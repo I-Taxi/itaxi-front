@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
 import 'package:itaxi/controller/signInController.dart';
+import 'package:itaxi/home.dart';
 import 'package:itaxi/mainScreen.dart';
 import 'package:itaxi/settings/settingScreen.dart';
 import 'package:itaxi/signInUp/signInScreen.dart';
@@ -29,12 +30,11 @@ class MyApp extends StatelessWidget {
       theme: ITaxiTheme.lightThemeData,
       home: GetBuilder<SignInController>(
         builder: (_) {
-          return SignInScreen();
-          // if (_signInController.signInState == SignInState.signedOut) {
-          //   return SignInScreen();
-          // } else {
-          //   return MainScreen();
-          // }
+          if (_signInController.signInState == SignInState.signedOut) {
+            return SignInScreen();
+          } else {
+            return Home();
+          }
         },
       ),
       // routes: {

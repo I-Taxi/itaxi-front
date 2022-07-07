@@ -32,23 +32,27 @@ class Home extends StatelessWidget {
         ),
         bottomNavigationBar: BottomNavigationBar(
             currentIndex: _navController.currentIndex,
-            backgroundColor: colorScheme.primary,
-            selectedItemColor: colorScheme.secondary,
-            unselectedItemColor: colorScheme.tertiary,
+            backgroundColor: Colors.blueGrey,
+            // backgroundColor: colorScheme.primary,
+            // selectedItemColor: colorScheme.secondary,
+            // unselectedItemColor: colorScheme.tertiary,
             onTap: (value) {
               _navController.changeIndex(value);
             },
             items: [
               BottomNavigationBarItem(
+                label: 'timeline',
                 icon: Icon(Icons.access_time),
               ),
               BottomNavigationBarItem(
+                label: 'main',
                 icon: Icon(Icons.directions_car),
               ),
               BottomNavigationBarItem(
+                  label: 'settings',
                   icon: Icon(
-                Icons.more_horiz_rounded,
-              ))
+                    Icons.more_horiz_rounded,
+                  ))
             ]),
       );
     });

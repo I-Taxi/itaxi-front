@@ -10,13 +10,15 @@ enum SignInState {
 class SignInController extends GetxController {
   SignInState signInState = SignInState.signedOut;
 
-  // Future<void> signIn async {
+  Future<void> signIn() async {
+    signInState = SignInState.signedIn;
+    update();
+  }
+
+  // Future<void> signOut() async {
   // }
 
-  // Future<void> signOut async {
-  // }
-
-  // Future<void> signUp async {
+  // Future<void> signUp() async {
   // }
 
   // 구글 로그인 (참고용), google_sign_in 패키지 필요
