@@ -1,15 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
+import 'package:itaxi/controller/signInController.dart';
 
 class SignUpScreen extends StatelessWidget {
   SignUpScreen({Key? key}) : super(key: key);
 
-  // 재입력 확인하는 용도
-  late String _studentId;
-  late String _password;
-  bool _agree1 = false;
-  bool _agree2 = false;
+  SignInController _signInController = Get.put(SignInController());
 
   Pattern pattern = r'^(?=.*[a-zA-Z]{3,})(?=.*\d{3,})';
   late RegExp regExp;
@@ -50,7 +47,7 @@ class SignUpScreen extends StatelessWidget {
                   labelStyle: textTheme.bodyText1
                       ?.copyWith(color: colorScheme.tertiary)),
               onChanged: (value) {
-                _studentId = value;
+                _signInController.studentId = value;
               },
               validator: (value) {
                 if (value!.isEmpty) return 'Please enter Student ID';
@@ -71,7 +68,8 @@ class SignUpScreen extends StatelessWidget {
               ),
               validator: (value) {
                 if (value!.isEmpty) return 'Please enter Student ID one more';
-                if (_studentId != value) return 'Confirm Student ID';
+                if (_signInController.studentId != value)
+                  return 'Confirm Student ID';
                 return null;
               }),
           const SizedBox(height: 12.0),
@@ -85,7 +83,7 @@ class SignUpScreen extends StatelessWidget {
                   labelStyle: textTheme.bodyText1
                       ?.copyWith(color: colorScheme.tertiary)),
               onChanged: (value) {
-                _password = value;
+                _signInController.customPw = value;
               },
               validator: (value) {
                 if (value!.isEmpty) return 'Please enter Password';
@@ -106,7 +104,9 @@ class SignUpScreen extends StatelessWidget {
               ),
               validator: (value) {
                 if (value!.isEmpty) return 'Please enter Password one more';
-                if (_password != value) return 'Confirm Password';
+                if (_signInController.customPw != value) {
+                  return 'Confirm Password';
+                }
                 return null;
               }),
           const SizedBox(
@@ -131,10 +131,10 @@ class SignUpScreen extends StatelessWidget {
                   children: [
                     const Text('약관에 동의합니다'),
                     Checkbox(
-                        value: _agree1,
+                        value: _signInController.agree1,
                         activeColor: Colors.blue,
                         onChanged: (value) {
-                          _agree1 = !_agree1;
+                          _signInController.agree1 = !_signInController.agree1;
                         })
                   ],
                 ),
@@ -158,10 +158,10 @@ class SignUpScreen extends StatelessWidget {
                   children: [
                     const Text('약관에 동의합니다'),
                     Checkbox(
-                        value: _agree2,
+                        value: _signInController.agree2,
                         activeColor: Colors.blue,
                         onChanged: (value) {
-                          _agree2 = !_agree2;
+                          _signInController.agree2 = !_signInController.agree2;
                         })
                   ],
                 ),

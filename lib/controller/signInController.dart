@@ -10,6 +10,12 @@ enum SignInState {
 class SignInController extends GetxController {
   SignInState signInState = SignInState.signedOut;
 
+  late String studentId;
+  late String customId;
+  late String customPw;
+  bool agree1 = false;
+  bool agree2 = false;
+
   Future<void> signIn() async {
     signInState = SignInState.signedIn;
     update();

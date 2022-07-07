@@ -32,7 +32,7 @@ class Home extends StatelessWidget {
         ),
         bottomNavigationBar: BottomNavigationBar(
             currentIndex: _navController.currentIndex,
-            backgroundColor: Colors.blueGrey,
+            backgroundColor: Colors.blueAccent,
             // backgroundColor: colorScheme.primary,
             // selectedItemColor: colorScheme.secondary,
             // unselectedItemColor: colorScheme.tertiary,

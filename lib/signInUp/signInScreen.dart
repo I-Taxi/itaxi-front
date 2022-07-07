@@ -30,83 +30,127 @@ class SignInScreen extends StatelessWidget {
 
     return SafeArea(
         child: Scaffold(
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.symmetric(horizontal: 60.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            const SizedBox(
-              height: 130,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: [
-                // 로고 이미지
-                Image.asset(
-                  width: 88.0,
-                  'assets/logo_blue.png',
-                ),
-                const SizedBox(
-                  width: 10.0,
-                ),
+      body: GestureDetector(
+        onTap: () {
+          FocusScope.of(context).unfocus();
+        },
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.symmetric(horizontal: 60.0),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              const SizedBox(
+                height: 130,
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  // 로고 이미지
+                  Image.asset(
+                    width: 88.0,
+                    'assets/logo_blue.png',
+                  ),
+                  const SizedBox(
+                    width: 10.0,
+                  ),
 
-                // 로고 글씨
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Text(
-                      'iTaxi',
-                      style: TextStyle(
-                        fontSize: 36.0,
-                        // color: colorScheme.secondary,
-                      ),
-                    ),
-                    Text('Powered by CRA', style: textTheme.headline1
-                        // ?.copyWith(color: colorScheme.secondary),
+                  // 로고 글씨
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        'iTaxi',
+                        style: TextStyle(
+                          fontSize: 36.0,
+                          // color: colorScheme.secondary,
                         ),
-                  ],
-                ),
-              ],
-            ),
-            const SizedBox(
-              height: 60.0,
-            ),
+                      ),
+                      Text('Powered by CRA', style: textTheme.headline1
+                          // ?.copyWith(color: colorScheme.secondary),
+                          ),
+                    ],
+                  ),
+                ],
+              ),
+              const SizedBox(
+                height: 60.0,
+              ),
 
-            // Custom ID 입력
-            TextFormField(
-                autocorrect: false,
-                decoration: InputDecoration(
-                    labelText: 'Custom ID', labelStyle: textTheme.subtitle1
-                    // ?.copyWith(color: colorScheme.tertiary)
-                    ),
-                validator: (value) {
-                  if (value!.isEmpty) return 'Please enter Custom ID';
-                  // pattern 변경하면 됨.
-                  // regExp = RegExp(pattern.toString());
-                  // if (!regExp.hasMatch(value)) return 'Username is invalid'
-                  return null;
-                }),
-            const SizedBox(height: 12.0),
-            TextFormField(
-                autocorrect: false,
-                obscureText: true,
-                decoration: InputDecoration(
-                    labelText: 'Custom PW', labelStyle: textTheme.subtitle1
-                    // ?.copyWith(color: colorScheme.tertiary)
-                    ),
-                validator: (value) {
-                  if (value!.isEmpty) return 'Please enter Custom PW';
-                  return null;
-                }),
-            TextButton(
-                onPressed: () {
-                  _signInController.signIn();
-                },
-                child: Text(
-                  'Sign In',
-                  style: textTheme.headline2,
-                )),
-          ],
+              // Custom ID 입력
+              TextFormField(
+                  autocorrect: false,
+                  decoration: InputDecoration(
+                      hintText: 'Your custom ID',
+                      labelText: 'Custom ID',
+                      labelStyle: textTheme.subtitle1,
+                      // ?.copyWith(color: colorScheme.tertiary),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            color: colorScheme.secondary, width: 1.0),
+                      )),
+                  validator: (value) {
+                    if (value!.isEmpty) return 'Please enter Custom ID';
+                    // pattern 변경하면 됨.
+                    // regExp = RegExp(pattern.toString());
+                    // if (!regExp.hasMatch(value)) return 'Username is invalid'
+                    return null;
+                  }),
+              const SizedBox(height: 12.0),
+
+              // Custom PW 입력
+              TextFormField(
+                  autocorrect: false,
+                  obscureText: true,
+                  decoration: InputDecoration(
+                      hintText: 'Your custom PW',
+                      labelText: 'Custom PW',
+                      labelStyle: textTheme.subtitle1
+                      // ?.copyWith(color: colorScheme.tertiary)
+                      ),
+                  validator: (value) {
+                    if (value!.isEmpty) return 'Please enter Custom PW';
+                    return null;
+                  }),
+
+              Row(
+                children: [
+                  Text(
+                    'Remember ID',
+                    style: textTheme.subtitle1,
+                  ),
+                  Checkbox(value: false, onChanged: (value) {}),
+                  Spacer(),
+                  TextButton(
+                      onPressed: () {},
+                      child: Text(
+                        'Forgot PW?',
+                        style: textTheme.subtitle1,
+                      ))
+                ],
+              ),
+              const SizedBox(
+                height: 60.0,
+              ),
+
+              // Sign In 버튼
+              TextButton(
+                  onPressed: () {
+                    _signInController.signIn();
+                  },
+                  child: Text(
+                    'Sign In',
+                    style: textTheme.headline2,
+                  )),
+              TextButton(
+                  onPressed: () {
+                    _signInController.signIn();
+                  },
+                  child: Text(
+                    'Sign Up',
+                    style: textTheme.headline2,
+                  )),
+            ],
+          ),
         ),
       ),
     ));

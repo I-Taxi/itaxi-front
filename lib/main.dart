@@ -3,16 +3,12 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:itaxi/controller/signInController.dart';
 import 'package:itaxi/home.dart';
-import 'package:itaxi/mainScreen.dart';
-import 'package:itaxi/settings/settingScreen.dart';
 import 'package:itaxi/signInUp/signInScreen.dart';
-import 'package:itaxi/signInUp/signUpScreen.dart';
 import 'package:itaxi/src/theme.dart';
-import 'package:itaxi/timeline/timelineScreen.dart';
 
 void main() {
   // firebase_core 패키지 필요
-  // WidgetsFlutterBinding.ensureInitialized();
+  WidgetsFlutterBinding.ensureInitialized();
   // await Firebase.initializeApp();
   runApp(MyApp());
 }
@@ -20,7 +16,7 @@ void main() {
 class MyApp extends StatelessWidget {
   MyApp({Key? key}) : super(key: key);
 
-  SignInController _signInController = Get.put(SignInController());
+  final SignInController _signInController = Get.put(SignInController());
 
   // This widget is the root of your application.
   @override
