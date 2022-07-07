@@ -46,8 +46,8 @@ class ITaxiTheme {
       // ),
       // disabledColor: Colors.white,
       dividerColor: colorScheme.tertiary,
-      // dividerTheme: DividerThemeData(
-      //   thickness: 1.0,
+      // dividerTheme: const DividerThemeData(
+      //   thickness: 0.3,
       // ),
       // floatingActionButtonTheme: FloatingActionButtonThemeData(
       //     backgroundColor: colorScheme.primary
