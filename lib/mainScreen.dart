@@ -2,6 +2,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:itaxi/controller/postsController.dart';
 import 'package:itaxi/controller/tabViewController.dart';
 import 'package:itaxi/widget/tabView.dart';
 
@@ -9,6 +10,7 @@ class MainScreen extends StatelessWidget {
   MainScreen({Key? key}) : super(key: key);
 
   TabViewController _tabViewController = Get.put(TabViewController());
+  PostsController _postsController = Get.put(PostsController());
 
   @override
   Widget build(BuildContext context) {
@@ -35,7 +37,7 @@ class MainScreen extends StatelessWidget {
             ),
           ],
         ),
-        body: GetBuilder<TabViewController>(
+        body: GetBuilder<PostsController>(
           builder: (_) {
             return Container(
               child: Row(
