@@ -37,13 +37,13 @@ class MyApp extends StatelessWidget {
           // }
         },
       ),
-      routes: {
-        '/signin': (context) => SignInScreen(),
-        '/signup': (context) => SignUpScreen(),
-        '/': (context) => MainScreen(),
-        '/timeline': (context) => TimelineScreen(),
-        '/settings': (context) => SettingScreen(),
-      },
+      // routes: {
+      //   '/signin': (context) => SignInScreen(),
+      //   '/signup': (context) => SignUpScreen(),
+      //   '/': (context) => MainScreen(),
+      //   '/timeline': (context) => TimelineScreen(),
+      //   '/settings': (context) => SettingScreen(),
+      // },
     );
   }
 }
