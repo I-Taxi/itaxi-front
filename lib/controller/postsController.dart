@@ -6,6 +6,15 @@ import 'package:get/get.dart';
 import 'package:itaxi/model/post.dart';
 
 class PostsController extends GetxController {
+  late Future<List<Post>> posts;
+  bool isLoading = true;
+
+  Future<void> getPosts() async {
+    posts = fetchPost(dep: 'dep', dst: 'dst', time: 'time');
+    isLoading = false;
+    update();
+  }
+
   // Posts 데이터 가져오기
   List<Post> PostfromJson(json) {
     List<Post> result = [];
