@@ -74,6 +74,6 @@ class ITaxiTheme {
     headline1: TextStyle(fontSize: 16, fontFamily: 'NotoSans'),
     headline2: TextStyle(fontSize: 15, fontFamily: 'Seoul'),
     subtitle1: TextStyle(fontSize: 13, fontFamily: 'NotoSans'),
-    bodyText1: TextStyle(fontSize: 7, fontFamily: 'NotoSans'),
+    bodyText1: TextStyle(fontSize: 11, fontFamily: 'NotoSans'),
   );
 }
