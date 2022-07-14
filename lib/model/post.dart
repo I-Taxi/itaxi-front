@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:itaxi/model/joiner.dart';
 
 class Post {
   String? id;
@@ -10,6 +11,7 @@ class Post {
   int? participantNum;
   int? status;
   int? luggage;
+  Joiner? joiners;
 
   Post({
     this.id,
@@ -21,6 +23,7 @@ class Post {
     this.participantNum,
     this.status,
     this.luggage,
+    this.joiners,
   });
 
   Post copyWith({
@@ -33,6 +36,7 @@ class Post {
     int? participantNum,
     int? status,
     int? luggage,
+    Joiner? joiners,
   }) {
     return Post(
       id: id ?? this.id,
@@ -44,6 +48,7 @@ class Post {
       participantNum: participantNum ?? this.participantNum,
       status: status ?? this.status,
       luggage: luggage ?? this.luggage,
+      joiners: joiners ?? this.joiners,
     );
   }
 
@@ -58,6 +63,7 @@ class Post {
       participantNum: ds['participantNum'],
       status: ds['status'],
       luggage: ds['luggage'],
+      joiners: ds['joiners'],
     );
   }
 
@@ -72,6 +78,7 @@ class Post {
       participantNum: ss.get('partifipanNum'),
       status: ss.get('status'),
       luggage: ss.get('luggage'),
+      joiners: ss.get('joiners'),
     );
   }
 
@@ -86,6 +93,7 @@ class Post {
       'participantNum': participantNum,
       'status': status,
       'luggage': luggage,
+      'joiners': joiners,
     };
   }
 }
