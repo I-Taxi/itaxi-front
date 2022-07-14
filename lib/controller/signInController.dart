@@ -1,5 +1,6 @@
 // import 'package:cloud_firestore/cloud_firestore.dart';
 // import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 
 enum SignInState {
@@ -13,8 +14,7 @@ class SignInController extends GetxController {
   late String studentId;
   late String customId;
   late String customPw;
-  bool agree1 = false;
-  bool agree2 = false;
+
 
   Future<void> signIn() async {
     signInState = SignInState.signedIn;
@@ -24,8 +24,27 @@ class SignInController extends GetxController {
   // Future<void> signOut() async {
   // }
 
-  // Future<void> signUp() async {
-  // }
+  Future<void> signUp() async {
+    await FirebaseAuth.instance
+        .createUserWithEmailAndPassword(
+        email: customId,
+        password: customPw);
+    FirebaseAuth.instance.currentUser?.sendEmailVerification();
+    // } on FirebaseAuthException catch (e) {
+    //   if (e.code == 'weak-password') {
+    //     print('the password provided is too weak');
+    //   } else if (e.code == 'email-already-in-use') {
+    //     print('The account already exists for that email.');
+    //   } else {
+    //     print('11111');
+    //   }
+    // } catch (e) {
+    //   print('끝');
+    // }
+    // SignInController의 SignUp 함수 만들어서 적용.
+    // pop
+    // Main Screen 또는 SignInScreen으로.
+  }
 
   // 구글 로그인 (참고용), google_sign_in 패키지 필요
   // Future<void> signInWithGoogle() async {

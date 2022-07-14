@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 
 import 'package:get/get.dart';
@@ -6,10 +7,10 @@ import 'package:itaxi/home.dart';
 import 'package:itaxi/signInUp/signInScreen.dart';
 import 'package:itaxi/src/theme.dart';
 
-void main() {
+void main() async {
   // firebase_core 패키지 필요
   WidgetsFlutterBinding.ensureInitialized();
-  // await Firebase.initializeApp();
+  await Firebase.initializeApp();
   runApp(MyApp());
 }
 
@@ -33,13 +34,6 @@ class MyApp extends StatelessWidget {
           }
         },
       ),
-      // routes: {
-      //   '/signin': (context) => SignInScreen(),
-      //   '/signup': (context) => SignUpScreen(),
-      //   '/': (context) => MainScreen(),
-      //   '/timeline': (context) => TimelineScreen(),
-      //   '/settings': (context) => SettingScreen(),
-      // },
     );
   }
 }

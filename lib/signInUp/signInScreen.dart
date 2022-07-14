@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:itaxi/controller/signInController.dart';
+import 'package:itaxi/signInUp/signUpScreen.dart';
 import 'package:itaxi/src/theme.dart';
 
 class SignInScreen extends StatelessWidget {
@@ -143,7 +144,8 @@ class SignInScreen extends StatelessWidget {
                   )),
               TextButton(
                   onPressed: () {
-                    _signInController.signIn();
+                    Get.to(SignUpScreen());
+                    // _signInController.signIn();
                   },
                   child: Text(
                     'Sign Up',
