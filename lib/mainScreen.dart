@@ -31,7 +31,7 @@ class _MainScreenState extends State<MainScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
-          // shadowColor: colorScheme.shadow,
+          shadowColor: colorScheme.shadow,
           elevation: 1.0,
           centerTitle: true,
           title: Text(
@@ -44,11 +44,12 @@ class _MainScreenState extends State<MainScreen> {
               tooltip: 'Add Post',
               icon: Icon(
                 Icons.add_circle_outline,
-                // color: colorScheme.secondary,
+                color: colorScheme.secondary,
               ),
             ),
           ],
         ),
+        backgroundColor: colorScheme.background,
         body: GetBuilder<TabViewController>(
           builder: (_) {
             return Column(
@@ -163,28 +164,76 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                     Text(
                       '오늘',
-                      style: textTheme.bodyText1,
-                      // ?.copyWith(color: colorScheme.secondary),
+                      style: textTheme.bodyText1
+                          ?.copyWith(color: colorScheme.secondary),
                     ),
                     const SizedBox(
                       height: 4.0,
                     ),
                     Text(
                       '날짜',
-                      style: textTheme.headline2,
-                      // ?.copyWith(color: colorScheme.secondary),
+                      style: textTheme.headline2
+                          ?.copyWith(color: colorScheme.secondary),
                     ),
                     const SizedBox(
                       height: 16.0,
                     ),
                     const Divider(
-                      color: Colors.grey,
-                      // color: colorScheme.tertiary,
                       thickness: 0.3,
                     ),
                   ],
                 ),
 
+                Expanded(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(vertical: 40.0),
+                        child: Text(
+                          '검색 결과가 없습니다',
+                          style: textTheme.headline2,
+                        ),
+                      ),
+                      InkWell(
+                        onTap: () {},
+                        child: Container(
+                          width: 352.0,
+                          height: 80.0,
+                          decoration: BoxDecoration(
+                            color: colorScheme.background,
+                            borderRadius: BorderRadius.circular(4.0),
+                            boxShadow: [
+                              BoxShadow(
+                                color: colorScheme.tertiary,
+                                offset: Offset(1.0, 1.0),
+                                blurRadius: 2.0,
+                              ),
+                            ],
+                          ),
+                          child: Column(
+                            children: [
+                              SizedBox(
+                                height: 18.0,
+                              ),
+                              Icon(
+                                Icons.add,
+                                color: colorScheme.secondary,
+                              ),
+                              SizedBox(
+                                height: 12.0,
+                              ),
+                              Text(
+                                '새로 모집하기',
+                                style: textTheme.subtitle1,
+                              )
+                            ],
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
                 // post list
                 // Expanded(
                 //   child: FutureBuilder<List<Post>>(
@@ -213,8 +262,7 @@ class _MainScreenState extends State<MainScreen> {
 
                 //       // post data loading bar
                 //       return LinearProgressIndicator(
-                //         color: Colors.blue,
-                //         // color: colorScheme.secondary,
+                //         color: colorScheme.secondary,
                 //       );
                 //     },
                 //   ),

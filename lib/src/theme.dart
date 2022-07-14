@@ -58,7 +58,7 @@ class ITaxiTheme {
   static const ColorScheme lightColorScheme = ColorScheme(
       primary: Color(0xFFFFFFFF),
       onPrimary: Colors.black,
-      secondary: Color(0x3FA9F5),
+      secondary: Color(0xff3FA9F5),
       onSecondary: Color(0xFFFFFFFF),
       error: Color(0xffb00020),
       onError: Colors.white,
@@ -66,8 +66,8 @@ class ITaxiTheme {
       onBackground: Colors.black,
       surface: Color(0xFFFFFFFF),
       onSurface: Colors.black,
-      tertiary: Color(0x999999),
-      shadow: Color(0xCCCCCC),
+      tertiary: Color(0xff999999),
+      shadow: Color(0xffCCCCCC),
       brightness: Brightness.light);
 
   static const TextTheme textTheme = TextTheme(
