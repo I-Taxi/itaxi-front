@@ -213,9 +213,15 @@ class _MainScreenState extends State<MainScreen> {
                           ),
                           child: Column(
                             children: [
+                              SizedBox(
+                                height: 18.0,
+                              ),
                               Icon(
                                 Icons.add,
                                 color: colorScheme.secondary,
+                              ),
+                              SizedBox(
+                                height: 12.0,
                               ),
                               Text(
                                 '새로 모집하기',
