@@ -214,7 +214,7 @@ class _MainScreenState extends State<MainScreen> {
                           child: Column(
                             children: [
                               SizedBox(
-                                height: 18.0,
+                                height: 16.0,
                               ),
                               Icon(
                                 Icons.add,

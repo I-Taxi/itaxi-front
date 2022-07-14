@@ -6,9 +6,10 @@ class Post {
   String? departure;
   String? destination;
   String? deptTime;
-  String? capacity;
-  String? participantNum;
-  String? status;
+  int? capacity;
+  int? participantNum;
+  int? status;
+  int? luggage;
 
   Post({
     this.id,
@@ -19,6 +20,7 @@ class Post {
     this.capacity,
     this.participantNum,
     this.status,
+    this.luggage,
   });
 
   Post copyWith({
@@ -27,9 +29,10 @@ class Post {
     String? departure,
     String? destination,
     String? deptTime,
-    String? capacity,
-    String? participantNum,
-    String? status,
+    int? capacity,
+    int? participantNum,
+    int? status,
+    int? luggage,
   }) {
     return Post(
       id: id ?? this.id,
@@ -40,6 +43,7 @@ class Post {
       capacity: capacity ?? this.capacity,
       participantNum: participantNum ?? this.participantNum,
       status: status ?? this.status,
+      luggage: luggage ?? this.luggage,
     );
   }
 
@@ -53,6 +57,7 @@ class Post {
       capacity: ds['capacity'],
       participantNum: ds['participantNum'],
       status: ds['status'],
+      luggage: ds['luggage'],
     );
   }
 
@@ -66,6 +71,7 @@ class Post {
       capacity: ss.get('capacity'),
       participantNum: ss.get('partifipanNum'),
       status: ss.get('status'),
+      luggage: ss.get('luggage'),
     );
   }
 
@@ -79,6 +85,7 @@ class Post {
       'capacity': capacity,
       'participantNum': participantNum,
       'status': status,
+      'luggage': luggage,
     };
   }
 }
