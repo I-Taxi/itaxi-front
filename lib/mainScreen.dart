@@ -185,88 +185,96 @@ class _MainScreenState extends State<MainScreen> {
                 ),
 
                 // post list
-                Expanded(
-                  child: FutureBuilder<List<Post>>(
-                    future: _postsController.posts,
-                    builder: (BuildContext context, snapshot) {
-                      if (snapshot.hasData) {
-                        // post가 있을 떼
-                        if (snapshot.data!.isNotEmpty) {
-                          return Center(
-                            child: Text('list'),
-                          );
-                        }
-                        // post가 없을 때
-                        else {
-                          return Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            children: [
-                              Padding(
-                                padding: EdgeInsets.symmetric(vertical: 40.0),
-                                child: Text(
-                                  '검색 결과가 없습니다',
-                                  style: textTheme.headline2,
-                                ),
-                              ),
-                              InkWell(
-                                onTap: () {},
-                                child: Container(
-                                  width: 352.0,
-                                  height: 80.0,
-                                  decoration: BoxDecoration(
-                                    color: colorScheme.background,
-                                    borderRadius: BorderRadius.circular(4.0),
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: colorScheme.tertiary,
-                                        offset: Offset(1.0, 1.0),
-                                        blurRadius: 2.0,
-                                      ),
-                                    ],
-                                  ),
-                                  child: Column(
-                                    children: [
-                                      SizedBox(
-                                        height: 16.0,
-                                      ),
-                                      Icon(
-                                        Icons.add,
-                                        color: colorScheme.secondary,
-                                      ),
-                                      SizedBox(
-                                        height: 12.0,
-                                      ),
-                                      Text(
-                                        '새로 모집하기',
-                                        style: textTheme.subtitle1,
-                                      )
-                                    ],
-                                  ),
-                                ),
-                              ),
-                            ],
-                          );
-                        }
-                      }
-                      // post load 중에 오류 발생
-                      else if (snapshot.hasError) {
-                        return Center(
-                          child: Text('${snapshot.error}'),
-                        );
-                      }
+                // Expanded(
+                //   child: FutureBuilder<List<Post>>(
+                //     future: _postsController.posts,
+                //     builder: (BuildContext context, snapshot) {
+                //       if (snapshot.hasData) {
+                //         // post가 있을 떼
+                //         if (snapshot.data!.isNotEmpty) {
+                //           return Center(
+                //             child: Text('list'),
+                //           );
+                //         }
+                //         // post가 없을 때
+                //         else {
+                //           return postIsEmpty(context);
+                //         }
+                //       }
+                //       // post load 중에 오류 발생
+                //       else if (snapshot.hasError) {
+                //         return Center(
+                //           child: Text('${snapshot.error}'),
+                //         );
+                //       }
 
-                      // post data loading bar
-                      return LinearProgressIndicator(
-                        color: colorScheme.secondary,
-                      );
-                    },
-                  ),
-                ),
+                //       // post data loading bar
+                //       return LinearProgressIndicator(
+                //         color: colorScheme.secondary,
+                //       );
+                //     },
+                //   ),
+                // ),
               ],
             );
           },
         ),
       ),
+    );
+  }
+
+  Widget postIsEmpty(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    return Column(
+      mainAxisAlignment: MainAxisAlignment.start,
+      children: [
+        Padding(
+          padding: EdgeInsets.symmetric(vertical: 40.0),
+          child: Text(
+            '검색 결과가 없습니다',
+            style: textTheme.headline1,
+          ),
+        ),
+        InkWell(
+          onTap: () {},
+          child: Container(
+            width: 352.0,
+            height: 80.0,
+            decoration: BoxDecoration(
+              color: colorScheme.background,
+              borderRadius: BorderRadius.circular(4.0),
+              boxShadow: [
+                BoxShadow(
+                  color: colorScheme.tertiary,
+                  offset: Offset(1.0, 1.0),
+                  blurRadius: 2.0,
+                ),
+              ],
+            ),
+            child: Column(
+              children: [
+                SizedBox(
+                  height: 16.0,
+                ),
+                Icon(
+                  Icons.add,
+                  color: colorScheme.secondary,
+                  size: 20.0,
+                ),
+                SizedBox(
+                  height: 12.0,
+                ),
+                Text(
+                  '새로 모집하기',
+                  style: textTheme.subtitle1,
+                )
+              ],
+            ),
+          ),
+        ),
+      ],
     );
   }
 }

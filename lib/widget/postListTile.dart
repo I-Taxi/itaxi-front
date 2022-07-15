@@ -13,8 +13,7 @@ Widget postListTile({
       borderRadius: BorderRadius.circular(4.0),
       boxShadow: [
         BoxShadow(
-          color: Colors.grey,
-          // color: colorScheme.tertiary,
+          color: colorScheme.tertiary,
           offset: Offset(1.0, 1.0),
           blurRadius: 2.0,
         ),
