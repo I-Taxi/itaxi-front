@@ -28,7 +28,7 @@ class PostsController extends GetxController {
   Future<List<Post>> fetchPost(
       {required String dep, required String dst, required String time}) async {
     //?dep=${dep}&dst=${dst}&time=${time}
-    var postUrl = "https://";
+    var postUrl = "http://203.252.99.211:8080/";
     postUrl = postUrl + '?dep=${dep}&dst=&{dst}&time=${time}';
 
     var response = await http.get(Uri.parse(postUrl));
