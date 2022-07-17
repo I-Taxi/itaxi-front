@@ -1,10 +1,28 @@
 import 'dart:convert';
 
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:itaxi/model/place.dart';
+import 'package:itaxi/widget/selectPlaceDialog.dart';
 
 class PlaceController extends GetxController {
+  late Future<List<Place>> places;
+
+  Place? dep; // 출발지
+  Place? dst; // 도착지
+
+  @override
+  void initState() {
+    super.onInit();
+    getPlaces();
+  }
+
+  Future<void> getPlaces() async {
+    places = fetchPlace();
+    update();
+  }
+
   // Places 데이터 가져오기
   List<Place> PlacefromJson(json) {
     List<Place> result = [];
@@ -15,8 +33,7 @@ class PlaceController extends GetxController {
     return result;
   }
 
-  Future<List<Place>> fetchPost(
-      {required String dep, required String dst, required String time}) async {
+  Future<List<Place>> fetchPlace() async {
     //?dep=${dep}&dst=${dst}&time=${time}
     var placeUrl = "http://203.252.99.211:8080/";
     placeUrl = placeUrl + 'place';
@@ -28,5 +45,15 @@ class PlaceController extends GetxController {
     } else {
       throw Exception('Failed to load places');
     }
+  }
+
+  void selectDep({required Place place}) {
+    dep = place;
+    update();
+  }
+
+  void selectDst({required Place place}) {
+    dst = place;
+    update();
   }
 }
