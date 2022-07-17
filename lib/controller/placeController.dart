@@ -4,7 +4,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:itaxi/model/place.dart';
 
-class SelectPlaceController extends GetxController {
+class PlaceController extends GetxController {
   // Places 데이터 가져오기
   List<Place> PlacefromJson(json) {
     List<Place> result = [];
