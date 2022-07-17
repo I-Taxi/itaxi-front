@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 import 'dart:convert';
@@ -20,4 +21,13 @@ class AddPostController extends GetxController {
 
     return response;
   }
+
+  // Dialog addPostDialog({required BuildContext context}) async {
+  //   final colorScheme = Theme.of(context).colorScheme;
+  //   final textTheme = Theme.of(context).textTheme;
+
+  //   return Dialog(
+  //     child: const Text('addPost'),
+  //   );
+  // }
 }
