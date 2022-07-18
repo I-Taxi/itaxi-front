@@ -121,7 +121,6 @@ Widget displayPlaces(
           // }
           print(index);
           Get.back();
-          Get.back();
         },
         child: Container(
           alignment: Alignment.center,
