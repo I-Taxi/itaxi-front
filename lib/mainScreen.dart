@@ -3,6 +3,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:itaxi/controller/addPostController.dart';
 import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/controller/placeController.dart';
 import 'package:itaxi/controller/postsController.dart';
@@ -21,6 +22,7 @@ class MainScreen extends StatefulWidget {
 
 class _MainScreenState extends State<MainScreen> {
   TabViewController _tabViewController = Get.put(TabViewController());
+  AddPostController _addPostController = Get.put(AddPostController());
   PostsController _postsController = Get.put(PostsController());
   PlaceController _placeController = Get.put(PlaceController());
   DateController _dateController = Get.put(DateController());
@@ -47,7 +49,9 @@ class _MainScreenState extends State<MainScreen> {
           ),
           actions: [
             IconButton(
-              onPressed: () {},
+              onPressed: () {
+                _addPostController.addPostDialog(context: context);
+              },
               tooltip: 'Add Post',
               icon: Icon(
                 Icons.add_circle_outline,
@@ -320,7 +324,9 @@ class _MainScreenState extends State<MainScreen> {
           ),
         ),
         InkWell(
-          onTap: () {},
+          onTap: () {
+            _addPostController.addPostDialog(context: context);
+          },
           child: Container(
             width: 352.0,
             height: 80.0,

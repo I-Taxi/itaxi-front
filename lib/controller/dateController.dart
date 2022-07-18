@@ -3,11 +3,13 @@ import 'package:get/get.dart';
 
 class DateController extends GetxController {
   DateTime? pickedDate;
+  TimeOfDay? pickedTime;
 
   @override
   void onInit() {
     super.onInit();
     pickedDate = DateTime.now();
+    pickedTime = TimeOfDay.now();
   }
 
   Future<void> selectDate(BuildContext context) async {
@@ -20,6 +22,18 @@ class DateController extends GetxController {
 
     if (selectedDate != null) {
       pickedDate = selectedDate;
+      update();
+    }
+  }
+
+  Future<void> selectTime(BuildContext context) async {
+    TimeOfDay? selectedTime = await showTimePicker(
+      context: context,
+      initialTime: TimeOfDay.now(),
+    );
+
+    if (selectedTime != null) {
+      pickedTime = selectedTime;
       update();
     }
   }
