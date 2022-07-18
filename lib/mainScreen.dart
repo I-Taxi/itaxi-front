@@ -213,13 +213,10 @@ class _MainScreenState extends State<MainScreen> {
                   ],
                 ),
 
-                Expanded(
-                  child: postIsEmpty(context),
-                ),
+                postIsEmpty(context),
 
                 // post list
-                // Expanded(
-                //   child: FutureBuilder<List<Post>>(
+                // FutureBuilder<List<Post>>(
                 //     future: _postsController.posts,
                 //     builder: (BuildContext context, snapshot) {
                 //       if (snapshot.hasData) {
@@ -256,7 +253,6 @@ class _MainScreenState extends State<MainScreen> {
                 //       );
                 //     },
                 //   ),
-                // ),
               ],
             );
           },
