@@ -2,6 +2,8 @@
 
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
+import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/controller/placeController.dart';
 import 'package:itaxi/controller/postsController.dart';
 import 'package:itaxi/controller/tabViewController.dart';
@@ -21,6 +23,7 @@ class _MainScreenState extends State<MainScreen> {
   TabViewController _tabViewController = Get.put(TabViewController());
   PostsController _postsController = Get.put(PostsController());
   PlaceController _placeController = Get.put(PlaceController());
+  DateController _dateController = Get.put(DateController());
 
   @override
   void initState() {
@@ -199,10 +202,51 @@ class _MainScreenState extends State<MainScreen> {
                     const SizedBox(
                       height: 4.0,
                     ),
-                    Text(
-                      '날짜',
-                      style: textTheme.headline2
-                          ?.copyWith(color: colorScheme.secondary),
+                    Stack(
+                      children: [
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.arrow_back_ios_rounded,
+                              color: colorScheme.shadow,
+                              size: 16.0,
+                            ),
+                            GetBuilder<DateController>(
+                              builder: (_) {
+                                return Text(
+                                  DateFormat('d E')
+                                      .format(_dateController.pickedDate!),
+                                  style: textTheme.headline2
+                                      ?.copyWith(color: colorScheme.secondary),
+                                );
+                              },
+                            ),
+                            Icon(
+                              Icons.arrow_forward_ios_rounded,
+                              color: colorScheme.shadow,
+                              size: 16.0,
+                            ),
+                          ],
+                        ),
+                        Align(
+                          alignment: Alignment.centerRight,
+                          child: GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: () {
+                              _dateController.selectDate(context);
+                            },
+                            child: Padding(
+                              padding: const EdgeInsets.only(right: 52.0),
+                              child: Icon(
+                                Icons.calendar_month_rounded,
+                                color: colorScheme.secondary,
+                                size: 20.0,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
                     const SizedBox(
                       height: 16.0,
