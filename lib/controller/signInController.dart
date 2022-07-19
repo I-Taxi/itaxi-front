@@ -1,7 +1,7 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+
+import '../mainScreen.dart';
 
 enum SignInState {
   signedIn,
@@ -11,64 +11,34 @@ enum SignInState {
 class SignInController extends GetxController {
   SignInState signInState = SignInState.signedOut;
 
-  late String studentId;
-  late String customId;
-  late String customPw;
-
+  late String id;
+  late String pw;
 
   Future<void> signIn() async {
-    signInState = SignInState.signedIn;
-    update();
+    try {
+      await FirebaseAuth.instance
+          .signInWithEmailAndPassword(
+          email: id,
+          password: pw) //아이디와 비밀번호로 로그인 시도
+          .then((value) {
+        // print(value);
+        value.user!.emailVerified == true //이메일 인증 여부
+            ? {
+                signInState = SignInState.signedIn,
+                Get.to(MainScreen())
+              }
+            : print('이메일 확인 안댐');
+        return value;
+      });
+    } on FirebaseAuthException catch (e) {
+      //로그인 예외처리
+      if (e.code == 'user-not-found') {
+        print('등록되지 않은 이메일입니다');
+      } else if (e.code == 'wrong-password') {
+        print('비밀번호가 틀렸습니다');
+      } else {
+        print(e.code);
+      }
+    }
   }
-
-  // Future<void> signOut() async {
-  // }
-
-  Future<void> signUp() async {
-    await FirebaseAuth.instance
-        .createUserWithEmailAndPassword(
-        email: customId,
-        password: customPw);
-    FirebaseAuth.instance.currentUser?.sendEmailVerification();
-    // } on FirebaseAuthException catch (e) {
-    //   if (e.code == 'weak-password') {
-    //     print('the password provided is too weak');
-    //   } else if (e.code == 'email-already-in-use') {
-    //     print('The account already exists for that email.');
-    //   } else {
-    //     print('11111');
-    //   }
-    // } catch (e) {
-    //   print('끝');
-    // }
-    // SignInController의 SignUp 함수 만들어서 적용.
-    // pop
-    // Main Screen 또는 SignInScreen으로.
-  }
-
-  // 구글 로그인 (참고용), google_sign_in 패키지 필요
-  // Future<void> signInWithGoogle() async {
-  //   UserController _userController = Get.find<UserController>();
-
-  //   final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-  //   final GoogleSignInAuthentication? googleAuth =
-  //   await googleUser?.authentication;
-  //   final credential = GoogleAuthProvider.credential(
-  //     accessToken: googleAuth?.accessToken,
-  //     idToken: googleAuth?.idToken,
-  //   );
-
-  //   await FirebaseAuth.instance.signInWithCredential(credential);
-  //   await UserRepository().setUser();
-  //   await _userController.setUser();
-  //   loginState = LoginState.loggedGoogleIn;
-
-  //   update();
-  // }
-
-  // Future<void> signOutWithGoogle() async {
-  //   FirebaseAuth.instance.signOut();
-  //   loginState = LoginState.loggedOut;
-  //   update();
-  // }
 }
