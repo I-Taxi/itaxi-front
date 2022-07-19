@@ -4,8 +4,8 @@ import 'package:itaxi/model/joiner.dart';
 class Post {
   String? id;
   String? uid;
-  String? depId;
-  String? dstId;
+  String? departure;
+  String? destination;
   String? deptTime;
   int? capacity;
   int? participantNum;
@@ -16,8 +16,8 @@ class Post {
   Post({
     this.id,
     this.uid,
-    this.depId,
-    this.dstId,
+    this.departure,
+    this.destination,
     this.deptTime,
     this.capacity,
     this.participantNum,
@@ -29,8 +29,8 @@ class Post {
   Post copyWith({
     String? id,
     String? uid,
-    String? depId,
-    String? dstId,
+    String? departure,
+    String? destination,
     String? deptTime,
     int? capacity,
     int? participantNum,
@@ -41,8 +41,8 @@ class Post {
     return Post(
       id: id ?? this.id,
       uid: uid ?? this.uid,
-      depId: depId ?? this.depId,
-      dstId: dstId ?? this.dstId,
+      departure: departure ?? this.departure,
+      destination: destination ?? this.destination,
       deptTime: deptTime ?? this.deptTime,
       capacity: capacity ?? this.capacity,
       participantNum: participantNum ?? this.participantNum,
@@ -56,8 +56,8 @@ class Post {
     return Post(
       id: ds['id'],
       uid: ds['uid'],
-      depId: ds['depId'],
-      dstId: ds['dstId'],
+      departure: ds['departure'],
+      destination: ds['destination'],
       deptTime: ds['deptTime'],
       capacity: ds['capacity'],
       participantNum: ds['participantNum'],
@@ -71,8 +71,8 @@ class Post {
     return Post(
       id: ss.get('id'),
       uid: ss.get('uid'),
-      depId: ss.get('depId'),
-      dstId: ss.get('dstId'),
+      departure: ss.get('departure'),
+      destination: ss.get('destination'),
       deptTime: ss.get('deptTime'),
       capacity: ss.get('capacity'),
       participantNum: ss.get('partifipanNum'),
@@ -86,8 +86,8 @@ class Post {
     return {
       'id': id,
       'uid': uid,
-      'depId': depId,
-      'dstId': dstId,
+      'departure': departure,
+      'destination': destination,
       'deptTime': deptTime,
       'capacity': capacity,
       'participantNum': participantNum,
