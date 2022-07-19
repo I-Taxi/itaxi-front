@@ -2,7 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart';
-import 'package:itaxi/controller/signInController.dart';
+import 'package:itaxi/controller/signUpController.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -13,7 +13,7 @@ class SignUpScreen extends StatefulWidget {
 
 class _SignUpScreenState extends State<SignUpScreen> {
 
-  SignInController _signInController = Get.put(SignInController());
+  SignUpController _signUpController = Get.put(SignUpController());
 
   final _idController = TextEditingController();
   final _pwController = TextEditingController();
@@ -67,7 +67,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       labelStyle: textTheme.bodyText1
                           ?.copyWith(color: colorScheme.tertiary)),
                   onChanged: (value) {
-                    _signInController.customId = value;
+                    _signUpController.customId = value;
                   },
                   validator: (value) {
                     if (value!.isEmpty) return 'Please enter Student ID';
@@ -105,8 +105,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           ?.copyWith(color: colorScheme.tertiary)),
                   onChanged: (value) {
                   print(value);
-                    _signInController.customPw = value;
-                    print(_signInController.customPw);
+                    _signUpController.customPw = value;
+                    print(_signUpController.customPw);
                   },
                   validator: (value) {
                     if (value!.isEmpty) return 'Please enter Password';
@@ -127,7 +127,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   validator: (value) {
                     if (value!.isEmpty) return 'Please enter Password one more';
-                    if (_signInController.customPw != value) {
+                    if (_signUpController.customPw != value) {
                       return 'Confirm Password';
                     }
                     return null;
@@ -210,7 +210,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 // textTheme 적용 해야함
                 child: const Text('Sign Up', style: TextStyle(color: Colors.black),),
                 onPressed: () {
-                  _signInController.signUp();
+                  _signUpController.signUp();
                 }
               ),
             ],

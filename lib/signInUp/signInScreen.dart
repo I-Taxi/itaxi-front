@@ -11,6 +11,9 @@ class SignInScreen extends StatelessWidget {
 
   SignInController _signInController = Get.put(SignInController());
 
+  final _idController = TextEditingController();
+  final _pwController = TextEditingController();
+
   Pattern pattern = r'^(?=.*[a-zA-Z]{3,})(?=.*\d{3,})';
   late RegExp regExp;
   final _formKey = GlobalKey<FormState>();
@@ -79,6 +82,7 @@ class SignInScreen extends StatelessWidget {
 
               // Custom ID 입력
               TextFormField(
+                controller: _idController,
                   autocorrect: false,
                   decoration: InputDecoration(
                       hintText: 'Your custom ID',
@@ -89,6 +93,9 @@ class SignInScreen extends StatelessWidget {
                         borderSide: BorderSide(
                             color: colorScheme.secondary, width: 1.0),
                       )),
+                  onChanged: (value) {
+                    _signInController.id = value;
+                  },
                   validator: (value) {
                     if (value!.isEmpty) return 'Please enter Custom ID';
                     // pattern 변경하면 됨.
@@ -100,6 +107,7 @@ class SignInScreen extends StatelessWidget {
 
               // Custom PW 입력
               TextFormField(
+                controller: _pwController,
                   autocorrect: false,
                   obscureText: true,
                   decoration: InputDecoration(
@@ -108,6 +116,9 @@ class SignInScreen extends StatelessWidget {
                       labelStyle: textTheme.subtitle1
                       // ?.copyWith(color: colorScheme.tertiary)
                       ),
+                  onChanged: (value) {
+                    _signInController.pw = value;
+                  },
                   validator: (value) {
                     if (value!.isEmpty) return 'Please enter Custom PW';
                     return null;
@@ -135,8 +146,8 @@ class SignInScreen extends StatelessWidget {
 
               // Sign In 버튼
               TextButton(
-                  onPressed: () {
-                    _signInController.signIn();
+                  onPressed: () async {
+                    await _signInController.signIn();
                   },
                   child: Text(
                     'Sign In',
