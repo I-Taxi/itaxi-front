@@ -18,14 +18,14 @@ class SignInController extends GetxController {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(
-          email: id,
-          password: pw) //아이디와 비밀번호로 로그인 시도
+              email: id, password: pw) //아이디와 비밀번호로 로그인 시도
           .then((value) {
         // print(value);
         value.user!.emailVerified == true //이메일 인증 여부
             ? {
                 signInState = SignInState.signedIn,
-                Get.to(MainScreen())
+                update(),
+                // Get.to(MainScreen())
               }
             : print('이메일 확인 안댐');
         return value;

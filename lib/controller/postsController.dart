@@ -3,14 +3,17 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
+import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/model/post.dart';
 
 class PostsController extends GetxController {
+  DateController _dateController = Get.put(DateController());
   late Future<List<Post>> posts;
   bool isLoading = true;
 
-  Future<void> getPosts() async {
-    posts = fetchPost(dep: 'dep', dst: 'dst', time: 'time');
+  Future<void> getPosts(
+      {int? depId, int? dstId, required DateTime time}) async {
+    posts = fetchPost(time: time);
     isLoading = false;
     update();
   }
@@ -26,10 +29,17 @@ class PostsController extends GetxController {
   }
 
   Future<List<Post>> fetchPost(
-      {required String dep, required String dst, required String time}) async {
+      {int? depId, int? dstId, required DateTime time}) async {
     //?dep=${dep}&dst=${dst}&time=${time}
-    var postUrl = "http://203.252.99.211:8080/";
-    postUrl = postUrl + '?dep=${dep}&dst=&{dst}&time=${time}';
+    var postUrl = "http://walab.handong.edu:8080/itaxi/api/";
+    final queryParameters = {
+      'depId': depId,
+      'dstId': dstId,
+      'time': time,
+    };
+    String queryString = Uri(queryParameters: queryParameters).query;
+
+    postUrl = postUrl + 'post?' + queryString;
 
     var response = await http.get(Uri.parse(postUrl));
 
