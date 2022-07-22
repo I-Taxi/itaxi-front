@@ -2,9 +2,18 @@
 // import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
+import 'package:get/get_state_manager/get_state_manager.dart';
 
+
+import 'package:http/http.dart' as http;
+import 'package:intl/intl.dart';
+import 'dart:convert';
+
+import '../model/user.dart';
 import '../signInUp/signInScreen.dart';
 import '../signInUp/signUpScreen.dart';
+
+
 
 // enum SignInState {
 //   signedIn,
@@ -13,11 +22,29 @@ import '../signInUp/signUpScreen.dart';
 
 class SignUpController extends GetxController {
 
-
   late String studentId;
   late String customId;
   late String customPw;
+  late String phone;
+  late String bank;
+  late String bankAddress;
 
+  Future<http.Response> fetchAddUser({required Login login}) async {
+    var addUserUrl = "walab.handong.edu:8080/itaxi/api/";
+    addUserUrl = addUserUrl + 'member';
+
+    var body = json.encode(login.toMap());
+    // print(body);
+    http.Response response = await http.post(
+      Uri.parse(addUserUrl),
+      headers: <String, String> {
+        'Content-Type': 'application/json'
+      },
+      body: body
+    );
+
+    return response;
+  }
 
   Future<void> signIn() async {
     // signInState = SignInState.signedIn;
@@ -28,12 +55,24 @@ class SignUpController extends GetxController {
   // }
 
   Future<void> signUp() async {
+    // print("확인용");
+    // print(FirebaseAuth.instance.currentUser!.uid);
     try {
     await FirebaseAuth.instance
         .createUserWithEmailAndPassword(
         email: customId,
         password: customPw);
     FirebaseAuth.instance.currentUser?.sendEmailVerification();
+    Login login = Login(
+      uid: FirebaseAuth.instance.currentUser!.uid.toString(),
+      email: FirebaseAuth.instance.currentUser!.email.toString(),
+      phone: phone,
+      name: FirebaseAuth.instance.currentUser!.displayName.toString(),
+      bank: bank,
+      bankAddress: bankAddress,
+    );
+    fetchAddUser(login: login);
+    Get.to(SignInScreen());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         print('the password provided is too weak');
@@ -45,7 +84,6 @@ class SignUpController extends GetxController {
     } catch (e) {
       print('끝');
     }
-    Get.to(SignInScreen());
     // SignInController의 SignUp 함수 만들어서 적용.
     // pop
     // Main Screen 또는 SignInScreen으로.
