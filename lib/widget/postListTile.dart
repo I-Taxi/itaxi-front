@@ -10,7 +10,7 @@ Widget postListTile({
   required Post post,
 }) {
   AddPostController _addPostController = Get.put(AddPostController());
-  PostController _postsController = Get.put(PostController());
+  PostController _postController = Get.put(PostController());
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
 
@@ -79,6 +79,9 @@ Widget postListTile({
                       ),
                       TextButton(
                         onPressed: () {
+                          _postController.fetchJoin(
+                              postId: post.id!,
+                              luggage: _addPostController.luggage);
                           Get.back();
                         },
                         child: Text(
