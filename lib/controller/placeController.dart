@@ -3,10 +3,14 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:itaxi/controller/dateController.dart';
+import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/model/place.dart';
 import 'package:itaxi/widget/selectPlaceDialog.dart';
 
 class PlaceController extends GetxController {
+  late PostController _postController = Get.find();
+  late DateController _dateController = Get.find();
   late Future<List<Place>> places;
 
   Place? dep; // 출발지
@@ -50,6 +54,11 @@ class PlaceController extends GetxController {
   void selectDep({required Place place}) {
     dep = place;
     update();
+    _postController.getPosts(
+        depId: dep?.id,
+        dstId: dst?.id,
+        time: _dateController
+            .formattingDateTime(_dateController.mergeDateAndTime()));
   }
 
   void selectDst({required Place place}) {

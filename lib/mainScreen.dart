@@ -24,14 +24,18 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   TabViewController _tabViewController = Get.put(TabViewController());
   AddPostController _addPostController = Get.put(AddPostController());
-  PostController _postsController = Get.put(PostController());
+  PostController _postController = Get.put(PostController());
   PlaceController _placeController = Get.put(PlaceController());
   DateController _dateController = Get.put(DateController());
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
 
   @override
   void initState() {
     super.initState();
-    _postsController.getPosts(
+    _postController.getPosts(
+        depId: _placeController.dep?.id,
+        dstId: _placeController.dst?.id,
         time: _dateController
             .formattingDateTime(_dateController.mergeDateAndTime()));
     _placeController.getPlaces();
@@ -277,43 +281,57 @@ class _MainScreenState extends State<MainScreen> {
                 // postIsEmpty(context),
 
                 // post list
-                FutureBuilder<List<Post>>(
-                  future: _postsController.posts,
-                  builder: (BuildContext context, snapshot) {
-                    if (snapshot.hasData) {
-                      // post가 있을 떼
-                      if (snapshot.data!.isNotEmpty) {
-                        return Expanded(
-                          child: ListView.builder(
-                            itemCount: snapshot.data!.length,
-                            itemBuilder: (BuildContext context, int index) {
-                              return postListTile(
-                                context: context,
-                                post: snapshot.data![index],
-                              );
-                            },
-                          ),
-                        );
-                      }
-                      // post가 없을 때
-                      else {
-                        return postIsEmpty(context);
-                      }
-                    }
-                    // post load 중에 오류 발생
-                    else if (snapshot.hasError) {
-                      return Center(
-                        child: Text(
-                          '${snapshot.error}',
-                        ),
+                Expanded(
+                  child: RefreshIndicator(
+                    key: _refreshIndicatorKey,
+                    color: colorScheme.tertiary,
+                    backgroundColor: colorScheme.background,
+                    strokeWidth: 2.0,
+                    onRefresh: () async {
+                      _postController.getPosts(
+                        depId: _placeController.dep?.id,
+                        dstId: _placeController.dst?.id,
+                        time: _dateController.formattingDateTime(
+                            _dateController.mergeDateAndTime()),
                       );
-                    }
+                    },
+                    child: FutureBuilder<List<Post>>(
+                      future: _postController.posts,
+                      builder: (BuildContext context, snapshot) {
+                        if (snapshot.hasData) {
+                          // post가 있을 떼
+                          if (snapshot.data!.isNotEmpty) {
+                            return ListView.builder(
+                              itemCount: snapshot.data!.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return postListTile(
+                                  context: context,
+                                  post: snapshot.data![index],
+                                );
+                              },
+                            );
+                          }
+                          // post가 없을 때
+                          else {
+                            return postIsEmpty(context);
+                          }
+                        }
+                        // post load 중에 오류 발생
+                        else if (snapshot.hasError) {
+                          return Center(
+                            child: Text(
+                              '${snapshot.error}',
+                            ),
+                          );
+                        }
 
-                    // post data loading bar
-                    return LinearProgressIndicator(
-                      color: colorScheme.secondary,
-                    );
-                  },
+                        // post data loading bar
+                        return LinearProgressIndicator(
+                          color: colorScheme.secondary,
+                        );
+                      },
+                    ),
+                  ),
                 ),
               ],
             );

@@ -7,7 +7,7 @@ import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/model/post.dart';
 
 class PostController extends GetxController {
-  DateController _dateController = Get.put(DateController());
+  late DateController _dateController = Get.find();
   late Future<List<Post>> posts;
   bool isLoading = true;
 
