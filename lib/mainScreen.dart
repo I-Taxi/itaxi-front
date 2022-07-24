@@ -287,8 +287,7 @@ class _MainScreenState extends State<MainScreen> {
                           itemCount: snapshot.data!.length,
                           itemBuilder: (BuildContext context, int index) {
                             return postListTile(
-                              colorScheme: colorScheme,
-                              textTheme: textTheme,
+                              context: context,
                               post: snapshot.data![index],
                             );
                           },
