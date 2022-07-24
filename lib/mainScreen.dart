@@ -283,14 +283,16 @@ class _MainScreenState extends State<MainScreen> {
                     if (snapshot.hasData) {
                       // post가 있을 떼
                       if (snapshot.data!.isNotEmpty) {
-                        return ListView.builder(
-                          itemCount: snapshot.data!.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return postListTile(
-                              context: context,
-                              post: snapshot.data![index],
-                            );
-                          },
+                        return Expanded(
+                          child: ListView.builder(
+                            itemCount: snapshot.data!.length,
+                            itemBuilder: (BuildContext context, int index) {
+                              return postListTile(
+                                context: context,
+                                post: snapshot.data![index],
+                              );
+                            },
+                          ),
                         );
                       }
                       // post가 없을 때

@@ -276,8 +276,8 @@ void addPostDialog({required BuildContext context}) {
                       String uid = '1';
                       Post post = Post(
                           uid: uid,
-                          depId: _placeController.dep?.id,
-                          dstId: _placeController.dst?.id,
+                          departure: _placeController.dep,
+                          destination: _placeController.dst,
                           deptTime: _dateController.formattingDateTime(
                               _dateController.mergeDateAndTime()),
                           capacity: _addPostController.capacity + 1,

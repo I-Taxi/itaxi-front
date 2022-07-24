@@ -38,8 +38,8 @@ class PostController extends GetxController {
     };
     String queryString = Uri(queryParameters: queryParameters).query;
 
-    postUrl = postUrl + 'post?' + queryString;
-
+    // postUrl = postUrl + 'post?' + queryString;
+    postUrl = postUrl + 'post/all';
     http.Response response = await http.get(
       Uri.parse(postUrl),
       headers: <String, String>{
@@ -47,16 +47,16 @@ class PostController extends GetxController {
       },
     );
 
+    print(response.body);
     if (response.statusCode == 200) {
-      return PostsfromJson(json.decode(response.body));
+      return PostsfromJson(json.decode(utf8.decode(response.bodyBytes)));
     } else {
-      print(response.body);
       throw Exception('Failed to load posts');
     }
   }
 
   // /itaxi/api/post/{postId}/join
-  Future<void> fetchJoin({required String postId, required int luggage}) async {
+  Future<void> fetchJoin({required int postId, required int luggage}) async {
     var joinUrl = "http://walab.handong.edu:8080/itaxi/api/";
     final queryParameters = {
       'postId': postId,
