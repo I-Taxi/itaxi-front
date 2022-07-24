@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:itaxi/controller/addPostController.dart';
-import 'package:itaxi/controller/postsController.dart';
+import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:numberpicker/numberpicker.dart';
 
@@ -10,7 +10,7 @@ Widget postListTile({
   required Post post,
 }) {
   AddPostController _addPostController = Get.put(AddPostController());
-  PostsController _postsController = Get.put(PostsController());
+  PostController _postsController = Get.put(PostController());
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
 

@@ -6,7 +6,7 @@ import 'package:intl/intl.dart';
 import 'package:itaxi/controller/addPostController.dart';
 import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/controller/placeController.dart';
-import 'package:itaxi/controller/postsController.dart';
+import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/controller/tabViewController.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/widget/addPostDialog.dart';
@@ -24,7 +24,7 @@ class MainScreen extends StatefulWidget {
 class _MainScreenState extends State<MainScreen> {
   TabViewController _tabViewController = Get.put(TabViewController());
   AddPostController _addPostController = Get.put(AddPostController());
-  PostsController _postsController = Get.put(PostsController());
+  PostController _postsController = Get.put(PostController());
   PlaceController _placeController = Get.put(PlaceController());
   DateController _dateController = Get.put(DateController());
 
