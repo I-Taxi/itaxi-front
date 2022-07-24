@@ -6,6 +6,7 @@ import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/controller/placeController.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/widget/selectPlaceDialog.dart';
+import 'package:numberpicker/numberpicker.dart';
 
 void addPostDialog({required BuildContext context}) {
   AddPostController _addPostController = Get.put(AddPostController());
@@ -42,23 +43,26 @@ void addPostDialog({required BuildContext context}) {
                           width: 0.3,
                         ),
                       ),
-                      child: _placeController.dep == null
-                          ? Text(
-                              '출발',
-                              style: textTheme.subtitle1
-                                  ?.copyWith(color: colorScheme.tertiary),
-                            )
-                          : Text(
-                              '${_placeController.dep?.name}',
-                              style: textTheme.subtitle1
-                                  ?.copyWith(color: colorScheme.tertiary),
-                            ),
+                      child: GetBuilder<PlaceController>(
+                        builder: (_) {
+                          return _placeController.dep == null
+                              ? Text(
+                                  '출발',
+                                  style: textTheme.subtitle1
+                                      ?.copyWith(color: colorScheme.tertiary),
+                                )
+                              : Text(
+                                  '${_placeController.dep?.name}',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: textTheme.subtitle1
+                                      ?.copyWith(color: colorScheme.tertiary),
+                                );
+                        },
+                      ),
                     ),
                   ),
 
-                  const SizedBox(
-                    width: 16.0,
-                  ),
+                  const Spacer(),
 
                   // 화살표
                   const Icon(
@@ -66,9 +70,7 @@ void addPostDialog({required BuildContext context}) {
                     color: Colors.grey,
                   ),
 
-                  const SizedBox(
-                    width: 16.0,
-                  ),
+                  const Spacer(),
 
                   // 도착 설정 버튼
                   GestureDetector(
@@ -77,26 +79,32 @@ void addPostDialog({required BuildContext context}) {
                       selectPlaceDialog(context: context, type: 1);
                     },
                     child: Container(
-                        padding: EdgeInsets.fromLTRB(32, 8, 32, 8),
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.all(Radius.circular(16.0)),
-                          border: Border.all(
-                            color: Colors.grey,
-                            // color: colorScheme.tertiary,
-                            width: 0.3,
-                          ),
+                      padding: EdgeInsets.fromLTRB(32, 8, 32, 8),
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.all(Radius.circular(16.0)),
+                        border: Border.all(
+                          color: Colors.grey,
+                          // color: colorScheme.tertiary,
+                          width: 0.3,
                         ),
-                        child: _placeController.dst == null
-                            ? Text(
-                                '도착',
-                                style: textTheme.subtitle1
-                                    ?.copyWith(color: colorScheme.tertiary),
-                              )
-                            : Text(
-                                '${_placeController.dst?.name}',
-                                style: textTheme.subtitle1
-                                    ?.copyWith(color: colorScheme.tertiary),
-                              )),
+                      ),
+                      child: GetBuilder<PlaceController>(
+                        builder: (context) {
+                          return _placeController.dst == null
+                              ? Text(
+                                  '도착',
+                                  style: textTheme.subtitle1
+                                      ?.copyWith(color: colorScheme.tertiary),
+                                )
+                              : Text(
+                                  '${_placeController.dst?.name}',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: textTheme.subtitle1
+                                      ?.copyWith(color: colorScheme.tertiary),
+                                );
+                        },
+                      ),
+                    ),
                   ),
                 ],
               ),
@@ -104,8 +112,14 @@ void addPostDialog({required BuildContext context}) {
                 height: 20.0,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  Text(
+                    '출발일',
+                    style: textTheme.headline2
+                        ?.copyWith(color: colorScheme.tertiary),
+                  ),
+                  const Spacer(),
                   GetBuilder<DateController>(
                     builder: (_) {
                       return Text(
@@ -136,8 +150,14 @@ void addPostDialog({required BuildContext context}) {
                 height: 20.0,
               ),
               Row(
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
+                  Text(
+                    '출발시간',
+                    style: textTheme.headline2
+                        ?.copyWith(color: colorScheme.tertiary),
+                  ),
+                  const Spacer(),
                   GetBuilder<DateController>(
                     builder: (_) {
                       return Text(
@@ -166,17 +186,85 @@ void addPostDialog({required BuildContext context}) {
               const SizedBox(
                 height: 20.0,
               ),
-              Text('추가인원'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '추가인원',
+                    style: textTheme.headline2
+                        ?.copyWith(color: colorScheme.tertiary),
+                  ),
+                  StatefulBuilder(
+                    builder: (_, setState) {
+                      return NumberPicker(
+                        value: _addPostController.capacity,
+                        minValue: 0,
+                        maxValue: 6,
+                        step: 1,
+                        itemHeight: 20,
+                        itemWidth: 50,
+                        itemCount: 2,
+                        axis: Axis.horizontal,
+                        haptics: true,
+                        onChanged: (value) {
+                          setState(() {
+                            _addPostController.capacity = value;
+                          });
+                        },
+                        textStyle: textTheme.headline2
+                            ?.copyWith(color: colorScheme.tertiary),
+                        selectedTextStyle: textTheme.headline2
+                            ?.copyWith(color: colorScheme.secondary),
+                      );
+                    },
+                  ),
+                ],
+              ),
               const SizedBox(
                 height: 20.0,
               ),
-              Text('나의 짐'),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    '나의 짐',
+                    style: textTheme.headline2
+                        ?.copyWith(color: colorScheme.tertiary),
+                  ),
+                  StatefulBuilder(
+                    builder: (_, setState) {
+                      return NumberPicker(
+                        value: _addPostController.luggage,
+                        minValue: 0,
+                        maxValue: 6,
+                        step: 1,
+                        itemHeight: 20,
+                        itemWidth: 50,
+                        itemCount: 2,
+                        axis: Axis.horizontal,
+                        haptics: true,
+                        onChanged: (value) {
+                          setState(() {
+                            _addPostController.luggage = value;
+                          });
+                        },
+                        textStyle: textTheme.headline2
+                            ?.copyWith(color: colorScheme.tertiary),
+                        selectedTextStyle: textTheme.headline2
+                            ?.copyWith(color: colorScheme.secondary),
+                      );
+                    },
+                  ),
+                ],
+              ),
               const Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
                   TextButton(
-                    onPressed: () {},
+                    onPressed: () {
+                      Get.back();
+                    },
                     child: Text(
                       '취소',
                       style: textTheme.headline1
@@ -188,11 +276,11 @@ void addPostDialog({required BuildContext context}) {
                       String uid = '1';
                       Post post = Post(
                           uid: uid,
-                          depId: 1,
-                          dstId: 2,
+                          depId: _placeController.dep?.id,
+                          dstId: _placeController.dst?.id,
                           deptTime: _dateController.formattingDateTime(
                               _dateController.mergeDateAndTime()),
-                          capacity: _addPostController.capacity,
+                          capacity: _addPostController.capacity + 1,
                           luggage: _addPostController.luggage);
                       _addPostController.fetchAddPost(post: post);
                       Get.back();

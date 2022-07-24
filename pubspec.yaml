@@ -45,6 +45,7 @@ dependencies:
   firebase_auth: ^3.4.1
   cloud_firestore: ^3.2.1
   animations: ^2.0.3
+  numberpicker: ^2.1.1
 
   shared_preferences: ^0.5.3+4
   logger: ^0.7.0+2
