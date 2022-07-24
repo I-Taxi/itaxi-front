@@ -186,18 +186,12 @@ void addPostDialog({required BuildContext context}) {
                   TextButton(
                     onPressed: () {
                       String uid = '1';
-                      DateTime deptTime = DateTime(
-                          _dateController.pickedDate!.year,
-                          _dateController.pickedDate!.month,
-                          _dateController.pickedDate!.day,
-                          _dateController.pickedTime!.hour,
-                          _dateController.pickedTime!.minute);
                       Post post = Post(
                           uid: uid,
                           depId: 1,
                           dstId: 2,
-                          deptTime: DateFormat('yyyy-MM-ddTHH:mm:ss')
-                              .format(deptTime),
+                          deptTime: _dateController.formattingDateTime(
+                              _dateController.mergeDateAndTime()),
                           capacity: _addPostController.capacity,
                           luggage: _addPostController.luggage);
                       _addPostController.fetchAddPost(post: post);

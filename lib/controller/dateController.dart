@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:itaxi/controller/postsController.dart';
 
 class DateController extends GetxController {
@@ -37,5 +38,14 @@ class DateController extends GetxController {
       pickedTime = selectedTime;
       update();
     }
+  }
+
+  DateTime mergeDateAndTime() {
+    return DateTime(pickedDate!.year, pickedDate!.month, pickedDate!.day,
+        pickedTime!.hour, pickedTime!.minute);
+  }
+
+  String formattingDateTime(DateTime datetime) {
+    return DateFormat('yyyy-MM-ddTHH:mm:ss').format(datetime);
   }
 }

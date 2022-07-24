@@ -31,7 +31,9 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    _postsController.getPosts(time: _dateController.pickedDate!);
+    _postsController.getPosts(
+        time: _dateController
+            .formattingDateTime(_dateController.mergeDateAndTime()));
     _placeController.getPlaces();
   }
 

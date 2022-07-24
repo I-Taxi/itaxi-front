@@ -11,8 +11,7 @@ class PostsController extends GetxController {
   late Future<List<Post>> posts;
   bool isLoading = true;
 
-  Future<void> getPosts(
-      {int? depId, int? dstId, required DateTime time}) async {
+  Future<void> getPosts({int? depId, int? dstId, required String time}) async {
     posts = fetchPost(time: time);
     isLoading = false;
     update();
@@ -29,7 +28,7 @@ class PostsController extends GetxController {
   }
 
   Future<List<Post>> fetchPost(
-      {int? depId, int? dstId, required DateTime time}) async {
+      {int? depId, int? dstId, required String time}) async {
     //?dep=${dep}&dst=${dst}&time=${time}
     var postUrl = "http://walab.handong.edu:8080/itaxi/api/";
     final queryParameters = {
@@ -41,11 +40,17 @@ class PostsController extends GetxController {
 
     postUrl = postUrl + 'post?' + queryString;
 
-    var response = await http.get(Uri.parse(postUrl));
+    var response = await http.get(
+      Uri.parse(postUrl),
+      headers: <String, String>{
+        'Content-type': 'application/json',
+      },
+    );
 
     if (response.statusCode == 200) {
       return PostfromJson(json.decode(response.body));
     } else {
+      print(response.body);
       throw Exception('Failed to load posts');
     }
   }
