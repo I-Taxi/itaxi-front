@@ -38,8 +38,8 @@ class PostController extends GetxController {
     };
     String queryString = Uri(queryParameters: queryParameters).query;
 
-    // postUrl = postUrl + 'post?' + queryString;
-    postUrl = postUrl + 'post/all';
+    postUrl = postUrl + 'post?' + queryString;
+    // postUrl = postUrl + 'post/all';
     http.Response response = await http.get(
       Uri.parse(postUrl),
       headers: <String, String>{
