@@ -14,6 +14,16 @@ class SignInController extends GetxController {
   late String id;
   late String pw;
 
+  void signedInState() {
+    signInState = SignInState.signedIn;
+    update();
+  }
+
+  void signedOutState(){
+    signInState = SignInState.signedOut;
+    update();
+  }
+
   Future<void> signIn() async {
     try {
       await FirebaseAuth.instance
@@ -23,9 +33,7 @@ class SignInController extends GetxController {
         // print(value);
         value.user!.emailVerified == true //이메일 인증 여부
             ? {
-                signInState = SignInState.signedIn,
-                update(),
-                // Get.to(MainScreen())
+                signedInState()
               }
             : print('이메일 확인 안댐');
         return value;

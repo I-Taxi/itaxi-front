@@ -1,63 +1,70 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Login {
-  int? id;
   String? uid;
-  String? name;
   String? email;
   String? phone;
+  String? name;
+  String? bank;
+  String? bankAddress;
 
   Login({
-    this.id,
     this.uid,
-    this.name,
     this.email,
-    this.phone
+    this.phone,
+    this.name,
+    this.bank,
+    this.bankAddress,
   });
 
   Login copyWith({
-    int? id,
     String? uid,
-    String? name,
     String? email,
     String? phone,
+    String? name,
+    String? bank,
+    String? bankAddress
   }) {
     return Login(
-      id: id ?? this.id,
       uid: uid ?? this.uid,
-      name: name ?? this.name,
       email: email ?? this.email,
       phone: phone ?? this.phone,
+      name: name ?? this.name,
+      bank: bank ?? this.bank,
+      bankAddress: bankAddress ?? this.bankAddress
     );
   }
 
   factory Login.fromDocs(Map<String, dynamic> ds) {
     return Login(
-      id: ds['id'],
       uid: ds['uid'],
-      name: ds['name'],
       email: ds['email'],
       phone: ds['phone'],
+      name: ds['name'],
+      bank: ds['bank'],
+      bankAddress: ds['bankAddress']
     );
   }
 
   factory Login.fromSnapshot(DocumentSnapshot ss) {
     return Login(
-      id: ss.get('id'),
       uid: ss.get('uid'),
-      name: ss.get('name'),
       email: ss.get('email'),
       phone: ss.get('phone'),
+      name: ss.get('name'),
+      bank: ss.get('bank'),
+      bankAddress: ss.get('bankAddress')
     );
   }
 
   Map<String, dynamic> toMap() {
     return {
-      'id': id,
-      'uid': uid,
-      'name': name,
-      'email': email,
-      'phone': phone,
+      'uid': uid.toString(),
+      'email': email.toString(),
+      'phone': phone.toString(),
+      'name': name.toString(),
+      'bank': bank.toString(),
+      'bankAddress': bankAddress.toString()
     };
   }
 }

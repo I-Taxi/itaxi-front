@@ -17,6 +17,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   final _idController = TextEditingController();
   final _pwController = TextEditingController();
+  final _phoneController = TextEditingController();
+  final _bankController = TextEditingController();
+  final _bankAddressController = TextEditingController();
+
   bool agree1 = false;
   bool agree2 = false;
 
@@ -135,6 +139,63 @@ class _SignUpScreenState extends State<SignUpScreen> {
               const SizedBox(
                 height: 12.0,
               ),
+              TextFormField(
+                  controller: _phoneController,
+                  autocorrect: false,
+                  decoration: InputDecoration(
+                      filled: true,
+                      labelText: 'Phone Number',
+                      labelStyle: textTheme.bodyText1
+                          ?.copyWith(color: colorScheme.tertiary)),
+                  onChanged: (value) {
+                    _signUpController.phone = value;
+                  },
+                  validator: (value) {
+                    if (value!.isEmpty) return 'Please enter Phone Number';
+                    // pattern 변경하면 됨.
+                    // regExp = RegExp(pattern.toString());
+                    // if (!regExp.hasMatch(value)) return 'Username is invalid'
+                    return null;
+                  }),
+              const SizedBox(height: 12.0),
+              TextFormField(
+                  controller: _bankController,
+                  autocorrect: false,
+                  decoration: InputDecoration(
+                      filled: true,
+                      labelText: 'Student Bank',
+                      labelStyle: textTheme.bodyText1
+                          ?.copyWith(color: colorScheme.tertiary)),
+                  onChanged: (value) {
+                    _signUpController.bank = value;
+                  },
+                  validator: (value) {
+                    if (value!.isEmpty) return 'Please enter Student Bank';
+                    // pattern 변경하면 됨.
+                    // regExp = RegExp(pattern.toString());
+                    // if (!regExp.hasMatch(value)) return 'Username is invalid'
+                    return null;
+                  }),
+              const SizedBox(height: 12.0),
+              TextFormField(
+                  controller: _bankAddressController,
+                  autocorrect: false,
+                  decoration: InputDecoration(
+                      filled: true,
+                      labelText: 'Student BankAddress',
+                      labelStyle: textTheme.bodyText1
+                          ?.copyWith(color: colorScheme.tertiary)),
+                  onChanged: (value) {
+                    _signUpController.bankAddress = value;
+                  },
+                  validator: (value) {
+                    if (value!.isEmpty) return 'Please enter Student Bank Address';
+                    // pattern 변경하면 됨.
+                    // regExp = RegExp(pattern.toString());
+                    // if (!regExp.hasMatch(value)) return 'Username is invalid'
+                    return null;
+                  }),
+              const SizedBox(height: 12.0),
 
               // 이용약관
               Row(
@@ -196,7 +257,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
               const SizedBox(
                 height: 20,
               ),
-
               // Sign Up 버튼
               TextButton(
                 // color: Colors.blue,
