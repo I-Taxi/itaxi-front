@@ -1,11 +1,14 @@
+import 'dart:convert';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:itaxi/model/joiner.dart';
+import 'package:itaxi/model/place.dart';
 
 class Post {
-  String? id;
+  int? id;
   String? uid;
-  int? depId;
-  int? dstId;
+  Place? departure;
+  Place? destination;
   String? deptTime;
   int? capacity;
   int? participantNum;
@@ -16,8 +19,8 @@ class Post {
   Post({
     this.id,
     this.uid,
-    this.depId,
-    this.dstId,
+    this.departure,
+    this.destination,
     this.deptTime,
     this.capacity,
     this.participantNum,
@@ -27,10 +30,10 @@ class Post {
   });
 
   Post copyWith({
-    String? id,
+    int? id,
     String? uid,
-    int? depId,
-    int? dstId,
+    Place? departure,
+    Place? destination,
     String? deptTime,
     int? capacity,
     int? participantNum,
@@ -41,8 +44,8 @@ class Post {
     return Post(
       id: id ?? this.id,
       uid: uid ?? this.uid,
-      depId: depId ?? this.depId,
-      dstId: dstId ?? this.dstId,
+      departure: departure ?? this.departure,
+      destination: destination ?? this.destination,
       deptTime: deptTime ?? this.deptTime,
       capacity: capacity ?? this.capacity,
       participantNum: participantNum ?? this.participantNum,
@@ -56,14 +59,14 @@ class Post {
     return Post(
       id: ds['id'],
       uid: ds['uid'],
-      depId: ds['depId'],
-      dstId: ds['dstId'],
+      departure: Place.fromDocs(ds['departure']),
+      destination: Place.fromDocs(ds['destination']),
       deptTime: ds['deptTime'],
       capacity: ds['capacity'],
       participantNum: ds['participantNum'],
       status: ds['status'],
       luggage: ds['luggage'],
-      joiners: ds['joiners'],
+      // joiners: Joiner.fromDocs(ds['joiners']),
     );
   }
 
@@ -71,14 +74,14 @@ class Post {
     return Post(
       id: ss.get('id'),
       uid: ss.get('uid'),
-      depId: ss.get('depId'),
-      dstId: ss.get('dstId'),
+      departure: Place.fromSnapshot(ss.get('departure')),
+      destination: Place.fromSnapshot(ss.get('destination')),
       deptTime: ss.get('deptTime'),
       capacity: ss.get('capacity'),
       participantNum: ss.get('partifipanNum'),
       status: ss.get('status'),
       luggage: ss.get('luggage'),
-      joiners: ss.get('joiners'),
+      joiners: Joiner.fromSnapshot(ss.get('joiners')),
     );
   }
 
@@ -86,8 +89,8 @@ class Post {
     return {
       'id': id,
       'uid': uid,
-      'depId': depId,
-      'dstId': dstId,
+      'departure': departure,
+      'destination': destination,
       'deptTime': deptTime,
       'capacity': capacity,
       'participantNum': participantNum,

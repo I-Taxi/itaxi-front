@@ -58,16 +58,6 @@ void selectPlaceDialog({required BuildContext context, required int type}) {
                                 ?.copyWith(color: colorScheme.tertiary),
                           ),
                         ),
-                        const Spacer(),
-                        TextButton(
-                            onPressed: () {
-                              Get.back();
-                            },
-                            child: Text(
-                              '확인',
-                              style: textTheme.headline1
-                                  ?.copyWith(color: colorScheme.secondary),
-                            ))
                       ],
                     );
                   }

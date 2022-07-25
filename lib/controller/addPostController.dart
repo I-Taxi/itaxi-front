@@ -29,6 +29,7 @@ class AddPostController extends GetxController {
       body: body,
     );
 
+    print(response.body);
     if (response.statusCode == 200) {
       return response;
     } else {

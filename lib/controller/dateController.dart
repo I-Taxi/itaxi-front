@@ -1,8 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:itaxi/controller/postsController.dart';
+import 'package:intl/intl.dart';
+import 'package:itaxi/controller/placeController.dart';
+import 'package:itaxi/controller/postController.dart';
 
 class DateController extends GetxController {
+  late PostController _postController = Get.find();
+  late PlaceController _placeController = Get.find();
   DateTime? pickedDate;
   TimeOfDay? pickedTime;
 
@@ -24,6 +28,10 @@ class DateController extends GetxController {
     if (selectedDate != null) {
       pickedDate = selectedDate;
       update();
+      // _postController.getPosts(
+      //     depId: _placeController.dep?.id,
+      //     dstId: _placeController.dst?.id,
+      //     time: formattingDateTime(mergeDateAndTime()));
     }
   }
 
@@ -37,5 +45,14 @@ class DateController extends GetxController {
       pickedTime = selectedTime;
       update();
     }
+  }
+
+  DateTime mergeDateAndTime() {
+    return DateTime(pickedDate!.year, pickedDate!.month, pickedDate!.day,
+        pickedTime!.hour, pickedTime!.minute);
+  }
+
+  String formattingDateTime(DateTime datetime) {
+    return DateFormat('yyyy-MM-ddTHH:mm:ss').format(datetime);
   }
 }
