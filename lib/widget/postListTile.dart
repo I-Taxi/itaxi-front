@@ -61,7 +61,7 @@ Widget postListTile({
                   width: 12.0,
                 ),
                 Text(
-                  '${post.departure}',
+                  '${post.depId}',
                   style: textTheme.bodyText1
                       ?.copyWith(color: colorScheme.onPrimary),
                 ),
@@ -81,7 +81,7 @@ Widget postListTile({
                   width: 12.0,
                 ),
                 Text(
-                  '${post.destination}',
+                  '${post.dstId}',
                   style: textTheme.bodyText1
                       ?.copyWith(color: colorScheme.onPrimary),
                 ),

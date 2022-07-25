@@ -35,13 +35,13 @@ class PlaceController extends GetxController {
 
   Future<List<Place>> fetchPlace() async {
     //?dep=${dep}&dst=${dst}&time=${time}
-    var placeUrl = "http://203.252.99.211:8080/";
+    var placeUrl = "http://walab.handong.edu:8080/itaxi/api/";
     placeUrl = placeUrl + 'place';
 
     var response = await http.get(Uri.parse(placeUrl));
 
     if (response.statusCode == 200) {
-      return PlacefromJson(json.decode(response.body));
+      return PlacefromJson(json.decode(utf8.decode(response.bodyBytes)));
     } else {
       throw Exception('Failed to load places');
     }

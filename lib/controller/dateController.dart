@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:itaxi/controller/postsController.dart';
 
 class DateController extends GetxController {
   DateTime? pickedDate;
