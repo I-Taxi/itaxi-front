@@ -30,11 +30,12 @@ class SignUpController extends GetxController {
   late String bankAddress;
 
   Future<http.Response> fetchAddUser({required Login login}) async {
-    var addUserUrl = "walab.handong.edu:8080/itaxi/api/";
+    var addUserUrl = "http://walab.handong.edu:8080/itaxi/api/";
     addUserUrl = addUserUrl + 'member';
 
     var body = json.encode(login.toMap());
-    // print(body);
+
+    print(body);
     http.Response response = await http.post(
       Uri.parse(addUserUrl),
       headers: <String, String> {
@@ -42,17 +43,12 @@ class SignUpController extends GetxController {
       },
       body: body
     );
+    print("확인용");
+    print(response.body);
 
     return response;
   }
 
-  Future<void> signIn() async {
-    // signInState = SignInState.signedIn;
-    // update();
-  }
-
-  // Future<void> signOut() async {
-  // }
 
   Future<void> signUp() async {
     // print("확인용");
