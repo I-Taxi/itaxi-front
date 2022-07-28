@@ -99,4 +99,16 @@ class Post {
       'joiners': joiners,
     };
   }
+
+  Map<String, dynamic> toAddPostMap() {
+    return {
+      "uid": uid,
+      "depId": departure?.id,
+      "dstId": destination?.id,
+      "deptTime": deptTime,
+      "capacity": capacity,
+      "luggage": luggage,
+      "postType": 0,
+    };
+  }
 }

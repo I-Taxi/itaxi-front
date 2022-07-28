@@ -18,8 +18,7 @@ class AddPostController extends GetxController {
   Future<http.Response> fetchAddPost({required Post post}) async {
     var addPostUrl = "http://walab.handong.edu:8080/itaxi/api/";
     addPostUrl = addPostUrl + 'post';
-
-    var body = json.encode(post.toMap());
+    var body = json.encode(post.toAddPostMap());
 
     http.Response response = await http.post(
       Uri.parse(addPostUrl),
