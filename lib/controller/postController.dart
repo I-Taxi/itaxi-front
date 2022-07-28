@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/model/post.dart';
 
@@ -31,15 +32,33 @@ class PostController extends GetxController {
       {int? depId, int? dstId, required String time}) async {
     //?dep=${dep}&dst=${dst}&time=${time}
     var postUrl = "http://walab.handong.edu:8080/itaxi/api/";
-    final queryParameters = {
-      'depId': depId,
-      'dstId': dstId,
-      'time': time,
-    };
+    final queryParameters;
+    if (depId == null && dstId == null) {
+      queryParameters = {
+        'time': DateFormat('yyyy-MM-dd').format(DateTime.parse(time)),
+      };
+    } else if (depId != null && dstId == null) {
+      queryParameters = {
+        'depId': depId,
+        'time': DateFormat('yyyy-MM-dd').format(DateTime.parse(time)),
+      };
+    } else if (depId == null && dstId != null) {
+      queryParameters = {
+        'dstId': dstId,
+        'time': DateFormat('yyyy-MM-dd').format(DateTime.parse(time)),
+      };
+    } else {
+      queryParameters = {
+        'depId': depId,
+        'dstId': dstId,
+        'time': DateFormat('yyyy-MM-dd').format(DateTime.parse(time)),
+      };
+    }
+
     String queryString = Uri(queryParameters: queryParameters).query;
 
-    // postUrl = postUrl + 'post?' + queryString;
-    postUrl = postUrl + 'post/all';
+    postUrl = postUrl + 'post?' + queryString;
+    // postUrl = postUrl + 'post/all';
     http.Response response = await http.get(
       Uri.parse(postUrl),
       headers: <String, String>{
@@ -58,17 +77,22 @@ class PostController extends GetxController {
   // /itaxi/api/post/{postId}/join
   Future<void> fetchJoin({required int postId, required int luggage}) async {
     var joinUrl = "http://walab.handong.edu:8080/itaxi/api/";
-    final queryParameters = {
-      'postId': postId,
-    };
-    String queryString = Uri(queryParameters: queryParameters).query;
+    // final queryParameters = {
+    //   'postId': postId.toString(),
+    // };
+    // String queryString = Uri(queryParameters: queryParameters).query;
 
-    joinUrl = joinUrl + 'post/' + queryString + '/join';
+    joinUrl = joinUrl + 'post/' + '$postId' + '/join';
 
-    Map<String, dynamic> body = {
+    Map<String, dynamic> map = {
       'luggage': luggage,
-      'uid': '1',
+      'status': 0,
+      'uid': 'neo_uid',
     };
+
+    var body = utf8.encode(json.encode(map));
+
+    print(joinUrl);
 
     http.Response response = await http.post(
       Uri.parse(joinUrl),
@@ -78,9 +102,9 @@ class PostController extends GetxController {
       body: body,
     );
 
-    print(response.body);
+    print(utf8.decode(response.bodyBytes));
     if (response.statusCode == 200) {
-      print(Post.fromDocs(json.decode(response.body)));
+      print(Post.fromDocs(json.decode(utf8.decode(response.bodyBytes))));
     } else {
       throw Exception('Failed to join');
     }

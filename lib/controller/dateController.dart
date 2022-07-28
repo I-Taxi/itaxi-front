@@ -28,10 +28,10 @@ class DateController extends GetxController {
     if (selectedDate != null) {
       pickedDate = selectedDate;
       update();
-      // _postController.getPosts(
-      //     depId: _placeController.dep?.id,
-      //     dstId: _placeController.dst?.id,
-      //     time: formattingDateTime(mergeDateAndTime()));
+      _postController.getPosts(
+          depId: _placeController.dep?.id,
+          dstId: _placeController.dst?.id,
+          time: formattingDateTime(mergeDateAndTime()));
     }
   }
 

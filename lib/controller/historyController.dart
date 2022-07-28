@@ -27,7 +27,7 @@ class HistoryController extends GetxController {
     var historyUrl = "http://walab.handong.edu:8080/itaxi/api/";
     // var body = json.encode({'uid': '1'});
     final queryParameters = {
-      'uid': '1',
+      'uid': 'neo_uid',
     };
     String queryString = Uri(queryParameters: queryParameters).query;
     historyUrl += '/post/history?' + queryString;

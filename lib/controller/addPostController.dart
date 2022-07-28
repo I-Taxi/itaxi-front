@@ -18,9 +18,9 @@ class AddPostController extends GetxController {
   Future<http.Response> fetchAddPost({required Post post}) async {
     var addPostUrl = "http://walab.handong.edu:8080/itaxi/api/";
     addPostUrl = addPostUrl + 'post';
-
-    var body = json.encode(post.toMap());
-
+    print('2');
+    var body = utf8.encode(json.encode(post.toAddPostMap()));
+    print('3');
     http.Response response = await http.post(
       Uri.parse(addPostUrl),
       headers: <String, String>{
@@ -29,7 +29,7 @@ class AddPostController extends GetxController {
       body: body,
     );
 
-    print(response.body);
+    print('AddPost : ${response.body}');
     if (response.statusCode == 200) {
       return response;
     } else {
