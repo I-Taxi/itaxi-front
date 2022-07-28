@@ -7,6 +7,7 @@ import 'package:itaxi/model/place.dart';
 class Post {
   int? id;
   String? uid;
+  int? postType;
   Place? departure;
   Place? destination;
   String? deptTime;
@@ -19,6 +20,7 @@ class Post {
   Post({
     this.id,
     this.uid,
+    this.postType,
     this.departure,
     this.destination,
     this.deptTime,
@@ -32,6 +34,7 @@ class Post {
   Post copyWith({
     int? id,
     String? uid,
+    int? postType,
     Place? departure,
     Place? destination,
     String? deptTime,
@@ -44,6 +47,7 @@ class Post {
     return Post(
       id: id ?? this.id,
       uid: uid ?? this.uid,
+      postType: postType ?? this.postType,
       departure: departure ?? this.departure,
       destination: destination ?? this.destination,
       deptTime: deptTime ?? this.deptTime,
@@ -59,6 +63,7 @@ class Post {
     return Post(
       id: ds['id'],
       uid: ds['uid'],
+      postType: ds['postType'],
       departure: Place.fromDocs(ds['departure']),
       destination: Place.fromDocs(ds['destination']),
       deptTime: ds['deptTime'],
@@ -74,6 +79,7 @@ class Post {
     return Post(
       id: ss.get('id'),
       uid: ss.get('uid'),
+      postType: ss.get('postType'),
       departure: Place.fromSnapshot(ss.get('departure')),
       destination: Place.fromSnapshot(ss.get('destination')),
       deptTime: ss.get('deptTime'),
@@ -89,6 +95,7 @@ class Post {
     return {
       'id': id,
       'uid': uid,
+      'postType': postType,
       'departure': departure,
       'destination': destination,
       'deptTime': deptTime,
@@ -103,12 +110,12 @@ class Post {
   Map<String, dynamic> toAddPostMap() {
     return {
       "uid": uid,
-      "depId": departure?.id,
-      "dstId": destination?.id,
+      "postType": postType,
+      "depId": departure!.id,
+      "dstId": destination!.id,
       "deptTime": deptTime,
       "capacity": capacity,
       "luggage": luggage,
-      "postType": 0,
     };
   }
 }
