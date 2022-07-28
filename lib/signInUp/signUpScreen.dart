@@ -17,6 +17,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   final _idController = TextEditingController();
   final _pwController = TextEditingController();
+  final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
   final _bankController = TextEditingController();
   final _bankAddressController = TextEditingController();
@@ -125,9 +126,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
               TextFormField(
                   autocorrect: false,
                   obscureText: true,
-                  decoration: const InputDecoration(
+                  decoration: InputDecoration(
                     filled: true,
                     labelText: 'Password Check',
+                    labelStyle: textTheme.bodyText1?.copyWith(color: colorScheme.tertiary)
                   ),
                   validator: (value) {
                     if (value!.isEmpty) return 'Please enter Password one more';
@@ -139,6 +141,31 @@ class _SignUpScreenState extends State<SignUpScreen> {
               const SizedBox(
                 height: 12.0,
               ),
+
+              // 이름 입력
+              TextFormField(
+                  controller: _nameController,
+                  autocorrect: false,
+                  decoration: InputDecoration(
+                      filled: true,
+                      labelText: 'Name',
+                      labelStyle: textTheme.bodyText1
+                          ?.copyWith(color: colorScheme.tertiary)),
+                  onChanged: (value) {
+                    print(value);
+                    _signUpController.name = value;
+                    // print(_signUpController.customPw);
+                  },
+                  validator: (value) {
+                    if (value!.isEmpty) return 'Please enter Password';
+                    // pattern 변경하면 됨.
+                    // regExp = RegExp(pattern.toString());
+                    // if (!regExp.hasMatch(value)) return 'Username is invalid'
+                    return null;
+                  }),
+              const SizedBox(height: 12.0),
+
+              // 휴대폰 번호 입력
               TextFormField(
                   controller: _phoneController,
                   autocorrect: false,
@@ -158,6 +185,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     return null;
                   }),
               const SizedBox(height: 12.0),
+
+              // 은행 입력
               TextFormField(
                   controller: _bankController,
                   autocorrect: false,
@@ -177,6 +206,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     return null;
                   }),
               const SizedBox(height: 12.0),
+
+              // 계좌 입력
               TextFormField(
                   controller: _bankAddressController,
                   autocorrect: false,

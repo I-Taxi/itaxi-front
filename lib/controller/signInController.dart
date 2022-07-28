@@ -33,7 +33,8 @@ class SignInController extends GetxController {
         // print(value);
         value.user!.emailVerified == true //이메일 인증 여부
             ? {
-                signedInState()
+                signedInState(),
+                update(),
               }
             : print('이메일 확인 안댐');
         return value;
@@ -45,6 +46,7 @@ class SignInController extends GetxController {
       } else if (e.code == 'wrong-password') {
         print('비밀번호가 틀렸습니다');
       } else {
+        // print("error Cdoe");
         print(e.code);
       }
     }
