@@ -15,7 +15,6 @@ class NoticeController extends GetxController {
 
   @override
   void initState() {
-    // super.onInit();
     getNotices();
   }
 

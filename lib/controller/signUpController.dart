@@ -25,6 +25,7 @@ class SignUpController extends GetxController {
   late String studentId;
   late String customId;
   late String customPw;
+  late String name;
   late String phone;
   late String bank;
   late String bankAddress;
@@ -52,7 +53,7 @@ class SignUpController extends GetxController {
 
   Future<void> signUp() async {
     // print("확인용");
-    // print(FirebaseAuth.instance.currentUser!.uid);
+    // print(FirebaseAuth.instance.currentUser!.displayName.toString());
     try {
     await FirebaseAuth.instance
         .createUserWithEmailAndPassword(

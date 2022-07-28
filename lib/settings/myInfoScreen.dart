@@ -16,9 +16,9 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
   // Future<List<Login>> users = _userController.users;
 
   @override
-  void initSate() {
-    super.initState();
+  void initState() {
     _userController.getUsers();
+    super.initState();
   }
 
   @override
@@ -49,12 +49,13 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
           child: FutureBuilder<List<UserInfoList>>(
             future: _userController.users,
             builder: (BuildContext context, snapshot) {
+              print("확인1");
               if(snapshot.hasData) {
                 if(snapshot.data!.isNotEmpty) {
                   return ListView.builder(
                     itemCount: snapshot.data!.length,
                     itemBuilder: (BuildContext context, int index) {
-                      return Container(
+                      return Center(
                         child: Text(snapshot.data![index].name as String),
                       );
                     },

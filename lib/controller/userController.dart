@@ -19,7 +19,6 @@ class UserController extends GetxController {
   }
 
   Future<void> getUsers() async {
-    print("hi");
     users = fetchUsers();
     print(users);
     update();
@@ -36,27 +35,28 @@ class UserController extends GetxController {
 
   Future<List<UserInfoList>> fetchUsers() async {
     var userUrl = "http://walab.handong.edu:8080/itaxi/api/";
-    userUrl = userUrl + 'member';
+    userUrl = userUrl + 'member/';
 
-    final queryParameters = {
+    var queryParameters = {
       'uid' : FirebaseAuth.instance.currentUser!.uid,
     };
-
-    String queryString = Uri(queryParameters: queryParameters).query;
+    var queryString = Uri(queryParameters: queryParameters).query;
 
     userUrl = userUrl + queryString;
 
-    var response = await http.get(
+    http.Response response = await http.get(
       Uri.parse(userUrl),
       headers: <String, String>{
         'Content-type': 'application/json'
-      }
+      },
     );
+    print("response.body ");
+    print(response.body);
 
     if(response.statusCode == 200) {
       return userFromJson(json.decode(utf8.decode(response.bodyBytes)));
     }else {
-      throw Exception('Failed to load Notice');
+      throw Exception('Failed to load MyInfo');
     }
   }
 
