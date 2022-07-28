@@ -273,15 +273,17 @@ void addPostDialog({required BuildContext context}) {
                   ),
                   TextButton(
                     onPressed: () {
-                      String uid = '1';
+                      String uid = 'neo_uid';
                       Post post = Post(
                           uid: uid,
+                          postType: 1,
                           departure: _placeController.dep,
                           destination: _placeController.dst,
                           deptTime: _dateController.formattingDateTime(
                               _dateController.mergeDateAndTime()),
                           capacity: _addPostController.capacity + 1,
                           luggage: _addPostController.luggage);
+                      print('1');
                       _addPostController.fetchAddPost(post: post);
                       Get.back();
                     },
