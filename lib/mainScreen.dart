@@ -295,39 +295,44 @@ class _MainScreenState extends State<MainScreen> {
                             _dateController.mergeDateAndTime()),
                       );
                     },
-                    child: FutureBuilder<List<Post>>(
-                      future: _postController.posts,
-                      builder: (BuildContext context, snapshot) {
-                        if (snapshot.hasData) {
-                          // post가 있을 떼
-                          if (snapshot.data!.isNotEmpty) {
-                            return ListView.builder(
-                              itemCount: snapshot.data!.length,
-                              itemBuilder: (BuildContext context, int index) {
-                                return postListTile(
-                                  context: context,
-                                  post: snapshot.data![index],
+                    child: GetBuilder<PostController>(
+                      builder: (_) {
+                        return FutureBuilder<List<Post>>(
+                          future: _postController.posts,
+                          builder: (BuildContext context, snapshot) {
+                            if (snapshot.hasData) {
+                              // post가 있을 떼
+                              if (snapshot.data!.isNotEmpty) {
+                                return ListView.builder(
+                                  itemCount: snapshot.data!.length,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return postListTile(
+                                      context: context,
+                                      post: snapshot.data![index],
+                                    );
+                                  },
                                 );
-                              },
-                            );
-                          }
-                          // post가 없을 때
-                          else {
-                            return postIsEmpty(context);
-                          }
-                        }
-                        // post load 중에 오류 발생
-                        else if (snapshot.hasError) {
-                          return Center(
-                            child: Text(
-                              '${snapshot.error}',
-                            ),
-                          );
-                        }
+                              }
+                              // post가 없을 때
+                              else {
+                                return postIsEmpty(context);
+                              }
+                            }
+                            // post load 중에 오류 발생
+                            else if (snapshot.hasError) {
+                              return Center(
+                                child: Text(
+                                  '${snapshot.error}',
+                                ),
+                              );
+                            }
 
-                        // post data loading bar
-                        return LinearProgressIndicator(
-                          color: colorScheme.secondary,
+                            // post data loading bar
+                            return LinearProgressIndicator(
+                              color: colorScheme.secondary,
+                            );
+                          },
                         );
                       },
                     ),
