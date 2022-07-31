@@ -109,4 +109,32 @@ class PostController extends GetxController {
       throw Exception('Failed to join');
     }
   }
+
+  Future<void> fetchOutJoin({required int postId}) async {
+    var joinUrl = "http://walab.handong.edu:8080/itaxi/api/";
+
+    joinUrl = joinUrl + 'post/' + '$postId' + '/join';
+
+    Map<String, dynamic> map = {
+      'uid': 'neo_uid',
+    };
+
+    var body = utf8.encode(json.encode(map));
+
+    print(joinUrl);
+
+    http.Response response = await http.put(
+      Uri.parse(joinUrl),
+      headers: <String, String>{
+        'Content-type': 'application/json',
+      },
+      body: body,
+    );
+
+    if (response.statusCode == 200) {
+      print(utf8.decode(response.bodyBytes));
+    } else {
+      throw Exception('Failed to out');
+    }
+  }
 }
