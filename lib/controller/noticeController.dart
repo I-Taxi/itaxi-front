@@ -45,7 +45,7 @@ class NoticeController extends GetxController {
           'Content-type': 'application/json',
       }
     );
-
+    print(response.body);
     if (response.statusCode == 200) {
       return noticeFromJson(json.decode(utf8.decode(response.bodyBytes)));
     } else {

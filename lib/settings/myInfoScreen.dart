@@ -1,6 +1,8 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:itaxi/controller/userController.dart';
+import 'package:itaxi/settings/userInfoRefactorScreen.dart';
 
 import '../model/userInfoList.dart';
 
@@ -14,6 +16,7 @@ class MyInfoScreen extends StatefulWidget {
 class _MyInfoScreenState extends State<MyInfoScreen> {
   UserController _userController = Get.put(UserController());
   // Future<List<Login>> users = _userController.users;
+  UserInfoList _userInfoList = UserInfoList();
 
   @override
   void initState() {
@@ -29,6 +32,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
     final textTheme = Theme
         .of(context)
         .textTheme;
+    double constraint = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
@@ -46,33 +50,114 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
           )
         ),
         body: SingleChildScrollView(
-          child: FutureBuilder<List<UserInfoList>>(
-            future: _userController.users,
-            builder: (BuildContext context, snapshot) {
-              print("확인1");
-              if(snapshot.hasData) {
-                if(snapshot.data!.isNotEmpty) {
-                  return ListView.builder(
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return Center(
-                        child: Text(snapshot.data![index].name as String),
+          // child: Text(_userInfoList.bank as String),
+          child: GetBuilder<UserController>(
+            init: UserController(),
+            builder: (_) {
+              return FutureBuilder<UserInfoList>(
+                future: _userController.users,
+                builder: (BuildContext context, snapshot) {
+                  if(snapshot.hasData) {
+                    if(snapshot.data != null) {
+                      return ConstrainedBox(
+                        constraints: BoxConstraints(maxHeight: constraint),
+                        child: Column(
+                          children: [
+                            Container(
+                              padding: EdgeInsets.only(top: 20, left: 40),
+                              child: Row(
+                                // mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  SizedBox(
+                                    width: 136,
+                                    height: 128,
+                                    child: Container(
+                                      color: colorScheme.secondary,
+                                    ),
+                                  ),
+                                  SizedBox(width: 24),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    children: [
+                                      Text(snapshot.data!.name.toString(), style: textTheme.headline1!.copyWith(color: colorScheme.onPrimary)),
+                                      Text(snapshot.data!.phone.toString(), style: textTheme.headline1!.copyWith(color: colorScheme.onPrimary)),
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                            Padding(
+                              padding: EdgeInsets.only(top: 15.0, left: 40.0, right: 40.0, bottom: 15.0),
+                              child: Divider(
+                                height: 1,
+                              ),
+                            ),
+                            Padding(
+                              padding: const EdgeInsets.only(left: 40.0, right: 40.0),
+                              child: Row(
+                                children: [
+                                  SizedBox(
+                                    width: 136,
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        Text("Email", style: textTheme.headline1!.copyWith(color: colorScheme.onPrimary),),
+                                        SizedBox(height: 10.0,),
+                                        Text("계좌 은행", style: textTheme.headline1!.copyWith(color: colorScheme.onPrimary),),
+                                        SizedBox(height: 10.0,),
+                                        Text("계좌 번호", style: textTheme.headline1!.copyWith(color: colorScheme.onPrimary),)
+                                      ],
+                                    ),
+                                  ),
+                                  SizedBox(width: 24),
+                                  Column(
+                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                    children: [
+                                      Text(snapshot.data!.email.toString(),
+                                        style: textTheme.headline1!.copyWith(color: colorScheme.onPrimary, fontSize: 12.0),),
+                                      SizedBox(height: 10.0,),
+                                      Text(snapshot.data!.bank.toString(),
+                                        style: textTheme.headline1!.copyWith(color: colorScheme.onPrimary),),
+                                      SizedBox(height: 10.0,),
+                                      Text(snapshot.data!.bankAddress.toString(),
+                                        style: textTheme.headline1!.copyWith(color: colorScheme.onPrimary),)
+                                    ],
+                                  )
+                                ],
+                              ),
+                            ),
+                            const Spacer(),
+                            SizedBox(
+                              width: 104,
+                              height: 40,
+                              child: TextButton(
+                                child: Text("수정", style: textTheme.headline2!.copyWith(color: colorScheme.secondary),),
+                                onPressed: () {
+                                  Get.to(UserInfoRefactorScreen());
+                                },
+                              ),
+                            )
+
+                          ],
+                        ),
                       );
-                    },
+                    } else {
+                      return Text('오류입니다 :>');
+                    }
+                  }
+                  else if (snapshot.hasError) {
+                    print("확인2");
+                    print(snapshot.error);
+                    return Center(
+                      child: Text(
+                        '${snapshot.error}',
+                      ),
+                    );
+                  }
+                  return LinearProgressIndicator(
+                    color: colorScheme.secondary,
                   );
-                } else {
-                  return Text('dafsd');
-                }
-              }
-              else if (snapshot.hasError) {
-                return Center(
-                  child: Text(
-                    '${snapshot.error}',
-                  ),
-                );
-              }
-              return LinearProgressIndicator(
-                color: colorScheme.secondary,
+                },
               );
             },
           ),

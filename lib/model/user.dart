@@ -35,7 +35,7 @@ class Login {
     );
   }
 
-  factory Login.fromDocs(Map<String, dynamic> ds) {
+  factory Login.fromDocs(Map<String, String> ds) {
     return Login(
       uid: ds['uid'],
       email: ds['email'],
