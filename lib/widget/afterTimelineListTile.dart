@@ -11,10 +11,35 @@ Widget afterTimelineListTile(
     behavior: HitTestBehavior.opaque,
     onTap: () {
       showDialog(
-          context: context,
-          builder: (BuildContext context) {
-            return Dialog();
-          });
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            child: Container(
+              height: 150,
+              padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 12.0),
+              child: Column(
+                children: [
+                  Row(
+                    children: [
+                      Text(
+                        '연락처',
+                        style: textTheme.subtitle1
+                            ?.copyWith(color: colorScheme.tertiary),
+                      ),
+                      Expanded(
+                        child: Divider(
+                          color: colorScheme.shadow,
+                          thickness: 1,
+                        ),
+                      ),
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          );
+        },
+      );
     },
     child: Container(
       margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
@@ -39,8 +64,7 @@ Widget afterTimelineListTile(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                '13:00',
-                // DateFormat('HH:mm').format(DateTime.parse(post.deptTime!)),
+                DateFormat('HH:mm').format(DateTime.parse(post.deptTime!)),
                 style:
                     textTheme.headline2?.copyWith(color: colorScheme.onPrimary),
               ),
@@ -72,8 +96,7 @@ Widget afterTimelineListTile(
                     width: 12.0,
                   ),
                   Text(
-                    '한동대',
-                    // '${post.departure?.name}',
+                    '${post.departure?.name}',
                     style: textTheme.bodyText1
                         ?.copyWith(color: colorScheme.onPrimary),
                   ),
@@ -93,8 +116,7 @@ Widget afterTimelineListTile(
                     width: 12.0,
                   ),
                   Text(
-                    '영일대',
-                    // '${post.destination?.name}',
+                    '${post.destination?.name}',
                     style: textTheme.bodyText1
                         ?.copyWith(color: colorScheme.onPrimary),
                   ),
