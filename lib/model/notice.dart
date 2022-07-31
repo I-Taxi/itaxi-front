@@ -5,7 +5,7 @@ class Notice {
   String? title;
   String? content;
   int? viewCnt;
-  DateTime? createdAt;
+  String? createdAt;
 
   Notice({
     this.id,
@@ -20,7 +20,7 @@ class Notice {
     String? title,
     String? content,
     int? viewCnt,
-    DateTime? createdAt,
+    String? createdAt,
 }) {
     return Notice(
       id: id ?? this.id,

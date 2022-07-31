@@ -64,7 +64,7 @@ class SignUpController extends GetxController {
       uid: FirebaseAuth.instance.currentUser!.uid.toString(),
       email: FirebaseAuth.instance.currentUser!.email.toString(),
       phone: phone,
-      name: FirebaseAuth.instance.currentUser!.displayName.toString(),
+      name: name,
       bank: bank,
       bankAddress: bankAddress,
     );
