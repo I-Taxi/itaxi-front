@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:itaxi/controller/addPostController.dart';
 import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/controller/placeController.dart';
+import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/widget/selectPlaceDialog.dart';
 import 'package:numberpicker/numberpicker.dart';
@@ -12,6 +13,7 @@ void addPostDialog({required BuildContext context}) {
   AddPostController _addPostController = Get.put(AddPostController());
   PlaceController _placeController = Get.put(PlaceController());
   DateController _dateController = Get.put(DateController());
+  PostController _postController = Get.find();
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
 
@@ -285,6 +287,11 @@ void addPostDialog({required BuildContext context}) {
                           luggage: _addPostController.luggage);
                       print('1');
                       _addPostController.fetchAddPost(post: post);
+                      _postController.getPosts(
+                          depId: _placeController.dep?.id,
+                          dstId: _placeController.dst?.id,
+                          time: _dateController.formattingDateTime(
+                              _dateController.mergeDateAndTime()));
                       Get.back();
                     },
                     child: Text(
