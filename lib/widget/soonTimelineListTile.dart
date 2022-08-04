@@ -21,7 +21,7 @@ Widget soonTimelineListTile(
           return Dialog(
             child: Container(
               height: 320,
-              padding: const EdgeInsets.fromLTRB(24.0, 20.0, 24.0, 12.0),
+              padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 12.0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -60,7 +60,7 @@ Widget soonTimelineListTile(
                           ),
                           Icon(
                             Icons.crop_square,
-                            color: colorScheme.tertiary,
+                            color: colorScheme.secondary,
                             size: 28.0,
                           ),
                         ],

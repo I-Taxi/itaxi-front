@@ -7,11 +7,13 @@ import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:itaxi/controller/dateController.dart';
+import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/controller/placeController.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/widget/selectPlaceDialog.dart';
 
 class AddPostController extends GetxController {
+  late HistoryController _historyController = Get.find();
   int capacity = 0;
   int luggage = 0;
 
@@ -31,6 +33,7 @@ class AddPostController extends GetxController {
 
     print('AddPost : ${response.body}');
     if (response.statusCode == 200) {
+      _historyController.getHistorys();
       return response;
     } else {
       throw Exception('Failed to add posts');

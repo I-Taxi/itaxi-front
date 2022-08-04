@@ -69,6 +69,7 @@ class TimelineScreen extends StatelessWidget {
                                       post: snapshot.data![index]);
                                 },
                               ),
+
                               // _historyController.soonHistorys.isNotEmpty
                               //     ? ListView.builder(
                               //         itemCount: _historyController
@@ -82,6 +83,7 @@ class TimelineScreen extends StatelessWidget {
                               //         },
                               //       )
                               //     : Container(),
+
                               const SizedBox(
                                 height: 24,
                               ),
@@ -154,6 +156,7 @@ class TimelineScreen extends StatelessWidget {
                             ),
                           ],
                         ),
+
                         // _historyController.afterHistorys.isNotEmpty
                         //     ? ListView.builder(
                         //         itemCount:
@@ -166,6 +169,7 @@ class TimelineScreen extends StatelessWidget {
                         //         },
                         //       )
                         //     : Container(),
+
                       ],
                     );
                   }

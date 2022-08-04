@@ -50,10 +50,10 @@ class SignInScreen extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   // 로고 이미지
-                  Image.asset(
-                    width: 88.0,
-                    'assets/logo_blue.png',
-                  ),
+                  // Image.asset(
+                  //   width: 88.0,
+                  //   'assets/logo_1.png',
+                  // ),
                   const SizedBox(
                     width: 10.0,
                   ),
@@ -82,7 +82,7 @@ class SignInScreen extends StatelessWidget {
 
               // Custom ID 입력
               TextFormField(
-                controller: _idController,
+                  controller: _idController,
                   autocorrect: false,
                   decoration: InputDecoration(
                       hintText: 'Your custom ID',
@@ -107,7 +107,7 @@ class SignInScreen extends StatelessWidget {
 
               // Custom PW 입력
               TextFormField(
-                controller: _pwController,
+                  controller: _pwController,
                   autocorrect: false,
                   obscureText: true,
                   decoration: InputDecoration(

@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:itaxi/controller/dateController.dart';
+import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/model/post.dart';
 
 class PostController extends GetxController {
@@ -130,7 +131,7 @@ class PostController extends GetxController {
     );
 
     if (response.statusCode == 200) {
-      print(Post.fromDocs(json.decode(utf8.decode(response.bodyBytes))));
+      print(utf8.decode(response.bodyBytes));
     } else {
       throw Exception('Failed to out');
     }
