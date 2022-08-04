@@ -5,6 +5,7 @@ import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:itaxi/controller/dateController.dart';
+import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/model/post.dart';
 
 class PostController extends GetxController {
