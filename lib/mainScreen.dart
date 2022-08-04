@@ -1,6 +1,5 @@
-// ignore_for_file: prefer_const_constructors
-
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:itaxi/controller/addPostController.dart';
@@ -15,7 +14,7 @@ import 'package:itaxi/widget/selectPlaceDialog.dart';
 import 'package:itaxi/widget/tabView.dart';
 
 class MainScreen extends StatefulWidget {
-  MainScreen({Key? key}) : super(key: key);
+  const MainScreen({Key? key}) : super(key: key);
 
   @override
   State<MainScreen> createState() => _MainScreenState();
@@ -56,15 +55,18 @@ class _MainScreenState extends State<MainScreen> {
             style: textTheme.subtitle1?.copyWith(color: colorScheme.onPrimary),
           ),
           actions: [
-            IconButton(
-              onPressed: () {
+            GestureDetector(
+              onTap: () {
                 addPostDialog(context: context);
               },
-              tooltip: 'Add Post',
-              icon: Icon(
-                Icons.add_circle_outline,
-                color: colorScheme.secondary,
+              child: Image.asset(
+                width: 24.w,
+                height: 24.h,
+                'assets/button/add_1.png',
               ),
+            ),
+            SizedBox(
+              width: 16.w,
             ),
           ],
         ),
@@ -80,30 +82,38 @@ class _MainScreenState extends State<MainScreen> {
                     GestureDetector(
                       behavior: HitTestBehavior.opaque,
                       onTap: () {
-                        _tabViewController.changeIndex(0);
-                      },
-                      child: (_tabViewController.currentIndex == 0)
-                          ? selectedTabView(
-                              viewTitle: '택시', textTheme: textTheme)
-                          : unSelectedTabView(
-                              viewTitle: '택시', textTheme: textTheme),
-                    ),
-                    const SizedBox(
-                      width: 20.0,
-                    ),
-                    GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: () {
                         _tabViewController.changeIndex(1);
                       },
                       child: (_tabViewController.currentIndex == 1)
                           ? selectedTabView(
-                              viewTitle: '전체', textTheme: textTheme)
+                              viewTitle: '택시',
+                              context: context,
+                            )
                           : unSelectedTabView(
-                              viewTitle: '전체', textTheme: textTheme),
+                              viewTitle: '택시',
+                              context: context,
+                            ),
                     ),
-                    const SizedBox(
-                      width: 20.0,
+                    SizedBox(
+                      width: 20.0.w,
+                    ),
+                    GestureDetector(
+                      behavior: HitTestBehavior.opaque,
+                      onTap: () {
+                        _tabViewController.changeIndex(0);
+                      },
+                      child: (_tabViewController.currentIndex == 0)
+                          ? selectedTabView(
+                              viewTitle: '전체',
+                              context: context,
+                            )
+                          : unSelectedTabView(
+                              viewTitle: '전체',
+                              context: context,
+                            ),
+                    ),
+                    SizedBox(
+                      width: 20.0.w,
                     ),
                     GestureDetector(
                       behavior: HitTestBehavior.opaque,
@@ -112,17 +122,21 @@ class _MainScreenState extends State<MainScreen> {
                       },
                       child: (_tabViewController.currentIndex == 2)
                           ? selectedTabView(
-                              viewTitle: '카풀', textTheme: textTheme)
+                              viewTitle: '카풀',
+                              context: context,
+                            )
                           : unSelectedTabView(
-                              viewTitle: '카풀', textTheme: textTheme),
+                              viewTitle: '카풀',
+                              context: context,
+                            ),
                     ),
                   ],
                 ),
                 // 출발 도착 날짜 선택
                 Column(
                   children: [
-                    const SizedBox(
-                      height: 20.0,
+                    SizedBox(
+                      height: 22.0.h,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -134,13 +148,15 @@ class _MainScreenState extends State<MainScreen> {
                             selectPlaceDialog(context: context, type: 0);
                           },
                           child: Container(
-                            padding: EdgeInsets.fromLTRB(48, 8, 48, 8),
+                            width: 122.w,
+                            height: 32.h,
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.fromLTRB(20.w, 5.h, 20.w, 5.h),
                             decoration: BoxDecoration(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(16.0)),
+                                  const BorderRadius.all(Radius.circular(16.0)),
                               border: Border.all(
-                                color: Colors.grey,
-                                // color: colorScheme.tertiary,
+                                color: colorScheme.tertiary,
                                 width: 0.3,
                               ),
                             ),
@@ -149,11 +165,13 @@ class _MainScreenState extends State<MainScreen> {
                                 return _placeController.dep == null
                                     ? Text(
                                         '출발',
+                                        overflow: TextOverflow.ellipsis,
                                         style: textTheme.subtitle1?.copyWith(
                                             color: colorScheme.tertiary),
                                       )
                                     : Text(
                                         '${_placeController.dep?.name}',
+                                        overflow: TextOverflow.ellipsis,
                                         style: textTheme.subtitle1?.copyWith(
                                             color: colorScheme.tertiary),
                                       );
@@ -162,18 +180,17 @@ class _MainScreenState extends State<MainScreen> {
                           ),
                         ),
 
-                        const SizedBox(
-                          width: 16.0,
+                        SizedBox(
+                          width: 16.0.w,
                         ),
-
                         // 화살표
-                        const Icon(
-                          Icons.arrow_forward,
-                          color: Colors.grey,
+                        Image.asset(
+                          width: 20.w,
+                          height: 12.h,
+                          'assets/arrow/arrow.png',
                         ),
-
-                        const SizedBox(
-                          width: 16.0,
+                        SizedBox(
+                          width: 16.0.w,
                         ),
 
                         // 도착 설정 버튼
@@ -183,13 +200,15 @@ class _MainScreenState extends State<MainScreen> {
                             selectPlaceDialog(context: context, type: 1);
                           },
                           child: Container(
-                            padding: EdgeInsets.fromLTRB(48, 8, 48, 8),
+                            width: 122.w,
+                            height: 32.h,
+                            alignment: Alignment.center,
+                            padding: EdgeInsets.fromLTRB(20.w, 5.h, 20.w, 5.h),
                             decoration: BoxDecoration(
                               borderRadius:
-                                  BorderRadius.all(Radius.circular(16.0)),
+                                  const BorderRadius.all(Radius.circular(16.0)),
                               border: Border.all(
-                                color: Colors.grey,
-                                // color: colorScheme.tertiary,
+                                color: colorScheme.tertiary,
                                 width: 0.3,
                               ),
                             ),
@@ -198,11 +217,13 @@ class _MainScreenState extends State<MainScreen> {
                                 return _placeController.dst == null
                                     ? Text(
                                         '도착',
+                                        overflow: TextOverflow.ellipsis,
                                         style: textTheme.subtitle1?.copyWith(
                                             color: colorScheme.tertiary),
                                       )
                                     : Text(
                                         '${_placeController.dst?.name}',
+                                        overflow: TextOverflow.ellipsis,
                                         style: textTheme.subtitle1?.copyWith(
                                             color: colorScheme.tertiary),
                                       );
@@ -212,41 +233,56 @@ class _MainScreenState extends State<MainScreen> {
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 8.0,
+                    SizedBox(
+                      height: 8.0.h,
                     ),
-                    Text(
-                      '오늘',
-                      style: textTheme.bodyText1
-                          ?.copyWith(color: colorScheme.secondary),
+                    GetBuilder<DateController>(
+                      builder: (_) {
+                        return (DateFormat.yMd().format(DateTime.now()) ==
+                                DateFormat.yMd()
+                                    .format(_dateController.pickedDate!))
+                            ? Text(
+                                '오늘',
+                                style: textTheme.bodyText1
+                                    ?.copyWith(color: colorScheme.secondary),
+                              )
+                            : Text(
+                                ' ',
+                                style: textTheme.bodyText1
+                                    ?.copyWith(color: colorScheme.secondary),
+                              );
+                      },
                     ),
-                    const SizedBox(
-                      height: 4.0,
+                    SizedBox(
+                      height: 4.0.h,
                     ),
                     Stack(
                       children: [
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
+                          crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Icon(
                               Icons.arrow_back_ios_rounded,
                               color: colorScheme.shadow,
-                              size: 16.0,
+                              size: 16.0.w,
                             ),
                             GetBuilder<DateController>(
                               builder: (_) {
                                 return Text(
-                                  DateFormat('d E')
+                                  DateFormat(' d E ')
                                       .format(_dateController.pickedDate!),
-                                  style: textTheme.headline2
-                                      ?.copyWith(color: colorScheme.secondary),
+                                  style: textTheme.headline2?.copyWith(
+                                    color: colorScheme.secondary,
+                                    fontFamily: 'NotoSans',
+                                  ),
                                 );
                               },
                             ),
                             Icon(
                               Icons.arrow_forward_ios_rounded,
                               color: colorScheme.shadow,
-                              size: 16.0,
+                              size: 16.0.w,
                             ),
                           ],
                         ),
@@ -258,27 +294,25 @@ class _MainScreenState extends State<MainScreen> {
                               _dateController.selectDate(context);
                             },
                             child: Padding(
-                              padding: const EdgeInsets.only(right: 52.0),
-                              child: Icon(
-                                Icons.calendar_month_rounded,
-                                color: colorScheme.secondary,
-                                size: 20.0,
+                              padding: EdgeInsets.only(right: 59.0.w),
+                              child: Image.asset(
+                                width: 20.w,
+                                height: 20.w,
+                                'assets/button/calendar.png',
                               ),
                             ),
                           ),
                         ),
                       ],
                     ),
-                    const SizedBox(
-                      height: 16.0,
+                    SizedBox(
+                      height: 16.0.h,
                     ),
                     const Divider(
                       thickness: 0.3,
                     ),
                   ],
                 ),
-
-                // postIsEmpty(context),
 
                 // post list
                 Expanded(
@@ -354,10 +388,13 @@ class _MainScreenState extends State<MainScreen> {
       mainAxisAlignment: MainAxisAlignment.start,
       children: [
         Padding(
-          padding: EdgeInsets.symmetric(vertical: 40.0),
+          padding: EdgeInsets.symmetric(vertical: 40.0.h),
           child: Text(
             '검색 결과가 없습니다',
-            style: textTheme.headline1?.copyWith(color: colorScheme.tertiary),
+            style: textTheme.headline2?.copyWith(
+              color: colorScheme.tertiary,
+              fontFamily: 'NotoSans',
+            ),
           ),
         ),
         InkWell(
@@ -365,8 +402,8 @@ class _MainScreenState extends State<MainScreen> {
             addPostDialog(context: context);
           },
           child: Container(
-            width: 352.0,
-            height: 80.0,
+            width: 352.0.w,
+            height: 80.0.h,
             decoration: BoxDecoration(
               color: colorScheme.background,
               borderRadius: BorderRadius.circular(4.0),
@@ -381,15 +418,15 @@ class _MainScreenState extends State<MainScreen> {
             child: Column(
               children: [
                 SizedBox(
-                  height: 16.0,
+                  height: 18.0.h,
                 ),
-                Icon(
-                  Icons.add,
-                  color: colorScheme.secondary,
-                  size: 20.0,
+                Image.asset(
+                  width: 16.0.w,
+                  height: 16.0.h,
+                  'assets/button/add_2.png',
                 ),
                 SizedBox(
-                  height: 12.0,
+                  height: 12.0.h,
                 ),
                 Text(
                   '새로 모집하기',
