@@ -55,7 +55,10 @@ class _MainScreenState extends State<MainScreen> {
           centerTitle: true,
           title: Text(
             '조회 / 모집',
-            style: textTheme.subtitle1?.copyWith(color: colorScheme.onPrimary),
+            style: textTheme.subtitle1?.copyWith(
+              color: colorScheme.onPrimary,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           actions: [
             GestureDetector(
