@@ -44,6 +44,7 @@ class TimelineScreen extends StatelessWidget {
                 if (snapshot.hasData) {
                   // history가 있을 때
                   if (snapshot.data!.isNotEmpty) {
+                    // _historyController.splitHistorys(snapshot);
                     return Column(
                       children: [
                         Padding(
@@ -68,6 +69,21 @@ class TimelineScreen extends StatelessWidget {
                                       post: snapshot.data![index]);
                                 },
                               ),
+
+                              // _historyController.soonHistorys.isNotEmpty
+                              //     ? ListView.builder(
+                              //         itemCount: _historyController
+                              //             .soonHistorys.length,
+                              //         itemBuilder:
+                              //             (BuildContext context, int index) {
+                              //           return soonTimelineListTile(
+                              //               context: context,
+                              //               post: _historyController
+                              //                   .soonHistorys[index]);
+                              //         },
+                              //       )
+                              //     : Container(),
+
                               const SizedBox(
                                 height: 24,
                               ),
@@ -140,6 +156,20 @@ class TimelineScreen extends StatelessWidget {
                             ),
                           ],
                         ),
+
+                        // _historyController.afterHistorys.isNotEmpty
+                        //     ? ListView.builder(
+                        //         itemCount:
+                        //             _historyController.soonHistorys.length,
+                        //         itemBuilder: (BuildContext context, int index) {
+                        //           return afterTimelineListTile(
+                        //               context: context,
+                        //               post: _historyController
+                        //                   .afterHistorys[index]);
+                        //         },
+                        //       )
+                        //     : Container(),
+
                       ],
                     );
                   }

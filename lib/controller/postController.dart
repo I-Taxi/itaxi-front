@@ -122,8 +122,6 @@ class PostController extends GetxController {
 
     var body = utf8.encode(json.encode(map));
 
-    print(joinUrl);
-
     http.Response response = await http.put(
       Uri.parse(joinUrl),
       headers: <String, String>{

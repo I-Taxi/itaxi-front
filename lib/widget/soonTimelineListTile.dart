@@ -111,6 +111,14 @@ Widget soonTimelineListTile(
                           ),
                         ],
                       ),
+                      const Spacer(),
+                      if (post.luggage != null)
+                        for (int i = 0; i < post.luggage!; i++)
+                          Icon(
+                            Icons.shopping_bag,
+                            color: colorScheme.tertiary,
+                            size: 24,
+                          ),
                     ],
                   ),
                   const SizedBox(
@@ -142,7 +150,7 @@ Widget soonTimelineListTile(
                           Get.back();
                         },
                         child: Text(
-                          '나가기',
+                          '방 나가기',
                           style: textTheme.headline1
                               ?.copyWith(color: colorScheme.tertiary),
                         ),
@@ -168,7 +176,7 @@ Widget soonTimelineListTile(
     },
     child: Container(
       height: 80.0,
-      margin: const EdgeInsets.only(bottom: 12),
+      margin: const EdgeInsets.only(bottom: 10),
       padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
       decoration: BoxDecoration(
         color: colorScheme.primary,
