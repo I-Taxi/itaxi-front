@@ -17,7 +17,7 @@ class Post {
   int? smallLuggageNum;
   int? status;
   int? luggage;
-  Joiner? joiners;
+  List<Joiner>? joiners;
 
   Post({
     this.id,
@@ -48,7 +48,7 @@ class Post {
     int? smallLuggageNum,
     int? status,
     int? luggage,
-    Joiner? joiners,
+    List<Joiner>? joiners,
   }) {
     return Post(
       id: id ?? this.id,
@@ -98,7 +98,8 @@ class Post {
       smallLuggageNum: ds['smallLuggageNum'],
       status: ds['status'],
       luggage: ds['luggage'],
-      joiners: Joiner.fromDocs(ds['joiners']),
+      joiners:
+          List<Joiner>.from(ds['joiners'].map((json) => Joiner.fromDocs(json))),
     );
   }
 
@@ -116,7 +117,6 @@ class Post {
       smallLuggageNum: ss.get('smallLuggageNum'),
       status: ss.get('status'),
       luggage: ss.get('luggage'),
-      joiners: Joiner.fromSnapshot(ss.get('joiners')),
     );
   }
 

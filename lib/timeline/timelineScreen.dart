@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/widget/afterTimelineListTile.dart';
@@ -45,10 +47,10 @@ class TimelineScreen extends StatelessWidget {
                   // history가 있을 때
                   if (snapshot.data!.isNotEmpty) {
                     // _historyController.splitHistorys(snapshot);
-                    return Column(
+                    return ListView(
                       children: [
                         Padding(
-                          padding: const EdgeInsets.fromLTRB(24, 12, 24, 0),
+                          padding: EdgeInsets.fromLTRB(28.w, 16.h, 28.w, 0.h),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
@@ -57,35 +59,21 @@ class TimelineScreen extends StatelessWidget {
                                 style: textTheme.headline1?.copyWith(
                                     fontSize: 15, color: colorScheme.secondary),
                               ),
-                              const SizedBox(
-                                height: 12,
+                              SizedBox(
+                                height: 12.h,
                               ),
-                              ListView.builder(
-                                shrinkWrap: true,
-                                itemCount: snapshot.data!.length,
-                                itemBuilder: (BuildContext context, int index) {
-                                  return soonTimelineListTile(
-                                      context: context,
-                                      post: snapshot.data![index]);
-                                },
-                              ),
-
-                              // _historyController.soonHistorys.isNotEmpty
-                              //     ? ListView.builder(
-                              //         itemCount: _historyController
-                              //             .soonHistorys.length,
-                              //         itemBuilder:
-                              //             (BuildContext context, int index) {
-                              //           return soonTimelineListTile(
-                              //               context: context,
-                              //               post: _historyController
-                              //                   .soonHistorys[index]);
-                              //         },
-                              //       )
-                              //     : Container(),
-
-                              const SizedBox(
-                                height: 24,
+                              for (int i = 0; i < snapshot.data!.length; i++)
+                                if (DateTime.now()
+                                        .difference(DateTime.parse(
+                                            snapshot.data![i].deptTime!))
+                                        .isNegative ==
+                                    true)
+                                  soonTimelineListTile(
+                                    context: context,
+                                    post: snapshot.data![i],
+                                  ),
+                              SizedBox(
+                                height: 24.h,
                               ),
                               Row(
                                 mainAxisAlignment:
@@ -102,8 +90,8 @@ class TimelineScreen extends StatelessWidget {
                                     behavior: HitTestBehavior.opaque,
                                     onTap: () {},
                                     child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 8),
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 8.w),
                                       child: Text(
                                         '택시',
                                         style: textTheme.subtitle1?.copyWith(
@@ -116,8 +104,8 @@ class TimelineScreen extends StatelessWidget {
                                     behavior: HitTestBehavior.opaque,
                                     onTap: () {},
                                     child: Padding(
-                                      padding: const EdgeInsets.symmetric(
-                                          horizontal: 8),
+                                      padding:
+                                          EdgeInsets.symmetric(horizontal: 8.w),
                                       child: Text(
                                         '카풀',
                                         style: textTheme.subtitle1?.copyWith(
@@ -135,40 +123,43 @@ class TimelineScreen extends StatelessWidget {
                           color: colorScheme.shadow,
                           thickness: 1,
                         ),
-                        const SizedBox(
-                          height: 10,
+                        SizedBox(
+                          height: 10.h,
                         ),
-                        Row(
-                          children: [
-                            const SizedBox(
-                              width: 20,
+                        for (int i = 0; i < snapshot.data!.length; i++)
+                          if (DateTime.now()
+                                  .difference(DateTime.parse(
+                                      snapshot.data![i].deptTime!))
+                                  .isNegative ==
+                              false)
+                            Column(
+                              children: [
+                                Row(
+                                  children: [
+                                    const SizedBox(
+                                      width: 20,
+                                    ),
+                                    Text(
+                                      DateFormat('M월 d일 E').format(
+                                          DateTime.parse(
+                                              snapshot.data![i].deptTime!)),
+                                      style: textTheme.bodyText1?.copyWith(
+                                          color: colorScheme.tertiary),
+                                    ),
+                                    Expanded(
+                                      child: Divider(
+                                        color: colorScheme.shadow,
+                                        thickness: 1,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                afterTimelineListTile(
+                                  context: context,
+                                  post: snapshot.data![i],
+                                ),
+                              ],
                             ),
-                            Text(
-                              '7월 26일 Tue',
-                              style: textTheme.bodyText1
-                                  ?.copyWith(color: colorScheme.tertiary),
-                            ),
-                            Expanded(
-                              child: Divider(
-                                color: colorScheme.shadow,
-                                thickness: 1,
-                              ),
-                            ),
-                          ],
-                        ),
-
-                        // _historyController.afterHistorys.isNotEmpty
-                        //     ? ListView.builder(
-                        //         itemCount:
-                        //             _historyController.soonHistorys.length,
-                        //         itemBuilder: (BuildContext context, int index) {
-                        //           return afterTimelineListTile(
-                        //               context: context,
-                        //               post: _historyController
-                        //                   .afterHistorys[index]);
-                        //         },
-                        //       )
-                        //     : Container(),
                       ],
                     );
                   }

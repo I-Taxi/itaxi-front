@@ -1,40 +1,229 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:itaxi/controller/historyController.dart';
+import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/model/post.dart';
 
 Widget afterTimelineListTile(
     {required BuildContext context, required Post post}) {
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
+  late PostController _postController = Get.find();
+  late HistoryController _historyController = Get.find();
 
   return GestureDetector(
     behavior: HitTestBehavior.opaque,
     onTap: () {
+      _historyController.getHistoryInfo(postId: post.id!);
       showDialog(
         context: context,
         builder: (BuildContext context) {
           return Dialog(
+            elevation: 0,
             child: Container(
-              height: 150,
-              padding: const EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 12.0),
-              child: Column(
-                children: [
-                  Row(
-                    children: [
-                      Text(
-                        '연락처',
-                        style: textTheme.subtitle1
-                            ?.copyWith(color: colorScheme.tertiary),
-                      ),
-                      Expanded(
-                        child: Divider(
-                          color: colorScheme.shadow,
-                          thickness: 1,
+              width: 360.w,
+              height: 320.h,
+              padding: EdgeInsets.fromLTRB(20.0.w, 20.0.h, 20.0.w, 12.0.h),
+              child: FutureBuilder<Post>(
+                future: _historyController.history,
+                builder: (BuildContext context, snapshot) {
+                  if (snapshot.hasData) {
+                    if (snapshot.data != null) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            snapshot.data!.postType == 1 ? '택시' : '카풀',
+                            style: textTheme.headline1
+                                ?.copyWith(color: colorScheme.tertiary),
+                          ),
+                          SizedBox(
+                            height: 16.h,
+                          ),
+                          Text(
+                            DateFormat('yyyy년 MM월 dd일 E').format(
+                                DateTime.parse(snapshot.data!.deptTime!)),
+                            style: textTheme.subtitle1
+                                ?.copyWith(color: colorScheme.tertiary),
+                          ),
+                          SizedBox(
+                            height: 16.h,
+                          ),
+                          Row(
+                            crossAxisAlignment: CrossAxisAlignment.end,
+                            children: [
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.end,
+                                children: [
+                                  Text(
+                                    DateFormat('HH:mm').format(DateTime.parse(
+                                        snapshot.data!.deptTime!)),
+                                    style: textTheme.headline2?.copyWith(
+                                        color: colorScheme.onPrimary),
+                                  ),
+                                  SizedBox(
+                                    height: 9.0.h,
+                                  ),
+                                  Image.asset(
+                                    width: 24.w,
+                                    height: 24.h,
+                                    'assets/participant/${snapshot.data!.participantNum}_2.png',
+                                  ),
+                                ],
+                              ),
+                              SizedBox(
+                                width: 20.w,
+                              ),
+                              Column(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    children: [
+                                      Image.asset(
+                                        width: 10.w,
+                                        height: 10.h,
+                                        'assets/place/departure.png',
+                                      ),
+                                      SizedBox(
+                                        width: 12.0.w,
+                                      ),
+                                      Text(
+                                        '${snapshot.data!.departure?.name}',
+                                        style: textTheme.bodyText1?.copyWith(
+                                            color: colorScheme.onPrimary),
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 12.0.h,
+                                  ),
+                                  Row(
+                                    children: [
+                                      Image.asset(
+                                        width: 10.w,
+                                        height: 10.h,
+                                        'assets/place/destination.png',
+                                      ),
+                                      SizedBox(
+                                        width: 12.0.w,
+                                      ),
+                                      Text(
+                                        '${snapshot.data!.destination?.name}',
+                                        style: textTheme.bodyText1?.copyWith(
+                                            color: colorScheme.onPrimary),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                              const Spacer(),
+                              if (snapshot.data!.largeLuggageNum != 0)
+                                for (int i = 0;
+                                    i < snapshot.data!.largeLuggageNum!;
+                                    i++)
+                                  Image.asset(
+                                    width: 24.w,
+                                    height: 32.h,
+                                    'assets/luggage/luggage_large.png',
+                                  ),
+                              if (snapshot.data!.smallLuggageNum != 0)
+                                for (int i = 0;
+                                    i < snapshot.data!.smallLuggageNum!;
+                                    i++)
+                                  Image.asset(
+                                    width: 16.w,
+                                    height: 22.h,
+                                    'assets/luggage/luggage_small.png',
+                                  ),
+                              if (snapshot.data!.largeLuggageNum != 0 ||
+                                  snapshot.data!.smallLuggageNum != 0)
+                                Padding(
+                                  padding: EdgeInsets.only(left: 7.w),
+                                  child: Image.asset(
+                                    width: 7.w,
+                                    height: 48.h,
+                                    'assets/luggage/human.png',
+                                  ),
+                                ),
+                            ],
+                          ),
+                          SizedBox(
+                            height: 16.h,
+                          ),
+                          Row(
+                            children: [
+                              Text(
+                                '연락처',
+                                style: textTheme.subtitle1
+                                    ?.copyWith(color: colorScheme.tertiary),
+                              ),
+                              Expanded(
+                                child: Divider(
+                                  color: colorScheme.shadow,
+                                  thickness: 1,
+                                ),
+                              ),
+                            ],
+                          ),
+                          const Spacer(),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              TextButton(
+                                onPressed: () {
+                                  _postController.fetchOutJoin(
+                                      postId: snapshot.data!.id!);
+                                  _historyController.getHistorys();
+                                  Get.back();
+                                },
+                                child: Text(
+                                  '방 나가기',
+                                  style: textTheme.headline1
+                                      ?.copyWith(color: colorScheme.tertiary),
+                                ),
+                              ),
+                              TextButton(
+                                onPressed: () {
+                                  Get.back();
+                                },
+                                child: Text(
+                                  '확인',
+                                  style: textTheme.headline1
+                                      ?.copyWith(color: colorScheme.secondary),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      );
+                    } else {
+                      return Center(
+                        child: Text(
+                          '글 내용 가져오기가 실패하였습니다',
+                          style: textTheme.headline2?.copyWith(
+                            color: colorScheme.tertiary,
+                            fontFamily: 'NotoSans',
+                          ),
                         ),
+                      );
+                    }
+                  } else if (snapshot.hasError) {
+                    return Center(
+                      child: Text('${snapshot.error}'),
+                    );
+                  } else {
+                    return Center(
+                      child: CircularProgressIndicator(
+                        color: colorScheme.tertiary,
+                        strokeWidth: 2,
                       ),
-                    ],
-                  ),
-                ],
+                    );
+                  }
+                },
               ),
             ),
           );
@@ -42,9 +231,9 @@ Widget afterTimelineListTile(
       );
     },
     child: Container(
-      margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-      padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
-      height: 80.0,
+      margin: EdgeInsets.fromLTRB(20.w, 10.h, 20.w, 10.h),
+      padding: EdgeInsets.fromLTRB(20.w, 12.h, 20.w, 12.h),
+      height: 80.0.h,
       decoration: BoxDecoration(
         color: colorScheme.primary,
         borderRadius: BorderRadius.circular(4.0),
@@ -68,18 +257,18 @@ Widget afterTimelineListTile(
                 style:
                     textTheme.headline2?.copyWith(color: colorScheme.onPrimary),
               ),
-              const SizedBox(
-                height: 4.0,
+              SizedBox(
+                height: 9.0.h,
               ),
-              Icon(
-                Icons.crop_square,
-                color: colorScheme.secondary,
-                size: 28.0,
+              Image.asset(
+                width: 24.w,
+                height: 24.h,
+                'assets/participant/${post.participantNum}_2.png',
               ),
             ],
           ),
-          const SizedBox(
-            width: 20,
+          SizedBox(
+            width: 20.w,
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -87,13 +276,13 @@ Widget afterTimelineListTile(
             children: [
               Row(
                 children: [
-                  Icon(
-                    Icons.circle_outlined,
-                    color: colorScheme.tertiary,
-                    size: 12.0,
+                  Image.asset(
+                    width: 10.w,
+                    height: 10.h,
+                    'assets/place/departure.png',
                   ),
-                  const SizedBox(
-                    width: 12.0,
+                  SizedBox(
+                    width: 12.0.w,
                   ),
                   Text(
                     '${post.departure?.name}',
@@ -102,18 +291,18 @@ Widget afterTimelineListTile(
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 12.0,
+              SizedBox(
+                height: 12.0.h,
               ),
               Row(
                 children: [
-                  Icon(
-                    Icons.circle,
-                    color: colorScheme.tertiary,
-                    size: 12.0,
+                  Image.asset(
+                    width: 10.w,
+                    height: 10.h,
+                    'assets/place/destination.png',
                   ),
-                  const SizedBox(
-                    width: 12.0,
+                  SizedBox(
+                    width: 12.0.w,
                   ),
                   Text(
                     '${post.destination?.name}',
@@ -125,13 +314,29 @@ Widget afterTimelineListTile(
             ],
           ),
           const Spacer(),
-          if (post.luggage != null)
-            for (int i = 0; i < post.luggage!; i++)
-              Icon(
-                Icons.shopping_bag,
-                color: colorScheme.tertiary,
-                size: 24,
+          if (post.largeLuggageNum != 0)
+            for (int i = 0; i < post.largeLuggageNum!; i++)
+              Image.asset(
+                width: 24.w,
+                height: 32.h,
+                'assets/luggage/luggage_large.png',
               ),
+          if (post.smallLuggageNum != 0)
+            for (int i = 0; i < post.smallLuggageNum!; i++)
+              Image.asset(
+                width: 16.w,
+                height: 22.h,
+                'assets/luggage/luggage_small.png',
+              ),
+          if (post.largeLuggageNum != 0 || post.smallLuggageNum != 0)
+            Padding(
+              padding: EdgeInsets.only(left: 7.w),
+              child: Image.asset(
+                width: 7.w,
+                height: 48.h,
+                'assets/luggage/human.png',
+              ),
+            ),
         ],
       ),
     ),
