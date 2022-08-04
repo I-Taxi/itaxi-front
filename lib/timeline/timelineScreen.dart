@@ -169,7 +169,6 @@ class TimelineScreen extends StatelessWidget {
                         //         },
                         //       )
                         //     : Container(),
-
                       ],
                     );
                   }

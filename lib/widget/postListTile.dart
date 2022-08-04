@@ -1,19 +1,19 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:itaxi/controller/addPostController.dart';
 import 'package:itaxi/controller/navigationController.dart';
 import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/model/post.dart';
-import 'package:numberpicker/numberpicker.dart';
 
 Widget postListTile({
   required BuildContext context,
   required Post post,
 }) {
-  AddPostController _addPostController = Get.put(AddPostController());
-  PostController _postController = Get.put(PostController());
-  NavigationController _navigationController = Get.put(NavigationController());
+  late AddPostController _addPostController = Get.find();
+  late PostController _postController = Get.find();
+  late NavigationController _navigationController = Get.find();
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
 
@@ -24,9 +24,11 @@ Widget postListTile({
         context: context,
         builder: (BuildContext context) {
           return Dialog(
+            elevation: 0,
             child: Container(
-              height: 150,
-              padding: EdgeInsets.fromLTRB(40.0, 32.0, 40.0, 12.0),
+              width: 360.w,
+              height: 132.h,
+              padding: EdgeInsets.fromLTRB(28.0.w, 32.0.h, 28.0.w, 12.0.h),
               child: Column(
                 children: [
                   Row(
@@ -34,30 +36,73 @@ Widget postListTile({
                     children: [
                       Text(
                         '나의 짐',
-                        style: textTheme.headline2
-                            ?.copyWith(color: colorScheme.tertiary),
+                        style: textTheme.headline2?.copyWith(
+                          color: colorScheme.tertiary,
+                          fontFamily: 'NotoSans',
+                        ),
                       ),
-                      StatefulBuilder(
-                        builder: (_, setState) {
-                          return NumberPicker(
-                            value: _addPostController.luggage,
-                            minValue: 0,
-                            maxValue: 6,
-                            step: 1,
-                            itemHeight: 20,
-                            itemWidth: 50,
-                            itemCount: 2,
-                            axis: Axis.horizontal,
-                            haptics: true,
-                            onChanged: (value) {
-                              setState(() {
-                                _addPostController.luggage = value;
-                              });
-                            },
-                            textStyle: textTheme.headline2
-                                ?.copyWith(color: colorScheme.tertiary),
-                            selectedTextStyle: textTheme.headline2
-                                ?.copyWith(color: colorScheme.secondary),
+                      GetBuilder<AddPostController>(
+                        builder: (_) {
+                          return Row(
+                            children: [
+                              GestureDetector(
+                                behavior: HitTestBehavior.opaque,
+                                onTap: () {
+                                  _addPostController.changeLuggage(0);
+                                },
+                                child: (_addPostController.luggage == 0)
+                                    ? Text(
+                                        '없음',
+                                        style: textTheme.headline2?.copyWith(
+                                            color: colorScheme.secondary),
+                                      )
+                                    : Text(
+                                        '없음',
+                                        style: textTheme.headline2?.copyWith(
+                                            color: colorScheme.tertiary),
+                                      ),
+                              ),
+                              SizedBox(
+                                width: 20.w,
+                              ),
+                              GestureDetector(
+                                behavior: HitTestBehavior.opaque,
+                                onTap: () {
+                                  _addPostController.changeLuggage(1);
+                                },
+                                child: (_addPostController.luggage == 1)
+                                    ? Text(
+                                        '소',
+                                        style: textTheme.headline2?.copyWith(
+                                            color: colorScheme.secondary),
+                                      )
+                                    : Text(
+                                        '소',
+                                        style: textTheme.headline2?.copyWith(
+                                            color: colorScheme.tertiary),
+                                      ),
+                              ),
+                              SizedBox(
+                                width: 20.w,
+                              ),
+                              GestureDetector(
+                                behavior: HitTestBehavior.opaque,
+                                onTap: () {
+                                  _addPostController.changeLuggage(2);
+                                },
+                                child: (_addPostController.luggage == 2)
+                                    ? Text(
+                                        '대',
+                                        style: textTheme.headline2?.copyWith(
+                                            color: colorScheme.secondary),
+                                      )
+                                    : Text(
+                                        '대',
+                                        style: textTheme.headline2?.copyWith(
+                                            color: colorScheme.tertiary),
+                                      ),
+                              ),
+                            ],
                           );
                         },
                       ),
@@ -101,9 +146,10 @@ Widget postListTile({
       );
     },
     child: Container(
-      height: 80.0,
-      margin: const EdgeInsets.fromLTRB(20, 10, 20, 10),
-      padding: const EdgeInsets.fromLTRB(20, 12, 20, 12),
+      width: 352.w,
+      height: 80.0.h,
+      margin: EdgeInsets.fromLTRB(30.w, 10.h, 30.w, 10.h),
+      padding: EdgeInsets.fromLTRB(18.w, 14.h, 0.w, 12.h),
       decoration: BoxDecoration(
         color: colorScheme.primary,
         borderRadius: BorderRadius.circular(4.0),
@@ -127,18 +173,18 @@ Widget postListTile({
                 style:
                     textTheme.headline2?.copyWith(color: colorScheme.onPrimary),
               ),
-              const SizedBox(
-                height: 4.0,
+              SizedBox(
+                height: 9.0.h,
               ),
-              Icon(
-                Icons.crop_square,
-                color: colorScheme.secondary,
-                size: 28.0,
+              Image.asset(
+                width: 24.w,
+                height: 24.h,
+                'assets/participant/${post.participantNum}_2.png',
               ),
             ],
           ),
-          const SizedBox(
-            width: 20,
+          SizedBox(
+            width: 22.w,
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
@@ -146,13 +192,13 @@ Widget postListTile({
             children: [
               Row(
                 children: [
-                  Icon(
-                    Icons.circle_outlined,
-                    color: colorScheme.tertiary,
-                    size: 12.0,
+                  Image.asset(
+                    width: 10.w,
+                    height: 10.h,
+                    'assets/place/departure.png',
                   ),
-                  const SizedBox(
-                    width: 12.0,
+                  SizedBox(
+                    width: 12.0.w,
                   ),
                   Text(
                     '${post.departure?.name}',
@@ -162,17 +208,17 @@ Widget postListTile({
                 ],
               ),
               SizedBox(
-                height: 12.0,
+                height: 12.0.h,
               ),
               Row(
                 children: [
-                  Icon(
-                    Icons.circle,
-                    color: colorScheme.tertiary,
-                    size: 12.0,
+                  Image.asset(
+                    width: 10.w,
+                    height: 10.h,
+                    'assets/place/destination.png',
                   ),
-                  const SizedBox(
-                    width: 12.0,
+                  SizedBox(
+                    width: 12.0.w,
                   ),
                   Text(
                     '${post.destination?.name}',
@@ -184,13 +230,29 @@ Widget postListTile({
             ],
           ),
           const Spacer(),
-          if (post.luggage != null)
-            for (int i = 0; i < post.luggage!; i++)
-              Icon(
-                Icons.shopping_bag,
-                color: colorScheme.tertiary,
-                size: 24,
+          if (post.largeLuggageNum != 0)
+            for (int i = 0; i < post.largeLuggageNum!; i++)
+              Image.asset(
+                width: 24.w,
+                height: 32.h,
+                'assets/luggage/luggage_large.png',
               ),
+          if (post.smallLuggageNum != 0)
+            for (int i = 0; i < post.smallLuggageNum!; i++)
+              Image.asset(
+                width: 16.w,
+                height: 22.h,
+                'assets/luggage/luggage_small.png',
+              ),
+          if (post.largeLuggageNum != 0 || post.smallLuggageNum != 0)
+            Padding(
+              padding: EdgeInsets.only(left: 7.w),
+              child: Image.asset(
+                width: 7.w,
+                height: 48.h,
+                'assets/luggage/human.png',
+              ),
+            ),
         ],
       ),
     ),

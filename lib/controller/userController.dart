@@ -17,8 +17,9 @@ class UserController extends GetxController {
   late String? phone;
 
   @override
-  void initState() {
-    // super.onInit();
+  void onInit() {
+    super.onInit();
+    uid = FirebaseAuth.instance.currentUser!.uid;
     getUsers();
   }
 
@@ -38,30 +39,19 @@ class UserController extends GetxController {
 
     userInfo = UserInfoList.fromDocs(json);
     uid = userInfo.uid;
-    print(userInfo);
 
     return userInfo;
   }
 
   Future<UserInfoList> fetchUsers() async {
     var userUrl = "http://walab.handong.edu:8080/itaxi/api/";
-    userUrl = userUrl + 'member/info';
+    userUrl = '${userUrl}member/info';
 
-    // final queryParameters = {
-    //   'uid' : FirebaseAuth.instance.currentUser!.uid
-    // };
-    //
-    // String queryUrl = Uri(queryParameters: queryParameters).query;
-    //
-    // userUrl = userUrl + 'info/' + queryUrl;
-
-    final body = jsonEncode({"uid": FirebaseAuth.instance.currentUser!.uid});
+    final body = jsonEncode({"uid": uid});
 
     http.Response response = await http.post(Uri.parse(userUrl),
         headers: <String, String>{'Content-type': 'application/json'},
         body: body);
-    print("response.body ");
-    print(json.decode(utf8.decode(response.bodyBytes)));
 
     if (response.statusCode == 200) {
       // print(UserInfoList.fromDocs(json.decode(utf8.decode(response.bodyBytes))));
@@ -86,10 +76,8 @@ class UserController extends GetxController {
           // 'uid': 'ryan_uid'.toString(),
           'uid': FirebaseAuth.instance.currentUser!.uid,
         }));
-    print(response.body);
 
     if (response.statusCode == 200) {
-      print(response.body);
     } else {
       throw Exception('Failed to patch My new Info');
     }

@@ -11,7 +11,6 @@ import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/widget/selectPlaceDialog.dart';
 import 'package:itaxi/widget/snackBar.dart';
-import 'package:numberpicker/numberpicker.dart';
 
 void addPostDialog({required BuildContext context}) {
   TabViewController _tabViewController = Get.find();
@@ -29,6 +28,7 @@ void addPostDialog({required BuildContext context}) {
       return Dialog(
         elevation: 0,
         child: Container(
+          width: 360.w,
           height: 372.h,
           alignment: Alignment.center,
           padding: EdgeInsets.fromLTRB(28.0.w, 32.0.h, 28.0.w, 12.0.h),
@@ -270,33 +270,104 @@ void addPostDialog({required BuildContext context}) {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    '추가인원',
+                    '수용인원',
                     style: textTheme.headline2?.copyWith(
                       color: colorScheme.tertiary,
                       fontFamily: 'NotoSans',
                     ),
                   ),
-                  StatefulBuilder(
-                    builder: (_, setState) {
-                      return NumberPicker(
-                        value: _addPostController.capacity,
-                        minValue: 0,
-                        maxValue: 6,
-                        step: 1,
-                        itemHeight: 20,
-                        itemWidth: 50,
-                        itemCount: 2,
-                        axis: Axis.horizontal,
-                        haptics: true,
-                        onChanged: (value) {
-                          setState(() {
-                            _addPostController.capacity = value;
-                          });
-                        },
-                        textStyle: textTheme.headline2
-                            ?.copyWith(color: colorScheme.tertiary),
-                        selectedTextStyle: textTheme.headline2
-                            ?.copyWith(color: colorScheme.secondary),
+                  GetBuilder<AddPostController>(
+                    builder: (_) {
+                      return Row(
+                        children: [
+                          GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: () {
+                              _addPostController.changeCapacity(1);
+                            },
+                            child: (_addPostController.capacity == 1)
+                                ? Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 6.w,
+                                    ),
+                                    child: Text(
+                                      '1',
+                                      style: textTheme.headline2?.copyWith(
+                                          color: colorScheme.secondary),
+                                    ),
+                                  )
+                                : Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 6.w,
+                                    ),
+                                    child: Text(
+                                      '1',
+                                      style: textTheme.headline2?.copyWith(
+                                          color: colorScheme.tertiary),
+                                    ),
+                                  ),
+                          ),
+                          SizedBox(
+                            width: 16.w,
+                          ),
+                          GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: () {
+                              _addPostController.changeCapacity(2);
+                            },
+                            child: (_addPostController.capacity == 2)
+                                ? Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 6.w,
+                                    ),
+                                    child: Text(
+                                      '2',
+                                      style: textTheme.headline2?.copyWith(
+                                          color: colorScheme.secondary),
+                                    ),
+                                  )
+                                : Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 6.w,
+                                    ),
+                                    child: Text(
+                                      '2',
+                                      style: textTheme.headline2?.copyWith(
+                                          color: colorScheme.tertiary),
+                                    ),
+                                  ),
+                          ),
+                          SizedBox(
+                            width: 16.w,
+                          ),
+                          GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: () {
+                              _addPostController.changeCapacity(3);
+                            },
+                            child: (_addPostController.capacity == 3)
+                                ? Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 6.w,
+                                    ),
+                                    child: Text(
+                                      '3',
+                                      style: textTheme.headline2?.copyWith(
+                                          color: colorScheme.secondary),
+                                    ),
+                                  )
+                                : Padding(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 6.w,
+                                    ),
+                                    child: Text(
+                                      '3',
+                                      style: textTheme.headline2?.copyWith(
+                                          color: colorScheme.tertiary),
+                                    ),
+                                  ),
+                          ),
+                        ],
                       );
                     },
                   ),
@@ -315,27 +386,68 @@ void addPostDialog({required BuildContext context}) {
                       fontFamily: 'NotoSans',
                     ),
                   ),
-                  StatefulBuilder(
-                    builder: (_, setState) {
-                      return NumberPicker(
-                        value: _addPostController.luggage,
-                        minValue: 0,
-                        maxValue: 6,
-                        step: 1,
-                        itemHeight: 20,
-                        itemWidth: 50,
-                        itemCount: 2,
-                        axis: Axis.horizontal,
-                        haptics: true,
-                        onChanged: (value) {
-                          setState(() {
-                            _addPostController.luggage = value;
-                          });
-                        },
-                        textStyle: textTheme.headline2
-                            ?.copyWith(color: colorScheme.tertiary),
-                        selectedTextStyle: textTheme.headline2
-                            ?.copyWith(color: colorScheme.secondary),
+                  GetBuilder<AddPostController>(
+                    builder: (_) {
+                      return Row(
+                        children: [
+                          GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: () {
+                              _addPostController.changeLuggage(0);
+                            },
+                            child: (_addPostController.luggage == 0)
+                                ? Text(
+                                    '없음',
+                                    style: textTheme.headline2?.copyWith(
+                                        color: colorScheme.secondary),
+                                  )
+                                : Text(
+                                    '없음',
+                                    style: textTheme.headline2
+                                        ?.copyWith(color: colorScheme.tertiary),
+                                  ),
+                          ),
+                          SizedBox(
+                            width: 20.w,
+                          ),
+                          GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: () {
+                              _addPostController.changeLuggage(1);
+                            },
+                            child: (_addPostController.luggage == 1)
+                                ? Text(
+                                    '소',
+                                    style: textTheme.headline2?.copyWith(
+                                        color: colorScheme.secondary),
+                                  )
+                                : Text(
+                                    '소',
+                                    style: textTheme.headline2
+                                        ?.copyWith(color: colorScheme.tertiary),
+                                  ),
+                          ),
+                          SizedBox(
+                            width: 20.w,
+                          ),
+                          GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: () {
+                              _addPostController.changeLuggage(2);
+                            },
+                            child: (_addPostController.luggage == 2)
+                                ? Text(
+                                    '대',
+                                    style: textTheme.headline2?.copyWith(
+                                        color: colorScheme.secondary),
+                                  )
+                                : Text(
+                                    '대',
+                                    style: textTheme.headline2
+                                        ?.copyWith(color: colorScheme.tertiary),
+                                  ),
+                          ),
+                        ],
                       );
                     },
                   ),
@@ -357,19 +469,25 @@ void addPostDialog({required BuildContext context}) {
                   ),
                   TextButton(
                     onPressed: () {
-                      Post post = Post(
-                          uid: _userController.uid,
-                          postType: 1,
-                          departure: _placeController.dep,
-                          destination: _placeController.dst,
-                          deptTime: _dateController.formattingDateTime(
-                            _dateController.mergeDateAndTime(),
-                          ),
-                          capacity: _addPostController.capacity + 1,
-                          luggage: _addPostController.luggage);
                       if (_tabViewController.currentIndex == 0) {
                         snackBar(context: context, title: '택시 또는 카풀을 선택해주세요.');
+                      } else if (_placeController.dep == null) {
+                        snackBar(context: context, title: '출발지를 선택해주세요.');
+                      } else if (_placeController.dst == null) {
+                        snackBar(context: context, title: '도착지를 선택해주세요.');
+                      } else if (_addPostController.capacity == 0) {
+                        snackBar(context: context, title: '수용인원을 선택해주세요.');
                       } else {
+                        Post post = Post(
+                            uid: _userController.uid,
+                            postType: _tabViewController.currentIndex,
+                            departure: _placeController.dep,
+                            destination: _placeController.dst,
+                            deptTime: _dateController.formattingDateTime(
+                              _dateController.mergeDateAndTime(),
+                            ),
+                            capacity: _addPostController.capacity + 1,
+                            luggage: _addPostController.luggage);
                         _addPostController.fetchAddPost(post: post);
                         _postController.getPosts(
                           depId: _placeController.dep?.id,
@@ -377,6 +495,7 @@ void addPostDialog({required BuildContext context}) {
                           time: _dateController.formattingDateTime(
                             _dateController.mergeDateAndTime(),
                           ),
+                          postType: _tabViewController.currentIndex,
                         );
                         Get.back();
                       }

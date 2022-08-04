@@ -10,6 +10,16 @@ class AddPostController extends GetxController {
   int capacity = 0;
   int luggage = 0;
 
+  void changeCapacity(int capacity) {
+    this.capacity = capacity;
+    update();
+  }
+
+  void changeLuggage(int luggage) {
+    this.luggage = luggage;
+    update();
+  }
+
   Future<http.Response> fetchAddPost({required Post post}) async {
     var addPostUrl = "http://walab.handong.edu:8080/itaxi/api/";
     addPostUrl = '${addPostUrl}post';
