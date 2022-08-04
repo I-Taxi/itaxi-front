@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
 import 'package:itaxi/controller/signInController.dart';
@@ -25,18 +26,24 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return GetMaterialApp(
-      title: 'iTaxi',
-      theme: ITaxiTheme.lightThemeData,
-      home: GetBuilder<SignInController>(
-        builder: (_) {
-          if (_signInController.signInState == SignInState.signedOut) {
-            return SignInScreen();
-          } else {
-            return Home();
-          }
-        },
-      ),
+    // ScreenUtil.init(context, width: 411, height: 731);
+    return ScreenUtilInit(
+      designSize: Size(411, 731),
+      builder: (context, child) {
+        return GetMaterialApp(
+          title: 'iTaxi',
+          theme: ITaxiTheme.lightThemeData,
+          home: GetBuilder<SignInController>(
+            builder: (_) {
+              if (_signInController.signInState == SignInState.signedOut) {
+                return SignInScreen();
+              } else {
+                return Home();
+              }
+            },
+          ),
+        );
+      }
     );
   }
 }
