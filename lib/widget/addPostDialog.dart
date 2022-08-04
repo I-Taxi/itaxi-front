@@ -1,19 +1,25 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:itaxi/controller/addPostController.dart';
 import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/controller/placeController.dart';
 import 'package:itaxi/controller/postController.dart';
+import 'package:itaxi/controller/tabViewController.dart';
+import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/widget/selectPlaceDialog.dart';
+import 'package:itaxi/widget/snackBar.dart';
 import 'package:numberpicker/numberpicker.dart';
 
 void addPostDialog({required BuildContext context}) {
+  TabViewController _tabViewController = Get.find();
   AddPostController _addPostController = Get.put(AddPostController());
+  PostController _postController = Get.find();
   PlaceController _placeController = Get.put(PlaceController());
   DateController _dateController = Get.put(DateController());
-  PostController _postController = Get.find();
+  UserController _userController = Get.put(UserController());
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
 
@@ -21,11 +27,66 @@ void addPostDialog({required BuildContext context}) {
     context: context,
     builder: (BuildContext context) {
       return Dialog(
+        elevation: 0,
         child: Container(
-          height: 360,
-          padding: EdgeInsets.fromLTRB(20.0, 20.0, 20.0, 12.0),
+          height: 372.h,
+          alignment: Alignment.center,
+          padding: EdgeInsets.fromLTRB(28.0.w, 32.0.h, 28.0.w, 12.0.h),
           child: Column(
             children: [
+              GetBuilder<TabViewController>(
+                builder: (_) {
+                  return Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          _tabViewController.changeIndex(1);
+                        },
+                        child: (_tabViewController.currentIndex == 1)
+                            ? Text(
+                                DateFormat('택시')
+                                    .format(_dateController.pickedDate!),
+                                style: textTheme.headline2
+                                    ?.copyWith(color: colorScheme.secondary),
+                              )
+                            : Text(
+                                DateFormat('택시')
+                                    .format(_dateController.pickedDate!),
+                                style: textTheme.headline2
+                                    ?.copyWith(color: colorScheme.tertiary),
+                              ),
+                      ),
+                      SizedBox(
+                        width: 40.0.h,
+                      ),
+                      GestureDetector(
+                        behavior: HitTestBehavior.opaque,
+                        onTap: () {
+                          _tabViewController.changeIndex(2);
+                        },
+                        child: (_tabViewController.currentIndex == 2)
+                            ? Text(
+                                DateFormat('카풀')
+                                    .format(_dateController.pickedDate!),
+                                style: textTheme.headline2
+                                    ?.copyWith(color: colorScheme.secondary),
+                              )
+                            : Text(
+                                DateFormat('카풀')
+                                    .format(_dateController.pickedDate!),
+                                style: textTheme.headline2
+                                    ?.copyWith(color: colorScheme.tertiary),
+                              ),
+                      )
+                    ],
+                  );
+                },
+              ),
+              SizedBox(
+                height: 16.0.h,
+              ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
@@ -36,12 +97,15 @@ void addPostDialog({required BuildContext context}) {
                       selectPlaceDialog(context: context, type: 0);
                     },
                     child: Container(
-                      padding: EdgeInsets.fromLTRB(32, 8, 32, 8),
+                      width: 100.w,
+                      height: 32.h,
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.fromLTRB(20.w, 5.h, 20.w, 5.h),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(16.0)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16.0)),
                         border: Border.all(
-                          color: Colors.grey,
-                          // color: colorScheme.tertiary,
+                          color: colorScheme.tertiary,
                           width: 0.3,
                         ),
                       ),
@@ -64,15 +128,19 @@ void addPostDialog({required BuildContext context}) {
                     ),
                   ),
 
-                  const Spacer(),
-
+                  SizedBox(
+                    width: 16.0.w,
+                  ),
                   // 화살표
-                  const Icon(
-                    Icons.arrow_forward,
-                    color: Colors.grey,
+                  Image.asset(
+                    width: 20.w,
+                    height: 12.h,
+                    'assets/arrow/arrow.png',
                   ),
 
-                  const Spacer(),
+                  SizedBox(
+                    width: 16.0.w,
+                  ),
 
                   // 도착 설정 버튼
                   GestureDetector(
@@ -81,12 +149,15 @@ void addPostDialog({required BuildContext context}) {
                       selectPlaceDialog(context: context, type: 1);
                     },
                     child: Container(
-                      padding: EdgeInsets.fromLTRB(32, 8, 32, 8),
+                      width: 100.w,
+                      height: 32.h,
+                      alignment: Alignment.center,
+                      padding: EdgeInsets.fromLTRB(20.w, 5.h, 20.w, 5.h),
                       decoration: BoxDecoration(
-                        borderRadius: BorderRadius.all(Radius.circular(16.0)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16.0)),
                         border: Border.all(
-                          color: Colors.grey,
-                          // color: colorScheme.tertiary,
+                          color: colorScheme.tertiary,
                           width: 0.3,
                         ),
                       ),
@@ -110,16 +181,19 @@ void addPostDialog({required BuildContext context}) {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 20.0,
+              SizedBox(
+                height: 28.0.h,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     '출발일',
-                    style: textTheme.headline2
-                        ?.copyWith(color: colorScheme.tertiary),
+                    style: textTheme.headline2?.copyWith(
+                      color: colorScheme.tertiary,
+                      fontFamily: 'NotoSans',
+                    ),
                   ),
                   const Spacer(),
                   GetBuilder<DateController>(
@@ -132,8 +206,8 @@ void addPostDialog({required BuildContext context}) {
                       );
                     },
                   ),
-                  const SizedBox(
-                    width: 12.0,
+                  SizedBox(
+                    width: 12.0.h,
                   ),
                   GestureDetector(
                     behavior: HitTestBehavior.opaque,
@@ -148,16 +222,19 @@ void addPostDialog({required BuildContext context}) {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 20.0,
+              SizedBox(
+                height: 20.0.h,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     '출발시간',
-                    style: textTheme.headline2
-                        ?.copyWith(color: colorScheme.tertiary),
+                    style: textTheme.headline2?.copyWith(
+                      color: colorScheme.tertiary,
+                      fontFamily: 'NotoSans',
+                    ),
                   ),
                   const Spacer(),
                   GetBuilder<DateController>(
@@ -169,8 +246,8 @@ void addPostDialog({required BuildContext context}) {
                       );
                     },
                   ),
-                  const SizedBox(
-                    width: 12.0,
+                  SizedBox(
+                    width: 12.0.h,
                   ),
                   GestureDetector(
                     behavior: HitTestBehavior.opaque,
@@ -185,16 +262,19 @@ void addPostDialog({required BuildContext context}) {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 20.0,
+              SizedBox(
+                height: 20.0.h,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
                     '추가인원',
-                    style: textTheme.headline2
-                        ?.copyWith(color: colorScheme.tertiary),
+                    style: textTheme.headline2?.copyWith(
+                      color: colorScheme.tertiary,
+                      fontFamily: 'NotoSans',
+                    ),
                   ),
                   StatefulBuilder(
                     builder: (_, setState) {
@@ -222,16 +302,18 @@ void addPostDialog({required BuildContext context}) {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 20.0,
+              SizedBox(
+                height: 20.0.h,
               ),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     '나의 짐',
-                    style: textTheme.headline2
-                        ?.copyWith(color: colorScheme.tertiary),
+                    style: textTheme.headline2?.copyWith(
+                      color: colorScheme.tertiary,
+                      fontFamily: 'NotoSans',
+                    ),
                   ),
                   StatefulBuilder(
                     builder: (_, setState) {
@@ -275,24 +357,29 @@ void addPostDialog({required BuildContext context}) {
                   ),
                   TextButton(
                     onPressed: () {
-                      String uid = 'neo_uid';
                       Post post = Post(
-                          uid: uid,
+                          uid: _userController.uid,
                           postType: 1,
                           departure: _placeController.dep,
                           destination: _placeController.dst,
                           deptTime: _dateController.formattingDateTime(
-                              _dateController.mergeDateAndTime()),
+                            _dateController.mergeDateAndTime(),
+                          ),
                           capacity: _addPostController.capacity + 1,
                           luggage: _addPostController.luggage);
-                      print('1');
-                      _addPostController.fetchAddPost(post: post);
-                      _postController.getPosts(
+                      if (_tabViewController.currentIndex == 0) {
+                        snackBar(context: context, title: '택시 또는 카풀을 선택해주세요.');
+                      } else {
+                        _addPostController.fetchAddPost(post: post);
+                        _postController.getPosts(
                           depId: _placeController.dep?.id,
                           dstId: _placeController.dst?.id,
                           time: _dateController.formattingDateTime(
-                              _dateController.mergeDateAndTime()));
-                      Get.back();
+                            _dateController.mergeDateAndTime(),
+                          ),
+                        );
+                        Get.back();
+                      }
                     },
                     child: Text(
                       '올리기',

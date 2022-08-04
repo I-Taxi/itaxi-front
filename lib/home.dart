@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:animations/animations.dart';
 
@@ -16,21 +17,28 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    final pageList = [TimelineScreen(), MainScreen(), SettingScreen()];
+    final pageList = [
+      const TimelineScreen(),
+      const MainScreen(),
+      const SettingScreen()
+    ];
 
-    return GetBuilder<NavigationController>(builder: (_) {
-      return Scaffold(
-        body: PageTransitionSwitcher(
-          transitionBuilder: (child, primaryAnimation, secondaryAnimation) {
-            return FadeThroughTransition(
-              animation: primaryAnimation,
-              secondaryAnimation: secondaryAnimation,
-              child: child,
-            );
-          },
-          child: pageList[_navController.currentIndex],
-        ),
-        bottomNavigationBar: BottomNavigationBar(
+    return GetBuilder<NavigationController>(
+      builder: (_) {
+        return Scaffold(
+          body: PageTransitionSwitcher(
+            transitionBuilder: (child, primaryAnimation, secondaryAnimation) {
+              return FadeThroughTransition(
+                animation: primaryAnimation,
+                secondaryAnimation: secondaryAnimation,
+                child: child,
+              );
+            },
+            child: pageList[_navController.currentIndex],
+          ),
+          bottomNavigationBar: BottomNavigationBar(
+            showSelectedLabels: false,
+            showUnselectedLabels: false,
             currentIndex: _navController.currentIndex,
             backgroundColor: colorScheme.primary,
             selectedItemColor: colorScheme.secondary,
@@ -41,19 +49,45 @@ class Home extends StatelessWidget {
             items: [
               BottomNavigationBarItem(
                 label: 'timeline',
-                icon: Icon(Icons.access_time),
+                activeIcon: Image.asset(
+                  width: 32.w,
+                  height: 32.h,
+                  'assets/bottom_bar/timeline_2.png',
+                ),
+                icon: Image.asset(
+                  width: 32.w,
+                  height: 32.h,
+                  'assets/bottom_bar/timeline_1.png',
+                ),
               ),
               BottomNavigationBarItem(
                 label: 'main',
-                icon: Icon(Icons.directions_car),
+                activeIcon: Image.asset(
+                  width: 45.71.w,
+                  height: 32.h,
+                  'assets/bottom_bar/home_2.png',
+                ),
+                icon: Image.asset(
+                  width: 45.71.w,
+                  height: 32.h,
+                  'assets/bottom_bar/home_1.png',
+                ),
               ),
               BottomNavigationBarItem(
-                  label: 'settings',
-                  icon: Icon(
-                    Icons.more_horiz_rounded,
-                  ))
-            ]),
-      );
-    });
+                label: 'settings',
+                activeIcon: Image.asset(
+                    width: 32.w,
+                    height: 7.45.h,
+                    'assets/bottom_bar/setting_2.png'),
+                icon: Image.asset(
+                    width: 32.w,
+                    height: 7.45.h,
+                    'assets/bottom_bar/setting_1.png'),
+              )
+            ],
+          ),
+        );
+      },
+    );
   }
 }

@@ -28,22 +28,22 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     // ScreenUtil.init(context, width: 411, height: 731);
     return ScreenUtilInit(
-      designSize: Size(411, 731),
-      builder: (context, child) {
-        return GetMaterialApp(
-          title: 'iTaxi',
-          theme: ITaxiTheme.lightThemeData,
-          home: GetBuilder<SignInController>(
-            builder: (_) {
-              if (_signInController.signInState == SignInState.signedOut) {
-                return SignInScreen();
-              } else {
-                return Home();
-              }
-            },
-          ),
-        );
-      }
-    );
+        designSize: const Size(411, 731),
+        builder: (context, child) {
+          return GetMaterialApp(
+            title: 'iTaxi',
+            theme: ITaxiTheme.lightThemeData,
+            debugShowCheckedModeBanner: false,
+            home: GetBuilder<SignInController>(
+              builder: (_) {
+                if (_signInController.signInState == SignInState.signedOut) {
+                  return SignInScreen();
+                } else {
+                  return Home();
+                }
+              },
+            ),
+          );
+        });
   }
 }

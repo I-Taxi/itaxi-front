@@ -2,7 +2,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
-
 import 'package:http/http.dart' as http;
 import 'package:intl/intl.dart';
 import 'dart:convert';
@@ -12,6 +11,7 @@ import '../model/userInfoList.dart';
 class UserController extends GetxController {
   late Future<UserInfoList> users;
 
+  late String? uid;
   late String? bank;
   late String? bankAddress;
   late String? phone;
@@ -37,6 +37,7 @@ class UserController extends GetxController {
     Map<String, dynamic> myMap = new Map<String, dynamic>.from(json);
 
     userInfo = UserInfoList.fromDocs(json);
+    uid = userInfo.uid;
     print(userInfo);
 
     return userInfo;
@@ -56,21 +57,17 @@ class UserController extends GetxController {
 
     final body = jsonEncode({"uid": FirebaseAuth.instance.currentUser!.uid});
 
-    http.Response response = await http.post(
-      Uri.parse(userUrl),
-      headers: <String, String>{
-        'Content-type': 'application/json'
-      },
-      body: body
-    );
+    http.Response response = await http.post(Uri.parse(userUrl),
+        headers: <String, String>{'Content-type': 'application/json'},
+        body: body);
     print("response.body ");
     print(json.decode(utf8.decode(response.bodyBytes)));
 
-    if(response.statusCode == 200) {
+    if (response.statusCode == 200) {
       // print(UserInfoList.fromDocs(json.decode(utf8.decode(response.bodyBytes))));
       // users = UserInfoList.add(json.decode(utf8.decode(response.bodyBytes)))
       return userFromJson(json.decode(utf8.decode(response.bodyBytes)));
-    }else {
+    } else {
       throw Exception('Failed to load MyInfo');
     }
   }
@@ -80,30 +77,21 @@ class UserController extends GetxController {
     var userUrl = "http://walab.handong.edu:8080/itaxi/api";
     userUrl = userUrl + '/member';
 
-
-
-    http.Response response = await http.patch(
-        Uri.parse(userUrl),
-        headers: <String, String>{
-          'Content-type': 'application/json'
-        },
+    http.Response response = await http.patch(Uri.parse(userUrl),
+        headers: <String, String>{'Content-type': 'application/json'},
         body: json.encode({
-          'bank' : bank.toString(),
+          'bank': bank.toString(),
           'bankAddress': bankAddress.toString(),
           'phone': phone.toString(),
           // 'uid': 'ryan_uid'.toString(),
           'uid': FirebaseAuth.instance.currentUser!.uid,
-        })
-    );
+        }));
     print(response.body);
 
-    if(response.statusCode == 200){
+    if (response.statusCode == 200) {
       print(response.body);
-    }else {
+    } else {
       throw Exception('Failed to patch My new Info');
     }
-
   }
-
-
 }
