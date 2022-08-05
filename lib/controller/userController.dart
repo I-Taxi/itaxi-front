@@ -18,6 +18,7 @@ class UserController extends GetxController {
   late String? bankAddress;
   late String? phone;
 
+
   @override
   void onInit() {
     super.onInit();
