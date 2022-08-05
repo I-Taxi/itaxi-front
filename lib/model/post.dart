@@ -13,9 +13,11 @@ class Post {
   String? deptTime;
   int? capacity;
   int? participantNum;
+  int? largeLuggageNum;
+  int? smallLuggageNum;
   int? status;
   int? luggage;
-  Joiner? joiners;
+  List<Joiner>? joiners;
 
   Post({
     this.id,
@@ -26,6 +28,8 @@ class Post {
     this.deptTime,
     this.capacity,
     this.participantNum,
+    this.largeLuggageNum,
+    this.smallLuggageNum,
     this.status,
     this.luggage,
     this.joiners,
@@ -40,9 +44,11 @@ class Post {
     String? deptTime,
     int? capacity,
     int? participantNum,
+    int? largeLuggageNum,
+    int? smallLuggageNum,
     int? status,
     int? luggage,
-    Joiner? joiners,
+    List<Joiner>? joiners,
   }) {
     return Post(
       id: id ?? this.id,
@@ -53,6 +59,8 @@ class Post {
       deptTime: deptTime ?? this.deptTime,
       capacity: capacity ?? this.capacity,
       participantNum: participantNum ?? this.participantNum,
+      largeLuggageNum: largeLuggageNum ?? this.largeLuggageNum,
+      smallLuggageNum: smallLuggageNum ?? this.smallLuggageNum,
       status: status ?? this.status,
       luggage: luggage ?? this.luggage,
       joiners: joiners ?? this.joiners,
@@ -69,9 +77,29 @@ class Post {
       deptTime: ds['deptTime'],
       capacity: ds['capacity'],
       participantNum: ds['participantNum'],
+      largeLuggageNum: ds['largeLuggageNum'],
+      smallLuggageNum: ds['smallLuggageNum'],
       status: ds['status'],
       luggage: ds['luggage'],
-      // joiners: Joiner.fromDocs(ds['joiners']),
+    );
+  }
+
+  factory Post.fromJoinerDocs(Map<String, dynamic> ds) {
+    return Post(
+      id: ds['id'],
+      uid: ds['uid'],
+      postType: ds['postType'],
+      departure: Place.fromDocs(ds['departure']),
+      destination: Place.fromDocs(ds['destination']),
+      deptTime: ds['deptTime'],
+      capacity: ds['capacity'],
+      participantNum: ds['participantNum'],
+      largeLuggageNum: ds['largeLuggageNum'],
+      smallLuggageNum: ds['smallLuggageNum'],
+      status: ds['status'],
+      luggage: ds['luggage'],
+      joiners:
+          List<Joiner>.from(ds['joiners'].map((json) => Joiner.fromDocs(json))),
     );
   }
 
@@ -85,9 +113,10 @@ class Post {
       deptTime: ss.get('deptTime'),
       capacity: ss.get('capacity'),
       participantNum: ss.get('partifipanNum'),
+      largeLuggageNum: ss.get('largeLuggageNum'),
+      smallLuggageNum: ss.get('smallLuggageNum'),
       status: ss.get('status'),
       luggage: ss.get('luggage'),
-      joiners: Joiner.fromSnapshot(ss.get('joiners')),
     );
   }
 
@@ -101,6 +130,8 @@ class Post {
       'deptTime': deptTime,
       'capacity': capacity,
       'participantNum': participantNum,
+      'largeLuggageNum': largeLuggageNum,
+      'smallLuggageNum': smallLuggageNum,
       'status': status,
       'luggage': luggage,
       'joiners': joiners,
@@ -115,6 +146,7 @@ class Post {
       "dstId": destination!.id,
       "deptTime": deptTime,
       "capacity": capacity,
+      "status": 0,
       "luggage": luggage,
     };
   }
