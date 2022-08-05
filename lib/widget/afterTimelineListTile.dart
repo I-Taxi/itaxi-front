@@ -5,6 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/model/post.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 Widget afterTimelineListTile(
     {required BuildContext context, required Post post}) {
@@ -24,7 +25,7 @@ Widget afterTimelineListTile(
             elevation: 0,
             child: Container(
               width: 360.w,
-              height: 320.h,
+              height: 360.h,
               padding: EdgeInsets.fromLTRB(20.0.w, 20.0.h, 20.0.w, 12.0.h),
               child: FutureBuilder<Post>(
                 future: _historyController.history,
@@ -169,6 +170,98 @@ Widget afterTimelineListTile(
                               ),
                             ],
                           ),
+                          SizedBox(
+                            height: 16.h,
+                          ),
+                          if (snapshot.data!.joiners != null)
+                            GridView(
+                              shrinkWrap: true,
+                              gridDelegate:
+                                  const SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                childAspectRatio: 4 / 1,
+                                mainAxisSpacing: 2.0,
+                                crossAxisSpacing: 20.0,
+                              ),
+                              children: [
+                                for (int i = 0;
+                                    i < snapshot.data!.joiners!.length;
+                                    i++)
+                                  Container(
+                                    width: 130.w,
+                                    height: 32.h,
+                                    alignment: Alignment.centerLeft,
+                                    padding: EdgeInsets.fromLTRB(
+                                        12.w, 5.h, 12.w, 5.h),
+                                    decoration: BoxDecoration(
+                                      borderRadius: const BorderRadius.all(
+                                          Radius.circular(16.0)),
+                                      border: Border.all(
+                                        color: colorScheme.tertiary,
+                                        width: 0.3,
+                                      ),
+                                    ),
+                                    child: Stack(
+                                      children: [
+                                        Text(
+                                          snapshot.data!.joiners!
+                                              .elementAt(i)
+                                              .memberName
+                                              .toString(),
+                                          style: textTheme.subtitle1?.copyWith(
+                                              color: colorScheme.onPrimary),
+                                        ),
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: [
+                                            GestureDetector(
+                                              behavior: HitTestBehavior.opaque,
+                                              onTap: () async {
+                                                final Uri launchUri = Uri.parse(
+                                                    'tel:${snapshot.data!.joiners![i].memberPhone}');
+                                                if (await canLaunchUrl(
+                                                    launchUri)) {
+                                                  await launchUrl(launchUri);
+                                                } else {
+                                                  throw Exception(
+                                                      'Failed call');
+                                                }
+                                              },
+                                              child: Image.asset(
+                                                width: 24.w,
+                                                height: 24.w,
+                                                'assets/button/phone.png',
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 4.w,
+                                            ),
+                                            GestureDetector(
+                                              behavior: HitTestBehavior.opaque,
+                                              onTap: () async {
+                                                final Uri launchUri = Uri.parse(
+                                                    'sms:${snapshot.data!.joiners![i].memberPhone}');
+                                                if (await canLaunchUrl(
+                                                    launchUri)) {
+                                                  await launchUrl(launchUri);
+                                                } else {
+                                                  throw Exception('Failed sms');
+                                                }
+                                              },
+                                              child: Image.asset(
+                                                width: 24.w,
+                                                height: 24.w,
+                                                'assets/button/mail.png',
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
+                                  )
+                              ],
+                            ),
                           const Spacer(),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -232,7 +325,7 @@ Widget afterTimelineListTile(
     },
     child: Container(
       margin: EdgeInsets.fromLTRB(20.w, 10.h, 20.w, 10.h),
-      padding: EdgeInsets.fromLTRB(20.w, 12.h, 20.w, 12.h),
+      padding: EdgeInsets.fromLTRB(20.w, 12.h, 0.w, 12.h),
       height: 80.0.h,
       decoration: BoxDecoration(
         color: colorScheme.primary,

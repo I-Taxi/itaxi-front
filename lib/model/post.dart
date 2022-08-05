@@ -146,6 +146,7 @@ class Post {
       "dstId": destination!.id,
       "deptTime": deptTime,
       "capacity": capacity,
+      "status": 0,
       "luggage": luggage,
     };
   }

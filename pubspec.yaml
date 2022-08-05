@@ -36,7 +36,7 @@ dependencies:
   cupertino_icons: ^1.0.5
   table_calendar: ^3.0.6
   flutter_svg: ^1.1.1+1
-  url_launcher: ^6.1.4
+  url_launcher: ^6.1.5
   get: ^4.6.5
   firebase_core: ^1.19.1
   firebase_auth: ^3.4.1
@@ -89,6 +89,8 @@ flutter:
     - assets/button/calendar.png
     - assets/button/readd.png
     - assets/button/search.png
+    - assets/button/mail.png
+    - assets/button/phone.png
     - assets/arrow/arrow.png
     - assets/arrow/arrow_down_1.png
     - assets/arrow/arrow_down_2.png
