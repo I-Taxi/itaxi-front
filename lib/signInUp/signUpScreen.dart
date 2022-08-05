@@ -29,6 +29,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   bool emailVerified = false;
 
+  bool _isObscure1 = true;
+  bool _isObscure2 = true;
+
+
 
   Pattern pattern = r'^(?=.*[a-zA-Z]{3,})(?=.*\d{3,})';
   late RegExp regExp;
@@ -108,34 +112,28 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                 ),
                 const SizedBox(height: 12.0),
-
-                // Student ID 확인 입력
-                // TextFormField(
-                //     autocorrect: false,
-                //     obscureText: true,
-                //     decoration: const InputDecoration(
-                //       filled: true,
-                //       labelText: 'Student ID Check',
-                //     ),
-                //     validator: (value) {
-                //       if (value!.isEmpty) return 'Please enter Student ID one more';
-                //       if (_signInController.studentId != value)
-                //         return 'Confirm Student ID';
-                //       return null;
-                //     }),
-                // const SizedBox(height: 12.0),
-
                 // Password 입력
                 TextFormField(
                   controller: _pwController,
                     autocorrect: false,
-                    obscureText: true,
+                    obscureText: _isObscure1,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: InputDecoration(
                         filled: true,
                         labelText: 'Password',
                         labelStyle: textTheme.bodyText1
-                            ?.copyWith(color: colorScheme.tertiary)),
+                            ?.copyWith(color: colorScheme.tertiary),
+                        suffixIcon: IconButton(
+                            icon: Icon(
+                              _isObscure1 ? Icons.visibility : Icons.visibility_off,
+                              color: colorScheme.tertiary,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _isObscure1 = !_isObscure1;
+                              });
+                            })
+                    ),
                     onChanged: (value) {
                     print(value);
                       _signUpController.customPw = value;
@@ -153,12 +151,22 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 // Password 확인 입력
                 TextFormField(
                     autocorrect: false,
-                    obscureText: true,
+                    obscureText: _isObscure2,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: InputDecoration(
                       filled: true,
                       labelText: 'Password Check',
-                      labelStyle: textTheme.bodyText1?.copyWith(color: colorScheme.tertiary)
+                      labelStyle: textTheme.bodyText1?.copyWith(color: colorScheme.tertiary),
+                        suffixIcon: IconButton(
+                            icon: Icon(
+                              _isObscure2 ? Icons.visibility : Icons.visibility_off,
+                              color: colorScheme.tertiary,
+                            ),
+                            onPressed: () {
+                              setState(() {
+                                _isObscure2 = !_isObscure2;
+                              });
+                            })
                     ),
                     validator: (value) {
                       if (value!.isEmpty) return 'Please enter Password one more';

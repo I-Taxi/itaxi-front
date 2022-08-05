@@ -17,7 +17,6 @@ class MyInfoScreen extends StatefulWidget {
 class _MyInfoScreenState extends State<MyInfoScreen> {
   UserController _userController = Get.put(UserController());
   // Future<List<Login>> users = _userController.users;
-  UserInfoList _userInfoList = UserInfoList();
 
   @override
   void initState() {
@@ -69,11 +68,19 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                               child: Row(
                                 // mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  SizedBox(
+                                  Container(
                                     width: 136.w,
                                     height: 128,
-                                    child: Container(
+                                    padding: EdgeInsets.symmetric(vertical: 44, horizontal: 39.w),
+                                    decoration: BoxDecoration(
                                       color: colorScheme.secondary,
+                                      borderRadius: const BorderRadius.all(
+                                        Radius.circular(4),
+                                      ),
+                                    ),
+                                    child: Image.asset(
+                                      // width: 58.0.w,
+                                      'assets/logo_2.png',
                                     ),
                                   ),
                                   SizedBox(width: 24.w),
@@ -130,7 +137,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                             // const Spacer(),
                             SizedBox(height: 50.h,),
                             SizedBox(
-                              width: 104,
+                              width: 104.w,
                               height: 40,
                               child: TextButton(
                                 child: Text("수정", style: textTheme.headline2!.copyWith(color: colorScheme.secondary),),
@@ -148,8 +155,8 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                     }
                   }
                   else if (snapshot.hasError) {
-                    print("확인2");
-                    print(snapshot.error);
+                    // print("확인2");
+                    // print(snapshot.error);
                     return Center(
                       child: Text(
                         '${snapshot.error}',
