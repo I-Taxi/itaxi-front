@@ -1,14 +1,14 @@
 import 'dart:convert';
 
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/controller/postController.dart';
+import 'package:itaxi/controller/tabViewController.dart';
 import 'package:itaxi/model/place.dart';
-import 'package:itaxi/widget/selectPlaceDialog.dart';
 
 class PlaceController extends GetxController {
+  late TabViewController _tabViewController = Get.find();
   late PostController _postController = Get.find();
   late DateController _dateController = Get.find();
   late Future<List<Place>> places;
@@ -55,10 +55,12 @@ class PlaceController extends GetxController {
     dep = place;
     update();
     _postController.getPosts(
-        depId: dep?.id,
-        dstId: dst?.id,
-        time: _dateController
-            .formattingDateTime(_dateController.mergeDateAndTime()));
+      depId: dep?.id,
+      dstId: dst?.id,
+      time: _dateController
+          .formattingDateTime(_dateController.mergeDateAndTime()),
+      postType: _tabViewController.currentIndex,
+    );
   }
 
   void selectDst({required Place place}) {

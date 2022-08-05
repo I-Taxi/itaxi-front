@@ -33,10 +33,13 @@ class _MainScreenState extends State<MainScreen> {
   void initState() {
     super.initState();
     _postController.getPosts(
-        depId: _placeController.dep?.id,
-        dstId: _placeController.dst?.id,
-        time: _dateController
-            .formattingDateTime(_dateController.mergeDateAndTime()));
+      depId: _placeController.dep?.id,
+      dstId: _placeController.dst?.id,
+      time: _dateController.formattingDateTime(
+        _dateController.mergeDateAndTime(),
+      ),
+      postType: _tabViewController.currentIndex,
+    );
     _placeController.getPlaces();
   }
 
@@ -52,12 +55,23 @@ class _MainScreenState extends State<MainScreen> {
           centerTitle: true,
           title: Text(
             '조회 / 모집',
-            style: textTheme.subtitle1?.copyWith(color: colorScheme.onPrimary),
+            style: textTheme.subtitle1?.copyWith(
+              color: colorScheme.onPrimary,
+              fontWeight: FontWeight.bold,
+            ),
           ),
           actions: [
             GestureDetector(
               onTap: () {
                 addPostDialog(context: context);
+                _postController.getPosts(
+                  depId: _placeController.dep?.id,
+                  dstId: _placeController.dst?.id,
+                  time: _dateController.formattingDateTime(
+                    _dateController.mergeDateAndTime(),
+                  ),
+                  postType: _tabViewController.currentIndex,
+                );
               },
               child: Image.asset(
                 width: 24.w,
@@ -83,6 +97,14 @@ class _MainScreenState extends State<MainScreen> {
                       behavior: HitTestBehavior.opaque,
                       onTap: () {
                         _tabViewController.changeIndex(1);
+                        _postController.getPosts(
+                          depId: _placeController.dep?.id,
+                          dstId: _placeController.dst?.id,
+                          time: _dateController.formattingDateTime(
+                            _dateController.mergeDateAndTime(),
+                          ),
+                          postType: _tabViewController.currentIndex,
+                        );
                       },
                       child: (_tabViewController.currentIndex == 1)
                           ? selectedTabView(
@@ -101,6 +123,14 @@ class _MainScreenState extends State<MainScreen> {
                       behavior: HitTestBehavior.opaque,
                       onTap: () {
                         _tabViewController.changeIndex(0);
+                        _postController.getPosts(
+                          depId: _placeController.dep?.id,
+                          dstId: _placeController.dst?.id,
+                          time: _dateController.formattingDateTime(
+                            _dateController.mergeDateAndTime(),
+                          ),
+                          postType: _tabViewController.currentIndex,
+                        );
                       },
                       child: (_tabViewController.currentIndex == 0)
                           ? selectedTabView(
@@ -119,6 +149,14 @@ class _MainScreenState extends State<MainScreen> {
                       behavior: HitTestBehavior.opaque,
                       onTap: () {
                         _tabViewController.changeIndex(2);
+                        _postController.getPosts(
+                          depId: _placeController.dep?.id,
+                          dstId: _placeController.dst?.id,
+                          time: _dateController.formattingDateTime(
+                            _dateController.mergeDateAndTime(),
+                          ),
+                          postType: _tabViewController.currentIndex,
+                        );
                       },
                       child: (_tabViewController.currentIndex == 2)
                           ? selectedTabView(
@@ -326,7 +364,9 @@ class _MainScreenState extends State<MainScreen> {
                         depId: _placeController.dep?.id,
                         dstId: _placeController.dst?.id,
                         time: _dateController.formattingDateTime(
-                            _dateController.mergeDateAndTime()),
+                          _dateController.mergeDateAndTime(),
+                        ),
+                        postType: _tabViewController.currentIndex,
                       );
                     },
                     child: GetBuilder<PostController>(
@@ -400,6 +440,14 @@ class _MainScreenState extends State<MainScreen> {
         InkWell(
           onTap: () {
             addPostDialog(context: context);
+            _postController.getPosts(
+              depId: _placeController.dep?.id,
+              dstId: _placeController.dst?.id,
+              time: _dateController.formattingDateTime(
+                _dateController.mergeDateAndTime(),
+              ),
+              postType: _tabViewController.currentIndex,
+            );
           },
           child: Container(
             width: 352.0.w,
@@ -410,7 +458,7 @@ class _MainScreenState extends State<MainScreen> {
               boxShadow: [
                 BoxShadow(
                   color: colorScheme.shadow,
-                  offset: Offset(1.0, 1.0),
+                  offset: const Offset(1.0, 1.0),
                   blurRadius: 2.0,
                 ),
               ],
