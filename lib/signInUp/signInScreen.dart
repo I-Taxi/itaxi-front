@@ -1,6 +1,7 @@
 // ignore_for_file: prefer_const_constructors
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:itaxi/controller/signInController.dart';
@@ -61,17 +62,17 @@ class _SignInScreenState extends State<SignInScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  const SizedBox(
-                    height: 130,
+                  SizedBox(
+                    height: 169.h,
                   ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       // 로고 이미지
-                      // Image.asset(
-                      //   width: 88.0,
-                      //   'assets/logo_1.png',
-                      // ),
+                      Image.asset(
+                        width: 88.0,
+                        'assets/logo_1.png',
+                      ),
                       const SizedBox(
                         width: 10.0,
                       ),
@@ -84,18 +85,18 @@ class _SignInScreenState extends State<SignInScreen> {
                             'iTaxi',
                             style: TextStyle(
                               fontSize: 36.0,
-                              // color: colorScheme.secondary,
+                              color: colorScheme.secondary,
                             ),
                           ),
-                          Text('Powered by CRA', style: textTheme.headline1
+                          Text('Powered by CRA', style: textTheme.headline1!.copyWith(color: colorScheme.secondary)
                             // ?.copyWith(color: colorScheme.secondary),
                           ),
                         ],
                       ),
                     ],
                   ),
-                  const SizedBox(
-                    height: 60.0,
+                  SizedBox(
+                    height: 60.0.h,
                   ),
 
                   // Custom ID 입력
@@ -105,8 +106,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       decoration: InputDecoration(
                           hintText: 'Your custom ID',
                           labelText: 'Custom ID',
-                          labelStyle: textTheme.subtitle1,
-                          // ?.copyWith(color: colorScheme.tertiary),
+                          labelStyle: textTheme.subtitle1?.copyWith(color: colorScheme.tertiary),
                           focusedBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
                                 color: colorScheme.secondary, width: 1.0),
@@ -131,8 +131,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       decoration: InputDecoration(
                           hintText: 'Your custom PW',
                           labelText: 'Custom PW',
-                          labelStyle: textTheme.subtitle1
-                        // ?.copyWith(color: colorScheme.tertiary)
+                          labelStyle: textTheme.subtitle1?.copyWith(color: colorScheme.tertiary)
                       ),
                       onChanged: (value) {
                         _signInController.pw = value;
@@ -146,9 +145,10 @@ class _SignInScreenState extends State<SignInScreen> {
                     children: [
                       Text(
                         'Remember ID',
-                        style: textTheme.subtitle1,
+                        style: textTheme.subtitle1!.copyWith(color: colorScheme.tertiary),
                       ),
-                      Checkbox(value: _rememberId,
+                      Checkbox(
+                          value: _rememberId,
                           activeColor: colorScheme.secondary,
                           onChanged: (value) {
                         setState(() {
@@ -161,33 +161,44 @@ class _SignInScreenState extends State<SignInScreen> {
                           },
                           child: Text(
                             'Forgot PW?',
-                            style: textTheme.subtitle1,
+                            style: textTheme.subtitle1!.copyWith(color: colorScheme.tertiary),
                           ))
                     ],
                   ),
-                  const SizedBox(
-                    height: 60.0,
+                  SizedBox(
+                    height: 60.0.h,
                   ),
 
                   // Sign In 버튼
-                  TextButton(
-                      onPressed: () async {
-                        // print("hi");
-                        // _rememberId ? await storage.write(
-                        //     key: "login",
-                        //     value: "id " +
-                        //         _idController.text.toString() +
-                        //         " " +
-                        //         "password " +
-                        //         _pwController.text.toString())
-                        // : () {};
-                        print("hello");
-                        await _signInController.signIn();
-                      },
-                      child: Text(
-                        'Sign In',
-                        style: textTheme.headline2,
-                      )),
+                  Container(
+                    width: 128.w,
+                    height: 40.h,
+                    decoration: BoxDecoration(
+                      color: colorScheme.secondary,
+                      borderRadius: BorderRadius.all(
+                        Radius.circular(8),
+                      ),
+                    ),
+                    // color: colorScheme.secondary,
+                    child: TextButton(
+                        onPressed: () async {
+                          // print("hi");
+                          // _rememberId ? await storage.write(
+                          //     key: "login",
+                          //     value: "id " +
+                          //         _idController.text.toString() +
+                          //         " " +
+                          //         "password " +
+                          //         _pwController.text.toString())
+                          // : () {};
+                          print("hello");
+                          await _signInController.signIn();
+                        },
+                        child: Text(
+                          'Sign In',
+                          style: textTheme.headline2!.copyWith(color: colorScheme.primary),
+                        )),
+                  ),
                   TextButton(
                       onPressed: () {
                         Get.to(SignUpScreen());

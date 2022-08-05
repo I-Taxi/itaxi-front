@@ -28,7 +28,8 @@ class _BugScreenState extends State<BugScreen> {
     try {
       await FlutterEmailSender.send(email);
     } catch (error) {
-      String title = "이메일 앱이 없어요";       
+      print(error);
+      String title = "이메일 앱이 없어요";
       String content = "기본 메일 앱을 사용할 수 없기 때문에 앱에서 바로 문의를 전송하기 어려운 상황입니다.\n\n아래 이메일로 연락주시면 친절하게 답변해드릴게요 :)\n\n22000019@handong.ac.kr";
       String message = "";
       mainDialog(context, title, content);
