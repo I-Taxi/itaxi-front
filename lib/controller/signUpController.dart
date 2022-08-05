@@ -54,6 +54,7 @@ class SignUpController extends GetxController {
   Future<void> signUp() async {
     // print("확인용");
     // print(FirebaseAuth.instance.currentUser!.displayName.toString());
+    customId = customId + "@handong.ac.kr";
     try {
     await FirebaseAuth.instance
         .createUserWithEmailAndPassword(

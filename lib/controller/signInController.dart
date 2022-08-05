@@ -1,4 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 
 import '../mainScreen.dart';
@@ -14,6 +16,12 @@ class SignInController extends GetxController {
   late String id;
   late String pw;
 
+
+  // 자동 로그인 시 필요한 변수
+  String userInfo = "";
+  static final storage = new FlutterSecureStorage();
+
+
   void signedInState() {
     signInState = SignInState.signedIn;
     update();
@@ -23,6 +31,32 @@ class SignInController extends GetxController {
     signInState = SignInState.signedOut;
     update();
   }
+
+  @override
+  void initState() {
+    super.onInit();
+    // print("hi");
+    // WidgetsBinding.instance.addPostFrameCallback((_){
+    //   _asyncMethod();
+    // });
+  }
+
+
+  _asyncMethod() async {
+    // 데이터 없을 경우 null 반환
+    userInfo = await storage.read(key: "login") as String;
+    print("userINfo");
+    print(userInfo);
+
+
+    // user 정보가 있을 경우 바로 main으로 넘어가게 함
+    if (userInfo != null) {
+      id = userInfo.split(" ")[1];
+      pw = userInfo.split(" ")[3];
+      signIn();
+    }
+  }
+
 
   Future<void> signIn() async {
     try {
