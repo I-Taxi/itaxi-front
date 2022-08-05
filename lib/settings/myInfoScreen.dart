@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/settings/userInfoRefactorScreen.dart';
@@ -64,22 +65,23 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                         child: Column(
                           children: [
                             Container(
-                              padding: EdgeInsets.only(top: 20, left: 40),
+                              padding: EdgeInsets.only(top: 20, left: 40.w),
                               child: Row(
                                 // mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
                                   SizedBox(
-                                    width: 136,
+                                    width: 136.w,
                                     height: 128,
                                     child: Container(
                                       color: colorScheme.secondary,
                                     ),
                                   ),
-                                  SizedBox(width: 24),
+                                  SizedBox(width: 24.w),
                                   Column(
                                     crossAxisAlignment: CrossAxisAlignment.start,
                                     children: [
                                       Text(snapshot.data!.name.toString(), style: textTheme.headline1!.copyWith(color: colorScheme.onPrimary)),
+                                      SizedBox(height: 5.0,),
                                       Text(snapshot.data!.phone.toString(), style: textTheme.headline1!.copyWith(color: colorScheme.onPrimary)),
                                     ],
                                   )
@@ -87,46 +89,46 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                               ),
                             ),
                             Padding(
-                              padding: EdgeInsets.only(top: 15.0, left: 40.0, right: 40.0, bottom: 15.0),
+                              padding: EdgeInsets.only(top: 15.0, left: 40.0.w, right: 40.0.w, bottom: 15.0),
                               child: Divider(
                                 height: 1,
                               ),
                             ),
                             Padding(
-                              padding: const EdgeInsets.only(left: 40.0, right: 40.0),
-                              child: Row(
+                              padding: EdgeInsets.only(left: 40.0.w, right: 40.0.w),
+                              child: Column(
                                 children: [
-                                  SizedBox(
-                                    width: 136,
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      children: [
-                                        Text("Email", style: textTheme.headline1!.copyWith(color: colorScheme.onPrimary),),
-                                        SizedBox(height: 10.0,),
-                                        Text("계좌 은행", style: textTheme.headline1!.copyWith(color: colorScheme.onPrimary),),
-                                        SizedBox(height: 10.0,),
-                                        Text("계좌 번호", style: textTheme.headline1!.copyWith(color: colorScheme.onPrimary),)
-                                      ],
-                                    ),
-                                  ),
-                                  SizedBox(width: 24),
-                                  Column(
-                                    crossAxisAlignment: CrossAxisAlignment.end,
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
+                                      Text("Email", style: textTheme.headline1!.copyWith(color: colorScheme.onPrimary),),
                                       Text(snapshot.data!.email.toString(),
-                                        style: textTheme.headline1!.copyWith(color: colorScheme.onPrimary, fontSize: 12.0),),
-                                      SizedBox(height: 10.0,),
+                                        style: textTheme.headline1!.copyWith(color: colorScheme.onPrimary, fontSize: 14.0.sp),),
+                                    ],
+                                  ),
+                                  SizedBox(height: 10,),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("계좌 은행", style: textTheme.headline1!.copyWith(color: colorScheme.onPrimary),),
                                       Text(snapshot.data!.bank.toString(),
-                                        style: textTheme.headline1!.copyWith(color: colorScheme.onPrimary),),
-                                      SizedBox(height: 10.0,),
+                                        style: textTheme.headline1!.copyWith(color: colorScheme.onPrimary, fontSize: 14.0.sp),),
+                                    ],
+                                  ),
+                                  SizedBox(height: 10,),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text("계좌 번호", style: textTheme.headline1!.copyWith(color: colorScheme.onPrimary),),
                                       Text(snapshot.data!.bankAddress.toString(),
-                                        style: textTheme.headline1!.copyWith(color: colorScheme.onPrimary),)
+                                        style: textTheme.headline1!.copyWith(color: colorScheme.onPrimary, fontSize: 14.0.sp),),
                                     ],
                                   )
                                 ],
                               ),
                             ),
-                            const Spacer(),
+                            // const Spacer(),
+                            SizedBox(height: 50.h,),
                             SizedBox(
                               width: 104,
                               height: 40,
@@ -166,3 +168,4 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
     );
   }
 }
+
