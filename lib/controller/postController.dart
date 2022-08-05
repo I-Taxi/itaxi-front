@@ -3,10 +3,12 @@ import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:itaxi/controller/dateController.dart';
+import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/model/post.dart';
 
 class PostController extends GetxController {
   late DateController _dateController = Get.find();
+  late UserController _userController = Get.find();
   late Future<List<Post>> posts;
   bool isLoading = true;
 
@@ -19,44 +21,87 @@ class PostController extends GetxController {
     return result;
   }
 
-  Future<void> getPosts({int? depId, int? dstId, required String time}) async {
-    posts = fetchPost(time: time);
+  Future<void> getPosts(
+      {int? depId,
+      int? dstId,
+      required String time,
+      required int postType}) async {
+    posts = fetchPost(
+      depId: depId,
+      dstId: dstId,
+      time: time,
+      postType: postType,
+    );
     isLoading = false;
     update();
   }
 
   // Posts 데이터 가져오기
   Future<List<Post>> fetchPost(
-      {int? depId, int? dstId, required String time}) async {
+      {int? depId,
+      int? dstId,
+      required String time,
+      required int postType}) async {
     //?dep=${dep}&dst=${dst}&time=${time}
     var postUrl = "http://walab.handong.edu:8080/itaxi/api/";
-    final queryParameters;
+    final Map<String, dynamic> queryParameters;
     if (depId == null && dstId == null) {
-      queryParameters = {
-        'time': DateFormat('yyyy-MM-dd').format(DateTime.parse(time)),
-      };
+      if (postType == 0) {
+        queryParameters = {
+          'time': DateFormat('yyyy-MM-dd').format(DateTime.parse(time)),
+        };
+      } else {
+        queryParameters = {
+          'time': DateFormat('yyyy-MM-dd').format(DateTime.parse(time)),
+          'postType': postType.toString(),
+        };
+      }
     } else if (depId != null && dstId == null) {
-      queryParameters = {
-        'depId': depId,
-        'time': DateFormat('yyyy-MM-dd').format(DateTime.parse(time)),
-      };
+      if (postType == 0) {
+        queryParameters = {
+          'depId': depId.toString(),
+          'time': DateFormat('yyyy-MM-dd').format(DateTime.parse(time)),
+        };
+      } else {
+        queryParameters = {
+          'depId': depId.toString(),
+          'time': DateFormat('yyyy-MM-dd').format(DateTime.parse(time)),
+          'postType': postType.toString(),
+        };
+      }
     } else if (depId == null && dstId != null) {
-      queryParameters = {
-        'dstId': dstId,
-        'time': DateFormat('yyyy-MM-dd').format(DateTime.parse(time)),
-      };
+      if (postType == 0) {
+        queryParameters = {
+          'dstId': dstId.toString(),
+          'time': DateFormat('yyyy-MM-dd').format(DateTime.parse(time)),
+        };
+      } else {
+        queryParameters = {
+          'dstId': dstId.toString(),
+          'time': DateFormat('yyyy-MM-dd').format(DateTime.parse(time)),
+          'postType': postType.toString(),
+        };
+      }
     } else {
-      queryParameters = {
-        'depId': depId,
-        'dstId': dstId,
-        'time': DateFormat('yyyy-MM-dd').format(DateTime.parse(time)),
-      };
+      if (postType == 0) {
+        queryParameters = {
+          'depId': depId.toString(),
+          'dstId': dstId.toString(),
+          'time': DateFormat('yyyy-MM-dd').format(DateTime.parse(time)),
+        };
+      } else {
+        queryParameters = {
+          'depId': depId.toString(),
+          'dstId': dstId.toString(),
+          'time': DateFormat('yyyy-MM-dd').format(DateTime.parse(time)),
+          'postType': postType.toString(),
+        };
+      }
     }
-
     String queryString = Uri(queryParameters: queryParameters).query;
 
-    postUrl = postUrl + 'post?' + queryString;
-    // postUrl = postUrl + 'post/all';
+    postUrl = '${postUrl}post?$queryString';
+
     http.Response response = await http.get(
       Uri.parse(postUrl),
       headers: <String, String>{
@@ -64,7 +109,6 @@ class PostController extends GetxController {
       },
     );
 
-    print(response.body);
     if (response.statusCode == 200) {
       return PostsfromJson(json.decode(utf8.decode(response.bodyBytes)));
     } else {
@@ -75,22 +119,15 @@ class PostController extends GetxController {
   // /itaxi/api/post/{postId}/join
   Future<void> fetchJoin({required int postId, required int luggage}) async {
     var joinUrl = "http://walab.handong.edu:8080/itaxi/api/";
-    // final queryParameters = {
-    //   'postId': postId.toString(),
-    // };
-    // String queryString = Uri(queryParameters: queryParameters).query;
 
-    joinUrl = joinUrl + 'post/' + '$postId' + '/join';
+    joinUrl = '${joinUrl}post/$postId/join';
 
     Map<String, dynamic> map = {
       'luggage': luggage,
       'status': 0,
-      'uid': 'neo_uid',
+      'uid': _userController.uid,
     };
-
     var body = utf8.encode(json.encode(map));
-
-    print(joinUrl);
 
     http.Response response = await http.post(
       Uri.parse(joinUrl),
@@ -100,9 +137,7 @@ class PostController extends GetxController {
       body: body,
     );
 
-    print(utf8.decode(response.bodyBytes));
     if (response.statusCode == 200) {
-      print(Post.fromDocs(json.decode(utf8.decode(response.bodyBytes))));
     } else {
       throw Exception('Failed to join');
     }
@@ -111,12 +146,11 @@ class PostController extends GetxController {
   Future<void> fetchOutJoin({required int postId}) async {
     var joinUrl = "http://walab.handong.edu:8080/itaxi/api/";
 
-    joinUrl = joinUrl + 'post/' + '$postId' + '/join';
+    joinUrl = '${joinUrl}post/$postId/join';
 
     Map<String, dynamic> map = {
-      'uid': 'neo_uid',
+      'uid': _userController.uid,
     };
-
     var body = utf8.encode(json.encode(map));
 
     http.Response response = await http.put(
@@ -128,7 +162,6 @@ class PostController extends GetxController {
     );
 
     if (response.statusCode == 200) {
-      print(utf8.decode(response.bodyBytes));
     } else {
       throw Exception('Failed to out');
     }
