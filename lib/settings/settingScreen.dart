@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:itaxi/settings/termOfServiceScreen.dart';
 import 'package:itaxi/settings/versionScreen.dart';
@@ -20,6 +22,9 @@ class SettingScreen extends StatefulWidget {
 class _SettingScreenState extends State<SettingScreen> {
   SignInController _signInController = Get.put(SignInController());
 
+  // 자동로그인 시 저장되어있는 Id/Pw
+  static final storage = FlutterSecureStorage();
+
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme
@@ -37,11 +42,14 @@ class _SettingScreenState extends State<SettingScreen> {
             title: Text(
               '설정',
               style: textTheme.subtitle1?.copyWith(
-                  color: colorScheme.onPrimary),
+                color: colorScheme.onPrimary,
+                fontWeight: FontWeight.bold,
+              ),
             ),
             actions: [
               IconButton(
                 onPressed: () {
+                  storage.delete(key: "login");
                   _signInController.signedOutState();
                 },
                 icon: Icon(
@@ -78,7 +86,7 @@ class _SettingScreenState extends State<SettingScreen> {
 
   Container _comp_listTile(icon, text, next, textTheme, colorScheme) {
     return Container(
-      padding: EdgeInsets.symmetric(vertical: 5.0, horizontal: 8.0),
+      padding: EdgeInsets.symmetric(vertical: 5.0.h, horizontal: 8.0.w),
       child: ListTile(
           leading: Icon(icon),
           title: Text(text,

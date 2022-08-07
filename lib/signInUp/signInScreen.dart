@@ -8,6 +8,8 @@ import 'package:itaxi/controller/signInController.dart';
 import 'package:itaxi/signInUp/signUpScreen.dart';
 import 'package:itaxi/src/theme.dart';
 
+import 'forgotPwScreen.dart';
+
 class SignInScreen extends StatefulWidget {
   const SignInScreen({Key? key}) : super(key: key);
 
@@ -18,9 +20,13 @@ class SignInScreen extends StatefulWidget {
 class _SignInScreenState extends State<SignInScreen> {
   SignInController _signInController = Get.put(SignInController());
 
-  static final storage =
-  new FlutterSecureStorage();
+  static final storage = new FlutterSecureStorage();
+
+  // 자동로그인 on/off
   bool _rememberId = false;
+
+  // 텍스트필드 숨김 on/off
+  bool _isObscure = true;
 
   final _idController = TextEditingController();
   final _pwController = TextEditingController();
@@ -127,11 +133,21 @@ class _SignInScreenState extends State<SignInScreen> {
                   TextFormField(
                       controller: _pwController,
                       autocorrect: false,
-                      obscureText: true,
+                      obscureText: _isObscure,
                       decoration: InputDecoration(
                           hintText: 'Your custom PW',
                           labelText: 'Custom PW',
-                          labelStyle: textTheme.subtitle1?.copyWith(color: colorScheme.tertiary)
+                          labelStyle: textTheme.subtitle1?.copyWith(color: colorScheme.tertiary),
+                          suffixIcon: IconButton(
+                              icon: Icon(
+                                  _isObscure ? Icons.visibility : Icons.visibility_off,
+                                color: colorScheme.tertiary,
+                              ),
+                              onPressed: () {
+                                setState(() {
+                                  _isObscure = !_isObscure;
+                                });
+                              })
                       ),
                       onChanged: (value) {
                         _signInController.pw = value;
@@ -158,6 +174,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       Spacer(),
                       TextButton(
                           onPressed: () {
+                            Get.to(ForgotPwScreen());
                           },
                           child: Text(
                             'Forgot PW?',
@@ -182,15 +199,15 @@ class _SignInScreenState extends State<SignInScreen> {
                     // color: colorScheme.secondary,
                     child: TextButton(
                         onPressed: () async {
-                          // print("hi");
-                          // _rememberId ? await storage.write(
-                          //     key: "login",
-                          //     value: "id " +
-                          //         _idController.text.toString() +
-                          //         " " +
-                          //         "password " +
-                          //         _pwController.text.toString())
-                          // : () {};
+                          print("hi");
+                          _rememberId ? await storage.write(
+                              key: "login",
+                              value: "id " +
+                                  _idController.text.toString() +
+                                  " " +
+                                  "password " +
+                                  _pwController.text.toString())
+                          : () {};
                           print("hello");
                           await _signInController.signIn();
                         },

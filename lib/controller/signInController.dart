@@ -16,9 +16,12 @@ class SignInController extends GetxController {
   late String id;
   late String pw;
 
+  // 비밀번호 재설정 시 필요한 변수
+  late String email;
+
 
   // 자동 로그인 시 필요한 변수
-  String userInfo = "";
+  String? userInfo = "";
   static final storage = new FlutterSecureStorage();
 
 
@@ -35,24 +38,23 @@ class SignInController extends GetxController {
   @override
   void initState() {
     super.onInit();
-    // print("hi");
-    // WidgetsBinding.instance.addPostFrameCallback((_){
-    //   _asyncMethod();
-    // });
+    WidgetsBinding.instance.addPostFrameCallback((_){
+      _asyncMethod();
+    });
   }
 
 
   _asyncMethod() async {
     // 데이터 없을 경우 null 반환
-    userInfo = await storage.read(key: "login") as String;
-    print("userINfo");
-    print(userInfo);
+    userInfo = await storage.read(key: "login");
+    // UserInfo 값 확인
+    // print(userInfo);
 
 
     // user 정보가 있을 경우 바로 main으로 넘어가게 함
     if (userInfo != null) {
-      id = userInfo.split(" ")[1];
-      pw = userInfo.split(" ")[3];
+      id = userInfo!.split(" ")[1];
+      pw = userInfo!.split(" ")[3];
       signIn();
     }
   }
@@ -84,5 +86,16 @@ class SignInController extends GetxController {
         print(e.code);
       }
     }
+  }
+
+  // 사용자에게 비밀번호 재설정 메일을 한글로 전송 시도
+  sendPasswordResetEmailByKorean() async {
+    await FirebaseAuth.instance.setLanguageCode("ko");
+    sendPasswordResetEmail();
+  }
+
+  // 사용자에게 비밀번호 재설정 메일을 전송
+  sendPasswordResetEmail() async {
+    FirebaseAuth.instance.sendPasswordResetEmail(email: email);
   }
 }

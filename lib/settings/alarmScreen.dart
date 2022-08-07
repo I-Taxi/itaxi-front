@@ -41,7 +41,7 @@ class _AlarmScreenState extends State<AlarmScreen> {
                     width: 150.0,
                     'assets/logo_1.png',
                   ),
-                  Text('공사중입니다.', style: textTheme.bodyText1!.copyWith(fontSize: 15.0.sp),)
+                  Text('공사중입니다. . .', style: textTheme.bodyText1!.copyWith(fontSize: 15.0.sp),)
                 ],
               ),
         )

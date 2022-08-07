@@ -86,9 +86,11 @@ class _NoticeScreenState extends State<NoticeScreen> {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    return Text(
-      '공지사항이 없습니다.',
-      style: textTheme.headline1?.copyWith(color: colorScheme.tertiary),
+    return Center(
+      child: Text(
+        '공지사항이 없습니다.',
+        style: textTheme.headline1?.copyWith(color: colorScheme.tertiary),
+      ),
     );
   }
 }
