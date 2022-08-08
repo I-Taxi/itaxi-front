@@ -1,11 +1,8 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 import 'dart:convert';
 
 import '../model/userInfoList.dart';
@@ -33,7 +30,6 @@ class UserController extends GetxController {
 
   UserInfoList userFromJson(json) {
     UserInfoList userInfo;
-    Map<String, dynamic> myMap = new Map<String, dynamic>.from(json);
 
     userInfo = UserInfoList.fromDocs(json);
     uid = userInfo.uid;
@@ -62,7 +58,7 @@ class UserController extends GetxController {
   // 정보 수정
   Future<void> fetchNewUsers() async {
     var userUrl = "http://walab.handong.edu:8080/itaxi/api";
-    userUrl = userUrl + '/member';
+    userUrl = '$userUrl/member';
 
     http.Response response = await http.patch(Uri.parse(userUrl),
         headers: <String, String>{'Content-type': 'application/json'},
