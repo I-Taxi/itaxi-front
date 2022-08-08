@@ -94,6 +94,7 @@ flutter:
     - assets/button/mail.png
     - assets/button/phone.png
     - assets/arrow/arrow.png
+    - assets/arrow/arrow_back.png
     - assets/arrow/arrow_down_1.png
     - assets/arrow/arrow_down_2.png
     - assets/luggage/human.png

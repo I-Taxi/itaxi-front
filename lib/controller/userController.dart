@@ -14,10 +14,10 @@ class UserController extends GetxController {
   late Future<UserInfoList> users;
 
   late String? uid;
+  late String? name;
   late String? bank;
   late String? bankAddress;
   late String? phone;
-
 
   @override
   void onInit() {
@@ -28,20 +28,16 @@ class UserController extends GetxController {
 
   Future<void> getUsers() async {
     users = fetchUsers();
-    // print(users);
     update();
   }
 
   UserInfoList userFromJson(json) {
     UserInfoList userInfo;
-    // json.forEach((item) {
-    //   print(item);
-    //   userInfo.add(UserInfoList.fromDocs(item));
-    // });
     Map<String, dynamic> myMap = new Map<String, dynamic>.from(json);
 
     userInfo = UserInfoList.fromDocs(json);
     uid = userInfo.uid;
+    name = userInfo.name;
 
     return userInfo;
   }
@@ -57,8 +53,6 @@ class UserController extends GetxController {
         body: body);
 
     if (response.statusCode == 200) {
-      // print(UserInfoList.fromDocs(json.decode(utf8.decode(response.bodyBytes))));
-      // users = UserInfoList.add(json.decode(utf8.decode(response.bodyBytes)))
       return userFromJson(json.decode(utf8.decode(response.bodyBytes)));
     } else {
       throw Exception('Failed to load MyInfo');
@@ -76,7 +70,6 @@ class UserController extends GetxController {
           'bank': bank.toString(),
           'bankAddress': bankAddress.toString(),
           'phone': phone.toString(),
-          // 'uid': 'ryan_uid'.toString(),
           'uid': FirebaseAuth.instance.currentUser!.uid,
         }));
 

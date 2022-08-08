@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:itaxi/model/chat.dart';
 import 'package:itaxi/model/joiner.dart';
 import 'package:itaxi/model/place.dart';
 
@@ -146,8 +147,14 @@ class Post {
       "dstId": destination!.id,
       "deptTime": deptTime,
       "capacity": capacity,
-      "status": 0,
       "luggage": luggage,
+    };
+  }
+
+  Map<String, dynamic> toFirestoreMap() {
+    return {
+      'id': id,
+      'postType': postType,
     };
   }
 }
