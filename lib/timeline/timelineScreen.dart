@@ -27,7 +27,9 @@ class TimelineScreen extends StatelessWidget {
           title: Text(
             '타임 라인',
             style: textTheme.subtitle1?.copyWith(
-                color: colorScheme.onPrimary, fontWeight: FontWeight.bold),
+              color: colorScheme.onPrimary,
+              fontWeight: FontWeight.bold,
+            ),
           ),
         ),
         backgroundColor: colorScheme.background,
@@ -134,26 +136,37 @@ class TimelineScreen extends StatelessWidget {
                               false)
                             Column(
                               children: [
-                                Row(
-                                  children: [
-                                    const SizedBox(
-                                      width: 20,
-                                    ),
-                                    Text(
-                                      DateFormat('M월 d일 E').format(
-                                          DateTime.parse(
-                                              snapshot.data![i].deptTime!)),
-                                      style: textTheme.bodyText1?.copyWith(
-                                          color: colorScheme.tertiary),
-                                    ),
-                                    Expanded(
-                                      child: Divider(
-                                        color: colorScheme.shadow,
-                                        thickness: 1,
+                                if (i == 0 ||
+                                    (i - 1 > 0 &&
+                                        DateTime.parse(DateFormat('yyyy-MM-dd')
+                                                    .format(DateTime.parse(snapshot
+                                                        .data![i].deptTime!)))
+                                                .compareTo(DateTime.parse(
+                                                    DateFormat('yyyy-MM-dd').format(
+                                                        DateTime.parse(snapshot
+                                                            .data![i - 1]
+                                                            .deptTime!)))) !=
+                                            0))
+                                  Row(
+                                    children: [
+                                      const SizedBox(
+                                        width: 20,
                                       ),
-                                    ),
-                                  ],
-                                ),
+                                      Text(
+                                        DateFormat('M월 d일 E').format(
+                                            DateTime.parse(
+                                                snapshot.data![i].deptTime!)),
+                                        style: textTheme.bodyText1?.copyWith(
+                                            color: colorScheme.tertiary),
+                                      ),
+                                      Expanded(
+                                        child: Divider(
+                                          color: colorScheme.shadow,
+                                          thickness: 1,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
                                 afterTimelineListTile(
                                   context: context,
                                   post: snapshot.data![i],

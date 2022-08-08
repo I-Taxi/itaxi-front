@@ -6,7 +6,6 @@ import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/widget/timelineDialog.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 Widget soonTimelineListTile(
     {required BuildContext context, required Post post}) {
@@ -22,24 +21,15 @@ Widget soonTimelineListTile(
       timelineDiaog(context: context, post: post);
     },
     child: Container(
-      width: 352.w,
-      height: 80.0.h,
       margin: EdgeInsets.fromLTRB(0.w, 10.h, 0.w, 10.h),
-      padding: EdgeInsets.fromLTRB(18.w, 4.h, 0.w, 0.h),
+      padding: EdgeInsets.fromLTRB(20.w, 11.h, 0.w, 11.h),
+      height: 80.0.h,
       decoration: BoxDecoration(
         color: colorScheme.primary,
-        // borderRadius: BorderRadius.circular(4.0),
         border: Border.all(
           width: 2,
           color: colorScheme.secondary,
         ),
-        // boxShadow: [
-        //   BoxShadow(
-        //     color: colorScheme.shadow,
-        //     offset: const Offset(1.0, 1.0),
-        //     blurRadius: 2.0,
-        //   ),
-        // ],
       ),
       child: Row(
         crossAxisAlignment: CrossAxisAlignment.end,
@@ -64,7 +54,7 @@ Widget soonTimelineListTile(
             ],
           ),
           SizedBox(
-            width: 22.w,
+            width: 20.w,
           ),
           Column(
             mainAxisAlignment: MainAxisAlignment.center,

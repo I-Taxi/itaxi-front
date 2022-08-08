@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:itaxi/chat/chatRoomScreen.dart';
+import 'package:itaxi/controller/chatRoomController.dart';
 import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/model/post.dart';
@@ -13,6 +15,7 @@ Future<dynamic> timelineDiaog(
   final textTheme = Theme.of(context).textTheme;
   late PostController _postController = Get.find();
   late HistoryController _historyController = Get.find();
+  ChatRoomController _chatRoomController = Get.put(ChatRoomController());
 
   return showDialog(
     context: context,
@@ -21,7 +24,7 @@ Future<dynamic> timelineDiaog(
         elevation: 0,
         child: Container(
           width: 360.w,
-          height: 320.h,
+          height: 360.h,
           padding: EdgeInsets.fromLTRB(20.0.w, 20.0.h, 20.0.w, 12.0.h),
           child: FutureBuilder<Post>(
             future: _historyController.history,
@@ -31,10 +34,25 @@ Future<dynamic> timelineDiaog(
                   return Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
-                        snapshot.data!.postType == 1 ? '택시' : '카풀',
-                        style: textTheme.headline1
-                            ?.copyWith(color: colorScheme.tertiary),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            snapshot.data!.postType == 1 ? '택시' : '카풀',
+                            style: textTheme.headline1
+                                ?.copyWith(color: colorScheme.tertiary),
+                          ),
+                          GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: () {
+                              Get.back();
+                            },
+                            child: Icon(
+                              Icons.clear_rounded,
+                              color: colorScheme.tertiary,
+                            ),
+                          )
+                        ],
                       ),
                       SizedBox(
                         height: 16.h,
@@ -177,7 +195,7 @@ Future<dynamic> timelineDiaog(
                             crossAxisCount: 2,
                             childAspectRatio: 4 / 1,
                             mainAxisSpacing: 2.0,
-                            crossAxisSpacing: 20.0,
+                            crossAxisSpacing: 10.0,
                           ),
                           children: [
                             for (int i = 0;
@@ -273,10 +291,12 @@ Future<dynamic> timelineDiaog(
                           ),
                           TextButton(
                             onPressed: () {
-                              Get.back();
+                              _chatRoomController.getPost(post: post);
+                              _chatRoomController.getChats(post: post);
+                              Get.to(const ChatRoonScreen());
                             },
                             child: Text(
-                              '확인',
+                              '채팅방 입장',
                               style: textTheme.headline1
                                   ?.copyWith(color: colorScheme.secondary),
                             ),

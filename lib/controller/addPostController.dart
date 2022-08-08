@@ -4,9 +4,10 @@ import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/model/post.dart';
+import 'package:itaxi/repository/chatRepository.dart';
 
 class AddPostController extends GetxController {
-  late HistoryController _historyController = Get.find();
+  late HistoryController _historyController = Get.put(HistoryController());
   int capacity = 0;
   int luggage = 0;
 
@@ -34,8 +35,10 @@ class AddPostController extends GetxController {
       body: body,
     );
 
-    print(response.body);
     if (response.statusCode == 200) {
+      Post result = Post.fromDocs(json.decode(utf8.decode(response.bodyBytes)));
+      post = post.copyWith(id: result.id);
+      await ChatRepository().setPost(post: post);
       _historyController.getHistorys();
       return response;
     } else {

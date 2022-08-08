@@ -6,7 +6,6 @@ import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/widget/timelineDialog.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 Widget afterTimelineListTile(
     {required BuildContext context, required Post post}) {
