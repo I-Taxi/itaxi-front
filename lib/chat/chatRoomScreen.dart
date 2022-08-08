@@ -36,6 +36,161 @@ class ChatRoonScreen extends StatelessWidget {
               'assets/arrow/arrow_back.png',
             ),
           ),
+          iconTheme: IconThemeData(
+            color: colorScheme.tertiary,
+          ),
+        ),
+        endDrawer: Drawer(
+          width: 280.w,
+          elevation: 0.0,
+          child: Padding(
+            padding: EdgeInsets.fromLTRB(24.w, 32.h, 0.w, 24.h),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  _chatRoomController.post.postType == 1 ? '택시' : '카풀',
+                  style: textTheme.headline1?.copyWith(
+                    color: colorScheme.tertiary,
+                  ),
+                ),
+                SizedBox(
+                  height: 16.h,
+                ),
+                Text(
+                  DateFormat('yyyy년 MM월 dd일 E').format(
+                      DateTime.parse(_chatRoomController.post.deptTime!)),
+                  style: textTheme.subtitle1
+                      ?.copyWith(color: colorScheme.tertiary),
+                ),
+                SizedBox(
+                  height: 16.h,
+                ),
+                Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          DateFormat('HH:mm').format(DateTime.parse(
+                              _chatRoomController.post.deptTime!)),
+                          style: textTheme.headline2
+                              ?.copyWith(color: colorScheme.onPrimary),
+                        ),
+                        SizedBox(
+                          height: 9.0.h,
+                        ),
+                        Image.asset(
+                          width: 24.w,
+                          height: 24.h,
+                          'assets/participant/${_chatRoomController.post.participantNum}_2.png',
+                        ),
+                      ],
+                    ),
+                    SizedBox(
+                      width: 20.w,
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Image.asset(
+                              width: 10.w,
+                              height: 10.h,
+                              'assets/place/departure.png',
+                            ),
+                            SizedBox(
+                              width: 12.0.w,
+                            ),
+                            Text(
+                              '${_chatRoomController.post.departure?.name}',
+                              style: textTheme.bodyText1
+                                  ?.copyWith(color: colorScheme.onPrimary),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 12.0.h,
+                        ),
+                        Row(
+                          children: [
+                            Image.asset(
+                              width: 10.w,
+                              height: 10.h,
+                              'assets/place/destination.png',
+                            ),
+                            SizedBox(
+                              width: 12.0.w,
+                            ),
+                            Text(
+                              '${_chatRoomController.post.destination?.name}',
+                              style: textTheme.bodyText1
+                                  ?.copyWith(color: colorScheme.onPrimary),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                    const Spacer(),
+                    if (_chatRoomController.post.largeLuggageNum != 0)
+                      for (int i = 0;
+                          i < _chatRoomController.post.largeLuggageNum!;
+                          i++)
+                        Image.asset(
+                          width: 24.w,
+                          height: 32.h,
+                          'assets/luggage/luggage_large.png',
+                        ),
+                    if (_chatRoomController.post.smallLuggageNum != 0)
+                      for (int i = 0;
+                          i < _chatRoomController.post.smallLuggageNum!;
+                          i++)
+                        Image.asset(
+                          width: 16.w,
+                          height: 22.h,
+                          'assets/luggage/luggage_small.png',
+                        ),
+                    if (_chatRoomController.post.largeLuggageNum != 0 ||
+                        _chatRoomController.post.smallLuggageNum != 0)
+                      Padding(
+                        padding: EdgeInsets.only(left: 7.w),
+                        child: Image.asset(
+                          width: 7.w,
+                          height: 48.h,
+                          'assets/luggage/human.png',
+                        ),
+                      ),
+                  ],
+                ),
+                SizedBox(
+                  height: 12.h,
+                ),
+                Divider(
+                  thickness: 1,
+                  color: colorScheme.shadow,
+                ),
+                SizedBox(
+                  height: 12.h,
+                ),
+                // for (int joiner = 0;
+                //     joiner < _chatRoomController.post.joiners!.length;
+                //     joiner++)
+                //   Text(
+                //     _chatRoomController.post.joiners!
+                //         .elementAt(joiner)
+                //         .memberName
+                //         .toString(),
+                //     style: textTheme.subtitle1?.copyWith(
+                //       color: colorScheme.onPrimary,
+                //     ),
+                //   ),
+              ],
+            ),
+          ),
         ),
         backgroundColor: colorScheme.background,
         body: GestureDetector(
