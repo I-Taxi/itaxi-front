@@ -398,6 +398,10 @@ class _MainScreenState extends State<MainScreen> {
                               return Center(
                                 child: Text(
                                   '${snapshot.error}',
+                                  style: textTheme.headline2?.copyWith(
+                                    color: colorScheme.tertiary,
+                                    fontFamily: 'NotoSans',
+                                  ),
                                 ),
                               );
                             }
