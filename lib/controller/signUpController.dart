@@ -1,19 +1,11 @@
-// import 'package:cloud_firestore/cloud_firestore.dart';
-// import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
-
 
 import 'package:http/http.dart' as http;
-import 'package:intl/intl.dart';
 import 'dart:convert';
 
-import '../model/user.dart';
-import '../signInUp/signInScreen.dart';
-import '../signInUp/signUpScreen.dart';
-
-
+import 'package:itaxi/model/user.dart';
+import 'package:itaxi/signInUp/signInScreen.dart';
 
 // enum SignInState {
 //   signedIn,
@@ -21,7 +13,6 @@ import '../signInUp/signUpScreen.dart';
 // }
 
 class SignUpController extends GetxController {
-
   late String studentId;
   late String customId;
   late String customPw;
@@ -32,55 +23,42 @@ class SignUpController extends GetxController {
 
   Future<http.Response> fetchAddUser({required Login login}) async {
     var addUserUrl = "http://walab.handong.edu:8080/itaxi/api/";
-    addUserUrl = addUserUrl + 'member';
+    addUserUrl = '${addUserUrl}member';
 
     var body = json.encode(login.toMap());
 
-    print(body);
-    http.Response response = await http.post(
-      Uri.parse(addUserUrl),
-      headers: <String, String> {
-        'Content-Type': 'application/json'
-      },
-      body: body
-    );
-    print("확인용");
-    print(response.body);
+    http.Response response = await http.post(Uri.parse(addUserUrl),
+        headers: <String, String>{'Content-Type': 'application/json'},
+        body: body);
 
     return response;
   }
 
-
   Future<void> signUp() async {
-    // print("확인용");
     // print(FirebaseAuth.instance.currentUser!.displayName.toString());
-    customId = customId + "@handong.ac.kr";
+    customId = "$customId@handong.ac.kr";
     try {
-    await FirebaseAuth.instance
-        .createUserWithEmailAndPassword(
-        email: customId,
-        password: customPw);
-    FirebaseAuth.instance.currentUser?.sendEmailVerification();
-    Login login = Login(
-      uid: FirebaseAuth.instance.currentUser!.uid.toString(),
-      email: FirebaseAuth.instance.currentUser!.email.toString(),
-      phone: phone,
-      name: name,
-      bank: bank,
-      bankAddress: bankAddress,
-    );
-    fetchAddUser(login: login);
-    Get.to(SignInScreen());
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: customId, password: customPw);
+      FirebaseAuth.instance.currentUser?.sendEmailVerification();
+      Login login = Login(
+        uid: FirebaseAuth.instance.currentUser!.uid.toString(),
+        email: FirebaseAuth.instance.currentUser!.email.toString(),
+        phone: phone,
+        name: name,
+        bank: bank,
+        bankAddress: bankAddress,
+      );
+      fetchAddUser(login: login);
+      Get.to(const SignInScreen());
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
-        print('the password provided is too weak');
+        throw Exception('the password provided is too weak');
       } else if (e.code == 'email-already-in-use') {
-        print('The account already exists for that email.');
+        throw Exception('The account already exists for that email.');
       } else {
-        print('11111');
+        throw Exception(e);
       }
-    } catch (e) {
-      print('끝');
     }
     // SignInController의 SignUp 함수 만들어서 적용.
     // pop

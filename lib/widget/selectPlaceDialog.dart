@@ -40,8 +40,13 @@ void selectPlaceDialog({required BuildContext context, required int type}) {
                       SizedBox(
                         height: 20.h,
                       ),
-                      displayPlaces(
-                          context: context, places: snapshot.data!, type: type),
+                      Expanded(
+                        child: displayPlaces(
+                          context: context,
+                          places: snapshot.data!,
+                          type: type,
+                        ),
+                      ),
                       // (snapshot.data!.length >= 6)
                       //     ? displayPlaces(
                       //         context: context,
@@ -70,7 +75,9 @@ void selectPlaceDialog({required BuildContext context, required int type}) {
                       //         ?.copyWith(color: colorScheme.tertiary),
                       //   ),
                       // ),
-                      const Spacer(),
+                      SizedBox(
+                        height: 12.h,
+                      ),
                       TextButton(
                         onPressed: () {
                           Get.back();

@@ -1,30 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 
-import '../widget/mainDialog.dart';
+import 'package:itaxi/widget/mainDialog.dart';
 
-class BugScreen extends StatefulWidget {
-  const BugScreen({Key? key}) : super(key: key);
+class BugScreen extends StatelessWidget {
+  BugScreen({Key? key}) : super(key: key);
 
-  @override
-  _BugScreenState createState() => _BugScreenState();
-}
-
-class _BugScreenState extends State<BugScreen> {
   // 버그제보 상단의 버그제보방법 글
-  String mainBody = "";
-
-  void _mainBody() {
-    mainBody += "[버그 제보 방법]\n";
-    mainBody += "";
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    _mainBody();
-  }
+  String mainBody = "[버그 제보 방법]\n";
 
   // 이메일 보내기
   void _sendEmail(BuildContext context) async {
@@ -51,73 +36,109 @@ class _BugScreenState extends State<BugScreen> {
     try {
       await FlutterEmailSender.send(email);
     } catch (error) {
-      // print(error);
       String title = "이메일 앱이 없어요";
-      String content = "기본 메일 앱을 사용할 수 없기 때문에 앱에서 바로 문의를 전송하기 어려운 상황입니다.\n\n아래 이메일로 연락주시면 친절하게 답변해드릴게요 :)\n\n22000019@handong.ac.kr";
-      String message = "";
+      String content =
+          "기본 메일 앱을 사용할 수 없기 때문에 앱에서 바로 문의를 전송하기 어려운 상황입니다.\n\n아래 이메일로 연락주시면 친절하게 답변해드릴게요 :)\n\n22000019@handong.ac.kr";
       mainDialog(context, title, content);
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme
-        .of(context)
-        .colorScheme;
-    final textTheme = Theme
-        .of(context)
-        .textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
     return SafeArea(
       child: Scaffold(
-          appBar: AppBar(
-            leading: BackButton(
-              color: colorScheme.shadow,
-            ),
-            elevation: 1.0,
-            centerTitle: true,
-            title: Text(
-              '버그제보',
-              style: textTheme.subtitle1?.copyWith(
-                  color: colorScheme.onPrimary
-              ),
+        appBar: AppBar(
+          shadowColor: colorScheme.shadow,
+          elevation: 1.0,
+          centerTitle: true,
+          title: Text(
+            '버그제보',
+            style: textTheme.subtitle1?.copyWith(
+              color: colorScheme.onPrimary,
+              fontWeight: FontWeight.bold,
             ),
           ),
-        body: Container(
-          padding: EdgeInsets.symmetric(vertical: 20.0, horizontal: 20.0),
-          child: ListView(
+          leading: IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: Icon(
+              Icons.arrow_back_rounded,
+              color: colorScheme.tertiary,
+            ),
+          ),
+        ),
+        backgroundColor: colorScheme.primary,
+        body: Padding(
+          padding: EdgeInsets.symmetric(
+            vertical: 20.0.h,
+            horizontal: 48.0.w,
+          ),
+          child: Column(
             children: [
-              Container(
-                padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 10.0.w),
-                height: 150.h,
-                decoration: BoxDecoration(
-                  color: colorScheme.primary,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(10),
-                  ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: colorScheme.shadow,
-                      offset: Offset(4.0, 4.0),
-                      blurRadius: 15.0,
-                      spreadRadius: 1.0,
-                    )
-                  ]
-                ),
-                child: Text(mainBody, style: textTheme.headline1!.copyWith(color: colorScheme.onPrimary),),
-              ),
-              const SizedBox(height: 20,),
-              TextButton(
-                style: TextButton.styleFrom(
-                  backgroundColor: colorScheme.tertiary,
-                ),
+              Align(
+                alignment: Alignment.centerLeft,
                 child: Text(
-                  '문의하기',
-                  style: textTheme.subtitle1,
+                  mainBody,
+                  style: textTheme.headline1!.copyWith(
+                    color: colorScheme.onPrimary,
+                  ),
                 ),
-                onPressed: () {
-                  _sendEmail(context);
-                },
-              )
+              ),
+              // Container(
+              //   padding: EdgeInsets.symmetric(
+              //     vertical: 10.0.h,
+              //     horizontal: 10.0.w,
+              //   ),
+              //   height: 150.h,
+              //   decoration: BoxDecoration(
+              //     color: colorScheme.primary,
+              //     borderRadius: const BorderRadius.all(
+              //       Radius.circular(10),
+              //     ),
+              //     boxShadow: [
+              //       BoxShadow(
+              //         color: colorScheme.shadow,
+              //         offset: const Offset(4.0, 4.0),
+              //         blurRadius: 15.0,
+              //         spreadRadius: 1.0,
+              //       )
+              //     ],
+              //   ),
+              //   child: Text(
+              //     mainBody,
+              //     style: textTheme.headline1!
+              //         .copyWith(color: colorScheme.onPrimary),
+              //   ),
+              // ),
+              SizedBox(
+                height: 40.h,
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    elevation: 0,
+                    primary: colorScheme.secondary,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(8.0),
+                    ),
+                  ),
+                  onPressed: () async {
+                    _sendEmail(context);
+                  },
+                  // textTheme 적용 해야함
+                  child: Text(
+                    '문의하기',
+                    style: textTheme.subtitle1!.copyWith(
+                      color: colorScheme.primary,
+                    ),
+                  ),
+                ),
+              ),
             ],
           ),
         ),

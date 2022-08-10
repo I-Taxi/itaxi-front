@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 
-import '../mainScreen.dart';
-
 enum SignInState {
   signedIn,
   signedOut,
@@ -19,37 +17,34 @@ class SignInController extends GetxController {
   // 비밀번호 재설정 시 필요한 변수
   late String email;
 
-
   // 자동 로그인 시 필요한 변수
   String? userInfo = "";
   static final storage = new FlutterSecureStorage();
-
 
   void signedInState() {
     signInState = SignInState.signedIn;
     update();
   }
 
-  void signedOutState(){
+  void signedOutState() {
     signInState = SignInState.signedOut;
     update();
   }
 
   @override
-  void initState() {
+  onInit() {
     super.onInit();
-    WidgetsBinding.instance.addPostFrameCallback((_){
-      _asyncMethod();
-    });
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) {
+        _asyncMethod();
+      },
+    );
   }
-
 
   _asyncMethod() async {
     // 데이터 없을 경우 null 반환
     userInfo = await storage.read(key: "login");
     // UserInfo 값 확인
-    // print(userInfo);
-
 
     // user 정보가 있을 경우 바로 main으로 넘어가게 함
     if (userInfo != null) {
@@ -59,31 +54,28 @@ class SignInController extends GetxController {
     }
   }
 
-
   Future<void> signIn() async {
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(
               email: id, password: pw) //아이디와 비밀번호로 로그인 시도
           .then((value) {
-        // print(value);
         value.user!.emailVerified == true //이메일 인증 여부
             ? {
                 signedInState(),
                 update(),
               }
-            : print('이메일 확인 안댐');
+            : throw Exception('이메일 확인 안됨');
         return value;
       });
     } on FirebaseAuthException catch (e) {
       //로그인 예외처리
       if (e.code == 'user-not-found') {
-        print('등록되지 않은 이메일입니다');
+        throw Exception('등록되지 않은 이메일입니다');
       } else if (e.code == 'wrong-password') {
-        print('비밀번호가 틀렸습니다');
+        throw Exception('비밀번호가 틀렸습니다');
       } else {
-        // print("error Cdoe");
-        print(e.code);
+        throw Exception(e.code);
       }
     }
   }
