@@ -127,6 +127,9 @@ class _SignInScreenState extends State<SignInScreen> {
                   TextFormField(
                     controller: _idController,
                     autocorrect: false,
+                    style: textTheme.subtitle1?.copyWith(
+                      color: colorScheme.primary,
+                    ),
                     decoration: InputDecoration(
                       suffixText: '@handong.ac.kr',
                       suffixStyle: textTheme.subtitle1?.copyWith(
@@ -176,6 +179,9 @@ class _SignInScreenState extends State<SignInScreen> {
                     controller: _pwController,
                     autocorrect: false,
                     obscureText: _isObscure,
+                    style: textTheme.subtitle1?.copyWith(
+                      color: colorScheme.primary,
+                    ),
                     decoration: InputDecoration(
                       suffixText: '',
                       constraints: BoxConstraints(
@@ -247,7 +253,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       const Spacer(),
                       TextButton(
                         onPressed: () {
-                          Get.to(const ForgotPwScreen());
+                          Get.to(ForgotPwScreen());
                         },
                         child: Text(
                           '비밀번호 찾기',

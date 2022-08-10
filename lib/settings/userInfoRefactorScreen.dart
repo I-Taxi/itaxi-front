@@ -44,158 +44,163 @@ class UserInfoRefactorScreen extends StatelessWidget {
           ),
         ),
         backgroundColor: colorScheme.background,
-        body: Form(
-          key: _formKey,
-          child: SingleChildScrollView(
-            child: Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 24.0.w,
-                vertical: 30.0.h,
-              ),
-              child: Column(
-                children: [
-                  Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Text(
-                      '새 전화번호',
-                      style: textTheme.subtitle1?.copyWith(
-                        fontSize: 12,
-                        color: colorScheme.tertiary,
+        body: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: 20.0.h,
+                  horizontal: 48.0.w,
+                ),
+                child: Column(
+                  children: [
+                    Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Text(
+                        '새 전화번호',
+                        style: textTheme.subtitle1?.copyWith(
+                          fontSize: 12,
+                          color: colorScheme.tertiary,
+                        ),
                       ),
                     ),
-                  ),
-                  // 휴대폰 번호 입력
-                  TextFormField(
-                      controller: _phoneController,
-                      autocorrect: false,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      decoration: InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: colorScheme.tertiary,
-                            width: 0.3,
+                    // 휴대폰 번호 입력
+                    TextFormField(
+                        controller: _phoneController,
+                        autocorrect: false,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        decoration: InputDecoration(
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: colorScheme.tertiary,
+                              width: 0.3,
+                            ),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: colorScheme.secondary,
+                              width: 1.0,
+                            ),
                           ),
                         ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: colorScheme.secondary,
-                            width: 1.0,
-                          ),
-                        ),
-                      ),
-                      onChanged: (value) {
-                        _userController.phone = value;
-                      },
-                      validator: (value) {
-                        if (value!.isEmpty) return '전화번호를 입력해주세요';
-                        return null;
-                      }),
-                  SizedBox(
-                    height: 12.0.h,
-                  ),
+                        onChanged: (value) {
+                          _userController.phone = value;
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty) return '전화번호를 입력해주세요';
+                          return null;
+                        }),
+                    SizedBox(
+                      height: 12.0.h,
+                    ),
 
-                  Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Text(
-                      '새 은행명',
-                      style: textTheme.subtitle1?.copyWith(
-                        fontSize: 12,
-                        color: colorScheme.tertiary,
+                    Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Text(
+                        '새 은행명',
+                        style: textTheme.subtitle1?.copyWith(
+                          fontSize: 12,
+                          color: colorScheme.tertiary,
+                        ),
                       ),
                     ),
-                  ),
-                  // 은행 다시 입력
-                  TextFormField(
-                      controller: _bankController,
-                      autocorrect: false,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      decoration: InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: colorScheme.tertiary,
-                            width: 0.3,
+                    // 은행 다시 입력
+                    TextFormField(
+                        controller: _bankController,
+                        autocorrect: false,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        decoration: InputDecoration(
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: colorScheme.tertiary,
+                              width: 0.3,
+                            ),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: colorScheme.secondary,
+                              width: 1.0,
+                            ),
                           ),
                         ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: colorScheme.secondary,
-                            width: 1.0,
-                          ),
+                        onChanged: (value) {
+                          _userController.bank = value;
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty) return '은행명을 입력해주세요';
+                          return null;
+                        }),
+                    SizedBox(
+                      height: 12.0.h,
+                    ),
+                    Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Text(
+                        '새 계좌번호',
+                        style: textTheme.subtitle1?.copyWith(
+                          fontSize: 12,
+                          color: colorScheme.tertiary,
                         ),
                       ),
-                      onChanged: (value) {
-                        _userController.bank = value;
+                    ),
+                    // 은행 계좌 입력
+                    TextFormField(
+                        controller: _bankAddressController,
+                        autocorrect: false,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        decoration: InputDecoration(
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: colorScheme.tertiary,
+                              width: 0.3,
+                            ),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: colorScheme.secondary,
+                              width: 1.0,
+                            ),
+                          ),
+                        ),
+                        onChanged: (value) {
+                          _userController.bankAddress = value;
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty) return '계좌번호를 입력해주세요';
+                          return null;
+                        }),
+                    SizedBox(
+                      height: 52.0.h,
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        primary: colorScheme.secondary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          await _userController.fetchNewUsers();
+                          await _userController.getUsers();
+                          Get.back();
+                        }
                       },
-                      validator: (value) {
-                        if (value!.isEmpty) return '은행명을 입력해주세요';
-                        return null;
-                      }),
-                  SizedBox(
-                    height: 12.0.h,
-                  ),
-                  Align(
-                    alignment: Alignment.bottomLeft,
-                    child: Text(
-                      '새 계좌번호',
-                      style: textTheme.subtitle1?.copyWith(
-                        fontSize: 12,
-                        color: colorScheme.tertiary,
-                      ),
-                    ),
-                  ),
-                  // 은행 계좌 입력
-                  TextFormField(
-                      controller: _bankAddressController,
-                      autocorrect: false,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      decoration: InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: colorScheme.tertiary,
-                            width: 0.3,
-                          ),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: colorScheme.secondary,
-                            width: 1.0,
-                          ),
+                      child: Text(
+                        '수정완료',
+                        style: textTheme.subtitle1!.copyWith(
+                          color: colorScheme.primary,
                         ),
                       ),
-                      onChanged: (value) {
-                        _userController.bankAddress = value;
-                      },
-                      validator: (value) {
-                        if (value!.isEmpty) return '계좌번호를 입력해주세요';
-                        return null;
-                      }),
-                  SizedBox(
-                    height: 50.0.h,
-                  ),
-                  ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      primary: colorScheme.secondary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
                     ),
-                    onPressed: () async {
-                      if (_formKey.currentState!.validate()) {
-                        await _userController.fetchNewUsers();
-                        await _userController.getUsers();
-                        Get.back();
-                      }
-                    },
-                    // textTheme 적용 해야함
-                    child: Text(
-                      '수정완료',
-                      style: textTheme.subtitle1!.copyWith(
-                        color: colorScheme.primary,
-                      ),
-                    ),
-                  ),
-                ],
+                  ],
+                ),
               ),
             ),
           ),
