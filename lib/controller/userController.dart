@@ -34,6 +34,9 @@ class UserController extends GetxController {
     userInfo = UserInfoList.fromDocs(json);
     uid = userInfo.uid;
     name = userInfo.name;
+    bank = userInfo.bank;
+    bankAddress = userInfo.bankAddress;
+    phone = userInfo.phone;
 
     return userInfo;
   }
@@ -60,14 +63,18 @@ class UserController extends GetxController {
     var userUrl = "http://walab.handong.edu:8080/itaxi/api";
     userUrl = '$userUrl/member';
 
-    http.Response response = await http.patch(Uri.parse(userUrl),
-        headers: <String, String>{'Content-type': 'application/json'},
-        body: json.encode({
+    http.Response response = await http.patch(
+      Uri.parse(userUrl),
+      headers: <String, String>{'Content-type': 'application/json'},
+      body: json.encode(
+        {
           'bank': bank.toString(),
           'bankAddress': bankAddress.toString(),
           'phone': phone.toString(),
           'uid': FirebaseAuth.instance.currentUser!.uid,
-        }));
+        },
+      ),
+    );
 
     if (response.statusCode == 200) {
     } else {

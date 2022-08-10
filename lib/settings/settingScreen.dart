@@ -5,97 +5,160 @@ import 'package:get/get.dart';
 import 'package:itaxi/settings/termOfServiceScreen.dart';
 import 'package:itaxi/settings/versionScreen.dart';
 
-import '../controller/signInController.dart';
-import '../signInUp/signInScreen.dart';
-import 'alarmScreen.dart';
-import 'bugScreen.dart';
-import 'myInfoScreen.dart';
-import 'noticeScreen.dart';
+import 'package:itaxi/controller/signInController.dart';
+import 'package:itaxi/settings/alarmScreen.dart';
+import 'package:itaxi/settings/bugScreen.dart';
+import 'package:itaxi/settings/myInfoScreen.dart';
+import 'package:itaxi/settings/noticeScreen.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);
 
-  @override
-  _SettingScreenState createState() => _SettingScreenState();
-}
-
-class _SettingScreenState extends State<SettingScreen> {
-  SignInController _signInController = Get.put(SignInController());
-
-  // 자동로그인 시 저장되어있는 Id/Pw
   static final storage = FlutterSecureStorage();
 
   @override
+  State<SettingScreen> createState() => _SettingScreenState();
+}
+
+class _SettingScreenState extends State<SettingScreen> {
+  final SignInController _signInController = Get.find();
+
+  @override
   Widget build(BuildContext context) {
-    final colorScheme = Theme
-        .of(context)
-        .colorScheme;
-    final textTheme = Theme
-        .of(context)
-        .textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     return SafeArea(
-        child: Scaffold(
-          appBar: AppBar(
-            shadowColor: colorScheme.shadow,
-            elevation: 1.0,
-            centerTitle: true,
-            title: Text(
-              '설정',
-              style: textTheme.subtitle1?.copyWith(
-                color: colorScheme.onPrimary,
-                fontWeight: FontWeight.bold,
+      child: Scaffold(
+        appBar: AppBar(
+          shadowColor: colorScheme.shadow,
+          elevation: 1.0,
+          centerTitle: true,
+          title: Text(
+            '설정',
+            style: textTheme.subtitle1?.copyWith(
+              color: colorScheme.onPrimary,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          actions: [
+            TextButton(
+              onPressed: () {
+                SettingScreen.storage.delete(key: "login");
+                _signInController.signedOutState();
+              },
+              child: Text(
+                '로그아웃',
+                style: textTheme.subtitle1?.copyWith(
+                  color: colorScheme.tertiary,
+                ),
               ),
             ),
-            actions: [
-              IconButton(
-                onPressed: () {
-                  storage.delete(key: "login");
-                  _signInController.signedOutState();
-                },
-                icon: Icon(
-                  Icons.local_dining,
-                  color: colorScheme.secondary,
-                ),
-              )
-            ],
-          ),
-          body: _myListView(textTheme, colorScheme),
-        ));
-  }
-
-  Widget _myListView(textTheme, colorScheme) {
-    return Container(
-      child: Column(
-        children: [
-          _comp_listTile(Icons.event_note, '공지사항', NoticeScreen(), textTheme, colorScheme),
-          Divider(height: 1, indent: 13.0, endIndent: 13.0,),
-          _comp_listTile(Icons.person_pin, '내정보', MyInfoScreen(), textTheme, colorScheme),
-          Divider(height: 1, indent: 13.0, endIndent: 13.0,),
-          _comp_listTile(
-              Icons.new_releases_outlined, '버전정보/개발자', VersionScreen(), textTheme, colorScheme),
-          Divider(height: 1, indent: 13.0, endIndent: 13.0,),
-          _comp_listTile(Icons.notifications_none, '알림', AlarmScreen(), textTheme, colorScheme),
-          Divider(height: 1, indent: 13.0, endIndent: 13.0,),
-          _comp_listTile(Icons.bug_report, '버그제보', BugScreen(), textTheme, colorScheme),
-          Divider(height: 1, indent: 13.0, endIndent: 13.0,),
-          _comp_listTile(Icons.lock, '이용약관', TermOfServiceScreen(), textTheme, colorScheme),
-        ]
+          ],
+        ),
+        backgroundColor: colorScheme.primary,
+        body: Padding(
+          padding: EdgeInsets.only(left: 28.w),
+          child: _myListView(context: context),
+        ),
       ),
     );
   }
 
-  Container _comp_listTile(icon, text, next, textTheme, colorScheme) {
-    return Container(
-      padding: EdgeInsets.symmetric(vertical: 5.0.h, horizontal: 8.0.w),
-      child: ListTile(
-          leading: Icon(icon),
-          title: Text(text,
-              style: textTheme.headline1?.copyWith(color: colorScheme.onPrimary)),
-          onTap: () {
-            // 하단 네비게이터 없게 하기
-            Get.to(next);
-          }
+  Widget _myListView({required BuildContext context}) {
+    final colorScheme = Theme.of(context).colorScheme;
+    return Column(
+      children: [
+        _settingListTile(
+          icon: Icons.event_note,
+          title: '공지사항',
+          nextPage: NoticeScreen(),
+          context: context,
+        ),
+        Divider(
+          height: 0.3,
+          color: colorScheme.shadow,
+        ),
+        _settingListTile(
+          icon: Icons.person_pin,
+          title: '내정보',
+          nextPage: MyInfoScreen(),
+          context: context,
+        ),
+        Divider(
+          height: 0.3,
+          color: colorScheme.shadow,
+        ),
+        _settingListTile(
+          icon: Icons.new_releases_outlined,
+          title: '버전정보/개발자',
+          nextPage: const VersionScreen(),
+          context: context,
+        ),
+        Divider(
+          height: 0.3,
+          color: colorScheme.shadow,
+        ),
+        _settingListTile(
+          icon: Icons.notifications_none,
+          title: '알림',
+          nextPage: const AlarmScreen(),
+          context: context,
+        ),
+        Divider(
+          height: 0.3,
+          color: colorScheme.shadow,
+        ),
+        _settingListTile(
+          icon: Icons.bug_report,
+          title: '버그제보',
+          nextPage: BugScreen(),
+          context: context,
+        ),
+        Divider(
+          height: 0.3,
+          color: colorScheme.shadow,
+        ),
+        _settingListTile(
+          icon: Icons.lock,
+          title: '약관',
+          nextPage: const TermOfServiceScreen(),
+          context: context,
+        ),
+        Divider(
+          height: 0.3,
+          color: colorScheme.shadow,
+        ),
+      ],
+    );
+  }
+
+  Widget _settingListTile({
+    required IconData icon,
+    required String title,
+    required nextPage,
+    required BuildContext context,
+  }) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    return ListTile(
+      leading: SizedBox(
+        height: double.infinity,
+        child: Image.asset(
+          width: 8.w,
+          height: 8.h,
+          'assets/place/departure.png',
+        ),
       ),
+      title: Text(
+        title,
+        style: textTheme.headline2?.copyWith(
+          color: colorScheme.onPrimary,
+          fontFamily: 'NotoSans',
+        ),
+      ),
+      onTap: () {
+        Get.to(nextPage);
+      },
     );
   }
 }
