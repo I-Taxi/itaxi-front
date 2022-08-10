@@ -1,6 +1,15 @@
 # itaxi
+This project is renewal project.  
 
-A new Flutter project.
+## About
+
+## Video
+
+## Download
+
+## Who?
+
+## Tech Stack
 
 ## Getting Started
 
