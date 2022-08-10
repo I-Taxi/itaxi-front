@@ -15,7 +15,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatefulWidget {
@@ -30,59 +30,22 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    // ScreenUtil.init(context, width: 411, height: 731);
     return ScreenUtilInit(
-        designSize: const Size(411, 731),
-        builder: (context, child) {
-          return GetMaterialApp(
-            title: 'iTaxi',
-            theme: ITaxiTheme.lightThemeData,
-            debugShowCheckedModeBanner: false,
-            home: GetBuilder<SignInController>(
-              builder: (_) {
-                print(_signInController.signInState);
-                return _signInController.signInState == SignInState.signedOut ? SignInScreen() : Home();
-                if (_signInController.signInState == SignInState.signedOut) {
-                  return SignInScreen();
-                } else {
-                  return Home();
-                }
-              },
-            ),
-          );
-        });
+      designSize: const Size(411, 731),
+      builder: (context, child) {
+        return GetMaterialApp(
+          title: 'iTaxi',
+          theme: ITaxiTheme.lightThemeData,
+          debugShowCheckedModeBanner: false,
+          home: GetBuilder<SignInController>(
+            builder: (_) {
+              return _signInController.signInState == SignInState.signedOut
+                  ? const SignInScreen()
+                  : Home();
+            },
+          ),
+        );
+      },
+    );
   }
 }
-
-//
-// class MyApp extends StatelessWidget {
-//   MyApp({Key? key}) : super(key: key);
-//
-//   final SignInController _signInController = Get.put(SignInController());
-//
-//   // This widget is the root of your application.
-//   @override
-//   Widget build(BuildContext context) {
-//     // ScreenUtil.init(context, width: 411, height: 731);
-//     return ScreenUtilInit(
-//         designSize: const Size(411, 731),
-//         builder: (context, child) {
-//           return GetMaterialApp(
-//             title: 'iTaxi',
-//             theme: ITaxiTheme.lightThemeData,
-//             debugShowCheckedModeBanner: false,
-//             home: GetBuilder<SignInController>(
-//               builder: (_) {
-//                 print(_signInController.signInState);
-//                 return _signInController.signInState == SignInState.signedOut ? SignInScreen() : Home();
-//                 if (_signInController.signInState == SignInState.signedOut) {
-//                   return SignInScreen();
-//                 } else {
-//                   return Home();
-//                 }
-//               },
-//             ),
-//           );
-//         });
-//   }
-// }

@@ -34,16 +34,17 @@ class SignInController extends GetxController {
   @override
   onInit() {
     super.onInit();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _asyncMethod();
-    });
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) {
+        _asyncMethod();
+      },
+    );
   }
 
   _asyncMethod() async {
     // 데이터 없을 경우 null 반환
     userInfo = await storage.read(key: "login");
     // UserInfo 값 확인
-    // print(userInfo);
 
     // user 정보가 있을 경우 바로 main으로 넘어가게 함
     if (userInfo != null) {

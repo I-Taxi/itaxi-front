@@ -44,9 +44,11 @@ class _SignInScreenState extends State<SignInScreen> {
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _signInController.onInit();
-    });
+    WidgetsBinding.instance.addPostFrameCallback(
+      (_) {
+        _signInController.onInit();
+      },
+    );
   }
 
   @override
@@ -55,194 +57,257 @@ class _SignInScreenState extends State<SignInScreen> {
     final textTheme = Theme.of(context).textTheme;
 
     return SafeArea(
-        child: Scaffold(
-      body: GestureDetector(
-        onTap: () {
-          FocusScope.of(context).unfocus();
-        },
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.symmetric(horizontal: 64.w),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 169.h,
-                ),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    // 로고 이미지
-                    Image.asset(
-                      width: 88.0.w,
-                      height: 60.h,
-                      'assets/logo_1.png',
-                    ),
-                    SizedBox(
-                      width: 10.0.w,
-                    ),
+      child: Scaffold(
+        backgroundColor: colorScheme.secondary,
+        body: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: SingleChildScrollView(
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 64.w),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 140.h,
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      // 로고 이미지
+                      Image.asset(
+                        width: 88.0.w,
+                        height: 60.h,
+                        'assets/logo_2.png',
+                      ),
+                      SizedBox(
+                        width: 12.0.w,
+                      ),
 
-                    // 로고 글씨
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      mainAxisAlignment: MainAxisAlignment.start,
-                      children: [
-                        Text(
-                          'iTaxi',
-                          style: textTheme.headline1?.copyWith(
-                            fontSize: 36,
-                            color: colorScheme.secondary,
+                      // 로고 글씨
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            'iTaxi',
+                            style: textTheme.headline2?.copyWith(
+                              fontSize: 36.sp,
+                              color: colorScheme.primary,
+                            ),
                           ),
-                        ),
-                        Text(
-                          'Powered by CRA',
-                          style: textTheme.headline1!.copyWith(
-                            color: colorScheme.secondary,
+                          Text(
+                            'Powered by CRA',
+                            style: textTheme.headline1!.copyWith(
+                              fontSize: 16.sp,
+                              color: colorScheme.primary,
+                            ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-                SizedBox(
-                  height: 66.0.h,
-                ),
+                        ],
+                      ),
+                    ],
+                  ),
 
-                // Custom ID 입력
-                TextFormField(
+                  SizedBox(
+                    height: 66.0.h,
+                  ),
+
+                  // Custom ID 입력
+                  Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      '아이디',
+                      style: textTheme.subtitle1?.copyWith(
+                        fontSize: 12,
+                        color: colorScheme.primary,
+                      ),
+                    ),
+                  ),
+                  TextFormField(
                     controller: _idController,
                     autocorrect: false,
                     decoration: InputDecoration(
-                        hintText: 'Your custom ID',
-                        labelText: 'Custom ID',
-                        labelStyle: textTheme.subtitle1?.copyWith(
-                          color: colorScheme.tertiary,
+                      suffixText: '@handong.ac.kr',
+                      suffixStyle: textTheme.subtitle1?.copyWith(
+                        color: colorScheme.primary,
+                      ),
+                      constraints: BoxConstraints(
+                        maxHeight: 36.h,
+                        maxWidth: 280.w,
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: colorScheme.primary,
+                          width: 0.3,
                         ),
-                        constraints: BoxConstraints(
-                          maxWidth: 280.w,
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: colorScheme.primary,
+                          width: 1.0,
                         ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                              color: colorScheme.secondary, width: 1.0),
-                        )),
+                      ),
+                    ),
                     onChanged: (value) {
-                      _signInController.id = value;
+                      _signInController.id = '$value@handong.ac.kr';
                     },
                     validator: (value) {
-                      if (value!.isEmpty) return 'Please enter Custom ID';
-                      // pattern 변경하면 됨.
-                      // regExp = RegExp(pattern.toString());
-                      // if (!regExp.hasMatch(value)) return 'Username is invalid'
+                      if (value!.isEmpty) return '아이디를 입력해주세요';
                       return null;
-                    }),
-                SizedBox(
-                  height: 14.0.h,
-                ),
+                    },
+                  ),
+                  SizedBox(
+                    height: 14.0.h,
+                  ),
 
-                // Custom PW 입력
-                TextFormField(
+                  // Custom PW 입력
+                  Align(
+                    alignment: Alignment.bottomLeft,
+                    child: Text(
+                      '비밀번호',
+                      style: textTheme.subtitle1?.copyWith(
+                        fontSize: 12,
+                        color: colorScheme.primary,
+                      ),
+                    ),
+                  ),
+                  TextFormField(
                     controller: _pwController,
                     autocorrect: false,
                     obscureText: _isObscure,
                     decoration: InputDecoration(
-                        hintText: 'Your custom PW',
-                        labelText: 'Custom PW',
-                        labelStyle: textTheme.subtitle1?.copyWith(
-                          color: colorScheme.tertiary,
+                      suffixText: '',
+                      constraints: BoxConstraints(
+                        maxHeight: 36.h,
+                        maxWidth: 280.w,
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: colorScheme.primary,
+                          width: 0.3,
                         ),
-                        constraints: BoxConstraints(
-                          maxWidth: 280.w,
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: colorScheme.primary,
+                          width: 1.0,
                         ),
-                        suffixIcon: IconButton(
-                            icon: Icon(
-                              _isObscure
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                              color: colorScheme.tertiary,
-                            ),
-                            onPressed: () {
-                              setState(() {
-                                _isObscure = !_isObscure;
-                              });
-                            })),
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _isObscure ? Icons.visibility_off : Icons.visibility,
+                          size: 20.h,
+                          color: colorScheme.primary,
+                        ),
+                        onPressed: () {
+                          setState(
+                            () {
+                              _isObscure = !_isObscure;
+                            },
+                          );
+                        },
+                      ),
+                    ),
                     onChanged: (value) {
                       _signInController.pw = value;
                     },
                     validator: (value) {
-                      if (value!.isEmpty) return 'Please enter Custom PW';
+                      if (value!.isEmpty) return '비밀번호를 입력해주세요';
                       return null;
-                    }),
-
-                Row(
-                  children: [
-                    Text(
-                      'Remember ID',
-                      style: textTheme.subtitle1!
-                          .copyWith(color: colorScheme.tertiary),
-                    ),
-                    Checkbox(
+                    },
+                  ),
+                  SizedBox(
+                    height: 4.h,
+                  ),
+                  Row(
+                    children: [
+                      Text(
+                        '자동 로그인',
+                        style: textTheme.subtitle1!.copyWith(
+                          fontSize: 12,
+                          color: colorScheme.primary,
+                        ),
+                      ),
+                      Checkbox(
                         value: _rememberId,
-                        activeColor: colorScheme.secondary,
+                        activeColor: colorScheme.primary,
+                        checkColor: colorScheme.secondary,
+                        side: BorderSide(
+                          color: colorScheme.primary,
+                        ),
                         onChanged: (value) {
-                          setState(() {
-                            _rememberId = !_rememberId;
-                          });
-                        }),
-                    const Spacer(),
-                    TextButton(
+                          setState(
+                            () {
+                              _rememberId = !_rememberId;
+                            },
+                          );
+                        },
+                      ),
+                      const Spacer(),
+                      TextButton(
                         onPressed: () {
                           Get.to(const ForgotPwScreen());
                         },
                         child: Text(
-                          'Forgot PW?',
-                          style: textTheme.subtitle1!
-                              .copyWith(color: colorScheme.tertiary),
-                        ))
-                  ],
-                ),
-                SizedBox(
-                  height: 64.0.h,
-                ),
-
-                // Sign In 버튼
-                Container(
-                  width: 128.w,
-                  height: 40.h,
-                  decoration: BoxDecoration(
-                    color: colorScheme.secondary,
-                    borderRadius: BorderRadius.circular(8),
+                          '비밀번호 찾기',
+                          style: textTheme.subtitle1!.copyWith(
+                            fontSize: 12,
+                            color: colorScheme.primary,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
-                  child: TextButton(
-                    onPressed: () async {
-                      _rememberId
-                          ? await storage.write(
-                              key: "login",
-                              value:
-                                  "id ${_idController.text} password ${_pwController.text}")
-                          : () {};
-                      await _signInController.signIn();
-                    },
-                    child: Text(
-                      'Sign In',
-                      style: textTheme.headline2!
-                          .copyWith(color: colorScheme.primary),
+                  SizedBox(
+                    height: 64.0.h,
+                  ),
+
+                  // Sign In 버튼
+                  Container(
+                    width: 128.w,
+                    height: 40.h,
+                    decoration: BoxDecoration(
+                      color: colorScheme.primary,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: TextButton(
+                      onPressed: () async {
+                        _rememberId
+                            ? await storage.write(
+                                key: "login",
+                                value:
+                                    "id ${_idController.text}@handong.ac.kr password ${_pwController.text}")
+                            : () {};
+                        await _signInController.signIn();
+                      },
+                      child: Text(
+                        '로그인',
+                        style: textTheme.headline1!.copyWith(
+                          fontSize: 14,
+                          color: colorScheme.secondary,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-                TextButton(
-                  onPressed: () {
-                    Get.to(const SignUpScreen());
-                  },
-                  child: Text(
-                    'Sign Up',
-                    style: textTheme.headline2
-                        ?.copyWith(color: colorScheme.tertiary),
+                  TextButton(
+                    onPressed: () {
+                      Get.to(const SignUpScreen());
+                    },
+                    child: Text(
+                      '회원가입',
+                      style: textTheme.headline1?.copyWith(
+                        fontSize: 14,
+                        color: colorScheme.primary,
+                      ),
+                    ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
           ),
         ),
       ),
-    ));
+    );
   }
 }

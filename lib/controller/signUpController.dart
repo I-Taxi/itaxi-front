@@ -57,10 +57,8 @@ class SignUpController extends GetxController {
       } else if (e.code == 'email-already-in-use') {
         throw Exception('The account already exists for that email.');
       } else {
-        throw Exception('11111');
+        throw Exception(e);
       }
-    } catch (e) {
-      throw Exception(e);
     }
     // SignInController의 SignUp 함수 만들어서 적용.
     // pop
