@@ -1,27 +1,17 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:itaxi/controller/signInController.dart';
-import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/src/theme.dart';
 
+class ForgotPwScreen extends StatelessWidget {
+  ForgotPwScreen({Key? key}) : super(key: key);
 
-
-class ForgotPwScreen extends StatefulWidget {
-  const ForgotPwScreen({Key? key}) : super(key: key);
-
-  @override
-  _ForgotPwScreenState createState() => _ForgotPwScreenState();
-}
-
-class _ForgotPwScreenState extends State<ForgotPwScreen> {
-  SignInController _signInController = SignInController();
+  SignInController _signInController = Get.find();
 
   final _emailController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
-
 
   @override
   Widget build(BuildContext context) {
@@ -31,102 +21,180 @@ class _ForgotPwScreenState extends State<ForgotPwScreen> {
     return SafeArea(
       child: Scaffold(
         appBar: AppBar(
+          shadowColor: colorScheme.shadow,
+          elevation: 1.0,
           centerTitle: true,
           title: Text(
             '비밀번호 재설정',
-            style: ITaxiTheme.textTheme.subtitle1,
+            style: ITaxiTheme.textTheme.subtitle1?.copyWith(
+              color: colorScheme.onPrimary,
+              fontWeight: FontWeight.bold,
+            ),
+          ),
+          leading: IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: Icon(
+              Icons.arrow_back_rounded,
+              color: colorScheme.tertiary,
+            ),
           ),
         ),
-        body: Form(
-          key: _formKey,
-          child: ListView(
-            padding: const EdgeInsets.symmetric(horizontal: 24.0, vertical: 30.0),
-            children: [
-              Container(
-                decoration: BoxDecoration(
-                  // color: colorScheme.secondary,
-                  borderRadius: BorderRadius.all(
-                    Radius.circular(8),
-                  ),
+        backgroundColor: colorScheme.background,
+        body: GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            FocusScope.of(context).unfocus();
+          },
+          child: Form(
+            key: _formKey,
+            child: SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  vertical: 20.0.h,
+                  horizontal: 48.0.w,
                 ),
-                child: Text('회원가입 시 입력한 본인의 @handong.ac.kr 이메일을 입력해주세요.\n해당 이메일을 통해 비밀번호 재설정 링크를 받으실 수 있습니다.', style: textTheme.bodyText1,),
+                child: Column(
+                  children: [
+                    Text(
+                      '회원가입 시 입력한 본인의 이메일을 입력해주세요.\n해당 이메일을 통해 비밀번호 재설정 링크를 받으실 수 있습니다.',
+                      style: textTheme.subtitle1?.copyWith(
+                        color: colorScheme.onPrimary,
+                      ),
+                    ),
+                    SizedBox(
+                      height: 30.0.h,
+                    ),
+                    Align(
+                      alignment: Alignment.bottomLeft,
+                      child: Text(
+                        '이메일',
+                        style: textTheme.subtitle1?.copyWith(
+                          fontSize: 12,
+                          color: colorScheme.tertiary,
+                        ),
+                      ),
+                    ),
+                    // 이메일 입력
+                    TextFormField(
+                        controller: _emailController,
+                        autocorrect: false,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        decoration: InputDecoration(
+                          suffixText: '@handong.ac.kr',
+                          suffixStyle: textTheme.subtitle1?.copyWith(
+                            color: colorScheme.tertiary,
+                          ),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: colorScheme.tertiary,
+                              width: 0.3,
+                            ),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: colorScheme.secondary,
+                              width: 1.0,
+                            ),
+                          ),
+                        ),
+                        onChanged: (value) {
+                          _signInController.email = '$value@handong.ac.kr';
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty) return '이메일을 입력해주세요';
+                          return null;
+                        }),
+                    SizedBox(
+                      height: 52.0.h,
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        primary: colorScheme.secondary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
+                        ),
+                      ),
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          showConfirmDialog(context);
+                        }
+                      },
+                      child: Text(
+                        '완료',
+                        style: textTheme.subtitle1!.copyWith(
+                          color: colorScheme.primary,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
-              SizedBox(height: 30.0.h,),
-              // 이메일 입력
-              TextFormField(
-                  controller: _emailController,
-                  autocorrect: false,
-                  autovalidateMode: AutovalidateMode.onUserInteraction,
-                  decoration: InputDecoration(
-                      filled: true,
-                      labelText: '이메일',
-                      labelStyle: textTheme.bodyText1
-                          ?.copyWith(color: colorScheme.tertiary)),
-                  onChanged: (value) {
-                    _signInController.email = value;
-                  },
-                  validator: (value) {
-                    if (value!.isEmpty) return 'Please enter Email';
-                    // pattern 변경하면 됨.
-                    // regExp = RegExp(pattern.toString());
-                    // if (!regExp.hasMatch(value)) return 'Username is invalid'
-                    return null;
-                  }),
-              const SizedBox(height: 12.0),
-
-              SizedBox(height: 50.0.h),
-              SizedBox(
-                width: 104.w,
-                height: 40.h,
-                child: TextButton(
-                  child: Text("완료", style: textTheme.headline2!.copyWith(color: colorScheme.secondary),),
-                  onPressed: () {
-                    if(_formKey.currentState!.validate()){
-                      ShowDialog(context);
-                    }
-                    // Get.to(UserInfoRefactorScreen());
-                  },
-                ),
-              )
-            ],
+            ),
           ),
         ),
       ),
     );
   }
 
-  void ShowDialog(context) {
+  void showConfirmDialog(context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          final textTheme = Theme.of(context).textTheme;
-          return AlertDialog(
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10.0)),
-            content: Column(
-              mainAxisSize: MainAxisSize.min,
-              crossAxisAlignment: CrossAxisAlignment.start,
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(4.0),
+          ),
+          child: Container(
+            width: 360.w,
+            height: 200.h,
+            alignment: Alignment.center,
+            padding: EdgeInsets.fromLTRB(
+              28.0.w,
+              32.0.h,
+              28.0.w,
+              12.0.h,
+            ),
+            child: Column(
               children: <Widget>[
                 Text(
-                  "회원가입 시 입력하신 이메일이 맞나요?\n메일이 오지 않은 경우, 스팸함을 확인해주세요.",
-                  style: textTheme.bodyText1,
+                  "메일이 오지 않았다면?",
+                  style: textTheme.headline1?.copyWith(
+                    color: colorScheme.secondary,
+                  ),
+                ),
+                SizedBox(
+                  height: 16.h,
+                ),
+                Text(
+                  '기입한 메일 확인 후, 스팸함을 확인해주세요',
+                  style: textTheme.subtitle1?.copyWith(
+                    color: colorScheme.onPrimary,
+                  ),
+                ),
+                const Spacer(),
+                TextButton(
+                  onPressed: () async {
+                    await _signInController.sendPasswordResetEmailByKorean();
+                    Get.back();
+                    Get.back();
+                  },
+                  child: Text(
+                    "확인",
+                    style: textTheme.headline1
+                        ?.copyWith(color: colorScheme.tertiary),
+                  ),
                 ),
               ],
             ),
-            actions: <Widget>[
-              TextButton(
-                child: Text("확인", style: textTheme.bodyText1,),
-                onPressed: () async{
-                  await _signInController.sendPasswordResetEmailByKorean();
-                  Get.back();
-                  Get.back();
-                },
-              ),
-            ],
-          );
-        }
+          ),
+        );
+      },
     );
   }
 }
-
-

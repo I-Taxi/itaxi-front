@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:itaxi/controller/noticeController.dart';
 import 'package:itaxi/widget/noticeListTile.dart';
@@ -37,40 +38,46 @@ class NoticeScreen extends StatelessWidget {
             ),
           ),
         ),
+        backgroundColor: colorScheme.background,
         body: SingleChildScrollView(
-          child: FutureBuilder<List<Notice>>(
-            future: _noticeController.notices,
-            builder: (BuildContext context, snapshot) {
-              if (snapshot.hasData) {
-                if (snapshot.data!.isNotEmpty) {
-                  return ListView.builder(
-                    shrinkWrap: true,
-                    itemCount: snapshot.data!.length,
-                    itemBuilder: (BuildContext context, int index) {
-                      return noticeListTile(
-                        context: context,
-                        notice: snapshot.data![index],
-                      );
-                    },
-                  );
-                } else {
-                  return noticeIsEmpty(context);
-                }
-              } else if (snapshot.hasError) {
-                return Center(
-                  child: Text(
-                    '${snapshot.error}',
-                    style: textTheme.headline2?.copyWith(
-                      color: colorScheme.tertiary,
-                      fontFamily: 'NotoSans',
+          child: Padding(
+            padding: EdgeInsets.only(
+              left: 32.0.w,
+            ),
+            child: FutureBuilder<List<Notice>>(
+              future: _noticeController.notices,
+              builder: (BuildContext context, snapshot) {
+                if (snapshot.hasData) {
+                  if (snapshot.data!.isNotEmpty) {
+                    return ListView.builder(
+                      shrinkWrap: true,
+                      itemCount: snapshot.data!.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return noticeListTile(
+                          context: context,
+                          notice: snapshot.data![index],
+                        );
+                      },
+                    );
+                  } else {
+                    return noticeIsEmpty(context);
+                  }
+                } else if (snapshot.hasError) {
+                  return Center(
+                    child: Text(
+                      '${snapshot.error}',
+                      style: textTheme.headline2?.copyWith(
+                        color: colorScheme.tertiary,
+                        fontFamily: 'NotoSans',
+                      ),
                     ),
-                  ),
+                  );
+                }
+                return LinearProgressIndicator(
+                  color: colorScheme.secondary,
                 );
-              }
-              return LinearProgressIndicator(
-                color: colorScheme.secondary,
-              );
-            },
+              },
+            ),
           ),
         ),
       ),
