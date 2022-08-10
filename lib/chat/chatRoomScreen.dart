@@ -32,12 +32,10 @@ class ChatRoonScreen extends StatelessWidget {
             onPressed: () {
               Get.back();
             },
-            icon: Image.asset(
-              'assets/arrow/arrow_back.png',
+            icon: Icon(
+              Icons.arrow_back_rounded,
+              color: colorScheme.tertiary,
             ),
-          ),
-          iconTheme: IconThemeData(
-            color: colorScheme.tertiary,
           ),
         ),
         endDrawer: Drawer(
