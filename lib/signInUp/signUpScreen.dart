@@ -32,7 +32,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool _isObscure2 = true;
 
   // Pattern pattern = r'^(?=.*[a-zA-Z]{3,})(?=.*\d{3,})';
-  Pattern pattern = r'^(?=.*[a-zA-Z]{3,})';
+  Pattern pattern = r'^(?=.*[a-zA-Z]{6,})';
   late RegExp regExp;
   final _formKey = GlobalKey<FormState>();
 
@@ -157,6 +157,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                     ),
+
                     // Password 입력
                     TextFormField(
                       controller: _pwController,
@@ -199,7 +200,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       validator: (value) {
                         if (value!.isEmpty) return '비밀번호를 입력해주세요';
                         regExp = RegExp(pattern.toString());
-                        if (!regExp.hasMatch(value)) return '3자 이상의 영어를 사용해주세요';
+                        if (!regExp.hasMatch(value)) return '6자 이상의 영어를 사용해주세요';
                         return null;
                       },
                     ),
