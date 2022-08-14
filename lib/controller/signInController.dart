@@ -36,6 +36,7 @@ class SignInController extends GetxController {
   @override
   onInit() {
     super.onInit();
+    num = 4;
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
         _asyncMethod();

@@ -55,7 +55,8 @@ class _NoticeScreenState extends State<NoticeScreen> {
         child: SingleChildScrollView(
           child: Padding(
             padding: EdgeInsets.only(
-              left: 32.0.w,
+              left: 16.0.w,
+              right: 16.0.w,
             ),
             child: FutureBuilder<List<Notice>>(
               future: _noticeController.notices,
@@ -63,6 +64,7 @@ class _NoticeScreenState extends State<NoticeScreen> {
                 if (snapshot.hasData) {
                   if (snapshot.data!.isNotEmpty) {
                     return ListView.builder(
+                      physics: ScrollPhysics(),
                       shrinkWrap: true,
                       itemCount: snapshot.data!.length,
                       itemBuilder: (BuildContext context, int index) {

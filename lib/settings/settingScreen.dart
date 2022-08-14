@@ -12,6 +12,8 @@ import 'package:itaxi/settings/bugScreen.dart';
 import 'package:itaxi/settings/myInfoScreen.dart';
 import 'package:itaxi/settings/noticeScreen.dart';
 
+import '../controller/navigationController.dart';
+
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);
 
@@ -23,6 +25,8 @@ class SettingScreen extends StatefulWidget {
 
 class _SettingScreenState extends State<SettingScreen> {
   final SignInController _signInController = Get.find();
+  final NavigationController _navController = Get.put(NavigationController());
+
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +49,7 @@ class _SettingScreenState extends State<SettingScreen> {
             onPressed: () {
               SettingScreen.storage.delete(key: "login");
               _signInController.signedOutState();
+              _navController.changeIndex(1);
             },
             child: Text(
               '로그아웃',
@@ -59,7 +64,7 @@ class _SettingScreenState extends State<SettingScreen> {
       body: ColorfulSafeArea(
         color: colorScheme.primary,
         child: Padding(
-          padding: EdgeInsets.only(left: 28.w),
+          padding: EdgeInsets.only(left: 16.w, right: 16.w),
           child: _myListView(context: context),
         ),
       ),
