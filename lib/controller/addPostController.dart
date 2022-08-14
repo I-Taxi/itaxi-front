@@ -21,7 +21,7 @@ class AddPostController extends GetxController {
     update();
   }
 
-  Future<http.Response> fetchAddPost({required Post post}) async {
+  Future<int> fetchAddPost({required Post post}) async {
     var addPostUrl = "http://walab.handong.edu:8080/itaxi/api/";
     addPostUrl = '${addPostUrl}post';
 
@@ -40,7 +40,7 @@ class AddPostController extends GetxController {
       post = post.copyWith(id: result.id);
       await ChatRepository().setPost(post: post);
       _historyController.getHistorys();
-      return response;
+      return response.statusCode;
     } else {
       throw Exception('Failed to add posts');
     }

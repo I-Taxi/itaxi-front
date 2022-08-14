@@ -51,11 +51,19 @@ Widget chatListTile({required BuildContext context, required Chat chat}) {
         : Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                chat.memberName!,
-                style: textTheme.subtitle1?.copyWith(
-                  color: colorScheme.tertiary,
-                ),
+              Row(
+                children: [
+                  Icon(
+                    Icons.bookmark,
+                    color: colorScheme.tertiary,
+                  ),
+                  Text(
+                    chat.memberName!,
+                    style: textTheme.subtitle1?.copyWith(
+                      color: colorScheme.tertiary,
+                    ),
+                  ),
+                ],
               ),
               SizedBox(
                 height: 2.h,

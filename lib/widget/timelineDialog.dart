@@ -6,6 +6,7 @@ import 'package:itaxi/chat/chatRoomScreen.dart';
 import 'package:itaxi/controller/chatRoomController.dart';
 import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/controller/postController.dart';
+import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -15,6 +16,7 @@ Future<dynamic> timelineDiaog(
   final textTheme = Theme.of(context).textTheme;
   late PostController _postController = Get.find();
   late HistoryController _historyController = Get.find();
+  late UserController _userController = Get.find();
   ChatRoomController _chatRoomController = Get.put(ChatRoomController());
 
   return showDialog(
@@ -217,13 +219,25 @@ Future<dynamic> timelineDiaog(
                                 ),
                                 child: Stack(
                                   children: [
-                                    Text(
-                                      snapshot.data!.joiners!
-                                          .elementAt(i)
-                                          .memberName
-                                          .toString(),
-                                      style: textTheme.subtitle1?.copyWith(
-                                          color: colorScheme.onPrimary),
+                                    Row(
+                                      children: [
+                                        (snapshot.data!.joiners![i].owner ==
+                                                true)
+                                            ? Icon(
+                                                Icons.bookmark,
+                                                color: colorScheme.secondary,
+                                                size: 24.w,
+                                              )
+                                            : Container(),
+                                        Text(
+                                          snapshot.data!.joiners!
+                                              .elementAt(i)
+                                              .memberName
+                                              .toString(),
+                                          style: textTheme.subtitle1?.copyWith(
+                                              color: colorScheme.onPrimary),
+                                        ),
+                                      ],
                                     ),
                                     Row(
                                       mainAxisAlignment: MainAxisAlignment.end,
@@ -277,8 +291,8 @@ Future<dynamic> timelineDiaog(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           TextButton(
-                            onPressed: () {
-                              _postController.fetchOutJoin(
+                            onPressed: () async {
+                              await _postController.fetchOutJoin(
                                   postId: snapshot.data!.id!);
                               _historyController.getHistorys();
                               Get.back();
@@ -291,8 +305,10 @@ Future<dynamic> timelineDiaog(
                           ),
                           TextButton(
                             onPressed: () {
-                              _chatRoomController.getPost(post: post);
-                              _chatRoomController.getChats(post: post);
+                              _chatRoomController.getPost(post: snapshot.data!);
+                              _chatRoomController.getChats(
+                                  post: snapshot.data!);
+                              Get.back();
                               Get.to(const ChatRoonScreen());
                             },
                             child: Text(

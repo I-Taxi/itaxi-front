@@ -286,9 +286,9 @@ void addPostDialog({required BuildContext context}) {
                               _addPostController.changeCapacity(1);
                             },
                             child: (_addPostController.capacity == 1)
-                                ? Padding(
+                                ? Container(
                                     padding: EdgeInsets.symmetric(
-                                      horizontal: 6.w,
+                                      horizontal: 10.w,
                                     ),
                                     child: Text(
                                       '1',
@@ -296,9 +296,9 @@ void addPostDialog({required BuildContext context}) {
                                           color: colorScheme.secondary),
                                     ),
                                   )
-                                : Padding(
+                                : Container(
                                     padding: EdgeInsets.symmetric(
-                                      horizontal: 6.w,
+                                      horizontal: 10.w,
                                     ),
                                     child: Text(
                                       '1',
@@ -308,7 +308,7 @@ void addPostDialog({required BuildContext context}) {
                                   ),
                           ),
                           SizedBox(
-                            width: 16.w,
+                            width: 8.w,
                           ),
                           GestureDetector(
                             behavior: HitTestBehavior.opaque,
@@ -316,9 +316,9 @@ void addPostDialog({required BuildContext context}) {
                               _addPostController.changeCapacity(2);
                             },
                             child: (_addPostController.capacity == 2)
-                                ? Padding(
+                                ? Container(
                                     padding: EdgeInsets.symmetric(
-                                      horizontal: 6.w,
+                                      horizontal: 10.w,
                                     ),
                                     child: Text(
                                       '2',
@@ -326,9 +326,9 @@ void addPostDialog({required BuildContext context}) {
                                           color: colorScheme.secondary),
                                     ),
                                   )
-                                : Padding(
+                                : Container(
                                     padding: EdgeInsets.symmetric(
-                                      horizontal: 6.w,
+                                      horizontal: 10.w,
                                     ),
                                     child: Text(
                                       '2',
@@ -338,7 +338,7 @@ void addPostDialog({required BuildContext context}) {
                                   ),
                           ),
                           SizedBox(
-                            width: 16.w,
+                            width: 8.w,
                           ),
                           GestureDetector(
                             behavior: HitTestBehavior.opaque,
@@ -346,9 +346,9 @@ void addPostDialog({required BuildContext context}) {
                               _addPostController.changeCapacity(3);
                             },
                             child: (_addPostController.capacity == 3)
-                                ? Padding(
+                                ? Container(
                                     padding: EdgeInsets.symmetric(
-                                      horizontal: 6.w,
+                                      horizontal: 10.w,
                                     ),
                                     child: Text(
                                       '3',
@@ -356,9 +356,9 @@ void addPostDialog({required BuildContext context}) {
                                           color: colorScheme.secondary),
                                     ),
                                   )
-                                : Padding(
+                                : Container(
                                     padding: EdgeInsets.symmetric(
-                                      horizontal: 6.w,
+                                      horizontal: 10.w,
                                     ),
                                     child: Text(
                                       '3',
@@ -396,19 +396,27 @@ void addPostDialog({required BuildContext context}) {
                               _addPostController.changeLuggage(0);
                             },
                             child: (_addPostController.luggage == 0)
-                                ? Text(
-                                    '없음',
-                                    style: textTheme.headline2?.copyWith(
-                                        color: colorScheme.secondary),
+                                ? Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 6.w),
+                                    child: Text(
+                                      '없음',
+                                      style: textTheme.headline2?.copyWith(
+                                          color: colorScheme.secondary),
+                                    ),
                                   )
-                                : Text(
-                                    '없음',
-                                    style: textTheme.headline2
-                                        ?.copyWith(color: colorScheme.tertiary),
+                                : Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 6.w),
+                                    child: Text(
+                                      '없음',
+                                      style: textTheme.headline2?.copyWith(
+                                          color: colorScheme.tertiary),
+                                    ),
                                   ),
                           ),
                           SizedBox(
-                            width: 20.w,
+                            width: 8.w,
                           ),
                           GestureDetector(
                             behavior: HitTestBehavior.opaque,
@@ -416,19 +424,27 @@ void addPostDialog({required BuildContext context}) {
                               _addPostController.changeLuggage(1);
                             },
                             child: (_addPostController.luggage == 1)
-                                ? Text(
-                                    '소',
-                                    style: textTheme.headline2?.copyWith(
-                                        color: colorScheme.secondary),
+                                ? Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 6.w),
+                                    child: Text(
+                                      '소',
+                                      style: textTheme.headline2?.copyWith(
+                                          color: colorScheme.secondary),
+                                    ),
                                   )
-                                : Text(
-                                    '소',
-                                    style: textTheme.headline2
-                                        ?.copyWith(color: colorScheme.tertiary),
+                                : Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 6.w),
+                                    child: Text(
+                                      '소',
+                                      style: textTheme.headline2?.copyWith(
+                                          color: colorScheme.tertiary),
+                                    ),
                                   ),
                           ),
                           SizedBox(
-                            width: 20.w,
+                            width: 8.w,
                           ),
                           GestureDetector(
                             behavior: HitTestBehavior.opaque,
@@ -436,15 +452,23 @@ void addPostDialog({required BuildContext context}) {
                               _addPostController.changeLuggage(2);
                             },
                             child: (_addPostController.luggage == 2)
-                                ? Text(
-                                    '대',
-                                    style: textTheme.headline2?.copyWith(
-                                        color: colorScheme.secondary),
+                                ? Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 6.w),
+                                    child: Text(
+                                      '대',
+                                      style: textTheme.headline2?.copyWith(
+                                          color: colorScheme.secondary),
+                                    ),
                                   )
-                                : Text(
-                                    '대',
-                                    style: textTheme.headline2
-                                        ?.copyWith(color: colorScheme.tertiary),
+                                : Container(
+                                    padding:
+                                        EdgeInsets.symmetric(horizontal: 6.w),
+                                    child: Text(
+                                      '대',
+                                      style: textTheme.headline2?.copyWith(
+                                          color: colorScheme.tertiary),
+                                    ),
                                   ),
                           ),
                         ],
@@ -468,7 +492,7 @@ void addPostDialog({required BuildContext context}) {
                     ),
                   ),
                   TextButton(
-                    onPressed: () {
+                    onPressed: () async {
                       if (_tabViewController.currentIndex == 0) {
                         snackBar(context: context, title: '택시 또는 카풀을 선택해주세요.');
                       } else if (_placeController.dep == null) {
@@ -488,7 +512,7 @@ void addPostDialog({required BuildContext context}) {
                             ),
                             capacity: _addPostController.capacity + 1,
                             luggage: _addPostController.luggage);
-                        _addPostController.fetchAddPost(post: post);
+                        await _addPostController.fetchAddPost(post: post);
                         _postController.getPosts(
                           depId: _placeController.dep?.id,
                           dstId: _placeController.dst?.id,
