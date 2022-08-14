@@ -6,10 +6,21 @@ import 'package:itaxi/widget/noticeListTile.dart';
 
 import 'package:itaxi/model/notice.dart';
 
-class NoticeScreen extends StatelessWidget {
-  NoticeScreen({Key? key}) : super(key: key);
+class NoticeScreen extends StatefulWidget {
+  const NoticeScreen({Key? key}) : super(key: key);
 
+  @override
+  _NoticeScreenState createState() => _NoticeScreenState();
+}
+
+class _NoticeScreenState extends State<NoticeScreen> {
   NoticeController _noticeController = Get.put(NoticeController());
+
+
+  @override
+  initState() {
+    _noticeController.getNotices();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,3 +110,5 @@ class NoticeScreen extends StatelessWidget {
     );
   }
 }
+
+
