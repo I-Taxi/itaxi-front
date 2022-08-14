@@ -41,6 +41,11 @@ class SignInController extends GetxController {
     );
   }
 
+  @override
+  void dispose() {
+    super.dispose();
+  }
+
   _asyncMethod() async {
     // 데이터 없을 경우 null 반환
     userInfo = await storage.read(key: "login");
@@ -55,6 +60,8 @@ class SignInController extends GetxController {
   }
 
   Future<void> signIn() async {
+    print(id);
+    print(pw);
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(

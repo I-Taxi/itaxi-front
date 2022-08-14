@@ -7,10 +7,21 @@ import 'package:itaxi/settings/userInfoRefactorScreen.dart';
 
 import '../model/userInfoList.dart';
 
-class MyInfoScreen extends StatelessWidget {
-  MyInfoScreen({Key? key}) : super(key: key);
+class MyInfoScreen extends StatefulWidget {
+  const MyInfoScreen({Key? key}) : super(key: key);
 
+  @override
+  _MyInfoScreenState createState() => _MyInfoScreenState();
+}
+
+class _MyInfoScreenState extends State<MyInfoScreen> {
   UserController _userController = Get.put(UserController());
+
+  @override
+  initState(){
+    super.initState();
+    _userController.getUsers();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -118,7 +129,7 @@ class MyInfoScreen extends StatelessWidget {
                               children: [
                                 Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       "Email",
@@ -142,7 +153,7 @@ class MyInfoScreen extends StatelessWidget {
                                 ),
                                 Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       "계좌 은행",
@@ -166,7 +177,7 @@ class MyInfoScreen extends StatelessWidget {
                                 ),
                                 Row(
                                   mainAxisAlignment:
-                                      MainAxisAlignment.spaceBetween,
+                                  MainAxisAlignment.spaceBetween,
                                   children: [
                                     Text(
                                       "계좌 번호",
@@ -239,3 +250,4 @@ class MyInfoScreen extends StatelessWidget {
     );
   }
 }
+
