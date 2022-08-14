@@ -11,6 +11,8 @@ enum SignInState {
 class SignInController extends GetxController {
   SignInState signInState = SignInState.signedOut;
 
+  late int num;
+
   late String id;
   late String pw;
 
@@ -34,6 +36,7 @@ class SignInController extends GetxController {
   @override
   onInit() {
     super.onInit();
+    num = 4;
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
         _asyncMethod();
@@ -72,17 +75,27 @@ class SignInController extends GetxController {
                 signedInState(),
                 update(),
               }
-            : throw Exception('이메일 확인 안됨');
+              :{
+          num = 0,
+          update(),
+        };
+            // : throw Exception('이메일 확인 안됨');
         return value;
       });
     } on FirebaseAuthException catch (e) {
       //로그인 예외처리
       if (e.code == 'user-not-found') {
-        throw Exception('등록되지 않은 이메일입니다');
+        num = 1;
+        update();
+        // throw Exception('등록되지 않은 이메일입니다');
       } else if (e.code == 'wrong-password') {
-        throw Exception('비밀번호가 틀렸습니다');
+        num = 2;
+        update();
+        // throw Exception('비밀번호가 틀렸습니다');
       } else {
-        throw Exception(e.code);
+        num = 3;
+        update();
+        // throw Exception(e.code);
       }
     }
   }
