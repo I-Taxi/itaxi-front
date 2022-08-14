@@ -1,3 +1,4 @@
+import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -6,192 +7,212 @@ import 'package:itaxi/controller/chatRoomController.dart';
 import 'package:itaxi/model/chat.dart';
 import 'package:itaxi/widget/chatListTile.dart';
 
-class ChatRoonScreen extends StatelessWidget {
+class ChatRoonScreen extends StatefulWidget {
   const ChatRoonScreen({Key? key}) : super(key: key);
+
+  @override
+  State<ChatRoonScreen> createState() => _ChatRoonScreenState();
+}
+
+class _ChatRoonScreenState extends State<ChatRoonScreen> {
+  final ScrollController _scrollController = ScrollController();
+
+  void _scrollDown() {
+    _scrollController.animateTo(
+      _scrollController.position.maxScrollExtent + 40.h,
+      curve: Curves.easeOut,
+      duration: const Duration(milliseconds: 300),
+    );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     late ChatRoomController _chatRoomController = Get.find();
-
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          shadowColor: colorScheme.shadow,
-          elevation: 1.0,
-          centerTitle: true,
-          title: Text(
-            '${_chatRoomController.post.departure!.name} - ${_chatRoomController.post.destination!.name}',
-            style: textTheme.subtitle1?.copyWith(
-              color: colorScheme.onPrimary,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          leading: IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: Icon(
-              Icons.arrow_back_rounded,
-              color: colorScheme.tertiary,
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        shadowColor: colorScheme.shadow,
+        elevation: 1.0,
+        centerTitle: true,
+        title: Text(
+          '${_chatRoomController.post.departure!.name} - ${_chatRoomController.post.destination!.name}',
+          style: textTheme.subtitle1?.copyWith(
+            color: colorScheme.onPrimary,
+            fontWeight: FontWeight.bold,
           ),
         ),
-        endDrawer: Drawer(
-          width: 280.w,
-          elevation: 0.0,
-          child: Padding(
-            padding: EdgeInsets.fromLTRB(24.w, 32.h, 0.w, 24.h),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  _chatRoomController.post.postType == 1 ? '택시' : '카풀',
-                  style: textTheme.headline1?.copyWith(
-                    color: colorScheme.tertiary,
-                  ),
-                ),
-                SizedBox(
-                  height: 16.h,
-                ),
-                Text(
-                  DateFormat('yyyy년 MM월 dd일 E').format(
-                      DateTime.parse(_chatRoomController.post.deptTime!)),
-                  style: textTheme.subtitle1
-                      ?.copyWith(color: colorScheme.tertiary),
-                ),
-                SizedBox(
-                  height: 16.h,
-                ),
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.end,
-                      children: [
-                        Text(
-                          DateFormat('HH:mm').format(DateTime.parse(
-                              _chatRoomController.post.deptTime!)),
-                          style: textTheme.headline2
-                              ?.copyWith(color: colorScheme.onPrimary),
-                        ),
-                        SizedBox(
-                          height: 9.0.h,
-                        ),
-                        Image.asset(
-                          width: 24.w,
-                          height: 24.h,
-                          'assets/participant/${_chatRoomController.post.participantNum}_2.png',
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      width: 20.w,
-                    ),
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Row(
-                          children: [
-                            Image.asset(
-                              width: 10.w,
-                              height: 10.h,
-                              'assets/place/departure.png',
-                            ),
-                            SizedBox(
-                              width: 12.0.w,
-                            ),
-                            Text(
-                              '${_chatRoomController.post.departure?.name}',
-                              style: textTheme.bodyText1
-                                  ?.copyWith(color: colorScheme.onPrimary),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 12.0.h,
-                        ),
-                        Row(
-                          children: [
-                            Image.asset(
-                              width: 10.w,
-                              height: 10.h,
-                              'assets/place/destination.png',
-                            ),
-                            SizedBox(
-                              width: 12.0.w,
-                            ),
-                            Text(
-                              '${_chatRoomController.post.destination?.name}',
-                              style: textTheme.bodyText1
-                                  ?.copyWith(color: colorScheme.onPrimary),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                    const Spacer(),
-                    if (_chatRoomController.post.largeLuggageNum != 0)
-                      for (int i = 0;
-                          i < _chatRoomController.post.largeLuggageNum!;
-                          i++)
-                        Image.asset(
-                          width: 24.w,
-                          height: 32.h,
-                          'assets/luggage/luggage_large.png',
-                        ),
-                    if (_chatRoomController.post.smallLuggageNum != 0)
-                      for (int i = 0;
-                          i < _chatRoomController.post.smallLuggageNum!;
-                          i++)
-                        Image.asset(
-                          width: 16.w,
-                          height: 22.h,
-                          'assets/luggage/luggage_small.png',
-                        ),
-                    if (_chatRoomController.post.largeLuggageNum != 0 ||
-                        _chatRoomController.post.smallLuggageNum != 0)
-                      Padding(
-                        padding: EdgeInsets.only(left: 7.w),
-                        child: Image.asset(
-                          width: 7.w,
-                          height: 48.h,
-                          'assets/luggage/human.png',
-                        ),
-                      ),
-                  ],
-                ),
-                SizedBox(
-                  height: 12.h,
-                ),
-                Divider(
-                  thickness: 1,
-                  color: colorScheme.shadow,
-                ),
-                SizedBox(
-                  height: 12.h,
-                ),
-                // for (int joiner = 0;
-                //     joiner < _chatRoomController.post.joiners!.length;
-                //     joiner++)
-                //   Text(
-                //     _chatRoomController.post.joiners!
-                //         .elementAt(joiner)
-                //         .memberName
-                //         .toString(),
-                //     style: textTheme.subtitle1?.copyWith(
-                //       color: colorScheme.onPrimary,
-                //     ),
-                //   ),
-              ],
-            ),
+        leading: IconButton(
+          onPressed: () {
+            Get.back();
+          },
+          icon: Icon(
+            Icons.arrow_back_rounded,
+            color: colorScheme.tertiary,
           ),
         ),
-        backgroundColor: colorScheme.background,
-        body: GestureDetector(
+      ),
+      // endDrawer: Drawer(
+      //   width: 280.w,
+      //   elevation: 0.0,
+      //   child: Padding(
+      //     padding: EdgeInsets.fromLTRB(24.w, 32.h, 0.w, 24.h),
+      //     child: Column(
+      //       crossAxisAlignment: CrossAxisAlignment.start,
+      //       children: [
+      //         Text(
+      //           _chatRoomController.post.postType == 1 ? '택시' : '카풀',
+      //           style: textTheme.headline1?.copyWith(
+      //             color: colorScheme.tertiary,
+      //           ),
+      //         ),
+      //         SizedBox(
+      //           height: 16.h,
+      //         ),
+      //         Text(
+      //           DateFormat('yyyy년 MM월 dd일 E')
+      //               .format(DateTime.parse(_chatRoomController.post.deptTime!)),
+      //           style:
+      //               textTheme.subtitle1?.copyWith(color: colorScheme.tertiary),
+      //         ),
+      //         SizedBox(
+      //           height: 16.h,
+      //         ),
+      //         Row(
+      //           crossAxisAlignment: CrossAxisAlignment.end,
+      //           children: [
+      //             Column(
+      //               mainAxisAlignment: MainAxisAlignment.center,
+      //               crossAxisAlignment: CrossAxisAlignment.end,
+      //               children: [
+      //                 Text(
+      //                   DateFormat('HH:mm').format(
+      //                       DateTime.parse(_chatRoomController.post.deptTime!)),
+      //                   style: textTheme.headline2
+      //                       ?.copyWith(color: colorScheme.onPrimary),
+      //                 ),
+      //                 SizedBox(
+      //                   height: 9.0.h,
+      //                 ),
+      //                 Image.asset(
+      //                   width: 24.w,
+      //                   height: 24.h,
+      //                   'assets/participant/${_chatRoomController.post.participantNum}_2.png',
+      //                 ),
+      //               ],
+      //             ),
+      //             SizedBox(
+      //               width: 20.w,
+      //             ),
+      //             Column(
+      //               mainAxisAlignment: MainAxisAlignment.center,
+      //               crossAxisAlignment: CrossAxisAlignment.start,
+      //               children: [
+      //                 Row(
+      //                   children: [
+      //                     Image.asset(
+      //                       width: 10.w,
+      //                       height: 10.h,
+      //                       'assets/place/departure.png',
+      //                     ),
+      //                     SizedBox(
+      //                       width: 12.0.w,
+      //                     ),
+      //                     Text(
+      //                       '${_chatRoomController.post.departure?.name}',
+      //                       style: textTheme.bodyText1
+      //                           ?.copyWith(color: colorScheme.onPrimary),
+      //                     ),
+      //                   ],
+      //                 ),
+      //                 SizedBox(
+      //                   height: 12.0.h,
+      //                 ),
+      //                 Row(
+      //                   children: [
+      //                     Image.asset(
+      //                       width: 10.w,
+      //                       height: 10.h,
+      //                       'assets/place/destination.png',
+      //                     ),
+      //                     SizedBox(
+      //                       width: 12.0.w,
+      //                     ),
+      //                     Text(
+      //                       '${_chatRoomController.post.destination?.name}',
+      //                       style: textTheme.bodyText1
+      //                           ?.copyWith(color: colorScheme.onPrimary),
+      //                     ),
+      //                   ],
+      //                 ),
+      //               ],
+      //             ),
+      //             const Spacer(),
+      //             if (_chatRoomController.post.largeLuggageNum != 0)
+      //               for (int i = 0;
+      //                   i < _chatRoomController.post.largeLuggageNum!;
+      //                   i++)
+      //                 Image.asset(
+      //                   width: 24.w,
+      //                   height: 32.h,
+      //                   'assets/luggage/luggage_large.png',
+      //                 ),
+      //             if (_chatRoomController.post.smallLuggageNum != 0)
+      //               for (int i = 0;
+      //                   i < _chatRoomController.post.smallLuggageNum!;
+      //                   i++)
+      //                 Image.asset(
+      //                   width: 16.w,
+      //                   height: 22.h,
+      //                   'assets/luggage/luggage_small.png',
+      //                 ),
+      //             if (_chatRoomController.post.largeLuggageNum != 0 ||
+      //                 _chatRoomController.post.smallLuggageNum != 0)
+      //               Padding(
+      //                 padding: EdgeInsets.only(left: 7.w),
+      //                 child: Image.asset(
+      //                   width: 7.w,
+      //                   height: 48.h,
+      //                   'assets/luggage/human.png',
+      //                 ),
+      //               ),
+      //           ],
+      //         ),
+      //         SizedBox(
+      //           height: 12.h,
+      //         ),
+      //         Divider(
+      //           thickness: 1,
+      //           color: colorScheme.shadow,
+      //         ),
+      //         SizedBox(
+      //           height: 12.h,
+      //         ),
+      //         // for (int joiner = 0;
+      //         //     joiner < _chatRoomController.post.joiners!.length;
+      //         //     joiner++)
+      //         //   Text(
+      //         //     _chatRoomController.post.joiners!
+      //         //         .elementAt(joiner)
+      //         //         .memberName
+      //         //         .toString(),
+      //         //     style: textTheme.subtitle1?.copyWith(
+      //         //       color: colorScheme.onPrimary,
+      //         //     ),
+      //         //   ),
+      //       ],
+      //     ),
+      //   ),
+      // ),
+      backgroundColor: colorScheme.background,
+      body: ColorfulSafeArea(
+        color: colorScheme.primary,
+        child: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () {
             FocusScope.of(context).unfocus();
@@ -210,6 +231,7 @@ class ChatRoonScreen extends StatelessWidget {
                           padding: EdgeInsets.fromLTRB(8.w, 0.h, 8.w, 12.h),
                           child: ListView.builder(
                             shrinkWrap: true,
+                            controller: _scrollController,
                             itemBuilder: (BuildContext context, int index) {
                               return Column(
                                 children: [
@@ -308,90 +330,85 @@ class ChatRoonScreen extends StatelessWidget {
                 },
               ),
               Container(
+                margin: EdgeInsets.fromLTRB(8.w, 4.w, 8.w, 4.w),
+                padding: EdgeInsets.only(left: 16.w),
                 decoration: BoxDecoration(
-                  color: colorScheme.tertiary,
-                ),
-                child: Container(
-                  margin: EdgeInsets.fromLTRB(8.w, 4.w, 8.w, 4.w),
-                  padding: EdgeInsets.only(left: 16.w),
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(20.0),
-                    border: Border.all(
-                      width: 1.0,
-                      color: colorScheme.shadow,
-                    ),
+                  borderRadius: BorderRadius.circular(20.0),
+                  border: Border.all(
+                    width: 1.0,
+                    color: colorScheme.shadow,
                   ),
-                  child: Row(
-                    children: [
-                      Flexible(
-                        child: SingleChildScrollView(
-                          scrollDirection: Axis.vertical,
-                          child: GetBuilder<ChatRoomController>(builder: (_) {
-                            return TextField(
-                              controller:
-                                  _chatRoomController.chatTextController,
-                              cursorColor: colorScheme.shadow,
-                              style: textTheme.subtitle1?.copyWith(
+                ),
+                child: Row(
+                  children: [
+                    Flexible(
+                      child: SingleChildScrollView(
+                        scrollDirection: Axis.vertical,
+                        child: GetBuilder<ChatRoomController>(builder: (_) {
+                          return TextField(
+                            controller: _chatRoomController.chatTextController,
+                            cursorColor: colorScheme.shadow,
+                            style: textTheme.subtitle1?.copyWith(
+                              color: colorScheme.tertiary,
+                            ),
+                            minLines: 1,
+                            maxLines: 4,
+                            decoration: InputDecoration.collapsed(
+                              hintText: '',
+                              hintStyle: textTheme.subtitle1?.copyWith(
                                 color: colorScheme.primary,
                               ),
-                              minLines: 1,
-                              maxLines: 4,
-                              decoration: InputDecoration.collapsed(
-                                hintText: '',
-                                hintStyle: textTheme.subtitle1?.copyWith(
-                                  color: colorScheme.primary,
-                                ),
-                              ),
-                              onChanged: (text) {
-                                if (_chatRoomController
-                                    .chatTextController.text.isNotEmpty) {
-                                  _chatRoomController.changeTexting(true);
-                                } else {
-                                  _chatRoomController.changeTexting(false);
-                                }
-                              },
-                              onSubmitted: (text) {
-                                _chatRoomController.submitChat();
-                                _chatRoomController.clearTexting();
-                              },
-                            );
-                          }),
-                        ),
+                            ),
+                            onChanged: (text) {
+                              if (_chatRoomController
+                                  .chatTextController.text.isNotEmpty) {
+                                _chatRoomController.changeTexting(true);
+                              } else {
+                                _chatRoomController.changeTexting(false);
+                              }
+                            },
+                            onSubmitted: (text) {
+                              _chatRoomController.submitChat();
+                              _chatRoomController.clearTexting();
+                            },
+                          );
+                        }),
                       ),
-                      GetBuilder<ChatRoomController>(
-                        builder: (_) {
-                          if (_chatRoomController.texting == true) {
-                            return GestureDetector(
-                              onTap: () {
-                                _chatRoomController.submitChat();
-                                _chatRoomController.clearTexting();
-                              },
-                              child: CircleAvatar(
-                                radius: 24.h,
-                                backgroundColor: colorScheme.tertiary,
-                                child: Icon(
-                                  Icons.arrow_upward_rounded,
-                                  color: colorScheme.primary,
-                                ),
+                    ),
+                    GetBuilder<ChatRoomController>(
+                      builder: (_) {
+                        if (_chatRoomController.texting == true) {
+                          return GestureDetector(
+                            onTap: () {
+                              _chatRoomController.submitChat();
+                              _chatRoomController.clearTexting();
+                              _scrollDown();
+                            },
+                            child: CircleAvatar(
+                              radius: 20.h,
+                              backgroundColor: colorScheme.primary,
+                              child: Icon(
+                                Icons.arrow_upward_rounded,
+                                color: colorScheme.tertiary,
                               ),
-                            );
-                          } else {
-                            return GestureDetector(
-                              onTap: () {},
-                              child: CircleAvatar(
-                                radius: 24.h,
-                                backgroundColor: colorScheme.tertiary,
-                                child: Icon(
-                                  Icons.arrow_upward_rounded,
-                                  color: colorScheme.tertiary,
-                                ),
+                            ),
+                          );
+                        } else {
+                          return GestureDetector(
+                            onTap: () {},
+                            child: CircleAvatar(
+                              radius: 20.h,
+                              backgroundColor: colorScheme.primary,
+                              child: Icon(
+                                Icons.arrow_upward_rounded,
+                                color: colorScheme.primary,
                               ),
-                            );
-                          }
-                        },
-                      ),
-                    ],
-                  ),
+                            ),
+                          );
+                        }
+                      },
+                    ),
+                  ],
                 ),
               ),
             ],

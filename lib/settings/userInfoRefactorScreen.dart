@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -20,31 +23,32 @@ class UserInfoRefactorScreen extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
 
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          shadowColor: colorScheme.shadow,
-          elevation: 1.0,
-          centerTitle: true,
-          title: Text(
-            '내정보 수정',
-            style: textTheme.subtitle1?.copyWith(
-              color: colorScheme.onPrimary,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          leading: IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: Icon(
-              Icons.arrow_back_rounded,
-              color: colorScheme.tertiary,
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        shadowColor: colorScheme.shadow,
+        elevation: 1.0,
+        centerTitle: true,
+        title: Text(
+          '내정보 수정',
+          style: textTheme.subtitle1?.copyWith(
+            color: colorScheme.onPrimary,
+            fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: colorScheme.background,
-        body: GestureDetector(
+        leading: IconButton(
+          onPressed: () {
+            Get.back();
+          },
+          icon: Icon(
+            Icons.arrow_back_rounded,
+            color: colorScheme.tertiary,
+          ),
+        ),
+      ),
+      backgroundColor: colorScheme.background,
+      body: ColorfulSafeArea(
+        color: colorScheme.primary,
+        child: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () {
             FocusScope.of(context).unfocus();
@@ -64,7 +68,7 @@ class UserInfoRefactorScreen extends StatelessWidget {
                       child: Text(
                         '새 전화번호',
                         style: textTheme.subtitle1?.copyWith(
-                          fontSize: 12,
+                          fontSize: Platform.isIOS ? 14 : 12,
                           color: colorScheme.tertiary,
                         ),
                       ),
@@ -104,7 +108,7 @@ class UserInfoRefactorScreen extends StatelessWidget {
                       child: Text(
                         '새 은행명',
                         style: textTheme.subtitle1?.copyWith(
-                          fontSize: 12,
+                          fontSize: Platform.isIOS ? 14 : 12,
                           color: colorScheme.tertiary,
                         ),
                       ),
@@ -143,7 +147,7 @@ class UserInfoRefactorScreen extends StatelessWidget {
                       child: Text(
                         '새 계좌번호',
                         style: textTheme.subtitle1?.copyWith(
-                          fontSize: 12,
+                          fontSize: Platform.isIOS ? 14 : 12,
                           color: colorScheme.tertiary,
                         ),
                       ),

@@ -60,6 +60,7 @@ class HistoryController extends GetxController {
     if (response.statusCode == 200) {
       return HistorysfromJson(json.decode(utf8.decode(response.bodyBytes)));
     } else {
+      print(response.statusCode);
       throw Exception('Failed to load historys');
     }
   }

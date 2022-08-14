@@ -66,5 +66,12 @@ class PlaceController extends GetxController {
   void selectDst({required Place place}) {
     dst = place;
     update();
+    _postController.getPosts(
+      depId: dep?.id,
+      dstId: dst?.id,
+      time: _dateController
+          .formattingDateTime(_dateController.mergeDateAndTime()),
+      postType: _tabViewController.currentIndex,
+    );
   }
 }

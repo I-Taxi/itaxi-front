@@ -1,3 +1,4 @@
+import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
@@ -27,36 +28,37 @@ class _SettingScreenState extends State<SettingScreen> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          shadowColor: colorScheme.shadow,
-          elevation: 1.0,
-          centerTitle: true,
-          title: Text(
-            '설정',
-            style: textTheme.subtitle1?.copyWith(
-              color: colorScheme.onPrimary,
-              fontWeight: FontWeight.bold,
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        shadowColor: colorScheme.shadow,
+        elevation: 1.0,
+        centerTitle: true,
+        title: Text(
+          '설정',
+          style: textTheme.subtitle1?.copyWith(
+            color: colorScheme.onPrimary,
+            fontWeight: FontWeight.bold,
           ),
-          actions: [
-            TextButton(
-              onPressed: () {
-                SettingScreen.storage.delete(key: "login");
-                _signInController.signedOutState();
-              },
-              child: Text(
-                '로그아웃',
-                style: textTheme.subtitle1?.copyWith(
-                  color: colorScheme.tertiary,
-                ),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () {
+              SettingScreen.storage.delete(key: "login");
+              _signInController.signedOutState();
+            },
+            child: Text(
+              '로그아웃',
+              style: textTheme.subtitle1?.copyWith(
+                color: colorScheme.tertiary,
               ),
             ),
-          ],
-        ),
-        backgroundColor: colorScheme.primary,
-        body: Padding(
+          ),
+        ],
+      ),
+      backgroundColor: colorScheme.primary,
+      body: ColorfulSafeArea(
+        color: colorScheme.primary,
+        child: Padding(
           padding: EdgeInsets.only(left: 28.w),
           child: _myListView(context: context),
         ),

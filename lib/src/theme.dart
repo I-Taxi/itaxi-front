@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 
 class ITaxiTheme {
@@ -12,7 +14,7 @@ class ITaxiTheme {
     return ThemeData(
       colorScheme: colorScheme,
       // fontFamily: '',
-      textTheme: textTheme,
+      textTheme: Platform.isIOS ? textThemeIOS : textThemeDefault,
       // textTheme: _textTheme.apply(
       //     displayColor: Color(0xff343434), fontFamily: GoogleFonts
       //     .roboto()
@@ -70,10 +72,17 @@ class ITaxiTheme {
       shadow: Color(0xffCCCCCC),
       brightness: Brightness.light);
 
-  static const TextTheme textTheme = TextTheme(
+  static const TextTheme textThemeDefault = TextTheme(
     headline1: TextStyle(fontSize: 16, fontFamily: 'NotoSans'),
     headline2: TextStyle(fontSize: 15, fontFamily: 'Seoul'),
     subtitle1: TextStyle(fontSize: 13, fontFamily: 'NotoSans'),
     bodyText1: TextStyle(fontSize: 11, fontFamily: 'NotoSans'),
+  );
+
+  static const TextTheme textThemeIOS = TextTheme(
+    headline1: TextStyle(fontSize: 18, fontFamily: 'NotoSans'),
+    headline2: TextStyle(fontSize: 17, fontFamily: 'Seoul'),
+    subtitle1: TextStyle(fontSize: 15, fontFamily: 'NotoSans'),
+    bodyText1: TextStyle(fontSize: 13, fontFamily: 'NotoSans'),
   );
 }

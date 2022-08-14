@@ -1,7 +1,4 @@
-import 'dart:convert';
-
 import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:itaxi/model/chat.dart';
 import 'package:itaxi/model/joiner.dart';
 import 'package:itaxi/model/place.dart';
 
