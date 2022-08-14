@@ -1,3 +1,4 @@
+import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -47,45 +48,46 @@ class _MainScreenState extends State<MainScreen> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          shadowColor: colorScheme.shadow,
-          elevation: 1.0,
-          centerTitle: true,
-          title: Text(
-            '조회 / 모집',
-            style: textTheme.subtitle1?.copyWith(
-              color: colorScheme.onPrimary,
-              fontWeight: FontWeight.bold,
+    return Scaffold(
+      appBar: AppBar(
+        shadowColor: colorScheme.shadow,
+        elevation: 1.0,
+        centerTitle: true,
+        title: Text(
+          '조회 / 모집',
+          style: textTheme.subtitle1?.copyWith(
+            color: colorScheme.onPrimary,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        actions: [
+          GestureDetector(
+            onTap: () {
+              addPostDialog(context: context);
+              _postController.getPosts(
+                depId: _placeController.dep?.id,
+                dstId: _placeController.dst?.id,
+                time: _dateController.formattingDateTime(
+                  _dateController.mergeDateAndTime(),
+                ),
+                postType: _tabViewController.currentIndex,
+              );
+            },
+            child: Image.asset(
+              width: 24.w,
+              height: 24.h,
+              'assets/button/add_1.png',
             ),
           ),
-          actions: [
-            GestureDetector(
-              onTap: () {
-                addPostDialog(context: context);
-                _postController.getPosts(
-                  depId: _placeController.dep?.id,
-                  dstId: _placeController.dst?.id,
-                  time: _dateController.formattingDateTime(
-                    _dateController.mergeDateAndTime(),
-                  ),
-                  postType: _tabViewController.currentIndex,
-                );
-              },
-              child: Image.asset(
-                width: 24.w,
-                height: 24.h,
-                'assets/button/add_1.png',
-              ),
-            ),
-            SizedBox(
-              width: 16.w,
-            ),
-          ],
-        ),
-        backgroundColor: colorScheme.background,
-        body: GetBuilder<TabViewController>(
+          SizedBox(
+            width: 16.w,
+          ),
+        ],
+      ),
+      backgroundColor: colorScheme.background,
+      body: ColorfulSafeArea(
+        color: colorScheme.primary,
+        child: GetBuilder<TabViewController>(
           builder: (_) {
             return Column(
               children: [
@@ -344,10 +346,11 @@ class _MainScreenState extends State<MainScreen> {
                       ],
                     ),
                     SizedBox(
-                      height: 16.0.h,
+                      height: 8.0.h,
                     ),
-                    const Divider(
+                    Divider(
                       thickness: 0.3,
+                      color: colorScheme.tertiary,
                     ),
                   ],
                 ),
@@ -395,14 +398,21 @@ class _MainScreenState extends State<MainScreen> {
                             }
                             // post load 중에 오류 발생
                             else if (snapshot.hasError) {
-                              return Center(
-                                child: Text(
-                                  '${snapshot.error}',
-                                  style: textTheme.headline2?.copyWith(
-                                    color: colorScheme.tertiary,
-                                    fontFamily: 'NotoSans',
+                              return ListView(
+                                children: [
+                                  SizedBox(
+                                    height: 40.h,
                                   ),
-                                ),
+                                  Align(
+                                    child: Text(
+                                      '${snapshot.error}',
+                                      style: textTheme.headline2?.copyWith(
+                                        color: colorScheme.tertiary,
+                                        fontFamily: 'NotoSans',
+                                      ),
+                                    ),
+                                  ),
+                                ],
                               );
                             }
 
@@ -428,66 +438,70 @@ class _MainScreenState extends State<MainScreen> {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    return Column(
-      mainAxisAlignment: MainAxisAlignment.start,
+    return ListView(
       children: [
-        Padding(
-          padding: EdgeInsets.symmetric(vertical: 40.0.h),
-          child: Text(
-            '검색 결과가 없습니다',
-            style: textTheme.headline2?.copyWith(
-              color: colorScheme.tertiary,
-              fontFamily: 'NotoSans',
-            ),
-          ),
-        ),
-        InkWell(
-          onTap: () {
-            addPostDialog(context: context);
-            _postController.getPosts(
-              depId: _placeController.dep?.id,
-              dstId: _placeController.dst?.id,
-              time: _dateController.formattingDateTime(
-                _dateController.mergeDateAndTime(),
+        Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.symmetric(vertical: 40.0.h),
+              child: Text(
+                '검색 결과가 없습니다',
+                style: textTheme.headline2?.copyWith(
+                  color: colorScheme.tertiary,
+                  fontFamily: 'NotoSans',
+                ),
               ),
-              postType: _tabViewController.currentIndex,
-            );
-          },
-          child: Container(
-            width: 352.0.w,
-            height: 80.0.h,
-            decoration: BoxDecoration(
-              color: colorScheme.background,
-              borderRadius: BorderRadius.circular(4.0),
-              boxShadow: [
-                BoxShadow(
-                  color: colorScheme.shadow,
-                  offset: const Offset(1.0, 1.0),
-                  blurRadius: 2.0,
-                ),
-              ],
             ),
-            child: Column(
-              children: [
-                SizedBox(
-                  height: 18.0.h,
+            InkWell(
+              onTap: () {
+                addPostDialog(context: context);
+                _postController.getPosts(
+                  depId: _placeController.dep?.id,
+                  dstId: _placeController.dst?.id,
+                  time: _dateController.formattingDateTime(
+                    _dateController.mergeDateAndTime(),
+                  ),
+                  postType: _tabViewController.currentIndex,
+                );
+              },
+              child: Container(
+                width: 352.0.w,
+                height: 80.0.h,
+                decoration: BoxDecoration(
+                  color: colorScheme.background,
+                  borderRadius: BorderRadius.circular(4.0),
+                  boxShadow: [
+                    BoxShadow(
+                      color: colorScheme.shadow,
+                      offset: const Offset(1.0, 1.0),
+                      blurRadius: 2.0,
+                    ),
+                  ],
                 ),
-                Image.asset(
-                  width: 16.0.w,
-                  height: 16.0.h,
-                  'assets/button/add_2.png',
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 18.0.h,
+                    ),
+                    Image.asset(
+                      width: 16.0.w,
+                      height: 16.0.h,
+                      'assets/button/add_2.png',
+                    ),
+                    SizedBox(
+                      height: 12.0.h,
+                    ),
+                    Text(
+                      '새로 모집하기',
+                      style: textTheme.subtitle1
+                          ?.copyWith(color: colorScheme.tertiary),
+                    )
+                  ],
                 ),
-                SizedBox(
-                  height: 12.0.h,
-                ),
-                Text(
-                  '새로 모집하기',
-                  style: textTheme.subtitle1
-                      ?.copyWith(color: colorScheme.tertiary),
-                )
-              ],
+              ),
             ),
-          ),
+          ],
         ),
       ],
     );

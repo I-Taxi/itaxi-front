@@ -82,7 +82,7 @@ Widget chatListTile({required BuildContext context, required Chat chat}) {
                     width: 4.w,
                   ),
                   Text(
-                    DateFormat('hh:mm').format(chat.chatTime!.toDate()),
+                    DateFormat('h:mm').format(chat.chatTime!.toDate()),
                     style: textTheme.bodyText1?.copyWith(
                       color: colorScheme.shadow,
                     ),

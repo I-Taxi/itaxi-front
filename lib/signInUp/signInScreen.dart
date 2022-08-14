@@ -1,10 +1,13 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
+import 'package:colorful_safe_area/colorful_safe_area.dart';
+
 import 'package:itaxi/controller/signInController.dart';
 import 'package:itaxi/signInUp/signUpScreen.dart';
-
 import 'package:itaxi/signInUp/forgotPwScreen.dart';
 
 class SignInScreen extends StatefulWidget {
@@ -56,10 +59,11 @@ class _SignInScreenState extends State<SignInScreen> {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    return SafeArea(
-      child: Scaffold(
-        backgroundColor: colorScheme.secondary,
-        body: GestureDetector(
+    return Scaffold(
+      backgroundColor: colorScheme.secondary,
+      body: ColorfulSafeArea(
+        color: colorScheme.secondary,
+        child: GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () {
             FocusScope.of(context).unfocus();
@@ -93,14 +97,13 @@ class _SignInScreenState extends State<SignInScreen> {
                           Text(
                             'iTaxi',
                             style: textTheme.headline2?.copyWith(
-                              fontSize: 36.sp,
+                              fontSize: 36,
                               color: colorScheme.primary,
                             ),
                           ),
                           Text(
                             'Powered by CRA',
-                            style: textTheme.headline1!.copyWith(
-                              fontSize: 16.sp,
+                            style: textTheme.headline2!.copyWith(
                               color: colorScheme.primary,
                             ),
                           ),
@@ -119,7 +122,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     child: Text(
                       '아이디',
                       style: textTheme.subtitle1?.copyWith(
-                        fontSize: 12,
+                        fontSize: Platform.isIOS ? 14 : 12,
                         color: colorScheme.primary,
                       ),
                     ),
@@ -170,7 +173,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     child: Text(
                       '비밀번호',
                       style: textTheme.subtitle1?.copyWith(
-                        fontSize: 12,
+                        fontSize: Platform.isIOS ? 14 : 12,
                         color: colorScheme.primary,
                       ),
                     ),
@@ -231,7 +234,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       Text(
                         '자동 로그인',
                         style: textTheme.subtitle1!.copyWith(
-                          fontSize: 12,
+                          fontSize: Platform.isIOS ? 14 : 12,
                           color: colorScheme.primary,
                         ),
                       ),
@@ -258,7 +261,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         child: Text(
                           '비밀번호 찾기',
                           style: textTheme.subtitle1!.copyWith(
-                            fontSize: 12,
+                            fontSize: Platform.isIOS ? 14 : 12,
                             color: colorScheme.primary,
                           ),
                         ),
@@ -289,8 +292,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       },
                       child: Text(
                         '로그인',
-                        style: textTheme.headline1!.copyWith(
-                          fontSize: 14,
+                        style: textTheme.subtitle1!.copyWith(
                           color: colorScheme.secondary,
                         ),
                       ),
@@ -302,8 +304,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     },
                     child: Text(
                       '회원가입',
-                      style: textTheme.headline1?.copyWith(
-                        fontSize: 14,
+                      style: textTheme.subtitle1?.copyWith(
                         color: colorScheme.primary,
                       ),
                     ),

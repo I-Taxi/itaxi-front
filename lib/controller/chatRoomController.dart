@@ -38,7 +38,7 @@ class ChatRoomController extends GetxController {
     Chat chat = Chat(
       memberId: _userController.uid,
       memberName: _userController.name!,
-      chatData: chatTextController.text,
+      chatData: chatTextController.text.trim(),
       chatTime: Timestamp.fromDate(DateTime.now()),
     );
     await ChatRepository().setChat(post: post, chat: chat);

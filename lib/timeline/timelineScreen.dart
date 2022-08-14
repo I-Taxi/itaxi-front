@@ -64,7 +64,9 @@ class TimelineScreen extends StatelessWidget {
                               SizedBox(
                                 height: 12.h,
                               ),
-                              for (int i = 0; i < snapshot.data!.length; i++)
+                              for (int i = snapshot.data!.length - 1;
+                                  i >= 0;
+                                  i--)
                                 if (DateTime.now()
                                         .difference(DateTime.parse(
                                             snapshot.data![i].deptTime!))
@@ -179,20 +181,39 @@ class TimelineScreen extends StatelessWidget {
 
                   // history가 없을 때
                   else {
-                    return Center(
-                      child: Text(
-                        '탑승 내역이 없습니다',
-                        style: textTheme.headline1
-                            ?.copyWith(color: colorScheme.tertiary),
-                      ),
+                    return ListView(
+                      children: [
+                        SizedBox(
+                          height: 160.h,
+                        ),
+                        Align(
+                          alignment: Alignment.center,
+                          child: Text(
+                            '탑승 내역이 없습니다',
+                            style: textTheme.headline1
+                                ?.copyWith(color: colorScheme.tertiary),
+                          ),
+                        ),
+                      ],
                     );
                   }
                 }
 
                 // history load 중에 오류 발생
                 else if (snapshot.hasError) {
-                  return Center(
-                    child: Text('${snapshot.error}'),
+                  return ListView(
+                    children: [
+                      SizedBox(
+                        height: 160.h,
+                      ),
+                      Align(
+                        child: Text(
+                          '${snapshot.error}',
+                          style: textTheme.headline1
+                              ?.copyWith(color: colorScheme.tertiary),
+                        ),
+                      ),
+                    ],
                   );
                 }
 

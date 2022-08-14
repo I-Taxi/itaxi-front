@@ -1,3 +1,4 @@
+import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -9,31 +10,32 @@ class AlarmScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          shadowColor: colorScheme.shadow,
-          elevation: 1.0,
-          centerTitle: true,
-          title: Text(
-            '알림',
-            style: textTheme.subtitle1?.copyWith(
-              color: colorScheme.onPrimary,
-              fontWeight: FontWeight.bold,
-            ),
-          ),
-          leading: IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: Icon(
-              Icons.arrow_back_rounded,
-              color: colorScheme.tertiary,
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        shadowColor: colorScheme.shadow,
+        elevation: 1.0,
+        centerTitle: true,
+        title: Text(
+          '알림',
+          style: textTheme.subtitle1?.copyWith(
+            color: colorScheme.onPrimary,
+            fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: colorScheme.primary,
-        body: Column(
+        leading: IconButton(
+          onPressed: () {
+            Get.back();
+          },
+          icon: Icon(
+            Icons.arrow_back_rounded,
+            color: colorScheme.tertiary,
+          ),
+        ),
+      ),
+      backgroundColor: colorScheme.primary,
+      body: ColorfulSafeArea(
+        color: colorScheme.primary,
+        child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             SizedBox(

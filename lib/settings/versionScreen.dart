@@ -1,3 +1,4 @@
+import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -9,30 +10,31 @@ class VersionScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          elevation: 0,
-          centerTitle: true,
-          backgroundColor: colorScheme.secondary,
-          title: Text(
-            '버전정보/개발자',
-            style: textTheme.subtitle1?.copyWith(
-              color: colorScheme.primary,
-            ),
-          ),
-          leading: IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: Icon(
-              Icons.arrow_back_rounded,
-              color: colorScheme.primary,
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        elevation: 0,
+        centerTitle: true,
+        backgroundColor: colorScheme.secondary,
+        title: Text(
+          '버전정보/개발자',
+          style: textTheme.subtitle1?.copyWith(
+            color: colorScheme.primary,
           ),
         ),
-        backgroundColor: colorScheme.secondary,
-        body: SingleChildScrollView(
+        leading: IconButton(
+          onPressed: () {
+            Get.back();
+          },
+          icon: Icon(
+            Icons.arrow_back_rounded,
+            color: colorScheme.primary,
+          ),
+        ),
+      ),
+      backgroundColor: colorScheme.secondary,
+      body: ColorfulSafeArea(
+        color: colorScheme.secondary,
+        child: SingleChildScrollView(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
