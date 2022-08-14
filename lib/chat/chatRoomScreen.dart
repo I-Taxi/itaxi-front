@@ -16,25 +16,35 @@ class ChatRoonScreen extends StatefulWidget {
 
 class _ChatRoonScreenState extends State<ChatRoonScreen> {
   final ScrollController _scrollController = ScrollController();
+  late ChatRoomController _chatRoomController = Get.find();
 
   void _scrollDown() {
     _scrollController.animateTo(
-      _scrollController.position.maxScrollExtent + 40.h,
+      _scrollController.position.maxScrollExtent,
       curve: Curves.easeOut,
       duration: const Duration(milliseconds: 300),
     );
   }
 
-  @override
-  void dispose() {
-    super.dispose();
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+
+  //   _chatRoomController.addListener(() {
+  //     _scrollDown();
+  //   });
+  // }
+
+  // @override
+  // void dispose() {
+  //   _chatRoomController.dispose();
+  //   super.dispose();
+  // }
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    late ChatRoomController _chatRoomController = Get.find();
     return Scaffold(
       appBar: AppBar(
         shadowColor: colorScheme.shadow,
@@ -370,6 +380,7 @@ class _ChatRoonScreenState extends State<ChatRoonScreen> {
                             onSubmitted: (text) {
                               _chatRoomController.submitChat();
                               _chatRoomController.clearTexting();
+                              _scrollDown();
                             },
                           );
                         }),

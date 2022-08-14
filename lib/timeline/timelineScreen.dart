@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -18,22 +21,23 @@ class TimelineScreen extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    return SafeArea(
-      child: Scaffold(
-        appBar: AppBar(
-          shadowColor: colorScheme.shadow,
-          elevation: 1.0,
-          centerTitle: true,
-          title: Text(
-            '타임 라인',
-            style: textTheme.subtitle1?.copyWith(
-              color: colorScheme.onPrimary,
-              fontWeight: FontWeight.bold,
-            ),
+    return Scaffold(
+      appBar: AppBar(
+        shadowColor: colorScheme.shadow,
+        elevation: 1.0,
+        centerTitle: true,
+        title: Text(
+          '타임 라인',
+          style: textTheme.subtitle1?.copyWith(
+            color: colorScheme.onPrimary,
+            fontWeight: FontWeight.bold,
           ),
         ),
-        backgroundColor: colorScheme.background,
-        body: RefreshIndicator(
+      ),
+      backgroundColor: colorScheme.background,
+      body: ColorfulSafeArea(
+        color: colorScheme.primary,
+        child: RefreshIndicator(
           key: _refreshIndicatorKey,
           color: colorScheme.tertiary,
           backgroundColor: colorScheme.background,
@@ -48,7 +52,6 @@ class TimelineScreen extends StatelessWidget {
                 if (snapshot.hasData) {
                   // history가 있을 때
                   if (snapshot.data!.isNotEmpty) {
-                    // _historyController.splitHistorys(snapshot);
                     return ListView(
                       children: [
                         Padding(
@@ -59,7 +62,8 @@ class TimelineScreen extends StatelessWidget {
                               Text(
                                 '곧 탑승 예정',
                                 style: textTheme.headline1?.copyWith(
-                                    fontSize: 15, color: colorScheme.secondary),
+                                    fontSize: Platform.isIOS ? 17 : 15,
+                                    color: colorScheme.secondary),
                               ),
                               SizedBox(
                                 height: 12.h,
@@ -67,15 +71,49 @@ class TimelineScreen extends StatelessWidget {
                               for (int i = snapshot.data!.length - 1;
                                   i >= 0;
                                   i--)
-                                if (DateTime.now()
-                                        .difference(DateTime.parse(
-                                            snapshot.data![i].deptTime!))
-                                        .isNegative ==
-                                    true)
-                                  soonTimelineListTile(
-                                    context: context,
-                                    post: snapshot.data![i],
-                                  ),
+                                Column(
+                                  children: [
+                                    if (i + 1 < snapshot.data!.length &&
+                                        DateTime.parse(DateFormat('yyyy-MM-dd')
+                                                    .format(DateTime.parse(snapshot
+                                                        .data![i].deptTime!)))
+                                                .compareTo(DateTime.parse(
+                                                    DateFormat('yyyy-MM-dd')
+                                                        .format(DateTime.parse(
+                                                            snapshot
+                                                                .data![i + 1]
+                                                                .deptTime!)))) !=
+                                            0)
+                                      Row(
+                                        children: [
+                                          Text(
+                                            DateFormat('M월 d일 E').format(
+                                                DateTime.parse(snapshot
+                                                    .data![i].deptTime!)),
+                                            style: textTheme.bodyText1
+                                                ?.copyWith(
+                                                    color:
+                                                        colorScheme.tertiary),
+                                          ),
+                                          Expanded(
+                                            child: Divider(
+                                              color: colorScheme.shadow,
+                                              thickness: 1,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                    if (DateTime.now()
+                                            .difference(DateTime.parse(
+                                                snapshot.data![i].deptTime!))
+                                            .isNegative ==
+                                        true)
+                                      soonTimelineListTile(
+                                        context: context,
+                                        post: snapshot.data![i],
+                                      ),
+                                  ],
+                                ),
                               SizedBox(
                                 height: 24.h,
                               ),
@@ -99,7 +137,7 @@ class TimelineScreen extends StatelessWidget {
                                       child: Text(
                                         '택시',
                                         style: textTheme.subtitle1?.copyWith(
-                                            fontSize: 14,
+                                            fontSize: Platform.isIOS ? 16 : 14,
                                             color: colorScheme.secondary),
                                       ),
                                     ),
@@ -113,7 +151,7 @@ class TimelineScreen extends StatelessWidget {
                                       child: Text(
                                         '카풀',
                                         style: textTheme.subtitle1?.copyWith(
-                                            fontSize: 14,
+                                            fontSize: Platform.isIOS ? 16 : 14,
                                             color: colorScheme.secondary),
                                       ),
                                     ),
@@ -151,8 +189,8 @@ class TimelineScreen extends StatelessWidget {
                                             0))
                                   Row(
                                     children: [
-                                      const SizedBox(
-                                        width: 20,
+                                      SizedBox(
+                                        width: 20.w,
                                       ),
                                       Text(
                                         DateFormat('M월 d일 E').format(
