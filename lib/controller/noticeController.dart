@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-import 'package:flutter_config/flutter_config.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -31,7 +31,7 @@ class NoticeController extends GetxController {
 
   Future<List<Notice>> fetchNotices() async {
     // var noticeUrl = "http://walab.handong.edu:8080/itaxi/api/";
-    var noticeUrl = FlutterConfig.get('API_URL').toString();
+    var noticeUrl = dotenv.env['API_URL'].toString();
     noticeUrl = "${noticeUrl}notice";
 
     var response = await http.get(
