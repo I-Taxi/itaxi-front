@@ -53,7 +53,8 @@ class SignUpController extends GetxController {
         bankAddress: bankAddress,
       );
       fetchAddUser(login: login);
-      Get.to(const SignInScreen());
+      // Get.to(const SignInScreen());
+      Get.back();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         throw Exception('the password provided is too weak');
