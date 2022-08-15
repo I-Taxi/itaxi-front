@@ -32,7 +32,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    print(FlutterConfig.get('API_URL'));
+    // print(FlutterConfig.get('API_URL'));
     return ScreenUtilInit(
       designSize: const Size(411, 731),
       builder: (context, child) {
