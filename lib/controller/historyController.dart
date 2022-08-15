@@ -1,6 +1,6 @@
 import 'dart:convert';
 
-import 'package:flutter_config/flutter_config.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
@@ -44,7 +44,7 @@ class HistoryController extends GetxController {
   // /itaxi/api/post/history
   Future<List<Post>> fetchHistorys() async {
     // var historyUrl = "http://walab.handong.edu:8080/itaxi/api/";
-    var historyUrl = FlutterConfig.get('API_URL').toString();
+    var historyUrl = dotenv.env['API_URL'].toString();
     historyUrl += '/post/history';
 
     Map<String, dynamic> map = {

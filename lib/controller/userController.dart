@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_config/flutter_config.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:get/get.dart';
 
@@ -44,8 +44,7 @@ class UserController extends GetxController {
 
   Future<UserInfoList> fetchUsers() async {
     // var userUrl = "http://walab.handong.edu:8080/itaxi/api/";
-    print(FlutterConfig.get('API_URL'));
-    var userUrl = FlutterConfig.get('API_URL').toString();
+    var userUrl = dotenv.env['API_URL'].toString();
     userUrl = '${userUrl}member/info';
 
     final body = jsonEncode({"uid": uid});
@@ -64,7 +63,7 @@ class UserController extends GetxController {
   // 정보 수정
   Future<void> fetchNewUsers() async {
     // var userUrl = "http://walab.handong.edu:8080/itaxi/api";
-    var userUrl = FlutterConfig.get('API_URL').toString();
+    var userUrl = dotenv.env['API_URL'].toString();
     userUrl = '$userUrl/member';
 
     http.Response response = await http.patch(
