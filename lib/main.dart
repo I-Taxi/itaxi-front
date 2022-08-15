@@ -1,5 +1,6 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_config/flutter_config.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 import 'package:get/get.dart';
@@ -12,6 +13,7 @@ import 'package:itaxi/src/theme.dart';
 void main() async {
   // firebase_core 패키지 필요
   WidgetsFlutterBinding.ensureInitialized();
+  await FlutterConfig.loadEnvVariables();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );

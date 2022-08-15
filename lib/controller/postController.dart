@@ -1,4 +1,7 @@
 import 'dart:convert';
+
+import 'package:flutter_config/flutter_config.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -42,8 +45,8 @@ class PostController extends GetxController {
       int? dstId,
       required String time,
       required int postType}) async {
-    //?dep=${dep}&dst=${dst}&time=${time}
-    var postUrl = "http://walab.handong.edu:8080/itaxi/api/";
+    // var postUrl = "http://walab.handong.edu:8080/itaxi/api/";
+    var postUrl = FlutterConfig.get('API_URL').toString();
     final Map<String, dynamic> queryParameters;
     if (depId == null && dstId == null) {
       if (postType == 0) {
@@ -118,8 +121,8 @@ class PostController extends GetxController {
 
   // /itaxi/api/post/{postId}/join
   Future<void> fetchJoin({required int postId, required int luggage}) async {
-    var joinUrl = "http://walab.handong.edu:8080/itaxi/api/";
-
+    // var joinUrl = "http://walab.handong.edu:8080/itaxi/api/";
+    var joinUrl = FlutterConfig.get('API_URL').toString();
     joinUrl = '${joinUrl}post/$postId/join';
 
     Map<String, dynamic> map = {
@@ -144,8 +147,8 @@ class PostController extends GetxController {
   }
 
   Future<void> fetchOutJoin({required int postId}) async {
-    var joinUrl = "http://walab.handong.edu:8080/itaxi/api/";
-
+    // var joinUrl = "http://walab.handong.edu:8080/itaxi/api/";
+    var joinUrl = FlutterConfig.get('API_URL').toString();
     joinUrl = '${joinUrl}post/$postId/join';
 
     Map<String, dynamic> map = {
