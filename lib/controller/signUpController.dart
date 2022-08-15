@@ -1,5 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_config/flutter_config.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
 import 'package:get/get.dart';
 
@@ -25,7 +25,7 @@ class SignUpController extends GetxController {
 
   Future<http.Response> fetchAddUser({required Login login}) async {
     // var addUserUrl = "http://walab.handong.edu:8080/itaxi/api/";
-    var addUserUrl = FlutterConfig.get('API_URL').toString();
+    var addUserUrl = dotenv.env['API_URL'].toString();
     addUserUrl = '${addUserUrl}member';
 
     var body = json.encode(login.toMap());
