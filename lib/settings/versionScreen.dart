@@ -99,45 +99,30 @@ class VersionScreen extends StatelessWidget {
               SizedBox(
                 height: 160.h,
               ),
-              commentRightListTile(
+              commentLeftListTile(
                 context: context,
                 name: '우리팀 면접관(팀장)',
                 comment: '데모는 편하게 해도 돼. 오류없이 ^^',
-              ),
-              SizedBox(
-                height: 20.h,
               ),
               commentLeftListTile(
                 context: context,
                 name: 'Legacy와 이별 중',
                 comment: 'Legacy 반가워요, 반가웠어요.',
               ),
-              SizedBox(
-                height: 20.h,
-              ),
-              commentRightListTile(
+              commentLeftListTile(
                 context: context,
                 name: '짜고보니 핵심 파트',
                 comment: '인생은 Greedy,,, 지금 이순간 최선을 다하자',
-              ),
-              SizedBox(
-                height: 20.h,
               ),
               commentLeftListTile(
                 context: context,
                 name: '센빠이들 너무 빨라요..',
                 comment: '이번 주말까지라고요…?',
               ),
-              SizedBox(
-                height: 20.h,
-              ),
-              commentRightListTile(
+              commentLeftListTile(
                 context: context,
                 name: '노예상인',
                 comment: 'throw Exception(’버그 등장’);',
-              ),
-              SizedBox(
-                height: 20.h,
               ),
               commentLeftListTile(
                 context: context,
@@ -165,7 +150,7 @@ Widget commentLeftListTile({
   return Padding(
     padding: EdgeInsets.symmetric(
       horizontal: 12.0.w,
-      vertical: 16.0.h,
+      vertical: 8.h,
     ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -207,7 +192,7 @@ Widget commentRightListTile({
   return Padding(
     padding: EdgeInsets.symmetric(
       horizontal: 12.0.w,
-      vertical: 16.0.h,
+      vertical: 4.0.h,
     ),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.end,
