@@ -45,6 +45,7 @@ class AddPostController extends GetxController {
       _historyController.getHistorys();
       return response.statusCode;
     } else {
+      print(response.statusCode);
       throw Exception('Failed to add posts');
     }
   }

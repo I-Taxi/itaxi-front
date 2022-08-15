@@ -48,6 +48,7 @@ class _SettingScreenState extends State<SettingScreen> {
           TextButton(
             onPressed: () {
               SettingScreen.storage.delete(key: "login");
+              _signInController.reset();
               _signInController.signedOutState();
               _navController.changeIndex(1);
             },
