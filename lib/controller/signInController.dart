@@ -63,6 +63,7 @@ class SignInController extends GetxController {
   }
 
   Future<void> signIn() async {
+    num = 4;
     print(id);
     print(pw);
     try {

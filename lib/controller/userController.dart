@@ -44,6 +44,7 @@ class UserController extends GetxController {
 
   Future<UserInfoList> fetchUsers() async {
     // var userUrl = "http://walab.handong.edu:8080/itaxi/api/";
+    print(FlutterConfig.get('API_URL'));
     var userUrl = FlutterConfig.get('API_URL').toString();
     userUrl = '${userUrl}member/info';
 
