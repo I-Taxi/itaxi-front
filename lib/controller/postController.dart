@@ -18,7 +18,7 @@ class PostController extends GetxController {
   List<Post> PostsfromJson(json) {
     List<Post> result = [];
     json.forEach((item) {
-      result.add(Post.fromDocs(item));
+      result.add(Post.fromPostAllDocs(item));
     });
 
     return result;

@@ -82,6 +82,25 @@ class Post {
     );
   }
 
+  factory Post.fromPostAllDocs(Map<String, dynamic> ds) {
+    return Post(
+      id: ds['id'],
+      uid: ds['uid'],
+      postType: ds['postType'],
+      departure: Place.fromDocs(ds['departure']),
+      destination: Place.fromDocs(ds['destination']),
+      deptTime: ds['deptTime'],
+      capacity: ds['capacity'],
+      participantNum: ds['participantNum'],
+      largeLuggageNum: ds['largeLuggageNum'],
+      smallLuggageNum: ds['smallLuggageNum'],
+      status: ds['status'],
+      luggage: ds['luggage'],
+      joiners: List<Joiner>.from(
+          ds['joiners'].map((json) => Joiner.fromUidDocs(json))),
+    );
+  }
+
   factory Post.fromJoinerDocs(Map<String, dynamic> ds) {
     return Post(
       id: ds['id'],
