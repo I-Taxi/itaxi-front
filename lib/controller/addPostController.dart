@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter_config/flutter_config.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:itaxi/controller/historyController.dart';
@@ -22,7 +24,8 @@ class AddPostController extends GetxController {
   }
 
   Future<int> fetchAddPost({required Post post}) async {
-    var addPostUrl = "http://walab.handong.edu:8080/itaxi/api/";
+    // var addPostUrl = "http://walab.handong.edu:8080/itaxi/api/";
+    var addPostUrl = FlutterConfig.get('API_URL').toString();
     addPostUrl = '${addPostUrl}post';
 
     var body = utf8.encode(json.encode(post.toAddPostMap()));

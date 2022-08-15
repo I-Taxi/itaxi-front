@@ -1,11 +1,12 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_config/flutter_config.dart';
+
 import 'package:get/get.dart';
-import 'package:get/get_state_manager/get_state_manager.dart';
 
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
-import '../model/userInfoList.dart';
+import 'package:itaxi/model/userInfoList.dart';
 
 class UserController extends GetxController {
   late Future<UserInfoList> users;
@@ -42,7 +43,8 @@ class UserController extends GetxController {
   }
 
   Future<UserInfoList> fetchUsers() async {
-    var userUrl = "http://walab.handong.edu:8080/itaxi/api/";
+    // var userUrl = "http://walab.handong.edu:8080/itaxi/api/";
+    var userUrl = FlutterConfig.get('API_URL').toString();
     userUrl = '${userUrl}member/info';
 
     final body = jsonEncode({"uid": uid});
@@ -60,7 +62,8 @@ class UserController extends GetxController {
 
   // 정보 수정
   Future<void> fetchNewUsers() async {
-    var userUrl = "http://walab.handong.edu:8080/itaxi/api";
+    // var userUrl = "http://walab.handong.edu:8080/itaxi/api";
+    var userUrl = FlutterConfig.get('API_URL').toString();
     userUrl = '$userUrl/member';
 
     http.Response response = await http.patch(

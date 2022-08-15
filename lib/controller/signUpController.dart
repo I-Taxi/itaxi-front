@@ -1,4 +1,6 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter_config/flutter_config.dart';
+
 import 'package:get/get.dart';
 
 import 'package:http/http.dart' as http;
@@ -22,7 +24,8 @@ class SignUpController extends GetxController {
   late String bankAddress;
 
   Future<http.Response> fetchAddUser({required Login login}) async {
-    var addUserUrl = "http://walab.handong.edu:8080/itaxi/api/";
+    // var addUserUrl = "http://walab.handong.edu:8080/itaxi/api/";
+    var addUserUrl = FlutterConfig.get('API_URL').toString();
     addUserUrl = '${addUserUrl}member';
 
     var body = json.encode(login.toMap());

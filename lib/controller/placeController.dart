@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:flutter_config/flutter_config.dart';
+
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:itaxi/controller/dateController.dart';
@@ -38,8 +40,8 @@ class PlaceController extends GetxController {
   }
 
   Future<List<Place>> fetchPlace() async {
-    //?dep=${dep}&dst=${dst}&time=${time}
-    var placeUrl = "http://walab.handong.edu:8080/itaxi/api/";
+    // var placeUrl = "http://walab.handong.edu:8080/itaxi/api/";
+    var placeUrl = FlutterConfig.get('API_URL');
     placeUrl = placeUrl + 'place';
 
     var response = await http.get(Uri.parse(placeUrl));
