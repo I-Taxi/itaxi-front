@@ -99,50 +99,50 @@ class VersionScreen extends StatelessWidget {
               SizedBox(
                 height: 160.h,
               ),
-              comentRightListTile(
+              commentRightListTile(
                 context: context,
                 name: '우리팀 면접관(팀장)',
-                coment: '데모는 편하게 해도 돼. 오류없이 ^^',
+                comment: '데모는 편하게 해도 돼. 오류없이 ^^',
               ),
               SizedBox(
                 height: 20.h,
               ),
-              comentLeftListTile(
+              commentLeftListTile(
                 context: context,
                 name: 'Legacy와 이별 중',
-                coment: 'Legacy 반가워요, 반가웠어요.',
+                comment: 'Legacy 반가워요, 반가웠어요.',
               ),
               SizedBox(
                 height: 20.h,
               ),
-              comentRightListTile(
+              commentRightListTile(
                 context: context,
                 name: '짜고보니 핵심 파트',
-                coment: '인생은 Greedy,,, 지금 이순간 최선을 다하자',
+                comment: '인생은 Greedy,,, 지금 이순간 최선을 다하자',
               ),
               SizedBox(
                 height: 20.h,
               ),
-              comentLeftListTile(
+              commentLeftListTile(
                 context: context,
                 name: '센빠이들 너무 빨라요..',
-                coment: '이번 주말까지라고요…?',
+                comment: '이번 주말까지라고요…?',
               ),
               SizedBox(
                 height: 20.h,
               ),
-              comentRightListTile(
+              commentRightListTile(
                 context: context,
                 name: '노예상인',
-                coment: 'throw Exception(’버그 등장’);',
+                comment: 'throw Exception(’버그 등장’);',
               ),
               SizedBox(
                 height: 20.h,
               ),
-              comentLeftListTile(
+              commentLeftListTile(
                 context: context,
                 name: '속아서 노예계약',
-                coment: '해 있을 땐 랩실에서 테스트 코드 작성… 해 없을 땐 집에서 UI 개발…',
+                comment: '해 있을 땐 랩실에서 테스트 코드 작성… 해 없을 땐 집에서 UI 개발…',
               ),
               SizedBox(
                 height: 80.h,
@@ -155,10 +155,10 @@ class VersionScreen extends StatelessWidget {
   }
 }
 
-Widget comentLeftListTile({
+Widget commentLeftListTile({
   required BuildContext context,
   required String name,
-  required String coment,
+  required String comment,
 }) {
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
@@ -186,7 +186,7 @@ Widget comentLeftListTile({
             borderRadius: BorderRadius.circular(12.0),
           ),
           child: Text(
-            coment,
+            comment,
             style: textTheme.subtitle1?.copyWith(
               color: colorScheme.tertiary,
             ),
@@ -197,10 +197,10 @@ Widget comentLeftListTile({
   );
 }
 
-Widget comentRightListTile({
+Widget commentRightListTile({
   required BuildContext context,
   required String name,
-  required String coment,
+  required String comment,
 }) {
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
@@ -228,7 +228,7 @@ Widget comentRightListTile({
             borderRadius: BorderRadius.circular(12.0),
           ),
           child: Text(
-            coment,
+            comment,
             style: textTheme.subtitle1?.copyWith(
               color: colorScheme.tertiary,
             ),
