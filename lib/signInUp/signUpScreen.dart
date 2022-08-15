@@ -6,6 +6,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:itaxi/controller/signUpController.dart';
 
+import '../widget/mainDialog.dart';
+
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
 
@@ -441,6 +443,15 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ),
                           onPressed: () {
+                            mainDialog(
+                              context,
+                              '서비스 이용약관',
+                              '제 1장 총칙\n'
+                              '제 1조(목적)\n'
+                             '이 약관은 “CRA”(이하 “회사”라 합니다)가 제공하는 “I-Taxi”(이하 ‘서비스’라 합니다)를 회사와 이용계약을 체결한 ‘고객’이 이용함에 있어 필요한 회사와 고객의 권리 및 의무, 기타 제반 사항을 정함을 목적으로 합니다.\n'
+
+
+                            );
                             // Navigate
                           },
                         ),
@@ -488,6 +499,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ),
                           onPressed: () {
+                            mainDialog(context, '개인정보처리방침 보기', '');
                             // Navigate
                           },
                         ),

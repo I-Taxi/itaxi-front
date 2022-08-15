@@ -49,6 +49,11 @@ class SignInController extends GetxController {
     super.dispose();
   }
 
+  void reset() {
+    id = "";
+    pw = "";
+  }
+
   _asyncMethod() async {
     // 데이터 없을 경우 null 반환
     userInfo = await storage.read(key: "login");

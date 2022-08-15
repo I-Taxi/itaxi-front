@@ -162,10 +162,6 @@ class _SignInScreenState extends State<SignInScreen> {
                       onChanged: (value) {
                         _signInController.id = '$value@handong.ac.kr';
                       },
-                      validator: (value) {
-                        if (value!.isEmpty) return '아이디를 입력해주세요';
-                        return null;
-                      },
                     ),
                     SizedBox(
                       height: 14.0.h,
@@ -225,10 +221,6 @@ class _SignInScreenState extends State<SignInScreen> {
                       onChanged: (value) {
                         _signInController.pw = value;
                       },
-                      validator: (value) {
-                        if (value!.isEmpty) return '비밀번호를 입력해주세요';
-                        return null;
-                      },
                     ),
                     SizedBox(
                       height: 4.h,
@@ -286,28 +278,25 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                       child: TextButton(
                         onPressed: () async {
-                          if(_formKey.currentState!.validate()){
-                            await _signInController.signIn();
-                            // print("qafsd : ${_signInController.signIn()}");
-                            setState(() {
-                              if(_signInController.num == 0){
-                                return mainDialog(context, '이메일 인증 오류', '인증 이메일을 확인해주시기 바랍니다.\n받은편지함에 없는 경우, 스팸함을 확인해주세요.');
-                              }else if(_signInController.num == 1){
-                                return mainDialog(context, '등록되지 않은 이메일', '등록되지 않은 이메일입니다.\n아래의 회원가입 버튼을 통해 회원가입을 진행해주세요.');
-                              }else if(_signInController.num == 2){
-                                return mainDialog(context, '비밀번호 오류', '비밀번호가 틀립니다.\n비밀번호를 다시 확인해주세요.');
-                              }else if(_signInController.num == 3){
-                                return mainDialog(context, '알 수 없는 오류', '알 수 없는 오류입니다.\n해당 메일로 문의주시면 감사하겠습니다.');
-                              }
-                            });
+                          await _signInController.signIn();
+                          setState(() {
+                            if(_signInController.num == 0){
+                              return mainDialog(context, '이메일 인증 오류', '인증 이메일을 확인해주시기 바랍니다.\n받은편지함에 없는 경우, 스팸함을 확인해주세요.');
+                            }else if(_signInController.num == 1){
+                              return mainDialog(context, '등록되지 않은 이메일', '등록되지 않은 이메일입니다.\n아래의 회원가입 버튼을 통해 회원가입을 진행해주세요.');
+                            }else if(_signInController.num == 2){
+                              return mainDialog(context, '비밀번호 오류', '비밀번호가 틀립니다.\n비밀번호를 다시 확인해주세요.');
+                            }else if(_signInController.num == 3){
+                              return mainDialog(context, '아이디와 비밀번호 입력', '아이디와 비밀번호를 입력해주세요.');
+                            }
+                          });
 
-                            _rememberId
-                                ? await storage.write(
-                                key: "login",
-                                value:
-                                "id ${_idController.text}@handong.ac.kr password ${_pwController.text}")
-                                : () {};
-                          }
+                          _rememberId
+                              ? await storage.write(
+                              key: "login",
+                              value:
+                              "id ${_idController.text}@handong.ac.kr password ${_pwController.text}")
+                              : () {};
                         },
                         child: Text(
                           '로그인',
