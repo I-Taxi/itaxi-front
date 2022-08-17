@@ -5,7 +5,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:itaxi/controller/signUpController.dart';
+import 'package:itaxi/settings/privacyPolicyScreen.dart';
 
+import '../settings/termOfServiceScreen.dart';
 import '../widget/mainDialog.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -117,6 +119,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     TextFormField(
                       controller: _idController,
                       autocorrect: false,
+                      cursorColor: colorScheme.tertiary,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
                         suffixText: '@handong.ac.kr',
@@ -165,6 +168,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       controller: _pwController,
                       autocorrect: false,
                       obscureText: _isObscure1,
+                      cursorColor: colorScheme.tertiary,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
                         enabledBorder: UnderlineInputBorder(
@@ -223,6 +227,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     TextFormField(
                       autocorrect: false,
                       obscureText: _isObscure2,
+                      cursorColor: colorScheme.tertiary,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
                         enabledBorder: UnderlineInputBorder(
@@ -280,6 +285,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     TextFormField(
                       controller: _nameController,
                       autocorrect: false,
+                      cursorColor: colorScheme.tertiary,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
                         enabledBorder: UnderlineInputBorder(
@@ -320,6 +326,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     TextFormField(
                       controller: _phoneController,
                       autocorrect: false,
+                      cursorColor: colorScheme.tertiary,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       keyboardType: TextInputType.number,
                       // inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -362,6 +369,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     TextFormField(
                         controller: _bankController,
                         autocorrect: false,
+                        cursorColor: colorScheme.tertiary,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
                         decoration: InputDecoration(
                           enabledBorder: UnderlineInputBorder(
@@ -401,6 +409,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     TextFormField(
                       controller: _bankAddressController,
                       autocorrect: false,
+                      cursorColor: colorScheme.tertiary,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
                         enabledBorder: UnderlineInputBorder(
@@ -443,15 +452,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ),
                           onPressed: () {
-                            mainDialog(
-                              context,
-                              '서비스 이용약관',
-                              '제 1장 총칙\n'
-                              '제 1조(목적)\n'
-                             '이 약관은 “CRA”(이하 “회사”라 합니다)가 제공하는 “I-Taxi”(이하 ‘서비스’라 합니다)를 회사와 이용계약을 체결한 ‘고객’이 이용함에 있어 필요한 회사와 고객의 권리 및 의무, 기타 제반 사항을 정함을 목적으로 합니다.\n'
-
-
-                            );
+                            Get.to(TermOfServiceScreen());
                             // Navigate
                           },
                         ),
@@ -499,7 +500,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             ),
                           ),
                           onPressed: () {
-                            mainDialog(context, '개인정보처리방침 보기', '');
+                            Get.to(PrivacyPolicyScreen());
                             // Navigate
                           },
                         ),
@@ -548,7 +549,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       onPressed: agree1 & agree2
                           ? () {
                               if (_formKey.currentState!.validate()) {
-                                _signUpController.signUp();
+                                signUpDialog(context, '메일 인증', '회원가입 시 입력하신 handong.ac.kr 계정으로 인증메일이 보내집니다.\n메일이 오지 않은경우, 스팸함을 확인해주세요.');
                               }
                             }
                           : () {},
@@ -567,5 +568,66 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
     );
+  }
+  void signUpDialog (BuildContext context, String? title, String? content) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(4.0),
+            ),
+            child: Container(
+              width: 360.w,
+              height: 200.h,
+              alignment: Alignment.center,
+              padding: EdgeInsets.fromLTRB(
+                28.0.w,
+                32.0.h,
+                28.0.w,
+                12.0.h,
+              ),
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    title as String,
+                    style: textTheme.headline1?.copyWith(
+                      color: colorScheme.secondary,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 16.h,
+                  ),
+                  Text(
+                    content as String,
+                    style: textTheme.subtitle1?.copyWith(
+                      color: colorScheme.onPrimary,
+                    ),
+                  ),
+                  const Spacer(),
+                  TextButton(
+                    onPressed: () async {
+                      _signUpController.signUp();
+                      Get.back();
+                      Get.back();
+                    },
+                    child: Text(
+                      "확인",
+                      style: textTheme.headline1
+                          ?.copyWith(color: colorScheme.tertiary),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+
+    );
+
   }
 }
