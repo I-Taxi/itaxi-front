@@ -39,7 +39,7 @@ class SignUpController extends GetxController {
 
   Future<void> signUp() async {
     // print(FirebaseAuth.instance.currentUser!.displayName.toString());
-    customId = "$customId@handong.ac.kr";
+    customId = "${customId}@handong.ac.kr";
     try {
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: customId, password: customPw);
