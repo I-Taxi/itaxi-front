@@ -294,7 +294,7 @@ class _MainScreenState extends State<MainScreen> {
                       },
                     ),
                     SizedBox(
-                      height: 4.0.h,
+                      height: 2.0.h,
                     ),
                     Stack(
                       children: [
@@ -302,6 +302,52 @@ class _MainScreenState extends State<MainScreen> {
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
+                            GetBuilder<DateController>(
+                              builder: (_) {
+                                if (DateFormat.yMEd().format(DateTime.now()) !=
+                                    DateFormat.yMEd()
+                                        .format(_dateController.pickedDate!)) {
+                                  return GestureDetector(
+                                    behavior: HitTestBehavior.opaque,
+                                    onTap: () {
+                                      _dateController.beforDate();
+                                    },
+                                    child: Container(
+                                      height: 24.h,
+                                      width: 60.w,
+                                      alignment: Alignment.center,
+                                      child: Text(
+                                        DateFormat(' d E ').format(
+                                            _dateController.pickedDate!
+                                                .add(const Duration(days: -1))),
+                                        style: textTheme.subtitle1?.copyWith(
+                                          color: colorScheme.tertiary,
+                                          fontFamily: 'NotoSans',
+                                        ),
+                                      ),
+                                    ),
+                                  );
+                                }
+                                return GestureDetector(
+                                  behavior: HitTestBehavior.opaque,
+                                  onTap: () {},
+                                  child: Container(
+                                    height: 24.h,
+                                    width: 60.w,
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      DateFormat(' - ').format(_dateController
+                                          .pickedDate!
+                                          .add(const Duration(days: -1))),
+                                      style: textTheme.subtitle1?.copyWith(
+                                        color: colorScheme.tertiary,
+                                        fontFamily: 'NotoSans',
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
                             Icon(
                               Icons.arrow_back_ios_rounded,
                               color: colorScheme.shadow,
@@ -309,12 +355,17 @@ class _MainScreenState extends State<MainScreen> {
                             ),
                             GetBuilder<DateController>(
                               builder: (_) {
-                                return Text(
-                                  DateFormat(' d E ')
-                                      .format(_dateController.pickedDate!),
-                                  style: textTheme.headline2?.copyWith(
-                                    color: colorScheme.secondary,
-                                    fontFamily: 'NotoSans',
+                                return Container(
+                                  height: 24.h,
+                                  width: 68.w,
+                                  alignment: Alignment.center,
+                                  child: Text(
+                                    DateFormat(' d E ')
+                                        .format(_dateController.pickedDate!),
+                                    style: textTheme.headline2?.copyWith(
+                                      color: colorScheme.secondary,
+                                      fontFamily: 'NotoSans',
+                                    ),
                                   ),
                                 );
                               },
@@ -323,6 +374,30 @@ class _MainScreenState extends State<MainScreen> {
                               Icons.arrow_forward_ios_rounded,
                               color: colorScheme.shadow,
                               size: 16.0.w,
+                            ),
+                            GetBuilder<DateController>(
+                              builder: (_) {
+                                return GestureDetector(
+                                  behavior: HitTestBehavior.opaque,
+                                  onTap: () {
+                                    _dateController.afterDate();
+                                  },
+                                  child: Container(
+                                    height: 24.h,
+                                    width: 60.w,
+                                    alignment: Alignment.center,
+                                    child: Text(
+                                      DateFormat(' d E ').format(_dateController
+                                          .pickedDate!
+                                          .add(const Duration(days: 1))),
+                                      style: textTheme.subtitle1?.copyWith(
+                                        color: colorScheme.tertiary,
+                                        fontFamily: 'NotoSans',
+                                      ),
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
                           ],
                         ),
@@ -336,8 +411,8 @@ class _MainScreenState extends State<MainScreen> {
                             child: Padding(
                               padding: EdgeInsets.only(right: 59.0.w),
                               child: Image.asset(
-                                width: 20.w,
-                                height: 20.w,
+                                width: 24.w,
+                                height: 24.w,
                                 'assets/button/calendar.png',
                               ),
                             ),

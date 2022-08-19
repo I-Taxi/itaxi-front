@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:itaxi/controller/placeController.dart';
 import 'package:itaxi/model/place.dart';
+import 'package:itaxi/widget/snackBar.dart';
 
 void selectPlaceDialog({required BuildContext context, required int type}) {
   PlaceController _placeController = Get.put(PlaceController());
@@ -146,9 +147,19 @@ Widget displayPlaces(
         behavior: HitTestBehavior.opaque,
         onTap: () {
           if (type == 0) {
-            _placeController.selectDep(place: places[index]);
+            if (_placeController.dst != null &&
+                _placeController.dst!.id == places[index].id) {
+              snackBar(context: context, title: '도착지와 같습니다.');
+            } else {
+              _placeController.selectDep(place: places[index]);
+            }
           } else {
-            _placeController.selectDst(place: places[index]);
+            if (_placeController.dep != null &&
+                _placeController.dep!.id == places[index].id) {
+              snackBar(context: context, title: '출발지와 같습니다.');
+            } else {
+              _placeController.selectDst(place: places[index]);
+            }
           }
           Get.back();
         },

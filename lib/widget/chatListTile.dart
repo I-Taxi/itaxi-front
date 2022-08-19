@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:itaxi/controller/chatRoomController.dart';
 import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/model/chat.dart';
 
@@ -10,6 +11,7 @@ Widget chatListTile({required BuildContext context, required Chat chat}) {
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
   late UserController _userController = Get.find();
+  late ChatRoomController _chatRoomController = Get.find();
 
   return Container(
     margin: EdgeInsets.only(bottom: 8.h),
@@ -53,10 +55,17 @@ Widget chatListTile({required BuildContext context, required Chat chat}) {
             children: [
               Row(
                 children: [
-                  Icon(
-                    Icons.bookmark,
-                    color: colorScheme.tertiary,
-                  ),
+                  for (int i = 0;
+                      i < _chatRoomController.post.joiners!.length;
+                      i++)
+                    if (_chatRoomController.post.joiners![i].owner == true &&
+                        _chatRoomController.post.joiners![i].uid ==
+                            _userController.uid)
+                      Icon(
+                        Icons.bookmark,
+                        color: colorScheme.tertiary,
+                        size: 24.w,
+                      ),
                   Text(
                     chat.memberName!,
                     style: textTheme.subtitle1?.copyWith(
