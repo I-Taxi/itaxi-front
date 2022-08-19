@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -499,6 +501,11 @@ void addPostDialog({required BuildContext context}) {
                         snackBar(context: context, title: '출발지를 선택해주세요.');
                       } else if (_placeController.dst == null) {
                         snackBar(context: context, title: '도착지를 선택해주세요.');
+                      } else if (DateTime.now()
+                              .difference(_dateController.mergeDateAndTime())
+                              .isNegative ==
+                          false) {
+                        snackBar(context: context, title: '출발시간을 다시 선택해주세요.');
                       } else if (_addPostController.capacity == 0) {
                         snackBar(context: context, title: '수용인원을 선택해주세요.');
                       } else {
@@ -512,6 +519,7 @@ void addPostDialog({required BuildContext context}) {
                             ),
                             capacity: _addPostController.capacity + 1,
                             luggage: _addPostController.luggage);
+                        Get.back();
                         await _addPostController.fetchAddPost(post: post);
                         _postController.getPosts(
                           depId: _placeController.dep?.id,
@@ -521,7 +529,6 @@ void addPostDialog({required BuildContext context}) {
                           ),
                           postType: _tabViewController.currentIndex,
                         );
-                        Get.back();
                       }
                     },
                     child: Text(

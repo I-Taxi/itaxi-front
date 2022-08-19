@@ -101,6 +101,28 @@ class DateController extends GetxController {
     }
   }
 
+  void beforDate() {
+    pickedDate = pickedDate!.add(const Duration(days: -1));
+    update();
+    _postController.getPosts(
+      depId: _placeController.dep?.id,
+      dstId: _placeController.dst?.id,
+      time: formattingDateTime(mergeDateAndTime()),
+      postType: _tabViewController.currentIndex,
+    );
+  }
+
+  void afterDate() {
+    pickedDate = pickedDate!.add(const Duration(days: 1));
+    update();
+    _postController.getPosts(
+      depId: _placeController.dep?.id,
+      dstId: _placeController.dst?.id,
+      time: formattingDateTime(mergeDateAndTime()),
+      postType: _tabViewController.currentIndex,
+    );
+  }
+
   DateTime mergeDateAndTime() {
     return DateTime(pickedDate!.year, pickedDate!.month, pickedDate!.day,
         pickedTime!.hour, pickedTime!.minute);

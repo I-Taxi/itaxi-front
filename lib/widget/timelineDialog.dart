@@ -290,19 +290,24 @@ Future<dynamic> timelineDiaog(
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
-                          TextButton(
-                            onPressed: () async {
-                              await _postController.fetchOutJoin(
-                                  postId: snapshot.data!.id!);
-                              _historyController.getHistorys();
-                              Get.back();
-                            },
-                            child: Text(
-                              '방 나가기',
-                              style: textTheme.headline1
-                                  ?.copyWith(color: colorScheme.tertiary),
+                          if (DateTime.now()
+                                  .difference(
+                                      DateTime.parse(snapshot.data!.deptTime!))
+                                  .isNegative ==
+                              true)
+                            TextButton(
+                              onPressed: () async {
+                                await _postController.fetchOutJoin(
+                                    postId: snapshot.data!.id!);
+                                _historyController.getHistorys();
+                                Get.back();
+                              },
+                              child: Text(
+                                '방 나가기',
+                                style: textTheme.headline1
+                                    ?.copyWith(color: colorScheme.tertiary),
+                              ),
                             ),
-                          ),
                           TextButton(
                             onPressed: () {
                               _chatRoomController.getPost(post: snapshot.data!);
