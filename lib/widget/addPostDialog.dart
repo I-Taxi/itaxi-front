@@ -499,8 +499,12 @@ void addPostDialog({required BuildContext context}) {
                         snackBar(context: context, title: '택시 또는 카풀을 선택해주세요.');
                       } else if (_placeController.dep == null) {
                         snackBar(context: context, title: '출발지를 선택해주세요.');
+                      } else if (_placeController.dep!.id == -1) {
+                        snackBar(context: context, title: '출발지를 다시 선택해주세요.');
                       } else if (_placeController.dst == null) {
                         snackBar(context: context, title: '도착지를 선택해주세요.');
+                      } else if (_placeController.dst!.id == -1) {
+                        snackBar(context: context, title: '도착지를 다시 선택해주세요.');
                       } else if (DateTime.now()
                               .difference(_dateController.mergeDateAndTime())
                               .isNegative ==

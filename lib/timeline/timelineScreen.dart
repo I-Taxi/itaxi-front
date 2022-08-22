@@ -71,49 +71,48 @@ class TimelineScreen extends StatelessWidget {
                               for (int i = snapshot.data!.length - 1;
                                   i >= 0;
                                   i--)
-                                Column(
-                                  children: [
-                                    if (i + 1 < snapshot.data!.length &&
-                                        DateTime.parse(DateFormat('yyyy-MM-dd')
-                                                    .format(DateTime.parse(snapshot
-                                                        .data![i].deptTime!)))
-                                                .compareTo(DateTime.parse(
-                                                    DateFormat('yyyy-MM-dd')
-                                                        .format(DateTime.parse(
-                                                            snapshot
-                                                                .data![i + 1]
-                                                                .deptTime!)))) !=
-                                            0)
-                                      Row(
-                                        children: [
-                                          Text(
-                                            DateFormat('M월 d일 E').format(
-                                                DateTime.parse(snapshot
-                                                    .data![i].deptTime!)),
-                                            style: textTheme.bodyText1
-                                                ?.copyWith(
-                                                    color:
-                                                        colorScheme.tertiary),
-                                          ),
-                                          Expanded(
-                                            child: Divider(
-                                              color: colorScheme.shadow,
-                                              thickness: 1,
+                                if (DateTime.now()
+                                        .difference(DateTime.parse(
+                                            snapshot.data![i].deptTime!))
+                                        .isNegative ==
+                                    true)
+                                  Column(
+                                    children: [
+                                      if (i + 1 < snapshot.data!.length &&
+                                          DateTime.parse(DateFormat('yyyy-MM-dd')
+                                                      .format(DateTime.parse(
+                                                          snapshot.data![i]
+                                                              .deptTime!)))
+                                                  .compareTo(DateTime.parse(
+                                                      DateFormat('yyyy-MM-dd')
+                                                          .format(DateTime.parse(
+                                                              snapshot.data![i + 1].deptTime!)))) !=
+                                              0)
+                                        Row(
+                                          children: [
+                                            Text(
+                                              DateFormat('M월 d일 E').format(
+                                                  DateTime.parse(snapshot
+                                                      .data![i].deptTime!)),
+                                              style: textTheme.bodyText1
+                                                  ?.copyWith(
+                                                      color:
+                                                          colorScheme.tertiary),
                                             ),
-                                          ),
-                                        ],
-                                      ),
-                                    if (DateTime.now()
-                                            .difference(DateTime.parse(
-                                                snapshot.data![i].deptTime!))
-                                            .isNegative ==
-                                        true)
+                                            Expanded(
+                                              child: Divider(
+                                                color: colorScheme.shadow,
+                                                thickness: 1,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
                                       soonTimelineListTile(
                                         context: context,
                                         post: snapshot.data![i],
                                       ),
-                                  ],
-                                ),
+                                    ],
+                                  ),
                               SizedBox(
                                 height: 24.h,
                               ),

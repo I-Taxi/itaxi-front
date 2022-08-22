@@ -48,7 +48,7 @@ class PostController extends GetxController {
     // var postUrl = "http://walab.handong.edu:8080/itaxi/api/";
     var postUrl = dotenv.env['API_URL'].toString();
     final Map<String, dynamic> queryParameters;
-    if (depId == null && dstId == null) {
+    if ((depId == null || depId == -1) && (dstId == null || dstId == -1)) {
       if (postType == 0) {
         queryParameters = {
           'time': DateFormat('yyyy-MM-dd').format(DateTime.parse(time)),
@@ -59,7 +59,7 @@ class PostController extends GetxController {
           'postType': postType.toString(),
         };
       }
-    } else if (depId != null && dstId == null) {
+    } else if (depId != null && (dstId == null || dstId == -1)) {
       if (postType == 0) {
         queryParameters = {
           'depId': depId.toString(),
@@ -72,7 +72,7 @@ class PostController extends GetxController {
           'postType': postType.toString(),
         };
       }
-    } else if (depId == null && dstId != null) {
+    } else if ((depId == null || depId == -1) && dstId != null) {
       if (postType == 0) {
         queryParameters = {
           'dstId': dstId.toString(),

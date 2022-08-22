@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -40,10 +42,19 @@ class DateController extends GetxController {
               onPrimary: colorScheme.primary,
               onSurface: colorScheme.tertiary,
             ),
-            textTheme: textTheme,
+            textTheme: textTheme.copyWith(
+              bodySmall: TextStyle(
+                fontSize: Platform.isIOS ? 15 : 13,
+                fontFamily: 'Seoul',
+              ),
+            ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                primary: colorScheme.secondary, // button text color
+                primary: colorScheme.secondary,
+                textStyle: TextStyle(
+                  fontSize: Platform.isIOS ? 15 : 13,
+                  fontFamily: 'NotoSans',
+                ), // button text color
               ),
             ),
           ),
@@ -83,10 +94,19 @@ class DateController extends GetxController {
               onPrimary: colorScheme.primary,
               onSurface: colorScheme.tertiary,
             ),
-            textTheme: textTheme,
+            textTheme: textTheme.copyWith(
+              bodySmall: TextStyle(
+                fontSize: Platform.isIOS ? 15 : 13,
+                fontFamily: 'Seoul',
+              ),
+            ),
             textButtonTheme: TextButtonThemeData(
               style: TextButton.styleFrom(
-                primary: colorScheme.secondary, // button text color
+                primary: colorScheme.secondary,
+                textStyle: TextStyle(
+                  fontSize: Platform.isIOS ? 15 : 13,
+                  fontFamily: 'NotoSans',
+                ), // button text color
               ),
             ),
           ),

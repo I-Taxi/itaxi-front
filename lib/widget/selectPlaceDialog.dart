@@ -148,6 +148,7 @@ Widget displayPlaces(
         onTap: () {
           if (type == 0) {
             if (_placeController.dst != null &&
+                _placeController.dst!.id != -1 &&
                 _placeController.dst!.id == places[index].id) {
               snackBar(context: context, title: '도착지와 같습니다.');
             } else {
@@ -155,6 +156,7 @@ Widget displayPlaces(
             }
           } else {
             if (_placeController.dep != null &&
+                _placeController.dep!.id != -1 &&
                 _placeController.dep!.id == places[index].id) {
               snackBar(context: context, title: '출발지와 같습니다.');
             } else {
