@@ -7,19 +7,36 @@ import 'package:get/get.dart';
 import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/src/theme.dart';
 
-class UserInfoRefactorScreen extends StatelessWidget {
-  UserInfoRefactorScreen({Key? key}) : super(key: key);
+class UserInfoRefactorScreen extends StatefulWidget {
+  const UserInfoRefactorScreen({Key? key}) : super(key: key);
+
+  @override
+  _UserInfoRefactorScreenState createState() => _UserInfoRefactorScreenState();
+}
+
+class _UserInfoRefactorScreenState extends State<UserInfoRefactorScreen> {
+  final UserController _userController = Get.find();
+
+  var data = Get.arguments;
 
   final _phoneController = TextEditingController();
   final _bankController = TextEditingController();
   final _bankAddressController = TextEditingController();
 
-  UserController _userController = Get.find();
 
   final _formKey = GlobalKey<FormState>();
 
   @override
+  void initState() {
+    super.initState();
+    _phoneController.text = _userController.phone.toString();
+    _bankController.text = _userController.bank.toString();
+    _bankAddressController.text = _userController.bankAddress.toString();
+  }
+
+  @override
   Widget build(BuildContext context) {
+    print(_userController.phone);
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
 
@@ -78,6 +95,8 @@ class UserInfoRefactorScreen extends StatelessWidget {
                         controller: _phoneController,
                         autocorrect: false,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
+                        // initialValue: _userController.phone.toString(),
+                        cursorColor: colorScheme.tertiary,
                         decoration: InputDecoration(
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
@@ -92,9 +111,6 @@ class UserInfoRefactorScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        onChanged: (value) {
-                          _userController.phone = value;
-                        },
                         validator: (value) {
                           if (value!.isEmpty) return '전화번호를 입력해주세요';
                           return null;
@@ -118,6 +134,8 @@ class UserInfoRefactorScreen extends StatelessWidget {
                         controller: _bankController,
                         autocorrect: false,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
+                        // initialValue: _userController.bank,
+                        cursorColor: colorScheme.tertiary,
                         decoration: InputDecoration(
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
@@ -132,9 +150,6 @@ class UserInfoRefactorScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        onChanged: (value) {
-                          _userController.bank = value;
-                        },
                         validator: (value) {
                           if (value!.isEmpty) return '은행명을 입력해주세요';
                           return null;
@@ -157,6 +172,8 @@ class UserInfoRefactorScreen extends StatelessWidget {
                         controller: _bankAddressController,
                         autocorrect: false,
                         autovalidateMode: AutovalidateMode.onUserInteraction,
+                        // initialValue: _userController.bankAddress,
+                        cursorColor: colorScheme.tertiary,
                         decoration: InputDecoration(
                           enabledBorder: UnderlineInputBorder(
                             borderSide: BorderSide(
@@ -171,9 +188,6 @@ class UserInfoRefactorScreen extends StatelessWidget {
                             ),
                           ),
                         ),
-                        onChanged: (value) {
-                          _userController.bankAddress = value;
-                        },
                         validator: (value) {
                           if (value!.isEmpty) return '계좌번호를 입력해주세요';
                           return null;
@@ -191,6 +205,9 @@ class UserInfoRefactorScreen extends StatelessWidget {
                       ),
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
+                          _userController.phone = _phoneController.text;
+                          _userController.bank = _bankController.text;
+                          _userController.bankAddress = _bankAddressController.text;
                           await _userController.fetchNewUsers();
                           await _userController.getUsers();
                           Get.back();
@@ -213,3 +230,5 @@ class UserInfoRefactorScreen extends StatelessWidget {
     );
   }
 }
+
+

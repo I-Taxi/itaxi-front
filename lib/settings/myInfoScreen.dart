@@ -16,7 +16,8 @@ class MyInfoScreen extends StatefulWidget {
 }
 
 class _MyInfoScreenState extends State<MyInfoScreen> {
-  UserController _userController = Get.put(UserController());
+  // UserController _userController = Get.put(UserController());
+  UserController _userController = Get.find();
 
   @override
   initState(){
@@ -205,7 +206,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                             ),
                             TextButton(
                               onPressed: () async {
-                                Get.to(UserInfoRefactorScreen());
+                                Get.to(UserInfoRefactorScreen(), arguments: [_userController.phone, _userController.bank, _userController.bankAddress ]);
                               },
                               // textTheme 적용 해야함
                               child: Text(
