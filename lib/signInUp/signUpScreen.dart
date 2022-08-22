@@ -410,6 +410,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       controller: _bankAddressController,
                       autocorrect: false,
                       cursorColor: colorScheme.tertiary,
+                      keyboardType: TextInputType.number,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
                         enabledBorder: UnderlineInputBorder(
