@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:itaxi/controller/chatRoomController.dart';
+import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/model/chat.dart';
 import 'package:itaxi/widget/chatListTile.dart';
 
@@ -15,8 +16,9 @@ class ChatRoonScreen extends StatefulWidget {
 }
 
 class _ChatRoonScreenState extends State<ChatRoonScreen> {
-  ScrollController _scrollController = ScrollController();
+  late UserController _userController = Get.find();
   late ChatRoomController _chatRoomController = Get.find();
+  ScrollController _scrollController = ScrollController();
   bool isScrollDown = false;
   bool needScrollDown = false;
 
@@ -165,7 +167,10 @@ class _ChatRoonScreenState extends State<ChatRoonScreen> {
                                 },
                                 itemCount: snapshot.data!.length,
                               ),
-                              if (isScrollDown == true)
+                              if (isScrollDown == true &&
+                                  snapshot.data![snapshot.data!.length - 1]
+                                          .memberId !=
+                                      _userController.uid)
                                 Align(
                                   alignment: Alignment.bottomCenter,
                                   child: GestureDetector(

@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 
-class TabViewController extends GetxController {
+class TimelineTabViewController extends GetxController {
   int currentIndex = 0;
 
   void changeIndex(int index) {
