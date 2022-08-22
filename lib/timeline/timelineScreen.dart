@@ -6,6 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:itaxi/controller/historyController.dart';
+import 'package:itaxi/controller/timelineTabViewController.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/widget/afterTimelineListTile.dart';
 import 'package:itaxi/widget/soonTimelineListTile.dart';
@@ -15,6 +16,8 @@ class TimelineScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    TimelineTabViewController _timelineTabViewController =
+        Get.put(TimelineTabViewController());
     HistoryController _historyController = Get.put(HistoryController());
     final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
         GlobalKey<RefreshIndicatorState>();
@@ -127,34 +130,81 @@ class TimelineScreen extends StatelessWidget {
                                         color: colorScheme.tertiary),
                                   ),
                                   const Spacer(),
-                                  GestureDetector(
-                                    behavior: HitTestBehavior.opaque,
-                                    onTap: () {},
-                                    child: Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 8.w),
-                                      child: Text(
-                                        '택시',
-                                        style: textTheme.subtitle1?.copyWith(
+                                  GetBuilder<TimelineTabViewController>(
+                                      builder: (_) {
+                                    return GestureDetector(
+                                      behavior: HitTestBehavior.opaque,
+                                      onTap: () {
+                                        _timelineTabViewController
+                                            .changeIndex(1);
+                                      },
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 8.w),
+                                        child: Text(
+                                          '택시',
+                                          style: textTheme.subtitle1?.copyWith(
                                             fontSize: Platform.isIOS ? 16 : 14,
-                                            color: colorScheme.secondary),
+                                            color: _timelineTabViewController
+                                                        .currentIndex ==
+                                                    1
+                                                ? colorScheme.secondary
+                                                : colorScheme.tertiary,
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
-                                  GestureDetector(
-                                    behavior: HitTestBehavior.opaque,
-                                    onTap: () {},
-                                    child: Padding(
-                                      padding:
-                                          EdgeInsets.symmetric(horizontal: 8.w),
-                                      child: Text(
-                                        '카풀',
-                                        style: textTheme.subtitle1?.copyWith(
+                                    );
+                                  }),
+                                  GetBuilder<TimelineTabViewController>(
+                                      builder: (_) {
+                                    return GestureDetector(
+                                      behavior: HitTestBehavior.opaque,
+                                      onTap: () {
+                                        _timelineTabViewController
+                                            .changeIndex(0);
+                                      },
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 8.w),
+                                        child: Text(
+                                          '전체',
+                                          style: textTheme.subtitle1?.copyWith(
                                             fontSize: Platform.isIOS ? 16 : 14,
-                                            color: colorScheme.secondary),
+                                            color: _timelineTabViewController
+                                                        .currentIndex ==
+                                                    0
+                                                ? colorScheme.secondary
+                                                : colorScheme.tertiary,
+                                          ),
+                                        ),
                                       ),
-                                    ),
-                                  ),
+                                    );
+                                  }),
+                                  GetBuilder<TimelineTabViewController>(
+                                      builder: (_) {
+                                    return GestureDetector(
+                                      behavior: HitTestBehavior.opaque,
+                                      onTap: () {
+                                        _timelineTabViewController
+                                            .changeIndex(2);
+                                      },
+                                      child: Padding(
+                                        padding: EdgeInsets.symmetric(
+                                            horizontal: 8.w),
+                                        child: Text(
+                                          '카풀',
+                                          style: textTheme.subtitle1?.copyWith(
+                                            fontSize: Platform.isIOS ? 16 : 14,
+                                            color: _timelineTabViewController
+                                                        .currentIndex ==
+                                                    2
+                                                ? colorScheme.secondary
+                                                : colorScheme.tertiary,
+                                          ),
+                                        ),
+                                      ),
+                                    );
+                                  }),
                                 ],
                               ),
                             ],
@@ -167,51 +217,77 @@ class TimelineScreen extends StatelessWidget {
                         SizedBox(
                           height: 10.h,
                         ),
-                        for (int i = 0; i < snapshot.data!.length; i++)
-                          if (DateTime.now()
-                                  .difference(DateTime.parse(
-                                      snapshot.data![i].deptTime!))
-                                  .isNegative ==
-                              false)
-                            Column(
-                              children: [
-                                if (i == 0 ||
-                                    (i - 1 > 0 &&
-                                        DateTime.parse(DateFormat('yyyy-MM-dd')
-                                                    .format(DateTime.parse(snapshot
-                                                        .data![i].deptTime!)))
-                                                .compareTo(DateTime.parse(
-                                                    DateFormat('yyyy-MM-dd').format(
-                                                        DateTime.parse(snapshot
-                                                            .data![i - 1]
-                                                            .deptTime!)))) !=
-                                            0))
-                                  Row(
+                        GetBuilder<TimelineTabViewController>(
+                          builder: (_) {
+                            return ListView.builder(
+                              physics: const ScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: snapshot.data!.length,
+                              itemBuilder: (BuildContext context, int i) {
+                                if ((_timelineTabViewController.currentIndex ==
+                                            0 ||
+                                        snapshot.data![i].postType ==
+                                            _timelineTabViewController
+                                                .currentIndex) &&
+                                    DateTime.now()
+                                            .difference(DateTime.parse(
+                                                snapshot.data![i].deptTime!))
+                                            .isNegative ==
+                                        false) {
+                                  return Column(
                                     children: [
-                                      SizedBox(
-                                        width: 20.w,
-                                      ),
-                                      Text(
-                                        DateFormat('M월 d일 E').format(
-                                            DateTime.parse(
-                                                snapshot.data![i].deptTime!)),
-                                        style: textTheme.bodyText1?.copyWith(
-                                            color: colorScheme.tertiary),
-                                      ),
-                                      Expanded(
-                                        child: Divider(
-                                          color: colorScheme.shadow,
-                                          thickness: 1,
+                                      if (i == 0 ||
+                                          (i - 1 > 0 &&
+                                              DateTime.parse(DateFormat(
+                                                              'yyyy-MM-dd')
+                                                          .format(DateTime.parse(
+                                                              snapshot.data![i]
+                                                                  .deptTime!)))
+                                                      .compareTo(DateTime.parse(
+                                                          DateFormat('yyyy-MM-dd')
+                                                              .format(DateTime.parse(snapshot.data![i - 1].deptTime!)))) !=
+                                                  0))
+                                        Row(
+                                          children: [
+                                            SizedBox(
+                                              width: 20.w,
+                                            ),
+                                            Text(
+                                              DateFormat('M월 d일 E').format(
+                                                  DateTime.parse(snapshot
+                                                      .data![i].deptTime!)),
+                                              style: textTheme.bodyText1
+                                                  ?.copyWith(
+                                                      color:
+                                                          colorScheme.tertiary),
+                                            ),
+                                            Expanded(
+                                              child: Divider(
+                                                color: colorScheme.shadow,
+                                                thickness: 1,
+                                              ),
+                                            ),
+                                          ],
                                         ),
+                                      afterTimelineListTile(
+                                        context: context,
+                                        post: snapshot.data![i],
                                       ),
                                     ],
-                                  ),
-                                afterTimelineListTile(
-                                  context: context,
-                                  post: snapshot.data![i],
-                                ),
-                              ],
-                            ),
+                                  );
+                                } else {
+                                  return Container();
+                                }
+                              },
+                            );
+                          },
+                        ),
+                        GetBuilder<TimelineTabViewController>(
+                          builder: (_) {
+                            for (int i = 0; i < snapshot.data!.length; i++) {}
+                            return Container();
+                          },
+                        ),
                       ],
                     );
                   }
