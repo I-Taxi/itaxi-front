@@ -46,15 +46,15 @@ class _SignInScreenState extends State<SignInScreen> {
     return false;
   }
 
-  @override
-  void initState() {
-    super.initState();
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) {
-        _signInController.onInit();
-      },
-    );
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   WidgetsBinding.instance.addPostFrameCallback(
+  //     (_) {
+  //       _signInController.onInit();
+  //     },
+  //   );
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -283,11 +283,13 @@ class _SignInScreenState extends State<SignInScreen> {
                             if(_signInController.num == 0){
                               return mainDialog(context, '이메일 인증 오류', '인증 이메일을 확인해주시기 바랍니다.\n받은편지함에 없는 경우, 스팸함을 확인해주세요.');
                             }else if(_signInController.num == 1){
-                              return mainDialog(context, '등록되지 않은 이메일', '등록되지 않은 이메일입니다.\n아래의 회원가입 버튼을 통해 회원가입을 진행해주세요.');
+                              return mainDialog(context, '등록되지 않은 이메일', '등록되지 않은 이메일입니다.\n혹시 인증 이메일이 만료되었다면 itaxi.cra.handong@gmail.com로 메일 보내주세요.');
                             }else if(_signInController.num == 2){
                               return mainDialog(context, '비밀번호 오류', '비밀번호가 틀립니다.\n비밀번호를 다시 확인해주세요.');
                             }else if(_signInController.num == 3){
                               return mainDialog(context, '아이디와 비밀번호 입력', '아이디와 비밀번호를 입력해주세요.');
+                            }else if(_signInController.num == 4){
+                              return mainDialog(context, '네트워크 오류', '네트워크 연결을 확인해주세요');
                             }
                           });
 

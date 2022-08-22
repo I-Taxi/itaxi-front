@@ -8,6 +8,7 @@ import 'package:itaxi/controller/signInController.dart';
 import 'package:itaxi/firebase_options.dart';
 import 'package:itaxi/home.dart';
 import 'package:itaxi/signInUp/signInScreen.dart';
+import 'package:itaxi/signInUp/splashScreen.dart';
 import 'package:itaxi/src/theme.dart';
 
 void main() async {
@@ -41,9 +42,13 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           home: GetBuilder<SignInController>(
             builder: (_) {
-              return _signInController.signInState == SignInState.signedOut
-                  ? const SignInScreen()
-                  : Home();
+              if(_signInController.signInState == SignInState.start){
+                return SplashScreen();
+              }else if(_signInController.signInState == SignInState.signedOut){
+                return SignInScreen();
+              }else {
+                return Home();
+              }
             },
           ),
         );
