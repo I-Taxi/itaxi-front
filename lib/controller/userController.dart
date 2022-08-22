@@ -20,8 +20,12 @@ class UserController extends GetxController {
   @override
   void onInit() {
     super.onInit();
-    uid = FirebaseAuth.instance.currentUser!.uid;
     getUsers();
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 
   Future<void> getUsers() async {
@@ -44,6 +48,7 @@ class UserController extends GetxController {
 
   Future<UserInfoList> fetchUsers() async {
     // var userUrl = "http://walab.handong.edu:8080/itaxi/api/";
+    uid = FirebaseAuth.instance.currentUser!.uid;
     var userUrl = dotenv.env['API_URL'].toString();
     userUrl = '${userUrl}member/info';
 

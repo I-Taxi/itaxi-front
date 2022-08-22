@@ -13,6 +13,7 @@ import 'package:itaxi/settings/myInfoScreen.dart';
 import 'package:itaxi/settings/noticeScreen.dart';
 
 import '../controller/navigationController.dart';
+import '../controller/userController.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);
@@ -26,6 +27,7 @@ class SettingScreen extends StatefulWidget {
 class _SettingScreenState extends State<SettingScreen> {
   final SignInController _signInController = Get.find();
   final NavigationController _navController = Get.put(NavigationController());
+  final UserController _userController = Get.put(UserController());
 
 
   @override

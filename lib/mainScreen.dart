@@ -14,6 +14,8 @@ import 'package:itaxi/widget/postListTile.dart';
 import 'package:itaxi/widget/selectPlaceDialog.dart';
 import 'package:itaxi/widget/tabView.dart';
 
+import 'controller/userController.dart';
+
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
 
@@ -27,12 +29,14 @@ class _MainScreenState extends State<MainScreen> {
   PostController _postController = Get.put(PostController());
   PlaceController _placeController = Get.put(PlaceController());
   DateController _dateController = Get.put(DateController());
+  UserController _userController = Get.put(UserController());
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
   @override
   void initState() {
     super.initState();
+    _userController.getUsers();
     _postController.getPosts(
       depId: _placeController.dep?.id,
       dstId: _placeController.dst?.id,
