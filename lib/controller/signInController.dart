@@ -3,13 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 
+import '../signInUp/signInScreen.dart';
+
 enum SignInState {
   signedIn,
   signedOut,
+  start,
 }
 
 class SignInController extends GetxController {
-  SignInState signInState = SignInState.signedOut;
+  SignInState signInState = SignInState.start;
 
   late int num;
 
@@ -22,6 +25,11 @@ class SignInController extends GetxController {
   // 자동 로그인 시 필요한 변수
   String? userInfo = "";
   static final storage = new FlutterSecureStorage();
+
+  void signedStart() {
+    signInState = SignInState.start;
+    update();
+  }
 
   void signedInState() {
     signInState = SignInState.signedIn;
@@ -36,7 +44,7 @@ class SignInController extends GetxController {
   @override
   onInit() {
     super.onInit();
-    num = 4;
+    num = 5;
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
         _asyncMethod();
@@ -64,11 +72,14 @@ class SignInController extends GetxController {
       id = userInfo!.split(" ")[1];
       pw = userInfo!.split(" ")[3];
       signIn();
+    }else {
+      signedOutState();
+      update();
     }
   }
 
   Future<void> signIn() async {
-    num = 4;
+    num = 5;
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(
@@ -96,8 +107,12 @@ class SignInController extends GetxController {
         num = 2;
         update();
         // throw Exception('비밀번호가 틀렸습니다');
-      } else {
+      } else if (e.code == 'network-request-failed'){
         num = 3;
+        update();
+      } else{
+        print(e.code);
+        num = 4;
         update();
         // throw Exception(e.code);
       }
