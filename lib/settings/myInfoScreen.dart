@@ -154,55 +154,55 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                                 SizedBox(
                                   height: 8.h,
                                 ),
-                                Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "계좌 은행",
-                                      style: textTheme.headline1!.copyWith(
-                                          color: colorScheme.onPrimary),
-                                    ),
-                                    SizedBox(
-                                      width: 32.w,
-                                    ),
-                                    Text(
-                                      snapshot.data!.bank.toString(),
-                                      overflow: TextOverflow.ellipsis,
-                                      style: textTheme.headline1!.copyWith(
-                                        color: colorScheme.onPrimary,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 8.h,
-                                ),
-                                Row(
-                                  mainAxisAlignment:
-                                  MainAxisAlignment.spaceBetween,
-                                  children: [
-                                    Text(
-                                      "계좌 번호",
-                                      style: textTheme.headline1!.copyWith(
-                                          color: colorScheme.onPrimary),
-                                    ),
-                                    SizedBox(
-                                      width: 32.w,
-                                    ),
-                                    Text(
-                                      snapshot.data!.bankAddress.toString(),
-                                      overflow: TextOverflow.ellipsis,
-                                      style: textTheme.headline1!.copyWith(
-                                        color: colorScheme.onPrimary,
-                                      ),
-                                    ),
-                                  ],
-                                ),
+                                // Row(
+                                //   mainAxisAlignment:
+                                //   MainAxisAlignment.spaceBetween,
+                                //   children: [
+                                //     Text(
+                                //       "계좌 은행",
+                                //       style: textTheme.headline1!.copyWith(
+                                //           color: colorScheme.onPrimary),
+                                //     ),
+                                //     SizedBox(
+                                //       width: 32.w,
+                                //     ),
+                                //     Text(
+                                //       snapshot.data!.bank.toString(),
+                                //       overflow: TextOverflow.ellipsis,
+                                //       style: textTheme.headline1!.copyWith(
+                                //         color: colorScheme.onPrimary,
+                                //       ),
+                                //     ),
+                                //   ],
+                                // ),
+                                // SizedBox(
+                                //   height: 8.h,
+                                // ),
+                                // Row(
+                                //   mainAxisAlignment:
+                                //   MainAxisAlignment.spaceBetween,
+                                //   children: [
+                                //     Text(
+                                //       "계좌 번호",
+                                //       style: textTheme.headline1!.copyWith(
+                                //           color: colorScheme.onPrimary),
+                                //     ),
+                                //     SizedBox(
+                                //       width: 32.w,
+                                //     ),
+                                //     Text(
+                                //       snapshot.data!.bankAddress.toString(),
+                                //       overflow: TextOverflow.ellipsis,
+                                //       style: textTheme.headline1!.copyWith(
+                                //         color: colorScheme.onPrimary,
+                                //       ),
+                                //     ),
+                                //   ],
+                                // ),
                               ],
                             ),
                             SizedBox(
-                              height: 280.h,
+                              height: 300.h,
                             ),
                             TextButton(
                               onPressed: () async {

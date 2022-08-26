@@ -36,7 +36,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
   bool _isObscure2 = true;
 
   // Pattern pattern = r'^(?=.*[a-zA-Z]{3,})(?=.*\d{3,})';
-  Pattern pattern = r'^(?=.*[a-zA-Z]{6,})';
+
+  // 문자 숫자 6자 이상
+  Pattern pattern = r'^(?=.*[a-zA-Z0-9]{6,})';
   late RegExp regExp;
   final _formKey = GlobalKey<FormState>();
 
@@ -206,7 +208,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       validator: (value) {
                         if (value!.isEmpty) return '비밀번호를 입력해주세요';
                         regExp = RegExp(pattern.toString());
-                        if (!regExp.hasMatch(value)) return '6자 이상의 영어를 사용해주세요';
+                        if (!regExp.hasMatch(value)) return '문자와 숫자 6자리 이상 사용해주세요';
                         return null;
                       },
                     ),
@@ -355,88 +357,88 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     SizedBox(
                       height: 12.0.h,
                     ),
-                    Align(
-                      alignment: Alignment.bottomLeft,
-                      child: Text(
-                        '은행명',
-                        style: textTheme.subtitle1?.copyWith(
-                          fontSize: Platform.isIOS ? 14 : 12,
-                          color: colorScheme.tertiary,
-                        ),
-                      ),
-                    ),
+                    // Align(
+                    //   alignment: Alignment.bottomLeft,
+                    //   child: Text(
+                    //     '은행명',
+                    //     style: textTheme.subtitle1?.copyWith(
+                    //       fontSize: Platform.isIOS ? 14 : 12,
+                    //       color: colorScheme.tertiary,
+                    //     ),
+                    //   ),
+                    // ),
                     // 은행 입력
-                    TextFormField(
-                        controller: _bankController,
-                        autocorrect: false,
-                        cursorColor: colorScheme.tertiary,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        decoration: InputDecoration(
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: colorScheme.tertiary,
-                              width: 0.3,
-                            ),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: colorScheme.secondary,
-                              width: 1.0,
-                            ),
-                          ),
-                        ),
-                        onChanged: (value) {
-                          _signUpController.bank = value;
-                        },
-                        validator: (value) {
-                          if (value!.isEmpty) return '은행명을 적어주세요';
-                          return null;
-                        }),
-                    SizedBox(
-                      height: 12.0.h,
-                    ),
-                    Align(
-                      alignment: Alignment.bottomLeft,
-                      child: Text(
-                        '계좌번호',
-                        style: textTheme.subtitle1?.copyWith(
-                          fontSize: Platform.isIOS ? 14 : 12,
-                          color: colorScheme.tertiary,
-                        ),
-                      ),
-                    ),
+                    // TextFormField(
+                    //     controller: _bankController,
+                    //     autocorrect: false,
+                    //     cursorColor: colorScheme.tertiary,
+                    //     autovalidateMode: AutovalidateMode.onUserInteraction,
+                    //     decoration: InputDecoration(
+                    //       enabledBorder: UnderlineInputBorder(
+                    //         borderSide: BorderSide(
+                    //           color: colorScheme.tertiary,
+                    //           width: 0.3,
+                    //         ),
+                    //       ),
+                    //       focusedBorder: UnderlineInputBorder(
+                    //         borderSide: BorderSide(
+                    //           color: colorScheme.secondary,
+                    //           width: 1.0,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //     onChanged: (value) {
+                    //       _signUpController.bank = value;
+                    //     },
+                    //     validator: (value) {
+                    //       if (value!.isEmpty) return '은행명을 적어주세요';
+                    //       return null;
+                    //     }),
+                    // SizedBox(
+                    //   height: 12.0.h,
+                    // ),
+                    // Align(
+                    //   alignment: Alignment.bottomLeft,
+                    //   child: Text(
+                    //     '계좌번호',
+                    //     style: textTheme.subtitle1?.copyWith(
+                    //       fontSize: Platform.isIOS ? 14 : 12,
+                    //       color: colorScheme.tertiary,
+                    //     ),
+                    //   ),
+                    // ),
                     // 계좌 입력
-                    TextFormField(
-                      controller: _bankAddressController,
-                      autocorrect: false,
-                      cursorColor: colorScheme.tertiary,
-                      keyboardType: TextInputType.number,
-                      autovalidateMode: AutovalidateMode.onUserInteraction,
-                      decoration: InputDecoration(
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: colorScheme.tertiary,
-                            width: 0.3,
-                          ),
-                        ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: colorScheme.secondary,
-                            width: 1.0,
-                          ),
-                        ),
-                      ),
-                      onChanged: (value) {
-                        _signUpController.bankAddress = value;
-                      },
-                      validator: (value) {
-                        if (value!.isEmpty) return '계좌번호를 입력해주세요';
-                        return null;
-                      },
-                    ),
-                    SizedBox(
-                      height: 12.0.h,
-                    ),
+                    // TextFormField(
+                    //   controller: _bankAddressController,
+                    //   autocorrect: false,
+                    //   cursorColor: colorScheme.tertiary,
+                    //   keyboardType: TextInputType.number,
+                    //   autovalidateMode: AutovalidateMode.onUserInteraction,
+                    //   decoration: InputDecoration(
+                    //     enabledBorder: UnderlineInputBorder(
+                    //       borderSide: BorderSide(
+                    //         color: colorScheme.tertiary,
+                    //         width: 0.3,
+                    //       ),
+                    //     ),
+                    //     focusedBorder: UnderlineInputBorder(
+                    //       borderSide: BorderSide(
+                    //         color: colorScheme.secondary,
+                    //         width: 1.0,
+                    //       ),
+                    //     ),
+                    //   ),
+                    //   onChanged: (value) {
+                    //     _signUpController.bankAddress = value;
+                    //   },
+                    //   validator: (value) {
+                    //     if (value!.isEmpty) return '계좌번호를 입력해주세요';
+                    //     return null;
+                    //   },
+                    // ),
+                    // SizedBox(
+                    //   height: 12.0.h,
+                    // ),
 
                     // 이용약관
                     Row(
