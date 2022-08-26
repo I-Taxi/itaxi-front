@@ -49,8 +49,8 @@ class SignUpController extends GetxController {
         email: FirebaseAuth.instance.currentUser!.email.toString(),
         phone: phone,
         name: name,
-        bank: bank,
-        bankAddress: bankAddress,
+        bank: "1",
+        bankAddress: "1",
       );
       fetchAddUser(login: login);
       // Get.to(const SignInScreen());

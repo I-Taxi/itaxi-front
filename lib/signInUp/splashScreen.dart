@@ -22,6 +22,7 @@ class _SplashScreenState extends State<SplashScreen> {
   initState() {
     Timer(const Duration(milliseconds: 2000), () {
       _signInController.onInit();
+      _signInController.signedOutState();
     });
     super.initState();
   }

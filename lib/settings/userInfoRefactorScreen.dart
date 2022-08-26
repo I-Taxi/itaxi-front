@@ -23,7 +23,6 @@ class _UserInfoRefactorScreenState extends State<UserInfoRefactorScreen> {
   final _bankController = TextEditingController();
   final _bankAddressController = TextEditingController();
 
-
   final _formKey = GlobalKey<FormState>();
 
   @override
@@ -36,7 +35,6 @@ class _UserInfoRefactorScreenState extends State<UserInfoRefactorScreen> {
 
   @override
   Widget build(BuildContext context) {
-    print(_userController.phone);
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
 
@@ -119,82 +117,82 @@ class _UserInfoRefactorScreenState extends State<UserInfoRefactorScreen> {
                       height: 12.0.h,
                     ),
 
-                    Align(
-                      alignment: Alignment.bottomLeft,
-                      child: Text(
-                        '새 은행명',
-                        style: textTheme.subtitle1?.copyWith(
-                          fontSize: Platform.isIOS ? 14 : 12,
-                          color: colorScheme.tertiary,
-                        ),
-                      ),
-                    ),
-                    // 은행 다시 입력
-                    TextFormField(
-                        controller: _bankController,
-                        autocorrect: false,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        // initialValue: _userController.bank,
-                        cursorColor: colorScheme.tertiary,
-                        decoration: InputDecoration(
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: colorScheme.tertiary,
-                              width: 0.3,
-                            ),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: colorScheme.secondary,
-                              width: 1.0,
-                            ),
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value!.isEmpty) return '은행명을 입력해주세요';
-                          return null;
-                        }),
-                    SizedBox(
-                      height: 12.0.h,
-                    ),
-                    Align(
-                      alignment: Alignment.bottomLeft,
-                      child: Text(
-                        '새 계좌번호',
-                        style: textTheme.subtitle1?.copyWith(
-                          fontSize: Platform.isIOS ? 14 : 12,
-                          color: colorScheme.tertiary,
-                        ),
-                      ),
-                    ),
-                    // 은행 계좌 입력
-                    TextFormField(
-                        controller: _bankAddressController,
-                        autocorrect: false,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        // initialValue: _userController.bankAddress,
-                        cursorColor: colorScheme.tertiary,
-                        decoration: InputDecoration(
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: colorScheme.tertiary,
-                              width: 0.3,
-                            ),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: colorScheme.secondary,
-                              width: 1.0,
-                            ),
-                          ),
-                        ),
-                        validator: (value) {
-                          if (value!.isEmpty) return '계좌번호를 입력해주세요';
-                          return null;
-                        }),
-                    SizedBox(
-                      height: 52.0.h,
-                    ),
+                    // Align(
+                    //   alignment: Alignment.bottomLeft,
+                    //   child: Text(
+                    //     '새 은행명',
+                    //     style: textTheme.subtitle1?.copyWith(
+                    //       fontSize: Platform.isIOS ? 14 : 12,
+                    //       color: colorScheme.tertiary,
+                    //     ),
+                    //   ),
+                    // ),
+                    // // 은행 다시 입력
+                    // TextFormField(
+                    //     controller: _bankController,
+                    //     autocorrect: false,
+                    //     autovalidateMode: AutovalidateMode.onUserInteraction,
+                    //     // initialValue: _userController.bank,
+                    //     cursorColor: colorScheme.tertiary,
+                    //     decoration: InputDecoration(
+                    //       enabledBorder: UnderlineInputBorder(
+                    //         borderSide: BorderSide(
+                    //           color: colorScheme.tertiary,
+                    //           width: 0.3,
+                    //         ),
+                    //       ),
+                    //       focusedBorder: UnderlineInputBorder(
+                    //         borderSide: BorderSide(
+                    //           color: colorScheme.secondary,
+                    //           width: 1.0,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //     validator: (value) {
+                    //       if (value!.isEmpty) return '은행명을 입력해주세요';
+                    //       return null;
+                    //     }),
+                    // SizedBox(
+                    //   height: 12.0.h,
+                    // ),
+                    // Align(
+                    //   alignment: Alignment.bottomLeft,
+                    //   child: Text(
+                    //     '새 계좌번호',
+                    //     style: textTheme.subtitle1?.copyWith(
+                    //       fontSize: Platform.isIOS ? 14 : 12,
+                    //       color: colorScheme.tertiary,
+                    //     ),
+                    //   ),
+                    // ),
+                    // // 은행 계좌 입력
+                    // TextFormField(
+                    //     controller: _bankAddressController,
+                    //     autocorrect: false,
+                    //     autovalidateMode: AutovalidateMode.onUserInteraction,
+                    //     // initialValue: _userController.bankAddress,
+                    //     cursorColor: colorScheme.tertiary,
+                    //     decoration: InputDecoration(
+                    //       enabledBorder: UnderlineInputBorder(
+                    //         borderSide: BorderSide(
+                    //           color: colorScheme.tertiary,
+                    //           width: 0.3,
+                    //         ),
+                    //       ),
+                    //       focusedBorder: UnderlineInputBorder(
+                    //         borderSide: BorderSide(
+                    //           color: colorScheme.secondary,
+                    //           width: 1.0,
+                    //         ),
+                    //       ),
+                    //     ),
+                    //     validator: (value) {
+                    //       if (value!.isEmpty) return '계좌번호를 입력해주세요';
+                    //       return null;
+                    //     }),
+                    // SizedBox(
+                    //   height: 52.0.h,
+                    // ),
                     ElevatedButton(
                       style: ElevatedButton.styleFrom(
                         elevation: 0,
@@ -206,8 +204,8 @@ class _UserInfoRefactorScreenState extends State<UserInfoRefactorScreen> {
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
                           _userController.phone = _phoneController.text;
-                          _userController.bank = _bankController.text;
-                          _userController.bankAddress = _bankAddressController.text;
+                          // _userController.bank = _bankController.text;
+                          // _userController.bankAddress = _bankAddressController.text;
                           await _userController.fetchNewUsers();
                           await _userController.getUsers();
                           Get.back();

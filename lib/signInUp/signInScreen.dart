@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
@@ -49,11 +50,7 @@ class _SignInScreenState extends State<SignInScreen> {
   // @override
   // void initState() {
   //   super.initState();
-  //   WidgetsBinding.instance.addPostFrameCallback(
-  //     (_) {
-  //       _signInController.onInit();
-  //     },
-  //   );
+  //   FlutterNativeSplash.remove();
   // }
 
   @override

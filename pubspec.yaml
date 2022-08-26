@@ -47,10 +47,12 @@ dependencies:
   flutter_screenutil: ^5.5.3+2
   flutter_secure_storage: ^5.1.0
   flutter_email_sender: ^5.1.0
+  flutter_native_splash: ^2.2.8
   colorful_safe_area: ^0.3.0
+  introduction_screen: ^3.0.2
 
 
-  shared_preferences: ^0.5.3+4
+  shared_preferences: ^2.0.13
   logger: ^0.7.0+2
 
 
@@ -73,7 +75,6 @@ dev_dependencies:
 
 # The following section is specific to Flutter packages.
 flutter:
-
   # The following line ensures that the Material Icons font is
   # included with your application, so that you can use the icons in
   # the material Icons class.
@@ -121,6 +122,8 @@ flutter:
     - assets/type/taxi_2.png
     - assets/type/train_1.png
     - assets/type/train_2.png
+    - assets/mainScreen.png
+    - assets/timeLine.png
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
@@ -149,3 +152,4 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+

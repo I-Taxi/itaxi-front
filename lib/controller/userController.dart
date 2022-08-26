@@ -76,8 +76,8 @@ class UserController extends GetxController {
       headers: <String, String>{'Content-type': 'application/json'},
       body: json.encode(
         {
-          'bank': bank.toString(),
-          'bankAddress': bankAddress.toString(),
+          'bank': "1",
+          'bankAddress': "1",
           'phone': phone.toString(),
           'uid': FirebaseAuth.instance.currentUser!.uid,
         },

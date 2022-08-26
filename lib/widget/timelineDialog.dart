@@ -297,10 +297,11 @@ Future<dynamic> timelineDiaog(
                               true)
                             TextButton(
                               onPressed: () async {
-                                await _postController.fetchOutJoin(
-                                    postId: snapshot.data!.id!);
-                                _historyController.getHistorys();
-                                Get.back();
+                                // await _postController.fetchOutJoin(
+                                //     postId: snapshot.data!.id!);
+                                // _historyController.getHistorys();
+                                // Get.back();
+                                showMainDialog(context, '방 나가기', '방을 나가시겠습니까?', _postController, _historyController, snapshot.data!.id!);
                               },
                               child: Text(
                                 '방 나가기',
@@ -355,4 +356,67 @@ Future<dynamic> timelineDiaog(
       );
     },
   );
+}
+
+Future<dynamic> showMainDialog (BuildContext context, String? title, String? content, PostController _postController, HistoryController _historyController, int postId) async {
+  final colorScheme = Theme.of(context).colorScheme;
+  final textTheme = Theme.of(context).textTheme;
+
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(4.0),
+          ),
+          child: Container(
+            width: 360.w,
+            height: 180.h,
+            alignment: Alignment.center,
+            padding: EdgeInsets.fromLTRB(
+              28.0.w,
+              32.0.h,
+              28.0.w,
+              12.0.h,
+            ),
+            child: Column(
+              children: <Widget>[
+                Text(
+                  title as String,
+                  style: textTheme.headline1?.copyWith(
+                    color: colorScheme.secondary,
+                  ),
+                ),
+                SizedBox(
+                  height: 16.h,
+                ),
+                Text(
+                  content as String,
+                  style: textTheme.subtitle1?.copyWith(
+                    color: colorScheme.onPrimary,
+                  ),
+                ),
+                // const Spacer(),
+                TextButton(
+                  onPressed: () async {
+                    await _postController.fetchOutJoin(
+                        postId: postId);
+                    _historyController.getHistorys();
+                    Get.back();
+                  },
+                  child: Text(
+                    "확인",
+                    style: textTheme.headline1
+                        ?.copyWith(color: colorScheme.tertiary),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      }
+
+  );
+
 }
