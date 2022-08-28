@@ -45,7 +45,7 @@ class HistoryController extends GetxController {
   Future<List<Post>> fetchHistorys() async {
     // var historyUrl = "http://walab.handong.edu:8080/itaxi/api/";
     var historyUrl = dotenv.env['API_URL'].toString();
-    historyUrl += '/post/history';
+    historyUrl += 'post/history';
 
     Map<String, dynamic> map = {
       'uid': _userController.uid,
@@ -71,7 +71,7 @@ class HistoryController extends GetxController {
   Future<Post> fetchHistoryInfo({required int postId}) async {
     // var historyUrl = "http://walab.handong.edu:8080/itaxi/api/";
     var historyUrl = dotenv.env['API_URL'].toString();
-    historyUrl += '/post/history/$postId';
+    historyUrl += 'post/history/$postId';
 
     http.Response response = await http.get(
       Uri.parse(historyUrl),

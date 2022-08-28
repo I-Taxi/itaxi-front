@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
+import 'package:itaxi/settings/privacyPolicyScreen.dart';
 import 'package:itaxi/settings/termOfServiceScreen.dart';
 import 'package:itaxi/settings/versionScreen.dart';
 
@@ -132,6 +133,16 @@ class _SettingScreenState extends State<SettingScreen> {
           icon: Icons.lock,
           title: '약관',
           nextPage: const TermOfServiceScreen(),
+          context: context,
+        ),
+        Divider(
+          height: 0.3,
+          color: colorScheme.shadow,
+        ),
+        _settingListTile(
+          icon: Icons.lock,
+          title: '개인정보처리방침',
+          nextPage: const PrivacyPolicyScreen(),
           context: context,
         ),
         Divider(
