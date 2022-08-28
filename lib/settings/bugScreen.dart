@@ -74,86 +74,88 @@ class BugScreen extends StatelessWidget {
       backgroundColor: colorScheme.primary,
       body: ColorfulSafeArea(
         color: colorScheme.primary,
-        child: Padding(
-          padding: EdgeInsets.symmetric(
-            vertical: 20.0.h,
-            horizontal: 48.0.w,
-          ),
-          child: Column(
-            children: [
-              Align(
-                alignment: Alignment.centerLeft,
-                child: Column(
-                  children: [
-                    Text(
-                      mainBody,
-                      style: textTheme.headline1!.copyWith(
-                        color: colorScheme.onPrimary,
+        child: Center(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              vertical: 20.0.h,
+              horizontal: 48.0.w,
+            ),
+            child: Column(
+              children: [
+                Align(
+                  alignment: Alignment.centerLeft,
+                  child: Column(
+                    children: [
+                      Text(
+                        mainBody,
+                        style: textTheme.headline1!.copyWith(
+                          color: colorScheme.onPrimary,
+                        ),
+                      ),
+                      Text(
+                        '1. 해당 버그가 나타난 페이지를 캡쳐해서 보내주세요.\n'
+                        '2. 보이지 않는 버그라면, 페이지/어떠한 동작을 할 때 발생했는 지 자세히 적어주세요.\n\n'
+                        '여러분의 버그 제보는 앱의 퀄리티를 높이는 데 사용됩니다.\n',
+                        style: textTheme.subtitle1!.copyWith(
+                          color: colorScheme.onPrimary,
+                        ),
+                      )
+                    ],
+                  ),
+                ),
+                // Container(
+                //   padding: EdgeInsets.symmetric(
+                //     vertical: 10.0.h,
+                //     horizontal: 10.0.w,
+                //   ),
+                //   height: 150.h,
+                //   decoration: BoxDecoration(
+                //     color: colorScheme.primary,
+                //     borderRadius: const BorderRadius.all(
+                //       Radius.circular(10),
+                //     ),
+                //     boxShadow: [
+                //       BoxShadow(
+                //         color: colorScheme.shadow,
+                //         offset: const Offset(4.0, 4.0),
+                //         blurRadius: 15.0,
+                //         spreadRadius: 1.0,
+                //       )
+                //     ],
+                //   ),
+                //   child: Text(
+                //     mainBody,
+                //     style: textTheme.headline1!
+                //         .copyWith(color: colorScheme.onPrimary),
+                //   ),
+                // ),
+                SizedBox(
+                  height: 40.h,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: ElevatedButton(
+                    style: ElevatedButton.styleFrom(
+                      elevation: 0,
+                      primary: colorScheme.secondary,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(8.0),
                       ),
                     ),
-                    Text(
-                      '1. 해당 버그가 나타난 페이지를 캡쳐해서 보내주세요.\n'
-                      '2. 보이지 않는 버그라면, 페이지/어떠한 동작을 할 때 발생했는 지 자세히 적어주세요.\n\n'
-                      '여러분의 버그 제보는 앱의 퀄리티를 높이는 데 사용됩니다.\n',
+                    onPressed: () async {
+                      _sendEmail(context);
+                    },
+                    // textTheme 적용 해야함
+                    child: Text(
+                      '문의하기',
                       style: textTheme.subtitle1!.copyWith(
-                        color: colorScheme.onPrimary,
+                        color: colorScheme.primary,
                       ),
-                    )
-                  ],
-                ),
-              ),
-              // Container(
-              //   padding: EdgeInsets.symmetric(
-              //     vertical: 10.0.h,
-              //     horizontal: 10.0.w,
-              //   ),
-              //   height: 150.h,
-              //   decoration: BoxDecoration(
-              //     color: colorScheme.primary,
-              //     borderRadius: const BorderRadius.all(
-              //       Radius.circular(10),
-              //     ),
-              //     boxShadow: [
-              //       BoxShadow(
-              //         color: colorScheme.shadow,
-              //         offset: const Offset(4.0, 4.0),
-              //         blurRadius: 15.0,
-              //         spreadRadius: 1.0,
-              //       )
-              //     ],
-              //   ),
-              //   child: Text(
-              //     mainBody,
-              //     style: textTheme.headline1!
-              //         .copyWith(color: colorScheme.onPrimary),
-              //   ),
-              // ),
-              SizedBox(
-                height: 40.h,
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    primary: colorScheme.secondary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                  ),
-                  onPressed: () async {
-                    _sendEmail(context);
-                  },
-                  // textTheme 적용 해야함
-                  child: Text(
-                    '문의하기',
-                    style: textTheme.subtitle1!.copyWith(
-                      color: colorScheme.primary,
                     ),
                   ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

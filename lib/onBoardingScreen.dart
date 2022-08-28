@@ -88,7 +88,7 @@ class onBoardingScreen extends StatelessWidget {
       )
   );
 
-  void goToHome(BuildContext context) => Get.to(Home());
+  void goToHome(BuildContext context) => Get.offAll(Home());
 
   PageDecoration buildDecoration(textTheme, colorScheme) => PageDecoration(
     titleTextStyle: textTheme.headline,
