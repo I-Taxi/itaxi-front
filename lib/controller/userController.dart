@@ -47,7 +47,6 @@ class UserController extends GetxController {
   }
 
   Future<UserInfoList> fetchUsers() async {
-    // var userUrl = "http://walab.handong.edu:8080/itaxi/api/";
     uid = FirebaseAuth.instance.currentUser!.uid;
     var userUrl = dotenv.env['API_URL'].toString();
     userUrl = '${userUrl}member/info';
@@ -67,9 +66,8 @@ class UserController extends GetxController {
 
   // 정보 수정
   Future<void> fetchNewUsers() async {
-    // var userUrl = "http://walab.handong.edu:8080/itaxi/api";
     var userUrl = dotenv.env['API_URL'].toString();
-    userUrl = '$userUrl/member';
+    userUrl = '${userUrl}member';
 
     http.Response response = await http.patch(
       Uri.parse(userUrl),

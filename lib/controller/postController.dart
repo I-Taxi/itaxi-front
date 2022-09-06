@@ -45,7 +45,6 @@ class PostController extends GetxController {
       int? dstId,
       required String time,
       required int postType}) async {
-    // var postUrl = "http://walab.handong.edu:8080/itaxi/api/";
     var postUrl = dotenv.env['API_URL'].toString();
     final Map<String, dynamic> queryParameters;
     if ((depId == null || depId == -1) && (dstId == null || dstId == -1)) {
@@ -121,7 +120,6 @@ class PostController extends GetxController {
 
   // /itaxi/api/post/{postId}/join
   Future<void> fetchJoin({required int postId, required int luggage}) async {
-    // var joinUrl = "http://walab.handong.edu:8080/itaxi/api/";
     var joinUrl = dotenv.env['API_URL'].toString();
     joinUrl = '${joinUrl}post/$postId/join';
 
@@ -147,7 +145,6 @@ class PostController extends GetxController {
   }
 
   Future<void> fetchOutJoin({required int postId}) async {
-    // var joinUrl = "http://walab.handong.edu:8080/itaxi/api/";
     var joinUrl = dotenv.env['API_URL'].toString();
     joinUrl = '${joinUrl}post/$postId/join';
 

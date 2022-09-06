@@ -88,7 +88,7 @@ Widget chatListTile({required BuildContext context, required Chat chat}) {
                       color: colorScheme.tertiary,
                       borderRadius: BorderRadius.circular(12.0),
                     ),
-                    child: Text(
+                    child: SelectableText(
                       chat.chatData!,
                       style: textTheme.subtitle1?.copyWith(
                         color: colorScheme.primary,
