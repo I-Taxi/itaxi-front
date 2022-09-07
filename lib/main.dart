@@ -71,19 +71,18 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           home: GetBuilder<SignInController>(
             builder: (_) {
-              return const OnBoardingScreen();
-              // if (_signInController.signInState == SignInState.start) {
-              //   return const SplashScreen();
-              // } else if (_signInController.signInState ==
-              //     SignInState.signedOut) {
-              //   return const SignInScreen();
-              // } else {
-              //   if (isOnBoarding == 1) {
-              //     return const OnBoardingScreen();
-              //   } else {
-              //     return Home();
-              //   }
-              // }
+              if (_signInController.signInState == SignInState.start) {
+                return const SplashScreen();
+              } else if (_signInController.signInState ==
+                  SignInState.signedOut) {
+                return const SignInScreen();
+              } else {
+                if (isOnBoarding == 1) {
+                  return const OnBoardingScreen();
+                } else {
+                  return Home();
+                }
+              }
             },
           ),
         );
