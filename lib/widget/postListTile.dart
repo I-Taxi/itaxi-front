@@ -28,10 +28,14 @@ Widget postListTile({
       for (int i = 0; i < post.joiners!.length; i++) {
         if (post.joiners![i].uid == _userController.uid) {
           if (post.joiners![i].owner == true) {
-            snackBar(context: context, title: '방장인 모집입니다. 타임라인에서 채팅방으로 입장하실 수 있습니다.');
+            snackBar(
+                context: context,
+                title: '방장인 모집입니다. 타임라인에서 채팅방으로 입장하실 수 있습니다.');
             break;
           } else {
-            snackBar(context: context, title: '이미 입장한 모집입니다. 타임라인에서 채팅방으로 입장하실 수 있습니다.');
+            snackBar(
+                context: context,
+                title: '이미 입장한 모집입니다. 타임라인에서 채팅방으로 입장하실 수 있습니다.');
             break;
           }
         } else if (i == post.joiners!.length - 1) {
@@ -154,7 +158,7 @@ Widget postListTile({
                               await _postController.fetchJoin(
                                   postId: post.id!,
                                   luggage: _addPostController.luggage);
-                              _historyController.fetchHistorys();
+                              await _historyController.fetchHistorys();
                               _navigationController.changeIndex(0);
                               Get.back();
                             },

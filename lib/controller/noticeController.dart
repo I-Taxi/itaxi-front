@@ -30,7 +30,6 @@ class NoticeController extends GetxController {
   }
 
   Future<List<Notice>> fetchNotices() async {
-    // var noticeUrl = "http://walab.handong.edu:8080/itaxi/api/";
     var noticeUrl = dotenv.env['API_URL'].toString();
     noticeUrl = "${noticeUrl}notice";
 

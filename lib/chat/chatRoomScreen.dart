@@ -158,10 +158,23 @@ class _ChatRoonScreenState extends State<ChatRoonScreen> {
                                               ],
                                             ),
                                           ),
-                                      chatListTile(
-                                        context: context,
-                                        chat: snapshot.data![index],
-                                      ),
+                                      snapshot.data![index].memberName == null
+                                          ? Padding(
+                                              padding: EdgeInsets.symmetric(
+                                                vertical: 6.h,
+                                              ),
+                                              child: Text(
+                                                snapshot.data![index].chatData!,
+                                                style: textTheme.bodyText1
+                                                    ?.copyWith(
+                                                  color: colorScheme.tertiary,
+                                                ),
+                                              ),
+                                            )
+                                          : chatListTile(
+                                              context: context,
+                                              chat: snapshot.data![index],
+                                            ),
                                     ],
                                   );
                                 },

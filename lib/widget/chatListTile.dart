@@ -1,4 +1,3 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -39,7 +38,7 @@ Widget chatListTile({required BuildContext context, required Chat chat}) {
                       color: colorScheme.secondary,
                       borderRadius: BorderRadius.circular(12.0),
                     ),
-                    child: Text(
+                    child: SelectableText(
                       chat.chatData!,
                       style: textTheme.subtitle1?.copyWith(
                         color: colorScheme.primary,
@@ -88,7 +87,7 @@ Widget chatListTile({required BuildContext context, required Chat chat}) {
                       color: colorScheme.tertiary,
                       borderRadius: BorderRadius.circular(12.0),
                     ),
-                    child: Text(
+                    child: SelectableText(
                       chat.chatData!,
                       style: textTheme.subtitle1?.copyWith(
                         color: colorScheme.primary,

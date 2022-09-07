@@ -28,7 +28,7 @@ class DateController extends GetxController {
       context: context,
       initialDate: pickedDate!,
       firstDate: DateTime.now(),
-      lastDate: DateTime(2100),
+      lastDate: DateTime.now().add(const Duration(days: 31)),
       helpText: '출발일',
       cancelText: '취소',
       confirmText: '확인',

@@ -24,7 +24,6 @@ class SignUpController extends GetxController {
   late String bankAddress;
 
   Future<http.Response> fetchAddUser({required Login login}) async {
-    // var addUserUrl = "http://walab.handong.edu:8080/itaxi/api/";
     var addUserUrl = dotenv.env['API_URL'].toString();
     addUserUrl = '${addUserUrl}member';
 

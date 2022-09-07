@@ -24,7 +24,6 @@ class AddPostController extends GetxController {
   }
 
   Future<int> fetchAddPost({required Post post}) async {
-    // var addPostUrl = "http://walab.handong.edu:8080/itaxi/api/";
     var addPostUrl = dotenv.env['API_URL'].toString();
     addPostUrl = '${addPostUrl}post';
 

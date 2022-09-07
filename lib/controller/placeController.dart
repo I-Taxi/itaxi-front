@@ -40,9 +40,8 @@ class PlaceController extends GetxController {
   }
 
   Future<List<Place>> fetchPlace() async {
-    // var placeUrl = "http://walab.handong.edu:8080/itaxi/api/";
     var placeUrl = dotenv.env['API_URL'].toString();
-    placeUrl = placeUrl + 'place';
+    placeUrl = '${placeUrl}place';
 
     var response = await http.get(Uri.parse(placeUrl));
 

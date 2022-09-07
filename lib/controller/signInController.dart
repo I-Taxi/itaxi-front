@@ -3,8 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 
-import '../signInUp/signInScreen.dart';
-
 enum SignInState {
   signedIn,
   signedOut,
@@ -72,7 +70,7 @@ class SignInController extends GetxController {
       id = userInfo!.split(" ")[1];
       pw = userInfo!.split(" ")[3];
       signIn();
-    }else {
+    } else {
       signedOutState();
       update();
     }
@@ -80,8 +78,6 @@ class SignInController extends GetxController {
 
   Future<void> signIn() async {
     num = 5;
-    print(id);
-    print(pw);
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(
@@ -92,11 +88,11 @@ class SignInController extends GetxController {
                 signedInState(),
                 update(),
               }
-              :{
-          num = 0,
-          update(),
-        };
-            // : throw Exception('이메일 확인 안됨');
+            : {
+                num = 0,
+                update(),
+              };
+        // : throw Exception('이메일 확인 안됨');
         return value;
       });
     } on FirebaseAuthException catch (e) {
@@ -109,10 +105,10 @@ class SignInController extends GetxController {
         num = 2;
         update();
         // throw Exception('비밀번호가 틀렸습니다');
-      } else if (e.code == 'network-request-failed'){
+      } else if (e.code == 'network-request-failed') {
         num = 3;
         update();
-      } else{
+      } else {
         print(e.code);
         num = 4;
         update();

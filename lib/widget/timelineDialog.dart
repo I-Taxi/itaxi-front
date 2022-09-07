@@ -301,7 +301,13 @@ Future<dynamic> timelineDiaog(
                                 //     postId: snapshot.data!.id!);
                                 // _historyController.getHistorys();
                                 // Get.back();
-                                showMainDialog(context, '방 나가기', '방을 나가시겠습니까?', _postController, _historyController, snapshot.data!.id!);
+                                showMainDialog(
+                                    context,
+                                    '방 나가기',
+                                    '방을 나가시겠습니까?',
+                                    _postController,
+                                    _historyController,
+                                    snapshot.data!.id!);
                               },
                               child: Text(
                                 '방 나가기',
@@ -358,7 +364,13 @@ Future<dynamic> timelineDiaog(
   );
 }
 
-Future<dynamic> showMainDialog (BuildContext context, String? title, String? content, PostController _postController, HistoryController _historyController, int postId) async {
+Future<dynamic> showMainDialog(
+    BuildContext context,
+    String? title,
+    String? content,
+    PostController _postController,
+    HistoryController _historyController,
+    int postId) async {
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
 
@@ -400,13 +412,12 @@ Future<dynamic> showMainDialog (BuildContext context, String? title, String? con
                 // const Spacer(),
                 TextButton(
                   onPressed: () async {
-                    await _postController.fetchOutJoin(
-                        postId: postId);
+                    await _postController.fetchOutJoin(postId: postId);
                     _historyController.getHistorys();
                     Get.back();
                   },
                   child: Text(
-                    "확인",
+                    "나가기",
                     style: textTheme.headline1
                         ?.copyWith(color: colorScheme.tertiary),
                   ),
@@ -415,8 +426,5 @@ Future<dynamic> showMainDialog (BuildContext context, String? title, String? con
             ),
           ),
         );
-      }
-
-  );
-
+      });
 }
