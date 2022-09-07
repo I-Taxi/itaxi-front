@@ -272,7 +272,7 @@ void addPostDialog({required BuildContext context}) {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    '수용인원',
+                    '최대인원',
                     style: textTheme.headline2?.copyWith(
                       color: colorScheme.tertiary,
                       fontFamily: 'NotoSans',
@@ -282,36 +282,6 @@ void addPostDialog({required BuildContext context}) {
                     builder: (_) {
                       return Row(
                         children: [
-                          GestureDetector(
-                            behavior: HitTestBehavior.opaque,
-                            onTap: () {
-                              _addPostController.changeCapacity(1);
-                            },
-                            child: (_addPostController.capacity == 1)
-                                ? Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 10.w,
-                                    ),
-                                    child: Text(
-                                      '1',
-                                      style: textTheme.headline2?.copyWith(
-                                          color: colorScheme.secondary),
-                                    ),
-                                  )
-                                : Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 10.w,
-                                    ),
-                                    child: Text(
-                                      '1',
-                                      style: textTheme.headline2?.copyWith(
-                                          color: colorScheme.tertiary),
-                                    ),
-                                  ),
-                          ),
-                          SizedBox(
-                            width: 8.w,
-                          ),
                           GestureDetector(
                             behavior: HitTestBehavior.opaque,
                             onTap: () {
@@ -364,6 +334,36 @@ void addPostDialog({required BuildContext context}) {
                                     ),
                                     child: Text(
                                       '3',
+                                      style: textTheme.headline2?.copyWith(
+                                          color: colorScheme.tertiary),
+                                    ),
+                                  ),
+                          ),
+                          SizedBox(
+                            width: 8.w,
+                          ),
+                          GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: () {
+                              _addPostController.changeCapacity(4);
+                            },
+                            child: (_addPostController.capacity == 4)
+                                ? Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 10.w,
+                                    ),
+                                    child: Text(
+                                      '4',
+                                      style: textTheme.headline2?.copyWith(
+                                          color: colorScheme.secondary),
+                                    ),
+                                  )
+                                : Container(
+                                    padding: EdgeInsets.symmetric(
+                                      horizontal: 10.w,
+                                    ),
+                                    child: Text(
+                                      '4',
                                       style: textTheme.headline2?.copyWith(
                                           color: colorScheme.tertiary),
                                     ),
@@ -511,7 +511,7 @@ void addPostDialog({required BuildContext context}) {
                           false) {
                         snackBar(context: context, title: '출발시간을 다시 선택해주세요.');
                       } else if (_addPostController.capacity == 0) {
-                        snackBar(context: context, title: '수용인원을 선택해주세요.');
+                        snackBar(context: context, title: '최대인원을 선택해주세요.');
                       } else {
                         Post post = Post(
                             uid: _userController.uid,
@@ -521,7 +521,7 @@ void addPostDialog({required BuildContext context}) {
                             deptTime: _dateController.formattingDateTime(
                               _dateController.mergeDateAndTime(),
                             ),
-                            capacity: _addPostController.capacity + 1,
+                            capacity: _addPostController.capacity,
                             luggage: _addPostController.luggage);
                         Get.back();
                         await _addPostController.fetchAddPost(post: post);

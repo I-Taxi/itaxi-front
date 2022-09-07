@@ -5,6 +5,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:itaxi/controller/chatRoomController.dart';
 import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/model/post.dart';
@@ -12,6 +13,7 @@ import 'package:itaxi/model/post.dart';
 class PostController extends GetxController {
   late DateController _dateController = Get.find();
   late UserController _userController = Get.find();
+  late ChatRoomController _chatRoomController = Get.put(ChatRoomController());
   late Future<List<Post>> posts;
   bool isLoading = true;
 
@@ -139,6 +141,7 @@ class PostController extends GetxController {
     );
 
     if (response.statusCode == 200) {
+      await _chatRoomController.joinChat();
     } else {
       throw Exception('Failed to join');
     }
@@ -162,6 +165,7 @@ class PostController extends GetxController {
     );
 
     if (response.statusCode == 200) {
+      await _chatRoomController.outChat();
     } else {
       throw Exception('Failed to out');
     }

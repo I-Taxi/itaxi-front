@@ -12,7 +12,6 @@ import 'package:itaxi/home.dart';
 import 'package:itaxi/signInUp/signInScreen.dart';
 import 'package:itaxi/signInUp/splashScreen.dart';
 import 'package:itaxi/src/theme.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'onBoardingScreen.dart';
 
 int? initScreen;
@@ -43,11 +42,9 @@ class _MyAppState extends State<MyApp> {
   String? onBoardingInfo;
   int? isOnBoarding = 1; // 0일 경우, 온보딩 페이지 x / 1일 경우, 온보딩 페이지 띄우기
 
-
-  @override
   onInit() {
     WidgetsBinding.instance.addPostFrameCallback(
-          (_) {
+      (_) {
         _onBoarding();
       },
     );
@@ -56,13 +53,12 @@ class _MyAppState extends State<MyApp> {
   _onBoarding() async {
     onBoardingInfo = await storage.read(key: "onBoarding");
 
-    if(onBoardingInfo != null){
+    if (onBoardingInfo != null) {
       isOnBoarding = 0;
-    }else{
+    } else {
       isOnBoarding = 1;
     }
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -75,18 +71,19 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           home: GetBuilder<SignInController>(
             builder: (_) {
-              if(_signInController.signInState == SignInState.start){
-                return SplashScreen();
-              }else
-              if(_signInController.signInState == SignInState.signedOut){
-                return SignInScreen();
-              }else {
-                if(isOnBoarding == 1){
-                  return onBoardingScreen();
-                }else{
-                  return Home();
-                }
-              }
+              return const OnBoardingScreen();
+              // if (_signInController.signInState == SignInState.start) {
+              //   return const SplashScreen();
+              // } else if (_signInController.signInState ==
+              //     SignInState.signedOut) {
+              //   return const SignInScreen();
+              // } else {
+              //   if (isOnBoarding == 1) {
+              //     return const OnBoardingScreen();
+              //   } else {
+              //     return Home();
+              //   }
+              // }
             },
           ),
         );
