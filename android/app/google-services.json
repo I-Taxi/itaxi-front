@@ -9,7 +9,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:493359198058:android:bc1657ea5cdf298267bf13",
         "android_client_info": {
-          "package_name": "com.example.itaxi"
+          "package_name": "com.cra.itaxi"
         }
       },
       "oauth_client": [
@@ -17,7 +17,7 @@
           "client_id": "493359198058-i50ruqh35aog70nuh1s4baa0mg7cc4ki.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.example.itaxi",
+            "package_name": "com.cra.itaxi",
             "certificate_hash": "9fe3cd2388b6ae490504cfb300773e7dfe4502ce"
           }
         },

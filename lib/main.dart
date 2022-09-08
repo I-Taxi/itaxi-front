@@ -42,7 +42,8 @@ class _MyAppState extends State<MyApp> {
   String? onBoardingInfo;
   int? isOnBoarding = 1; // 0일 경우, 온보딩 페이지 x / 1일 경우, 온보딩 페이지 띄우기
 
-  onInit() {
+  @override
+  initState() {
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
         _onBoarding();
