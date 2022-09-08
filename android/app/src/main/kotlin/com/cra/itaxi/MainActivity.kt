@@ -1,4 +1,4 @@
-package com.example.itaxi
+package com.cra.itaxi
 
 import io.flutter.embedding.android.FlutterActivity
 

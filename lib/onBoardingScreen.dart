@@ -28,95 +28,103 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         decoration: BoxDecoration(
           color: ITaxiTheme.lightColorScheme.secondary,
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            SizedBox(
-              height: 160.h,
-            ),
-            Image.asset(
-              'assets/logo_2.png',
-              width: 80.w,
-              height: 54.86.h,
-            ),
-            SizedBox(
-              height: 16.h,
-            ),
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                '한동이들의 No.1 교통 어플리케이션',
-                style: Platform.isIOS
-                    ? ITaxiTheme.textThemeIOS.subtitle1!.copyWith(
-                        color: ITaxiTheme.lightColorScheme.primary,
-                      )
-                    : ITaxiTheme.textThemeDefault.subtitle1!.copyWith(
-                        color: ITaxiTheme.lightColorScheme.primary,
+        child: Container(
+          color: ITaxiTheme.lightColorScheme.secondary,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(
+                  height: 160.h,
+                ),
+                Image.asset(
+                  'assets/logo_2.png',
+                  width: 80.w,
+                  height: 54.86.h,
+                ),
+                SizedBox(
+                  height: 16.h,
+                ),
+                Align(
+                  alignment: Alignment.center,
+                  child: Text(
+                    '한동이들의 No.1 교통 어플리케이션',
+                    style: Platform.isIOS
+                        ? ITaxiTheme.textThemeIOS.subtitle1!.copyWith(
+                      color: ITaxiTheme.lightColorScheme.primary,
+                    )
+                        : ITaxiTheme.textThemeDefault.subtitle1!.copyWith(
+                      color: ITaxiTheme.lightColorScheme.primary,
+                    ),
+                  ),
+                ),
+                SizedBox(
+                  height: 160.h,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 40.w,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        'iTaxi는',
+                        style: Platform.isIOS
+                            ? ITaxiTheme.textThemeIOS.headline1!.copyWith(
+                          fontSize: 40,
+                          fontWeight: FontWeight.w900,
+                          color: ITaxiTheme.lightColorScheme.primary,
+                          letterSpacing: -1,
+                        )
+                            : ITaxiTheme.textThemeDefault.headline1!.copyWith(
+                          fontSize: 38,
+                          fontWeight: FontWeight.w900,
+                          color: ITaxiTheme.lightColorScheme.primary,
+                          letterSpacing: -1,
+                        ),
                       ),
-              ),
+                      SizedBox(
+                        height: 4.h,
+                      ),
+                      Text(
+                        '원활한 택시 및 카풀 이용을 위해 개발되었습니다.',
+                        style: Platform.isIOS
+                            ? ITaxiTheme.textThemeIOS.headline1!.copyWith(
+                          color: ITaxiTheme.lightColorScheme.primary,
+                          wordSpacing: 1,
+                        )
+                            : ITaxiTheme.textThemeDefault.headline1!.copyWith(
+                          color: ITaxiTheme.lightColorScheme.primary,
+                          wordSpacing: 1,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                      Text(
+                        '카풀의 경우 법적으로 7시 ~ 9시, 18시 ~ 20시까지만 허용됩니다.',
+                        style: Platform.isIOS
+                            ? ITaxiTheme.textThemeIOS.headline1!.copyWith(
+                          color: ITaxiTheme.lightColorScheme.primary,
+                          wordSpacing: 1,
+                        )
+                            : ITaxiTheme.textThemeDefault.headline1!.copyWith(
+                          color: ITaxiTheme.lightColorScheme.primary,
+                          wordSpacing: 1,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 30.h,
+                      )
+                    ],
+                  ),
+                ),
+              ],
             ),
-            SizedBox(
-              height: 160.h,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 40.w,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    'iTaxi는',
-                    style: Platform.isIOS
-                        ? ITaxiTheme.textThemeIOS.headline1!.copyWith(
-                            fontSize: 40,
-                            fontWeight: FontWeight.w900,
-                            color: ITaxiTheme.lightColorScheme.primary,
-                            letterSpacing: -1,
-                          )
-                        : ITaxiTheme.textThemeDefault.headline1!.copyWith(
-                            fontSize: 38,
-                            fontWeight: FontWeight.w900,
-                            color: ITaxiTheme.lightColorScheme.primary,
-                            letterSpacing: -1,
-                          ),
-                  ),
-                  SizedBox(
-                    height: 4.h,
-                  ),
-                  Text(
-                    '원활한 택시 및 카풀 이용을 위해 개발되었습니다.',
-                    style: Platform.isIOS
-                        ? ITaxiTheme.textThemeIOS.headline1!.copyWith(
-                            color: ITaxiTheme.lightColorScheme.primary,
-                            wordSpacing: 1,
-                          )
-                        : ITaxiTheme.textThemeDefault.headline1!.copyWith(
-                            color: ITaxiTheme.lightColorScheme.primary,
-                            wordSpacing: 1,
-                          ),
-                  ),
-                  SizedBox(
-                    height: 2.h,
-                  ),
-                  Text(
-                    '카풀의 경우 법적으로 7시 ~ 9시, 18시 ~ 20시까지만 허용됩니다.',
-                    style: Platform.isIOS
-                        ? ITaxiTheme.textThemeIOS.headline1!.copyWith(
-                            color: ITaxiTheme.lightColorScheme.primary,
-                            wordSpacing: 1,
-                          )
-                        : ITaxiTheme.textThemeDefault.headline1!.copyWith(
-                            color: ITaxiTheme.lightColorScheme.primary,
-                            wordSpacing: 1,
-                          ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        )
       ),
     ),
     PageModel(
@@ -124,79 +132,86 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         decoration: BoxDecoration(
           color: ITaxiTheme.lightColorScheme.primary,
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            SizedBox(
-              height: 40.h,
+        child: Container(
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(
+                  height: 40.h,
+                ),
+                Image.asset(
+                  'assets/mainScreen.png',
+                  width: 140.w,
+                  height: 280.h,
+                ),
+                SizedBox(
+                  height: 80.h,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 40.w,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        '홈 화면',
+                        style: Platform.isIOS
+                            ? ITaxiTheme.textThemeIOS.headline1!.copyWith(
+                          fontSize: 40,
+                          fontWeight: FontWeight.w900,
+                          color: ITaxiTheme.lightColorScheme.secondary,
+                          letterSpacing: -1,
+                        )
+                            : ITaxiTheme.textThemeDefault.headline1!.copyWith(
+                          fontSize: 38,
+                          fontWeight: FontWeight.w900,
+                          color: ITaxiTheme.lightColorScheme.secondary,
+                          letterSpacing: -1,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 4.h,
+                      ),
+                      Text(
+                        '우측 상단의 버튼으로 방을 생성할 수 있습니다.',
+                        style: Platform.isIOS
+                            ? ITaxiTheme.textThemeIOS.headline1!.copyWith(
+                          color: ITaxiTheme.lightColorScheme.onPrimary,
+                          wordSpacing: 1,
+                        )
+                            : ITaxiTheme.textThemeDefault.headline1!.copyWith(
+                          color: ITaxiTheme.lightColorScheme.onPrimary,
+                          wordSpacing: 1,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                      Text(
+                        '시간, 탑승가능한 인원, 출발지와 도착지, 입장한 사람들의 짐의 개수 등을 확인한 후 입장하길 바랍니다.',
+                        style: Platform.isIOS
+                            ? ITaxiTheme.textThemeIOS.headline1!.copyWith(
+                          color: ITaxiTheme.lightColorScheme.onPrimary,
+                          wordSpacing: 1,
+                        )
+                            : ITaxiTheme.textThemeDefault.headline1!.copyWith(
+                          color: ITaxiTheme.lightColorScheme.onPrimary,
+                          wordSpacing: 1,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 30.h,
+                      )
+                    ],
+                  ),
+                ),
+              ],
             ),
-            Image.asset(
-              'assets/mainScreen.png',
-              width: 140.w,
-              height: 280.h,
-            ),
-            SizedBox(
-              height: 80.h,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 40.w,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    '홈 화면',
-                    style: Platform.isIOS
-                        ? ITaxiTheme.textThemeIOS.headline1!.copyWith(
-                            fontSize: 40,
-                            fontWeight: FontWeight.w900,
-                            color: ITaxiTheme.lightColorScheme.secondary,
-                            letterSpacing: -1,
-                          )
-                        : ITaxiTheme.textThemeDefault.headline1!.copyWith(
-                            fontSize: 38,
-                            fontWeight: FontWeight.w900,
-                            color: ITaxiTheme.lightColorScheme.secondary,
-                            letterSpacing: -1,
-                          ),
-                  ),
-                  SizedBox(
-                    height: 4.h,
-                  ),
-                  Text(
-                    '우측 상단의 버튼으로 방을 생성할 수 있습니다.',
-                    style: Platform.isIOS
-                        ? ITaxiTheme.textThemeIOS.headline1!.copyWith(
-                            color: ITaxiTheme.lightColorScheme.onPrimary,
-                            wordSpacing: 1,
-                          )
-                        : ITaxiTheme.textThemeDefault.headline1!.copyWith(
-                            color: ITaxiTheme.lightColorScheme.onPrimary,
-                            wordSpacing: 1,
-                          ),
-                  ),
-                  SizedBox(
-                    height: 2.h,
-                  ),
-                  Text(
-                    '시간, 탑승가능한 인원, 출발지와 도착지, 입장한 사람들의 짐의 개수 등을 확인한 후 입장하길 바랍니다.',
-                    style: Platform.isIOS
-                        ? ITaxiTheme.textThemeIOS.headline1!.copyWith(
-                            color: ITaxiTheme.lightColorScheme.onPrimary,
-                            wordSpacing: 1,
-                          )
-                        : ITaxiTheme.textThemeDefault.headline1!.copyWith(
-                            color: ITaxiTheme.lightColorScheme.onPrimary,
-                            wordSpacing: 1,
-                          ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        )
       ),
     ),
     PageModel(
@@ -204,94 +219,99 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
         decoration: BoxDecoration(
           color: ITaxiTheme.lightColorScheme.primary,
         ),
-        child: Column(
-          mainAxisSize: MainAxisSize.max,
-          crossAxisAlignment: CrossAxisAlignment.stretch,
-          children: [
-            SizedBox(
-              height: 32.h,
+        child: Container(
+          child: SingleChildScrollView(
+            controller: ScrollController(),
+            child: Column(
+              mainAxisSize: MainAxisSize.max,
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                SizedBox(
+                  height: 32.h,
+                ),
+                Image.asset(
+                  'assets/timeLine.png',
+                  width: 160.w,
+                  height: 280.h,
+                ),
+                SizedBox(
+                  height: 80.h,
+                ),
+                Padding(
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 40.w,
+                  ),
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      Text(
+                        '타임라인',
+                        style: Platform.isIOS
+                            ? ITaxiTheme.textThemeIOS.headline1!.copyWith(
+                          fontSize: 40,
+                          fontWeight: FontWeight.w900,
+                          color: ITaxiTheme.lightColorScheme.secondary,
+                          letterSpacing: -1,
+                        )
+                            : ITaxiTheme.textThemeDefault.headline1!.copyWith(
+                          fontSize: 38,
+                          fontWeight: FontWeight.w900,
+                          color: ITaxiTheme.lightColorScheme.secondary,
+                          letterSpacing: -1,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 4.h,
+                      ),
+                      Text(
+                        '입장한 방은 타임라인에서 확인할 수 있습니다.',
+                        style: Platform.isIOS
+                            ? ITaxiTheme.textThemeIOS.headline1!.copyWith(
+                          color: ITaxiTheme.lightColorScheme.onPrimary,
+                          wordSpacing: 1,
+                        )
+                            : ITaxiTheme.textThemeDefault.headline1!.copyWith(
+                          color: ITaxiTheme.lightColorScheme.onPrimary,
+                          wordSpacing: 1,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                      Text(
+                        '홈 화면에서 방에 입장한 후 타임라인에 입장한 방이 뜨지 않는다면, 새로고침을 하길 바랍니다.',
+                        style: Platform.isIOS
+                            ? ITaxiTheme.textThemeIOS.headline1!.copyWith(
+                          color: ITaxiTheme.lightColorScheme.onPrimary,
+                          wordSpacing: 1,
+                        )
+                            : ITaxiTheme.textThemeDefault.headline1!.copyWith(
+                          color: ITaxiTheme.lightColorScheme.onPrimary,
+                          wordSpacing: 1,
+                        ),
+                      ),
+                      SizedBox(
+                        height: 2.h,
+                      ),
+                      Text(
+                        '방을 누르면, 현재 방에 입장한 사람의 이름 및 연락처를 알 수 있고 채팅방에 입장할 수 있습니다.',
+                        style: Platform.isIOS
+                            ? ITaxiTheme.textThemeIOS.headline1!.copyWith(
+                          color: ITaxiTheme.lightColorScheme.onPrimary,
+                          wordSpacing: 1,
+                        )
+                            : ITaxiTheme.textThemeDefault.headline1!.copyWith(
+                          color: ITaxiTheme.lightColorScheme.onPrimary,
+                          wordSpacing: 1,
+                        ),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             ),
-            Image.asset(
-              'assets/timeLine.png',
-              width: 160.w,
-              height: 280.h,
-            ),
-            SizedBox(
-              height: 80.h,
-            ),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                horizontal: 40.w,
-              ),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: [
-                  Text(
-                    '타임라인',
-                    style: Platform.isIOS
-                        ? ITaxiTheme.textThemeIOS.headline1!.copyWith(
-                            fontSize: 40,
-                            fontWeight: FontWeight.w900,
-                            color: ITaxiTheme.lightColorScheme.secondary,
-                            letterSpacing: -1,
-                          )
-                        : ITaxiTheme.textThemeDefault.headline1!.copyWith(
-                            fontSize: 38,
-                            fontWeight: FontWeight.w900,
-                            color: ITaxiTheme.lightColorScheme.secondary,
-                            letterSpacing: -1,
-                          ),
-                  ),
-                  SizedBox(
-                    height: 4.h,
-                  ),
-                  Text(
-                    '입장한 방은 타임라인에서 확인할 수 있습니다.',
-                    style: Platform.isIOS
-                        ? ITaxiTheme.textThemeIOS.headline1!.copyWith(
-                            color: ITaxiTheme.lightColorScheme.onPrimary,
-                            wordSpacing: 1,
-                          )
-                        : ITaxiTheme.textThemeDefault.headline1!.copyWith(
-                            color: ITaxiTheme.lightColorScheme.onPrimary,
-                            wordSpacing: 1,
-                          ),
-                  ),
-                  SizedBox(
-                    height: 2.h,
-                  ),
-                  Text(
-                    '홈 화면에서 방에 입장한 후 타임라인에 입장한 방이 뜨지 않는다면, 새로고침을 하길 바랍니다.',
-                    style: Platform.isIOS
-                        ? ITaxiTheme.textThemeIOS.headline1!.copyWith(
-                            color: ITaxiTheme.lightColorScheme.onPrimary,
-                            wordSpacing: 1,
-                          )
-                        : ITaxiTheme.textThemeDefault.headline1!.copyWith(
-                            color: ITaxiTheme.lightColorScheme.onPrimary,
-                            wordSpacing: 1,
-                          ),
-                  ),
-                  SizedBox(
-                    height: 2.h,
-                  ),
-                  Text(
-                    '방을 누르면, 현재 방에 입장한 사람의 이름 및 연락처를 알 수 있고 채팅방에 입장할 수 있습니다.',
-                    style: Platform.isIOS
-                        ? ITaxiTheme.textThemeIOS.headline1!.copyWith(
-                            color: ITaxiTheme.lightColorScheme.onPrimary,
-                            wordSpacing: 1,
-                          )
-                        : ITaxiTheme.textThemeDefault.headline1!.copyWith(
-                            color: ITaxiTheme.lightColorScheme.onPrimary,
-                            wordSpacing: 1,
-                          ),
-                  ),
-                ],
-              ),
-            ),
-          ],
-        ),
+          ),
+        )
       ),
     ),
   ];
