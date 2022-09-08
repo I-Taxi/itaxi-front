@@ -49,3 +49,7 @@ app.*.map.json
 
 # API
 .env
+
+# key
+/android/keystore/appKey.jks
+/android/key.jks
