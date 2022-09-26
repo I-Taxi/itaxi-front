@@ -11,6 +11,8 @@ import 'package:itaxi/model/userInfoList.dart';
 class UserController extends GetxController {
   late Future<UserInfoList> users;
 
+  int isDeleted = 0;
+
   late String? uid;
   late String? name;
   late String? bank;
@@ -83,8 +85,37 @@ class UserController extends GetxController {
     );
 
     if (response.statusCode == 200) {
+      //return response;
     } else {
       throw Exception('Failed to patch My new Info');
+    }
+  }
+
+  // 회원탈퇴
+  Future<http.Response> fetchDeleteUsers() async {
+    uid = FirebaseAuth.instance.currentUser!.uid;
+    var userUrl = dotenv.env['API_URL'].toString();
+    userUrl = '${userUrl}member/resign';
+
+    final body = jsonEncode({"uid": uid});
+
+    http.Response response = await http.patch(
+      Uri.parse(userUrl),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: body,
+    );
+
+    if (response.statusCode == 200) {
+      print(response.statusCode);
+      isDeleted = 1;
+      return response;
+    } else {
+      print(response.statusCode);
+      print(response.body);
+      throw Exception('Failed to Delete User');
+
     }
   }
 }

@@ -15,6 +15,7 @@ import 'package:itaxi/settings/noticeScreen.dart';
 
 import '../controller/navigationController.dart';
 import '../controller/userController.dart';
+import '../widget/mainDialog.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);
@@ -149,10 +150,19 @@ class _SettingScreenState extends State<SettingScreen> {
           height: 0.3,
           color: colorScheme.shadow,
         ),
+        _deleteUserListTile(
+          title: '회원탈퇴',
+          context: context,
+        ),
+        Divider(
+          height: 0.3,
+          color: colorScheme.shadow,
+        ),
       ],
     );
   }
 
+  // 설정 타일
   Widget _settingListTile({
     required IconData icon,
     required String title,
@@ -181,5 +191,108 @@ class _SettingScreenState extends State<SettingScreen> {
         Get.to(nextPage);
       },
     );
+  }
+
+  // 회원탈퇴 타일
+  Widget _deleteUserListTile({
+    required String title,
+    required BuildContext context,
+  }) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    return ListTile(
+      leading: SizedBox(
+        height: double.infinity,
+        child: Image.asset(
+          width: 8.w,
+          height: 8.h,
+          'assets/place/departure.png',
+        ),
+      ),
+      title: Text(
+        title,
+        style: textTheme.headline2?.copyWith(
+          color: colorScheme.onPrimary,
+          fontFamily: 'NotoSans',
+        ),
+      ),
+      onTap: () {
+        deletedUserDialog(context, '회원탈퇴', '현재 모집중인 방이 있거나, 입장하신 방이 있는 경우에는 회원탈퇴가 되지 않습니다.\n정말로 탈퇴하시겠습니까?');
+      },
+    );
+  }
+
+  // 현재 모집중이거나 입장한 방이 있을 경우 dialog
+  void deletedUserDialog (BuildContext context, String? title, String? content) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return Dialog(
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(4.0),
+            ),
+            child: Container(
+              width: 360.w,
+              height: 200.h,
+              alignment: Alignment.center,
+              padding: EdgeInsets.fromLTRB(
+                28.0.w,
+                32.0.h,
+                28.0.w,
+                12.0.h,
+              ),
+              child: Column(
+                children: <Widget>[
+                  Text(
+                    title as String,
+                    style: textTheme.headline1?.copyWith(
+                      color: colorScheme.secondary,
+                    ),
+                  ),
+                  SizedBox(
+                    height: 16.h,
+                  ),
+                  Text(
+                    content as String,
+                    style: textTheme.subtitle1?.copyWith(
+                      color: colorScheme.onPrimary,
+                    ),
+                  ),
+                  const Spacer(),
+                  TextButton(
+                    onPressed: () async {
+                      Get.back();
+                      print("체크1");
+                      print(_userController.isDeleted);
+                      await _userController.fetchDeleteUsers();
+                      print(_userController.isDeleted);
+                      if (_userController.isDeleted == 1) {
+                        _signInController.deleteUser();
+                        await SettingScreen.storage.delete(key: "login");
+                        _signInController.reset();
+                        _navController.changeIndex(1);
+                      }else {
+                        Get.back();
+                        mainDialog(context, '회원탈퇴', '현재 모집중이거나 입장하신 방이 있습니다. 해당 방을 나가신 후 다시 시도해주세요.');
+                      }
+                    },
+                    child: Text(
+                      "확인",
+                      style: textTheme.headline1
+                          ?.copyWith(color: colorScheme.tertiary),
+                    ),
+                  ),
+                ],
+              ),
+            ),
+          );
+        }
+
+    );
+
   }
 }

@@ -10,6 +10,8 @@ enum SignInState {
 }
 
 class SignInController extends GetxController {
+  final FirebaseAuth fAuth = FirebaseAuth.instance;
+
   SignInState signInState = SignInState.start;
 
   late int num;
@@ -58,6 +60,7 @@ class SignInController extends GetxController {
   void reset() {
     id = "";
     pw = "";
+    fAuth.signOut();
   }
 
   _asyncMethod() async {
@@ -127,4 +130,13 @@ class SignInController extends GetxController {
   sendPasswordResetEmail() async {
     FirebaseAuth.instance.sendPasswordResetEmail(email: email);
   }
+
+  // 회원탈퇴
+  deleteUser() async {
+    User? user = FirebaseAuth.instance.currentUser;
+    user!.delete();
+    signedOutState();
+    update();
+  }
+
 }

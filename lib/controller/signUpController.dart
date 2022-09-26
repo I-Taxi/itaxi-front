@@ -33,7 +33,15 @@ class SignUpController extends GetxController {
         headers: <String, String>{'Content-Type': 'application/json'},
         body: body);
 
-    return response;
+    if(response.statusCode == 200){
+      return response;
+    }else{
+      print(response.statusCode);
+      print(response.body);
+
+      throw Exception('Failed to Add User');
+    }
+
   }
 
   Future<void> signUp() async {
