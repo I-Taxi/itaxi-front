@@ -159,8 +159,8 @@ Widget postListTile({
                                   postId: post.id!,
                                   luggage: _addPostController.luggage);
                               await _historyController.fetchHistorys();
-                              _navigationController.changeIndex(0);
                               Get.back();
+                              _navigationController.changeIndex(0);
                             },
                             child: Text(
                               '입장',
