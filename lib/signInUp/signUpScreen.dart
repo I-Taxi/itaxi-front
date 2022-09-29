@@ -208,7 +208,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       validator: (value) {
                         if (value!.isEmpty) return '비밀번호를 입력해주세요';
                         regExp = RegExp(pattern.toString());
-                        if (!regExp.hasMatch(value)) return '문자와 숫자 6자리 이상 사용해주세요';
+                        if (!regExp.hasMatch(value))
+                          return '문자와 숫자 6자리 이상 사용해주세요';
                         return null;
                       },
                     ),
@@ -552,7 +553,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       onPressed: agree1 & agree2
                           ? () {
                               if (_formKey.currentState!.validate()) {
-                                signUpDialog(context, '메일 인증', '회원가입 시 입력하신 handong.ac.kr 계정으로 인증메일이 보내집니다.\n메일이 오지 않은경우, 스팸함을 확인해주세요.');
+                                signUpDialog(context, '메일 인증',
+                                    '회원가입 시 입력하신 handong.ac.kr 계정으로 인증메일이 보내집니다.\n메일이 오지 않은경우, 스팸함을 확인해주세요.');
                               }
                             }
                           : () {},
@@ -572,7 +574,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
       ),
     );
   }
-  void signUpDialog (BuildContext context, String? title, String? content) {
+
+  void signUpDialog(BuildContext context, String? title, String? content) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
@@ -586,7 +589,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             child: Container(
               width: 360.w,
-              height: 200.h,
+              height: 220.h,
               alignment: Alignment.center,
               padding: EdgeInsets.fromLTRB(
                 28.0.w,
@@ -628,9 +631,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
               ),
             ),
           );
-        }
-
-    );
-
+        });
   }
 }
