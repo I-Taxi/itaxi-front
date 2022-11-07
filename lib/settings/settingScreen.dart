@@ -31,7 +31,6 @@ class _SettingScreenState extends State<SettingScreen> {
   final NavigationController _navController = Get.put(NavigationController());
   final UserController _userController = Get.put(UserController());
 
-
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -217,13 +216,14 @@ class _SettingScreenState extends State<SettingScreen> {
         ),
       ),
       onTap: () {
-        deletedUserDialog(context, '회원탈퇴', '현재 모집중인 방이 있거나, 입장하신 방이 있는 경우에는 회원탈퇴가 되지 않습니다.\n정말로 탈퇴하시겠습니까?');
+        deletedUserDialog(context, '회원탈퇴',
+            '현재 모집중인 방이 있거나, 입장하신 방이 있는 경우에는 회원탈퇴가 되지 않습니다.\n정말로 탈퇴하시겠습니까?');
       },
     );
   }
 
   // 현재 모집중이거나 입장한 방이 있을 경우 dialog
-  void deletedUserDialog (BuildContext context, String? title, String? content) {
+  void deletedUserDialog(BuildContext context, String? title, String? content) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
@@ -237,7 +237,7 @@ class _SettingScreenState extends State<SettingScreen> {
             ),
             child: Container(
               width: 360.w,
-              height: 200.h,
+              height: 240.h,
               alignment: Alignment.center,
               padding: EdgeInsets.fromLTRB(
                 28.0.w,
@@ -275,9 +275,10 @@ class _SettingScreenState extends State<SettingScreen> {
                         await SettingScreen.storage.delete(key: "login");
                         _signInController.reset();
                         _navController.changeIndex(1);
-                      }else {
+                      } else {
                         Get.back();
-                        mainDialog(context, '회원탈퇴', '현재 모집중이거나 입장하신 방이 있습니다. 해당 방을 나가신 후 다시 시도해주세요.');
+                        mainDialog(context, '회원탈퇴',
+                            '현재 모집중이거나 입장하신 방이 있습니다. 해당 방을 나가신 후 다시 시도해주세요.');
                       }
                     },
                     child: Text(
@@ -290,9 +291,6 @@ class _SettingScreenState extends State<SettingScreen> {
               ),
             ),
           );
-        }
-
-    );
-
+        });
   }
 }

@@ -17,7 +17,7 @@ void mainDialog(BuildContext context, String? title, String? content) {
           ),
           child: Container(
             width: 360.w,
-            height: 220.h,
+            height: 280.h,
             alignment: Alignment.center,
             padding: EdgeInsets.fromLTRB(
               28.0.w,

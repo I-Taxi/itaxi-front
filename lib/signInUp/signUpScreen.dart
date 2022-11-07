@@ -589,7 +589,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             child: Container(
               width: 360.w,
-              height: 220.h,
+              height: 240.h,
               alignment: Alignment.center,
               padding: EdgeInsets.fromLTRB(
                 28.0.w,
