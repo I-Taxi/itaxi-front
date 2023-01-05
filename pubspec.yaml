@@ -40,12 +40,12 @@ dependencies:
   flutter_svg: ^1.1.1+1
   url_launcher: ^6.1.5
   get: ^4.6.5
-  firebase_core: ^1.19.1
-  firebase_auth: ^3.4.1
-  cloud_firestore: ^3.2.1
+  firebase_core: ^2.4.1
+  firebase_auth: ^4.2.4
+  cloud_firestore: ^4.3.1
   animations: ^2.0.3
   flutter_screenutil: ^5.5.3+2
-  flutter_secure_storage: ^5.1.0
+  flutter_secure_storage: ^7.0.1
   flutter_email_sender: ^5.1.0
   flutter_native_splash: ^2.2.8
   colorful_safe_area: ^0.3.0
@@ -53,7 +53,7 @@ dependencies:
 
 
   shared_preferences: ^2.0.13
-  logger: ^0.7.0+2
+  logger: ^1.1.0
   onboarding: ^3.1.0
 
   change_app_package_name: ^1.0.0
