@@ -412,9 +412,8 @@ Future<dynamic> showMainDialog(
                 // const Spacer(),
                 TextButton(
                   onPressed: () async {
-                    print("press out");
                     await _postController.fetchOutJoin(post: post);
-                    _historyController.getHistorys();
+                    await _historyController.getHistorys();
                     Get.back();
                     Get.back();
                   },

@@ -9,6 +9,7 @@ import 'package:itaxi/controller/chatRoomController.dart';
 import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/model/post.dart';
+import 'package:itaxi/model/joiner.dart';
 
 class PostController extends GetxController {
   late DateController _dateController = Get.find();
@@ -151,6 +152,13 @@ class PostController extends GetxController {
   Future<void> fetchOutJoin({required Post post}) async {
     var joinUrl = dotenv.env['API_URL'].toString();
     joinUrl = '${joinUrl}post/${post.id}/join';
+    // Joiner? owner;
+
+    // post.joiners?.forEach((joiner) {
+    //   if (joiner.owner!) {
+    //     owner = joiner;
+    //   }
+    // });
 
     Map<String, dynamic> map = {
       'uid': _userController.uid,
@@ -166,6 +174,10 @@ class PostController extends GetxController {
     );
     if (response.statusCode == 200) {
       await _chatRoomController.outChat(post: post);
+
+      // if (_userController.memberId == owner?.memberId) {
+      //   _chatRoomController.changeOwnerChat(post: post);
+      // }
     } else {
       throw Exception('Failed to out');
     }

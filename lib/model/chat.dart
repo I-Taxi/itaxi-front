@@ -2,30 +2,34 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class Chat {
   String? id;
-  String? memberId;
+  String? uid;
   String? memberName;
+  int? memberId;
   String? chatData;
   Timestamp? chatTime;
 
   Chat({
     this.id,
-    this.memberId,
+    this.uid,
     this.memberName,
+    this.memberId,
     this.chatData,
     this.chatTime,
   });
 
   Chat copyWith({
     String? id,
-    String? memberId,
+    String? uid,
     String? memberName,
+    int? memberId,
     String? chatData,
     Timestamp? chatTime,
   }) {
     return Chat(
       id: id ?? this.id,
-      memberId: memberId ?? this.memberId,
+      uid: uid ?? this.uid,
       memberName: memberName ?? this.memberName,
+      memberId: memberId ?? this.memberId,
       chatData: chatData ?? this.chatData,
       chatTime: chatTime ?? this.chatTime,
     );
@@ -34,8 +38,9 @@ class Chat {
   factory Chat.fromDocs(Map<String, dynamic> ds) {
     return Chat(
       id: ds['id'],
-      memberId: ds['memberId'],
+      uid: ds['uid'],
       memberName: ds['memberName'],
+      memberId: ds['memberId'],
       chatData: ds['chatData'],
       chatTime: ds['chatTime'],
     );
@@ -44,8 +49,9 @@ class Chat {
   factory Chat.fromSnapShot(DocumentSnapshot ss) {
     return Chat(
       id: ss.get('id'),
-      memberId: ss.get('memberId'),
+      uid: ss.get('uid'),
       memberName: ss.get('memberName'),
+      memberId: ss.get('memberId'),
       chatData: ss.get('chatData'),
       chatTime: ss.get('chatTime'),
     );
@@ -54,8 +60,9 @@ class Chat {
   Map<String, dynamic> toMap() {
     return {
       'id': id,
-      'memberId': memberId,
+      'uid': uid,
       'memberName': memberName,
+      'memberId': memberId,
       'chatData': chatData,
       'chatTime': chatTime,
     };

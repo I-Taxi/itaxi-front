@@ -174,6 +174,7 @@ class _ChatRoonScreenState extends State<ChatRoonScreen> {
                                           : chatListTile(
                                               context: context,
                                               chat: snapshot.data![index],
+                                              joiners: _chatRoomController.post.joiners,
                                             ),
                                     ],
                                   );
@@ -182,7 +183,7 @@ class _ChatRoonScreenState extends State<ChatRoonScreen> {
                               ),
                               if (isScrollDown == true &&
                                   snapshot.data![snapshot.data!.length - 1]
-                                          .memberId !=
+                                          .uid !=
                                       _userController.uid)
                                 Align(
                                   alignment: Alignment.bottomCenter,

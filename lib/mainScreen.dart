@@ -442,6 +442,7 @@ class _MainScreenState extends State<MainScreen> {
                     backgroundColor: colorScheme.background,
                     strokeWidth: 2.0,
                     onRefresh: () async {
+                      print('refresh');
                       _postController.getPosts(
                         depId: _placeController.dep?.id,
                         dstId: _placeController.dst?.id,

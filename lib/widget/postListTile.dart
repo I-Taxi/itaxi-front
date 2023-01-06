@@ -157,14 +157,10 @@ Widget postListTile({
                           ),
                           TextButton(
                             onPressed: () async {
-                              print('pressed join');
-                              print(post.joiners);
-                              print(isLoding);
-
                               await _postController.fetchJoin(
                                   post: post,
                                   luggage: _addPostController.luggage);
-                              await _historyController.fetchHistorys();
+                              await _historyController.getHistorys();
                               _navigationController.changeIndex(0);
                               Get.back();
                             },
