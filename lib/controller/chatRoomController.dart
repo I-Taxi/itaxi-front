@@ -44,7 +44,7 @@ class ChatRoomController extends GetxController {
     await ChatRepository().setChat(post: post, chat: chat);
   }
 
-  Future<void> joinChat() async {
+  Future<void> joinChat({required Post post}) async {
     Chat chat = Chat(
       chatData: '${_userController.name!}님이 들어왔습니다.',
       chatTime: Timestamp.fromDate(DateTime.now()),
@@ -52,7 +52,7 @@ class ChatRoomController extends GetxController {
     await ChatRepository().setChatLog(post: post, chat: chat);
   }
 
-  Future<void> outChat() async {
+  Future<void> outChat({required Post post}) async {
     Chat chat = Chat(
       chatData: '${_userController.name!}님이 나갔습니다.',
       chatTime: Timestamp.fromDate(DateTime.now()),

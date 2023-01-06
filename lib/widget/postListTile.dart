@@ -22,6 +22,8 @@ Widget postListTile({
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
 
+  bool isLoding = false;
+
   return GestureDetector(
     behavior: HitTestBehavior.opaque,
     onTap: () {
@@ -155,12 +157,16 @@ Widget postListTile({
                           ),
                           TextButton(
                             onPressed: () async {
+                              print('pressed join');
+                              print(post.joiners);
+                              print(isLoding);
+
                               await _postController.fetchJoin(
-                                  postId: post.id!,
+                                  post: post,
                                   luggage: _addPostController.luggage);
                               await _historyController.fetchHistorys();
-                              Get.back();
                               _navigationController.changeIndex(0);
+                              Get.back();
                             },
                             child: Text(
                               '입장',
