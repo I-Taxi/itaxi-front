@@ -321,7 +321,7 @@ Future<dynamic> timelineDiaog(
                               _chatRoomController.getChats(
                                   post: snapshot.data!);
                               Get.back();
-                              Get.to(const ChatRoonScreen());
+                              Get.to(() => const ChatRoomScreen());
                             },
                             child: Text(
                               '채팅방 입장',

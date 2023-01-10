@@ -7,6 +7,9 @@ import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/controller/navigationController.dart';
 import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/controller/userController.dart';
+import 'package:itaxi/controller/chatRoomController.dart';
+import 'package:itaxi/chat/chatRoomScreen.dart';
+import 'package:itaxi/model/chat.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/widget/snackBar.dart';
 
@@ -19,166 +22,291 @@ Widget postListTile({
   late NavigationController _navigationController = Get.find();
   HistoryController _historyController = Get.put(HistoryController());
   late UserController _userController = Get.find();
+  late ChatRoomController _chatRoomController = Get.put(ChatRoomController());
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
-
-  bool isLoding = false;
 
   return GestureDetector(
     behavior: HitTestBehavior.opaque,
     onTap: () {
-      for (int i = 0; i < post.joiners!.length; i++) {
-        if (post.joiners![i].uid == _userController.uid) {
-          if (post.joiners![i].owner == true) {
-            snackBar(
-                context: context,
-                title: '방장인 모집입니다. 타임라인에서 채팅방으로 입장하실 수 있습니다.');
-            break;
-          } else {
-            snackBar(
-                context: context,
-                title: '이미 입장한 모집입니다. 타임라인에서 채팅방으로 입장하실 수 있습니다.');
-            break;
-          }
-        } else if (i == post.joiners!.length - 1) {
-          showDialog(
-            context: context,
-            builder: (BuildContext context) {
-              return Dialog(
-                elevation: 0,
-                child: Container(
-                  width: 360.w,
-                  height: 132.h,
-                  padding: EdgeInsets.fromLTRB(28.0.w, 32.0.h, 28.0.w, 12.0.h),
-                  child: Column(
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            '나의 짐',
-                            style: textTheme.headline2?.copyWith(
-                              color: colorScheme.tertiary,
+      String ownerInfo = '''
+  ${_userController.name}님이 방장입니다.
+                              
+  알아두면 좋습니다.
+  1. 탑승할 차량의 번호를 꼭 알려 주세요.
+  2. 모일 장소를 미리 정하세요.
+  3. 정산 방법을 제시하세요.
+      ''';
+      String nonOnwerInfo = '''
+  ${_userController.name}님 환영합니다.
+  
+  알아두면 좋습니다.
+  1. 탑승할 차량의 번호를 숙지하세요.
+  2. 모일 장소를 숙지하세요.
+  3. 정산 완료 시 채팅으로 꼭 기록을 
+  남겨 주세요.
+      ''';
+      if (post.joiners!.length >= post.capacity!) {
+        snackBar(context: context, title: '이미 인원이 가득 찬 모집입니다.');
+      } else {
+        for (int i = 0; i < post.joiners!.length; i++) {
+          if (post.joiners![i].uid == _userController.uid) {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Dialog(
+                  elevation: 0,
+                  child: Container(
+                    width: 360.w,
+                    height: post.joiners![i].owner! ? 255.h : 272.h,
+                    padding:
+                    EdgeInsets.fromLTRB(28.0.w, 32.0.h, 28.0.w, 12.0.h),
+                    child: Column(
+                      children: [
+                        Center(
+                          child: Text(
+                            '채팅방 안내',
+                            style: textTheme.headline1?.copyWith(
+                              color: colorScheme.onPrimary,
                               fontFamily: 'NotoSans',
                             ),
                           ),
-                          GetBuilder<AddPostController>(
-                            builder: (_) {
-                              return Row(
-                                children: [
-                                  GestureDetector(
-                                    behavior: HitTestBehavior.opaque,
-                                    onTap: () {
-                                      _addPostController.changeLuggage(0);
-                                    },
-                                    child: (_addPostController.luggage == 0)
-                                        ? Text(
-                                            '없음',
-                                            style: textTheme.headline2
-                                                ?.copyWith(
-                                                    color:
-                                                        colorScheme.secondary),
-                                          )
-                                        : Text(
-                                            '없음',
-                                            style: textTheme.headline2
-                                                ?.copyWith(
-                                                    color:
-                                                        colorScheme.tertiary),
-                                          ),
+                        ),
+                        SizedBox(
+                          height: 10.0.h,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            post.joiners![i].owner!
+                                ? Text(
+                                  ownerInfo,
+                                  style: textTheme.bodyText1?.copyWith(
+                                    color: colorScheme.tertiary,
+                                    fontFamily: 'NotoSans',
                                   ),
-                                  SizedBox(
-                                    width: 20.w,
+                                )
+                                : Text(
+                                    nonOnwerInfo,
+                                    style: textTheme.bodyText1?.copyWith(
+                                      color: colorScheme.tertiary,
+                                      fontFamily: 'NotoSans',
+                                    ),
                                   ),
-                                  GestureDetector(
-                                    behavior: HitTestBehavior.opaque,
-                                    onTap: () {
-                                      _addPostController.changeLuggage(1);
-                                    },
-                                    child: (_addPostController.luggage == 1)
-                                        ? Text(
-                                            '소',
-                                            style: textTheme.headline2
-                                                ?.copyWith(
-                                                    color:
-                                                        colorScheme.secondary),
-                                          )
-                                        : Text(
-                                            '소',
-                                            style: textTheme.headline2
-                                                ?.copyWith(
-                                                    color:
-                                                        colorScheme.tertiary),
-                                          ),
-                                  ),
-                                  SizedBox(
-                                    width: 20.w,
-                                  ),
-                                  GestureDetector(
-                                    behavior: HitTestBehavior.opaque,
-                                    onTap: () {
-                                      _addPostController.changeLuggage(2);
-                                    },
-                                    child: (_addPostController.luggage == 2)
-                                        ? Text(
-                                            '대',
-                                            style: textTheme.headline2
-                                                ?.copyWith(
-                                                    color:
-                                                        colorScheme.secondary),
-                                          )
-                                        : Text(
-                                            '대',
-                                            style: textTheme.headline2
-                                                ?.copyWith(
-                                                    color:
-                                                        colorScheme.tertiary),
-                                          ),
-                                  ),
-                                ],
-                              );
-                            },
-                          ),
-                        ],
-                      ),
-                      const Spacer(),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceAround,
-                        children: [
-                          TextButton(
-                            onPressed: () {
-                              Get.back();
-                            },
-                            child: Text(
-                              '취소',
-                              style: textTheme.headline1
-                                  ?.copyWith(color: colorScheme.tertiary),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20.0.h,
+                        ),
+                        const Spacer(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                Get.back();
+                              },
+                              child: Text(
+                                '취소',
+                                style: textTheme.headline1
+                                    ?.copyWith(color: colorScheme.tertiary),
+                              ),
                             ),
-                          ),
-                          TextButton(
-                            onPressed: () async {
-                              await _postController.fetchJoin(
-                                  post: post,
-                                  luggage: _addPostController.luggage);
-                              await _historyController.getHistorys();
-                              _navigationController.changeIndex(0);
-                              Get.back();
-                            },
-                            child: Text(
-                              '입장',
-                              style: textTheme.headline1
-                                  ?.copyWith(color: colorScheme.secondary),
+                            TextButton(
+                              onPressed: () async {
+                                await _historyController.getHistorys();
+                                _navigationController.changeIndex(0);
+                                _chatRoomController.getPost(post: post);
+                                _chatRoomController.getChats(post: post);
+                                Get.back();
+                                Get.to(() => const ChatRoomScreen());
+                              },
+                              child: Text(
+                                '입장',
+                                style: textTheme.headline1
+                                    ?.copyWith(color: colorScheme.secondary),
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
-                ),
-              );
-            },
-          );
-          break;
+                );
+              },
+            );
+            break;
+          } else if (i == post.joiners!.length - 1) {
+            showDialog(
+              context: context,
+              builder: (BuildContext context) {
+                return Dialog(
+                  elevation: 0,
+                  child: Container(
+                    width: 360.w,
+                    height: 293.h,
+                    padding:
+                        EdgeInsets.fromLTRB(28.0.w, 32.0.h, 28.0.w, 12.0.h),
+                    child: Column(
+                      children: [
+                        Center(
+                          child: Text(
+                            '방 입장 안내',
+                            style: textTheme.headline1?.copyWith(
+                              color: colorScheme.onPrimary,
+                              fontFamily: 'NotoSans',
+                            ),
+                          ),
+                        ),
+                        SizedBox(
+                          height: 10.0.h,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              nonOnwerInfo,
+                              style: textTheme.bodyText1?.copyWith(
+                                color: colorScheme.tertiary,
+                                fontFamily: 'NotoSans',
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20.0.h,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '나의 짐',
+                              style: textTheme.headline2?.copyWith(
+                                color: colorScheme.tertiary,
+                                fontFamily: 'NotoSans',
+                              ),
+                            ),
+                            GetBuilder<AddPostController>(
+                              builder: (_) {
+                                return Row(
+                                  children: [
+                                    GestureDetector(
+                                      behavior: HitTestBehavior.opaque,
+                                      onTap: () {
+                                        _addPostController.changeLuggage(0);
+                                      },
+                                      child: (_addPostController.luggage == 0)
+                                          ? Text(
+                                              '없음',
+                                              style: textTheme.headline2
+                                                  ?.copyWith(
+                                                      color: colorScheme
+                                                          .secondary),
+                                            )
+                                          : Text(
+                                              '없음',
+                                              style: textTheme.headline2
+                                                  ?.copyWith(
+                                                      color:
+                                                          colorScheme.tertiary),
+                                            ),
+                                    ),
+                                    SizedBox(
+                                      width: 20.w,
+                                    ),
+                                    GestureDetector(
+                                      behavior: HitTestBehavior.opaque,
+                                      onTap: () {
+                                        _addPostController.changeLuggage(1);
+                                      },
+                                      child: (_addPostController.luggage == 1)
+                                          ? Text(
+                                              '소',
+                                              style: textTheme.headline2
+                                                  ?.copyWith(
+                                                      color: colorScheme
+                                                          .secondary),
+                                            )
+                                          : Text(
+                                              '소',
+                                              style: textTheme.headline2
+                                                  ?.copyWith(
+                                                      color:
+                                                          colorScheme.tertiary),
+                                            ),
+                                    ),
+                                    SizedBox(
+                                      width: 20.w,
+                                    ),
+                                    GestureDetector(
+                                      behavior: HitTestBehavior.opaque,
+                                      onTap: () {
+                                        _addPostController.changeLuggage(2);
+                                      },
+                                      child: (_addPostController.luggage == 2)
+                                          ? Text(
+                                              '대',
+                                              style: textTheme.headline2
+                                                  ?.copyWith(
+                                                      color: colorScheme
+                                                          .secondary),
+                                            )
+                                          : Text(
+                                              '대',
+                                              style: textTheme.headline2
+                                                  ?.copyWith(
+                                                      color:
+                                                          colorScheme.tertiary),
+                                            ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                        const Spacer(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
+                          children: [
+                            TextButton(
+                              onPressed: () {
+                                Get.back();
+                              },
+                              child: Text(
+                                '취소',
+                                style: textTheme.headline1
+                                    ?.copyWith(color: colorScheme.tertiary),
+                              ),
+                            ),
+                            TextButton(
+                              onPressed: () async {
+                                await _postController.fetchJoin(
+                                    post: post,
+                                    luggage: _addPostController.luggage);
+                                await _historyController.getHistorys();
+                                _navigationController.changeIndex(0);
+                                _chatRoomController.getPost(post: post);
+                                _chatRoomController.getChats(post: post);
+                                Get.back();
+                                Get.to(() => const ChatRoomScreen());
+                              },
+                              child: Text(
+                                '입장',
+                                style: textTheme.headline1
+                                    ?.copyWith(color: colorScheme.secondary),
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              },
+            );
+            break;
+          }
         }
       }
     },

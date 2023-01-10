@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:itaxi/chat/chatRoomScreen.dart';
 import 'package:itaxi/controller/addPostController.dart';
 import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/controller/placeController.dart';
@@ -21,6 +22,7 @@ void addPostDialog({required BuildContext context}) {
   PlaceController _placeController = Get.put(PlaceController());
   DateController _dateController = Get.put(DateController());
   UserController _userController = Get.put(UserController());
+
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
 
@@ -525,7 +527,7 @@ void addPostDialog({required BuildContext context}) {
                             luggage: _addPostController.luggage);
                         Get.back();
                         await _addPostController.fetchAddPost(post: post);
-                        _postController.getPosts(
+                        await _postController.getPosts(
                           depId: _placeController.dep?.id,
                           dstId: _placeController.dst?.id,
                           time: _dateController.formattingDateTime(
