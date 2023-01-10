@@ -88,7 +88,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                                   child: Image.asset(
                                     width: 58.0.w,
                                     height: 40.h,
-                                    'assets/logo_2.png',
+                                    'assets/logo_2_new.png',
                                   ),
                                 ),
                                 SizedBox(width: 24.w),
