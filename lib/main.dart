@@ -64,7 +64,7 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     return ScreenUtilInit(
-      designSize: const Size(411, 731),
+      designSize: const Size(390, 844),
       builder: (context, child) {
         return GetMaterialApp(
           title: 'iTaxi',

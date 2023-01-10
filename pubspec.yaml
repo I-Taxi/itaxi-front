@@ -87,7 +87,8 @@ flutter:
   assets:
     - .env
     - assets/logo_1.png
-    - assets/logo_2.png
+    - assets/logo_2_new.png
+    - assets/logo_text.png
     - assets/bottom_bar/home_1.png
     - assets/bottom_bar/home_2.png
     - assets/bottom_bar/setting_1.png
