@@ -36,15 +36,16 @@ class ChatRoomController extends GetxController {
 
   Future<void> submitChat() async {
     Chat chat = Chat(
-      memberId: _userController.uid,
+      uid: _userController.uid,
       memberName: _userController.name!,
+      memberId: _userController.memberId,
       chatData: chatTextController.text.trim(),
       chatTime: Timestamp.fromDate(DateTime.now()),
     );
     await ChatRepository().setChat(post: post, chat: chat);
   }
 
-  Future<void> joinChat() async {
+  Future<void> joinChat({required Post post}) async {
     Chat chat = Chat(
       chatData: '${_userController.name!}님이 들어왔습니다.',
       chatTime: Timestamp.fromDate(DateTime.now()),
@@ -52,9 +53,23 @@ class ChatRoomController extends GetxController {
     await ChatRepository().setChatLog(post: post, chat: chat);
   }
 
-  Future<void> outChat() async {
+  Future<void> outChat({required Post post}) async {
     Chat chat = Chat(
       chatData: '${_userController.name!}님이 나갔습니다.',
+      chatTime: Timestamp.fromDate(DateTime.now()),
+    );
+    await ChatRepository().setChatLog(post: post, chat: chat);
+  }
+
+  Future<void> changeOwnerChat({required Post post}) async {
+    String? owner;
+    post.joiners?.forEach((joiner) {
+      if (joiner.owner!) {
+        owner = joiner.memberName;
+      }
+    });
+    Chat chat = Chat(
+      chatData: '이제 ${owner!}님이 방장입니다.',
       chatTime: Timestamp.fromDate(DateTime.now()),
     );
     await ChatRepository().setChatLog(post: post, chat: chat);
