@@ -21,7 +21,7 @@ class _ForgotPwScreenState extends State<ForgotPwScreen> {
   final _emailController = TextEditingController();
 
   final _formKey = GlobalKey<FormState>();
-  bool isValueEmpty = true; //입력값이 있는 판별
+  bool isValueEmpty = true; // 메일 입력 여부 판별
 
 
   @override
