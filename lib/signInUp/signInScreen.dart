@@ -31,6 +31,11 @@ class _SignInScreenState extends State<SignInScreen> {
   // 텍스트필드 숨김 on/off
   bool _isObscure = true;
 
+  //로그인 버튼 색깔 id, pw 입력시 변경
+  bool idEmpty = true;
+  bool pwEmpty = true;
+
+
   final _idController = TextEditingController();
   final _pwController = TextEditingController();
 
@@ -130,6 +135,16 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                       onChanged: (value) {
                         _signInController.id = '$value@handong.ac.kr';
+                        if(value.isNotEmpty){
+                          setState(() {
+                            idEmpty = false;
+                          });
+                        }
+                        else{
+                          setState(() {
+                            idEmpty = true;
+                          });
+                        }
                       },
                     ),
                     SizedBox(
@@ -191,8 +206,17 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                       onChanged: (value) {
                         _signInController.pw = value;
-                      },
-                    ),
+                        if (value.isNotEmpty){
+                          setState(() {
+                            pwEmpty = false;
+                          });
+                        }
+                        else{
+                          setState(() {
+                            pwEmpty = true;
+                          });
+                        }
+                      }),
                     SizedBox(
                       height: 4.h,
                     ),
@@ -279,7 +303,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         child: Text(
                           '로그인',
                           style: textTheme.subtitle1!.copyWith(
-                            color: colorScheme.secondary, //수정해야 됨.
+                            color: (pwEmpty || idEmpty) ? colorScheme.tertiary : colorScheme.secondary, //수정해야 됨.
                           ),
                         ),
                       ),
