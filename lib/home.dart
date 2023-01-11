@@ -8,6 +8,8 @@ import 'package:itaxi/settings/settingScreen.dart';
 import 'package:itaxi/timeline/timelineScreen.dart';
 import 'package:itaxi/controller/navigationController.dart';
 
+import 'package:itaxi/screen/placeSearchScreen.dart';
+
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);
 
@@ -19,7 +21,8 @@ class Home extends StatelessWidget {
     final pageList = [
       const TimelineScreen(),
       const MainScreen(),
-      const SettingScreen()
+      // const SettingScreen()
+      const PlaceSearchScreen()
     ];
 
     return GetBuilder<NavigationController>(
