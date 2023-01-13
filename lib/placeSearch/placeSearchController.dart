@@ -1,22 +1,50 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
+import 'package:itaxi/controller/placeController.dart';
+import 'package:itaxi/model/place.dart';
+
 import 'dart:io';
 
 class PlaceSearchController extends GetxController {
   int _currentIndex = 0;
   int _postType = 0;
   int _peopleCount = 2;
+  int _depOrDst = 0;
+  int _placeType = 0;
+
+  String _searchQuery = '';
 
   late DateTime _pickedDate;
   late TimeOfDay _pickedTime;
 
+  final PlaceController _placeController = Get.find();
+  List<Place> places = [];
+  final List<Place> _suggestions = [];
+  final List<Place> _searchResult = [];
+  final List<Place> _typeFilteredList = [];
+  final List<Place> _typeFilteredResultList = [];
+
+  bool _hasResult = false;
+
   int get currentIndex => _currentIndex;
   int get postType => _postType;
   int get peopleCount => _peopleCount;
+  int get depOrDst => _depOrDst;
+  int get placeType => _placeType;
+
+  String get searchQuery => _searchQuery;
 
   DateTime get pickedDate => _pickedDate;
   TimeOfDay get pickedTime => _pickedTime;
+
+  List<Place> get suggestions => _suggestions;
+  List<Place> get searchResult => _searchResult;
+  List<Place> get typeFilteredList => _typeFilteredList;
+  List<Place> get typeFilteredResultList => _typeFilteredResultList;
+
+
+  bool get hasResult => _hasResult;
 
   void changeIndex(int idx) {
     _currentIndex = idx;
@@ -40,6 +68,71 @@ class PlaceSearchController extends GetxController {
       _peopleCount--;
       update();
     }
+  }
+
+  void removeResult() {
+    _hasResult = false;
+    _searchResult.clear();
+    _typeFilteredResultList.clear();
+  }
+
+  void changeDepOrDst(int idx) {
+    _depOrDst = idx;
+    update();
+  }
+
+  void changePlaceType(int idx) {
+    _placeType = idx;
+    update();
+  }
+
+  void changeSearchQuery(String text) {
+    _searchQuery = text;
+    if (_hasResult) {
+      removeResult();
+    }
+    getSearchSuggestions();
+    update();
+  }
+
+  void setResultByQuery() {
+    _hasResult = true;
+    _searchResult.clear();
+
+    _searchResult.addAll(places.where((element) {
+      return (element.name != null && element.name!.contains(_searchQuery));
+    }));
+    _searchQuery = '';
+    changePlaceType(_searchResult[0].placeType!);
+    filterPlacesByIndex();
+    update();
+  }
+
+  void getSearchSuggestions() {
+    suggestions.clear();
+    if (_searchQuery != '') {
+      suggestions.addAll(places.where((element) {
+        return (element.name != null && element.name!.contains(_searchQuery));
+      }));
+    }
+  }
+
+  void filterPlacesByIndex() {
+    if (_hasResult) {
+      _typeFilteredResultList.clear();
+      _searchResult.forEach((place) {
+        if (place.placeType == _placeType) {
+          _typeFilteredResultList.add(place);
+        }
+      });
+    }
+    _typeFilteredList.clear();
+    places.forEach((place) {
+      if (place.placeType == _placeType) {
+        _typeFilteredList.add(place);
+      }
+    });
+    update();
   }
 
   Future<void> selectDate(BuildContext context) async {
@@ -145,9 +238,12 @@ class PlaceSearchController extends GetxController {
   @override
   void onInit() {
     super.onInit();
+    _placeController.places.then((value) {
+      places = value;
+      filterPlacesByIndex();
+      update();
+    });
     _pickedDate = DateTime.now();
     _pickedTime = TimeOfDay.now();
   }
-
-
 }
