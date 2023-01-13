@@ -2,11 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:get/get.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-
+import 'package:itaxi/placeSearch/placeSearchController.dart';
 import 'dart:io';
 import 'package:intl/intl.dart';
 
-import 'package:itaxi/screen/placeSearchController.dart';
 
 
 class PlaceSearchScreen extends StatefulWidget {
