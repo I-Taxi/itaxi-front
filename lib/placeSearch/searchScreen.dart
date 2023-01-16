@@ -1,43 +1,53 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
-import 'package:itaxi/placeSearch/placeSearchController.dart';
 import 'package:colorful_safe_area/colorful_safe_area.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:itaxi/controller/placeController.dart';
+import 'package:itaxi/placeSearch/placeSearchController.dart';
+import 'package:itaxi/model/place.dart';
+import 'package:intl/intl.dart';
+import 'package:itaxi/placeSearch/placeSearchWidget.dart';
 
 class SearchScreen extends StatefulWidget {
-  SearchScreen({Key? key}) : super(key: key);
+  const SearchScreen({Key? key}) : super(key: key);
 
   @override
   State<SearchScreen> createState() => _SearchScreenState();
 }
 
 class _SearchScreenState extends State<SearchScreen> {
+  final PlaceSearchController _placeSearchController = Get.find();
+  final PlaceController _placeController = Get.find();
+  final TextEditingController _searchTextController = TextEditingController();
 
-  PlaceSearchController _placeSearchController = Get.put(PlaceSearchController());
-  final TextEditingController _textEditingController = TextEditingController();
+  late String depOrDst;
 
+  late List<Place> places;
+  late List<Place> suggestions;
 
-  final List<String> st_dest = ["출발지", "도착지"];
-  int i = 0; //출발지, 도착지 판단.
+  // final List<String> st_dest = ["출발지", "도착지"];
+  // int i = 0; //출발지, 도착지 판단.
 
-  static var _place = [
-    [],
-    ["한동대 전체", "한동택정", "오석 흡연장", "갈대상자관", "뉴턴홀", "팔각정(뉴턴)", "느헤미야홀"],
-    ["양덕 전체", "그할마(CU장량그랜드점)", "궁물촌", "커피유야", "야옹아 멍멍해봐", "예성사무소", "다이소"],
-    ["포항고속버스터미널", "포항시외버스터미널", "포항역", "영일대", "육거리"]
-  ];
-  int changeCol = 0;
-  bool _isVisible = false; // 클릭 시 아이콘 보이게 함.
-  int _selectedIndex = 100; //초기에 강조되는 것을 피하기 위해서 설정함.
+  // static var _place = [
+  //   [],
+  //   ["한동대 전체", "한동택정", "오석 흡연장", "갈대상자관", "뉴턴홀", "팔각정(뉴턴)", "느헤미야홀"],
+  //   ["양덕 전체", "그할마(CU장량그랜드점)", "궁물촌", "커피유야", "야옹아 멍멍해봐", "예성사무소", "다이소"],
+  //   ["포항고속버스터미널", "포항시외버스터미널", "포항역", "영일대", "육거리"]
+  // ];
+  // int changeCol = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    depOrDst = _placeSearchController.depOrDst == 0 ? '출발' : '도착';
+    places = _placeSearchController.places;
+    suggestions = _placeSearchController.suggestions;
+  }
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme
-        .of(context)
-        .textTheme;
-    final colorScheme = Theme
-        .of(context)
-        .colorScheme;
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return GestureDetector(
       onTap: (){
@@ -67,9 +77,28 @@ class _SearchScreenState extends State<SearchScreen> {
            actions: [
              TextButton(
                  onPressed: (){
-                   setState(() {
-                     i = 1;
-                   });
+                   if (_placeSearchController.depOrDst == 0) {
+                     if (_placeSearchController.selectedPlace!.name == _placeController.dst!.name) {
+                       // [TODO]: 출발지 도착지 같을때 띄우는거
+                     }
+                     else {
+                       _placeSearchController.setDeparture();
+                       _placeSearchController.selectedIndex = -1;
+                       _placeSearchController.changeSearchQuery('');
+                       Get.back();
+                     }
+                   }
+                   else {
+                     if (_placeSearchController.selectedPlace!.name == _placeController.dep!.name) {
+                       // [TODO]: 출발지 도착지 같을때 띄우는거
+                     }
+                     else {
+                       _placeSearchController.setDestination();
+                       _placeSearchController.selectedIndex = -1;
+                       _placeSearchController.changeSearchQuery('');
+                       Get.back();
+                     }
+                   }
                  },
                  child: Text(
                    "다음",
@@ -101,7 +130,7 @@ class _SearchScreenState extends State<SearchScreen> {
                       style: textTheme.headline1?.copyWith(
                           color: colorScheme.tertiary
                       ),
-                      controller: _textEditingController,
+                      controller: _searchTextController,
                       decoration: InputDecoration(
                         filled: true,
                         fillColor: Color(0xFFF1F1F1),
@@ -117,17 +146,46 @@ class _SearchScreenState extends State<SearchScreen> {
                           ),
                           color: colorScheme.tertiary,
                         ),
-                        hintText: st_dest[i]+"를 입력하세요",
+                        hintText: "$depOrDst를 입력하세요",
                         hintStyle: textTheme.headline1?.copyWith(
                           color: colorScheme.tertiary
                         ),
                         //prefixIconColor :
                       ),
                       onChanged: (value){
-                        //여기에 자동 완성 기능 추가
+                        _placeSearchController.changeSearchQuery(value);
                       },
                     ),
                   ),
+                  // 자동완성 리스트
+                  // [TODO]: 자동완성 부분 UI 완성
+                  if (_placeSearchController.suggestions.isNotEmpty)
+                    Container(
+                      height: 50.0 + 30.0.h * suggestions.length,
+                      child: ListView.builder(
+                        padding: EdgeInsets.all(25),
+                        itemCount: suggestions.length,
+                        itemBuilder: (context, idx) {
+                          return GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: () {
+                              _searchTextController.text = suggestions[idx].name!;
+                              _placeSearchController.changeSearchQuery(suggestions[idx].name!);
+                              _placeSearchController.setResultByQuery();
+                              _placeSearchController.selectedIndex = -1;
+                            },
+                            child: Container(
+                              height: 30.0.h,
+                              alignment: Alignment.centerLeft,
+                              child: Padding(
+                                padding: const EdgeInsets.all(5.0),
+                                child: Text(suggestions[idx].name!),
+                              ),
+                            ),
+                          );
+                        },
+                      ),
+                    ),
                   SizedBox(
                     height: 35.0.h,
                   ),
@@ -137,87 +195,82 @@ class _SearchScreenState extends State<SearchScreen> {
                       ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             elevation: 0,
-                            backgroundColor: (changeCol == 0) ? colorScheme.secondary : colorScheme.primary,
+                            backgroundColor: (_placeSearchController.placeType == 5) ? colorScheme.secondary : colorScheme.primary,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                           ),
                           onPressed: (){
-                            setState(() {
-                              changeCol = 0;
-                              _selectedIndex = 100;
-                            });
+                            _placeSearchController.placeType == 5;
+                            // setState(() {
+                            //   changeCol = 0;
+                            //   _placeSearchController.selectedIndex = 100;
+                            // });
                           },
                         child: Text(
                           '내 장소',
                           style: textTheme.subtitle1!.copyWith(
-                            color: (changeCol == 0) ? colorScheme.primary : colorScheme.tertiary,
+                            color: (_placeSearchController.placeType == 5) ? colorScheme.primary : colorScheme.tertiary,
                           ),
                         ),
                       ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           elevation: 0,
-                          backgroundColor: (changeCol == 1) ? colorScheme.secondary : colorScheme.primary,
+                          backgroundColor: (_placeSearchController.placeType == 0) ? colorScheme.secondary : colorScheme.primary,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),
-                        onPressed: (){
-                          setState(() {
-                            changeCol = 1;
-                            _selectedIndex = 100;
-                          });
+                        onPressed: () {
+                          _placeSearchController.placeType = 0;
+                          _placeSearchController.selectedIndex = -1;
                           // 리스트 보여주기
                         },
                         child: Text(
                           '한동대',
                           style: textTheme.subtitle1!.copyWith(
-                            color: (changeCol == 1) ? colorScheme.primary : colorScheme.tertiary,
+                            color: (_placeSearchController.placeType == 0) ? colorScheme.primary : colorScheme.tertiary,
                           ),
                         ),
                       ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           elevation: 0,
-                          backgroundColor: (changeCol == 2) ? colorScheme.secondary : colorScheme.primary,
+                          backgroundColor: (_placeSearchController.placeType == 1) ? colorScheme.secondary : colorScheme.primary,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),
                         onPressed: (){
-                          setState(() {
-                            changeCol = 2;
-                            _selectedIndex = 100;
-                          });
+                          _placeSearchController.placeType = 1;
+                          _placeSearchController.selectedIndex = -1;
                           // 리스트 보여주기
                         },
                         child: Text(
                           '양덕',
                           style: textTheme.subtitle1!.copyWith(
-                            color: (changeCol == 2) ? colorScheme.primary : colorScheme.tertiary,
+                            color: (_placeSearchController.placeType == 1) ? colorScheme.primary : colorScheme.tertiary,
                           ),
                         ),
                       ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
                           elevation: 0,
-                          backgroundColor: (changeCol == 3) ? colorScheme.secondary : colorScheme.primary,
+                          backgroundColor: _placeSearchController.placeType == 2 ? colorScheme.secondary : colorScheme.primary,
                           shape: RoundedRectangleBorder(
                             borderRadius: BorderRadius.circular(8.0),
                           ),
                         ),
                         onPressed: (){
-                          setState(() {
-                            changeCol = 3;
-                            _selectedIndex = 100;
-                          });
+                          _placeSearchController.placeType = 2;
+                          _placeSearchController.selectedIndex = -1;
                           // 리스트 보여주기
                         },
                         child: Text(
                           '타지역',
                           style: textTheme.subtitle1!.copyWith(
-                            color: (changeCol == 3) ? colorScheme.primary : colorScheme.tertiary,
+                            color: (_placeSearchController.placeType == 2) ? colorScheme.primary : colorScheme.tertiary,
                           ),
                         ),
                       ),
@@ -228,112 +281,107 @@ class _SearchScreenState extends State<SearchScreen> {
                       height: 1,
                       color: colorScheme.tertiary
                   ),
-                  Expanded(
-                    child: ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: _place[changeCol].length,
-                        itemBuilder: (_, int index){
-                          return ListTile(
-                            //   trailing: Checkbox(
-                            //     value: widget.selectedList[index],
-                            // ),
-                            selectedColor: colorScheme.secondary,
-                            selected: index == _selectedIndex,
-                            leading: const Icon(
-                              Icons.location_on,
-                            ),
-                            onTap: (){
-                              ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                              setState(() {
-                                // if 문 추가해서 내 장소인지 나머지 구간들인지 구별해야 함.
-                                _selectedIndex = index;
-
-                                ScaffoldMessenger.of(context).showSnackBar(
-                                  SnackBar(
-                                    content: RichText(
-                                        textAlign: TextAlign.center,
-                                      text: TextSpan(
-                                        text: '원하는 출발지라면 ',
-                                        style: textTheme.subtitle1?.copyWith(
-                                          color: colorScheme.primary,
-                                        ),
-                                        children: <TextSpan>[
-                                          TextSpan(text: "다음", style: textTheme.subtitle1?.copyWith(
-                                            color: colorScheme.secondary,
-                                            fontWeight: FontWeight.bold
-                                          ),),
-                                          TextSpan(text: "을 눌러주세요."),
-                                        ]
-                                      )
-                                    ),
-                                    backgroundColor: Colors.green,
-                                    behavior: SnackBarBehavior.floating,
-                                    shape: RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.circular(16)
-                                    ),
-                                    duration: const Duration(seconds: 2),
-                                  ),
-                                );
-                              });
-                            },
-                            trailing: IconButton(
-                              icon: Icon(
-                                (changeCol == 0) ? Icons.delete : Icons.add,
-                                color: (index == _selectedIndex) ? colorScheme.secondary : colorScheme.primary
-                              ),
-                              onPressed: (){
-                                ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                                setState(() {
-                                  if(changeCol == 0){
-                                    _place[0].remove(_place[changeCol][index]);
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                          content: Text(
-                                              "제거되었습니다.",
-                                             style: textTheme.headline2?.copyWith(
-                                               color: colorScheme.primary,
-                                             ),
-                                            textAlign: TextAlign.center,
-                                          ),
-                                        backgroundColor: Colors.red,
-                                        behavior: SnackBarBehavior.floating,
-                                        shape: RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(16)
-                                        ),
-                                        duration: const Duration(seconds: 2),
-                                      ),
-                                    );
-                                  }
-                                  else{
-                                    if(!_place[0].contains(_place[changeCol][index]))
-                                      _place[0].add(_place[changeCol][index]); //중복 추가 안되게 막음.
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                          "즐겨찾기에 추가되었습니다.",
-                                          style: textTheme.headline2?.copyWith(
-                                            color: colorScheme.primary,
-                                          ),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                        backgroundColor: Colors.green,
-                                        behavior: SnackBarBehavior.floating,
-                                        shape: RoundedRectangleBorder(
-                                            borderRadius: BorderRadius.circular(16)
-                                        ),
-                                        duration: const Duration(seconds: 2),
-                                      ),
-                                    );
-                                  }
-                                });
-                              },
-                            ),
-                            title: Text(_place[changeCol][index]),
-                          );
-                        }
+                  _placeSearchController.hasResult
+                    ? placeSearchTile(
+                      placeList: _placeSearchController.typeFilteredResultList,
+                      context: context,
+                      favoritePressed: () {
+                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        // setState(() {
+                        //   if(changeCol == 0){
+                        //     _place[0].remove(_place[changeCol][index]);
+                        //     ScaffoldMessenger.of(context).showSnackBar(
+                        //       SnackBar(
+                        //           content: Text(
+                        //               "제거되었습니다.",
+                        //              style: textTheme.headline2?.copyWith(
+                        //                color: colorScheme.primary,
+                        //              ),
+                        //             textAlign: TextAlign.center,
+                        //           ),
+                        //         backgroundColor: Colors.red,
+                        //         behavior: SnackBarBehavior.floating,
+                        //         shape: RoundedRectangleBorder(
+                        //           borderRadius: BorderRadius.circular(16)
+                        //         ),
+                        //         duration: const Duration(seconds: 2),
+                        //       ),
+                        //     );
+                        //   }
+                        //   else{
+                        //     if(!_place[0].contains(_place[changeCol][index]))
+                        //       _place[0].add(_place[changeCol][index]); //중복 추가 안되게 막음.
+                        //     ScaffoldMessenger.of(context).showSnackBar(
+                        //       SnackBar(
+                        //         content: Text(
+                        //           "즐겨찾기에 추가되었습니다.",
+                        //           style: textTheme.headline2?.copyWith(
+                        //             color: colorScheme.primary,
+                        //           ),
+                        //           textAlign: TextAlign.center,
+                        //         ),
+                        //         backgroundColor: Colors.green,
+                        //         behavior: SnackBarBehavior.floating,
+                        //         shape: RoundedRectangleBorder(
+                        //             borderRadius: BorderRadius.circular(16)
+                        //         ),
+                        //         duration: const Duration(seconds: 2),
+                        //       ),
+                        //     );
+                        //   }
+                        // });
+                      },
+                    )
+                    : placeSearchTile(
+                      placeList: _placeSearchController.typeFilteredList,
+                      context: context,
+                      favoritePressed: () {
+                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        // setState(() {
+                        //   if(changeCol == 0){
+                        //     _place[0].remove(_place[changeCol][index]);
+                        //     ScaffoldMessenger.of(context).showSnackBar(
+                        //       SnackBar(
+                        //           content: Text(
+                        //               "제거되었습니다.",
+                        //              style: textTheme.headline2?.copyWith(
+                        //                color: colorScheme.primary,
+                        //              ),
+                        //             textAlign: TextAlign.center,
+                        //           ),
+                        //         backgroundColor: Colors.red,
+                        //         behavior: SnackBarBehavior.floating,
+                        //         shape: RoundedRectangleBorder(
+                        //           borderRadius: BorderRadius.circular(16)
+                        //         ),
+                        //         duration: const Duration(seconds: 2),
+                        //       ),
+                        //     );
+                        //   }
+                        //   else{
+                        //     if(!_place[0].contains(_place[changeCol][index]))
+                        //       _place[0].add(_place[changeCol][index]); //중복 추가 안되게 막음.
+                        //     ScaffoldMessenger.of(context).showSnackBar(
+                        //       SnackBar(
+                        //         content: Text(
+                        //           "즐겨찾기에 추가되었습니다.",
+                        //           style: textTheme.headline2?.copyWith(
+                        //             color: colorScheme.primary,
+                        //           ),
+                        //           textAlign: TextAlign.center,
+                        //         ),
+                        //         backgroundColor: Colors.green,
+                        //         behavior: SnackBarBehavior.floating,
+                        //         shape: RoundedRectangleBorder(
+                        //             borderRadius: BorderRadius.circular(16)
+                        //         ),
+                        //         duration: const Duration(seconds: 2),
+                        //       ),
+                        //     );
+                        //   }
+                        // });
+                      },
                     ),
-                  )
                 ],
               ),
             );
@@ -343,7 +391,3 @@ class _SearchScreenState extends State<SearchScreen> {
     );
   }
 }
-
-
-
-

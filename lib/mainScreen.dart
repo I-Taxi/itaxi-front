@@ -3,16 +3,21 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+
 import 'package:itaxi/controller/addPostController.dart';
 import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/controller/placeController.dart';
 import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/controller/tabViewController.dart';
+
 import 'package:itaxi/model/post.dart';
+
 import 'package:itaxi/widget/addPostDialog.dart';
 import 'package:itaxi/widget/postListTile.dart';
 import 'package:itaxi/widget/selectPlaceDialog.dart';
 import 'package:itaxi/widget/tabView.dart';
+
+import 'package:itaxi/placeSearch/placeSearchScreen.dart';
 
 import 'controller/userController.dart';
 
@@ -67,7 +72,7 @@ class _MainScreenState extends State<MainScreen> {
         actions: [
           GestureDetector(
             onTap: () {
-              addPostDialog(context: context);
+              Get.to(() => const PlaceSearchScreen());
               _postController.getPosts(
                 depId: _placeController.dep?.id,
                 dstId: _placeController.dst?.id,

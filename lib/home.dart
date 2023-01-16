@@ -21,8 +21,7 @@ class Home extends StatelessWidget {
     final pageList = [
       const TimelineScreen(),
       const MainScreen(),
-      // const SettingScreen()
-      const PlaceSearchScreen()
+      const SettingScreen()
     ];
 
     return GetBuilder<NavigationController>(
