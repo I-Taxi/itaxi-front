@@ -12,6 +12,7 @@ class PlaceSearchController extends GetxController {
   int _peopleCount = 2;
   int _depOrDst = 0;
   int _placeType = 0;
+  int _selectedIndex = -1;
 
   String _searchQuery = '';
 
@@ -19,6 +20,9 @@ class PlaceSearchController extends GetxController {
   late TimeOfDay _pickedTime;
 
   final PlaceController _placeController = Get.find();
+
+  Place? selectedPlace;
+
   List<Place> places = [];
   final List<Place> _suggestions = [];
   final List<Place> _searchResult = [];
@@ -32,6 +36,7 @@ class PlaceSearchController extends GetxController {
   int get peopleCount => _peopleCount;
   int get depOrDst => _depOrDst;
   int get placeType => _placeType;
+  int get selectedIndex => _selectedIndex;
 
   String get searchQuery => _searchQuery;
 
@@ -43,8 +48,17 @@ class PlaceSearchController extends GetxController {
   List<Place> get typeFilteredList => _typeFilteredList;
   List<Place> get typeFilteredResultList => _typeFilteredResultList;
 
-
   bool get hasResult => _hasResult;
+
+  set placeType(int value) {
+    _placeType = value;
+    filterPlacesByIndex();
+  }
+
+  set selectedIndex(int value) {
+    _selectedIndex = value;
+    update();
+  }
 
   void changeIndex(int idx) {
     _currentIndex = idx;
@@ -132,6 +146,16 @@ class PlaceSearchController extends GetxController {
         _typeFilteredList.add(place);
       }
     });
+    update();
+  }
+
+  void setDeparture() {
+    _placeController.dep = selectedPlace;
+    update();
+  }
+
+  void setDestination() {
+    _placeController.dst = selectedPlace;
     update();
   }
 

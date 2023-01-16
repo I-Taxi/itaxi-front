@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
+import 'package:itaxi/controller/placeController.dart';
+import 'package:itaxi/model/place.dart';
+import 'package:itaxi/placeSearch/placeSearchController.dart';
 
 Widget selectedView({required String viewText, required BuildContext context}) {
   final colorScheme = Theme.of(context).colorScheme;
@@ -105,6 +109,89 @@ Widget unselectedSearchTypeView({required String viewText, required BuildContext
         viewText,
         style: textTheme.headline1?.copyWith(color: colorScheme.tertiary),
       ),
+    ),
+  );
+}
+
+Widget placeSearchTile({
+  required List<Place> placeList,
+  required BuildContext context,
+  required void Function()? favoritePressed,
+}) {
+  final colorScheme = Theme.of(context).colorScheme;
+  final textTheme = Theme.of(context).textTheme;
+  final PlaceSearchController _placeSearchController = Get.find();
+
+  return Expanded(
+    child: ListView.builder(
+        scrollDirection: Axis.vertical,
+        shrinkWrap: true,
+        itemCount: placeList.length,
+        itemBuilder: (_, int index){
+          return ListTile(
+            //   trailing: Checkbox(
+            //     value: widget.selectedList[index],
+            // ),
+            selectedColor: colorScheme.secondary,
+            selected: index == _placeSearchController.selectedIndex,
+            leading: const Icon(
+              Icons.location_on,
+            ),
+            onTap: () {
+              ScaffoldMessenger.of(context).hideCurrentSnackBar();
+              // if 문 추가해서 내 장소인지 나머지 구간들인지 구별해야 함.
+              _placeSearchController.selectedIndex = index;
+              _placeSearchController.selectedPlace = placeList[index];
+
+              placeSearchSnackBar(
+                  context: context,
+                  title: RichText(
+                      textAlign: TextAlign.center,
+                      text: TextSpan(
+                          text: '원하는 출발지라면 ',
+                          style: textTheme.subtitle1?.copyWith(
+                            color: colorScheme.primary,
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(text: "다음", style: textTheme.subtitle1?.copyWith(
+                                color: colorScheme.secondary,
+                                fontWeight: FontWeight.bold
+                            ),),
+                            TextSpan(text: "을 눌러주세요."),
+                          ]
+                      )
+                  )
+              );
+            },
+            trailing: IconButton(
+              icon: Icon(
+                  (_placeSearchController.selectedIndex == 0) ? Icons.delete : Icons.add,
+                  color: (index == _placeSearchController.selectedIndex) ? colorScheme.secondary : colorScheme.primary
+              ),
+              onPressed: favoritePressed,
+            ),
+            title: Text(placeList[index].name!),
+          );
+        }
+    ),
+  );
+}
+
+ScaffoldFeatureController<SnackBar, SnackBarClosedReason> placeSearchSnackBar({
+  required BuildContext context,
+  required Widget title,
+}) {
+  final colorScheme = Theme.of(context).colorScheme;
+  final textTheme = Theme.of(context).textTheme;
+  return ScaffoldMessenger.of(context).showSnackBar(
+    SnackBar(
+      content: title,
+      backgroundColor: Colors.green,
+      behavior: SnackBarBehavior.floating,
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(16)
+      ),
+      duration: const Duration(seconds: 2),
     ),
   );
 }

@@ -58,7 +58,7 @@ Widget postListTile({
                   elevation: 0,
                   child: Container(
                     width: 360.w,
-                    height: post.joiners![i].owner! ? 255.h : 272.h,
+                    height: post.joiners![i].owner! ? 300.h : 320.h,
                     padding:
                     EdgeInsets.fromLTRB(28.0.w, 32.0.h, 28.0.w, 12.0.h),
                     child: Column(

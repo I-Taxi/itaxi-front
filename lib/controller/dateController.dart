@@ -11,8 +11,8 @@ class DateController extends GetxController {
   late TabViewController _tabViewController = Get.find();
   late PostController _postController = Get.find();
   late PlaceController _placeController = Get.find();
-  DateTime? pickedDate;
-  TimeOfDay? pickedTime;
+  late DateTime pickedDate;
+  late TimeOfDay pickedTime;
 
   @override
   void onInit() {
