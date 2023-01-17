@@ -31,7 +31,7 @@ class Place {
     return Place(
       id: ds['id'],
       name: ds['name'],
-      placeType: 0,
+      placeType: ds['placeType'] ?? 0,
       cnt: ds['cnt'],
     );
   }
