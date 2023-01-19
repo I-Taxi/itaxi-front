@@ -201,11 +201,10 @@ class _SearchScreenState extends State<SearchScreen> {
                             ),
                           ),
                           onPressed: (){
-                            _placeSearchController.placeType == 5;
-                            // setState(() {
-                            //   changeCol = 0;
-                            //   _placeSearchController.selectedIndex = 100;
-                            // });
+                            _placeSearchController.placeType = 5;
+                            _placeSearchController.changeSearchQuery('');
+                            _placeSearchController.fetchFavoritePlace();
+                            _placeSearchController.selectedIndex = -1;
                           },
                         child: Text(
                           '내 장소',
@@ -281,107 +280,68 @@ class _SearchScreenState extends State<SearchScreen> {
                       height: 1,
                       color: colorScheme.tertiary
                   ),
-                  _placeSearchController.hasResult
-                    ? placeSearchTile(
-                      placeList: _placeSearchController.typeFilteredResultList,
+                  _placeSearchController.placeType == 5
+                    ? favoritePlaceSearchTile(
+                      placeList: _placeSearchController.favoritePlaces,
                       context: context,
-                      favoritePressed: () {
+                      favoritePressed: () async {
                         ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                        // setState(() {
-                        //   if(changeCol == 0){
-                        //     _place[0].remove(_place[changeCol][index]);
-                        //     ScaffoldMessenger.of(context).showSnackBar(
-                        //       SnackBar(
-                        //           content: Text(
-                        //               "제거되었습니다.",
-                        //              style: textTheme.headline2?.copyWith(
-                        //                color: colorScheme.primary,
-                        //              ),
-                        //             textAlign: TextAlign.center,
-                        //           ),
-                        //         backgroundColor: Colors.red,
-                        //         behavior: SnackBarBehavior.floating,
-                        //         shape: RoundedRectangleBorder(
-                        //           borderRadius: BorderRadius.circular(16)
-                        //         ),
-                        //         duration: const Duration(seconds: 2),
-                        //       ),
-                        //     );
-                        //   }
-                        //   else{
-                        //     if(!_place[0].contains(_place[changeCol][index]))
-                        //       _place[0].add(_place[changeCol][index]); //중복 추가 안되게 막음.
-                        //     ScaffoldMessenger.of(context).showSnackBar(
-                        //       SnackBar(
-                        //         content: Text(
-                        //           "즐겨찾기에 추가되었습니다.",
-                        //           style: textTheme.headline2?.copyWith(
-                        //             color: colorScheme.primary,
-                        //           ),
-                        //           textAlign: TextAlign.center,
-                        //         ),
-                        //         backgroundColor: Colors.green,
-                        //         behavior: SnackBarBehavior.floating,
-                        //         shape: RoundedRectangleBorder(
-                        //             borderRadius: BorderRadius.circular(16)
-                        //         ),
-                        //         duration: const Duration(seconds: 2),
-                        //       ),
-                        //     );
-                        //   }
-                        // });
+                        int _resCode = await _placeSearchController.removeFavoritePlace();
+                        if (_resCode == 0) {
+                          placeSearchSnackBar(
+                              context: context,
+                              title: Text(
+                                "제거되었습니다.",
+                                style: textTheme.headline2?.copyWith(
+                                  color: colorScheme.primary,
+                                ),
+                              ),
+                              color: Colors.red,
+                          );
+                        }
                       },
                     )
-                    : placeSearchTile(
-                      placeList: _placeSearchController.typeFilteredList,
-                      context: context,
-                      favoritePressed: () {
-                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                        // setState(() {
-                        //   if(changeCol == 0){
-                        //     _place[0].remove(_place[changeCol][index]);
-                        //     ScaffoldMessenger.of(context).showSnackBar(
-                        //       SnackBar(
-                        //           content: Text(
-                        //               "제거되었습니다.",
-                        //              style: textTheme.headline2?.copyWith(
-                        //                color: colorScheme.primary,
-                        //              ),
-                        //             textAlign: TextAlign.center,
-                        //           ),
-                        //         backgroundColor: Colors.red,
-                        //         behavior: SnackBarBehavior.floating,
-                        //         shape: RoundedRectangleBorder(
-                        //           borderRadius: BorderRadius.circular(16)
-                        //         ),
-                        //         duration: const Duration(seconds: 2),
-                        //       ),
-                        //     );
-                        //   }
-                        //   else{
-                        //     if(!_place[0].contains(_place[changeCol][index]))
-                        //       _place[0].add(_place[changeCol][index]); //중복 추가 안되게 막음.
-                        //     ScaffoldMessenger.of(context).showSnackBar(
-                        //       SnackBar(
-                        //         content: Text(
-                        //           "즐겨찾기에 추가되었습니다.",
-                        //           style: textTheme.headline2?.copyWith(
-                        //             color: colorScheme.primary,
-                        //           ),
-                        //           textAlign: TextAlign.center,
-                        //         ),
-                        //         backgroundColor: Colors.green,
-                        //         behavior: SnackBarBehavior.floating,
-                        //         shape: RoundedRectangleBorder(
-                        //             borderRadius: BorderRadius.circular(16)
-                        //         ),
-                        //         duration: const Duration(seconds: 2),
-                        //       ),
-                        //     );
-                        //   }
-                        // });
-                      },
-                    ),
+                    : _placeSearchController.hasResult
+                      ? placeSearchTile(
+                        placeList: _placeSearchController.typeFilteredResultList,
+                        context: context,
+                        favoritePressed: () async {
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                          int _resCode = await _placeSearchController.addFavoritePlace();
+                          if (_resCode == 0) {
+                            placeSearchSnackBar(
+                                context: context,
+                                title: Text(
+                                    "즐겨찾기에 추가되었습니다.",
+                                    style: textTheme.headline2?.copyWith(
+                                      color: colorScheme.primary,
+                                    ),
+                                ),
+                                color: Colors.green
+                            );
+                          }
+                        },
+                      )
+                      : placeSearchTile(
+                        placeList: _placeSearchController.typeFilteredList,
+                        context: context,
+                        favoritePressed: () async {
+                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                          int _resCode = await _placeSearchController.addFavoritePlace();
+                          if (_resCode == 0) {
+                            placeSearchSnackBar(
+                                context: context,
+                                title: Text(
+                                  "즐겨찾기에 추가되었습니다.",
+                                  style: textTheme.headline2?.copyWith(
+                                    color: colorScheme.primary,
+                                  ),
+                                ),
+                                color: Colors.green
+                            );
+                          }
+                        },
+                      ),
                 ],
               ),
             );

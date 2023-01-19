@@ -1,9 +1,13 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:get/get.dart';
+
 import 'package:itaxi/model/chat.dart';
 import 'package:itaxi/model/post.dart';
+import 'package:itaxi/controller/historyController.dart';
 
 class ChatRepository {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  HistoryController _historyController = Get.find();
 
   Future<void> setPost({required Post post}) async {
     DocumentReference reference =

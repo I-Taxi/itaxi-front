@@ -152,13 +152,13 @@ class PostController extends GetxController {
   Future<void> fetchOutJoin({required Post post}) async {
     var joinUrl = dotenv.env['API_URL'].toString();
     joinUrl = '${joinUrl}post/${post.id}/join';
-    // Joiner? owner;
+    Joiner? owner;
 
-    // post.joiners?.forEach((joiner) {
-    //   if (joiner.owner!) {
-    //     owner = joiner;
-    //   }
-    // });
+    post.joiners?.forEach((joiner) {
+      if (joiner.owner!) {
+        owner = joiner;
+      }
+    });
 
     Map<String, dynamic> map = {
       'uid': _userController.uid,
@@ -173,8 +173,10 @@ class PostController extends GetxController {
       body: body,
     );
     if (response.statusCode == 200) {
+      print(response.body);
       await _chatRoomController.outChat(post: post);
 
+      _chatRoomController.changeOwnerChat(ownerName: response.body);
       // if (_userController.memberId == owner?.memberId) {
       //   _chatRoomController.changeOwnerChat(post: post);
       // }
