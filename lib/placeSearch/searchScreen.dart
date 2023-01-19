@@ -203,6 +203,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           onPressed: (){
                             _placeSearchController.placeType = 5;
                             _placeSearchController.changeSearchQuery('');
+                            _placeSearchController.fetchFavoritePlace();
                             _placeSearchController.selectedIndex = -1;
                           },
                         child: Text(

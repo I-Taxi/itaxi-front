@@ -342,10 +342,10 @@ class PlaceSearchController extends GetxController {
 
   Future<int> removeFavoritePlace() async {
     var favorPlaceUrl = dotenv.env['API_URL'].toString();
-    favorPlaceUrl = '${favorPlaceUrl}favorite/delete';
-    var body = json.encode(<String, int>{"favorId": favoriteSelectedPlace!.id!});
+    favorPlaceUrl = '${favorPlaceUrl}favorite/${favoriteSelectedPlace!.id}';
+    var body = json.encode(<String, String>{"uid": _userController!.uid!});
 
-    http.Response response = await http.patch(
+    http.Response response = await http.delete(
       Uri.parse(favorPlaceUrl),
       headers: <String, String>{
         'Content-type': 'application/json',
