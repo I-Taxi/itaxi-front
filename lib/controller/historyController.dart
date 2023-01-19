@@ -11,11 +11,13 @@ class HistoryController extends GetxController {
   UserController _userController = Get.put(UserController());
   late Future<List<Post>> historys;
   late Future<Post> history;
+  late List<Post> historiesWithoutFuture;
 
   @override
   Future<void> onInit() async {
     super.onInit();
     historys = fetchHistorys();
+    historiesWithoutFuture = await historys;
   }
 
   List<Post> HistorysfromJson(json) {

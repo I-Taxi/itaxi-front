@@ -29,6 +29,7 @@ class PlaceSearchController extends GetxController {
   final PlaceController _placeController = Get.find();
   final UserController _userController = Get.find();
 
+  FavoritePlace? favoriteSelectedPlace;
   Place? selectedPlace;
 
   List<Place> places = [];
@@ -273,10 +274,10 @@ class PlaceSearchController extends GetxController {
 
   Future<int> addFavoritePlace() async {
     var favorPlaceUrl = dotenv.env['API_URL'].toString();
-    favorPlaceUrl = '${favorPlaceUrl}favorite/create';
+    favorPlaceUrl = '${favorPlaceUrl}favorite';
 
     Map<String, dynamic> addFavorPlaceMap = {
-      "memberUid": _userController.uid,
+      "uid": _userController.uid,
       "placeId": selectedPlace!.id!,
     };
 
@@ -309,13 +310,16 @@ class PlaceSearchController extends GetxController {
 
   Future<void> fetchFavoritePlace() async {
     var favorPlaceUrl = dotenv.env['API_URL'].toString();
-    favorPlaceUrl = '${favorPlaceUrl}favorite/create/{uid}?uid=${_userController.uid}';
+    favorPlaceUrl = '${favorPlaceUrl}favorite/';
 
-    http.Response response = await http.get(
+    var body = json.encode(<String, String>{'uid': _userController.uid!});
+
+    http.Response response = await http.put(
       Uri.parse(favorPlaceUrl),
       headers: <String, String>{
         'Content-type': 'application/json',
       },
+      body: body,
     );
 
     if (response.statusCode == 200) {
@@ -336,9 +340,28 @@ class PlaceSearchController extends GetxController {
     }
   }
 
-  Future<void> removeFavoritePlace(FavoritePlace removePlace) async {
+  Future<int> removeFavoritePlace() async {
     var favorPlaceUrl = dotenv.env['API_URL'].toString();
-    favorPlaceUrl = '${favorPlaceUrl}favorite/delete?favorId=${_userController.uid}';
+    favorPlaceUrl = '${favorPlaceUrl}favorite/delete';
+    var body = json.encode(<String, int>{"favorId": favoriteSelectedPlace!.id!});
+
+    http.Response response = await http.patch(
+      Uri.parse(favorPlaceUrl),
+      headers: <String, String>{
+        'Content-type': 'application/json',
+      },
+      body: body,
+    );
+
+    if (response.statusCode == 200) {
+      await fetchFavoritePlace();
+      return 0;
+    }
+    else {
+      print(response.statusCode);
+      print(response.body);
+      throw Exception('Failed to Fetch Favorite Place');
+    }
   }
 
   @override

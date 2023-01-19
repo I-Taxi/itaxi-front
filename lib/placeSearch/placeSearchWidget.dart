@@ -209,6 +209,7 @@ Widget favoritePlaceSearchTile({
               ScaffoldMessenger.of(context).hideCurrentSnackBar();
               // if 문 추가해서 내 장소인지 나머지 구간들인지 구별해야 함.
               _placeSearchController.selectedIndex = index;
+              _placeSearchController.favoriteSelectedPlace = placeList[index];
               _placeSearchController.selectedPlace = placeList[index].place;
 
               placeSearchSnackBar(

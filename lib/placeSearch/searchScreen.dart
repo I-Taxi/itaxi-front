@@ -285,6 +285,19 @@ class _SearchScreenState extends State<SearchScreen> {
                       context: context,
                       favoritePressed: () async {
                         ScaffoldMessenger.of(context).hideCurrentSnackBar();
+                        int _resCode = await _placeSearchController.removeFavoritePlace();
+                        if (_resCode == 0) {
+                          placeSearchSnackBar(
+                              context: context,
+                              title: Text(
+                                "제거되었습니다.",
+                                style: textTheme.headline2?.copyWith(
+                                  color: colorScheme.primary,
+                                ),
+                              ),
+                              color: Colors.red,
+                          );
+                        }
                       },
                     )
                     : _placeSearchController.hasResult
