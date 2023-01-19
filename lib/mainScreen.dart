@@ -3,21 +3,16 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-
 import 'package:itaxi/controller/addPostController.dart';
 import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/controller/placeController.dart';
 import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/controller/tabViewController.dart';
-
 import 'package:itaxi/model/post.dart';
-
 import 'package:itaxi/widget/addPostDialog.dart';
 import 'package:itaxi/widget/postListTile.dart';
 import 'package:itaxi/widget/selectPlaceDialog.dart';
 import 'package:itaxi/widget/tabView.dart';
-
-import 'package:itaxi/placeSearch/placeSearchScreen.dart';
 
 import 'controller/userController.dart';
 
@@ -36,7 +31,7 @@ class _MainScreenState extends State<MainScreen> {
   DateController _dateController = Get.put(DateController());
   UserController _userController = Get.put(UserController());
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
+  GlobalKey<RefreshIndicatorState>();
 
   @override
   void initState() {
@@ -72,7 +67,7 @@ class _MainScreenState extends State<MainScreen> {
         actions: [
           GestureDetector(
             onTap: () {
-              Get.to(() => const PlaceSearchScreen());
+              addPostDialog(context: context);
               _postController.getPosts(
                 depId: _placeController.dep?.id,
                 dstId: _placeController.dst?.id,
@@ -119,13 +114,13 @@ class _MainScreenState extends State<MainScreen> {
                       },
                       child: (_tabViewController.currentIndex == 1)
                           ? selectedTabView(
-                              viewTitle: '택시',
-                              context: context,
-                            )
+                        viewTitle: '택시',
+                        context: context,
+                      )
                           : unSelectedTabView(
-                              viewTitle: '택시',
-                              context: context,
-                            ),
+                        viewTitle: '택시',
+                        context: context,
+                      ),
                     ),
                     SizedBox(
                       width: 20.0.w,
@@ -145,13 +140,13 @@ class _MainScreenState extends State<MainScreen> {
                       },
                       child: (_tabViewController.currentIndex == 0)
                           ? selectedTabView(
-                              viewTitle: '전체',
-                              context: context,
-                            )
+                        viewTitle: '전체',
+                        context: context,
+                      )
                           : unSelectedTabView(
-                              viewTitle: '전체',
-                              context: context,
-                            ),
+                        viewTitle: '전체',
+                        context: context,
+                      ),
                     ),
                     SizedBox(
                       width: 20.0.w,
@@ -171,13 +166,13 @@ class _MainScreenState extends State<MainScreen> {
                       },
                       child: (_tabViewController.currentIndex == 2)
                           ? selectedTabView(
-                              viewTitle: '카풀',
-                              context: context,
-                            )
+                        viewTitle: '카풀',
+                        context: context,
+                      )
                           : unSelectedTabView(
-                              viewTitle: '카풀',
-                              context: context,
-                            ),
+                        viewTitle: '카풀',
+                        context: context,
+                      ),
                     ),
                   ],
                 ),
@@ -203,7 +198,7 @@ class _MainScreenState extends State<MainScreen> {
                             padding: EdgeInsets.fromLTRB(20.w, 5.h, 20.w, 5.h),
                             decoration: BoxDecoration(
                               borderRadius:
-                                  const BorderRadius.all(Radius.circular(16.0)),
+                              const BorderRadius.all(Radius.circular(16.0)),
                               border: Border.all(
                                 color: colorScheme.tertiary,
                                 width: 0.3,
@@ -213,17 +208,17 @@ class _MainScreenState extends State<MainScreen> {
                               builder: (_) {
                                 return _placeController.dep == null
                                     ? Text(
-                                        '출발',
-                                        overflow: TextOverflow.ellipsis,
-                                        style: textTheme.subtitle1?.copyWith(
-                                            color: colorScheme.tertiary),
-                                      )
+                                  '출발',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: textTheme.subtitle1?.copyWith(
+                                      color: colorScheme.tertiary),
+                                )
                                     : Text(
-                                        '${_placeController.dep?.name}',
-                                        overflow: TextOverflow.ellipsis,
-                                        style: textTheme.subtitle1?.copyWith(
-                                            color: colorScheme.tertiary),
-                                      );
+                                  '${_placeController.dep?.name}',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: textTheme.subtitle1?.copyWith(
+                                      color: colorScheme.tertiary),
+                                );
                               },
                             ),
                           ),
@@ -255,7 +250,7 @@ class _MainScreenState extends State<MainScreen> {
                             padding: EdgeInsets.fromLTRB(20.w, 5.h, 20.w, 5.h),
                             decoration: BoxDecoration(
                               borderRadius:
-                                  const BorderRadius.all(Radius.circular(16.0)),
+                              const BorderRadius.all(Radius.circular(16.0)),
                               border: Border.all(
                                 color: colorScheme.tertiary,
                                 width: 0.3,
@@ -265,17 +260,17 @@ class _MainScreenState extends State<MainScreen> {
                               builder: (_) {
                                 return _placeController.dst == null
                                     ? Text(
-                                        '도착',
-                                        overflow: TextOverflow.ellipsis,
-                                        style: textTheme.subtitle1?.copyWith(
-                                            color: colorScheme.tertiary),
-                                      )
+                                  '도착',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: textTheme.subtitle1?.copyWith(
+                                      color: colorScheme.tertiary),
+                                )
                                     : Text(
-                                        '${_placeController.dst?.name}',
-                                        overflow: TextOverflow.ellipsis,
-                                        style: textTheme.subtitle1?.copyWith(
-                                            color: colorScheme.tertiary),
-                                      );
+                                  '${_placeController.dst?.name}',
+                                  overflow: TextOverflow.ellipsis,
+                                  style: textTheme.subtitle1?.copyWith(
+                                      color: colorScheme.tertiary),
+                                );
                               },
                             ),
                           ),
@@ -288,18 +283,18 @@ class _MainScreenState extends State<MainScreen> {
                     GetBuilder<DateController>(
                       builder: (_) {
                         return (DateFormat.yMd().format(DateTime.now()) ==
-                                DateFormat.yMd()
-                                    .format(_dateController.pickedDate!))
+                            DateFormat.yMd()
+                                .format(_dateController.pickedDate!))
                             ? Text(
-                                '오늘',
-                                style: textTheme.bodyText1
-                                    ?.copyWith(color: colorScheme.secondary),
-                              )
+                          '오늘',
+                          style: textTheme.bodyText1
+                              ?.copyWith(color: colorScheme.secondary),
+                        )
                             : Text(
-                                ' ',
-                                style: textTheme.bodyText1
-                                    ?.copyWith(color: colorScheme.secondary),
-                              );
+                          ' ',
+                          style: textTheme.bodyText1
+                              ?.copyWith(color: colorScheme.secondary),
+                        );
                       },
                     ),
                     SizedBox(
@@ -447,7 +442,6 @@ class _MainScreenState extends State<MainScreen> {
                     backgroundColor: colorScheme.background,
                     strokeWidth: 2.0,
                     onRefresh: () async {
-                      print('refresh');
                       _postController.getPosts(
                         depId: _placeController.dep?.id,
                         dstId: _placeController.dst?.id,

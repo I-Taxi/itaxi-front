@@ -10,7 +10,7 @@ import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:itaxi/controller/signInController.dart';
 import 'package:itaxi/signInUp/signUpScreen.dart';
 import 'package:itaxi/signInUp/forgotPwScreen.dart';
-import 'package:itaxi/placeSearch/searchScreen.dart';
+import 'package:itaxi/newTimeline/checkPlaceScreen.dart';
 
 import '../widget/mainDialog.dart';
 
@@ -248,7 +248,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         const Spacer(),
                         TextButton(
                           onPressed: () {
-                            Get.to(SearchScreen()); //ForgotPwScreen
+                            Get.to(ForgotPwScreen()); //ForgotPwScreen가 ()안에 있었음
                           },
                           child: Text(
                             '비밀번호 찾기',

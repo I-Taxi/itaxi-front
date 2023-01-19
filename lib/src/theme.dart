@@ -74,16 +74,16 @@ class ITaxiTheme {
       brightness: Brightness.light);
 
   static const TextTheme textThemeDefault = TextTheme(
-    headline1: TextStyle(fontSize: 16, fontFamily: 'NotoSans'),
-    headline2: TextStyle(fontSize: 15, fontFamily: 'Seoul'),
-    subtitle1: TextStyle(fontSize: 13, fontFamily: 'NotoSans'),
-    bodyText1: TextStyle(fontSize: 11, fontFamily: 'NotoSans'),
+    headline1: TextStyle(fontSize: 16, fontFamily: 'Pretendard Variable'),
+    headline2: TextStyle(fontSize: 15, fontFamily: 'Pretendard Variable'),
+    subtitle1: TextStyle(fontSize: 13, fontFamily: 'Pretendard Variable'),
+    bodyText1: TextStyle(fontSize: 11, fontFamily: 'Pretendard Variable'),
   );
 
   static const TextTheme textThemeIOS = TextTheme(
-    headline1: TextStyle(fontSize: 18, fontFamily: 'NotoSans'),
-    headline2: TextStyle(fontSize: 17, fontFamily: 'Seoul'),
-    subtitle1: TextStyle(fontSize: 15, fontFamily: 'NotoSans'),
-    bodyText1: TextStyle(fontSize: 13, fontFamily: 'NotoSans'),
+    headline1: TextStyle(fontSize: 18, fontFamily: 'Pretendard Variable'),
+    headline2: TextStyle(fontSize: 17, fontFamily: 'Pretendard Variable'),
+    subtitle1: TextStyle(fontSize: 15, fontFamily: 'Pretendard Variable'),
+    bodyText1: TextStyle(fontSize: 13, fontFamily: 'Pretendard Variable'),
   );
 }
