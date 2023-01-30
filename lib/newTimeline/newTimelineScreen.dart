@@ -8,7 +8,9 @@ import 'package:intl/intl.dart';
 import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/controller/timelineTabViewController.dart';
 import 'package:itaxi/model/post.dart';
-import 'package:itaxi/widget/afterTimelineListTile.dart';
+import 'package:itaxi/widget/newAfterTimelineListTile.dart';
+//import 'package:itaxi/widget/afterTimelineListTile.dart'; //위에 import 한 것에 원본
+import 'package:itaxi/widget/postListTile.dart';
 import 'package:itaxi/widget/soonTimelineListTile.dart';
 
 class NewTimelineScreen extends StatelessWidget {
@@ -29,20 +31,12 @@ class NewTimelineScreen extends StatelessWidget {
         shadowColor: colorScheme.shadow,
         elevation: 1.0,
         centerTitle: true,
-        leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: Icon(
-            Icons.chevron_left_outlined,
-            color: colorScheme.tertiary,
-          ),
-        ),
         title: Text(
           '타임 라인',
-          style: textTheme.subtitle1?.copyWith(
+          style: textTheme.headline1?.copyWith(
             color: colorScheme.onPrimary,
-            fontWeight: FontWeight.bold,
+            fontWeight: FontWeight.w600,
+              fontSize: Platform.isIOS ? 20 : 18
           ),
         ),
       ),
@@ -67,15 +61,15 @@ class NewTimelineScreen extends StatelessWidget {
                     return ListView(
                       children: [
                         Padding(
-                          padding: EdgeInsets.fromLTRB(28.w, 16.h, 28.w, 0.h),
+                          padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 0.h),
                           child: Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '곧 탑승 예정',
+                                '탑승 예정',
                                 style: textTheme.headline1?.copyWith(
-                                    fontSize: Platform.isIOS ? 17 : 15,
-                                    color: colorScheme.secondary),
+                                    fontSize: Platform.isIOS ? 16 : 14,
+                                    color: colorScheme.tertiaryContainer),
                               ),
                               SizedBox(
                                 height: 12.h,
@@ -119,7 +113,7 @@ class NewTimelineScreen extends StatelessWidget {
                                             ),
                                           ],
                                         ),
-                                      soonTimelineListTile(
+                                      soonTimelineListTile( //soonTimelineListTile을 수정해야 함.
                                         context: context,
                                         post: snapshot.data![i],
                                       ),
@@ -223,9 +217,6 @@ class NewTimelineScreen extends StatelessWidget {
                           color: colorScheme.shadow,
                           thickness: 1,
                         ),
-                        SizedBox(
-                          height: 10.h,
-                        ),
                         GetBuilder<TimelineTabViewController>(
                           builder: (_) {
                             return ListView.builder(
@@ -256,32 +247,14 @@ class NewTimelineScreen extends StatelessWidget {
                                                   DateFormat('yyyy-MM-dd')
                                                       .format(DateTime.parse(snapshot.data![i - 1].deptTime!)))) !=
                                                   0))
-                                        Row(
-                                          children: [
-                                            SizedBox(
-                                              width: 20.w,
-                                            ),
-                                            Text(
-                                              DateFormat('M월 d일 E').format(
-                                                  DateTime.parse(snapshot
-                                                      .data![i].deptTime!)),
-                                              style: textTheme.bodyText1
-                                                  ?.copyWith(
-                                                  color:
-                                                  colorScheme.tertiary),
-                                            ),
-                                            Expanded(
-                                              child: Divider(
-                                                color: colorScheme.shadow,
-                                                thickness: 1,
-                                              ),
-                                            ),
-                                          ],
-                                        ),
-                                      afterTimelineListTile(
+                                      newAfterTimelineListTile(
                                         context: context,
                                         post: snapshot.data![i],
                                       ),
+                                      Container(
+                                        color: Color(0xF1F1F1F1),
+                                        height: 8.h,
+                                      )
                                     ],
                                   );
                                 } else {
@@ -312,7 +285,7 @@ class NewTimelineScreen extends StatelessWidget {
                         Align(
                           alignment: Alignment.center,
                           child: Text(
-                            '아직 I-TAXU를 이용한 이력이 없어요\n어서 새로운 동료를 만나보세요',
+                            '아직 I-TAXI를 이용한 이력이 없어요\n어서 새로운 동료를 만나보세요',
                             style: textTheme.headline1?.copyWith(color: colorScheme.tertiaryContainer, fontWeight: FontWeight.w500, fontSize: 20),
                           ),
                         ),

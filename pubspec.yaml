@@ -59,6 +59,7 @@ dependencies:
   change_app_package_name: ^1.0.0
 
   toggle_switch: ^2.0.1
+  dotted_line: ^3.1.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -136,12 +137,15 @@ flutter:
     - assets/newType/ktx.png
     - assets/newType/messenger.png
     - assets/newType/timeline.png
-    - assets/background.png
     - assets/change.png
     - assets/removeP.png
     - assets/addPerson.png
     - assets/addPlace.png
     - assets/delStopover.png
+    - assets/car_new.png
+    - assets/profile.png
+    - assets/change_profile.png
+    - assets/background.png
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

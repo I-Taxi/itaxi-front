@@ -316,20 +316,19 @@ Widget postListTile({
         children: [
           Image(
               image: AssetImage('assets/ListView_Taxi_Car.png'),
-            width: 342.w,
           ),
           Row(
             children: [
               Container(
                 width: 150.w,
-                height: 142.h,
-                margin: EdgeInsets.fromLTRB(36.5.w,20.h, 64.5.w, 20.h),
+                height: 120.h,
+                margin: EdgeInsets.fromLTRB(36.5.w,30.h, 64.5.w, 20.h),
                 decoration: BoxDecoration(
                   color: colorScheme.primary,
                   borderRadius: BorderRadius.circular(4.0),
                 ),
                 child: Row(
-                  // crossAxisAlignment: CrossAxisAlignment.end,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Column(
                       mainAxisAlignment: MainAxisAlignment.center,
@@ -338,7 +337,7 @@ Widget postListTile({
                         Text(
                           "출발 시간",
                           style: textTheme.bodyText1?.copyWith(
-                              color: colorScheme.tertiary
+                              color: colorScheme.tertiary,
                           ),
                         ),
                         SizedBox(
@@ -405,7 +404,7 @@ Widget postListTile({
                           ),
                         ),
                         Text(
-                          "택시",
+                          "택시", //차량 유형 받아와야 함.
                           style: textTheme.subtitle1?.copyWith(
                               color: colorScheme.onPrimary
                           ),
@@ -440,20 +439,18 @@ Widget postListTile({
                 ),
               ),
               SizedBox(
-                width: 16.w,
+                width: 14.w,
               ),
-              Container(
-                child: TextButton(
-                  child: Text(
-                    "탑승",
-                    style: textTheme.subtitle1?.copyWith(
-                        color: colorScheme.primary
-                    ),
+              TextButton(
+                child: Text(
+                  "탑승",
+                  style: textTheme.subtitle1?.copyWith(
+                      color: colorScheme.primary
                   ),
-                  onPressed: (){
-
-                  }, // 누르면 모집창으로 넘어가도록 바꿔야 함.
                 ),
+                onPressed: (){
+
+                }, // 누르면 모집창으로 넘어가도록 바꿔야 함.
               )
             ],
           ),

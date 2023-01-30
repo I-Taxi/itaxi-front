@@ -16,6 +16,7 @@ import 'package:itaxi/newMainScreen.dart';
 import 'package:itaxi/newMainScreenGather.dart';
 import 'package:itaxi/stopoverScreen.dart';
 import 'package:itaxi/newTimeline/newTimelineScreen.dart';
+import 'package:itaxi/settings/newSettingScreen.dart';
 
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);
@@ -26,10 +27,10 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final pageList = [
-      const NewTimelineScreen(),  //원래 timeline이었음
-      const StopoverScreen(),         // 원래 MainScreen이었음
-      const SettingScreen(),
-      const CheckPlaceScreen()
+      const NewMainScreen(),  //원래 timeline이었음
+      const NewMainScreenGather(),         // 원래 MainScreen이었음
+      const NewSettingScreen(),   // 원래 SettingScreen이었음
+      const NewTimelineScreen()
     ];
 
     return GetBuilder<NavigationController>(
@@ -46,6 +47,7 @@ class Home extends StatelessWidget {
             child: pageList[_navController.currentIndex],
           ),
           bottomNavigationBar: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
             showSelectedLabels: false,
             showUnselectedLabels: false,
             currentIndex: _navController.currentIndex,
