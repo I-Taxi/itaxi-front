@@ -78,7 +78,7 @@ class _SearchScreenState extends State<SearchScreen> {
              TextButton(
                  onPressed: (){
                    if (_placeSearchController.depOrDst == 0) {
-                     if (_placeSearchController.selectedPlace!.name == _placeController.dst!.name) {
+                     if (_placeController.dst != null && _placeSearchController.selectedPlace!.name == _placeController.dst!.name) {
                        // [TODO]: 출발지 도착지 같을때 띄우는거
                        placeSearchSnackBar(context: context, title: const Text('춥발지를 다시 선택해주세요.'));
                      }
@@ -90,7 +90,7 @@ class _SearchScreenState extends State<SearchScreen> {
                      }
                    }
                    else {
-                     if (_placeSearchController.selectedPlace!.name == _placeController.dep!.name) {
+                     if (_placeController.dep != null && _placeSearchController.selectedPlace!.name == _placeController.dep!.name) {
                        // [TODO]: 출발지 도착지 같을때 띄우는거
                        placeSearchSnackBar(context: context, title: const Text('도착지를 다시 선택해주세요.'));
                      }

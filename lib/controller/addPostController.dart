@@ -28,6 +28,7 @@ class AddPostController extends GetxController {
     addPostUrl = '${addPostUrl}post';
 
     var body = utf8.encode(json.encode(post.toAddPostMap()));
+    print(post.toAddPostMap());
 
     http.Response response = await http.post(
       Uri.parse(addPostUrl),
@@ -45,6 +46,7 @@ class AddPostController extends GetxController {
       return response.statusCode;
     } else {
       print(response.statusCode);
+      print(response.body);
       throw Exception('Failed to add posts');
     }
   }
