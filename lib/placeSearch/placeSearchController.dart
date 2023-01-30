@@ -1,8 +1,15 @@
+import 'dart:convert';
+
+import 'package:http/http.dart' as http;
+
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 
 import 'package:itaxi/controller/placeController.dart';
+import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/model/place.dart';
+import 'package:itaxi/model/favoritePlace.dart';
 
 import 'dart:io';
 
@@ -20,7 +27,9 @@ class PlaceSearchController extends GetxController {
   late TimeOfDay _pickedTime;
 
   final PlaceController _placeController = Get.find();
+  final UserController _userController = Get.find();
 
+  FavoritePlace? favoriteSelectedPlace;
   Place? selectedPlace;
 
   List<Place> places = [];
@@ -28,6 +37,7 @@ class PlaceSearchController extends GetxController {
   final List<Place> _searchResult = [];
   final List<Place> _typeFilteredList = [];
   final List<Place> _typeFilteredResultList = [];
+  late List<FavoritePlace> favoritePlaces = [];
 
   bool _hasResult = false;
 
@@ -52,7 +62,10 @@ class PlaceSearchController extends GetxController {
 
   set placeType(int value) {
     _placeType = value;
-    filterPlacesByIndex();
+    if (value != 5) {
+      filterPlacesByIndex();
+    }
+    update();
   }
 
   set selectedIndex(int value) {
@@ -259,6 +272,98 @@ class PlaceSearchController extends GetxController {
         _pickedTime.hour, _pickedTime.minute);
   }
 
+  Future<int> addFavoritePlace() async {
+    var favorPlaceUrl = dotenv.env['API_URL'].toString();
+    favorPlaceUrl = '${favorPlaceUrl}favorite';
+
+    Map<String, dynamic> addFavorPlaceMap = {
+      "uid": _userController.uid,
+      "placeId": selectedPlace!.id!,
+    };
+
+    var body = utf8.encode(json.encode(addFavorPlaceMap));
+
+    http.Response response = await http.post(
+      Uri.parse(favorPlaceUrl),
+      headers: <String, String> {
+        "Content-type": "application/json",
+      },
+      body: body,
+    );
+
+    if (response.statusCode == 200) {
+      await fetchFavoritePlace();
+      return 0;
+    }
+
+    final responseBody = json.decode(utf8.decode(response.bodyBytes));
+    if (responseBody["message"] == "이미 즐겨찾기로 등록된 장소입니다.") {
+
+      return 1;
+    }
+    else {
+      print(response.statusCode);
+      print(response.body);
+      throw Exception('Failed to Add Favorite Place');
+    }
+  }
+
+  Future<void> fetchFavoritePlace() async {
+    var favorPlaceUrl = dotenv.env['API_URL'].toString();
+    favorPlaceUrl = '${favorPlaceUrl}favorite/';
+
+    var body = json.encode(<String, String>{'uid': _userController.uid!});
+
+    http.Response response = await http.put(
+      Uri.parse(favorPlaceUrl),
+      headers: <String, String>{
+        'Content-type': 'application/json',
+      },
+      body: body,
+    );
+
+    if (response.statusCode == 200) {
+      List<dynamic> result = json.decode(utf8.decode(response.bodyBytes));
+      favoritePlaces.clear();
+
+      result.forEach((place) {
+        print(place.toString());
+        favoritePlaces.add(FavoritePlace.fromDocs(place));
+      });
+
+      update();
+    }
+    else {
+      print(response.statusCode);
+      print(response.body);
+      throw Exception('Failed to Fetch Favorite Place');
+    }
+  }
+
+  Future<int> removeFavoritePlace() async {
+    var favorPlaceUrl = dotenv.env['API_URL'].toString();
+    favorPlaceUrl = '${favorPlaceUrl}favorite/${favoriteSelectedPlace!.id}';
+    var body = json.encode(<String, String>{"uid": _userController!.uid!});
+
+    http.Response response = await http.delete(
+      Uri.parse(favorPlaceUrl),
+      headers: <String, String>{
+        'Content-type': 'application/json',
+      },
+      body: body,
+    );
+
+    if (response.statusCode == 200) {
+      await fetchFavoritePlace();
+      return 0;
+    }
+    else {
+      print(response.statusCode);
+      print(response.body);
+      throw Exception('Failed to Fetch Favorite Place');
+    }
+  }
+
   @override
   void onInit() {
     super.onInit();
@@ -269,5 +374,6 @@ class PlaceSearchController extends GetxController {
     });
     _pickedDate = DateTime.now();
     _pickedTime = TimeOfDay.now();
+    fetchFavoritePlace();
   }
 }

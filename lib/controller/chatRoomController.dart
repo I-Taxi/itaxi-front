@@ -1,6 +1,12 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:itaxi/fcm/fcmController.dart';
+
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+
 import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/model/chat.dart';
 import 'package:itaxi/model/post.dart';
@@ -10,8 +16,22 @@ class ChatRoomController extends GetxController {
   late Post post;
   late Stream<List<Chat>> chats;
   late UserController _userController = Get.find();
+
   TextEditingController chatTextController = TextEditingController();
   bool texting = false;
+
+  String? token;
+
+  @override
+  void onInit() {
+    fetchFcmToken().then((_) {
+      super.onInit();
+    });
+  }
+
+  Future<void> fetchFcmToken() async {
+    token = await FirebaseMessaging.instance.getToken();
+  }
 
   void changeTexting(bool texting) {
     this.texting = texting;
@@ -43,6 +63,7 @@ class ChatRoomController extends GetxController {
       chatTime: Timestamp.fromDate(DateTime.now()),
     );
     await ChatRepository().setChat(post: post, chat: chat);
+
   }
 
   Future<void> joinChat({required Post post}) async {
@@ -61,15 +82,9 @@ class ChatRoomController extends GetxController {
     await ChatRepository().setChatLog(post: post, chat: chat);
   }
 
-  Future<void> changeOwnerChat({required Post post}) async {
-    String? owner;
-    post.joiners?.forEach((joiner) {
-      if (joiner.owner!) {
-        owner = joiner.memberName;
-      }
-    });
+  Future<void> changeOwnerChat({required String ownerName}) async {
     Chat chat = Chat(
-      chatData: '이제 ${owner!}님이 방장입니다.',
+      chatData: '이제 $ownerName님이 방장입니다.',
       chatTime: Timestamp.fromDate(DateTime.now()),
     );
     await ChatRepository().setChatLog(post: post, chat: chat);
