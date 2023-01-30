@@ -310,114 +310,150 @@ Widget postListTile({
         }
       }
     },
-    child: Container(
-      width: 352.w,
-      height: 80.0.h,
-      margin: EdgeInsets.fromLTRB(30.w, 10.h, 30.w, 10.h),
-      padding: EdgeInsets.fromLTRB(18.w, 14.h, 0.w, 12.h),
-      decoration: BoxDecoration(
-        color: colorScheme.primary,
-        borderRadius: BorderRadius.circular(4.0),
-        boxShadow: [
-          BoxShadow(
-            color: colorScheme.shadow,
-            offset: const Offset(1.0, 1.0),
-            blurRadius: 2.0,
-          ),
-        ],
-      ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
+    child: Padding(
+      padding: EdgeInsets.all(24.0),
+      child: Stack(
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.end,
+          Image(
+              image: AssetImage('assets/ListView_Taxi_Car.png'),
+          ),
+          Row(
             children: [
-              Text(
-                DateFormat('HH:mm').format(DateTime.parse(post.deptTime!)),
-                style:
-                    textTheme.headline2?.copyWith(color: colorScheme.onPrimary),
+              Container(
+                width: 150.w,
+                height: 120.h,
+                margin: EdgeInsets.fromLTRB(36.5.w,30.h, 64.5.w, 20.h),
+                decoration: BoxDecoration(
+                  color: colorScheme.primary,
+                  borderRadius: BorderRadius.circular(4.0),
+                ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "출발 시간",
+                          style: textTheme.bodyText1?.copyWith(
+                              color: colorScheme.tertiary,
+                          ),
+                        ),
+                        SizedBox(
+                          height: 4.0.h,
+                        ),
+                        Text(
+                          DateFormat('HH:mm').format(DateTime.parse(post.deptTime!)),
+                          style:
+                              textTheme.subtitle1?.copyWith(
+                                  color: colorScheme.onPrimary,
+                              ),
+                        ),
+                        SizedBox(
+                          height: 24.0.h,
+                        ),
+                        Text(
+                          "탑승 인원",
+                          style: textTheme.bodyText1?.copyWith(
+                              color: colorScheme.tertiary
+                          ),
+                        ),
+                        SizedBox(
+                          height: 4.0.h,
+                        ),
+                        Text(
+                          "${post.participantNum}/4명", //이 명수도 총 인원에 따라 달라짐.
+                          style: textTheme.subtitle1?.copyWith(
+                              color: colorScheme.onPrimary
+                          ),
+                        ),
+                        // Image.asset(
+                        //   width: 24.w,
+                        //   height: 24.h,
+                        //   'assets/participant/${post.participantNum}_2.png',
+                        // ),
+                      ],
+                    ),
+                    SizedBox(
+                      width: 66.w,
+                    ),
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          "경유지",
+                          style: textTheme.bodyText1?.copyWith(
+                              color: colorScheme.tertiary
+                          ),
+                        ),
+                        Text(
+                          "없음", //경유지 받아와야 함.
+                          style: textTheme.subtitle1?.copyWith(
+                              color: colorScheme.onPrimary
+                          ),
+                        ),
+                        SizedBox(
+                          height: 24.0.h,
+                        ),
+                        Text(
+                          "모집유형",
+                          style: textTheme.bodyText1?.copyWith(
+                              color: colorScheme.tertiary
+                          ),
+                        ),
+                        Text(
+                          "택시", //차량 유형 받아와야 함.
+                          style: textTheme.subtitle1?.copyWith(
+                              color: colorScheme.onPrimary
+                          ),
+                        ),
+                      ],
+                    ),
+                    const Spacer(),
+                    // if (post.largeLuggageNum != 0)
+                    //   for (int i = 0; i < post.largeLuggageNum!; i++)
+                    //     Image.asset(
+                    //       width: 24.w,
+                    //       height: 32.h,
+                    //       'assets/luggage/luggage_large.png',
+                    //     ),
+                    // if (post.smallLuggageNum != 0)
+                    //   for (int i = 0; i < post.smallLuggageNum!; i++)
+                    //     Image.asset(
+                    //       width: 16.w,
+                    //       height: 22.h,
+                    //       'assets/luggage/luggage_small.png',
+                    //     ),
+                    // if (post.largeLuggageNum != 0 || post.smallLuggageNum != 0)
+                    //   Padding(
+                    //     padding: EdgeInsets.only(left: 7.w),
+                    //     child: Image.asset(
+                    //       width: 7.w,
+                    //       height: 48.h,
+                    //       'assets/luggage/human.png',
+                    //     ),
+                    //   ),
+                  ],
+                ),
               ),
               SizedBox(
-                height: 9.0.h,
+                width: 14.w,
               ),
-              Image.asset(
-                width: 24.w,
-                height: 24.h,
-                'assets/participant/${post.participantNum}_2.png',
-              ),
+              TextButton(
+                child: Text(
+                  "탑승",
+                  style: textTheme.subtitle1?.copyWith(
+                      color: colorScheme.primary
+                  ),
+                ),
+                onPressed: (){
+
+                }, // 누르면 모집창으로 넘어가도록 바꿔야 함.
+              )
             ],
           ),
-          SizedBox(
-            width: 22.w,
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Row(
-                children: [
-                  Image.asset(
-                    width: 10.w,
-                    height: 10.h,
-                    'assets/place/departure.png',
-                  ),
-                  SizedBox(
-                    width: 12.0.w,
-                  ),
-                  Text(
-                    '${post.departure?.name}',
-                    style: textTheme.bodyText1
-                        ?.copyWith(color: colorScheme.onPrimary),
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 12.0.h,
-              ),
-              Row(
-                children: [
-                  Image.asset(
-                    width: 10.w,
-                    height: 10.h,
-                    'assets/place/destination.png',
-                  ),
-                  SizedBox(
-                    width: 12.0.w,
-                  ),
-                  Text(
-                    '${post.destination?.name}',
-                    style: textTheme.bodyText1
-                        ?.copyWith(color: colorScheme.onPrimary),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          const Spacer(),
-          if (post.largeLuggageNum != 0)
-            for (int i = 0; i < post.largeLuggageNum!; i++)
-              Image.asset(
-                width: 24.w,
-                height: 32.h,
-                'assets/luggage/luggage_large.png',
-              ),
-          if (post.smallLuggageNum != 0)
-            for (int i = 0; i < post.smallLuggageNum!; i++)
-              Image.asset(
-                width: 16.w,
-                height: 22.h,
-                'assets/luggage/luggage_small.png',
-              ),
-          if (post.largeLuggageNum != 0 || post.smallLuggageNum != 0)
-            Padding(
-              padding: EdgeInsets.only(left: 7.w),
-              child: Image.asset(
-                width: 7.w,
-                height: 48.h,
-                'assets/luggage/human.png',
-              ),
-            ),
         ],
       ),
     ),

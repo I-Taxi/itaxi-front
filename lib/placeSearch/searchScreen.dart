@@ -39,7 +39,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     super.initState();
-    depOrDst = _placeSearchController.depOrDst == 0 ? '출발' : '도착';
+    depOrDst = _placeSearchController.depOrDst == 0 ? '출발지' : '도착지';
     places = _placeSearchController.places;
     suggestions = _placeSearchController.suggestions;
   }
@@ -80,6 +80,7 @@ class _SearchScreenState extends State<SearchScreen> {
                    if (_placeSearchController.depOrDst == 0) {
                      if (_placeSearchController.selectedPlace!.name == _placeController.dst!.name) {
                        // [TODO]: 출발지 도착지 같을때 띄우는거
+                       placeSearchSnackBar(context: context, title: const Text('춥발지를 다시 선택해주세요.'));
                      }
                      else {
                        _placeSearchController.setDeparture();
@@ -91,6 +92,7 @@ class _SearchScreenState extends State<SearchScreen> {
                    else {
                      if (_placeSearchController.selectedPlace!.name == _placeController.dep!.name) {
                        // [TODO]: 출발지 도착지 같을때 띄우는거
+                       placeSearchSnackBar(context: context, title: const Text('도착지를 다시 선택해주세요.'));
                      }
                      else {
                        _placeSearchController.setDestination();
