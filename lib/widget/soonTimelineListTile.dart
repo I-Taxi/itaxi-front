@@ -41,7 +41,7 @@ Widget soonTimelineListTile(
               Text(
                 DateFormat('HH:mm').format(DateTime.parse(post.deptTime!)),
                 style:
-                    textTheme.headline2?.copyWith(color: colorScheme.onPrimary),
+                    textTheme.bodyText1?.copyWith(color: colorScheme.onPrimary),
               ),
               SizedBox(
                 height: 9.0.h,

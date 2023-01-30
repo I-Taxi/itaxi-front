@@ -44,7 +44,7 @@ class VersionScreen extends StatelessWidget {
               Image.asset(
                 width: 82.w,
                 height: 56.h,
-                'assets/logo_2.png',
+                'assets/logo_2_new.png',
               ),
               SizedBox(
                 height: 12.h,

@@ -11,8 +11,8 @@ class DateController extends GetxController {
   late TabViewController _tabViewController = Get.find();
   late PostController _postController = Get.find();
   late PlaceController _placeController = Get.find();
-  DateTime? pickedDate;
-  TimeOfDay? pickedTime;
+  late DateTime pickedDate;
+  late TimeOfDay pickedTime;
 
   @override
   void onInit() {
@@ -30,8 +30,8 @@ class DateController extends GetxController {
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(const Duration(days: 31)),
       helpText: '출발일',
-      cancelText: '취소',
-      confirmText: '확인',
+      cancelText: 'CANCEL',
+      confirmText: 'OK',
       fieldLabelText: '날짜를 입력해주세요',
       fieldHintText: '월/일/년도',
       builder: (context, child) {

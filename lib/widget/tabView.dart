@@ -6,19 +6,19 @@ Widget selectedTabView(
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
   return Container(
-    width: 80.0.w,
-    height: 52.0.h,
+    width: 28.0.w,
+    height: 23.0.h,
     alignment: Alignment.center,
-    decoration: BoxDecoration(
-      border: Border(
-          bottom: BorderSide(
-        color: colorScheme.secondary,
-        width: 1.0,
-      )),
-    ),
+    // decoration: BoxDecoration(
+    //   border: Border(
+    //       bottom: BorderSide(
+    //     color: colorScheme.secondary,
+    //     width: 1.0,
+    //   )),
+    // ),
     child: Text(
       viewTitle,
-      style: textTheme.headline1?.copyWith(color: colorScheme.onPrimary),
+      style: textTheme.subtitle1?.copyWith(color: colorScheme.secondary, fontWeight: FontWeight.w600),
     ),
   );
 }
@@ -28,12 +28,15 @@ Widget unSelectedTabView(
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
   return Container(
-    width: 80.0.w,
-    height: 52.0.h,
+    width: 28.0.w,
+    height: 23.0.h,
     alignment: Alignment.center,
     child: Text(
       viewTitle,
-      style: textTheme.headline1?.copyWith(color: colorScheme.onPrimary),
+      style: textTheme.subtitle1?.copyWith(
+          color: colorScheme.tertiary,
+        fontWeight: FontWeight.w600
+      ),
     ),
   );
 }

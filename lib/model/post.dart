@@ -163,7 +163,7 @@ class Post {
       "dstId": destination!.id,
       "deptTime": deptTime,
       "capacity": capacity,
-      "luggage": luggage,
+      "stopoverIds": <int>[1, 2, 3],
     };
   }
 

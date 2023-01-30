@@ -8,14 +8,14 @@ import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/model/chat.dart';
 import 'package:itaxi/widget/chatListTile.dart';
 
-class ChatRoonScreen extends StatefulWidget {
-  const ChatRoonScreen({Key? key}) : super(key: key);
+class ChatRoomScreen extends StatefulWidget {
+  const ChatRoomScreen({Key? key}) : super(key: key);
 
   @override
-  State<ChatRoonScreen> createState() => _ChatRoonScreenState();
+  State<ChatRoomScreen> createState() => _ChatRoomScreenState();
 }
 
-class _ChatRoonScreenState extends State<ChatRoonScreen> {
+class _ChatRoomScreenState extends State<ChatRoomScreen> {
   late UserController _userController = Get.find();
   late ChatRoomController _chatRoomController = Get.find();
   ScrollController _scrollController = ScrollController();
@@ -33,22 +33,24 @@ class _ChatRoonScreenState extends State<ChatRoonScreen> {
   @override
   void initState() {
     _scrollController.addListener(() {
-      if (_scrollController.position.pixels ==
-          _scrollController.position.maxScrollExtent) {
-        setState(() {
-          isScrollDown = false;
-          needScrollDown = false;
-        });
-      }
-      if (_scrollController.position.pixels <
-          _scrollController.position.maxScrollExtent) {
-        setState(() {
-          needScrollDown = true;
-        });
+      if (_scrollController.hasClients) {
+        if (_scrollController.position.pixels ==
+            _scrollController.position.maxScrollExtent) {
+          setState(() {
+            isScrollDown = false;
+            needScrollDown = false;
+          });
+        }
+        if (_scrollController.position.pixels <
+            _scrollController.position.maxScrollExtent) {
+          setState(() {
+            needScrollDown = true;
+          });
+        }
       }
     });
     _chatRoomController.chats.listen((event) {
-      if (_scrollController.position.pixels !=
+      if (_scrollController.hasClients && _scrollController.position.pixels !=
           _scrollController.position.maxScrollExtent) {
         setState(() {
           isScrollDown = true;
@@ -174,6 +176,7 @@ class _ChatRoonScreenState extends State<ChatRoonScreen> {
                                           : chatListTile(
                                               context: context,
                                               chat: snapshot.data![index],
+                                              joiners: _chatRoomController.post.joiners,
                                             ),
                                     ],
                                   );
@@ -182,7 +185,7 @@ class _ChatRoonScreenState extends State<ChatRoonScreen> {
                               ),
                               if (isScrollDown == true &&
                                   snapshot.data![snapshot.data!.length - 1]
-                                          .memberId !=
+                                          .uid !=
                                       _userController.uid)
                                 Align(
                                   alignment: Alignment.bottomCenter,

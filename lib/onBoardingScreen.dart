@@ -39,7 +39,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   height: 160.h,
                 ),
                 Image.asset(
-                  'assets/logo_2.png',
+                  'assets/logo_2_new.png',
                   width: 80.w,
                   height: 54.86.h,
                 ),

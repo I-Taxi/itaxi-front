@@ -53,3 +53,6 @@ app.*.map.json
 # key
 /android/keystore/appKey.jks
 /android/key.jks
+
+# Service Account Key
+service-account-file.json

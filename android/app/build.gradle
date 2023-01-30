@@ -34,7 +34,7 @@ if (keystorePropertiesFile.exists()) {
 }
 
 android {
-    compileSdkVersion flutter.compileSdkVersion
+    compileSdkVersion 33 //flutter.compileSdkVersion
     ndkVersion flutter.ndkVersion
 
     compileOptions {
@@ -60,35 +60,36 @@ android {
         versionCode 2
         versionName "2.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
     }
 
-    signingConfigs {
-        release {
-//            storeFile file('../keystore/appKey.jks') // Key store 위치
-//            storePassword file('../keystore/store.password').text.trim() // Key store 비밀번호
-//            keyPassword file('../keystore/key.password').text.trim() // Key 비밀번호
-//            keyAlias 'appKey'
-            keyAlias keystoreProperties['keyAlias']
-            keyPassword keystoreProperties['keyPassword']
-            storeFile file(keystoreProperties['storeFile'])
-            storePassword keystoreProperties['storePassword']
-        }
-
-
-        buildTypes {
-            release {
-                // TODO: Add your own signing config for the release build.
-                // Signing with the debug keys for now, so `flutter run --release` works.
-                signingConfig signingConfigs.release
-//            minifyEnabled true
-//            useProguard true
-//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
-            }
-        }
-//    dataBinding{
-//        enabled = true
+//    signingConfigs {
+//        release {
+////            storeFile file('../keystore/appKey.jks') // Key store 위치
+////            storePassword file('../keystore/store.password').text.trim() // Key store 비밀번호
+////            keyPassword file('../keystore/key.password').text.trim() // Key 비밀번호
+////            keyAlias 'appKey'
+//            keyAlias keystoreProperties['keyAlias']
+//            keyPassword keystoreProperties['keyPassword']
+//            storeFile file(keystoreProperties['storeFile'])
+//            storePassword keystoreProperties['storePassword']
+//        }
+//
+//
+//        buildTypes {
+//            release {
+//                // TODO: Add your own signing config for the release build.
+//                // Signing with the debug keys for now, so `flutter run --release` works.
+//                signingConfig signingConfigs.release
+////            minifyEnabled true
+////            useProguard true
+////            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            }
+//        }
+////    dataBinding{
+////        enabled = true
+////    }
 //    }
-    }
 
     flutter {
         source '../..'
@@ -98,5 +99,6 @@ android {
         implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:$kotlin_version"
         implementation platform('com.google.firebase:firebase-bom:30.2.0')
         implementation 'com.google.firebase:firebase-analytics-ktx'
+        implementation 'com.android.support:multidex:1.0.3'
     }
 }

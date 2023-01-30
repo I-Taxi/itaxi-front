@@ -5,16 +5,25 @@ import 'package:intl/intl.dart';
 import 'package:itaxi/controller/chatRoomController.dart';
 import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/model/chat.dart';
+import 'package:itaxi/model/joiner.dart';
 
-Widget chatListTile({required BuildContext context, required Chat chat}) {
+Widget chatListTile({required BuildContext context, required Chat chat, required List<Joiner>? joiners}) {
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
   late UserController _userController = Get.find();
   late ChatRoomController _chatRoomController = Get.find();
 
+  Joiner? owner;
+
+  joiners?.forEach((joiner) {
+    if (joiner.owner!) {
+      owner = joiner;
+    }
+  });
+
   return Container(
     margin: EdgeInsets.only(bottom: 8.h),
-    child: (_userController.uid == chat.memberId)
+    child: (_userController.uid == chat.uid)
         ? Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
@@ -54,17 +63,12 @@ Widget chatListTile({required BuildContext context, required Chat chat}) {
             children: [
               Row(
                 children: [
-                  for (int i = 0;
-                      i < _chatRoomController.post.joiners!.length;
-                      i++)
-                    if (_chatRoomController.post.joiners![i].owner == true &&
-                        _chatRoomController.post.joiners![i].uid ==
-                            _userController.uid)
-                      Icon(
-                        Icons.bookmark,
-                        color: colorScheme.tertiary,
-                        size: 24.w,
-                      ),
+                  if (chat.memberId == owner?.memberId)
+                    Icon(
+                      Icons.bookmark,
+                      color: colorScheme.tertiary,
+                      size: 24.w,
+                    ),
                   Text(
                     chat.memberName!,
                     style: textTheme.subtitle1?.copyWith(
