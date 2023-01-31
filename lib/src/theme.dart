@@ -65,7 +65,7 @@ class ITaxiTheme {
       error: Color(0xffb00020),
       onError: Colors.white,
       background: Color(0xFFFFFFFF),
-      onBackground: Colors.black,
+      onBackground: Color(0XFFF1F1F1),
       surface: Color(0xFFFFFFFF),
       onSurface: Colors.black,
       tertiary: Color(0xff919191),

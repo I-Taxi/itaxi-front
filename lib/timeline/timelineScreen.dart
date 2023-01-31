@@ -8,8 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/controller/timelineTabViewController.dart';
 import 'package:itaxi/model/post.dart';
-import 'package:itaxi/widget/newAfterTimelineListTile.dart';
-//import 'package:itaxi/widget/afterTimelineListTile.dart'; //위에 import 한 것에 원본
+import 'package:itaxi/widget/afterTimelineListTile.dart'; //위에 import 한 것에 원본
 import 'package:itaxi/widget/postListTile.dart';
 import 'package:itaxi/widget/soonTimelineListTile.dart';
 
@@ -40,9 +39,9 @@ class TimelineScreen extends StatelessWidget {
               fontSize: Platform.isIOS ? 20 : 18),
         ),
       ),
-      backgroundColor: colorScheme.background,
+      backgroundColor: colorScheme.onBackground,
       body: ColorfulSafeArea(
-        color: colorScheme.primary,
+        color: colorScheme.tertiary,
         child: RefreshIndicator(
           key: _refreshIndicatorKey,
           color: colorScheme.tertiary,
@@ -248,7 +247,7 @@ class TimelineScreen extends StatelessWidget {
                                                           DateFormat('yyyy-MM-dd')
                                                               .format(DateTime.parse(snapshot.data![i - 1].deptTime!)))) !=
                                                   0))
-                                        newAfterTimelineListTile(
+                                        afterTimelineListTile(
                                           context: context,
                                           post: snapshot.data![i],
                                         ),
@@ -277,7 +276,9 @@ class TimelineScreen extends StatelessWidget {
 
                   // history가 없을 때
                   else {
-                    return ListView(
+                    return Column(
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         SizedBox(
                           height: 60.h,
@@ -287,10 +288,8 @@ class TimelineScreen extends StatelessWidget {
                           alignment: Alignment.center,
                           child: Text(
                             '아직 I-TAXI를 이용한 이력이 없어요\n어서 새로운 동료를 만나보세요',
-                            style: textTheme.headline1?.copyWith(
-                                color: colorScheme.tertiaryContainer,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20),
+                            textAlign: TextAlign.center,
+                            style: textTheme.headline1?.copyWith(color: colorScheme.tertiaryContainer, fontWeight: FontWeight.w500, fontSize: 20),
                           ),
                         ),
                         SizedBox(
@@ -298,16 +297,11 @@ class TimelineScreen extends StatelessWidget {
                         ),
                         OutlinedButton(
                           onPressed: () {},
-                          child: Text(
-                            "동료 구하러 가기",
-                            style: textTheme.headline1?.copyWith(
-                                color: colorScheme.secondary,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20),
+                          child: Image.asset(
+                            width: 198,
+                            'assets/button/add_timeline.png',
                           ),
-                          style: OutlinedButton.styleFrom(
-                              side: BorderSide(
-                                  width: 5.0, color: colorScheme.secondary)),
+                          style: OutlinedButton.styleFrom(side: BorderSide(width: 0, color: colorScheme.primary)),
                         )
                       ],
                     );

@@ -107,6 +107,7 @@ flutter:
     - assets/button/search.png
     - assets/button/mail.png
     - assets/button/phone.png
+    - assets/button/add_timeline.png
     - assets/arrow/arrow.png
     - assets/arrow/arrow_back.png
     - assets/arrow/arrow_down_1.png
