@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/controller/timelineTabViewController.dart';
 import 'package:itaxi/model/post.dart';
-import 'package:itaxi/widget/newAfterTimelineListTile.dart';
+import 'package:itaxi/widget/afterTimelineListTile.dart';
 //import 'package:itaxi/widget/afterTimelineListTile.dart'; //위에 import 한 것에 원본
 import 'package:itaxi/widget/postListTile.dart';
 import 'package:itaxi/widget/soonTimelineListTile.dart';
@@ -248,7 +248,7 @@ class TimelineScreen extends StatelessWidget {
                                                           DateFormat('yyyy-MM-dd')
                                                               .format(DateTime.parse(snapshot.data![i - 1].deptTime!)))) !=
                                                   0))
-                                        newAfterTimelineListTile(
+                                        afterTimelineListTile(
                                           context: context,
                                           post: snapshot.data![i],
                                         ),
