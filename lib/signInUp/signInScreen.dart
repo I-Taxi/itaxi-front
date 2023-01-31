@@ -10,6 +10,7 @@ import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:itaxi/controller/signInController.dart';
 import 'package:itaxi/signInUp/signUpScreen.dart';
 import 'package:itaxi/signInUp/forgotPwScreen.dart';
+import 'package:itaxi/timeline/checkPlaceScreen.dart';
 
 import '../widget/mainDialog.dart';
 
@@ -30,6 +31,11 @@ class _SignInScreenState extends State<SignInScreen> {
 
   // 텍스트필드 숨김 on/off
   bool _isObscure = true;
+
+  //로그인 버튼 색깔 id, pw 입력시 변경
+  bool idEmpty = true;
+  bool pwEmpty = true;
+
 
   final _idController = TextEditingController();
   final _pwController = TextEditingController();
@@ -71,50 +77,22 @@ class _SignInScreenState extends State<SignInScreen> {
             key: _formKey,
             child: SingleChildScrollView(
               child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 64.w),
+                padding:
+                    EdgeInsets.symmetric(
+                        vertical: 130.5.h,
+                        horizontal: 63.w
+                    ),
                 child: Column(
                   children: [
-                    SizedBox(
-                      height: 140.h,
+                    // 로고 이미지
+                    Image.asset(
+                      width: 110.w,
+                      height: 122.h,
+                      'assets/logo_text.png',
                     ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        // 로고 이미지
-                        Image.asset(
-                          width: 88.0.w,
-                          height: 60.h,
-                          'assets/logo_2.png',
-                        ),
-                        SizedBox(
-                          width: 12.0.w,
-                        ),
-
-                        // 로고 글씨
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              'iTaxi',
-                              style: textTheme.headline2?.copyWith(
-                                fontSize: 36,
-                                color: colorScheme.primary,
-                              ),
-                            ),
-                            Text(
-                              'Powered by CRA',
-                              style: textTheme.headline2!.copyWith(
-                                color: colorScheme.primary,
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-
+                    // 로고 글씨
                     SizedBox(
-                      height: 66.0.h,
+                      height: 71.0.h,
                     ),
 
                     // Custom ID 입력
@@ -146,7 +124,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
                             color: colorScheme.primary,
-                            width: 0.3,
+                            width: 1.0,
                           ),
                         ),
                         focusedBorder: UnderlineInputBorder(
@@ -158,6 +136,16 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                       onChanged: (value) {
                         _signInController.id = '$value@handong.ac.kr';
+                        if(value.isNotEmpty){
+                          setState(() {
+                            idEmpty = false;
+                          });
+                        }
+                        else{
+                          setState(() {
+                            idEmpty = true;
+                          });
+                        }
                       },
                     ),
                     SizedBox(
@@ -191,7 +179,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
                             color: colorScheme.primary,
-                            width: 0.3,
+                            width: 1.0,
                           ),
                         ),
                         focusedBorder: UnderlineInputBorder(
@@ -202,7 +190,9 @@ class _SignInScreenState extends State<SignInScreen> {
                         ),
                         suffixIcon: IconButton(
                           icon: Icon(
-                            _isObscure ? Icons.visibility_off : Icons.visibility,
+                            _isObscure
+                                ? Icons.visibility_off
+                                : Icons.visibility,
                             size: 20.h,
                             color: colorScheme.primary,
                           ),
@@ -217,8 +207,17 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                       onChanged: (value) {
                         _signInController.pw = value;
-                      },
-                    ),
+                        if (value.isNotEmpty){
+                          setState(() {
+                            pwEmpty = false;
+                          });
+                        }
+                        else{
+                          setState(() {
+                            pwEmpty = true;
+                          });
+                        }
+                      }),
                     SizedBox(
                       height: 4.h,
                     ),
@@ -249,7 +248,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         const Spacer(),
                         TextButton(
                           onPressed: () {
-                            Get.to(ForgotPwScreen());
+                            Get.to(ForgotPwScreen()); //ForgotPwScreen가 ()안에 있었음
                           },
                           child: Text(
                             '비밀번호 찾기',
@@ -262,45 +261,50 @@ class _SignInScreenState extends State<SignInScreen> {
                       ],
                     ),
                     SizedBox(
-                      height: 64.0.h,
+                      height: 63.0.h,
                     ),
 
                     // Sign In 버튼
                     Container(
-                      width: 128.w,
-                      height: 40.h,
+                      width: 109.w,
+                      height: 48.h,
                       decoration: BoxDecoration(
                         color: colorScheme.primary,
-                        borderRadius: BorderRadius.circular(8),
+                        borderRadius: BorderRadius.circular(6),
                       ),
                       child: TextButton(
                         onPressed: () async {
                           await _signInController.signIn();
                           setState(() {
-                            if(_signInController.num == 0){
-                              return mainDialog(context, '이메일 인증 오류', '인증 이메일을 확인해주시기 바랍니다.\n받은편지함에 없는 경우, 스팸함을 확인해주세요.');
-                            }else if(_signInController.num == 1){
-                              return mainDialog(context, '등록되지 않은 이메일', '등록되지 않은 이메일입니다.\n혹시 인증 이메일이 만료되었다면 itaxi.cra.handong@gmail.com로 메일 보내주세요.');
-                            }else if(_signInController.num == 2){
-                              return mainDialog(context, '비밀번호 오류', '비밀번호가 틀립니다.\n비밀번호를 다시 확인해주세요.');
-                            }else if(_signInController.num == 3){
-                              return mainDialog(context, '아이디와 비밀번호 입력', '아이디와 비밀번호를 입력해주세요.');
-                            }else if(_signInController.num == 4){
-                              return mainDialog(context, '네트워크 오류', '네트워크 연결을 확인해주세요');
+                            if (_signInController.num == 0) {
+                              return mainDialog(context, '이메일 인증 오류',
+                                  '인증 이메일을 확인해주시기 바랍니다.\n받은편지함에 없는 경우, 스팸함을 확인해주세요.');
+                            } else if (_signInController.num == 1) {
+                              return mainDialog(context, '등록되지 않은 이메일',
+                                  '등록되지 않은 이메일입니다.\n혹시 인증 이메일이 만료되었다면 itaxi.cra.handong@gmail.com로 메일 보내주세요.');
+                            } else if (_signInController.num == 2) {
+                              return mainDialog(context, '비밀번호 오류',
+                                  '비밀번호가 틀립니다.\n비밀번호를 다시 확인해주세요.');
+                            } else if (_signInController.num == 3) {
+                              return mainDialog(context, '아이디와 비밀번호 입력',
+                                  '아이디와 비밀번호를 입력해주세요.');
+                            } else if (_signInController.num == 4) {
+                              return mainDialog(
+                                  context, '네트워크 오류', '네트워크 연결을 확인해주세요');
                             }
                           });
 
                           _rememberId
                               ? await storage.write(
-                              key: "login",
-                              value:
-                              "id ${_idController.text}@handong.ac.kr password ${_pwController.text}")
+                                  key: "login",
+                                  value:
+                                      "id ${_idController.text}@handong.ac.kr password ${_pwController.text}")
                               : () {};
                         },
                         child: Text(
                           '로그인',
                           style: textTheme.subtitle1!.copyWith(
-                            color: colorScheme.secondary,
+                            color: (pwEmpty || idEmpty) ? colorScheme.tertiary : colorScheme.secondary, //수정해야 됨.
                           ),
                         ),
                       ),

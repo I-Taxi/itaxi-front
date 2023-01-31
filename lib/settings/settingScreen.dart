@@ -16,6 +16,12 @@ import 'package:itaxi/settings/noticeScreen.dart';
 import '../controller/navigationController.dart';
 import '../controller/userController.dart';
 import '../widget/mainDialog.dart';
+import 'package:flutter/cupertino.dart';
+
+import 'package:itaxi/settings/bugScreen.dart';
+import 'package:itaxi/settings/privacyPolicyScreen.dart';
+import 'package:itaxi/settings/termOfServiceScreen.dart';
+import 'package:itaxi/settings/myInfoScreen.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);
@@ -31,6 +37,8 @@ class _SettingScreenState extends State<SettingScreen> {
   final NavigationController _navController = Get.put(NavigationController());
   final UserController _userController = Get.put(UserController());
 
+  bool alarm = false;
+
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -38,37 +46,13 @@ class _SettingScreenState extends State<SettingScreen> {
     return Scaffold(
       appBar: AppBar(
         shadowColor: colorScheme.shadow,
-        elevation: 1.0,
-        centerTitle: true,
-        title: Text(
-          '설정',
-          style: textTheme.subtitle1?.copyWith(
-            color: colorScheme.onPrimary,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        actions: [
-          TextButton(
-            onPressed: () async {
-              await SettingScreen.storage.delete(key: "login");
-              _signInController.reset();
-              _signInController.signedOutState();
-              _navController.changeIndex(1);
-            },
-            child: Text(
-              '로그아웃',
-              style: textTheme.subtitle1?.copyWith(
-                color: colorScheme.tertiary,
-              ),
-            ),
-          ),
-        ],
+        elevation: 0.0,
       ),
       backgroundColor: colorScheme.primary,
       body: ColorfulSafeArea(
         color: colorScheme.primary,
         child: Padding(
-          padding: EdgeInsets.only(left: 16.w, right: 16.w),
+          padding: EdgeInsets.only(left: 35.w, right: 28.5.w),
           child: _myListView(context: context),
         ),
       ),
@@ -77,150 +61,279 @@ class _SettingScreenState extends State<SettingScreen> {
 
   Widget _myListView({required BuildContext context}) {
     final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
+        Image(
+          image: AssetImage("assets/profile.png"),
+          height: 88.w,
+          width: 88.w,
+        ),
+        SizedBox(
+          height: 16.h,
+        ),
+        Row(
+          children: [
+            RichText(
+              text: TextSpan(
+                  text: "OOO학부생\n",
+                  style: textTheme.headline1?.copyWith(
+                      color: colorScheme.onPrimary,
+                      fontWeight: FontWeight.w700,
+                      fontSize: 22),
+                  children: <TextSpan>[
+                    TextSpan(
+                      text: "handongin@handong.ac.kr",
+                      style: textTheme.headline1?.copyWith(
+                          color: colorScheme.tertiaryContainer,
+                          fontWeight: FontWeight.w400,
+                          fontSize: 8),
+                    )
+                  ]),
+            ),
+            Spacer(),
+            IconButton(
+              onPressed: () {
+                Get.to(MyInfoScreen());
+              },
+              icon: Icon(
+                Icons.arrow_forward_ios,
+                size: 20.h,
+              ),
+              color: colorScheme.tertiaryContainer,
+            ),
+          ],
+        ),
+        SizedBox(
+          height: 15.h,
+        ),
+        Container(
+          height: 1.5.h,
+          width: 390.w,
+          color: Color(0xE1E1E1E1),
+        ),
+        SizedBox(
+          height: 20.h,
+        ),
         _settingListTile(
-          icon: Icons.event_note,
           title: '공지사항',
           nextPage: NoticeScreen(),
           context: context,
         ),
-        Divider(
-          height: 0.3,
-          color: colorScheme.shadow,
+        SizedBox(
+          height: 28.h,
         ),
         _settingListTile(
-          icon: Icons.person_pin,
-          title: '내정보',
-          nextPage: MyInfoScreen(),
-          context: context,
-        ),
-        Divider(
-          height: 0.3,
-          color: colorScheme.shadow,
-        ),
-        _settingListTile(
-          icon: Icons.new_releases_outlined,
           title: '버전정보/개발자',
           nextPage: const VersionScreen(),
           context: context,
         ),
-        Divider(
-          height: 0.3,
-          color: colorScheme.shadow,
+        SizedBox(
+          height: 20.h,
         ),
-        _settingListTile(
-          icon: Icons.notifications_none,
+        _alarmListTile(
           title: '알림',
           nextPage: const AlarmScreen(),
           context: context,
         ),
-        Divider(
-          height: 0.3,
-          color: colorScheme.shadow,
+        SizedBox(
+          height: 20.h,
         ),
         _settingListTile(
-          icon: Icons.bug_report,
           title: '버그제보',
           nextPage: BugScreen(),
           context: context,
         ),
-        Divider(
-          height: 0.3,
-          color: colorScheme.shadow,
+        SizedBox(
+          height: 28.h,
         ),
         _settingListTile(
-          icon: Icons.lock,
           title: '약관',
           nextPage: const TermOfServiceScreen(),
           context: context,
         ),
-        Divider(
-          height: 0.3,
-          color: colorScheme.shadow,
+        SizedBox(
+          height: 28.h,
         ),
         _settingListTile(
-          icon: Icons.lock,
           title: '개인정보처리방침',
           nextPage: const PrivacyPolicyScreen(),
           context: context,
         ),
-        Divider(
-          height: 0.3,
-          color: colorScheme.shadow,
+        SizedBox(
+          height: 28.h,
         ),
-        _deleteUserListTile(
-          title: '회원탈퇴',
-          context: context,
-        ),
-        Divider(
-          height: 0.3,
-          color: colorScheme.shadow,
-        ),
+        Row(
+          children: [
+            Text(
+              "Created by CRA",
+              style: textTheme.bodyText1?.copyWith(
+                color: colorScheme.tertiaryContainer,
+                fontWeight: FontWeight.w400,
+              ),
+            ),
+            Spacer(),
+            IconButton(
+              onPressed: () {
+                setState(() {
+                  _logout(context: context);
+                });
+              },
+              icon: Icon(Icons.logout),
+              color: colorScheme.tertiary,
+            ),
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  _logout(context: context);
+                });
+              },
+              child: Text(
+                "로그아웃",
+                style: textTheme.bodyText1?.copyWith(
+                  color: colorScheme.tertiaryContainer,
+                  fontWeight: FontWeight.w400,
+                ),
+              ),
+            )
+          ],
+        )
       ],
     );
   }
 
-  // 설정 타일
-  Widget _settingListTile({
-    required IconData icon,
+  // 알람 타일
+  Widget _alarmListTile({
     required String title,
     required nextPage,
     required BuildContext context,
   }) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    return ListTile(
-      leading: SizedBox(
-        height: double.infinity,
-        child: Image.asset(
-          width: 8.w,
-          height: 8.h,
-          'assets/place/departure.png',
+    return Row(
+      children: [
+        GestureDetector(
+          onTap: () {
+            Get.to(nextPage);
+          },
+          child: Text(
+            title,
+            textAlign: TextAlign.start,
+            style: textTheme.headline1?.copyWith(
+                color: colorScheme.onPrimary, fontWeight: FontWeight.w500),
+          ),
         ),
-      ),
-      title: Text(
-        title,
-        style: textTheme.headline2?.copyWith(
-          color: colorScheme.onPrimary,
-          fontFamily: 'NotoSans',
-        ),
-      ),
-      onTap: () {
-        Get.to(nextPage);
-      },
+        Spacer(),
+        Transform.scale(
+          scale: 0.6,
+          child: CupertinoSwitch(
+              value: alarm,
+              activeColor: Color(0xff00CE21),
+              thumbColor: colorScheme.primary,
+              onChanged: (bool value) {
+                setState(() {
+                  alarm = value;
+                });
+              }),
+        )
+      ],
     );
   }
 
-  // 회원탈퇴 타일
-  Widget _deleteUserListTile({
+  Widget _settingListTile({
     required String title,
+    required nextPage,
     required BuildContext context,
   }) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    return ListTile(
-      leading: SizedBox(
-        height: double.infinity,
-        child: Image.asset(
-          width: 8.w,
-          height: 8.h,
-          'assets/place/departure.png',
-        ),
-      ),
-      title: Text(
-        title,
-        style: textTheme.headline2?.copyWith(
-          color: colorScheme.onPrimary,
-          fontFamily: 'NotoSans',
-        ),
-      ),
+    return GestureDetector(
       onTap: () {
-        deletedUserDialog(context, '회원탈퇴',
-            '현재 모집중인 방이 있거나, 입장하신 방이 있는 경우에는 회원탈퇴가 되지 않습니다.\n정말로 탈퇴하시겠습니까?');
+        Get.to(nextPage);
       },
+      child: Text(
+        title,
+        textAlign: TextAlign.start,
+        style: textTheme.headline1?.copyWith(
+            color: colorScheme.onPrimary, fontWeight: FontWeight.w500),
+      ),
     );
   }
+
+  void _logout({
+    required BuildContext context,
+  }) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+    showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+            title: Align(
+              alignment: Alignment.center,
+              child: Text(
+                "로그아웃 하시겠습니까?",
+                style: textTheme.headline1?.copyWith(
+                    color: colorScheme.secondary, fontWeight: FontWeight.w500),
+              ),
+            ),
+            actions: <Widget>[
+              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                TextButton(
+                    onPressed: () => Navigator.pop(context, "취소"),
+                    child: Text(
+                      "취소",
+                      style: textTheme.headline1?.copyWith(
+                        color: colorScheme.tertiary,
+                      ),
+                    )),
+                SizedBox(
+                  width: 60.w,
+                ),
+                TextButton(
+                    onPressed: () async {
+                      await SettingScreen.storage.delete(key: "login");
+                      _signInController.reset();
+                      _signInController.signedOutState();
+                      _navController.changeIndex(1);
+                      Navigator.pop(context);
+                    },
+                    child: Text(
+                      "확인",
+                      style: textTheme.headline1?.copyWith(
+                        color: colorScheme.secondary,
+                      ),
+                    )),
+              ])
+            ],
+          );
+        });
+  }
+
+  // 회원탈퇴 타일 => 알림 타일로 바꿀 예정
+  // Widget _deleteUserListTile({
+  //   required String title,
+  //   required BuildContext context,
+  // }) {
+  //   final colorScheme = Theme.of(context).colorScheme;
+  //   final textTheme = Theme.of(context).textTheme;
+  //   return ListTile(
+  //     title: Text(
+  //       title,
+  //       style: textTheme.headline1?.copyWith(
+  //         color: colorScheme.onPrimary,
+  //           fontWeight: FontWeight.w500
+  //       ),
+  //     ),
+  //     onTap: () {
+  //       deletedUserDialog(context, '회원탈퇴',
+  //           '현재 모집중인 방이 있거나, 입장하신 방이 있는 경우에는 회원탈퇴가 되지 않습니다.\n정말로 탈퇴하시겠습니까?');
+  //     },
+  //   );
+  // }
 
   // 현재 모집중이거나 입장한 방이 있을 경우 dialog
   void deletedUserDialog(BuildContext context, String? title, String? content) {

@@ -1,6 +1,10 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:itaxi/mainScreenGather.dart';
+import 'package:itaxi/timeline/checkPlaceScreen.dart';
+import 'package:itaxi/settings/settingScreen.dart';
+import 'package:toggle_switch/toggle_switch.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:itaxi/controller/addPostController.dart';
@@ -14,7 +18,11 @@ import 'package:itaxi/widget/postListTile.dart';
 import 'package:itaxi/widget/selectPlaceDialog.dart';
 import 'package:itaxi/widget/tabView.dart';
 
-import 'controller/userController.dart';
+import 'package:itaxi/controller/userController.dart';
+
+import 'package:itaxi/placeSearch/searchScreen.dart';
+import 'package:itaxi/placeSearch/placeSearchController.dart';
+// import 'package:itaxi/newMainScreenGather.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -30,8 +38,11 @@ class _MainScreenState extends State<MainScreen> {
   PlaceController _placeController = Get.put(PlaceController());
   DateController _dateController = Get.put(DateController());
   UserController _userController = Get.put(UserController());
+  late PlaceSearchController _placeSearchController;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
+  String e = ""; // 요일 변수
+  int personCount = 1; // 인원수
 
   @override
   void initState() {
@@ -45,544 +56,407 @@ class _MainScreenState extends State<MainScreen> {
       ),
       postType: _tabViewController.currentIndex,
     );
-    _placeController.getPlaces();
+    _placeController
+        .getPlaces()
+        .then((_) => _placeSearchController = Get.put(PlaceSearchController()));
   }
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    return Scaffold(
-      appBar: AppBar(
-        shadowColor: colorScheme.shadow,
-        elevation: 1.0,
-        centerTitle: true,
-        title: Text(
-          '조회 / 모집',
-          style: textTheme.subtitle1?.copyWith(
-            color: colorScheme.onPrimary,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        actions: [
-          GestureDetector(
-            onTap: () {
-              addPostDialog(context: context);
-              _postController.getPosts(
-                depId: _placeController.dep?.id,
-                dstId: _placeController.dst?.id,
-                time: _dateController.formattingDateTime(
-                  _dateController.mergeDateAndTime(),
+    return MaterialApp(
+      title: "newMainScreen",
+      debugShowCheckedModeBanner: false,
+      home: Stack(
+        children: [
+          Container(
+              height: 427.h,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage('assets/background.png'),
                 ),
-                postType: _tabViewController.currentIndex,
-              );
-            },
-            child: Image.asset(
-              width: 24.w,
-              height: 24.h,
-              'assets/button/add_1.png',
-            ),
-          ),
-          SizedBox(
-            width: 16.w,
-          ),
-        ],
-      ),
-      backgroundColor: colorScheme.background,
-      body: ColorfulSafeArea(
-        color: colorScheme.primary,
-        child: GetBuilder<TabViewController>(
-          builder: (_) {
-            return Column(
-              children: [
-                Row(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: () {
-                        _tabViewController.changeIndex(1);
-                        _postController.getPosts(
-                          depId: _placeController.dep?.id,
-                          dstId: _placeController.dst?.id,
-                          time: _dateController.formattingDateTime(
-                            _dateController.mergeDateAndTime(),
+              )),
+          Padding(
+            padding: EdgeInsets.only(left: 24.h, top: 55.63.h, right: 26.4.w),
+            child: GetBuilder<TabViewController>(builder: (_) {
+              return Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            "I-TAXI",
+                            style: textTheme.headline1?.copyWith(
+                                color: colorScheme.primary,
+                                fontWeight: FontWeight.bold),
                           ),
-                          postType: _tabViewController.currentIndex,
-                        );
-                      },
-                      child: (_tabViewController.currentIndex == 1)
-                          ? selectedTabView(
-                              viewTitle: '택시',
-                              context: context,
-                            )
-                          : unSelectedTabView(
-                              viewTitle: '택시',
-                              context: context,
-                            ),
-                    ),
-                    SizedBox(
-                      width: 20.0.w,
-                    ),
-                    GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: () {
-                        _tabViewController.changeIndex(0);
-                        _postController.getPosts(
-                          depId: _placeController.dep?.id,
-                          dstId: _placeController.dst?.id,
-                          time: _dateController.formattingDateTime(
-                            _dateController.mergeDateAndTime(),
-                          ),
-                          postType: _tabViewController.currentIndex,
-                        );
-                      },
-                      child: (_tabViewController.currentIndex == 0)
-                          ? selectedTabView(
-                              viewTitle: '전체',
-                              context: context,
-                            )
-                          : unSelectedTabView(
-                              viewTitle: '전체',
-                              context: context,
-                            ),
-                    ),
-                    SizedBox(
-                      width: 20.0.w,
-                    ),
-                    GestureDetector(
-                      behavior: HitTestBehavior.opaque,
-                      onTap: () {
-                        _tabViewController.changeIndex(2);
-                        _postController.getPosts(
-                          depId: _placeController.dep?.id,
-                          dstId: _placeController.dst?.id,
-                          time: _dateController.formattingDateTime(
-                            _dateController.mergeDateAndTime(),
-                          ),
-                          postType: _tabViewController.currentIndex,
-                        );
-                      },
-                      child: (_tabViewController.currentIndex == 2)
-                          ? selectedTabView(
-                              viewTitle: '카풀',
-                              context: context,
-                            )
-                          : unSelectedTabView(
-                              viewTitle: '카풀',
-                              context: context,
-                            ),
-                    ),
-                  ],
-                ),
-                // 출발 도착 날짜 선택
-                Column(
-                  children: [
-                    SizedBox(
-                      height: 22.0.h,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                          Text(
+                            "어디든지 자유롭게 이동하세요!",
+                            style: textTheme.headline2?.copyWith(
+                                color: colorScheme.primary,
+                                fontFamily: 'Pretendard Variable'),
+                          )
+                        ],
+                      ),
+                      IconButton(
+                        color: colorScheme.primary,
+                        onPressed: () {
+                          Get.to(SettingScreen());
+                        },
+                        icon: Icon(Icons.menu),
+                      ),
+                    ],
+                  ),
+                  SizedBox(
+                    height: 58.37.h,
+                  ),
+                  Container(
+                    height: 433.63.h,
+                    width: 342.w,
+                    decoration: BoxDecoration(
+                        color: colorScheme.primary,
+                        borderRadius: BorderRadius.circular(36.0)),
+                    child: Column(
                       children: [
-                        // 출발 설정 버튼
-                        GestureDetector(
-                          behavior: HitTestBehavior.opaque,
-                          onTap: () {
-                            selectPlaceDialog(context: context, type: 0);
-                          },
-                          child: Container(
-                            width: 122.w,
-                            height: 32.h,
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.fromLTRB(20.w, 5.h, 20.w, 5.h),
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(16.0)),
-                              border: Border.all(
-                                color: colorScheme.tertiary,
-                                width: 0.3,
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: 23.w, right: 23.w, top: 20.63.h),
+                          child: SizedBox(
+                            width: 295.0.w,
+                            height: 57.h,
+                            child: FittedBox(
+                              fit: BoxFit.fill,
+                              child: ToggleSwitch(
+                                borderColor: [Color(0xf6f6f6f6)],
+                                borderWidth: 2.0,
+                                cornerRadius: 30.0,
+                                activeBgColors: [
+                                  [colorScheme.primary],
+                                  [colorScheme.primary]
+                                ],
+                                inactiveBgColor: Color(0xfff6f6f6),
+                                initialLabelIndex: 0,
+                                totalSwitches: 2,
+                                labels: ["조회", "모집"],
+                                customTextStyles: [
+                                  TextStyle(
+                                      fontSize: 10.0,
+                                      fontWeight: FontWeight.w600,
+                                      color: colorScheme.onPrimary),
+                                  TextStyle(
+                                      fontSize: 10.0,
+                                      fontWeight: FontWeight.w600,
+                                      color: colorScheme.onPrimary),
+                                ],
+                                radiusStyle: true,
+                                onToggle: (index) {
+                                  if (index == 1) Get.to(MainScreenGather());
+                                  // 어떻게 하면 모집란으로 바로 가게 할 수 있을까???
+                                },
                               ),
                             ),
-                            child: GetBuilder<PlaceController>(
-                              builder: (_) {
-                                return _placeController.dep == null
-                                    ? Text(
-                                        '출발',
-                                        overflow: TextOverflow.ellipsis,
-                                        style: textTheme.subtitle1?.copyWith(
-                                            color: colorScheme.tertiary),
-                                      )
-                                    : Text(
-                                        '${_placeController.dep?.name}',
-                                        overflow: TextOverflow.ellipsis,
-                                        style: textTheme.subtitle1?.copyWith(
-                                            color: colorScheme.tertiary),
-                                      );
-                              },
-                            ),
                           ),
                         ),
-
-                        SizedBox(
-                          width: 16.0.w,
-                        ),
-                        // 화살표
-                        Image.asset(
-                          width: 20.w,
-                          height: 12.h,
-                          'assets/arrow/arrow.png',
-                        ),
-                        SizedBox(
-                          width: 16.0.w,
-                        ),
-
-                        // 도착 설정 버튼
-                        GestureDetector(
-                          behavior: HitTestBehavior.opaque,
-                          onTap: () {
-                            selectPlaceDialog(context: context, type: 1);
-                          },
-                          child: Container(
-                            width: 122.w,
-                            height: 32.h,
-                            alignment: Alignment.center,
-                            padding: EdgeInsets.fromLTRB(20.w, 5.h, 20.w, 5.h),
-                            decoration: BoxDecoration(
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(16.0)),
-                              border: Border.all(
-                                color: colorScheme.tertiary,
-                                width: 0.3,
-                              ),
-                            ),
-                            child: GetBuilder<PlaceController>(
-                              builder: (_) {
-                                return _placeController.dst == null
-                                    ? Text(
-                                        '도착',
-                                        overflow: TextOverflow.ellipsis,
-                                        style: textTheme.subtitle1?.copyWith(
-                                            color: colorScheme.tertiary),
-                                      )
-                                    : Text(
-                                        '${_placeController.dst?.name}',
-                                        overflow: TextOverflow.ellipsis,
-                                        style: textTheme.subtitle1?.copyWith(
-                                            color: colorScheme.tertiary),
-                                      );
-                              },
-                            ),
-                          ),
-                        ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 8.0.h,
-                    ),
-                    GetBuilder<DateController>(
-                      builder: (_) {
-                        return (DateFormat.yMd().format(DateTime.now()) ==
-                                DateFormat.yMd()
-                                    .format(_dateController.pickedDate!))
-                            ? Text(
-                                '오늘',
-                                style: textTheme.bodyText1
-                                    ?.copyWith(color: colorScheme.secondary),
-                              )
-                            : Text(
-                                ' ',
-                                style: textTheme.bodyText1
-                                    ?.copyWith(color: colorScheme.secondary),
-                              );
-                      },
-                    ),
-                    SizedBox(
-                      height: 2.0.h,
-                    ),
-                    Stack(
-                      children: [
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            GetBuilder<DateController>(
-                              builder: (_) {
-                                if (DateFormat.yMEd().format(DateTime.now()) !=
-                                    DateFormat.yMEd()
-                                        .format(_dateController.pickedDate!)) {
-                                  return GestureDetector(
-                                    behavior: HitTestBehavior.opaque,
-                                    onTap: () {
-                                      _dateController.beforDate();
-                                    },
-                                    child: Container(
-                                      height: 24.h,
-                                      width: 60.w,
-                                      alignment: Alignment.center,
-                                      child: Text(
-                                        DateFormat(' d E ').format(
-                                            _dateController.pickedDate!
-                                                .add(const Duration(days: -1))),
-                                        style: textTheme.subtitle1?.copyWith(
-                                          color: colorScheme.tertiary,
-                                          fontFamily: 'NotoSans',
+                        Padding(
+                          padding: EdgeInsets.fromLTRB(23.w, 20.h, 24.w, 8.h),
+                          child: SizedBox(
+                            width: 295.w,
+                            height: 120.h,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              // crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  width: 19.w,
+                                ),
+                                Image(
+                                  image:
+                                      AssetImage('assets/participant/1_1.png'),
+                                  height: 59.16.h,
+                                  width: 24.w,
+                                ),
+                                SizedBox(
+                                  width: 19.w,
+                                ),
+                                SizedBox(
+                                  width: 180.w,
+                                  height: 120.h,
+                                  child: Column(
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
+                                    // mainAxisAlignment: MainAxisAlignment.start,
+                                    children: [
+                                      TextButton(
+                                        onPressed: () {
+                                          _placeSearchController
+                                              .changeDepOrDst(0);
+                                          Get.to(() => SearchScreen());
+                                        },
+                                        child: Text(
+                                          "출발지 입력",
+                                          style: textTheme.headline2?.copyWith(
+                                              color: colorScheme.onPrimary,
+                                              fontWeight: FontWeight.w600),
                                         ),
+                                        style: TextButton.styleFrom(
+                                            fixedSize: Size(85.w, 18.h)),
                                       ),
-                                    ),
-                                  );
-                                }
-                                return GestureDetector(
-                                  behavior: HitTestBehavior.opaque,
-                                  onTap: () {},
-                                  child: Container(
-                                    height: 24.h,
-                                    width: 60.w,
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      DateFormat(' - ').format(_dateController
-                                          .pickedDate!
-                                          .add(const Duration(days: -1))),
-                                      style: textTheme.subtitle1?.copyWith(
-                                        color: colorScheme.tertiary,
-                                        fontFamily: 'NotoSans',
+                                      Container(
+                                        width: 180.w,
+                                        height: 1.h,
+                                        color: Color(0xffE1E1E1),
                                       ),
-                                    ),
+                                      TextButton(
+                                        onPressed: () {
+                                          _placeSearchController
+                                              .changeDepOrDst(1);
+                                          Get.to(() => SearchScreen());
+                                        },
+                                        child: Text(
+                                          "도착지 입력",
+                                          style: textTheme.headline2?.copyWith(
+                                              color: colorScheme.onPrimary,
+                                              fontWeight: FontWeight.w600),
+                                        ),
+                                        style: TextButton.styleFrom(
+                                            fixedSize: Size(85.w, 18.h)),
+                                      ),
+                                    ],
                                   ),
-                                );
-                              },
+                                ),
+                                IconButton(
+                                  onPressed: () {},
+                                  icon: Image.asset('assets/change.png'),
+                                  iconSize: 36,
+                                  color: colorScheme.tertiary,
+                                ),
+                              ],
                             ),
-                            Icon(
-                              Icons.arrow_back_ios_rounded,
-                              color: colorScheme.shadow,
-                              size: 16.0.w,
-                            ),
-                            GetBuilder<DateController>(
-                              builder: (_) {
-                                return Container(
-                                  height: 24.h,
-                                  width: 68.w,
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    DateFormat(' d E ')
-                                        .format(_dateController.pickedDate!),
-                                    style: textTheme.headline2?.copyWith(
-                                      color: colorScheme.secondary,
-                                      fontFamily: 'NotoSans',
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                            Icon(
-                              Icons.arrow_forward_ios_rounded,
-                              color: colorScheme.shadow,
-                              size: 16.0.w,
-                            ),
-                            GetBuilder<DateController>(
-                              builder: (_) {
-                                return GestureDetector(
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(right: 24.w, left: 23.w),
+                          child: SizedBox(
+                            height: 56.59.h,
+                            width: 295.w,
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                SizedBox(
+                                  width: 20.w,
+                                ),
+                                GestureDetector(
                                   behavior: HitTestBehavior.opaque,
                                   onTap: () {
-                                    _dateController.afterDate();
+                                    _dateController.selectDate(context);
                                   },
-                                  child: Container(
-                                    height: 24.h,
-                                    width: 60.w,
-                                    alignment: Alignment.center,
-                                    child: Text(
-                                      DateFormat(' d E ').format(_dateController
-                                          .pickedDate!
-                                          .add(const Duration(days: 1))),
-                                      style: textTheme.subtitle1?.copyWith(
-                                        color: colorScheme.tertiary,
-                                        fontFamily: 'NotoSans',
-                                      ),
-                                    ),
+                                  child: Icon(
+                                    Icons.calendar_month_outlined,
+                                    size: 24,
+                                    color: colorScheme.tertiary,
                                   ),
-                                );
-                              },
-                            ),
-                          ],
-                        ),
-                        Align(
-                          alignment: Alignment.centerRight,
-                          child: GestureDetector(
-                            behavior: HitTestBehavior.opaque,
-                            onTap: () {
-                              _dateController.selectDate(context);
-                            },
-                            child: Padding(
-                              padding: EdgeInsets.only(right: 59.0.w),
-                              child: Image.asset(
-                                width: 24.w,
-                                height: 24.w,
-                                'assets/button/calendar.png',
-                              ),
+                                ),
+                                SizedBox(
+                                  width: 25.w,
+                                ),
+                                Text(
+                                  DateFormat('M월 d일, EE').format(//요일 설정 해줘야 함.
+                                      _dateController.pickedDate!),
+                                  style: textTheme.headline1?.copyWith(
+                                      color: colorScheme.onPrimary,
+                                      fontWeight: FontWeight.w600),
+                                )
+                              ],
                             ),
                           ),
                         ),
-                      ],
-                    ),
-                    SizedBox(
-                      height: 8.0.h,
-                    ),
-                    Divider(
-                      thickness: 0.3,
-                      color: colorScheme.tertiary,
-                    ),
-                  ],
-                ),
-
-                // post list
-                Expanded(
-                  child: RefreshIndicator(
-                    key: _refreshIndicatorKey,
-                    color: colorScheme.tertiary,
-                    backgroundColor: colorScheme.background,
-                    strokeWidth: 2.0,
-                    onRefresh: () async {
-                      _postController.getPosts(
-                        depId: _placeController.dep?.id,
-                        dstId: _placeController.dst?.id,
-                        time: _dateController.formattingDateTime(
-                          _dateController.mergeDateAndTime(),
-                        ),
-                        postType: _tabViewController.currentIndex,
-                      );
-                    },
-                    child: GetBuilder<PostController>(
-                      builder: (_) {
-                        return FutureBuilder<List<Post>>(
-                          future: _postController.posts,
-                          builder: (BuildContext context, snapshot) {
-                            if (snapshot.hasData) {
-                              // post가 있을 떼
-                              if (snapshot.data!.isNotEmpty) {
-                                return ListView.builder(
-                                  itemCount: snapshot.data!.length,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return postListTile(
-                                      context: context,
-                                      post: snapshot.data![index],
+                        Padding(
+                          padding: EdgeInsets.only(
+                              right: 24.w, left: 23.w, top: 8.h),
+                          child: SizedBox(
+                            //getbuilder controller를 써야 함.
+                            width: 295.w,
+                            height: 56.59.h,
+                            child: Row(
+                              // crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  width: 19.w,
+                                ),
+                                Icon(
+                                  Icons.add,
+                                  size: 24,
+                                  color: colorScheme.tertiary,
+                                ),
+                                SizedBox(width: 74.83.w),
+                                GestureDetector(
+                                  behavior: HitTestBehavior.opaque,
+                                  onTap: () {
+                                    _tabViewController.changeIndex(0);
+                                    _postController.getPosts(
+                                      depId: _placeController.dep?.id,
+                                      dstId: _placeController.dst?.id,
+                                      time: _dateController.formattingDateTime(
+                                        _dateController.mergeDateAndTime(),
+                                      ),
+                                      postType: _tabViewController.currentIndex,
                                     );
                                   },
-                                );
-                              }
-                              // post가 없을 때
-                              else {
-                                return postIsEmpty(context);
-                              }
-                            }
-                            // post load 중에 오류 발생
-                            else if (snapshot.hasError) {
-                              return ListView(
-                                children: [
-                                  SizedBox(
-                                    height: 40.h,
-                                  ),
-                                  Align(
-                                    child: Text(
-                                      '${snapshot.error}',
-                                      style: textTheme.headline2?.copyWith(
-                                        color: colorScheme.tertiary,
-                                        fontFamily: 'NotoSans',
+                                  child: (_tabViewController.currentIndex == 0)
+                                      ? selectedTabView(
+                                          viewTitle: '전체',
+                                          context: context,
+                                        )
+                                      : unSelectedTabView(
+                                          viewTitle: '전체',
+                                          context: context,
+                                        ),
+                                ),
+                                SizedBox(
+                                  width: 16.0.w,
+                                ),
+                                GestureDetector(
+                                  behavior: HitTestBehavior.opaque,
+                                  onTap: () {
+                                    _tabViewController.changeIndex(1);
+                                    _postController.getPosts(
+                                      depId: _placeController.dep?.id,
+                                      dstId: _placeController.dst?.id,
+                                      time: _dateController.formattingDateTime(
+                                        _dateController.mergeDateAndTime(),
                                       ),
-                                    ),
-                                  ),
-                                ],
-                              );
-                            }
-
-                            // post data loading bar
-                            return LinearProgressIndicator(
-                              color: colorScheme.secondary,
-                            );
-                          },
-                        );
+                                      postType: _tabViewController.currentIndex,
+                                    );
+                                  },
+                                  child: (_tabViewController.currentIndex == 1)
+                                      ? selectedTabView(
+                                          viewTitle: '택시',
+                                          context: context,
+                                        )
+                                      : unSelectedTabView(
+                                          viewTitle: '택시',
+                                          context: context,
+                                        ),
+                                ),
+                                SizedBox(
+                                  width: 16.0.w,
+                                ),
+                                GestureDetector(
+                                  behavior: HitTestBehavior.opaque,
+                                  onTap: () {
+                                    _tabViewController.changeIndex(2);
+                                    _postController.getPosts(
+                                      depId: _placeController.dep?.id,
+                                      dstId: _placeController.dst?.id,
+                                      time: _dateController.formattingDateTime(
+                                        _dateController.mergeDateAndTime(),
+                                      ),
+                                      postType: _tabViewController.currentIndex,
+                                    );
+                                  },
+                                  child: (_tabViewController.currentIndex == 2)
+                                      ? selectedTabView(
+                                          viewTitle: '카풀',
+                                          context: context,
+                                        )
+                                      : unSelectedTabView(
+                                          viewTitle: '카풀',
+                                          context: context,
+                                        ),
+                                ),
+                              ],
+                            ),
+                          ),
+                        ),
+                        Padding(
+                          padding: EdgeInsets.only(
+                              left: 23.w, right: 24.w, bottom: 24.82.h),
+                          child: SizedBox(
+                            height: 56.59.h,
+                            width: 295.w,
+                            child: Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                SizedBox(
+                                  width: 19.w,
+                                ),
+                                Icon(
+                                  Icons.person,
+                                  size: 24,
+                                  color: colorScheme.tertiary,
+                                ),
+                                SizedBox(width: 76.17.w),
+                                IconButton(
+                                  onPressed: () {
+                                    if (personCount != 1)
+                                      setState(() {
+                                        personCount--;
+                                      });
+                                  },
+                                  icon: Image.asset('assets/removeP.png'),
+                                  color: (personCount == 1)
+                                      ? colorScheme.tertiaryContainer
+                                      : colorScheme.secondary,
+                                ),
+                                SizedBox(
+                                  width: 8.w,
+                                ),
+                                Text(
+                                  "$personCount명",
+                                  style: textTheme.headline1?.copyWith(
+                                      color: colorScheme.onPrimary,
+                                      fontWeight: FontWeight.w600),
+                                ),
+                                SizedBox(
+                                  width: 8.w,
+                                ),
+                                IconButton(
+                                  onPressed: () {
+                                    if (personCount != 4)
+                                      setState(() {
+                                        personCount++;
+                                      });
+                                  },
+                                  icon: Image.asset('assets/addPerson.png'),
+                                  color: (personCount == 4)
+                                      ? colorScheme.tertiaryContainer
+                                      : colorScheme.secondary,
+                                ),
+                              ],
+                            ),
+                          ),
+                        )
+                      ],
+                    ),
+                  ),
+                  SizedBox(
+                    height: 60.h,
+                  ),
+                  ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        primary: Colors.blueAccent,
+                        minimumSize: Size(342.w, 57.h),
+                      ),
+                      onPressed: () {
+                        Get.to(CheckPlaceScreen());
                       },
-                    ),
-                  ),
-                ),
-              ],
-            );
-          },
-        ),
+                      child: Text(
+                        "조회하기",
+                        style: textTheme.headline1?.copyWith(
+                          color: colorScheme.primary,
+                        ),
+                      )),
+                ],
+              );
+            }),
+          )
+        ],
       ),
-    );
-  }
-
-  Widget postIsEmpty(BuildContext context) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-
-    return ListView(
-      children: [
-        Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 40.0.h),
-              child: Text(
-                '검색 결과가 없습니다',
-                style: textTheme.headline2?.copyWith(
-                  color: colorScheme.tertiary,
-                  fontFamily: 'NotoSans',
-                ),
-              ),
-            ),
-            InkWell(
-              onTap: () {
-                addPostDialog(context: context);
-                _postController.getPosts(
-                  depId: _placeController.dep?.id,
-                  dstId: _placeController.dst?.id,
-                  time: _dateController.formattingDateTime(
-                    _dateController.mergeDateAndTime(),
-                  ),
-                  postType: _tabViewController.currentIndex,
-                );
-              },
-              child: Container(
-                width: 352.0.w,
-                height: 80.0.h,
-                decoration: BoxDecoration(
-                  color: colorScheme.background,
-                  borderRadius: BorderRadius.circular(4.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: colorScheme.shadow,
-                      offset: const Offset(1.0, 1.0),
-                      blurRadius: 2.0,
-                    ),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 18.0.h,
-                    ),
-                    Image.asset(
-                      width: 16.0.w,
-                      height: 16.0.h,
-                      'assets/button/add_2.png',
-                    ),
-                    SizedBox(
-                      height: 12.0.h,
-                    ),
-                    Text(
-                      '새로 모집하기',
-                      style: textTheme.subtitle1
-                          ?.copyWith(color: colorScheme.tertiary),
-                    )
-                  ],
-                ),
-              ),
-            ),
-          ],
-        ),
-      ],
     );
   }
 }

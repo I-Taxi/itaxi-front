@@ -31,7 +31,7 @@ class PlaceController extends GetxController {
 
   // Places 데이터 가져오기
   List<Place> PlacefromJson(json) {
-    List<Place> result = [Place(id: -1, name: '전체', cnt: 0)];
+    List<Place> result = [Place(id: -1, name: '전체', placeType: 0, cnt: 0)];
     json.forEach((item) {
       result.add(Place.fromDocs(item));
     });
@@ -41,7 +41,7 @@ class PlaceController extends GetxController {
 
   Future<List<Place>> fetchPlace() async {
     var placeUrl = dotenv.env['API_URL'].toString();
-    placeUrl = '${placeUrl}place';
+    placeUrl = '${placeUrl}place/1';
 
     var response = await http.get(Uri.parse(placeUrl));
 

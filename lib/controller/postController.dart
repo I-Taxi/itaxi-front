@@ -9,6 +9,7 @@ import 'package:itaxi/controller/chatRoomController.dart';
 import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/model/post.dart';
+import 'package:itaxi/model/joiner.dart';
 
 class PostController extends GetxController {
   late DateController _dateController = Get.find();
@@ -121,9 +122,9 @@ class PostController extends GetxController {
   }
 
   // /itaxi/api/post/{postId}/join
-  Future<void> fetchJoin({required int postId, required int luggage}) async {
+  Future<void> fetchJoin({required Post post, required int luggage}) async {
     var joinUrl = dotenv.env['API_URL'].toString();
-    joinUrl = '${joinUrl}post/$postId/join';
+    joinUrl = '${joinUrl}post/${post.id}/join';
 
     Map<String, dynamic> map = {
       'luggage': luggage,
@@ -141,15 +142,23 @@ class PostController extends GetxController {
     );
 
     if (response.statusCode == 200) {
-      await _chatRoomController.joinChat();
+      await _chatRoomController.joinChat(post: post);
+      print('join');
     } else {
       throw Exception('Failed to join');
     }
   }
 
-  Future<void> fetchOutJoin({required int postId}) async {
+  Future<void> fetchOutJoin({required Post post}) async {
     var joinUrl = dotenv.env['API_URL'].toString();
-    joinUrl = '${joinUrl}post/$postId/join';
+    joinUrl = '${joinUrl}post/${post.id}/join';
+    Joiner? owner;
+
+    post.joiners?.forEach((joiner) {
+      if (joiner.owner!) {
+        owner = joiner;
+      }
+    });
 
     Map<String, dynamic> map = {
       'uid': _userController.uid,
@@ -163,9 +172,14 @@ class PostController extends GetxController {
       },
       body: body,
     );
-
     if (response.statusCode == 200) {
-      await _chatRoomController.outChat();
+      print(response.body);
+      await _chatRoomController.outChat(post: post);
+
+      _chatRoomController.changeOwnerChat(ownerName: response.body);
+      // if (_userController.memberId == owner?.memberId) {
+      //   _chatRoomController.changeOwnerChat(post: post);
+      // }
     } else {
       throw Exception('Failed to out');
     }

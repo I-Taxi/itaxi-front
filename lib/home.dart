@@ -4,9 +4,18 @@ import 'package:get/get.dart';
 import 'package:animations/animations.dart';
 
 import 'package:itaxi/mainScreen.dart';
+import 'package:itaxi/timeline/checkPlaceScreen.dart';
 import 'package:itaxi/settings/settingScreen.dart';
-import 'package:itaxi/timeline/timelineScreen.dart';
 import 'package:itaxi/controller/navigationController.dart';
+
+import 'package:itaxi/placeSearch/placeSearchScreen.dart';
+import 'package:itaxi/timeline/checkPlaceScreen.dart';
+
+import 'package:itaxi/mainScreen.dart';
+import 'package:itaxi/mainScreenGather.dart';
+import 'package:itaxi/stopoverScreen.dart';
+import 'package:itaxi/timeline/timelineScreen.dart';
+import 'package:itaxi/settings/settingScreen.dart';
 
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);
@@ -17,9 +26,10 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final pageList = [
-      const TimelineScreen(),
-      const MainScreen(),
-      const SettingScreen()
+      const MainScreen(), //원래 timeline이었음
+      const MainScreenGather(), // 원래 MainScreen이었음
+      const SettingScreen(), // 원래 SettingScreen이었음
+      const TimelineScreen()
     ];
 
     return GetBuilder<NavigationController>(
@@ -36,6 +46,7 @@ class Home extends StatelessWidget {
             child: pageList[_navController.currentIndex],
           ),
           bottomNavigationBar: BottomNavigationBar(
+            type: BottomNavigationBarType.fixed,
             showSelectedLabels: false,
             showUnselectedLabels: false,
             currentIndex: _navController.currentIndex,
@@ -47,41 +58,61 @@ class Home extends StatelessWidget {
             },
             items: [
               BottomNavigationBarItem(
-                label: 'timeline',
+                label: "car_taxi",
                 activeIcon: Image.asset(
-                  width: 32.w,
-                  height: 32.h,
-                  'assets/bottom_bar/timeline_2.png',
+                  width: 100.w,
+                  height: 60.h,
+                  'assets/newType/car_taxi.png',
+                  color: colorScheme.secondary,
                 ),
                 icon: Image.asset(
-                  width: 32.w,
-                  height: 32.h,
-                  'assets/bottom_bar/timeline_1.png',
+                  width: 100.w,
+                  height: 60.h,
+                  'assets/newType/car_taxi.png',
+                  color: colorScheme.tertiary,
                 ),
               ),
               BottomNavigationBarItem(
-                label: 'main',
+                label: "KTX",
                 activeIcon: Image.asset(
-                  width: 45.71.w,
-                  height: 32.h,
-                  'assets/bottom_bar/home_2.png',
+                  width: 100.w,
+                  height: 60.h,
+                  'assets/newType/ktx.png',
+                  color: colorScheme.secondary,
                 ),
                 icon: Image.asset(
-                  width: 45.71.w,
-                  height: 32.h,
-                  'assets/bottom_bar/home_1.png',
+                  width: 100.w,
+                  height: 60.h,
+                  'assets/newType/ktx.png',
                 ),
               ),
               BottomNavigationBarItem(
-                label: 'settings',
+                label: "messenger",
                 activeIcon: Image.asset(
-                    width: 32.w,
-                    height: 7.45.h,
-                    'assets/bottom_bar/setting_2.png'),
+                  width: 100.w,
+                  height: 60.h,
+                  'assets/newType/messenger.png',
+                  color: colorScheme.secondary,
+                ),
                 icon: Image.asset(
-                    width: 32.w,
-                    height: 7.45.h,
-                    'assets/bottom_bar/setting_1.png'),
+                  width: 100.w,
+                  height: 60.h,
+                  'assets/newType/messenger.png',
+                ),
+              ),
+              BottomNavigationBarItem(
+                label: "timeline",
+                activeIcon: Image.asset(
+                  width: 100.w,
+                  height: 60.h,
+                  'assets/newType/timeline.png',
+                  color: colorScheme.secondary,
+                ),
+                icon: Image.asset(
+                  width: 100.w,
+                  height: 60.h,
+                  'assets/newType/timeline.png',
+                ),
               )
             ],
           ),

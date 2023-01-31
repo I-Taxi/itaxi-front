@@ -40,12 +40,12 @@ dependencies:
   flutter_svg: ^1.1.1+1
   url_launcher: ^6.1.5
   get: ^4.6.5
-  firebase_core: ^1.19.1
-  firebase_auth: ^3.4.1
-  cloud_firestore: ^3.2.1
+  firebase_core: ^2.4.1
+  firebase_auth: ^4.2.4
+  cloud_firestore: ^4.3.1
   animations: ^2.0.3
   flutter_screenutil: ^5.5.3+2
-  flutter_secure_storage: ^5.1.0
+  flutter_secure_storage: ^7.0.1
   flutter_email_sender: ^5.1.0
   flutter_native_splash: ^2.2.8
   colorful_safe_area: ^0.3.0
@@ -53,10 +53,14 @@ dependencies:
 
 
   shared_preferences: ^2.0.13
-  logger: ^0.7.0+2
+  logger: ^1.1.0
   onboarding: ^3.1.0
 
   change_app_package_name: ^1.0.0
+  firebase_messaging: ^14.2.1
+
+  toggle_switch: ^2.0.1
+  dotted_line: ^3.1.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -87,7 +91,8 @@ flutter:
   assets:
     - .env
     - assets/logo_1.png
-    - assets/logo_2.png
+    - assets/logo_2_new.png
+    - assets/logo_text.png
     - assets/bottom_bar/home_1.png
     - assets/bottom_bar/home_2.png
     - assets/bottom_bar/setting_1.png
@@ -127,6 +132,21 @@ flutter:
     - assets/type/train_2.png
     - assets/mainScreen.png
     - assets/timeLine.png
+    - assets/DeptoDes.png
+    - assets/ListView_Taxi_Car.png
+    - assets/newType/car_taxi.png
+    - assets/newType/ktx.png
+    - assets/newType/messenger.png
+    - assets/newType/timeline.png
+    - assets/change.png
+    - assets/removeP.png
+    - assets/addPerson.png
+    - assets/addPlace.png
+    - assets/delStopover.png
+    - assets/car_new.png
+    - assets/profile.png
+    - assets/change_profile.png
+    - assets/background.png
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

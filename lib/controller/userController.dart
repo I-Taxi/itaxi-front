@@ -14,6 +14,7 @@ class UserController extends GetxController {
   int isDeleted = 0;
 
   late String? uid;
+  late int? memberId;
   late String? name;
   late String? bank;
   late String? bankAddress;
@@ -40,6 +41,7 @@ class UserController extends GetxController {
 
     userInfo = UserInfoList.fromDocs(json);
     uid = userInfo.uid;
+    memberId = userInfo.id;
     name = userInfo.name;
     bank = userInfo.bank;
     bankAddress = userInfo.bankAddress;

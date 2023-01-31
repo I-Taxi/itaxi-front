@@ -45,17 +45,17 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyAGe12W02oq-rmRYZ8YKMDnukAPsbm0GZw',
-    appId: '1:493359198058:web:e3aa000c3bc1aa2567bf13',
+    appId: '1:493359198058:web:439239c6f2c646d067bf13',
     messagingSenderId: '493359198058',
     projectId: 'itaxi-772b7',
     authDomain: 'itaxi-772b7.firebaseapp.com',
     storageBucket: 'itaxi-772b7.appspot.com',
-    measurementId: 'G-1ZTF75L8Z8',
+    measurementId: 'G-7HHEH4BXJB',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyBQFjlD0SDsifsul1aNFX0R4Yxwb7KmRDM',
-    appId: '1:493359198058:android:bc1657ea5cdf298267bf13',
+    appId: '1:493359198058:android:92702dabedd2500d67bf13',
     messagingSenderId: '493359198058',
     projectId: 'itaxi-772b7',
     storageBucket: 'itaxi-772b7.appspot.com',

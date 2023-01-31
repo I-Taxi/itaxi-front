@@ -307,7 +307,7 @@ Future<dynamic> timelineDiaog(
                                     '방을 나가시겠습니까?',
                                     _postController,
                                     _historyController,
-                                    snapshot.data!.id!);
+                                    snapshot.data!);
                               },
                               child: Text(
                                 '방 나가기',
@@ -321,7 +321,7 @@ Future<dynamic> timelineDiaog(
                               _chatRoomController.getChats(
                                   post: snapshot.data!);
                               Get.back();
-                              Get.to(const ChatRoonScreen());
+                              Get.to(() => const ChatRoomScreen());
                             },
                             child: Text(
                               '채팅방 입장',
@@ -370,7 +370,7 @@ Future<dynamic> showMainDialog(
     String? content,
     PostController _postController,
     HistoryController _historyController,
-    int postId) async {
+    Post post) async {
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
 
@@ -412,8 +412,9 @@ Future<dynamic> showMainDialog(
                 // const Spacer(),
                 TextButton(
                   onPressed: () async {
-                    await _postController.fetchOutJoin(postId: postId);
-                    _historyController.getHistorys();
+                    await _postController.fetchOutJoin(post: post);
+                    await _historyController.getHistorys();
+                    Get.back();
                     Get.back();
                   },
                   child: Text(
