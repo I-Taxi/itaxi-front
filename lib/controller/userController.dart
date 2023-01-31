@@ -1,5 +1,8 @@
+import 'dart:math';
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:encrypt/encrypt.dart';
 
 import 'package:get/get.dart';
 
@@ -20,9 +23,15 @@ class UserController extends GetxController {
   late String? bankAddress;
   late String? phone;
 
+  final key = Key.fromUtf8(dotenv.env['ENCRYPTION_KEY'].toString());
+  final iv = IV.fromLength(16);
+
+  late final Encrypter encrypter;
+
   @override
   void onInit() {
     super.onInit();
+    encrypter = Encrypter(AES(key));
     getUsers();
   }
 
@@ -34,6 +43,18 @@ class UserController extends GetxController {
   Future<void> getUsers() async {
     users = fetchUsers();
     update();
+  }
+
+  void encryptUser(UserInfoList user) {
+    user.phone = encrypter.encrypt(user.phone!, iv: iv).base64;
+    user.bank = encrypter.encrypt(user.bank!, iv: iv).base64;
+    user.bankAddress = encrypter.encrypt(user.bankAddress!, iv: iv).base64;
+  }
+
+  void decryptUser(UserInfoList user) {
+    user.phone = encrypter.decrypt64(user.phone!, iv: iv);
+    user.bank = encrypter.decrypt64(user.bank!, iv: iv);
+    user.bankAddress = encrypter.decrypt64(user.bankAddress!, iv: iv);
   }
 
   UserInfoList userFromJson(json) {
@@ -62,9 +83,12 @@ class UserController extends GetxController {
         body: body);
 
     if (response.statusCode == 200) {
-      return userFromJson(json.decode(utf8.decode(response.bodyBytes)));
+      UserInfoList result =
+          userFromJson(json.decode(utf8.decode(response.bodyBytes)));
+      decryptUser(result);
+      return result;
     } else {
-      throw Exception('Failed to load MyInfo');
+      throw Exception('계정 정보를 불러오는 데 실패했습니다.');
     }
   }
 
@@ -73,14 +97,18 @@ class UserController extends GetxController {
     var userUrl = dotenv.env['API_URL'].toString();
     userUrl = '${userUrl}member';
 
+    var encryptPhone = encrypter.encrypt(phone!, iv: iv).base64;
+    var encryptBank = encrypter.encrypt("1", iv: iv).base64;
+    var encryptBankAddress = encrypter.encrypt("1", iv: iv).base64;
+
     http.Response response = await http.patch(
       Uri.parse(userUrl),
       headers: <String, String>{'Content-type': 'application/json'},
       body: json.encode(
         {
-          'bank': "1",
-          'bankAddress': "1",
-          'phone': phone.toString(),
+          'bank': encryptBank,
+          'bankAddress': encryptBankAddress,
+          'phone': encryptPhone,
           'uid': FirebaseAuth.instance.currentUser!.uid,
         },
       ),
@@ -117,7 +145,6 @@ class UserController extends GetxController {
       print(response.statusCode);
       print(response.body);
       throw Exception('Failed to Delete User');
-
     }
   }
 }
