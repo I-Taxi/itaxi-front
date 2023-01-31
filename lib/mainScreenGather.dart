@@ -1,9 +1,8 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:itaxi/newMainScreenGather.dart';
-import 'package:itaxi/newTimeline/checkPlaceScreen.dart';
-import 'package:itaxi/settings/newSettingScreen.dart';
+import 'package:itaxi/mainScreenGather.dart';
+import 'package:itaxi/stopoverScreen.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -19,25 +18,25 @@ import 'package:itaxi/widget/selectPlaceDialog.dart';
 import 'package:itaxi/widget/tabView.dart';
 
 import 'package:itaxi/controller/userController.dart';
-
 import 'package:itaxi/placeSearch/searchScreen.dart';
 import 'package:itaxi/placeSearch/placeSearchController.dart';
-// import 'package:itaxi/newMainScreenGather.dart';
+import 'package:itaxi/settings/settingScreen.dart';
 
-class NewMainScreen extends StatefulWidget {
-  const NewMainScreen({Key? key}) : super(key: key);
+class MainScreenGather extends StatefulWidget {
+  const MainScreenGather({Key? key}) : super(key: key);
 
   @override
-  State<NewMainScreen> createState() => _NewMainScreenState();
+  State<MainScreenGather> createState() => _MainScreenGatherState();
 }
 
-class _NewMainScreenState extends State<NewMainScreen> {
+class _MainScreenGatherState extends State<MainScreenGather> {
   TabViewController _tabViewController = Get.put(TabViewController());
   AddPostController _addPostController = Get.put(AddPostController());
   PostController _postController = Get.put(PostController());
   PlaceController _placeController = Get.put(PlaceController());
   DateController _dateController = Get.put(DateController());
   UserController _userController = Get.put(UserController());
+  PlaceSearchController _placeSearchController = Get.find();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
   String e = ""; // 요일 변수
@@ -62,10 +61,8 @@ class _NewMainScreenState extends State<NewMainScreen> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    return MaterialApp(
-      title: "newMainScreen",
-      debugShowCheckedModeBanner: false,
-      home: Stack(
+    return Scaffold(
+      body: Stack(
         children: [
           Container(
               height: 427.h,
@@ -95,18 +92,17 @@ class _NewMainScreenState extends State<NewMainScreen> {
                           Text(
                             "어디든지 자유롭게 이동하세요!",
                             style: textTheme.headline2?.copyWith(
-                                color: colorScheme.primary,
-                                fontFamily: 'Pretendard Variable'),
+                              color: colorScheme.primary,
+                            ),
                           )
                         ],
                       ),
                       IconButton(
-                        color: colorScheme.primary,
-                        onPressed: () {
-                          Get.to(NewSettingScreen());
-                        },
-                        icon: Icon(Icons.menu),
-                      ),
+                          color: colorScheme.primary,
+                          onPressed: () {
+                            Get.to(SettingScreen());
+                          },
+                          icon: Icon(Icons.menu))
                     ],
                   ),
                   SizedBox(
@@ -137,25 +133,23 @@ class _NewMainScreenState extends State<NewMainScreen> {
                                   [colorScheme.primary]
                                 ],
                                 inactiveBgColor: Color(0xfff6f6f6),
-                                initialLabelIndex: 0,
+                                initialLabelIndex: 1,
                                 totalSwitches: 2,
                                 labels: ["조회", "모집"],
                                 customTextStyles: [
                                   TextStyle(
-                                      fontSize: 10.0,
-                                      fontWeight: FontWeight.w600,
-                                      color: colorScheme.onPrimary),
+                                    fontFamily: 'Pretendard Variable',
+                                    fontSize: 10.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                   TextStyle(
-                                      fontSize: 10.0,
-                                      fontWeight: FontWeight.w600,
-                                      color: colorScheme.onPrimary),
+                                    fontFamily: 'Pretendard Variable',
+                                    fontSize: 10.0,
+                                    fontWeight: FontWeight.w600,
+                                  ),
                                 ],
                                 radiusStyle: true,
-                                onToggle: (index) {
-                                  if(index == 1)
-                                    Get.to(NewMainScreenGather());
-                                  // 어떻게 하면 모집란으로 바로 가게 할 수 있을까???
-                                },
+                                onToggle: (index) {},
                               ),
                             ),
                           ),
@@ -191,10 +185,10 @@ class _NewMainScreenState extends State<NewMainScreen> {
                                     children: [
                                       TextButton(
                                         onPressed: () {
-                                          Get.to(SearchScreen(),
-                                              binding: BindingsBuilder(() {
-                                            Get.put(PlaceSearchController());
-                                          }));
+                                          print("출발지 입력");
+                                          _placeSearchController
+                                              .changeDepOrDst(0);
+                                          Get.to(() => SearchScreen());
                                         },
                                         child: Text(
                                           "출발지 입력",
@@ -212,10 +206,10 @@ class _NewMainScreenState extends State<NewMainScreen> {
                                       ),
                                       TextButton(
                                         onPressed: () {
-                                          Get.to(SearchScreen(),
-                                              binding: BindingsBuilder(() {
-                                            Get.put(PlaceSearchController());
-                                          }));
+                                          print("도착지 입력");
+                                          _placeSearchController
+                                              .changeDepOrDst(1);
+                                          Get.to(() => SearchScreen());
                                         },
                                         child: Text(
                                           "도착지 입력",
@@ -229,11 +223,23 @@ class _NewMainScreenState extends State<NewMainScreen> {
                                     ],
                                   ),
                                 ),
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: Image.asset('assets/change.png'),
-                                  iconSize: 36,
-                                  color: colorScheme.tertiary,
+                                Column(
+                                  children: [
+                                    IconButton(
+                                      onPressed: () {},
+                                      icon: Image.asset('assets/change.png'),
+                                      iconSize: 32,
+                                      color: colorScheme.tertiary,
+                                    ),
+                                    IconButton(
+                                      onPressed: () {
+                                        Get.to(StopoverScreen());
+                                      },
+                                      icon: Image.asset('assets/addPlace.png'),
+                                      iconSize: 32,
+                                      color: colorScheme.tertiary,
+                                    ),
+                                  ],
                                 ),
                               ],
                             ),
@@ -248,21 +254,24 @@ class _NewMainScreenState extends State<NewMainScreen> {
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
                                 SizedBox(
-                                  width: 20.w,
+                                  width: 8.5.w,
                                 ),
-                                GestureDetector(
-                                  behavior: HitTestBehavior.opaque,
-                                  onTap: () {
-                                    _dateController.selectDate(context);
-                                  },
-                                  child: Icon(
-                                    Icons.calendar_month_outlined,
-                                    size: 24,
-                                    color: colorScheme.tertiary,
-                                  ),
-                                ),
+                                IconButton(
+                                    onPressed: () {
+                                      GestureDetector(
+                                        behavior: HitTestBehavior.opaque,
+                                        onTap: () {
+                                          _dateController.selectDate(context);
+                                        },
+                                      );
+                                    },
+                                    icon: Icon(
+                                      Icons.calendar_month_outlined,
+                                      size: 24,
+                                      color: colorScheme.tertiary,
+                                    )),
                                 SizedBox(
-                                  width: 25.w,
+                                  width: 19.63.w,
                                 ),
                                 Text(
                                   DateFormat('M월 d일, EE').format(//요일 설정 해줘야 함.
@@ -293,7 +302,7 @@ class _NewMainScreenState extends State<NewMainScreen> {
                                   size: 24,
                                   color: colorScheme.tertiary,
                                 ),
-                                SizedBox(width: 74.83.w),
+                                SizedBox(width: 100.83.w),
                                 GestureDetector(
                                   behavior: HitTestBehavior.opaque,
                                   onTap: () {
@@ -309,11 +318,11 @@ class _NewMainScreenState extends State<NewMainScreen> {
                                   },
                                   child: (_tabViewController.currentIndex == 0)
                                       ? selectedTabView(
-                                          viewTitle: '전체',
+                                          viewTitle: '택시',
                                           context: context,
                                         )
                                       : unSelectedTabView(
-                                          viewTitle: '전체',
+                                          viewTitle: '택시',
                                           context: context,
                                         ),
                                 ),
@@ -334,32 +343,6 @@ class _NewMainScreenState extends State<NewMainScreen> {
                                     );
                                   },
                                   child: (_tabViewController.currentIndex == 1)
-                                      ? selectedTabView(
-                                          viewTitle: '택시',
-                                          context: context,
-                                        )
-                                      : unSelectedTabView(
-                                          viewTitle: '택시',
-                                          context: context,
-                                        ),
-                                ),
-                                SizedBox(
-                                  width: 16.0.w,
-                                ),
-                                GestureDetector(
-                                  behavior: HitTestBehavior.opaque,
-                                  onTap: () {
-                                    _tabViewController.changeIndex(2);
-                                    _postController.getPosts(
-                                      depId: _placeController.dep?.id,
-                                      dstId: _placeController.dst?.id,
-                                      time: _dateController.formattingDateTime(
-                                        _dateController.mergeDateAndTime(),
-                                      ),
-                                      postType: _tabViewController.currentIndex,
-                                    );
-                                  },
-                                  child: (_tabViewController.currentIndex == 2)
                                       ? selectedTabView(
                                           viewTitle: '카풀',
                                           context: context,
@@ -442,11 +425,9 @@ class _NewMainScreenState extends State<NewMainScreen> {
                         primary: Colors.blueAccent,
                         minimumSize: Size(342.w, 57.h),
                       ),
-                      onPressed: () {
-                        Get.to(CheckPlaceScreen());
-                      },
+                      onPressed: () {},
                       child: Text(
-                        "조회하기",
+                        "방 만들기",
                         style: textTheme.headline1?.copyWith(
                           color: colorScheme.primary,
                         ),
