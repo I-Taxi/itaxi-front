@@ -21,112 +21,120 @@ Widget afterTimelineListTile(
       timelineDiaog(context: context, post: post);
     },
     child: Container(
-      margin: EdgeInsets.fromLTRB(20.w, 10.h, 20.w, 10.h),
-      padding: EdgeInsets.fromLTRB(20.w, 12.h, 0.w, 12.h),
-      height: 80.0.h,
+      // margin: EdgeInsets.fromLTRB(20.w, 10.h, 20.w, 10.h),
+      padding: EdgeInsets.fromLTRB(24.w, 12.h, 0.w, 16.h),
+      height: 166.0.h,
       decoration: BoxDecoration(
         color: colorScheme.primary,
-        borderRadius: BorderRadius.circular(4.0),
-        boxShadow: [
-          BoxShadow(
-            color: colorScheme.shadow,
-            offset: const Offset(1.0, 1.0),
-            blurRadius: 2.0,
-          ),
-        ],
+        // borderRadius: BorderRadius.circular(4.0),
+        // boxShadow: [
+        //   BoxShadow(
+        //     color: colorScheme.shadow,
+        //     offset: const Offset(1.0, 1.0),
+        //     blurRadius: 2.0,
+        //   ),
+        // ],
       ),
-      child: Row(
-        crossAxisAlignment: CrossAxisAlignment.end,
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.end,
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            // crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Text(
-                DateFormat('HH:mm').format(DateTime.parse(post.deptTime!)),
+                DateFormat('MM/dd (EE)').format(DateTime.parse(post.deptTime!)),
                 style:
-                    textTheme.headline2?.copyWith(color: colorScheme.onPrimary),
+                textTheme.headline2?.copyWith(color: colorScheme.tertiaryContainer),
               ),
               SizedBox(
-                height: 9.0.h,
+                width: 6.w,
               ),
               Image.asset(
-                width: 24.w,
-                height: 24.h,
-                'assets/participant/${post.participantNum}_2.png',
+                width: 3.w,
+                height: 3.h,
+                'assets/place/destination.png',
+              ),
+              SizedBox(
+                width: 6.w,
+              ),
+              Text(
+                "계산 완료(또는 탑승 완료)",
+                style: textTheme.headline2?.copyWith(color: colorScheme.tertiaryContainer),
               ),
             ],
           ),
-          SizedBox(
-            width: 20.w,
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.start,
+          // SizedBox(
+          //   height: 24.h,
+          // ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Row(
-                children: [
-                  Image.asset(
-                    width: 10.w,
-                    height: 10.h,
-                    'assets/place/departure.png',
-                  ),
-                  SizedBox(
-                    width: 12.0.w,
-                  ),
-                  Text(
-                    '${post.departure?.name}',
-                    style: textTheme.bodyText1
-                        ?.copyWith(color: colorScheme.onPrimary),
-                  ),
-                ],
+              Image.asset(
+                width: 30.26.w,
+                height: 20.65.h,
+                'assets/car_new.png', //만약 ktx를 탄 정보면 이미지에 ktx가 들어가야 함
               ),
               SizedBox(
-                height: 12.0.h,
+                width: 21.87.w,
               ),
-              Row(
-                children: [
-                  Image.asset(
-                    width: 10.w,
-                    height: 10.h,
-                    'assets/place/destination.png',
+              RichText(
+                  text: TextSpan(
+                    text: "출발\n",
+                    style: textTheme.bodyText1?.copyWith(
+                        color: colorScheme.tertiaryContainer,
+                      fontWeight: FontWeight.w400
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(text: '${post.departure?.name}',
+                         style: textTheme.subtitle1
+                            ?.copyWith(color: colorScheme.onPrimary, fontWeight: FontWeight.w400),)
+                    ]
                   ),
-                  SizedBox(
-                    width: 12.0.w,
-                  ),
-                  Text(
-                    '${post.destination?.name}',
-                    style: textTheme.bodyText1
-                        ?.copyWith(color: colorScheme.onPrimary),
-                  ),
-                ],
               ),
+              SizedBox(
+                width: 21.87.w,
+              ),
+              RichText(
+                text: TextSpan(
+                    text: "도착\n",
+                    style: textTheme.bodyText1?.copyWith(
+                        color: colorScheme.tertiaryContainer,
+                        fontWeight: FontWeight.w400
+                    ),
+                    children: <TextSpan>[
+                      TextSpan(
+                        text: '${post.destination?.name}',
+                        style: textTheme.subtitle1
+                            ?.copyWith(color: colorScheme.onPrimary, fontWeight: FontWeight.w400),)
+                    ]
+                ),
+              )
             ],
           ),
-          const Spacer(),
-          if (post.largeLuggageNum != 0)
-            for (int i = 0; i < post.largeLuggageNum!; i++)
-              Image.asset(
-                width: 24.w,
-                height: 32.h,
-                'assets/luggage/luggage_large.png',
+          // SizedBox(
+          //   height: 26.0.h,
+          // ),
+          ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                side: BorderSide(
+                  width: 1.0,
+                  color: colorScheme.secondary
+                ),
+                minimumSize: Size(341.w, 36.h),
               ),
-          if (post.smallLuggageNum != 0)
-            for (int i = 0; i < post.smallLuggageNum!; i++)
-              Image.asset(
-                width: 16.w,
-                height: 22.h,
-                'assets/luggage/luggage_small.png',
-              ),
-          if (post.largeLuggageNum != 0 || post.smallLuggageNum != 0)
-            Padding(
-              padding: EdgeInsets.only(left: 7.w),
-              child: Image.asset(
-                width: 7.w,
-                height: 48.h,
-                'assets/luggage/human.png',
-              ),
-            ),
+              onPressed: (){
+              },
+              child: Text(
+                "상세보기",
+                style: textTheme.subtitle1?.copyWith(
+                  color: colorScheme.secondary,
+                  fontWeight: FontWeight.w500
+                ),
+              )
+          ),
         ],
       ),
     ),

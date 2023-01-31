@@ -251,7 +251,7 @@ Widget favoritePlaceSearchTile({
 ScaffoldFeatureController<SnackBar, SnackBarClosedReason> placeSearchSnackBar({
   required BuildContext context,
   required Widget title,
-  required MaterialColor color,
+  required Color color,
 }) {
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;

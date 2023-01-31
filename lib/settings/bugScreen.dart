@@ -51,26 +51,20 @@ class BugScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        shadowColor: colorScheme.shadow,
-        elevation: 1.0,
-        centerTitle: true,
-        title: Text(
-          '버그제보',
-          style: textTheme.subtitle1?.copyWith(
-            color: colorScheme.onPrimary,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: Icon(
-            Icons.arrow_back_rounded,
-            color: colorScheme.tertiary,
-          ),
-        ),
-      ),
+          shadowColor: colorScheme.shadow,
+          automaticallyImplyLeading: false,
+          elevation: 0.0,
+          actions: [
+            IconButton(
+              onPressed: () {
+                Get.back();
+              },
+              icon: Icon(
+                Icons.clear_sharp,
+                color: colorScheme.tertiary,
+              ),
+            ),
+          ]),
       backgroundColor: colorScheme.primary,
       body: ColorfulSafeArea(
         color: colorScheme.primary,
@@ -78,26 +72,33 @@ class BugScreen extends StatelessWidget {
           child: Padding(
             padding: EdgeInsets.symmetric(
               vertical: 20.0.h,
-              horizontal: 48.0.w,
+              horizontal: 24.0.w,
             ),
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
               children: [
+                Text(
+                  '버그 제보',
+                  style: textTheme.headline1?.copyWith(
+                      color: colorScheme.onPrimary,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 24),
+                ),
+                SizedBox(
+                  height: 57.h,
+                ),
                 Align(
                   alignment: Alignment.centerLeft,
                   child: Column(
                     children: [
                       Text(
-                        mainBody,
-                        style: textTheme.headline1!.copyWith(
-                          color: colorScheme.onPrimary,
-                        ),
-                      ),
-                      Text(
+                        '이용에 불편함을 끼쳐드려 죄송합니다.\n'
+                        '여러분의 제보는 앱의 퀄리티를 높이는데 사용됩니다.\n\n\n'
                         '1. 해당 버그가 나타난 페이지를 캡쳐해서 보내주세요.\n'
-                        '2. 보이지 않는 버그라면, 페이지/어떠한 동작을 할 때 발생했는 지 자세히 적어주세요.\n\n'
-                        '여러분의 버그 제보는 앱의 퀄리티를 높이는 데 사용됩니다.\n',
-                        style: textTheme.subtitle1!.copyWith(
-                          color: colorScheme.onPrimary,
+                        '2. 보이지 않는 버그라면, 페이지/어떤 동작을 할 때 발생했는지 자세히 적어주세요.\n\n',
+                        style: textTheme.bodyText1!.copyWith(
+                          color: colorScheme.tertiaryContainer,
                         ),
                       )
                     ],
@@ -134,22 +135,27 @@ class BugScreen extends StatelessWidget {
                 ),
                 Align(
                   alignment: Alignment.center,
-                  child: ElevatedButton(
-                    style: ElevatedButton.styleFrom(
-                      elevation: 0,
-                      primary: colorScheme.secondary,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8.0),
-                      ),
-                    ),
-                    onPressed: () async {
-                      _sendEmail(context);
-                    },
-                    // textTheme 적용 해야함
-                    child: Text(
-                      '문의하기',
-                      style: textTheme.subtitle1!.copyWith(
-                        color: colorScheme.primary,
+                  child: SizedBox(
+                    width: 198.w,
+                    height: 44.h,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                          elevation: 0,
+                          primary: colorScheme.primary,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8.0),
+                          ),
+                          side: BorderSide(
+                              width: 1.0, color: colorScheme.secondary)),
+                      onPressed: () async {
+                        _sendEmail(context);
+                      },
+                      // textTheme 적용 해야함
+                      child: Text(
+                        '제보하기',
+                        style: textTheme.subtitle1!.copyWith(
+                          color: colorScheme.secondary,
+                        ),
                       ),
                     ),
                   ),
