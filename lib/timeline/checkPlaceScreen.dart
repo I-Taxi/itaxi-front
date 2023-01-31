@@ -32,7 +32,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
   DateController _dateController = Get.put(DateController());
   UserController _userController = Get.put(UserController());
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-  GlobalKey<RefreshIndicatorState>();
+      GlobalKey<RefreshIndicatorState>();
 
   @override
   void initState() {
@@ -84,11 +84,9 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
               alignment: Alignment.center,
               decoration: BoxDecoration(
                   color: colorScheme.secondary,
-                borderRadius: BorderRadius.only(
-                  bottomLeft: Radius.circular(18.0),
-                  bottomRight: Radius.circular(18.0)
-                )
-              ),
+                  borderRadius: BorderRadius.only(
+                      bottomLeft: Radius.circular(18.0),
+                      bottomRight: Radius.circular(18.0))),
               child: Column(
                 children: [
                   Row(
@@ -116,17 +114,15 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                     ],
                   ),
                   Padding(
-                    padding: EdgeInsets.only(
-                      top: 32.h,
-                      bottom: 17.h
-                    ),
+                    padding: EdgeInsets.only(top: 32.h, bottom: 17.h),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         GetBuilder<DateController>(
                           builder: (_) {
                             if (DateFormat.yMEd().format(DateTime.now()) !=
-                                DateFormat.yMEd().format(_dateController.pickedDate!)) {
+                                DateFormat.yMEd()
+                                    .format(_dateController.pickedDate!)) {
                               return GestureDetector(
                                 behavior: HitTestBehavior.opaque,
                                 onTap: () {
@@ -156,7 +152,8 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                                 width: 42.w,
                                 alignment: Alignment.center,
                                 child: Text(
-                                  DateFormat(' - ').format(_dateController.pickedDate!
+                                  DateFormat(' - ').format(_dateController
+                                      .pickedDate!
                                       .add(const Duration(days: -2))),
                                   style: textTheme.headline1?.copyWith(
                                     color: colorScheme.tertiary,
@@ -173,7 +170,8 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                         GetBuilder<DateController>(
                           builder: (_) {
                             if (DateFormat.yMEd().format(DateTime.now()) !=
-                                DateFormat.yMEd().format(_dateController.pickedDate!)) {
+                                DateFormat.yMEd()
+                                    .format(_dateController.pickedDate!)) {
                               return GestureDetector(
                                 behavior: HitTestBehavior.opaque,
                                 onTap: () {
@@ -202,7 +200,8 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                                 width: 42.w,
                                 alignment: Alignment.center,
                                 child: Text(
-                                  DateFormat(' - ').format(_dateController.pickedDate!
+                                  DateFormat(' - ').format(_dateController
+                                      .pickedDate!
                                       .add(const Duration(days: -1))),
                                   style: textTheme.headline1?.copyWith(
                                     color: colorScheme.tertiary,
@@ -247,7 +246,8 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                                 width: 42.w,
                                 alignment: Alignment.center,
                                 child: Text(
-                                  DateFormat('MM.d').format(_dateController.pickedDate!
+                                  DateFormat('MM.d').format(_dateController
+                                      .pickedDate!
                                       .add(const Duration(days: 1))),
                                   style: textTheme.subtitle1?.copyWith(
                                     color: colorScheme.tertiary,
@@ -273,7 +273,8 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                                 width: 42.w,
                                 alignment: Alignment.center,
                                 child: Text(
-                                  DateFormat('MM.d').format(_dateController.pickedDate!
+                                  DateFormat('MM.d').format(_dateController
+                                      .pickedDate!
                                       .add(const Duration(days: 2))),
                                   style: textTheme.subtitle1?.copyWith(
                                     color: colorScheme.tertiary,

@@ -41,7 +41,7 @@ Widget soonTimelineListTile(
               Text(
                 DateFormat('HH:mm').format(DateTime.parse(post.deptTime!)),
                 style:
-                    textTheme.bodyText1?.copyWith(color: colorScheme.onPrimary),
+                textTheme.bodyText1?.copyWith(color: colorScheme.onPrimary),
               ),
               SizedBox(
                 height: 9.0.h,
@@ -99,30 +99,6 @@ Widget soonTimelineListTile(
               ),
             ],
           ),
-          const Spacer(),
-          if (post.largeLuggageNum != 0)
-            for (int i = 0; i < post.largeLuggageNum!; i++)
-              Image.asset(
-                width: 24.w,
-                height: 32.h,
-                'assets/luggage/luggage_large.png',
-              ),
-          if (post.smallLuggageNum != 0)
-            for (int i = 0; i < post.smallLuggageNum!; i++)
-              Image.asset(
-                width: 16.w,
-                height: 22.h,
-                'assets/luggage/luggage_small.png',
-              ),
-          if (post.largeLuggageNum != 0 || post.smallLuggageNum != 0)
-            Padding(
-              padding: EdgeInsets.only(left: 7.w),
-              child: Image.asset(
-                width: 7.w,
-                height: 48.h,
-                'assets/luggage/human.png',
-              ),
-            ),
         ],
       ),
     ),

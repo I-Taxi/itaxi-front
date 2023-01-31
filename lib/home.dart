@@ -4,19 +4,18 @@ import 'package:get/get.dart';
 import 'package:animations/animations.dart';
 
 import 'package:itaxi/mainScreen.dart';
-import 'package:itaxi/newTimeline/checkPlaceScreen.dart';
+import 'package:itaxi/timeline/checkPlaceScreen.dart';
 import 'package:itaxi/settings/settingScreen.dart';
-import 'package:itaxi/timeline/timelineScreen.dart';
 import 'package:itaxi/controller/navigationController.dart';
 
 import 'package:itaxi/placeSearch/placeSearchScreen.dart';
-import 'package:itaxi/newTimeline/checkPlaceScreen.dart';
+import 'package:itaxi/timeline/checkPlaceScreen.dart';
 
-import 'package:itaxi/newMainScreen.dart';
-import 'package:itaxi/newMainScreenGather.dart';
+import 'package:itaxi/mainScreen.dart';
+import 'package:itaxi/mainScreenGather.dart';
 import 'package:itaxi/stopoverScreen.dart';
-import 'package:itaxi/newTimeline/newTimelineScreen.dart';
-import 'package:itaxi/settings/newSettingScreen.dart';
+import 'package:itaxi/timeline/timelineScreen.dart';
+import 'package:itaxi/settings/settingScreen.dart';
 
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);
@@ -27,10 +26,10 @@ class Home extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final pageList = [
-      const NewMainScreen(),  //원래 timeline이었음
-      const NewMainScreenGather(),         // 원래 MainScreen이었음
-      const NewSettingScreen(),   // 원래 SettingScreen이었음
-      const NewTimelineScreen()
+      const MainScreen(), //원래 timeline이었음
+      const MainScreenGather(), // 원래 MainScreen이었음
+      const SettingScreen(), // 원래 SettingScreen이었음
+      const TimelineScreen()
     ];
 
     return GetBuilder<NavigationController>(
