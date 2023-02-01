@@ -10,7 +10,7 @@ import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-Future<dynamic> timelineDiaog(
+Future<dynamic> timelineDialog(
     {required BuildContext context, required Post post}) {
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
@@ -138,34 +138,6 @@ Future<dynamic> timelineDiaog(
                             ],
                           ),
                           const Spacer(),
-                          if (snapshot.data!.largeLuggageNum != 0)
-                            for (int i = 0;
-                                i < snapshot.data!.largeLuggageNum!;
-                                i++)
-                              Image.asset(
-                                width: 24.w,
-                                height: 32.h,
-                                'assets/luggage/luggage_large.png',
-                              ),
-                          if (snapshot.data!.smallLuggageNum != 0)
-                            for (int i = 0;
-                                i < snapshot.data!.smallLuggageNum!;
-                                i++)
-                              Image.asset(
-                                width: 16.w,
-                                height: 22.h,
-                                'assets/luggage/luggage_small.png',
-                              ),
-                          if (snapshot.data!.largeLuggageNum != 0 ||
-                              snapshot.data!.smallLuggageNum != 0)
-                            Padding(
-                              padding: EdgeInsets.only(left: 7.w),
-                              child: Image.asset(
-                                width: 7.w,
-                                height: 48.h,
-                                'assets/luggage/human.png',
-                              ),
-                            ),
                         ],
                       ),
                       SizedBox(
