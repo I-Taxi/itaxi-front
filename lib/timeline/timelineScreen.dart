@@ -39,7 +39,7 @@ class TimelineScreen extends StatelessWidget {
               fontSize: Platform.isIOS ? 20 : 18),
         ),
       ),
-      backgroundColor: colorScheme.onBackground,
+      backgroundColor: colorScheme.background,
       body: ColorfulSafeArea(
         color: colorScheme.tertiary,
         child: RefreshIndicator(
@@ -122,154 +122,154 @@ class TimelineScreen extends StatelessWidget {
                               SizedBox(
                                 height: 24.h,
                               ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceAround,
-                                children: [
-                                  Text(
-                                    '탑승 내역',
-                                    style: textTheme.headline1?.copyWith(
-                                        fontSize: 15,
-                                        color: colorScheme.tertiary),
-                                  ),
-                                  const Spacer(),
-                                  GetBuilder<TimelineTabViewController>(
-                                      builder: (_) {
-                                    return GestureDetector(
-                                      behavior: HitTestBehavior.opaque,
-                                      onTap: () {
-                                        _timelineTabViewController
-                                            .changeIndex(1);
-                                      },
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 8.w),
-                                        child: Text(
-                                          '택시',
-                                          style: textTheme.subtitle1?.copyWith(
-                                            fontSize: Platform.isIOS ? 16 : 14,
-                                            color: _timelineTabViewController
-                                                        .currentIndex ==
-                                                    1
-                                                ? colorScheme.secondary
-                                                : colorScheme.tertiary,
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  }),
-                                  GetBuilder<TimelineTabViewController>(
-                                      builder: (_) {
-                                    return GestureDetector(
-                                      behavior: HitTestBehavior.opaque,
-                                      onTap: () {
-                                        _timelineTabViewController
-                                            .changeIndex(0);
-                                      },
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 8.w),
-                                        child: Text(
-                                          '전체',
-                                          style: textTheme.subtitle1?.copyWith(
-                                            fontSize: Platform.isIOS ? 16 : 14,
-                                            color: _timelineTabViewController
-                                                        .currentIndex ==
-                                                    0
-                                                ? colorScheme.secondary
-                                                : colorScheme.tertiary,
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  }),
-                                  GetBuilder<TimelineTabViewController>(
-                                      builder: (_) {
-                                    return GestureDetector(
-                                      behavior: HitTestBehavior.opaque,
-                                      onTap: () {
-                                        _timelineTabViewController
-                                            .changeIndex(2);
-                                      },
-                                      child: Padding(
-                                        padding: EdgeInsets.symmetric(
-                                            horizontal: 8.w),
-                                        child: Text(
-                                          '카풀',
-                                          style: textTheme.subtitle1?.copyWith(
-                                            fontSize: Platform.isIOS ? 16 : 14,
-                                            color: _timelineTabViewController
-                                                        .currentIndex ==
-                                                    2
-                                                ? colorScheme.secondary
-                                                : colorScheme.tertiary,
-                                          ),
-                                        ),
-                                      ),
-                                    );
-                                  }),
-                                ],
-                              ),
+                              // Row(
+                              //   mainAxisAlignment:
+                              //       MainAxisAlignment.spaceAround,
+                              //   children: [
+                              // Text(
+                              //   '탑승 내역',
+                              //   style: textTheme.headline1?.copyWith(
+                              //       fontSize: 15,
+                              //       color: colorScheme.tertiary),
+                              // ),
+                              // const Spacer(),
+                              // GetBuilder<TimelineTabViewController>(
+                              //     builder: (_) {
+                              //   return GestureDetector(
+                              //     behavior: HitTestBehavior.opaque,
+                              //     onTap: () {
+                              //       _timelineTabViewController
+                              //           .changeIndex(1);
+                              //     },
+                              //     child: Padding(
+                              //       padding: EdgeInsets.symmetric(
+                              //           horizontal: 8.w),
+                              //       child: Text(
+                              //         '택시',
+                              //         style: textTheme.subtitle1?.copyWith(
+                              //           fontSize: Platform.isIOS ? 16 : 14,
+                              //           color: _timelineTabViewController
+                              //                       .currentIndex ==
+                              //                   1
+                              //               ? colorScheme.secondary
+                              //               : colorScheme.tertiary,
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   );
+                              // }),
+                              // GetBuilder<TimelineTabViewController>(
+                              //     builder: (_) {
+                              //   return GestureDetector(
+                              //     behavior: HitTestBehavior.opaque,
+                              //     onTap: () {
+                              //       _timelineTabViewController
+                              //           .changeIndex(0);
+                              //     },
+                              //     child: Padding(
+                              //       padding: EdgeInsets.symmetric(
+                              //           horizontal: 8.w),
+                              //       child: Text(
+                              //         '전체',
+                              //         style: textTheme.subtitle1?.copyWith(
+                              //           fontSize: Platform.isIOS ? 16 : 14,
+                              //           color: _timelineTabViewController
+                              //                       .currentIndex ==
+                              //                   0
+                              //               ? colorScheme.secondary
+                              //               : colorScheme.tertiary,
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   );
+                              // }),
+                              // GetBuilder<TimelineTabViewController>(
+                              //     builder: (_) {
+                              //   return GestureDetector(
+                              //     behavior: HitTestBehavior.opaque,
+                              //     onTap: () {
+                              //       _timelineTabViewController
+                              //           .changeIndex(2);
+                              //     },
+                              //     child: Padding(
+                              //       padding: EdgeInsets.symmetric(
+                              //           horizontal: 8.w),
+                              //       child: Text(
+                              //         '카풀',
+                              //         style: textTheme.subtitle1?.copyWith(
+                              //           fontSize: Platform.isIOS ? 16 : 14,
+                              //           color: _timelineTabViewController
+                              //                       .currentIndex ==
+                              //                   2
+                              //               ? colorScheme.secondary
+                              //               : colorScheme.tertiary,
+                              //         ),
+                              //       ),
+                              //     ),
+                              //   );
+                              // }),
+                              //   ],
+                              // ),
                             ],
                           ),
                         ),
-                        Divider(
-                          color: colorScheme.shadow,
-                          thickness: 1,
-                        ),
-                        GetBuilder<TimelineTabViewController>(
-                          builder: (_) {
-                            return ListView.builder(
-                              physics: const ScrollPhysics(),
-                              shrinkWrap: true,
-                              itemCount: snapshot.data!.length,
-                              itemBuilder: (BuildContext context, int i) {
-                                if ((_timelineTabViewController.currentIndex ==
-                                            0 ||
-                                        snapshot.data![i].postType ==
-                                            _timelineTabViewController
-                                                .currentIndex) &&
-                                    DateTime.now()
-                                            .difference(DateTime.parse(
-                                                snapshot.data![i].deptTime!))
-                                            .isNegative ==
-                                        false) {
-                                  return Column(
-                                    children: [
-                                      if (i == 0 ||
-                                          (i - 1 > 0 &&
-                                              DateTime.parse(DateFormat(
-                                                              'yyyy-MM-dd')
-                                                          .format(DateTime.parse(
-                                                              snapshot.data![i]
-                                                                  .deptTime!)))
-                                                      .compareTo(DateTime.parse(
-                                                          DateFormat('yyyy-MM-dd')
-                                                              .format(DateTime.parse(snapshot.data![i - 1].deptTime!)))) !=
-                                                  0))
-                                        afterTimelineListTile(
-                                          context: context,
-                                          post: snapshot.data![i],
-                                        ),
-                                      Container(
-                                        color: Color(0xF1F1F1F1),
-                                        height: 8.h,
-                                      )
-                                    ],
-                                  );
-                                } else {
-                                  return Container();
-                                }
-                              },
-                            );
-                          },
-                        ),
-                        GetBuilder<TimelineTabViewController>(
-                          builder: (_) {
-                            for (int i = 0; i < snapshot.data!.length; i++) {}
-                            return Container();
-                          },
-                        ),
+                        // Divider(
+                        //   color: colorScheme.shadow,
+                        //   thickness: 1,
+                        // ),
+                        // GetBuilder<TimelineTabViewController>(
+                        //   builder: (_) {
+                        //     return ListView.builder(
+                        //       physics: const ScrollPhysics(),
+                        //       shrinkWrap: true,
+                        //       itemCount: snapshot.data!.length,
+                        //       itemBuilder: (BuildContext context, int i) {
+                        //         if ((_timelineTabViewController.currentIndex ==
+                        //                     0 ||
+                        //                 snapshot.data![i].postType ==
+                        //                     _timelineTabViewController
+                        //                         .currentIndex) &&
+                        //             DateTime.now()
+                        //                     .difference(DateTime.parse(
+                        //                         snapshot.data![i].deptTime!))
+                        //                     .isNegative ==
+                        //                 false) {
+                        //           return Column(
+                        //             children: [
+                        //               if (i == 0 ||
+                        //                   (i - 1 > 0 &&
+                        //                       DateTime.parse(DateFormat(
+                        //                                       'yyyy-MM-dd')
+                        //                                   .format(DateTime.parse(
+                        //                                       snapshot.data![i]
+                        //                                           .deptTime!)))
+                        //                               .compareTo(DateTime.parse(
+                        //                                   DateFormat('yyyy-MM-dd')
+                        //                                       .format(DateTime.parse(snapshot.data![i - 1].deptTime!)))) !=
+                        //                           0))
+                        //                 afterTimelineListTile(
+                        //                   context: context,
+                        //                   post: snapshot.data![i],
+                        //                 ),
+                        //               Container(
+                        //                 color: Color(0xF1F1F1F1),
+                        //                 height: 8.h,
+                        //               )
+                        //             ],
+                        //           );
+                        //         } else {
+                        //           return Container();
+                        //         }
+                        //       },
+                        //     );
+                        //   },
+                        // ),
+                        // GetBuilder<TimelineTabViewController>(
+                        //   builder: (_) {
+                        //     for (int i = 0; i < snapshot.data!.length; i++) {}
+                        //     return Container();
+                        //   },
+                        // ),
                       ],
                     );
                   }
@@ -301,7 +301,7 @@ class TimelineScreen extends StatelessWidget {
                             width: 198,
                             'assets/button/add_timeline.png',
                           ),
-                          style: OutlinedButton.styleFrom(side: BorderSide(width: 0, color: colorScheme.primary)),
+                          style: OutlinedButton.styleFrom(side: BorderSide(width: 0, color: colorScheme.onBackground)),
                         )
                       ],
                     );

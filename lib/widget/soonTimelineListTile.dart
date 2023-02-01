@@ -5,7 +5,7 @@ import 'package:intl/intl.dart';
 import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/model/post.dart';
-import 'package:itaxi/widget/timelineDialog.dart';
+import 'package:itaxi/timeline/timelineDetailScreen.dart';
 
 Widget soonTimelineListTile(
     {required BuildContext context, required Post post}) {
@@ -18,7 +18,7 @@ Widget soonTimelineListTile(
     behavior: HitTestBehavior.opaque,
     onTap: () {
       _historyController.getHistoryInfo(postId: post.id!);
-      timelineDiaog(context: context, post: post);
+      Get.to(() => TimelineDetailScreen());
     },
     child: Container(
       margin: EdgeInsets.fromLTRB(0.w, 10.h, 0.w, 10.h),
