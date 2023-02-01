@@ -94,6 +94,8 @@ flutter:
     - assets/logo_1.png
     - assets/logo_2_new.png
     - assets/logo_text.png
+
+    # botton bar
     - assets/bottom_bar/home_1.png
     - assets/bottom_bar/home_2.png
     - assets/bottom_bar/setting_1.png
@@ -101,6 +103,8 @@ flutter:
     - assets/bottom_bar/timeline_1.png
     - assets/bottom_bar/timeline_2.png
     - assets/bottom_bar/timeline_new.png
+
+    # button
     - assets/button/add_1.png
     - assets/button/add_2.png
     - assets/button/calendar.png
@@ -109,13 +113,19 @@ flutter:
     - assets/button/mail.png
     - assets/button/phone.png
     - assets/button/add_timeline.png
+
+    # arrow
     - assets/arrow/arrow.png
     - assets/arrow/arrow_back.png
     - assets/arrow/arrow_down_1.png
     - assets/arrow/arrow_down_2.png
+
+    # luggage
     - assets/luggage/human.png
     - assets/luggage/luggage_small.png
     - assets/luggage/luggage_large.png
+
+    # participant
     - assets/participant/1_1.png
     - assets/participant/1_2.png
     - assets/participant/2_1.png
@@ -124,14 +134,20 @@ flutter:
     - assets/participant/3_2.png
     - assets/participant/4_1.png
     - assets/participant/4_2.png
+
+    # place
     - assets/place/departure.png
     - assets/place/destination.png
+
+    # type
     - assets/type/car_1.png
     - assets/type/car_2.png
     - assets/type/taxi_1.png
     - assets/type/taxi_2.png
     - assets/type/train_1.png
     - assets/type/train_2.png
+
+    # for screen
     - assets/mainScreen.png
     - assets/timeLine.png
     - assets/DeptoDes.png
@@ -149,6 +165,14 @@ flutter:
     - assets/profile.png
     - assets/change_profile.png
     - assets/background.png
+
+    # icon
+    - assets/icon/boarding_complete.png
+    - assets/icon/location.png
+    - assets/icon/message.png
+    - assets/icon/not_owner.png
+    - assets/icon/owner.png
+    - assets/icon/phone.png
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
@@ -174,7 +198,22 @@ flutter:
         - asset: fonts/NotoSansCJKkr-Regular (TTF).ttf
         - asset: fonts/NotoSansCJKkr-Bold (TTF).ttf
           weight: 700
-  #
+  # 두 번째 방법
+    - family: ExtraBold
+      fonts:
+        - asset: fonts/Pretendard-ExtraBold.otf
+    - family: Black
+      fonts:
+        - asset: fonts/Pretendard-Black.otf
+    - family: Bold
+      fonts:
+        - asset: fonts/Pretendard-Bold.otf
+    - family: SemiBold
+      fonts:
+        - asset: fonts/Pretendard-SemiBold.otf
+    - family: Regular
+      fonts:
+        - asset: fonts/Pretendard-Regular.otf
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
 
