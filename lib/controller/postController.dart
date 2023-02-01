@@ -162,6 +162,7 @@ class PostController extends GetxController {
       if (joiner.owner!) {
         owner = joiner;
       }
+      post.joiners?.remove(joiner);
     });
 
     Map<String, dynamic> map = {
@@ -179,6 +180,7 @@ class PostController extends GetxController {
     if (response.statusCode == 200) {
       print(response.body);
       await _chatRoomController.outChat(post: post);
+      ChatRepository().setPost(post: post);
 
       _chatRoomController.changeOwnerChat(ownerName: response.body);
       // if (_userController.memberId == owner?.memberId) {
