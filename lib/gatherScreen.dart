@@ -21,7 +21,6 @@ import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/placeSearch/searchScreen.dart';
 import 'package:itaxi/placeSearch/placeSearchController.dart';
 import 'package:itaxi/settings/settingScreen.dart';
-import 'package:itaxi/widget/snackBar.dart';
 import 'package:itaxi/stopOverScreen.dart';
 
 class GatherScreen extends StatefulWidget {
@@ -198,9 +197,7 @@ class _GatherScreenState extends State<GatherScreen> {
                                           Get.to(() => SearchScreen());
                                         },
                                         child: Text(
-                                          _placeController.dep == null
-                                              ? "출발지 입력"
-                                              : _placeController.dep!.name!,
+                                          "출발지 입력",
                                           style: textTheme.headline2?.copyWith(
                                               color: colorScheme.onPrimary,
                                               fontWeight: FontWeight.w600),
@@ -221,9 +218,7 @@ class _GatherScreenState extends State<GatherScreen> {
                                           Get.to(() => SearchScreen());
                                         },
                                         child: Text(
-                                          _placeController.dst == null
-                                              ? "도착지 입력"
-                                              : _placeController.dst!.name!,
+                                          "도착지 입력",
                                           style: textTheme.headline2?.copyWith(
                                               color: colorScheme.onPrimary,
                                               fontWeight: FontWeight.w600),
@@ -391,12 +386,13 @@ class _GatherScreenState extends State<GatherScreen> {
                                 SizedBox(width: 76.17.w),
                                 IconButton(
                                   onPressed: () {
-                                    if (_addPostController.capacity != 1)
-                                      _addPostController.decreaseCapacity(
-                                          _addPostController.capacity);
+                                    if (personCount != 1)
+                                      setState(() {
+                                        personCount--;
+                                      });
                                   },
                                   icon: Image.asset('assets/removeP.png'),
-                                  color: (_addPostController.capacity == 1)
+                                  color: (personCount == 1)
                                       ? colorScheme.tertiaryContainer
                                       : colorScheme.secondary,
                                 ),
@@ -404,7 +400,7 @@ class _GatherScreenState extends State<GatherScreen> {
                                   width: 8.w,
                                 ),
                                 Text(
-                                  "${_addPostController.capacity}명",
+                                  "$personCount명",
                                   style: textTheme.headline1?.copyWith(
                                       color: colorScheme.onPrimary,
                                       fontWeight: FontWeight.w600),
@@ -414,12 +410,13 @@ class _GatherScreenState extends State<GatherScreen> {
                                 ),
                                 IconButton(
                                   onPressed: () {
-                                    if (_addPostController.capacity != 4)
-                                      _addPostController.increaseCapacity(
-                                          _addPostController.capacity);
+                                    if (personCount != 4)
+                                      setState(() {
+                                        personCount++;
+                                      });
                                   },
                                   icon: Image.asset('assets/addPerson.png'),
-                                  color: (_addPostController.capacity == 4)
+                                  color: (personCount == 4)
                                       ? colorScheme.tertiaryContainer
                                       : colorScheme.secondary,
                                 ),
@@ -438,43 +435,7 @@ class _GatherScreenState extends State<GatherScreen> {
                         primary: Colors.blueAccent,
                         minimumSize: Size(342.w, 57.h),
                       ),
-                      onPressed: () async {
-                        if (_placeController.dep == null) {
-                          snackBar(context: context, title: '출발지를 선택해주세요.');
-                        } else if (_placeController.dep!.id == -1) {
-                          snackBar(context: context, title: '출발지를 다시 선택해주세요.');
-                        } else if (_placeController.dst == null) {
-                          snackBar(context: context, title: '도착지를 선택해주세요.');
-                        } else if (_placeController.dst!.id == -1) {
-                          snackBar(context: context, title: '도착지를 다시 선택해주세요.');
-                        } else if (DateTime.now()
-                                .difference(_dateController.mergeDateAndTime())
-                                .isNegative ==
-                            false) {
-                          snackBar(context: context, title: '출발시간을 다시 선택해주세요.');
-                        } else {
-                          Post post = Post(
-                              uid: _userController.uid,
-                              postType: _screenController.currentTabIndex,
-                              departure: _placeController.dep,
-                              destination: _placeController.dst,
-                              deptTime: _dateController.formattingDateTime(
-                                _dateController.mergeDateAndTime(),
-                              ),
-                              capacity: _addPostController.capacity,
-                              luggage: _addPostController.luggage);
-                          Get.back();
-                          await _addPostController.fetchAddPost(post: post);
-                          await _postController.getPosts(
-                            depId: _placeController.dep?.id,
-                            dstId: _placeController.dst?.id,
-                            time: _dateController.formattingDateTime(
-                              _dateController.mergeDateAndTime(),
-                            ),
-                            postType: _screenController.currentTabIndex,
-                          );
-                        }
-                      },
+                      onPressed: () {},
                       child: Text(
                         "방 만들기",
                         style: textTheme.headline1?.copyWith(

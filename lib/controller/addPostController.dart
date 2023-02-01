@@ -10,16 +10,11 @@ import 'package:itaxi/repository/chatRepository.dart';
 
 class AddPostController extends GetxController {
   late HistoryController _historyController = Get.put(HistoryController());
-  int capacity = 1;
+  int capacity = 0;
   int luggage = 0;
 
-  void increaseCapacity(int capacity) {
-    this.capacity = capacity++;
-    update();
-  }
-
-  void decreaseCapacity(int capacity) {
-    this.capacity = capacity--;
+  void changeCapacity(int capacity) {
+    this.capacity = capacity;
     update();
   }
 

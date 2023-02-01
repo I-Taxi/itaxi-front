@@ -53,7 +53,6 @@ class PlaceController extends GetxController {
   }
 
   void selectDep({required Place place}) {
-
     dep = place;
     update();
     _postController.getPosts(

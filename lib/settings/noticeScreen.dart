@@ -30,32 +30,22 @@ class _NoticeScreenState extends State<NoticeScreen> {
     return Scaffold(
       appBar: AppBar(
         shadowColor: colorScheme.shadow,
-          automaticallyImplyLeading: false,
-        elevation: 0.0,
-        title: Padding(
-          padding: EdgeInsets.only(left: 24.w, right: 24.w),
-          child: Column(
-            children: [
-              Align(
-                alignment: Alignment.topRight,
-                child: IconButton(
-                  onPressed: () {
-                    Get.back();
-                  },
-                  icon: Icon(
-                    Icons.clear_sharp,
-                    color: colorScheme.tertiary,
-                  ),
-                ),
-              ),
-              Text(
-                '공지사항',
-                style: textTheme.subtitle1?.copyWith(
-                  color: colorScheme.onPrimary,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-            ],
+        elevation: 1.0,
+        centerTitle: true,
+        title: Text(
+          '공지사항',
+          style: textTheme.subtitle1?.copyWith(
+            color: colorScheme.onPrimary,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        leading: IconButton(
+          onPressed: () {
+            Get.back();
+          },
+          icon: Icon(
+            Icons.arrow_back_rounded,
+            color: colorScheme.tertiary,
           ),
         ),
       ),

@@ -12,11 +12,6 @@ import 'package:itaxi/chat/chatRoomScreen.dart';
 import 'package:itaxi/model/chat.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/widget/snackBar.dart';
-import 'package:itaxi/widget/soonTimelineListTile.dart';
-import 'package:itaxi/controller/screenController.dart';
-import 'package:itaxi/controller/placeController.dart';
-import 'package:itaxi/controller/dateController.dart';
-
 
 Widget postListTile({
   required BuildContext context,
@@ -28,10 +23,6 @@ Widget postListTile({
   HistoryController _historyController = Get.put(HistoryController());
   late UserController _userController = Get.find();
   late ChatRoomController _chatRoomController = Get.put(ChatRoomController());
-  late ScreenController _screenController = Get.find();
-  late PlaceController _placeController = Get.find();
-  late DateController _dateController = Get.find();
-
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
 
@@ -77,6 +68,7 @@ Widget postListTile({
                             '채팅방 안내',
                             style: textTheme.headline1?.copyWith(
                               color: colorScheme.onPrimary,
+                              fontFamily: 'NotoSans',
                             ),
                           ),
                         ),
@@ -162,6 +154,7 @@ Widget postListTile({
                             '방 입장 안내',
                             style: textTheme.headline1?.copyWith(
                               color: colorScheme.onPrimary,
+                              fontFamily: 'NotoSans',
                             ),
                           ),
                         ),
@@ -175,6 +168,7 @@ Widget postListTile({
                               nonOnwerInfo,
                               style: textTheme.bodyText1?.copyWith(
                                 color: colorScheme.tertiary,
+                                fontFamily: 'NotoSans',
                               ),
                             ),
                           ],
@@ -182,95 +176,96 @@ Widget postListTile({
                         SizedBox(
                           height: 20.0.h,
                         ),
-                        // Row(
-                        //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        //   children: [
-                        //     Text(
-                        //       '나의 짐',
-                        //       style: textTheme.headline2?.copyWith(
-                        //         color: colorScheme.tertiary,
-                        //       ),
-                        //     ),
-                        //     GetBuilder<AddPostController>(
-                        //       builder: (_) {
-                        //         return Row(
-                        //           children: [
-                        //             GestureDetector(
-                        //               behavior: HitTestBehavior.opaque,
-                        //               onTap: () {
-                        //                 _addPostController.changeLuggage(0);
-                        //               },
-                        //               child: (_addPostController.luggage == 0)
-                        //                   ? Text(
-                        //                       '없음',
-                        //                       style: textTheme.headline2
-                        //                           ?.copyWith(
-                        //                               color: colorScheme
-                        //                                   .secondary),
-                        //                     )
-                        //                   : Text(
-                        //                       '없음',
-                        //                       style: textTheme.headline2
-                        //                           ?.copyWith(
-                        //                               color:
-                        //                                   colorScheme.tertiary),
-                        //                     ),
-                        //             ),
-                        //             SizedBox(
-                        //               width: 20.w,
-                        //             ),
-                        //             GestureDetector(
-                        //               behavior: HitTestBehavior.opaque,
-                        //               onTap: () {
-                        //                 _addPostController.changeLuggage(1);
-                        //               },
-                        //               child: (_addPostController.luggage == 1)
-                        //                   ? Text(
-                        //                       '소',
-                        //                       style: textTheme.headline2
-                        //                           ?.copyWith(
-                        //                               color: colorScheme
-                        //                                   .secondary),
-                        //                     )
-                        //                   : Text(
-                        //                       '소',
-                        //                       style: textTheme.headline2
-                        //                           ?.copyWith(
-                        //                               color:
-                        //                                   colorScheme.tertiary),
-                        //                     ),
-                        //             ),
-                        //             SizedBox(
-                        //               width: 20.w,
-                        //             ),
-                        //             GestureDetector(
-                        //               behavior: HitTestBehavior.opaque,
-                        //               onTap: () {
-                        //                 _addPostController.changeLuggage(2);
-                        //               },
-                        //               child: (_addPostController.luggage == 2)
-                        //                   ? Text(
-                        //                       '대',
-                        //                       style: textTheme.headline2
-                        //                           ?.copyWith(
-                        //                               color: colorScheme
-                        //                                   .secondary),
-                        //                     )
-                        //                   : Text(
-                        //                       '대',
-                        //                       style: textTheme.headline2
-                        //                           ?.copyWith(
-                        //                               color:
-                        //                                   colorScheme.tertiary),
-                        //                     ),
-                        //             ),
-                        //           ],
-                        //         );
-                        //       },
-                        //     ),
-                        //   ],
-                        // ),
-                        // const Spacer(),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              '나의 짐',
+                              style: textTheme.headline2?.copyWith(
+                                color: colorScheme.tertiary,
+                                fontFamily: 'NotoSans',
+                              ),
+                            ),
+                            GetBuilder<AddPostController>(
+                              builder: (_) {
+                                return Row(
+                                  children: [
+                                    GestureDetector(
+                                      behavior: HitTestBehavior.opaque,
+                                      onTap: () {
+                                        _addPostController.changeLuggage(0);
+                                      },
+                                      child: (_addPostController.luggage == 0)
+                                          ? Text(
+                                              '없음',
+                                              style: textTheme.headline2
+                                                  ?.copyWith(
+                                                      color: colorScheme
+                                                          .secondary),
+                                            )
+                                          : Text(
+                                              '없음',
+                                              style: textTheme.headline2
+                                                  ?.copyWith(
+                                                      color:
+                                                          colorScheme.tertiary),
+                                            ),
+                                    ),
+                                    SizedBox(
+                                      width: 20.w,
+                                    ),
+                                    GestureDetector(
+                                      behavior: HitTestBehavior.opaque,
+                                      onTap: () {
+                                        _addPostController.changeLuggage(1);
+                                      },
+                                      child: (_addPostController.luggage == 1)
+                                          ? Text(
+                                              '소',
+                                              style: textTheme.headline2
+                                                  ?.copyWith(
+                                                      color: colorScheme
+                                                          .secondary),
+                                            )
+                                          : Text(
+                                              '소',
+                                              style: textTheme.headline2
+                                                  ?.copyWith(
+                                                      color:
+                                                          colorScheme.tertiary),
+                                            ),
+                                    ),
+                                    SizedBox(
+                                      width: 20.w,
+                                    ),
+                                    GestureDetector(
+                                      behavior: HitTestBehavior.opaque,
+                                      onTap: () {
+                                        _addPostController.changeLuggage(2);
+                                      },
+                                      child: (_addPostController.luggage == 2)
+                                          ? Text(
+                                              '대',
+                                              style: textTheme.headline2
+                                                  ?.copyWith(
+                                                      color: colorScheme
+                                                          .secondary),
+                                            )
+                                          : Text(
+                                              '대',
+                                              style: textTheme.headline2
+                                                  ?.copyWith(
+                                                      color:
+                                                          colorScheme.tertiary),
+                                            ),
+                                    ),
+                                  ],
+                                );
+                              },
+                            ),
+                          ],
+                        ),
+                        const Spacer(),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
@@ -388,13 +383,13 @@ Widget postListTile({
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          "출발일",
+                          "경유지",
                           style: textTheme.bodyText1?.copyWith(
                               color: colorScheme.tertiary
                           ),
                         ),
                         Text(
-                          DateFormat('MM/dd').format(DateTime.parse(post.deptTime!)), //경유지 받아와야 함.
+                          "없음", //경유지 받아와야 함.
                           style: textTheme.subtitle1?.copyWith(
                               color: colorScheme.onPrimary
                           ),
@@ -409,7 +404,7 @@ Widget postListTile({
                           ),
                         ),
                         Text(
-                          post.postType == 1 ? '택시' : '카풀',//차량 유형 받아와야 함.
+                          "택시", //차량 유형 받아와야 함.
                           style: textTheme.subtitle1?.copyWith(
                               color: colorScheme.onPrimary
                           ),
@@ -453,28 +448,8 @@ Widget postListTile({
                       color: colorScheme.primary
                   ),
                 ),
-                onPressed: () async {
-                  // 이게 지금 현재 index로 잘 작동하는지 확인해 봐야 함.
-                  Post post = Post(
-                    uid: _userController.uid,
-                    postType: _screenController.currentTabIndex,
-                    departure: _placeController.dep,
-                    destination: _placeController.dst,
-                    deptTime: _dateController.formattingDateTime(
-                      _dateController.mergeDateAndTime(),
-                    ),
-                    capacity: _addPostController.capacity,
-                  );
-                  Get.back();
-                  await _addPostController.fetchAddPost(post: post);
-                  await _postController.getPosts(
-                    depId: _placeController.dep?.id,
-                    dstId: _placeController.dst?.id,
-                    time: _dateController.formattingDateTime(
-                      _dateController.mergeDateAndTime(),
-                    ),
-                    postType: _screenController.currentTabIndex,
-                  );
+                onPressed: (){
+
                 }, // 누르면 모집창으로 넘어가도록 바꿔야 함.
               )
             ],
