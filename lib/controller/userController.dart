@@ -1,6 +1,8 @@
 import 'dart:math';
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:encrypt/encrypt.dart';
 
@@ -10,8 +12,13 @@ import 'package:http/http.dart' as http;
 import 'dart:convert';
 
 import 'package:itaxi/model/userInfoList.dart';
+import 'package:itaxi/fcm/fcmController.dart';
 
 class UserController extends GetxController {
+  FirebaseFirestore _firestore = FirebaseFirestore.instance;
+  final FirebaseMessaging _fcm = FirebaseMessaging.instance;
+  late final FCMController _fcmController;
+
   late Future<UserInfoList> users;
 
   int isDeleted = 0;
@@ -27,10 +34,12 @@ class UserController extends GetxController {
   final iv = IV.fromLength(16);
 
   late final Encrypter encrypter;
+  late String? token;
 
   @override
   void onInit() {
     super.onInit();
+    _fcmController = FCMController(_fcm);
     encrypter = Encrypter(AES(key));
     getUsers();
   }
@@ -42,6 +51,9 @@ class UserController extends GetxController {
 
   Future<void> getUsers() async {
     users = fetchUsers();
+    users.then((value) {
+      updateUserFirestore();
+    });
     update();
   }
 
@@ -67,8 +79,15 @@ class UserController extends GetxController {
     bank = userInfo.bank;
     bankAddress = userInfo.bankAddress;
     phone = userInfo.phone;
-
     return userInfo;
+  }
+
+  Future<int> updateUserFirestore() async {
+    final token = await _fcmController.getToken();
+    DocumentReference reference =
+        _firestore.collection('Users').doc(memberId.toString());
+    await reference.set({"memberId": memberId, "token": token});
+    return 0;
   }
 
   Future<UserInfoList> fetchUsers() async {
@@ -86,6 +105,7 @@ class UserController extends GetxController {
       UserInfoList result =
           userFromJson(json.decode(utf8.decode(response.bodyBytes)));
       decryptUser(result);
+
       return result;
     } else {
       throw Exception('계정 정보를 불러오는 데 실패했습니다.');
