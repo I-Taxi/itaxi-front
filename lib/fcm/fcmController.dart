@@ -6,17 +6,15 @@ class FCMController {
   FCMController(this.fcm);
 
   Future<void> requestPermission() async {
-
-    // token = await FirebaseMessaging.instance.getToken();
+    final token = await FirebaseMessaging.instance.getToken();
+    print(token);
     // 사용자가 이전에 설정한 알림 허용 상태를 가져옵니다.
-    NotificationSettings previousSettings =
-    await fcm.getNotificationSettings();
+    NotificationSettings previousSettings = await fcm.getNotificationSettings();
 
     // 사용자가 결정하지 않은 경우, 혀용 요청을 보냅니다.
     if (previousSettings.authorizationStatus ==
         AuthorizationStatus.notDetermined) {
-      NotificationSettings notificationSettings =
-      await fcm.requestPermission(
+      NotificationSettings notificationSettings = await fcm.requestPermission(
           alert: true,
           announcement: true,
           badge: true,
