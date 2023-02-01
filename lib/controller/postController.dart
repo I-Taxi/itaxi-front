@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'dart:js_util';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 
@@ -8,6 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:itaxi/controller/chatRoomController.dart';
 import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/controller/userController.dart';
+import 'package:itaxi/repository/chatRepository.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/model/joiner.dart';
 
@@ -142,7 +144,9 @@ class PostController extends GetxController {
     );
 
     if (response.statusCode == 200) {
-      await _chatRoomController.joinChat(post: post);
+      Post result = Post.fromDocs(json.decode(utf8.decode(response.bodyBytes)));
+      await _chatRoomController.joinChat(post: result);
+      await ChatRepository().setPost(post: result);
       print('join');
     } else {
       throw Exception('Failed to join');

@@ -30,6 +30,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
+  
 
   FirebaseMessaging.onBackgroundMessage((message) async {
     print("A background message: ${message.messageId}");

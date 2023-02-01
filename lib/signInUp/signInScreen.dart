@@ -1,5 +1,6 @@
 import 'dart:io';
 
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -35,7 +36,6 @@ class _SignInScreenState extends State<SignInScreen> {
   //로그인 버튼 색깔 id, pw 입력시 변경
   bool idEmpty = true;
   bool pwEmpty = true;
-
 
   final _idController = TextEditingController();
   final _pwController = TextEditingController();
@@ -78,10 +78,7 @@ class _SignInScreenState extends State<SignInScreen> {
             child: SingleChildScrollView(
               child: Padding(
                 padding:
-                    EdgeInsets.symmetric(
-                        vertical: 130.5.h,
-                        horizontal: 63.w
-                    ),
+                    EdgeInsets.symmetric(vertical: 130.5.h, horizontal: 63.w),
                 child: Column(
                   children: [
                     // 로고 이미지
@@ -136,12 +133,11 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                       onChanged: (value) {
                         _signInController.id = '$value@handong.ac.kr';
-                        if(value.isNotEmpty){
+                        if (value.isNotEmpty) {
                           setState(() {
                             idEmpty = false;
                           });
-                        }
-                        else{
+                        } else {
                           setState(() {
                             idEmpty = true;
                           });
@@ -164,60 +160,59 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                     ),
                     TextFormField(
-                      controller: _pwController,
-                      autocorrect: false,
-                      obscureText: _isObscure,
-                      style: textTheme.subtitle1?.copyWith(
-                        color: colorScheme.primary,
-                      ),
-                      decoration: InputDecoration(
-                        suffixText: '',
-                        constraints: BoxConstraints(
-                          maxHeight: 36.h,
-                          maxWidth: 280.w,
+                        controller: _pwController,
+                        autocorrect: false,
+                        obscureText: _isObscure,
+                        style: textTheme.subtitle1?.copyWith(
+                          color: colorScheme.primary,
                         ),
-                        enabledBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: colorScheme.primary,
-                            width: 1.0,
+                        decoration: InputDecoration(
+                          suffixText: '',
+                          constraints: BoxConstraints(
+                            maxHeight: 36.h,
+                            maxWidth: 280.w,
+                          ),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: colorScheme.primary,
+                              width: 1.0,
+                            ),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: colorScheme.primary,
+                              width: 1.0,
+                            ),
+                          ),
+                          suffixIcon: IconButton(
+                            icon: Icon(
+                              _isObscure
+                                  ? Icons.visibility_off
+                                  : Icons.visibility,
+                              size: 20.h,
+                              color: colorScheme.primary,
+                            ),
+                            onPressed: () {
+                              setState(
+                                () {
+                                  _isObscure = !_isObscure;
+                                },
+                              );
+                            },
                           ),
                         ),
-                        focusedBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                            color: colorScheme.primary,
-                            width: 1.0,
-                          ),
-                        ),
-                        suffixIcon: IconButton(
-                          icon: Icon(
-                            _isObscure
-                                ? Icons.visibility_off
-                                : Icons.visibility,
-                            size: 20.h,
-                            color: colorScheme.primary,
-                          ),
-                          onPressed: () {
-                            setState(
-                              () {
-                                _isObscure = !_isObscure;
-                              },
-                            );
-                          },
-                        ),
-                      ),
-                      onChanged: (value) {
-                        _signInController.pw = value;
-                        if (value.isNotEmpty){
-                          setState(() {
-                            pwEmpty = false;
-                          });
-                        }
-                        else{
-                          setState(() {
-                            pwEmpty = true;
-                          });
-                        }
-                      }),
+                        onChanged: (value) {
+                          _signInController.pw = value;
+                          if (value.isNotEmpty) {
+                            setState(() {
+                              pwEmpty = false;
+                            });
+                          } else {
+                            setState(() {
+                              pwEmpty = true;
+                            });
+                          }
+                        }),
                     SizedBox(
                       height: 4.h,
                     ),
@@ -304,7 +299,9 @@ class _SignInScreenState extends State<SignInScreen> {
                         child: Text(
                           '로그인',
                           style: textTheme.subtitle1!.copyWith(
-                            color: (pwEmpty || idEmpty) ? colorScheme.tertiary : colorScheme.secondary, //수정해야 됨.
+                            color: (pwEmpty || idEmpty)
+                                ? colorScheme.tertiary
+                                : colorScheme.secondary, //수정해야 됨.
                           ),
                         ),
                       ),
