@@ -12,8 +12,8 @@ import 'package:itaxi/placeSearch/placeSearchScreen.dart';
 import 'package:itaxi/timeline/checkPlaceScreen.dart';
 
 import 'package:itaxi/mainScreen.dart';
-import 'package:itaxi/mainScreenGather.dart';
-import 'package:itaxi/stopoverScreen.dart';
+import 'package:itaxi/gatherScreen.dart';
+import 'package:itaxi/stopOverScreen.dart';
 import 'package:itaxi/timeline/timelineScreen.dart';
 import 'package:itaxi/settings/settingScreen.dart';
 
@@ -27,7 +27,7 @@ class Home extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final pageList = [
       const MainScreen(), //원래 timeline이었음
-      const MainScreenGather(), // 원래 MainScreen이었음
+      const GatherScreen(), // 원래 MainScreen이었음
       const SettingScreen(), // 원래 SettingScreen이었음
       const TimelineScreen()
     ];

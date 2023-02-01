@@ -1,7 +1,7 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:itaxi/mainScreenGather.dart';
+import 'package:itaxi/gatherScreen.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -9,7 +9,7 @@ import 'package:itaxi/controller/addPostController.dart';
 import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/controller/placeController.dart';
 import 'package:itaxi/controller/postController.dart';
-import 'package:itaxi/controller/tabViewController.dart';
+import 'package:itaxi/controller/screenController.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/widget/addPostDialog.dart';
 import 'package:itaxi/widget/postListTile.dart';
@@ -28,7 +28,7 @@ class StopoverScreen extends StatefulWidget {
 }
 
 class _StopoverScreenState extends State<StopoverScreen> {
-  TabViewController _tabViewController = Get.put(TabViewController());
+  ScreenController _screenController = Get.put(ScreenController());
   AddPostController _addPostController = Get.put(AddPostController());
   PostController _postController = Get.put(PostController());
   PlaceController _placeController = Get.put(PlaceController());
@@ -49,7 +49,7 @@ class _StopoverScreenState extends State<StopoverScreen> {
       time: _dateController.formattingDateTime(
         _dateController.mergeDateAndTime(),
       ),
-      postType: _tabViewController.currentIndex,
+      postType: _screenController.currentTabIndex,
     );
     _placeController.getPlaces();
   }
@@ -71,7 +71,7 @@ class _StopoverScreenState extends State<StopoverScreen> {
               )),
           Padding(
             padding: EdgeInsets.only(left: 24.h, top: 55.63.h, right: 26.4.w),
-            child: GetBuilder<TabViewController>(builder: (_) {
+            child: GetBuilder<ScreenController>(builder: (_) {
               return Column(
                 children: [
                   Row(
@@ -144,7 +144,9 @@ class _StopoverScreenState extends State<StopoverScreen> {
                                   ),
                                 ],
                                 radiusStyle: true,
-                                onToggle: (index) {},
+                                onToggle: (index) {
+                                  _screenController.changeToggleIndex(0);
+                                },
                               ),
                             ),
                           ),
@@ -162,7 +164,8 @@ class _StopoverScreenState extends State<StopoverScreen> {
                                   width: 19.w,
                                 ),
                                 Image(
-                                  image: AssetImage('assets/participant/1_1.png'),
+                                  image:
+                                      AssetImage('assets/participant/1_1.png'),
                                   height: 59.16.h,
                                   width: 24.w,
                                 ),
@@ -173,15 +176,16 @@ class _StopoverScreenState extends State<StopoverScreen> {
                                   width: 180.w,
                                   height: 180.h,
                                   child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.start,
                                     // mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       TextButton(
                                         onPressed: () {
                                           Get.to(SearchScreen(),
                                               binding: BindingsBuilder(() {
-                                                Get.put(PlaceSearchController());
-                                              }));
+                                            Get.put(PlaceSearchController());
+                                          }));
                                         },
                                         child: Text(
                                           "출발지 입력",
@@ -223,8 +227,8 @@ class _StopoverScreenState extends State<StopoverScreen> {
                                         onPressed: () {
                                           Get.to(SearchScreen(),
                                               binding: BindingsBuilder(() {
-                                                Get.put(PlaceSearchController());
-                                              }));
+                                            Get.put(PlaceSearchController());
+                                          }));
                                         },
                                         child: Text(
                                           "도착지 입력",
@@ -250,13 +254,16 @@ class _StopoverScreenState extends State<StopoverScreen> {
                                     ),
                                     IconButton(
                                       onPressed: () {
-                                        Get.back();
+                                        _screenController.changeStopOver(0);
                                       },
-                                      icon: Image.asset('assets/delStopover.png'),
+                                      icon:
+                                          Image.asset('assets/delStopover.png'),
                                       iconSize: 32,
                                     ),
                                     IconButton(
-                                      onPressed: () {},
+                                      onPressed: () {
+                                        _screenController.changeStopOver(2);
+                                      },
                                       icon: Image.asset('assets/addPlace.png'),
                                       iconSize: 30,
                                       color: colorScheme.tertiary,
@@ -308,8 +315,8 @@ class _StopoverScreenState extends State<StopoverScreen> {
                           ),
                         ),
                         Padding(
-                          padding:
-                              EdgeInsets.only(right: 24.w, left: 23.w, top: 8.h),
+                          padding: EdgeInsets.only(
+                              right: 24.w, left: 23.w, top: 8.h),
                           child: SizedBox(
                             //getbuilder controller를 써야 함.
                             width: 295.w,
@@ -329,25 +336,27 @@ class _StopoverScreenState extends State<StopoverScreen> {
                                 GestureDetector(
                                   behavior: HitTestBehavior.opaque,
                                   onTap: () {
-                                    _tabViewController.changeIndex(0);
+                                    _screenController.changeTabIndex(0);
                                     _postController.getPosts(
                                       depId: _placeController.dep?.id,
                                       dstId: _placeController.dst?.id,
                                       time: _dateController.formattingDateTime(
                                         _dateController.mergeDateAndTime(),
                                       ),
-                                      postType: _tabViewController.currentIndex,
+                                      postType:
+                                          _screenController.currentTabIndex,
                                     );
                                   },
-                                  child: (_tabViewController.currentIndex == 0)
-                                      ? selectedTabView(
-                                          viewTitle: '택시',
-                                          context: context,
-                                        )
-                                      : unSelectedTabView(
-                                          viewTitle: '택시',
-                                          context: context,
-                                        ),
+                                  child:
+                                      (_screenController.currentTabIndex == 0)
+                                          ? selectedTabView(
+                                              viewTitle: '택시',
+                                              context: context,
+                                            )
+                                          : unSelectedTabView(
+                                              viewTitle: '택시',
+                                              context: context,
+                                            ),
                                 ),
                                 SizedBox(
                                   width: 16.0.w,
@@ -355,25 +364,27 @@ class _StopoverScreenState extends State<StopoverScreen> {
                                 GestureDetector(
                                   behavior: HitTestBehavior.opaque,
                                   onTap: () {
-                                    _tabViewController.changeIndex(1);
+                                    _screenController.changeTabIndex(1);
                                     _postController.getPosts(
                                       depId: _placeController.dep?.id,
                                       dstId: _placeController.dst?.id,
                                       time: _dateController.formattingDateTime(
                                         _dateController.mergeDateAndTime(),
                                       ),
-                                      postType: _tabViewController.currentIndex,
+                                      postType:
+                                          _screenController.currentTabIndex,
                                     );
                                   },
-                                  child: (_tabViewController.currentIndex == 1)
-                                      ? selectedTabView(
-                                          viewTitle: '카풀',
-                                          context: context,
-                                        )
-                                      : unSelectedTabView(
-                                          viewTitle: '카풀',
-                                          context: context,
-                                        ),
+                                  child:
+                                      (_screenController.currentTabIndex == 1)
+                                          ? selectedTabView(
+                                              viewTitle: '카풀',
+                                              context: context,
+                                            )
+                                          : unSelectedTabView(
+                                              viewTitle: '카풀',
+                                              context: context,
+                                            ),
                                 ),
                               ],
                             ),
