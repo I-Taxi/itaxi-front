@@ -12,25 +12,20 @@ class VersionScreen extends StatelessWidget {
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
-        elevation: 0,
-        centerTitle: true,
-        backgroundColor: colorScheme.secondary,
-        title: Text(
-          '버전정보/개발자',
-          style: textTheme.subtitle1?.copyWith(
-            color: colorScheme.primary,
-          ),
-        ),
-        leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: Icon(
-            Icons.arrow_back_rounded,
-            color: colorScheme.primary,
-          ),
-        ),
-      ),
+          elevation: 0,
+          backgroundColor: colorScheme.secondary,
+          automaticallyImplyLeading: false,
+          actions: [
+            IconButton(
+              onPressed: () {
+                Get.back();
+              },
+              icon: Icon(
+                Icons.clear_sharp,
+                color: colorScheme.tertiary,
+              ),
+            ),
+          ]),
       backgroundColor: colorScheme.secondary,
       body: ColorfulSafeArea(
         color: colorScheme.secondary,
@@ -38,34 +33,41 @@ class VersionScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              Text(
+                '버전정보/개발자',
+                style: textTheme.headline1?.copyWith(
+                    color: colorScheme.primary,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 30
+                ),
+              ),
               SizedBox(
-                height: 168.h,
+                height: 140.h,
               ),
               Image.asset(
                 width: 82.w,
                 height: 56.h,
-                'assets/logo_2_new.png',
+                'assets/logo_text.png',
               ),
               SizedBox(
-                height: 12.h,
-              ),
-              Align(
-                alignment: Alignment.center,
-                child: Text(
-                  '최신 버전을 사용 중입니다.',
-                  style: textTheme.headline2?.copyWith(
-                    color: colorScheme.primary,
-                    fontFamily: 'Noto Sans',
-                  ),
-                ),
-              ),
-              SizedBox(
-                height: 8.h,
+                height: 19.56.h,
               ),
               Align(
                 alignment: Alignment.center,
                 child: Text(
                   '현재 버전 3.0',
+                  style: textTheme.subtitle1?.copyWith(
+                    color: colorScheme.primary,
+                  ),
+                ),
+              ),
+              SizedBox(
+                height: 15.h,
+              ),
+              Align(
+                alignment: Alignment.center,
+                child: Text(
+                  '최신 버전을 사용 중입니다.',
                   style: textTheme.subtitle1?.copyWith(
                     color: colorScheme.primary,
                   ),

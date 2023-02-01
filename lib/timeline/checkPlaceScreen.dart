@@ -25,7 +25,7 @@ class CheckPlaceScreen extends StatefulWidget {
 }
 
 class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
-  ScreenController _tabViewController = Get.put(ScreenController());
+  ScreenController _screenController = Get.put(ScreenController());
   AddPostController _addPostController = Get.put(AddPostController());
   PostController _postController = Get.put(PostController());
   PlaceController _placeController = Get.put(PlaceController());
@@ -44,7 +44,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
       time: _dateController.formattingDateTime(
         _dateController.mergeDateAndTime(),
       ),
-      postType: _tabViewController.currentTabIndex,
+      postType: _screenController.currentTabIndex,
     );
     _placeController.getPlaces();
   }
@@ -92,7 +92,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("출발지",
+                      Text(_placeController.dep == null  ? "출발지" : _placeController.dep!.name!,
                           style: textTheme.subtitle1?.copyWith(
                               fontSize: Platform.isIOS ? 20 : 18,
                               color: colorScheme.primary)),
@@ -107,7 +107,8 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                       SizedBox(
                         width: 36.0.w,
                       ),
-                      Text("도착지",
+                      Text(
+                          _placeController.dst == null  ? "도착지" : _placeController.dst!.name!,
                           style: textTheme.subtitle1?.copyWith(
                               fontSize: Platform.isIOS ? 20 : 18,
                               color: colorScheme.primary)),
@@ -138,7 +139,6 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                                         .add(const Duration(days: -2))),
                                     style: textTheme.subtitle1?.copyWith(
                                       color: colorScheme.tertiary,
-                                      fontFamily: 'NotoSans',
                                     ),
                                   ),
                                 ),
@@ -157,7 +157,6 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                                       .add(const Duration(days: -2))),
                                   style: textTheme.headline1?.copyWith(
                                     color: colorScheme.tertiary,
-                                    fontFamily: 'NotoSans',
                                   ),
                                 ),
                               ),
@@ -225,7 +224,6 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                                     .format(_dateController.pickedDate!),
                                 style: textTheme.subtitle1?.copyWith(
                                   color: colorScheme.primary,
-                                  fontFamily: 'Pretendard Variable',
                                 ),
                               ),
                             );
@@ -251,7 +249,6 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                                       .add(const Duration(days: 1))),
                                   style: textTheme.subtitle1?.copyWith(
                                     color: colorScheme.tertiary,
-                                    fontFamily: 'NotoSans',
                                   ),
                                 ),
                               ),
@@ -278,7 +275,6 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                                       .add(const Duration(days: 2))),
                                   style: textTheme.subtitle1?.copyWith(
                                     color: colorScheme.tertiary,
-                                    fontFamily: 'NotoSans',
                                   ),
                                 ),
                               ),
@@ -654,7 +650,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                         time: _dateController.formattingDateTime(
                           _dateController.mergeDateAndTime(),
                         ),
-                        postType: _tabViewController.currentTabIndex,
+                        postType: _screenController.currentTabIndex,
                       );
                     },
                     child: GetBuilder<PostController>(
@@ -693,7 +689,6 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                                       '${snapshot.error}',
                                       style: textTheme.headline2?.copyWith(
                                         color: colorScheme.tertiary,
-                                        fontFamily: 'NotoSans',
                                       ),
                                     ),
                                   ),
@@ -734,58 +729,57 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                 '검색 결과가 없습니다',
                 style: textTheme.headline2?.copyWith(
                   color: colorScheme.tertiary,
-                  fontFamily: 'NotoSans',
                 ),
               ),
             ),
-            InkWell(
-              onTap: () {
-                addPostDialog(context: context);
-                _postController.getPosts(
-                  depId: _placeController.dep?.id,
-                  dstId: _placeController.dst?.id,
-                  time: _dateController.formattingDateTime(
-                    _dateController.mergeDateAndTime(),
-                  ),
-                  postType: _tabViewController.currentTabIndex,
-                );
-              },
-              child: Container(
-                width: 352.0.w,
-                height: 80.0.h,
-                decoration: BoxDecoration(
-                  color: colorScheme.background,
-                  borderRadius: BorderRadius.circular(4.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: colorScheme.shadow,
-                      offset: const Offset(1.0, 1.0),
-                      blurRadius: 2.0,
-                    ),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 18.0.h,
-                    ),
-                    Image.asset(
-                      width: 16.0.w,
-                      height: 16.0.h,
-                      'assets/button/add_2.png',
-                    ),
-                    SizedBox(
-                      height: 12.0.h,
-                    ),
-                    Text(
-                      '새로 모집하기',
-                      style: textTheme.subtitle1
-                          ?.copyWith(color: colorScheme.tertiary),
-                    )
-                  ],
-                ),
-              ),
-            ),
+            // InkWell(
+            //   onTap: () {
+            //     addPostDialog(context: context);
+            //     _postController.getPosts(
+            //       depId: _placeController.dep?.id,
+            //       dstId: _placeController.dst?.id,
+            //       time: _dateController.formattingDateTime(
+            //         _dateController.mergeDateAndTime(),
+            //       ),
+            //       postType: _tabViewController.currentIndex,
+            //     );
+            //   },
+            //   child: Container(
+            //     width: 352.0.w,
+            //     height: 80.0.h,
+            //     decoration: BoxDecoration(
+            //       color: colorScheme.background,
+            //       borderRadius: BorderRadius.circular(4.0),
+            //       boxShadow: [
+            //         BoxShadow(
+            //           color: colorScheme.shadow,
+            //           offset: const Offset(1.0, 1.0),
+            //           blurRadius: 2.0,
+            //         ),
+            //       ],
+            //     ),
+            //     child: Column(
+            //       children: [
+            //         SizedBox(
+            //           height: 18.0.h,
+            //         ),
+            //         Image.asset(
+            //           width: 16.0.w,
+            //           height: 16.0.h,
+            //           'assets/button/add_2.png',
+            //         ),
+            //         SizedBox(
+            //           height: 12.0.h,
+            //         ),
+            //         Text(
+            //           '새로 모집하기',
+            //           style: textTheme.subtitle1
+            //               ?.copyWith(color: colorScheme.tertiary),
+            //         )
+            //       ],
+            //     ),
+            //   ),
+            // ),
           ],
         ),
       ],

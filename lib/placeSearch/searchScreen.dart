@@ -320,6 +320,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                     style: textTheme.headline2?.copyWith(
                                       color: colorScheme.primary,
                                     ),
+                                  textAlign: TextAlign.center,
                                 ),
                                 color: Colors.green
                             );
@@ -340,8 +341,9 @@ class _SearchScreenState extends State<SearchScreen> {
                                   style: textTheme.headline2?.copyWith(
                                     color: colorScheme.primary,
                                   ),
+                                  textAlign: TextAlign.center,
                                 ),
-                                color: Colors.green
+                                color: Colors.green,
                             );
                           }
                         },

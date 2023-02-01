@@ -37,15 +37,7 @@ class _ForgotPwScreenState extends State<ForgotPwScreen> {
     return Scaffold(
       appBar: AppBar(
         shadowColor: colorScheme.shadow,
-        elevation: 1.0,
-        centerTitle: true,
-        title: Text(
-          '비밀번호 재설정',
-          style: textTheme.subtitle1?.copyWith(
-            color: colorScheme.onPrimary,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
+        elevation: 0.0,
         leading: IconButton(
           onPressed: () {
             Get.back();
@@ -70,32 +62,19 @@ class _ForgotPwScreenState extends State<ForgotPwScreen> {
               child: Padding(
                 padding: EdgeInsets.symmetric(
                   vertical: 39.0.h,
-                  horizontal: 63.0.w,
+                  horizontal: 24.0.w,
                 ),
                 child: Column(
                   children: [
-                  Container(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    '회원가입 시 입력한 본인의 이메일을\n입력해주세요.\n\n해당 이메일을 통해 비밀번호\n재설정 링크를 받으실 수 있습니다.',
-                    style: textTheme.subtitle1?.copyWith(
-                      fontSize: 16,
-                      color: colorScheme.onPrimary,
+                    Text(
+                      '비밀번호 재설정',
+                      style: textTheme.headline1?.copyWith(
+                        color: colorScheme.onPrimary,
+                        fontWeight: FontWeight.bold,
+                      ),
                     ),
-                  ),
-                ),
                 SizedBox(
-                  height: 72.0.h,
-                ),
-                Align(
-                  alignment: Alignment.bottomLeft,
-                  child: Text(
-                    '이메일',
-                    style: textTheme.subtitle1?.copyWith(
-                      fontSize: Platform.isIOS ? 14 : 12,
-                      color: colorScheme.onPrimary,
-                    ),
-                  ),
+                  height: 52.0.h,
                 ),
                 // 이메일 입력
                 TextFormField(
@@ -103,6 +82,7 @@ class _ForgotPwScreenState extends State<ForgotPwScreen> {
                     autocorrect: false,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: InputDecoration(
+                      hintText: "가입한 이메일을 입력해주세요",
                       suffixText: '@handong.ac.kr',
                       suffixStyle: textTheme.subtitle1?.copyWith(
                         color: colorScheme.onPrimary,
@@ -141,36 +121,34 @@ class _ForgotPwScreenState extends State<ForgotPwScreen> {
                         return null;
                       }
                     }),
-                SizedBox(
-                  height: 59.0.h,
-                ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    backgroundColor: isValueEmpty ? colorScheme.tertiary : colorScheme.secondary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                  ),
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      showConfirmDialog(context);
-                    }
-                  },
-                  child: Text(
-                    '완료',
-                    style: textTheme.subtitle1!.copyWith(
-                      color: colorScheme.primary,
-                    ),
-                  ),
-                  ),
                 ],
               ),
             ),
           ),
         ),
       ),
-    ),);
+    ),
+      bottomNavigationBar: Material(
+        color: isValueEmpty ? colorScheme.tertiaryContainer : colorScheme.secondary,
+        child: InkWell(
+          onTap: () async{
+            await _signInController.sendPasswordResetEmailByKorean();
+          },
+          child: SizedBox(
+            height: kToolbarHeight,
+            width: double.infinity,
+            child: Center(
+              child: Text(
+                "이메일로 재설정 링크 받기",
+                style: textTheme.subtitle1!.copyWith(
+                  color: colorScheme.onPrimary
+                ),
+              ),
+            ),
+          ),
+        ),
+      )
+    );
   }
 
   void showConfirmDialog(context) {
@@ -193,15 +171,15 @@ class _ForgotPwScreenState extends State<ForgotPwScreen> {
             height: 262.h,
             alignment: Alignment.center,
             padding: EdgeInsets.fromLTRB(
-              28.0.w,
-              32.0.h,
-              28.0.w,
-              12.0.h,
+              36.0.w,
+              24.0.h,
+              36.0.w,
+              28.0.h,
             ),
             child: Column(
               children: <Widget>[
                 Text(
-                  "메일이 오지 않았다면?",
+                  "메일이 전송되었습니다",
                   style: textTheme.headline1?.copyWith(
                     color: colorScheme.secondary,
                   ),
@@ -210,16 +188,33 @@ class _ForgotPwScreenState extends State<ForgotPwScreen> {
                   height: 32.h,
                 ),
                 Text(
-                  '가입한 메일 확인 후,\n스팸함을 확인해주세요',
+                  "입력한 이메일 주소로 비밀번호 재설정\n링크를 보내드렸습니다.",
                   style: textTheme.subtitle1?.copyWith(
-                    color: colorScheme.onPrimary,
+                    color: colorScheme.onPrimary
                   ),
-                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 15.h,
+                ),
+                RichText(
+                    text: TextSpan(
+                      text: "메일이 보이지 않는다면, ",
+                      style: textTheme.subtitle1?.copyWith(
+                          color: colorScheme.onPrimary
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(text: "스팸함을\n", style: textTheme.subtitle1?.copyWith(
+                            color: colorScheme.secondary
+                        ),),
+                        TextSpan(text: "확인해주세요", style: textTheme.subtitle1?.copyWith(
+                        color: colorScheme.onPrimary
+                        ),)
+                      ]
+                    )
                 ),
                 const Spacer(),
                 TextButton(
                   onPressed: () async {
-                    await _signInController.sendPasswordResetEmailByKorean();
                     Get.back();
                     Get.back();
                   },
