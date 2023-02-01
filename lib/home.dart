@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:animations/animations.dart';
+import 'package:itaxi/chat/chatRoomListScreen.dart';
 
 import 'package:itaxi/mainScreen.dart';
 import 'package:itaxi/timeline/checkPlaceScreen.dart';
@@ -28,7 +29,7 @@ class Home extends StatelessWidget {
     final pageList = [
       const MainScreen(), //원래 timeline이었음
       const GatherScreen(), // 원래 MainScreen이었음
-      const SettingScreen(), // 원래 SettingScreen이었음
+      const ChatroomListScreen(), // 원래 SettingScreen이었음
       const TimelineScreen()
     ];
 
