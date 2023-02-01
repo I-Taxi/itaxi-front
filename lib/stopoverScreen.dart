@@ -11,7 +11,6 @@ import 'package:itaxi/controller/placeController.dart';
 import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/controller/tabViewController.dart';
 import 'package:itaxi/model/post.dart';
-import 'package:itaxi/widget/addPostDialog.dart';
 import 'package:itaxi/widget/postListTile.dart';
 import 'package:itaxi/widget/selectPlaceDialog.dart';
 import 'package:itaxi/widget/tabView.dart';
