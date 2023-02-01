@@ -8,7 +8,7 @@ import 'package:itaxi/controller/addPostController.dart';
 import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/controller/placeController.dart';
 import 'package:itaxi/controller/postController.dart';
-import 'package:itaxi/controller/tabViewController.dart';
+import 'package:itaxi/controller/screenController.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/widget/postListTile.dart';
 import 'package:itaxi/widget/selectPlaceDialog.dart';
@@ -24,7 +24,7 @@ class CheckPlaceScreen extends StatefulWidget {
 }
 
 class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
-  TabViewController _tabViewController = Get.put(TabViewController());
+  ScreenController _tabViewController = Get.put(ScreenController());
   AddPostController _addPostController = Get.put(AddPostController());
   PostController _postController = Get.put(PostController());
   PlaceController _placeController = Get.put(PlaceController());
@@ -43,7 +43,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
       time: _dateController.formattingDateTime(
         _dateController.mergeDateAndTime(),
       ),
-      postType: _tabViewController.currentIndex,
+      postType: _tabViewController.currentTabIndex,
     );
     _placeController.getPlaces();
   }
@@ -296,7 +296,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
       backgroundColor: colorScheme.background,
       body: ColorfulSafeArea(
         color: colorScheme.primary,
-        child: GetBuilder<TabViewController>(
+        child: GetBuilder<ScreenController>(
           builder: (_) {
             return Column(
               children: [
@@ -653,7 +653,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                         time: _dateController.formattingDateTime(
                           _dateController.mergeDateAndTime(),
                         ),
-                        postType: _tabViewController.currentIndex,
+                        postType: _tabViewController.currentTabIndex,
                       );
                     },
                     child: GetBuilder<PostController>(
@@ -745,7 +745,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                   time: _dateController.formattingDateTime(
                     _dateController.mergeDateAndTime(),
                   ),
-                  postType: _tabViewController.currentIndex,
+                  postType: _tabViewController.currentTabIndex,
                 );
               },
               child: Container(

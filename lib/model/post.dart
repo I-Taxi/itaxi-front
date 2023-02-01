@@ -142,9 +142,20 @@ class Post {
   }
 
   Map<String, dynamic> toFirestoreMap() {
+    List<int?> membersId = [];
+    String postName = "";
+
+    for (Joiner? joiner in joiners!) {
+      membersId.add(joiner!.memberId);
+    }
+
+    postName = "(${departure!.name!}) -> (${destination!.name!})";
+
     return {
       'id': id,
       'postType': postType,
+      'membersId': membersId,
+      'postName': postName,
     };
   }
 }
