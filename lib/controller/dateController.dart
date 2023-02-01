@@ -5,10 +5,10 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:itaxi/controller/placeController.dart';
 import 'package:itaxi/controller/postController.dart';
-import 'package:itaxi/controller/tabViewController.dart';
+import 'package:itaxi/controller/screenController.dart';
 
 class DateController extends GetxController {
-  late TabViewController _tabViewController = Get.find();
+  late ScreenController _tabViewController = Get.find();
   late PostController _postController = Get.find();
   late PlaceController _placeController = Get.find();
   late DateTime pickedDate;
@@ -70,7 +70,7 @@ class DateController extends GetxController {
         depId: _placeController.dep?.id,
         dstId: _placeController.dst?.id,
         time: formattingDateTime(mergeDateAndTime()),
-        postType: _tabViewController.currentIndex,
+        postType: _tabViewController.currentTabIndex,
       );
     }
   }
@@ -128,7 +128,7 @@ class DateController extends GetxController {
       depId: _placeController.dep?.id,
       dstId: _placeController.dst?.id,
       time: formattingDateTime(mergeDateAndTime()),
-      postType: _tabViewController.currentIndex,
+      postType: _tabViewController.currentTabIndex,
     );
   }
 
@@ -139,7 +139,7 @@ class DateController extends GetxController {
       depId: _placeController.dep?.id,
       dstId: _placeController.dst?.id,
       time: formattingDateTime(mergeDateAndTime()),
-      postType: _tabViewController.currentIndex,
+      postType: _tabViewController.currentTabIndex,
     );
   }
 

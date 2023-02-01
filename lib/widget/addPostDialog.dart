@@ -9,14 +9,14 @@ import 'package:itaxi/controller/addPostController.dart';
 import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/controller/placeController.dart';
 import 'package:itaxi/controller/postController.dart';
-import 'package:itaxi/controller/tabViewController.dart';
+import 'package:itaxi/controller/screenController.dart';
 import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/widget/selectPlaceDialog.dart';
 import 'package:itaxi/widget/snackBar.dart';
 
 void addPostDialog({required BuildContext context}) {
-  TabViewController _tabViewController = Get.find();
+  ScreenController _tabViewController = Get.find();
   AddPostController _addPostController = Get.put(AddPostController());
   PostController _postController = Get.find();
   PlaceController _placeController = Get.put(PlaceController());
@@ -38,7 +38,7 @@ void addPostDialog({required BuildContext context}) {
           padding: EdgeInsets.fromLTRB(28.0.w, 32.0.h, 28.0.w, 12.0.h),
           child: Column(
             children: [
-              GetBuilder<TabViewController>(
+              GetBuilder<ScreenController>(
                 builder: (_) {
                   return Row(
                     mainAxisAlignment: MainAxisAlignment.center,
@@ -46,9 +46,9 @@ void addPostDialog({required BuildContext context}) {
                       GestureDetector(
                         behavior: HitTestBehavior.opaque,
                         onTap: () {
-                          _tabViewController.changeIndex(1);
+                          _tabViewController.changeTabIndex(1);
                         },
-                        child: (_tabViewController.currentIndex == 1)
+                        child: (_tabViewController.currentTabIndex == 1)
                             ? Text(
                                 DateFormat('택시')
                                     .format(_dateController.pickedDate!),
@@ -68,9 +68,9 @@ void addPostDialog({required BuildContext context}) {
                       GestureDetector(
                         behavior: HitTestBehavior.opaque,
                         onTap: () {
-                          _tabViewController.changeIndex(2);
+                          _tabViewController.changeTabIndex(2);
                         },
-                        child: (_tabViewController.currentIndex == 2)
+                        child: (_tabViewController.currentTabIndex == 2)
                             ? Text(
                                 DateFormat('카풀')
                                     .format(_dateController.pickedDate!),
@@ -497,7 +497,7 @@ void addPostDialog({required BuildContext context}) {
                   ),
                   TextButton(
                     onPressed: () async {
-                      if (_tabViewController.currentIndex == 0) {
+                      if (_tabViewController.currentTabIndex == 0) {
                         snackBar(context: context, title: '택시 또는 카풀을 선택해주세요.');
                       } else if (_placeController.dep == null) {
                         snackBar(context: context, title: '출발지를 선택해주세요.');
@@ -517,7 +517,7 @@ void addPostDialog({required BuildContext context}) {
                       } else {
                         Post post = Post(
                             uid: _userController.uid,
-                            postType: _tabViewController.currentIndex,
+                            postType: _tabViewController.currentTabIndex,
                             departure: _placeController.dep,
                             destination: _placeController.dst,
                             deptTime: _dateController.formattingDateTime(
@@ -533,7 +533,7 @@ void addPostDialog({required BuildContext context}) {
                           time: _dateController.formattingDateTime(
                             _dateController.mergeDateAndTime(),
                           ),
-                          postType: _tabViewController.currentIndex,
+                          postType: _tabViewController.currentTabIndex,
                         );
                       }
                     },

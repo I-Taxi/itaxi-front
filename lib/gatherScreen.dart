@@ -1,8 +1,8 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:itaxi/mainScreenGather.dart';
-import 'package:itaxi/stopoverScreen.dart';
+import 'package:itaxi/gatherScreen.dart';
+import 'package:itaxi/stopOverScreen.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -10,7 +10,7 @@ import 'package:itaxi/controller/addPostController.dart';
 import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/controller/placeController.dart';
 import 'package:itaxi/controller/postController.dart';
-import 'package:itaxi/controller/tabViewController.dart';
+import 'package:itaxi/controller/screenController.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/widget/addPostDialog.dart';
 import 'package:itaxi/widget/postListTile.dart';
@@ -21,16 +21,17 @@ import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/placeSearch/searchScreen.dart';
 import 'package:itaxi/placeSearch/placeSearchController.dart';
 import 'package:itaxi/settings/settingScreen.dart';
+import 'package:itaxi/stopOverScreen.dart';
 
-class MainScreenGather extends StatefulWidget {
-  const MainScreenGather({Key? key}) : super(key: key);
+class GatherScreen extends StatefulWidget {
+  const GatherScreen({Key? key}) : super(key: key);
 
   @override
-  State<MainScreenGather> createState() => _MainScreenGatherState();
+  State<GatherScreen> createState() => _GatherScreenState();
 }
 
-class _MainScreenGatherState extends State<MainScreenGather> {
-  TabViewController _tabViewController = Get.put(TabViewController());
+class _GatherScreenState extends State<GatherScreen> {
+  ScreenController _screenController = Get.put(ScreenController());
   AddPostController _addPostController = Get.put(AddPostController());
   PostController _postController = Get.put(PostController());
   PlaceController _placeController = Get.put(PlaceController());
@@ -52,7 +53,7 @@ class _MainScreenGatherState extends State<MainScreenGather> {
       time: _dateController.formattingDateTime(
         _dateController.mergeDateAndTime(),
       ),
-      postType: _tabViewController.currentIndex,
+      postType: _screenController.currentTabIndex,
     );
     _placeController.getPlaces();
   }
@@ -61,6 +62,9 @@ class _MainScreenGatherState extends State<MainScreenGather> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
+    if (_screenController.stopOver > 0) {
+      return StopoverScreen();
+    }
     return Scaffold(
       body: Stack(
         children: [
@@ -74,7 +78,7 @@ class _MainScreenGatherState extends State<MainScreenGather> {
               )),
           Padding(
             padding: EdgeInsets.only(left: 24.h, top: 55.63.h, right: 26.4.w),
-            child: GetBuilder<TabViewController>(builder: (_) {
+            child: GetBuilder<ScreenController>(builder: (controller) {
               return Column(
                 children: [
                   Row(
@@ -149,7 +153,9 @@ class _MainScreenGatherState extends State<MainScreenGather> {
                                   ),
                                 ],
                                 radiusStyle: true,
-                                onToggle: (index) {},
+                                onToggle: (index) {
+                                  controller.changeToggleIndex(0);
+                                },
                               ),
                             ),
                           ),
@@ -233,7 +239,7 @@ class _MainScreenGatherState extends State<MainScreenGather> {
                                     ),
                                     IconButton(
                                       onPressed: () {
-                                        Get.to(StopoverScreen());
+                                        controller.changeStopOver(1);
                                       },
                                       icon: Image.asset('assets/addPlace.png'),
                                       iconSize: 32,
@@ -306,25 +312,27 @@ class _MainScreenGatherState extends State<MainScreenGather> {
                                 GestureDetector(
                                   behavior: HitTestBehavior.opaque,
                                   onTap: () {
-                                    _tabViewController.changeIndex(0);
+                                    _screenController.changeTabIndex(0);
                                     _postController.getPosts(
                                       depId: _placeController.dep?.id,
                                       dstId: _placeController.dst?.id,
                                       time: _dateController.formattingDateTime(
                                         _dateController.mergeDateAndTime(),
                                       ),
-                                      postType: _tabViewController.currentIndex,
+                                      postType:
+                                          _screenController.currentTabIndex,
                                     );
                                   },
-                                  child: (_tabViewController.currentIndex == 0)
-                                      ? selectedTabView(
-                                          viewTitle: '택시',
-                                          context: context,
-                                        )
-                                      : unSelectedTabView(
-                                          viewTitle: '택시',
-                                          context: context,
-                                        ),
+                                  child:
+                                      (_screenController.currentTabIndex == 0)
+                                          ? selectedTabView(
+                                              viewTitle: '택시',
+                                              context: context,
+                                            )
+                                          : unSelectedTabView(
+                                              viewTitle: '택시',
+                                              context: context,
+                                            ),
                                 ),
                                 SizedBox(
                                   width: 16.0.w,
@@ -332,25 +340,27 @@ class _MainScreenGatherState extends State<MainScreenGather> {
                                 GestureDetector(
                                   behavior: HitTestBehavior.opaque,
                                   onTap: () {
-                                    _tabViewController.changeIndex(1);
+                                    _screenController.changeTabIndex(1);
                                     _postController.getPosts(
                                       depId: _placeController.dep?.id,
                                       dstId: _placeController.dst?.id,
                                       time: _dateController.formattingDateTime(
                                         _dateController.mergeDateAndTime(),
                                       ),
-                                      postType: _tabViewController.currentIndex,
+                                      postType:
+                                          _screenController.currentTabIndex,
                                     );
                                   },
-                                  child: (_tabViewController.currentIndex == 1)
-                                      ? selectedTabView(
-                                          viewTitle: '카풀',
-                                          context: context,
-                                        )
-                                      : unSelectedTabView(
-                                          viewTitle: '카풀',
-                                          context: context,
-                                        ),
+                                  child:
+                                      (_screenController.currentTabIndex == 1)
+                                          ? selectedTabView(
+                                              viewTitle: '카풀',
+                                              context: context,
+                                            )
+                                          : unSelectedTabView(
+                                              viewTitle: '카풀',
+                                              context: context,
+                                            ),
                                 ),
                               ],
                             ),
