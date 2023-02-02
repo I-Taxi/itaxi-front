@@ -63,6 +63,7 @@ dependencies:
   dotted_line: ^3.1.0
   encrypt: ^5.0.1
   cloud_functions: ^4.0.7
+  flutter_local_notifications: ^13.0.0
 
 
   # The following adds the Cupertino Icons font to your application.
@@ -166,6 +167,11 @@ flutter:
     - assets/profile.png
     - assets/change_profile.png
     - assets/background.png
+    - assets/icon_KTX.png
+    - assets/icon_Car.png
+    - assets/banner.png
+    - assets/contact.png
+    - assets/first_chat.png
 
     # icon
     - assets/icon/boarding_complete.png
