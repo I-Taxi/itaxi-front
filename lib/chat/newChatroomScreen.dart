@@ -274,29 +274,28 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
             const Divider(
               thickness: 1,
             ),
-            Container(
-              height: 224.h,
-              child: Expanded(
-                  child: Align(
-                alignment: FractionalOffset.bottomLeft,
-                child: Padding(
-                  padding: EdgeInsets.only(bottom: 43.h, left: 30.w),
-                  child: Row(children: [
-                    const Icon(
-                      Icons.logout,
-                      size: 24,
-                    ),
-                    SizedBox(
-                      width: 5.w,
-                    ),
-                    Text(
-                      "방 나가기",
-                      style: textTheme.bodySmall?.copyWith(fontSize: 13),
-                    )
-                  ]),
-                ),
-              )),
+            SizedBox(
+              height: 152.h,
             ),
+            Align(
+              alignment: FractionalOffset.bottomLeft,
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 43.h, left: 30.w),
+                child: Row(children: [
+                  const Icon(
+                    Icons.logout,
+                    size: 24,
+                  ),
+                  SizedBox(
+                    width: 5.w,
+                  ),
+                  Text(
+                    "방 나가기",
+                    style: textTheme.bodySmall?.copyWith(fontSize: 13),
+                  )
+                ]),
+              ),
+            )
           ],
         ),
       ),
