@@ -53,17 +53,14 @@ class _SplashScreenState extends State<SplashScreen> {
               ),
               Text(
                 'iTaxi',
-                style: textTheme.headline1
-                    ?.copyWith(fontSize: 36, color: colorScheme.primary),
+                style: textTheme.headline1?.copyWith(color: colorScheme.primary),
               ),
               SizedBox(
                 height: 58.h,
               ),
               Text(
                 '한동이들의 No.1 교통 어플리케이션',
-                style: textTheme.headline1?.copyWith(
-                    fontSize: Platform.isIOS ? 16 : 14,
-                    color: colorScheme.primary),
+                style: textTheme.subtitle2?.copyWith(color: colorScheme.primary),
               ),
             ],
           ),

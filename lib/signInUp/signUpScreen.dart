@@ -64,12 +64,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme
-        .of(context)
-        .textTheme;
-    final colorScheme = Theme
-        .of(context)
-        .colorScheme;
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
 
     return Scaffold(
       appBar: AppBar(
@@ -77,7 +73,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         elevation: 1.0,
         centerTitle: true,
         title: Text(
-          'Sign Up',
+          '회원가입',
           style: textTheme.subtitle1?.copyWith(
             color: colorScheme.onPrimary,
             fontWeight: FontWeight.bold,
@@ -115,10 +111,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   alignment: Alignment.bottomLeft,
                   child: Text(
                     '아이디',
-                    style: textTheme.subtitle1?.copyWith(
-                      fontSize: Platform.isIOS ? 14 : 12,
-                      color: colorScheme.tertiary,
-                    ),
+                    style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiary)
                   ),
                 ),
                 // Custom ID 입력
@@ -129,7 +122,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: InputDecoration(
                     suffixText: '@handong.ac.kr',
-                    suffixStyle: textTheme.subtitle1?.copyWith(
+                        suffixStyle: textTheme.subtitle2?.copyWith(
                       color: colorScheme.tertiary,
                     ),
                     enabledBorder: UnderlineInputBorder(
@@ -162,10 +155,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   alignment: Alignment.bottomLeft,
                   child: Text(
                     '비밀번호',
-                    style: textTheme.subtitle1?.copyWith(
-                      fontSize: Platform.isIOS ? 14 : 12,
-                      color: colorScheme.tertiary,
-                    ),
+                    style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiary)
                   ),
                 ),
 
@@ -224,10 +214,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   alignment: Alignment.bottomLeft,
                   child: Text(
                     '비밀번호 확인',
-                    style: textTheme.subtitle1?.copyWith(
-                      fontSize: Platform.isIOS ? 14 : 12,
-                      color: colorScheme.tertiary,
-                    ),
+                    style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiary)
                   ),
                 ),
                 // Password 확인 입력
@@ -282,10 +269,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   alignment: Alignment.bottomLeft,
                   child: Text(
                     '이름',
-                    style: textTheme.subtitle1?.copyWith(
-                      fontSize: Platform.isIOS ? 14 : 12,
-                      color: colorScheme.tertiary,
-                    ),
+                    style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiary)
                   ),
                 ),
                 // 이름 입력
@@ -323,10 +307,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   alignment: Alignment.bottomLeft,
                   child: Text(
                     '전화번호',
-                    style: textTheme.subtitle1?.copyWith(
-                      fontSize: Platform.isIOS ? 14 : 12,
-                      color: colorScheme.tertiary,
-                    ),
+                    style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiary)
                   ),
                 ),
                 // 휴대폰 번호 입력
@@ -453,8 +434,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     RawMaterialButton(
                       child: Text(
                         '이용약관 보기',
-                        style: textTheme.subtitle1?.copyWith(
-                          fontSize: Platform.isIOS ? 14 : 12,
+                            style: textTheme.bodyText2?.copyWith(
                           color: colorScheme.tertiary,
                           decoration: TextDecoration.underline,
                         ),
@@ -468,10 +448,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       children: [
                         Text(
                           '약관에 동의합니다',
-                          style: textTheme.subtitle1?.copyWith(
-                            fontSize: Platform.isIOS ? 14 : 12,
-                            color: colorScheme.tertiary,
-                          ),
+                          style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiary)
                         ),
                         Checkbox(
                           value: agree1,
@@ -500,13 +477,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   children: <Widget>[
                 RawMaterialButton(
                 child: Text(
-                '개인정보처리방침 보기',
-                style: textTheme.subtitle1?.copyWith(
-                fontSize: Platform.isIOS ? 14 : 12,
-                color: colorScheme.tertiary,
-                decoration: TextDecoration.underline,
-                ),
-              ),
+                            '개인정보처리방침 보기',
+                            style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiary, decoration: TextDecoration.underline),
+                          ),
             onPressed: () {
               Get.to(PrivacyPolicyScreen());
               // Navigate
@@ -516,8 +489,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             children: [
               Text(
                 '약관에 동의합니다',
-                style: textTheme.subtitle1?.copyWith(
-                  fontSize: Platform.isIOS ? 14 : 12,
+                              style: textTheme.bodyText2?.copyWith(
                   color: colorScheme.tertiary,
                 ),
               ),
@@ -564,8 +536,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               : () {},
           child: Text(
             '가입하기',
-            style: textTheme.subtitle1!.copyWith(
-              color: colorScheme.primary,
+                        style: textTheme.bodyText2!.copyWith(color: colorScheme.primary
             ),
           ),
         ),
@@ -609,7 +580,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 children: <Widget>[
                   Text(
                     title as String,
-                    style: textTheme.headline1?.copyWith(
+                    style: textTheme.subtitle1?.copyWith(
                       color: colorScheme.secondary,
                     ),
                   ),
@@ -618,7 +589,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   ),
                   Text(
                     content as String,
-                    style: textTheme.subtitle1?.copyWith(
+                    style: textTheme.bodyText1?.copyWith(
                       color: colorScheme.onPrimary,
                     ),
                   ),
@@ -631,7 +602,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                     child: Text(
                       "확인",
-                      style: textTheme.headline1
+                      style: textTheme.subtitle2
                           ?.copyWith(color: colorScheme.tertiary),
                     ),
                   ),

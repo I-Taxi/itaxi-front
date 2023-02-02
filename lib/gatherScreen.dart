@@ -88,13 +88,13 @@ class _GatherScreenState extends State<GatherScreen> {
                         children: [
                           Text(
                             "I-TAXI",
-                            style: textTheme.headline1?.copyWith(
-                                color: colorScheme.primary,
-                                fontWeight: FontWeight.bold),
+                            style: textTheme.headline3?.copyWith(
+                              color: colorScheme.primary,
+                            ),
                           ),
                           Text(
                             "어디든지 자유롭게 이동하세요!",
-                            style: textTheme.headline2?.copyWith(
+                            style: textTheme.subtitle1?.copyWith(
                               color: colorScheme.primary,
                             ),
                           )
@@ -140,15 +140,8 @@ class _GatherScreenState extends State<GatherScreen> {
                                 totalSwitches: 2,
                                 labels: ["조회", "모집"],
                                 customTextStyles: [
-                                  TextStyle(
-                                    fontFamily: 'Pretendard Variable',
-                                    fontSize: 10.0,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                  TextStyle(
-                                    fontFamily: 'Pretendard Variable',
-                                    fontSize: 10.0,
-                                    fontWeight: FontWeight.w600,
+                                  textTheme.subtitle2?.copyWith(
+                                    color: colorScheme.onTertiary,
                                   ),
                                 ],
                                 radiusStyle: true,
@@ -195,14 +188,11 @@ class _GatherScreenState extends State<GatherScreen> {
                                               .changeDepOrDst(0);
                                           Get.to(() => SearchScreen());
                                         },
+                                        // style: TextButton.styleFrom(fixedSize: Size(85.w, 18.h)),
                                         child: Text(
                                           "출발지 입력",
-                                          style: textTheme.headline2?.copyWith(
-                                              color: colorScheme.onPrimary,
-                                              fontWeight: FontWeight.w600),
+                                          style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
                                         ),
-                                        style: TextButton.styleFrom(
-                                            fixedSize: Size(85.w, 18.h)),
                                       ),
                                       Container(
                                         width: 180.w,
@@ -216,14 +206,11 @@ class _GatherScreenState extends State<GatherScreen> {
                                               .changeDepOrDst(1);
                                           Get.to(() => SearchScreen());
                                         },
+                                        // style: TextButton.styleFrom(fixedSize: Size(85.w, 18.h)),
                                         child: Text(
                                           "도착지 입력",
-                                          style: textTheme.headline2?.copyWith(
-                                              color: colorScheme.onPrimary,
-                                              fontWeight: FontWeight.w600),
+                                          style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
                                         ),
-                                        style: TextButton.styleFrom(
-                                            fixedSize: Size(85.w, 18.h)),
                                       ),
                                     ],
                                   ),
@@ -281,9 +268,7 @@ class _GatherScreenState extends State<GatherScreen> {
                                 Text(
                                   DateFormat('M월 d일, EE').format(//요일 설정 해줘야 함.
                                       _dateController.pickedDate!),
-                                  style: textTheme.headline1?.copyWith(
-                                      color: colorScheme.onPrimary,
-                                      fontWeight: FontWeight.w600),
+                                  style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
                                 )
                               ],
                             ),
@@ -400,9 +385,7 @@ class _GatherScreenState extends State<GatherScreen> {
                                 ),
                                 Text(
                                   "$personCount명",
-                                  style: textTheme.headline1?.copyWith(
-                                      color: colorScheme.onPrimary,
-                                      fontWeight: FontWeight.w600),
+                                  style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
                                 ),
                                 SizedBox(
                                   width: 8.w,
@@ -437,7 +420,7 @@ class _GatherScreenState extends State<GatherScreen> {
                       onPressed: () {},
                       child: Text(
                         "방 만들기",
-                        style: textTheme.headline1?.copyWith(
+                        style: textTheme.subtitle2?.copyWith(
                           color: colorScheme.primary,
                         ),
                       )),

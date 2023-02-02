@@ -38,8 +38,7 @@ class _MainScreenState extends State<MainScreen> {
   DateController _dateController = Get.put(DateController());
   UserController _userController = Get.put(UserController());
   late PlaceSearchController _placeSearchController;
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   String e = ""; // 요일 변수
   int personCount = 1; // 인원수
 
@@ -55,9 +54,7 @@ class _MainScreenState extends State<MainScreen> {
       ),
       postType: _screenController.currentTabIndex,
     );
-    _placeController
-        .getPlaces()
-        .then((_) => _placeSearchController = Get.put(PlaceSearchController()));
+    _placeController.getPlaces().then((_) => _placeSearchController = Get.put(PlaceSearchController()));
   }
 
   @override
@@ -77,8 +74,7 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                 )),
             Padding(
-                padding:
-                    EdgeInsets.only(left: 24.h, top: 55.63.h, right: 26.4.w),
+                padding: EdgeInsets.only(left: 24.h, top: 55.63.h, right: 26.4.w),
                 child: Column(
                   children: [
                     Row(
@@ -89,15 +85,15 @@ class _MainScreenState extends State<MainScreen> {
                           children: [
                             Text(
                               "I-TAXI",
-                              style: textTheme.headline1?.copyWith(
-                                  color: colorScheme.primary,
-                                  fontWeight: FontWeight.bold),
+                              style: textTheme.headline3?.copyWith(
+                                color: colorScheme.primary,
+                              ),
                             ),
                             Text(
                               "어디든지 자유롭게 이동하세요!",
-                              style: textTheme.headline2?.copyWith(
-                                  color: colorScheme.primary,
-                                  fontFamily: 'Pretendard Variable'),
+                              style: textTheme.subtitle1?.copyWith(
+                                color: colorScheme.primary,
+                              ),
                             )
                           ],
                         ),
@@ -116,16 +112,13 @@ class _MainScreenState extends State<MainScreen> {
                     Container(
                       height: 433.63.h,
                       width: 342.w,
-                      decoration: BoxDecoration(
-                          color: colorScheme.primary,
-                          borderRadius: BorderRadius.circular(36.0)),
+                      decoration: BoxDecoration(color: colorScheme.primary, borderRadius: BorderRadius.circular(36.0)),
                       child: Column(
                         children: [
                           Padding(
-                            padding: EdgeInsets.only(
-                                left: 23.w, right: 23.w, top: 20.63.h),
+                            padding: EdgeInsets.only(left: 23.w, right: 23.w, top: 20.63.h),
                             child: SizedBox(
-                              width: 295.0.w,
+                              width: 296.w,
                               height: 57.h,
                               child: FittedBox(
                                 fit: BoxFit.fill,
@@ -142,19 +135,13 @@ class _MainScreenState extends State<MainScreen> {
                                   totalSwitches: 2,
                                   labels: ["조회", "모집"],
                                   customTextStyles: [
-                                    TextStyle(
-                                        fontSize: 10.0,
-                                        fontWeight: FontWeight.w600,
-                                        color: colorScheme.onPrimary),
-                                    TextStyle(
-                                        fontSize: 10.0,
-                                        fontWeight: FontWeight.w600,
-                                        color: colorScheme.onPrimary),
+                                    textTheme.subtitle2?.copyWith(
+                                      color: colorScheme.onTertiary,
+                                    ),
                                   ],
                                   radiusStyle: true,
                                   onToggle: (index) {
-                                    if (index == 1)
-                                      controller.changeToggleIndex(1);
+                                    if (index == 1) controller.changeToggleIndex(1);
                                     // 어떻게 하면 모집란으로 바로 가게 할 수 있을까???
                                   },
                                 ),
@@ -174,8 +161,7 @@ class _MainScreenState extends State<MainScreen> {
                                     width: 19.w,
                                   ),
                                   Image(
-                                    image: AssetImage(
-                                        'assets/participant/1_1.png'),
+                                    image: AssetImage('assets/participant/1_1.png'),
                                     height: 59.16.h,
                                     width: 24.w,
                                   ),
@@ -186,27 +172,19 @@ class _MainScreenState extends State<MainScreen> {
                                     width: 180.w,
                                     height: 120.h,
                                     child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
                                       // mainAxisAlignment: MainAxisAlignment.start,
                                       children: [
                                         TextButton(
                                           onPressed: () {
-                                            _placeSearchController
-                                                .changeDepOrDst(0);
+                                            _placeSearchController.changeDepOrDst(0);
                                             Get.to(() => SearchScreen());
                                           },
+                                          // style: TextButton.styleFrom(fixedSize: Size(85.w, 18.h)),
                                           child: Text(
                                             "출발지 입력",
-                                            style: textTheme.headline2
-                                                ?.copyWith(
-                                                    color:
-                                                        colorScheme.onPrimary,
-                                                    fontWeight:
-                                                        FontWeight.w600),
+                                            style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
                                           ),
-                                          style: TextButton.styleFrom(
-                                              fixedSize: Size(85.w, 18.h)),
                                         ),
                                         Container(
                                           width: 180.w,
@@ -215,21 +193,14 @@ class _MainScreenState extends State<MainScreen> {
                                         ),
                                         TextButton(
                                           onPressed: () {
-                                            _placeSearchController
-                                                .changeDepOrDst(1);
+                                            _placeSearchController.changeDepOrDst(1);
                                             Get.to(() => SearchScreen());
                                           },
+                                          // style: TextButton.styleFrom(fixedSize: Size(85.w, 18.h)),
                                           child: Text(
                                             "도착지 입력",
-                                            style: textTheme.headline2
-                                                ?.copyWith(
-                                                    color:
-                                                        colorScheme.onPrimary,
-                                                    fontWeight:
-                                                        FontWeight.w600),
+                                            style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
                                           ),
-                                          style: TextButton.styleFrom(
-                                              fixedSize: Size(85.w, 18.h)),
                                         ),
                                       ],
                                     ),
@@ -270,20 +241,16 @@ class _MainScreenState extends State<MainScreen> {
                                     width: 25.w,
                                   ),
                                   Text(
-                                    DateFormat('M월 d일, EE')
-                                        .format(//요일 설정 해줘야 함.
-                                            _dateController.pickedDate!),
-                                    style: textTheme.headline1?.copyWith(
-                                        color: colorScheme.onPrimary,
-                                        fontWeight: FontWeight.w600),
+                                    DateFormat('M월 d일, EE').format(//요일 설정 해줘야 함.
+                                        _dateController.pickedDate!),
+                                    style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
                                   )
                                 ],
                               ),
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(
-                                right: 24.w, left: 23.w, top: 8.h),
+                            padding: EdgeInsets.only(right: 24.w, left: 23.w, top: 8.h),
                             child: SizedBox(
                               //getbuilder controller를 써야 함.
                               width: 295.w,
@@ -307,25 +274,21 @@ class _MainScreenState extends State<MainScreen> {
                                       _postController.getPosts(
                                         depId: _placeController.dep?.id,
                                         dstId: _placeController.dst?.id,
-                                        time:
-                                            _dateController.formattingDateTime(
+                                        time: _dateController.formattingDateTime(
                                           _dateController.mergeDateAndTime(),
                                         ),
-                                        postType:
-                                            _screenController.currentTabIndex,
+                                        postType: _screenController.currentTabIndex,
                                       );
                                     },
-                                    child:
-                                        (_screenController.currentTabIndex ==
-                                                0)
-                                            ? selectedTabView(
-                                                viewTitle: '전체',
-                                                context: context,
-                                              )
-                                            : unSelectedTabView(
-                                                viewTitle: '전체',
-                                                context: context,
-                                              ),
+                                    child: (_screenController.currentTabIndex == 0)
+                                        ? selectedTabView(
+                                            viewTitle: '전체',
+                                            context: context,
+                                          )
+                                        : unSelectedTabView(
+                                            viewTitle: '전체',
+                                            context: context,
+                                          ),
                                   ),
                                   SizedBox(
                                     width: 16.0.w,
@@ -337,25 +300,21 @@ class _MainScreenState extends State<MainScreen> {
                                       _postController.getPosts(
                                         depId: _placeController.dep?.id,
                                         dstId: _placeController.dst?.id,
-                                        time:
-                                            _dateController.formattingDateTime(
+                                        time: _dateController.formattingDateTime(
                                           _dateController.mergeDateAndTime(),
                                         ),
-                                        postType:
-                                            _screenController.currentTabIndex,
+                                        postType: _screenController.currentTabIndex,
                                       );
                                     },
-                                    child:
-                                        (_screenController.currentTabIndex ==
-                                                1)
-                                            ? selectedTabView(
-                                                viewTitle: '택시',
-                                                context: context,
-                                              )
-                                            : unSelectedTabView(
-                                                viewTitle: '택시',
-                                                context: context,
-                                              ),
+                                    child: (_screenController.currentTabIndex == 1)
+                                        ? selectedTabView(
+                                            viewTitle: '택시',
+                                            context: context,
+                                          )
+                                        : unSelectedTabView(
+                                            viewTitle: '택시',
+                                            context: context,
+                                          ),
                                   ),
                                   SizedBox(
                                     width: 16.0.w,
@@ -367,33 +326,28 @@ class _MainScreenState extends State<MainScreen> {
                                       _postController.getPosts(
                                         depId: _placeController.dep?.id,
                                         dstId: _placeController.dst?.id,
-                                        time:
-                                            _dateController.formattingDateTime(
+                                        time: _dateController.formattingDateTime(
                                           _dateController.mergeDateAndTime(),
                                         ),
-                                        postType:
-                                            _screenController.currentTabIndex,
+                                        postType: _screenController.currentTabIndex,
                                       );
                                     },
-                                    child:
-                                        (_screenController.currentTabIndex ==
-                                                2)
-                                            ? selectedTabView(
-                                                viewTitle: '카풀',
-                                                context: context,
-                                              )
-                                            : unSelectedTabView(
-                                                viewTitle: '카풀',
-                                                context: context,
-                                              ),
+                                    child: (_screenController.currentTabIndex == 2)
+                                        ? selectedTabView(
+                                            viewTitle: '카풀',
+                                            context: context,
+                                          )
+                                        : unSelectedTabView(
+                                            viewTitle: '카풀',
+                                            context: context,
+                                          ),
                                   ),
                                 ],
                               ),
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(
-                                left: 23.w, right: 24.w, bottom: 24.82.h),
+                            padding: EdgeInsets.only(left: 23.w, right: 24.w, bottom: 24.82.h),
                             child: SizedBox(
                               height: 56.59.h,
                               width: 295.w,
@@ -417,19 +371,12 @@ class _MainScreenState extends State<MainScreen> {
                                         });
                                     },
                                     icon: Image.asset('assets/removeP.png'),
-                                    color: (personCount == 1)
-                                        ? colorScheme.tertiaryContainer
-                                        : colorScheme.secondary,
+                                    color: (personCount == 1) ? colorScheme.tertiaryContainer : colorScheme.secondary,
                                   ),
                                   SizedBox(
                                     width: 8.w,
                                   ),
-                                  Text(
-                                    "$personCount명",
-                                    style: textTheme.headline1?.copyWith(
-                                        color: colorScheme.onPrimary,
-                                        fontWeight: FontWeight.w600),
-                                  ),
+                                  Text("$personCount명", style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary)),
                                   SizedBox(
                                     width: 8.w,
                                   ),
@@ -441,9 +388,7 @@ class _MainScreenState extends State<MainScreen> {
                                         });
                                     },
                                     icon: Image.asset('assets/addPerson.png'),
-                                    color: (personCount == 4)
-                                        ? colorScheme.tertiaryContainer
-                                        : colorScheme.secondary,
+                                    color: (personCount == 4) ? colorScheme.tertiaryContainer : colorScheme.secondary,
                                   ),
                                 ],
                               ),
@@ -465,16 +410,17 @@ class _MainScreenState extends State<MainScreen> {
                         },
                         child: Text(
                           "조회하기",
-                          style: textTheme.headline1?.copyWith(
+                          style: textTheme.subtitle2?.copyWith(
                             color: colorScheme.primary,
                           ),
                         )),
                   ],
-                ))
+                )),
           ],
         );
-      } else
-        return GatherScreen();
+      } else {
+        return Stack();
+      }
     });
   }
 }
