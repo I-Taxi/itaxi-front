@@ -1,7 +1,5 @@
-import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:itaxi/gatherScreen.dart';
 import 'package:itaxi/stopOverScreen.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:get/get.dart';
@@ -11,17 +9,14 @@ import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/controller/placeController.dart';
 import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/controller/screenController.dart';
-import 'package:itaxi/model/post.dart';
-import 'package:itaxi/widget/addPostDialog.dart';
-import 'package:itaxi/widget/postListTile.dart';
-import 'package:itaxi/widget/selectPlaceDialog.dart';
 import 'package:itaxi/widget/tabView.dart';
 
 import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/placeSearch/searchScreen.dart';
 import 'package:itaxi/placeSearch/placeSearchController.dart';
 import 'package:itaxi/settings/settingScreen.dart';
-import 'package:itaxi/stopOverScreen.dart';
+import 'package:itaxi/widget/snackBar.dart';
+import 'package:itaxi/model/post.dart';
 
 class GatherScreen extends StatefulWidget {
   const GatherScreen({Key? key}) : super(key: key);
@@ -40,8 +35,6 @@ class _GatherScreenState extends State<GatherScreen> {
   PlaceSearchController _placeSearchController = Get.find();
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
-  String e = ""; // 요일 변수
-  int personCount = 1; // 인원수
 
   @override
   void initState() {
@@ -142,12 +135,10 @@ class _GatherScreenState extends State<GatherScreen> {
                                 labels: ["조회", "모집"],
                                 customTextStyles: [
                                   TextStyle(
-                                    fontFamily: 'Pretendard Variable',
                                     fontSize: 10.0,
                                     fontWeight: FontWeight.w600,
                                   ),
                                   TextStyle(
-                                    fontFamily: 'Pretendard Variable',
                                     fontSize: 10.0,
                                     fontWeight: FontWeight.w600,
                                   ),
@@ -197,13 +188,14 @@ class _GatherScreenState extends State<GatherScreen> {
                                           Get.to(() => SearchScreen());
                                         },
                                         child: Text(
-                                          "출발지 입력",
-                                          style: textTheme.headline2?.copyWith(
-                                              color: colorScheme.onPrimary,
-                                              fontWeight: FontWeight.w600),
+                                            _placeController.dep == null
+                                                ? "출발지 입력"
+                                                : _placeController.dep!.name!,
+                                            style: textTheme.headline2
+                                                ?.copyWith(
+                                                    color:
+                                                        colorScheme.onPrimary)
                                         ),
-                                        style: TextButton.styleFrom(
-                                            fixedSize: Size(85.w, 18.h)),
                                       ),
                                       Container(
                                         width: 180.w,
@@ -218,10 +210,13 @@ class _GatherScreenState extends State<GatherScreen> {
                                           Get.to(() => SearchScreen());
                                         },
                                         child: Text(
-                                          "도착지 입력",
-                                          style: textTheme.headline2?.copyWith(
-                                              color: colorScheme.onPrimary,
-                                              fontWeight: FontWeight.w600),
+                                            _placeController.dep == null
+                                                ? "도착지 입력"
+                                                : _placeController.dep!.name!,
+                                            style: textTheme.headline2
+                                                ?.copyWith(
+                                                color:
+                                                colorScheme.onPrimary)
                                         ),
                                         style: TextButton.styleFrom(
                                             fixedSize: Size(85.w, 18.h)),
@@ -386,13 +381,11 @@ class _GatherScreenState extends State<GatherScreen> {
                                 SizedBox(width: 76.17.w),
                                 IconButton(
                                   onPressed: () {
-                                    if (personCount != 1)
-                                      setState(() {
-                                        personCount--;
-                                      });
+                                    if (_addPostController.capacity != 1)
+                                      _addPostController.decreaseCapacity(_addPostController.capacity);
                                   },
                                   icon: Image.asset('assets/removeP.png'),
-                                  color: (personCount == 1)
+                                  color: (_addPostController.capacity == 1)
                                       ? colorScheme.tertiaryContainer
                                       : colorScheme.secondary,
                                 ),
@@ -400,7 +393,7 @@ class _GatherScreenState extends State<GatherScreen> {
                                   width: 8.w,
                                 ),
                                 Text(
-                                  "$personCount명",
+                                  "${_addPostController.capacity}명",
                                   style: textTheme.headline1?.copyWith(
                                       color: colorScheme.onPrimary,
                                       fontWeight: FontWeight.w600),
@@ -410,13 +403,13 @@ class _GatherScreenState extends State<GatherScreen> {
                                 ),
                                 IconButton(
                                   onPressed: () {
-                                    if (personCount != 4)
+                                    if (_addPostController.capacity != 4)
                                       setState(() {
-                                        personCount++;
+                                        _addPostController.capacity++;
                                       });
                                   },
                                   icon: Image.asset('assets/addPerson.png'),
-                                  color: (personCount == 4)
+                                  color: (_addPostController.capacity == 4)
                                       ? colorScheme.tertiaryContainer
                                       : colorScheme.secondary,
                                 ),
@@ -435,7 +428,45 @@ class _GatherScreenState extends State<GatherScreen> {
                         primary: Colors.blueAccent,
                         minimumSize: Size(342.w, 57.h),
                       ),
-                      onPressed: () {},
+                      onPressed: () async {
+                        if (_placeController.dep == null) {
+                          snackBar(context: context, title: '출발지를 선택해주세요.');
+                        } else if (_placeController.dep!.id == -1) {
+                          snackBar(context: context, title: '출발지를 다시 선택해주세요.');
+                        } else if (_placeController.dst == null) {
+                          snackBar(context: context, title: '도착지를 선택해주세요.');
+                        } else if (_placeController.dst!.id == -1) {
+                          snackBar(context: context, title: '도착지를 다시 선택해주세요.');
+                        } else if (DateTime.now()
+                            .difference(_dateController.mergeDateAndTime())
+                            .isNegative ==
+                            false) {
+                          snackBar(context: context, title: '출발시간을 다시 선택해주세요.');
+                        } else if (_addPostController.capacity == 0) {
+                          snackBar(context: context, title: '최대인원을 선택해주세요.');
+                        } else {
+                          Post post = Post(
+                            uid: _userController.uid,
+                            postType: _screenController.currentTabIndex,
+                            departure: _placeController.dep,
+                            destination: _placeController.dst,
+                            deptTime: _dateController.formattingDateTime(
+                              _dateController.mergeDateAndTime(),
+                            ),
+                            capacity: _addPostController.capacity,
+                          );
+                          Get.back();
+                          await _addPostController.fetchAddPost(post: post);
+                          await _postController.getPosts(
+                            depId: _placeController.dep?.id,
+                            dstId: _placeController.dst?.id,
+                            time: _dateController.formattingDateTime(
+                              _dateController.mergeDateAndTime(),
+                            ),
+                            postType: _screenController.currentTabIndex,
+                          );
+                        }
+                      },
                       child: Text(
                         "방 만들기",
                         style: textTheme.headline1?.copyWith(

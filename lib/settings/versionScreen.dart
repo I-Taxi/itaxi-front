@@ -15,21 +15,15 @@ class VersionScreen extends StatelessWidget {
         elevation: 0,
         centerTitle: true,
         backgroundColor: colorScheme.secondary,
-        title: Text(
-          '버전정보/개발자',
-          style: textTheme.subtitle1?.copyWith(
-            color: colorScheme.primary,
-          ),
-        ),
-        leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: Icon(
-            Icons.arrow_back_rounded,
-            color: colorScheme.primary,
-          ),
-        ),
+        automaticallyImplyLeading: false,
+        actions: [
+          IconButton(
+              onPressed: (){
+                Get.back();
+              },
+              icon: Icon(Icons.clear_sharp, color: colorScheme.tertiary,)
+          )
+        ],
       ),
       backgroundColor: colorScheme.secondary,
       body: ColorfulSafeArea(
@@ -38,24 +32,30 @@ class VersionScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
+              Text(
+                '버전정보/개발자',
+                style: textTheme.headline1?.copyWith(
+                  color: colorScheme.primary,
+                  fontWeight: FontWeight.bold
+                ),
+              ),
               SizedBox(
-                height: 168.h,
+                height: 140.h,
               ),
               Image.asset(
                 width: 82.w,
                 height: 56.h,
-                'assets/logo_2_new.png',
+                'assets/logo_text.png',
               ),
               SizedBox(
-                height: 12.h,
+                height: 19.56.h,
               ),
               Align(
                 alignment: Alignment.center,
                 child: Text(
-                  '최신 버전을 사용 중입니다.',
-                  style: textTheme.headline2?.copyWith(
+                  '현재 버전 3.0',
+                  style: textTheme.subtitle1?.copyWith(
                     color: colorScheme.primary,
-                    fontFamily: 'Noto Sans',
                   ),
                 ),
               ),
@@ -65,7 +65,7 @@ class VersionScreen extends StatelessWidget {
               Align(
                 alignment: Alignment.center,
                 child: Text(
-                  '현재 버전 3.0',
+                  '최신 버전을 사용 중입니다.',
                   style: textTheme.subtitle1?.copyWith(
                     color: colorScheme.primary,
                   ),

@@ -1,17 +1,20 @@
+import 'dart:io';
+
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:itaxi/controller/signInController.dart';
+import 'package:itaxi/src/theme.dart';
 
-class ForgotPwScreen extends StatefulWidget {
-  ForgotPwScreen({Key? key}) : super(key: key);
+class ResetPWScreen extends StatefulWidget {
+  ResetPWScreen({Key? key}) : super(key: key);
 
   @override
-  State<ForgotPwScreen> createState() => _ForgotPwScreenState();
+  State<ResetPWScreen> createState() => _ResetPWScreenState();
 }
 
-class _ForgotPwScreenState extends State<ForgotPwScreen> {
+class _ResetPWScreenState extends State<ResetPWScreen> {
   SignInController _signInController = Get.find();
 
 
@@ -63,88 +66,88 @@ class _ForgotPwScreenState extends State<ForgotPwScreen> {
                 ),
                 child: Column(
                   children: [
-                    Text('비밀번호 찾기', style: textTheme.headline1?.copyWith(
-                      color: colorScheme.onPrimary,
-                      fontWeight: FontWeight.bold
-                    ),),
-                SizedBox(
-                  height: 52.0.h,
-                ),
-                // 이메일 입력
-                TextFormField(
-                    controller: _emailController,
-                    autocorrect: false,
-                    autovalidateMode: AutovalidateMode.onUserInteraction,
-                    decoration: InputDecoration(
-                      hintText: "가입한 이메일을 입력해주세요",
-                      suffixText: '@handong.ac.kr',
-                      suffixStyle: textTheme.subtitle1?.copyWith(
+                    Text('비밀번호 재설정', style: textTheme.headline1?.copyWith(
                         color: colorScheme.onPrimary,
-                      ),
-                      enabledBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: colorScheme.onPrimary,
-                          width: 1.0,
+                        fontWeight: FontWeight.bold
+                    ),),
+                    SizedBox(
+                      height: 52.0.h,
+                    ),
+                    // 이메일 입력
+                    TextFormField(
+                        controller: _emailController,
+                        autocorrect: false,
+                        autovalidateMode: AutovalidateMode.onUserInteraction,
+                        decoration: InputDecoration(
+                          hintText: "가입한 이메일을 입력해주세요",
+                          suffixText: '@handong.ac.kr',
+                          suffixStyle: textTheme.subtitle1?.copyWith(
+                            color: colorScheme.onPrimary,
+                          ),
+                          enabledBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: colorScheme.onPrimary,
+                              width: 1.0,
+                            ),
+                          ),
+                          focusedBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                              color: colorScheme.secondary,
+                              width: 1.0,
+                            ),
+                          ),
+                        ),
+                        onChanged: (value) {
+                          _signInController.email = '$value@handong.ac.kr';
+                          if(value.length > 0){
+                            setState(() {
+                              isValueEmpty = false;
+                            });
+                          }
+                          else{
+                            setState(() {
+                              isValueEmpty = true;
+                            });
+                          }
+                        },
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return '이메일을 입력해주세요';
+                          }
+                          else {
+                            return null;
+                          }
+                        }),
+                    SizedBox(
+                      height: 59.0.h,
+                    ),
+                    ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        elevation: 0,
+                        backgroundColor: isValueEmpty ? colorScheme.tertiary : colorScheme.secondary,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(8.0),
                         ),
                       ),
-                      focusedBorder: UnderlineInputBorder(
-                        borderSide: BorderSide(
-                          color: colorScheme.secondary,
-                          width: 1.0,
+                      onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                          showConfirmDialog(context);
+                        }
+                      },
+                      child: Text(
+                        '완료',
+                        style: textTheme.subtitle1!.copyWith(
+                          color: colorScheme.primary,
                         ),
                       ),
                     ),
-                    onChanged: (value) {
-                      _signInController.email = '$value@handong.ac.kr';
-                      if(value.length > 0){
-                        setState(() {
-                          isValueEmpty = false;
-                        });
-                      }
-                      else{
-                        setState(() {
-                          isValueEmpty = true;
-                        });
-                      }
-                    },
-                    validator: (value) {
-                      if (value!.isEmpty) {
-                        return '이메일을 입력해주세요';
-                      }
-                      else {
-                        return null;
-                      }
-                    }),
-                SizedBox(
-                  height: 59.0.h,
+                  ],
                 ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    backgroundColor: isValueEmpty ? colorScheme.tertiary : colorScheme.secondary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                  ),
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      showConfirmDialog(context);
-                    }
-                  },
-                  child: Text(
-                    '완료',
-                    style: textTheme.subtitle1!.copyWith(
-                      color: colorScheme.primary,
-                    ),
-                  ),
-                  ),
-                ],
               ),
             ),
           ),
         ),
       ),
-    ),
       bottomNavigationBar: Material(
         color: isValueEmpty ? colorScheme.tertiaryContainer : colorScheme.secondary,
         child: InkWell(
@@ -158,7 +161,7 @@ class _ForgotPwScreenState extends State<ForgotPwScreen> {
               child: Text(
                 "이메일로 재설정 링크 받기",
                 style: textTheme.subtitle1!.copyWith(
-                  color: colorScheme.onPrimary
+                    color: colorScheme.onPrimary
                 ),
               ),
             ),
@@ -215,22 +218,22 @@ class _ForgotPwScreenState extends State<ForgotPwScreen> {
                   height: 15.h,
                 ),
                 RichText(
-                    text: TextSpan(
+                  text: TextSpan(
                       text: "메일이 보이지 않는다면, ",
                       style: textTheme.subtitle1?.copyWith(
-                        color: colorScheme.onPrimary
+                          color: colorScheme.onPrimary
                       ),
                       children: <TextSpan>[
                         TextSpan(text: "스팸함을\n", style: textTheme.subtitle1?.copyWith(
-                          color: colorScheme.secondary
+                            color: colorScheme.secondary
                         )),
                         TextSpan(
-                          text: "확인해주세요", style: textTheme.subtitle1?.copyWith(
-                          color: colorScheme.onPrimary
+                            text: "확인해주세요", style: textTheme.subtitle1?.copyWith(
+                            color: colorScheme.onPrimary
                         )
                         )
                       ]
-                    ),
+                  ),
                 ),
 
                 const Spacer(),

@@ -50,17 +50,17 @@ void addPostDialog({required BuildContext context}) {
                         },
                         child: (_tabViewController.currentTabIndex == 1)
                             ? Text(
-                                DateFormat('택시')
-                                    .format(_dateController.pickedDate!),
-                                style: textTheme.headline2
-                                    ?.copyWith(color: colorScheme.secondary),
-                              )
+                          DateFormat('택시')
+                              .format(_dateController.pickedDate!),
+                          style: textTheme.headline2
+                              ?.copyWith(color: colorScheme.secondary),
+                        )
                             : Text(
-                                DateFormat('택시')
-                                    .format(_dateController.pickedDate!),
-                                style: textTheme.headline2
-                                    ?.copyWith(color: colorScheme.tertiary),
-                              ),
+                          DateFormat('택시')
+                              .format(_dateController.pickedDate!),
+                          style: textTheme.headline2
+                              ?.copyWith(color: colorScheme.tertiary),
+                        ),
                       ),
                       SizedBox(
                         width: 40.0.h,
@@ -72,17 +72,17 @@ void addPostDialog({required BuildContext context}) {
                         },
                         child: (_tabViewController.currentTabIndex == 2)
                             ? Text(
-                                DateFormat('카풀')
-                                    .format(_dateController.pickedDate!),
-                                style: textTheme.headline2
-                                    ?.copyWith(color: colorScheme.secondary),
-                              )
+                          DateFormat('카풀')
+                              .format(_dateController.pickedDate!),
+                          style: textTheme.headline2
+                              ?.copyWith(color: colorScheme.secondary),
+                        )
                             : Text(
-                                DateFormat('카풀')
-                                    .format(_dateController.pickedDate!),
-                                style: textTheme.headline2
-                                    ?.copyWith(color: colorScheme.tertiary),
-                              ),
+                          DateFormat('카풀')
+                              .format(_dateController.pickedDate!),
+                          style: textTheme.headline2
+                              ?.copyWith(color: colorScheme.tertiary),
+                        ),
                       )
                     ],
                   );
@@ -107,7 +107,7 @@ void addPostDialog({required BuildContext context}) {
                       padding: EdgeInsets.fromLTRB(20.w, 5.h, 20.w, 5.h),
                       decoration: BoxDecoration(
                         borderRadius:
-                            const BorderRadius.all(Radius.circular(16.0)),
+                        const BorderRadius.all(Radius.circular(16.0)),
                         border: Border.all(
                           color: colorScheme.tertiary,
                           width: 0.3,
@@ -117,16 +117,16 @@ void addPostDialog({required BuildContext context}) {
                         builder: (_) {
                           return _placeController.dep == null
                               ? Text(
-                                  '출발',
-                                  style: textTheme.subtitle1
-                                      ?.copyWith(color: colorScheme.tertiary),
-                                )
+                            '출발',
+                            style: textTheme.subtitle1
+                                ?.copyWith(color: colorScheme.tertiary),
+                          )
                               : Text(
-                                  '${_placeController.dep?.name}',
-                                  overflow: TextOverflow.ellipsis,
-                                  style: textTheme.subtitle1
-                                      ?.copyWith(color: colorScheme.tertiary),
-                                );
+                            '${_placeController.dep?.name}',
+                            overflow: TextOverflow.ellipsis,
+                            style: textTheme.subtitle1
+                                ?.copyWith(color: colorScheme.tertiary),
+                          );
                         },
                       ),
                     ),
@@ -159,7 +159,7 @@ void addPostDialog({required BuildContext context}) {
                       padding: EdgeInsets.fromLTRB(20.w, 5.h, 20.w, 5.h),
                       decoration: BoxDecoration(
                         borderRadius:
-                            const BorderRadius.all(Radius.circular(16.0)),
+                        const BorderRadius.all(Radius.circular(16.0)),
                         border: Border.all(
                           color: colorScheme.tertiary,
                           width: 0.3,
@@ -169,16 +169,16 @@ void addPostDialog({required BuildContext context}) {
                         builder: (context) {
                           return _placeController.dst == null
                               ? Text(
-                                  '도착',
-                                  style: textTheme.subtitle1
-                                      ?.copyWith(color: colorScheme.tertiary),
-                                )
+                            '도착',
+                            style: textTheme.subtitle1
+                                ?.copyWith(color: colorScheme.tertiary),
+                          )
                               : Text(
-                                  '${_placeController.dst?.name}',
-                                  overflow: TextOverflow.ellipsis,
-                                  style: textTheme.subtitle1
-                                      ?.copyWith(color: colorScheme.tertiary),
-                                );
+                            '${_placeController.dst?.name}',
+                            overflow: TextOverflow.ellipsis,
+                            style: textTheme.subtitle1
+                                ?.copyWith(color: colorScheme.tertiary),
+                          );
                         },
                       ),
                     ),
@@ -237,7 +237,6 @@ void addPostDialog({required BuildContext context}) {
                     '출발시간',
                     style: textTheme.headline2?.copyWith(
                       color: colorScheme.tertiary,
-                      fontFamily: 'NotoSans',
                     ),
                   ),
                   const Spacer(),
@@ -269,218 +268,113 @@ void addPostDialog({required BuildContext context}) {
               SizedBox(
                 height: 20.0.h,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    '최대인원',
-                    style: textTheme.headline2?.copyWith(
-                      color: colorScheme.tertiary,
-                      fontFamily: 'NotoSans',
-                    ),
-                  ),
-                  GetBuilder<AddPostController>(
-                    builder: (_) {
-                      return Row(
-                        children: [
-                          GestureDetector(
-                            behavior: HitTestBehavior.opaque,
-                            onTap: () {
-                              _addPostController.changeCapacity(2);
-                            },
-                            child: (_addPostController.capacity == 2)
-                                ? Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 10.w,
-                                    ),
-                                    child: Text(
-                                      '2',
-                                      style: textTheme.headline2?.copyWith(
-                                          color: colorScheme.secondary),
-                                    ),
-                                  )
-                                : Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 10.w,
-                                    ),
-                                    child: Text(
-                                      '2',
-                                      style: textTheme.headline2?.copyWith(
-                                          color: colorScheme.tertiary),
-                                    ),
-                                  ),
-                          ),
-                          SizedBox(
-                            width: 8.w,
-                          ),
-                          GestureDetector(
-                            behavior: HitTestBehavior.opaque,
-                            onTap: () {
-                              _addPostController.changeCapacity(3);
-                            },
-                            child: (_addPostController.capacity == 3)
-                                ? Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 10.w,
-                                    ),
-                                    child: Text(
-                                      '3',
-                                      style: textTheme.headline2?.copyWith(
-                                          color: colorScheme.secondary),
-                                    ),
-                                  )
-                                : Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 10.w,
-                                    ),
-                                    child: Text(
-                                      '3',
-                                      style: textTheme.headline2?.copyWith(
-                                          color: colorScheme.tertiary),
-                                    ),
-                                  ),
-                          ),
-                          SizedBox(
-                            width: 8.w,
-                          ),
-                          GestureDetector(
-                            behavior: HitTestBehavior.opaque,
-                            onTap: () {
-                              _addPostController.changeCapacity(4);
-                            },
-                            child: (_addPostController.capacity == 4)
-                                ? Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 10.w,
-                                    ),
-                                    child: Text(
-                                      '4',
-                                      style: textTheme.headline2?.copyWith(
-                                          color: colorScheme.secondary),
-                                    ),
-                                  )
-                                : Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 10.w,
-                                    ),
-                                    child: Text(
-                                      '4',
-                                      style: textTheme.headline2?.copyWith(
-                                          color: colorScheme.tertiary),
-                                    ),
-                                  ),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20.0.h,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    '나의 짐',
-                    style: textTheme.headline2?.copyWith(
-                      color: colorScheme.tertiary,
-                      fontFamily: 'NotoSans',
-                    ),
-                  ),
-                  GetBuilder<AddPostController>(
-                    builder: (_) {
-                      return Row(
-                        children: [
-                          GestureDetector(
-                            behavior: HitTestBehavior.opaque,
-                            onTap: () {
-                              _addPostController.changeLuggage(0);
-                            },
-                            child: (_addPostController.luggage == 0)
-                                ? Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 6.w),
-                                    child: Text(
-                                      '없음',
-                                      style: textTheme.headline2?.copyWith(
-                                          color: colorScheme.secondary),
-                                    ),
-                                  )
-                                : Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 6.w),
-                                    child: Text(
-                                      '없음',
-                                      style: textTheme.headline2?.copyWith(
-                                          color: colorScheme.tertiary),
-                                    ),
-                                  ),
-                          ),
-                          SizedBox(
-                            width: 8.w,
-                          ),
-                          GestureDetector(
-                            behavior: HitTestBehavior.opaque,
-                            onTap: () {
-                              _addPostController.changeLuggage(1);
-                            },
-                            child: (_addPostController.luggage == 1)
-                                ? Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 6.w),
-                                    child: Text(
-                                      '소',
-                                      style: textTheme.headline2?.copyWith(
-                                          color: colorScheme.secondary),
-                                    ),
-                                  )
-                                : Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 6.w),
-                                    child: Text(
-                                      '소',
-                                      style: textTheme.headline2?.copyWith(
-                                          color: colorScheme.tertiary),
-                                    ),
-                                  ),
-                          ),
-                          SizedBox(
-                            width: 8.w,
-                          ),
-                          GestureDetector(
-                            behavior: HitTestBehavior.opaque,
-                            onTap: () {
-                              _addPostController.changeLuggage(2);
-                            },
-                            child: (_addPostController.luggage == 2)
-                                ? Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 6.w),
-                                    child: Text(
-                                      '대',
-                                      style: textTheme.headline2?.copyWith(
-                                          color: colorScheme.secondary),
-                                    ),
-                                  )
-                                : Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 6.w),
-                                    child: Text(
-                                      '대',
-                                      style: textTheme.headline2?.copyWith(
-                                          color: colorScheme.tertiary),
-                                    ),
-                                  ),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ],
-              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   crossAxisAlignment: CrossAxisAlignment.center,
+              //   children: [
+              //     Text(
+              //       '최대인원',
+              //       style: textTheme.headline2?.copyWith(
+              //         color: colorScheme.tertiary,
+              //       ),
+              //     ),
+              //     // GetBuilder<AddPostController>(
+              //     //   builder: (_) {
+              //     //     return Row(
+              //     //       children: [
+              //     //         GestureDetector(
+              //     //           behavior: HitTestBehavior.opaque,
+              //     //           onTap: () {
+              //     //             _addPostController.changeCapacity(2);
+              //     //           },
+              //     //           child: (_addPostController.capacity == 2)
+              //     //               ? Container(
+              //     //                   padding: EdgeInsets.symmetric(
+              //     //                     horizontal: 10.w,
+              //     //                   ),
+              //     //                   child: Text(
+              //     //                     '2',
+              //     //                     style: textTheme.headline2?.copyWith(
+              //     //                         color: colorScheme.secondary),
+              //     //                   ),
+              //     //                 )
+              //     //               : Container(
+              //     //                   padding: EdgeInsets.symmetric(
+              //     //                     horizontal: 10.w,
+              //     //                   ),
+              //     //                   child: Text(
+              //     //                     '2',
+              //     //                     style: textTheme.headline2?.copyWith(
+              //     //                         color: colorScheme.tertiary),
+              //     //                   ),
+              //     //                 ),
+              //     //         ),
+              //     //         SizedBox(
+              //     //           width: 8.w,
+              //     //         ),
+              //     //         GestureDetector(
+              //     //           behavior: HitTestBehavior.opaque,
+              //     //           onTap: () {
+              //     //             _addPostController.changeCapacity(3);
+              //     //           },
+              //     //           child: (_addPostController.capacity == 3)
+              //     //               ? Container(
+              //     //                   padding: EdgeInsets.symmetric(
+              //     //                     horizontal: 10.w,
+              //     //                   ),
+              //     //                   child: Text(
+              //     //                     '3',
+              //     //                     style: textTheme.headline2?.copyWith(
+              //     //                         color: colorScheme.secondary),
+              //     //                   ),
+              //     //                 )
+              //     //               : Container(
+              //     //                   padding: EdgeInsets.symmetric(
+              //     //                     horizontal: 10.w,
+              //     //                   ),
+              //     //                   child: Text(
+              //     //                     '3',
+              //     //                     style: textTheme.headline2?.copyWith(
+              //     //                         color: colorScheme.tertiary),
+              //     //                   ),
+              //     //                 ),
+              //     //         ),
+              //     //         SizedBox(
+              //     //           width: 8.w,
+              //     //         ),
+              //     //         GestureDetector(
+              //     //           behavior: HitTestBehavior.opaque,
+              //     //           onTap: () {
+              //     //             _addPostController.changeCapacity(4);
+              //     //           },
+              //     //           child: (_addPostController.capacity == 4)
+              //     //               ? Container(
+              //     //                   padding: EdgeInsets.symmetric(
+              //     //                     horizontal: 10.w,
+              //     //                   ),
+              //     //                   child: Text(
+              //     //                     '4',
+              //     //                     style: textTheme.headline2?.copyWith(
+              //     //                         color: colorScheme.secondary),
+              //     //                   ),
+              //     //                 )
+              //     //               : Container(
+              //     //                   padding: EdgeInsets.symmetric(
+              //     //                     horizontal: 10.w,
+              //     //                   ),
+              //     //                   child: Text(
+              //     //                     '4',
+              //     //                     style: textTheme.headline2?.copyWith(
+              //     //                         color: colorScheme.tertiary),
+              //     //                   ),
+              //     //                 ),
+              //     //         ),
+              //     //       ],
+              //     //     );
+              //     //   },
+              //     // ),
+              //   ],
+              // ),
               const Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -508,23 +402,23 @@ void addPostDialog({required BuildContext context}) {
                       } else if (_placeController.dst!.id == -1) {
                         snackBar(context: context, title: '도착지를 다시 선택해주세요.');
                       } else if (DateTime.now()
-                              .difference(_dateController.mergeDateAndTime())
-                              .isNegative ==
+                          .difference(_dateController.mergeDateAndTime())
+                          .isNegative ==
                           false) {
                         snackBar(context: context, title: '출발시간을 다시 선택해주세요.');
                       } else if (_addPostController.capacity == 0) {
                         snackBar(context: context, title: '최대인원을 선택해주세요.');
                       } else {
                         Post post = Post(
-                            uid: _userController.uid,
-                            postType: _tabViewController.currentTabIndex,
-                            departure: _placeController.dep,
-                            destination: _placeController.dst,
-                            deptTime: _dateController.formattingDateTime(
-                              _dateController.mergeDateAndTime(),
-                            ),
-                            capacity: _addPostController.capacity,
-                            luggage: _addPostController.luggage);
+                          uid: _userController.uid,
+                          postType: _tabViewController.currentTabIndex,
+                          departure: _placeController.dep,
+                          destination: _placeController.dst,
+                          deptTime: _dateController.formattingDateTime(
+                            _dateController.mergeDateAndTime(),
+                          ),
+                          capacity: _addPostController.capacity,
+                        );
                         Get.back();
                         await _addPostController.fetchAddPost(post: post);
                         await _postController.getPosts(
