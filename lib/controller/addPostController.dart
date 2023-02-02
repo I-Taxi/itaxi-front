@@ -46,6 +46,7 @@ class AddPostController extends GetxController {
     if (response.statusCode == 200) {
       Post result = Post.fromDocs(json.decode(utf8.decode(response.bodyBytes)));
       post = post.copyWith(id: result.id);
+      
       await ChatRepository().setPost(post: post);
       await _historyController.getHistorys();
       return response.statusCode;
