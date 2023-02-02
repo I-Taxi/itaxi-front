@@ -119,6 +119,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   controller: _idController,
                   autocorrect: false,
                   cursorColor: colorScheme.tertiary,
+                      style: textTheme.bodyText1?.copyWith(color: colorScheme.onPrimary),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: InputDecoration(
                     suffixText: '@handong.ac.kr',
@@ -165,6 +166,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   autocorrect: false,
                   obscureText: _isObscure1,
                   cursorColor: colorScheme.tertiary,
+                      style: textTheme.bodyText1?.copyWith(color: colorScheme.onPrimary),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(
@@ -223,6 +225,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   obscureText: _isObscure2,
                   cursorColor: colorScheme.tertiary,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
+                      style: textTheme.bodyText1?.copyWith(color: colorScheme.onPrimary),
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
@@ -278,6 +281,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   autocorrect: false,
                   cursorColor: colorScheme.tertiary,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
+                      style: textTheme.bodyText1?.copyWith(color: colorScheme.onPrimary),
                   decoration: InputDecoration(
                     enabledBorder: UnderlineInputBorder(
                       borderSide: BorderSide(
@@ -315,6 +319,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   controller: _phoneController,
                   autocorrect: false,
                   cursorColor: colorScheme.tertiary,
+                      style: textTheme.bodyText1?.copyWith(color: colorScheme.onPrimary),
                   autovalidateMode: AutovalidateMode.onUserInteraction,
                   keyboardType: TextInputType.number,
                   // inputFormatters: [FilteringTextInputFormatter.digitsOnly],
@@ -433,11 +438,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   children: <Widget>[
                     RawMaterialButton(
                       child: Text(
-                        '이용약관 보기',
-                            style: textTheme.bodyText2?.copyWith(
+                        '이용약관', style: textTheme.bodyText2?.copyWith(
                           color: colorScheme.tertiary,
-                          decoration: TextDecoration.underline,
-                        ),
+                          decoration: TextDecoration.underline)
                       ),
                       onPressed: () {
                         Get.to(TermOfServiceScreen());
@@ -477,7 +480,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   children: <Widget>[
                 RawMaterialButton(
                 child: Text(
-                            '개인정보처리방침 보기',
+                            '개인정보처리방침',
                             style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiary, decoration: TextDecoration.underline),
                           ),
             onPressed: () {

@@ -103,7 +103,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     TextFormField(
                       controller: _idController,
                       autocorrect: false,
-                      style: textTheme.bodyText2?.copyWith(
+                      style: textTheme.bodyText1?.copyWith(
                         color: colorScheme.primary,
                       ),
                       decoration: InputDecoration(
@@ -159,7 +159,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       controller: _pwController,
                       autocorrect: false,
                       obscureText: _isObscure,
-                        style: textTheme.subtitle1?.copyWith(
+                        style: textTheme.bodyText1?.copyWith(
                         color: colorScheme.primary,
                         ),
                         decoration: InputDecoration(
