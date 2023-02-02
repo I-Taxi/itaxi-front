@@ -100,7 +100,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                                   children: [
                                     Text(
                                       "${snapshot.data!.name.toString()}학부생",
-                                      style: textTheme.headline1!.copyWith(
+                                      style: textTheme.headline3!.copyWith(
                                           color: colorScheme.onPrimary,
                                           fontWeight: FontWeight.w700),
                                     ),
@@ -110,7 +110,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                                     Text(
                                       snapshot.data!.email.toString(),
                                       overflow: TextOverflow.ellipsis,
-                                      style: textTheme.bodyText1!.copyWith(
+                                      style: textTheme.bodyText2!.copyWith(
                                         color: colorScheme.tertiaryContainer,
                                       ),
                                     ),
@@ -119,7 +119,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                                     ),
                                     Text(
                                       snapshot.data!.phone.toString(),
-                                      style: textTheme.bodyText1!.copyWith(
+                                      style: textTheme.bodyText2!.copyWith(
                                         color: colorScheme.tertiaryContainer,
                                       ),
                                     ),
@@ -131,7 +131,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                                 GestureDetector(
                                   onTap: () {},
                                   child: Image.asset(
-                                    "assets/change_profile.png",
+                                    "assets/profile.png",
                                     width: 88.w,
                                     height: 88.h,
                                   ),
@@ -150,9 +150,8 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                             ),
                             Text(
                               "계정 관리",
-                              style: textTheme.headline1!.copyWith(
-                                  color: colorScheme.onPrimary,
-                                  fontSize: 18 //ios일 경우 20 전반적인 수정 작업 필요
+                              style: textTheme.subtitle1!.copyWith(
+                                color: colorScheme.onPrimary,
                                   ),
                             ),
                             SizedBox(
@@ -188,9 +187,8 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                             ),
                             Text(
                               "결제 관리",
-                              style: textTheme.headline1!.copyWith(
-                                  color: colorScheme.onPrimary,
-                                  fontSize: 18 //ios일 경우 20 전반적인 수정 작업 필요
+                              style: textTheme.subtitle1!.copyWith(
+                                color: colorScheme.onPrimary,
                                   ),
                             ),
                             SizedBox(
@@ -204,10 +202,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                       return Center(
                         child: Text(
                           '로딩 중 오류가 발생하였습니다 :<',
-                          style: textTheme.headline2?.copyWith(
-                            color: colorScheme.tertiary,
-                            fontFamily: 'NotoSans',
-                          ),
+                          style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiary)
                         ),
                       );
                     }
@@ -215,10 +210,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                     return Center(
                       child: Text(
                         '${snapshot.error}',
-                        style: textTheme.headline2?.copyWith(
-                          color: colorScheme.tertiary,
-                          fontFamily: 'NotoSans',
-                        ),
+                        style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiary)
                       ),
                     );
                   }
@@ -251,7 +243,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
               children: [
                 Text(
                   title,
-                  style: textTheme.headline1!
+                  style: textTheme.bodyText1!
                       .copyWith(color: colorScheme.onPrimary),
                 ),
                 SizedBox(
@@ -301,7 +293,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                 Text(
                   title,
                   style:
-                      textTheme.headline1!.copyWith(color: Color(0xffE67373)),
+                      textTheme.bodyText1!.copyWith(color: Color(0xffE67373)),
                 ),
                 SizedBox(
                   width: 32.w,
