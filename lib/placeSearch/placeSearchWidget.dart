@@ -109,7 +109,7 @@ Widget unselectedSearchTypeView({required String viewText, required BuildContext
       alignment: Alignment.center,
       child: Text(
         viewText,
-        style: textTheme.headline1?.copyWith(color: colorScheme.tertiary),
+        style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiary),
       ),
     ),
   );
@@ -256,7 +256,10 @@ Widget favoritePlaceSearchTile({
               ),
               onPressed: favoritePressed,
             ),
-            title: Text(placeList[index].place!.name!),
+            title: Text(
+              placeList[index].place!.name!,
+              style: textTheme.bodyText1?.copyWith(color: colorScheme.onPrimary),
+            ),
           );
         }
     ),

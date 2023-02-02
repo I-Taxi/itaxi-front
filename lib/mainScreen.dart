@@ -120,31 +120,28 @@ class _MainScreenState extends State<MainScreen> {
                             child: SizedBox(
                               width: 296.w,
                               height: 57.h,
-                              child: FittedBox(
-                                fit: BoxFit.fill,
-                                child: ToggleSwitch(
-                                  borderColor: [Color(0xf6f6f6f6)],
-                                  borderWidth: 2.0,
-                                  cornerRadius: 30.0,
-                                  activeBgColors: [
-                                    [colorScheme.primary],
-                                    [colorScheme.primary]
-                                  ],
-                                  inactiveBgColor: Color(0xfff6f6f6),
-                                  initialLabelIndex: 0,
-                                  totalSwitches: 2,
-                                  labels: ["조회", "모집"],
-                                  customTextStyles: [
-                                    textTheme.subtitle2?.copyWith(
-                                      color: colorScheme.onTertiary,
-                                    ),
-                                  ],
-                                  radiusStyle: true,
-                                  onToggle: (index) {
-                                    if (index == 1) controller.changeToggleIndex(1);
-                                    // 어떻게 하면 모집란으로 바로 가게 할 수 있을까???
-                                  },
-                                ),
+                              child: ToggleSwitch(
+                                borderColor: [Color(0xf6f6f6f6)],
+                                borderWidth: 2.0,
+                                cornerRadius: 30.0,
+                                activeBgColors: [
+                                  [colorScheme.primary],
+                                  [colorScheme.primary]
+                                ],
+                                inactiveBgColor: Color(0xfff6f6f6),
+                                initialLabelIndex: 0,
+                                totalSwitches: 2,
+                                labels: ["조회", "모집"],
+                                customTextStyles: [
+                                  textTheme.subtitle2?.copyWith(
+                                    color: colorScheme.onTertiary,
+                                  ),
+                                ],
+                                radiusStyle: true,
+                                onToggle: (index) {
+                                  if (index == 1) controller.changeToggleIndex(1);
+                                  // 어떻게 하면 모집란으로 바로 가게 할 수 있을까???
+                                },
                               ),
                             ),
                           ),
@@ -160,10 +157,16 @@ class _MainScreenState extends State<MainScreen> {
                                   SizedBox(
                                     width: 19.w,
                                   ),
-                                  Image(
-                                    image: AssetImage('assets/participant/1_1.png'),
-                                    height: 59.16.h,
-                                    width: 24.w,
+                                  Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 5.h,
+                                      ),
+                                      Image(
+                                        image: AssetImage('assets/place/dep-dest.png'),
+                                        width: 23.w,
+                                      ),
+                                    ],
                                   ),
                                   SizedBox(
                                     width: 19.w,
@@ -218,7 +221,7 @@ class _MainScreenState extends State<MainScreen> {
                           Padding(
                             padding: EdgeInsets.only(right: 24.w, left: 23.w),
                             child: SizedBox(
-                              height: 56.59.h,
+                              height: 20.h,
                               width: 295.w,
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
