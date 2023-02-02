@@ -58,32 +58,41 @@ class ITaxiTheme {
   }
 
   static const ColorScheme lightColorScheme = ColorScheme(
-      primary: Color(0xFFFFFFFF),
-      onPrimary: Colors.black,
-      secondary: Color(0xff70b1f2), //Color(0xff3fa9f5) - 기존 color
-      onSecondary: Color(0xFFFFFFFF),
-      error: Color(0xffb00020),
-      onError: Colors.white,
-      background: Color(0xFFFFFFFF),
-      onBackground: Colors.black,
-      surface: Color(0xFFFFFFFF),
-      onSurface: Colors.black,
-      tertiary: Color(0xff919191),
-      tertiaryContainer: Color(0xff717171),
-      shadow: Color(0xffCCCCCC),
-      brightness: Brightness.light);
+    primary: Color(0xFFFFFFFF),
+    onPrimary: Colors.black,
+    secondary: Color(0xff70b1f2), //Color(0xff3fa9f5) - 기존 color
+    onSecondary: Color(0xFFFFFFFF),
+    secondaryContainer: Color(0XFF509DE9),
+    error: Color(0xffb00020),
+    onError: Colors.white,
+    background: Color(0xFFFFFFFF),
+    onBackground: Color(0XFFF1F1F1),
+    surface: Color(0xFFFFFFFF),
+    onSurface: Colors.black,
+    tertiary: Color(0xff919191),
+    tertiaryContainer: Color(0xff717171),
+    shadow: Color(0xffCCCCCC),
+    brightness: Brightness.light,
+    onTertiary: Color(0XFF3E3E3E),
+  );
 
   static const TextTheme textThemeDefault = TextTheme(
-    headline1: TextStyle(fontSize: 16, fontFamily: 'Pretendard Variable'),
-    headline2: TextStyle(fontSize: 15, fontFamily: 'Pretendard Variable'),
-    subtitle1: TextStyle(fontSize: 13, fontFamily: 'Pretendard Variable'),
-    bodyText1: TextStyle(fontSize: 11, fontFamily: 'Pretendard Variable'),
+    headline1: TextStyle(fontSize: 40, fontFamily: 'Black'),
+    headline2: TextStyle(fontSize: 32, fontFamily: 'Bold'),
+    headline3: TextStyle(fontSize: 24, fontFamily: 'Bold'),
+    subtitle1: TextStyle(fontSize: 20, fontFamily: 'Medium'),
+    subtitle2: TextStyle(fontSize: 16, fontFamily: 'SemiBold'),
+    bodyText1: TextStyle(fontSize: 16, fontFamily: 'Regular'),
+    bodyText2: TextStyle(fontSize: 13, fontFamily: 'Regular'),
   );
 
   static const TextTheme textThemeIOS = TextTheme(
-    headline1: TextStyle(fontSize: 18, fontFamily: 'Pretendard Variable'),
-    headline2: TextStyle(fontSize: 17, fontFamily: 'Pretendard Variable'),
-    subtitle1: TextStyle(fontSize: 15, fontFamily: 'Pretendard Variable'),
-    bodyText1: TextStyle(fontSize: 13, fontFamily: 'Pretendard Variable'),
+    headline1: TextStyle(fontSize: 42, fontFamily: 'Black'),
+    headline2: TextStyle(fontSize: 34, fontFamily: 'Bold'),
+    headline3: TextStyle(fontSize: 26, fontFamily: 'Bold'),
+    subtitle1: TextStyle(fontSize: 22, fontFamily: 'Medium'),
+    subtitle2: TextStyle(fontSize: 18, fontFamily: 'SemiBold'),
+    bodyText1: TextStyle(fontSize: 18, fontFamily: 'Regular'),
+    bodyText2: TextStyle(fontSize: 15, fontFamily: 'Regular'),
   );
 }

@@ -50,16 +50,12 @@ void addPostDialog({required BuildContext context}) {
                         },
                         child: (_tabViewController.currentTabIndex == 1)
                             ? Text(
-                                DateFormat('택시')
-                                    .format(_dateController.pickedDate!),
-                                style: textTheme.headline2
-                                    ?.copyWith(color: colorScheme.secondary),
+                                DateFormat('택시').format(_dateController.pickedDate!),
+                                style: textTheme.headline2?.copyWith(color: colorScheme.secondary),
                               )
                             : Text(
-                                DateFormat('택시')
-                                    .format(_dateController.pickedDate!),
-                                style: textTheme.headline2
-                                    ?.copyWith(color: colorScheme.tertiary),
+                                DateFormat('택시').format(_dateController.pickedDate!),
+                                style: textTheme.headline2?.copyWith(color: colorScheme.tertiary),
                               ),
                       ),
                       SizedBox(
@@ -72,16 +68,12 @@ void addPostDialog({required BuildContext context}) {
                         },
                         child: (_tabViewController.currentTabIndex == 2)
                             ? Text(
-                                DateFormat('카풀')
-                                    .format(_dateController.pickedDate!),
-                                style: textTheme.headline2
-                                    ?.copyWith(color: colorScheme.secondary),
+                                DateFormat('카풀').format(_dateController.pickedDate!),
+                                style: textTheme.headline2?.copyWith(color: colorScheme.secondary),
                               )
                             : Text(
-                                DateFormat('카풀')
-                                    .format(_dateController.pickedDate!),
-                                style: textTheme.headline2
-                                    ?.copyWith(color: colorScheme.tertiary),
+                                DateFormat('카풀').format(_dateController.pickedDate!),
+                                style: textTheme.headline2?.copyWith(color: colorScheme.tertiary),
                               ),
                       )
                     ],
@@ -106,8 +98,7 @@ void addPostDialog({required BuildContext context}) {
                       alignment: Alignment.center,
                       padding: EdgeInsets.fromLTRB(20.w, 5.h, 20.w, 5.h),
                       decoration: BoxDecoration(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(16.0)),
+                        borderRadius: const BorderRadius.all(Radius.circular(16.0)),
                         border: Border.all(
                           color: colorScheme.tertiary,
                           width: 0.3,
@@ -118,14 +109,12 @@ void addPostDialog({required BuildContext context}) {
                           return _placeController.dep == null
                               ? Text(
                                   '출발',
-                                  style: textTheme.subtitle1
-                                      ?.copyWith(color: colorScheme.tertiary),
+                                  style: textTheme.subtitle1?.copyWith(color: colorScheme.tertiary),
                                 )
                               : Text(
                                   '${_placeController.dep?.name}',
                                   overflow: TextOverflow.ellipsis,
-                                  style: textTheme.subtitle1
-                                      ?.copyWith(color: colorScheme.tertiary),
+                                  style: textTheme.subtitle1?.copyWith(color: colorScheme.tertiary),
                                 );
                         },
                       ),
@@ -158,8 +147,7 @@ void addPostDialog({required BuildContext context}) {
                       alignment: Alignment.center,
                       padding: EdgeInsets.fromLTRB(20.w, 5.h, 20.w, 5.h),
                       decoration: BoxDecoration(
-                        borderRadius:
-                            const BorderRadius.all(Radius.circular(16.0)),
+                        borderRadius: const BorderRadius.all(Radius.circular(16.0)),
                         border: Border.all(
                           color: colorScheme.tertiary,
                           width: 0.3,
@@ -170,14 +158,12 @@ void addPostDialog({required BuildContext context}) {
                           return _placeController.dst == null
                               ? Text(
                                   '도착',
-                                  style: textTheme.subtitle1
-                                      ?.copyWith(color: colorScheme.tertiary),
+                                  style: textTheme.subtitle1?.copyWith(color: colorScheme.tertiary),
                                 )
                               : Text(
                                   '${_placeController.dst?.name}',
                                   overflow: TextOverflow.ellipsis,
-                                  style: textTheme.subtitle1
-                                      ?.copyWith(color: colorScheme.tertiary),
+                                  style: textTheme.subtitle1?.copyWith(color: colorScheme.tertiary),
                                 );
                         },
                       ),
@@ -203,10 +189,8 @@ void addPostDialog({required BuildContext context}) {
                   GetBuilder<DateController>(
                     builder: (_) {
                       return Text(
-                        DateFormat('yyyy MM dd E')
-                            .format(_dateController.pickedDate!),
-                        style: textTheme.headline2
-                            ?.copyWith(color: colorScheme.tertiary),
+                        DateFormat('yyyy MM dd E').format(_dateController.pickedDate!),
+                        style: textTheme.headline2?.copyWith(color: colorScheme.tertiary),
                       );
                     },
                   ),
@@ -245,8 +229,7 @@ void addPostDialog({required BuildContext context}) {
                     builder: (_) {
                       return Text(
                         '${_dateController.pickedTime?.hour} : ${_dateController.pickedTime?.minute}',
-                        style: textTheme.headline2
-                            ?.copyWith(color: colorScheme.tertiary),
+                        style: textTheme.headline2?.copyWith(color: colorScheme.tertiary),
                       );
                     },
                   ),
@@ -296,8 +279,7 @@ void addPostDialog({required BuildContext context}) {
                                     ),
                                     child: Text(
                                       '2',
-                                      style: textTheme.headline2?.copyWith(
-                                          color: colorScheme.secondary),
+                                      style: textTheme.headline2?.copyWith(color: colorScheme.secondary),
                                     ),
                                   )
                                 : Container(
@@ -306,8 +288,7 @@ void addPostDialog({required BuildContext context}) {
                                     ),
                                     child: Text(
                                       '2',
-                                      style: textTheme.headline2?.copyWith(
-                                          color: colorScheme.tertiary),
+                                      style: textTheme.headline2?.copyWith(color: colorScheme.tertiary),
                                     ),
                                   ),
                           ),
@@ -326,8 +307,7 @@ void addPostDialog({required BuildContext context}) {
                                     ),
                                     child: Text(
                                       '3',
-                                      style: textTheme.headline2?.copyWith(
-                                          color: colorScheme.secondary),
+                                      style: textTheme.headline2?.copyWith(color: colorScheme.secondary),
                                     ),
                                   )
                                 : Container(
@@ -336,8 +316,7 @@ void addPostDialog({required BuildContext context}) {
                                     ),
                                     child: Text(
                                       '3',
-                                      style: textTheme.headline2?.copyWith(
-                                          color: colorScheme.tertiary),
+                                      style: textTheme.headline2?.copyWith(color: colorScheme.tertiary),
                                     ),
                                   ),
                           ),
@@ -356,8 +335,7 @@ void addPostDialog({required BuildContext context}) {
                                     ),
                                     child: Text(
                                       '4',
-                                      style: textTheme.headline2?.copyWith(
-                                          color: colorScheme.secondary),
+                                      style: textTheme.headline2?.copyWith(color: colorScheme.secondary),
                                     ),
                                   )
                                 : Container(
@@ -366,8 +344,7 @@ void addPostDialog({required BuildContext context}) {
                                     ),
                                     child: Text(
                                       '4',
-                                      style: textTheme.headline2?.copyWith(
-                                          color: colorScheme.tertiary),
+                                      style: textTheme.headline2?.copyWith(color: colorScheme.tertiary),
                                     ),
                                   ),
                           ),
@@ -401,21 +378,17 @@ void addPostDialog({required BuildContext context}) {
                             },
                             child: (_addPostController.luggage == 0)
                                 ? Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 6.w),
+                                    padding: EdgeInsets.symmetric(horizontal: 6.w),
                                     child: Text(
                                       '없음',
-                                      style: textTheme.headline2?.copyWith(
-                                          color: colorScheme.secondary),
+                                      style: textTheme.headline2?.copyWith(color: colorScheme.secondary),
                                     ),
                                   )
                                 : Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 6.w),
+                                    padding: EdgeInsets.symmetric(horizontal: 6.w),
                                     child: Text(
                                       '없음',
-                                      style: textTheme.headline2?.copyWith(
-                                          color: colorScheme.tertiary),
+                                      style: textTheme.headline2?.copyWith(color: colorScheme.tertiary),
                                     ),
                                   ),
                           ),
@@ -429,21 +402,17 @@ void addPostDialog({required BuildContext context}) {
                             },
                             child: (_addPostController.luggage == 1)
                                 ? Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 6.w),
+                                    padding: EdgeInsets.symmetric(horizontal: 6.w),
                                     child: Text(
                                       '소',
-                                      style: textTheme.headline2?.copyWith(
-                                          color: colorScheme.secondary),
+                                      style: textTheme.headline2?.copyWith(color: colorScheme.secondary),
                                     ),
                                   )
                                 : Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 6.w),
+                                    padding: EdgeInsets.symmetric(horizontal: 6.w),
                                     child: Text(
                                       '소',
-                                      style: textTheme.headline2?.copyWith(
-                                          color: colorScheme.tertiary),
+                                      style: textTheme.headline2?.copyWith(color: colorScheme.tertiary),
                                     ),
                                   ),
                           ),
@@ -457,21 +426,17 @@ void addPostDialog({required BuildContext context}) {
                             },
                             child: (_addPostController.luggage == 2)
                                 ? Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 6.w),
+                                    padding: EdgeInsets.symmetric(horizontal: 6.w),
                                     child: Text(
                                       '대',
-                                      style: textTheme.headline2?.copyWith(
-                                          color: colorScheme.secondary),
+                                      style: textTheme.headline2?.copyWith(color: colorScheme.secondary),
                                     ),
                                   )
                                 : Container(
-                                    padding:
-                                        EdgeInsets.symmetric(horizontal: 6.w),
+                                    padding: EdgeInsets.symmetric(horizontal: 6.w),
                                     child: Text(
                                       '대',
-                                      style: textTheme.headline2?.copyWith(
-                                          color: colorScheme.tertiary),
+                                      style: textTheme.headline2?.copyWith(color: colorScheme.tertiary),
                                     ),
                                   ),
                           ),
@@ -491,8 +456,7 @@ void addPostDialog({required BuildContext context}) {
                     },
                     child: Text(
                       '취소',
-                      style: textTheme.headline1
-                          ?.copyWith(color: colorScheme.tertiary),
+                      style: textTheme.headline1?.copyWith(color: colorScheme.tertiary),
                     ),
                   ),
                   TextButton(
@@ -507,10 +471,7 @@ void addPostDialog({required BuildContext context}) {
                         snackBar(context: context, title: '도착지를 선택해주세요.');
                       } else if (_placeController.dst!.id == -1) {
                         snackBar(context: context, title: '도착지를 다시 선택해주세요.');
-                      } else if (DateTime.now()
-                              .difference(_dateController.mergeDateAndTime())
-                              .isNegative ==
-                          false) {
+                      } else if (DateTime.now().difference(_dateController.mergeDateAndTime()).isNegative == false) {
                         snackBar(context: context, title: '출발시간을 다시 선택해주세요.');
                       } else if (_addPostController.capacity == 0) {
                         snackBar(context: context, title: '최대인원을 선택해주세요.');
@@ -523,8 +484,7 @@ void addPostDialog({required BuildContext context}) {
                             deptTime: _dateController.formattingDateTime(
                               _dateController.mergeDateAndTime(),
                             ),
-                            capacity: _addPostController.capacity,
-                            luggage: _addPostController.luggage);
+                            capacity: _addPostController.capacity);
                         Get.back();
                         await _addPostController.fetchAddPost(post: post);
                         await _postController.getPosts(
@@ -539,8 +499,7 @@ void addPostDialog({required BuildContext context}) {
                     },
                     child: Text(
                       '올리기',
-                      style: textTheme.headline1
-                          ?.copyWith(color: colorScheme.secondary),
+                      style: textTheme.headline1?.copyWith(color: colorScheme.secondary),
                     ),
                   ),
                 ],

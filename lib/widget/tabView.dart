@@ -6,7 +6,7 @@ Widget selectedTabView(
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
   return Container(
-    width: 28.0.w,
+    width: 32.0.w,
     height: 23.0.h,
     alignment: Alignment.center,
     // decoration: BoxDecoration(
@@ -18,7 +18,9 @@ Widget selectedTabView(
     // ),
     child: Text(
       viewTitle,
-      style: textTheme.subtitle1?.copyWith(color: colorScheme.secondary, fontWeight: FontWeight.w600),
+      style: textTheme.subtitle2?.copyWith(
+        color: colorScheme.tertiary,
+      ),
     ),
   );
 }
@@ -28,14 +30,13 @@ Widget unSelectedTabView(
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
   return Container(
-    width: 28.0.w,
+    width: 32.0.w,
     height: 23.0.h,
     alignment: Alignment.center,
     child: Text(
       viewTitle,
-      style: textTheme.subtitle1?.copyWith(
-          color: colorScheme.tertiary,
-        fontWeight: FontWeight.w600
+      style: textTheme.subtitle2?.copyWith(
+        color: colorScheme.tertiary,
       ),
     ),
   );
