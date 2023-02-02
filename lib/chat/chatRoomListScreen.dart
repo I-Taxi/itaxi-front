@@ -50,8 +50,9 @@ class ChatroomListScreen extends StatelessWidget {
               style: textTheme.bodySmall?.copyWith(
                   color: colorScheme.shadow, fontWeight: FontWeight.bold),
             ),
-            SingleChildScrollView(
-              child: Column(children: [
+            SizedBox(
+              height: 88.h,
+              child: ListView(children: [
                 chatroomListListTile(context),
               ]),
             ),

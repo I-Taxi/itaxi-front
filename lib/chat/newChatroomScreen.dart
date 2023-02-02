@@ -274,25 +274,25 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
             const Divider(
               thickness: 1,
             ),
-            SizedBox(
-              height: 157.h,
-            ),
-            Padding(
-              padding: EdgeInsets.only(bottom: 43.h, left: 30.w),
-              child: Row(children: [
-                const Icon(
-                  Icons.logout,
-                  size: 24,
-                ),
-                SizedBox(
-                  width: 5.w,
-                ),
-                Text(
-                  "방 나가기",
-                  style: textTheme.bodySmall?.copyWith(fontSize: 13),
-                )
-              ]),
-            ),
+            Align(
+              alignment: FractionalOffset.bottomLeft,
+              child: Padding(
+                padding: EdgeInsets.only(bottom: 43.h, left: 30.w),
+                child: Row(children: [
+                  const Icon(
+                    Icons.logout,
+                    size: 24,
+                  ),
+                  SizedBox(
+                    width: 5.w,
+                  ),
+                  Text(
+                    "방 나가기",
+                    style: textTheme.bodySmall?.copyWith(fontSize: 13),
+                  )
+                ]),
+              ),
+            )
           ],
         ),
       ),
@@ -359,7 +359,7 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                   Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        color: colorScheme.shadow),
+                        color: Colors.grey[200]),
                     width: 181.w,
                     height: 24.h,
                     child: Padding(
@@ -379,56 +379,61 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                 ],
               ),
             ),
+            //Image.asset('assets/new_message.png'),
+            Expanded(
+              child: Align(
+                  alignment: FractionalOffset.bottomCenter,
+                  child: Padding(
+                    padding: EdgeInsets.fromLTRB(6.w, 12.h, 6.w, 44.h),
+                    child: TextField(
+                      // controller: _controller,
+                      cursorColor: Colors.grey[400],
+                      style: textTheme.subtitle1
+                          ?.copyWith(color: colorScheme.onPrimary),
+                      minLines: 1,
+                      maxLines: 4,
+                      decoration: InputDecoration(
+                        contentPadding: EdgeInsets.only(
+                            top: 10.h, bottom: 10.h, left: 10.w),
+                        filled: true,
+                        border: InputBorder.none,
+                        enabledBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(width: 1, color: (Colors.grey[200])!),
+                          borderRadius: BorderRadius.circular(24),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderSide:
+                              BorderSide(width: 1, color: (Colors.grey[200])!),
+                          borderRadius: BorderRadius.circular(24),
+                        ),
+                        fillColor: Colors.grey[200],
+                        suffixIcon: IconButton(
+                            icon: const Icon(Icons.send),
+                            onPressed: () {},
+                            color: Colors.grey[400]),
+                        hintText: '',
+                        hintStyle: textTheme.subtitle1?.copyWith(
+                          color: colorScheme.onPrimary,
+                        ),
+                      ),
 
-            SizedBox(height: 13.h),
-            Padding(
-              padding: EdgeInsets.only(left: 6.w, right: 6.w),
-              child: TextField(
-                // controller: _controller,
-                cursorColor: Colors.grey[400],
-                style:
-                    textTheme.subtitle1?.copyWith(color: colorScheme.onPrimary),
-                minLines: 1,
-                maxLines: 4,
-                decoration: InputDecoration(
-                  filled: true,
-                  border: InputBorder.none,
-                  enabledBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(width: 1, color: (Colors.grey[200])!),
-                    borderRadius: BorderRadius.circular(24),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderSide:
-                        BorderSide(width: 1, color: (Colors.grey[200])!),
-                    borderRadius: BorderRadius.circular(24),
-                  ),
-                  fillColor: Colors.grey[200],
-                  suffixIcon: IconButton(
-                      icon: const Icon(Icons.send),
-                      onPressed: () {},
-                      color: Colors.grey[400]),
-                  hintText: '',
-                  hintStyle: textTheme.subtitle1?.copyWith(
-                    color: colorScheme.onPrimary,
-                  ),
-                ),
-
-                onChanged: (text) {
-                  // if (_chatRoomController
-                  //     .chatTextController.text.isNotEmpty) {
-                  //   _chatRoomController.changeTexting(true);
-                  // } else {
-                  //   _chatRoomController.changeTexting(false);
-                  // }
-                },
-                onSubmitted: (text) {
-                  // _chatRoomController.submitChat();
-                  // _chatRoomController.clearTexting();
-                  _scrollDown();
-                },
-              ),
-            )
+                      onChanged: (text) {
+                        // if (_chatRoomController
+                        //     .chatTextController.text.isNotEmpty) {
+                        //   _chatRoomController.changeTexting(true);
+                        // } else {
+                        //   _chatRoomController.changeTexting(false);
+                        // }
+                      },
+                      onSubmitted: (text) {
+                        // _chatRoomController.submitChat();
+                        // _chatRoomController.clearTexting();
+                        _scrollDown();
+                      },
+                    ),
+                  )),
+            ),
           ],
         ),
       ),
