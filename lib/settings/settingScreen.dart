@@ -78,17 +78,13 @@ class _SettingScreenState extends State<SettingScreen> {
             RichText(
               text: TextSpan(
                   text: "OOO학부생\n",
-                  style: textTheme.headline1?.copyWith(
-                      color: colorScheme.onPrimary,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 22),
+                  style: textTheme.headline3?.copyWith(
+                    color: colorScheme.onPrimary,
+                  ),
                   children: <TextSpan>[
                     TextSpan(
                       text: "handongin@handong.ac.kr",
-                      style: textTheme.headline1?.copyWith(
-                          color: colorScheme.tertiaryContainer,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 8),
+                      style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiaryContainer),
                     )
                   ]),
             ),
@@ -168,9 +164,8 @@ class _SettingScreenState extends State<SettingScreen> {
           children: [
             Text(
               "Created by CRA",
-              style: textTheme.bodyText1?.copyWith(
+              style: textTheme.bodyText2?.copyWith(
                 color: colorScheme.tertiaryContainer,
-                fontWeight: FontWeight.w400,
               ),
             ),
             Spacer(),
@@ -191,9 +186,7 @@ class _SettingScreenState extends State<SettingScreen> {
               },
               child: Text(
                 "로그아웃",
-                style: textTheme.bodyText1?.copyWith(
-                  color: colorScheme.tertiaryContainer,
-                  fontWeight: FontWeight.w400,
+                style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiaryContainer
                 ),
               ),
             )
@@ -220,7 +213,7 @@ class _SettingScreenState extends State<SettingScreen> {
           child: Text(
             title,
             textAlign: TextAlign.start,
-            style: textTheme.headline1?.copyWith(
+            style: textTheme.subtitle1?.copyWith(
                 color: colorScheme.onPrimary, fontWeight: FontWeight.w500),
           ),
         ),
@@ -255,8 +248,7 @@ class _SettingScreenState extends State<SettingScreen> {
       child: Text(
         title,
         textAlign: TextAlign.start,
-        style: textTheme.headline1?.copyWith(
-            color: colorScheme.onPrimary, fontWeight: FontWeight.w500),
+        style: textTheme.subtitle1?.copyWith(color: colorScheme.onPrimary),
       ),
     );
   }
@@ -276,8 +268,7 @@ class _SettingScreenState extends State<SettingScreen> {
               alignment: Alignment.center,
               child: Text(
                 "로그아웃 하시겠습니까?",
-                style: textTheme.headline1?.copyWith(
-                    color: colorScheme.secondary, fontWeight: FontWeight.w500),
+                style: textTheme.subtitle1?.copyWith(color: colorScheme.secondary),
               ),
             ),
             actions: <Widget>[
@@ -286,7 +277,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     onPressed: () => Navigator.pop(context, "취소"),
                     child: Text(
                       "취소",
-                      style: textTheme.headline1?.copyWith(
+                      style: textTheme.subtitle1?.copyWith(
                         color: colorScheme.tertiary,
                       ),
                     )),
@@ -303,7 +294,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     },
                     child: Text(
                       "확인",
-                      style: textTheme.headline1?.copyWith(
+                      style: textTheme.subtitle1?.copyWith(
                         color: colorScheme.secondary,
                       ),
                     )),
@@ -362,7 +353,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 children: <Widget>[
                   Text(
                     title as String,
-                    style: textTheme.headline1?.copyWith(
+                    style: textTheme.subtitle1?.copyWith(
                       color: colorScheme.secondary,
                     ),
                   ),
@@ -371,7 +362,7 @@ class _SettingScreenState extends State<SettingScreen> {
                   ),
                   Text(
                     content as String,
-                    style: textTheme.subtitle1?.copyWith(
+                    style: textTheme.bodyText1?.copyWith(
                       color: colorScheme.onPrimary,
                     ),
                   ),
@@ -396,7 +387,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     },
                     child: Text(
                       "확인",
-                      style: textTheme.headline1
+                      style: textTheme.subtitle1
                           ?.copyWith(color: colorScheme.tertiary),
                     ),
                   ),

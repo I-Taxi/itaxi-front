@@ -92,9 +92,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text("출발지",
-                          style: textTheme.subtitle1?.copyWith(
-                              fontSize: Platform.isIOS ? 20 : 18,
-                              color: colorScheme.primary)),
+                          style: textTheme.subtitle1?.copyWith(color: colorScheme.primary)),
                       SizedBox(
                         width: 37.0.w,
                       ),
@@ -107,9 +105,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                         width: 36.0.w,
                       ),
                       Text("도착지",
-                          style: textTheme.subtitle1?.copyWith(
-                              fontSize: Platform.isIOS ? 20 : 18,
-                              color: colorScheme.primary)),
+                          style: textTheme.subtitle1?.copyWith(color: colorScheme.primary)),
                     ],
                   ),
                   Padding(
@@ -135,9 +131,8 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                                     DateFormat('MM.d').format(_dateController
                                         .pickedDate!
                                         .add(const Duration(days: -2))),
-                                    style: textTheme.subtitle1?.copyWith(
+                                    style: textTheme.bodyText1?.copyWith(
                                       color: colorScheme.tertiary,
-                                      fontFamily: 'NotoSans',
                                     ),
                                   ),
                                 ),
@@ -154,9 +149,8 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                                   DateFormat(' - ').format(_dateController
                                       .pickedDate!
                                       .add(const Duration(days: -2))),
-                                  style: textTheme.headline1?.copyWith(
+                                  style: textTheme.bodyText1?.copyWith(
                                     color: colorScheme.tertiary,
-                                    fontFamily: 'NotoSans',
                                   ),
                                 ),
                               ),
@@ -184,7 +178,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                                     DateFormat('MM.d').format(_dateController
                                         .pickedDate!
                                         .add(const Duration(days: -1))),
-                                    style: textTheme.subtitle1?.copyWith(
+                                    style: textTheme.bodyText1?.copyWith(
                                       color: colorScheme.tertiary,
                                     ),
                                   ),
@@ -202,7 +196,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                                   DateFormat(' - ').format(_dateController
                                       .pickedDate!
                                       .add(const Duration(days: -1))),
-                                  style: textTheme.headline1?.copyWith(
+                                  style: textTheme.bodyText1?.copyWith(
                                     color: colorScheme.tertiary,
                                   ),
                                 ),
@@ -222,9 +216,8 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                               child: Text(
                                 DateFormat('MM월 d일')
                                     .format(_dateController.pickedDate!),
-                                style: textTheme.subtitle1?.copyWith(
+                                style: textTheme.subtitle2?.copyWith(
                                   color: colorScheme.primary,
-                                  fontFamily: 'Pretendard Variable',
                                 ),
                               ),
                             );
@@ -248,9 +241,8 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                                   DateFormat('MM.d').format(_dateController
                                       .pickedDate!
                                       .add(const Duration(days: 1))),
-                                  style: textTheme.subtitle1?.copyWith(
+                                  style: textTheme.bodyText1?.copyWith(
                                     color: colorScheme.tertiary,
-                                    fontFamily: 'NotoSans',
                                   ),
                                 ),
                               ),
@@ -690,9 +682,8 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                                   Align(
                                     child: Text(
                                       '${snapshot.error}',
-                                      style: textTheme.headline2?.copyWith(
+                                      style: textTheme.subtitle2?.copyWith(
                                         color: colorScheme.tertiary,
-                                        fontFamily: 'NotoSans',
                                       ),
                                     ),
                                   ),
@@ -731,7 +722,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
               padding: EdgeInsets.symmetric(vertical: 40.0.h),
               child: Text(
                 '검색 결과가 없습니다',
-                style: textTheme.headline2?.copyWith(
+                style: textTheme.subtitle2?.copyWith(
                   color: colorScheme.tertiary,
                   fontFamily: 'NotoSans',
                 ),

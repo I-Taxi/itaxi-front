@@ -90,15 +90,18 @@ class _MainScreenState extends State<MainScreen> {
                         children: [
                           Text(
                             "I-TAXI",
-                            style: textTheme.headline1?.copyWith(
-                                color: colorScheme.primary,
-                                fontWeight: FontWeight.bold),
+                            style: textTheme.headline3?.copyWith(
+                              color: colorScheme.primary,
+                            ),
+                          ),
+                          SizedBox(
+                            height: 5.h,
                           ),
                           Text(
                             "어디든지 자유롭게 이동하세요!",
-                            style: textTheme.headline2?.copyWith(
-                                color: colorScheme.primary,
-                                fontFamily: 'Pretendard Variable'),
+                            style: textTheme.subtitle1?.copyWith(
+                              color: colorScheme.primary,
+                            ),
                           )
                         ],
                       ),
@@ -124,9 +127,9 @@ class _MainScreenState extends State<MainScreen> {
                       children: [
                         Padding(
                           padding: EdgeInsets.only(
-                              left: 23.w, right: 23.w, top: 20.63.h),
+                            left: 23.w, right: 23.w, top: 20.63.h),
                           child: SizedBox(
-                            width: 295.0.w,
+                            width: 296.w,
                             height: 57.h,
                             child: FittedBox(
                               fit: BoxFit.fill,
@@ -143,14 +146,9 @@ class _MainScreenState extends State<MainScreen> {
                                 totalSwitches: 2,
                                 labels: ["조회", "모집"],
                                 customTextStyles: [
-                                  TextStyle(
-                                      fontSize: 10.0,
-                                      fontWeight: FontWeight.w600,
-                                      color: colorScheme.onPrimary),
-                                  TextStyle(
-                                      fontSize: 10.0,
-                                      fontWeight: FontWeight.w600,
-                                      color: colorScheme.onPrimary),
+                                  textTheme.subtitle2?.copyWith(
+                                    color: colorScheme.onTertiary,
+                                  ),
                                 ],
                                 radiusStyle: true,
                                 onToggle: (index) {
@@ -196,14 +194,11 @@ class _MainScreenState extends State<MainScreen> {
                                               .changeDepOrDst(0);
                                           Get.to(() => SearchScreen());
                                         },
+                                        // style: TextButton.styleFrom(fixedSize: Size(85.w, 18.h)),
                                         child: Text(
                                           "출발지 입력",
-                                          style: textTheme.headline2?.copyWith(
-                                              color: colorScheme.onPrimary,
-                                              fontWeight: FontWeight.w600),
+                                          style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
                                         ),
-                                        style: TextButton.styleFrom(
-                                            fixedSize: Size(85.w, 18.h)),
                                       ),
                                       Container(
                                         width: 180.w,
@@ -216,14 +211,11 @@ class _MainScreenState extends State<MainScreen> {
                                               .changeDepOrDst(1);
                                           Get.to(() => SearchScreen());
                                         },
+                                        // style: TextButton.styleFrom(fixedSize: Size(85.w, 18.h)),
                                         child: Text(
                                           "도착지 입력",
-                                          style: textTheme.headline2?.copyWith(
-                                              color: colorScheme.onPrimary,
-                                              fontWeight: FontWeight.w600),
+                                          style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
                                         ),
-                                        style: TextButton.styleFrom(
-                                            fixedSize: Size(85.w, 18.h)),
                                       ),
                                     ],
                                   ),
@@ -266,9 +258,7 @@ class _MainScreenState extends State<MainScreen> {
                                 Text(
                                   DateFormat('M월 d일, EE').format(//요일 설정 해줘야 함.
                                       _dateController.pickedDate!),
-                                  style: textTheme.headline1?.copyWith(
-                                      color: colorScheme.onPrimary,
-                                      fontWeight: FontWeight.w600),
+                                  style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
                                 )
                               ],
                             ),
@@ -407,9 +397,7 @@ class _MainScreenState extends State<MainScreen> {
                                 ),
                                 Text(
                                   "$personCount명",
-                                  style: textTheme.headline1?.copyWith(
-                                      color: colorScheme.onPrimary,
-                                      fontWeight: FontWeight.w600),
+                                  style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
                                 ),
                                 SizedBox(
                                   width: 8.w,
@@ -446,7 +434,7 @@ class _MainScreenState extends State<MainScreen> {
                       },
                       child: Text(
                         "조회하기",
-                        style: textTheme.headline1?.copyWith(
+                        style: textTheme.subtitle2?.copyWith(
                           color: colorScheme.primary,
                         ),
                       )),

@@ -100,21 +100,18 @@ class _SignInScreenState extends State<SignInScreen> {
                       alignment: Alignment.bottomLeft,
                       child: Text(
                         '아이디',
-                        style: textTheme.subtitle1?.copyWith(
-                          fontSize: Platform.isIOS ? 14 : 12,
-                          color: colorScheme.primary,
-                        ),
+                        style: textTheme.bodyText2?.copyWith(color: colorScheme.primary)
                       ),
                     ),
                     TextFormField(
                       controller: _idController,
                       autocorrect: false,
-                      style: textTheme.subtitle1?.copyWith(
+                      style: textTheme.bodyText2?.copyWith(
                         color: colorScheme.primary,
                       ),
                       decoration: InputDecoration(
                         suffixText: '@handong.ac.kr',
-                        suffixStyle: textTheme.subtitle1?.copyWith(
+                        suffixStyle: textTheme.bodyText1?.copyWith(
                           color: colorScheme.primary,
                         ),
                         constraints: BoxConstraints(
@@ -157,8 +154,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       alignment: Alignment.bottomLeft,
                       child: Text(
                         '비밀번호',
-                        style: textTheme.subtitle1?.copyWith(
-                          fontSize: Platform.isIOS ? 14 : 12,
+                        style: textTheme.bodyText2?.copyWith(
                           color: colorScheme.primary,
                         ),
                       ),
@@ -167,7 +163,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       controller: _pwController,
                       autocorrect: false,
                       obscureText: _isObscure,
-                      style: textTheme.subtitle1?.copyWith(
+                        style: textTheme.bodyText2?.copyWith(
                         color: colorScheme.primary,
                       ),
                       decoration: InputDecoration(
@@ -225,7 +221,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       children: [
                         Text(
                           '자동 로그인',
-                          style: textTheme.subtitle1!.copyWith(
+                          style: textTheme.bodyText2!.copyWith(
                             fontSize: Platform.isIOS ? 14 : 12,
                             color: colorScheme.primary,
                           ),
@@ -252,7 +248,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           },
                           child: Text(
                             '비밀번호 찾기',
-                            style: textTheme.subtitle1!.copyWith(
+                            style: textTheme.bodyText2!.copyWith(
                               fontSize: Platform.isIOS ? 14 : 12,
                               color: colorScheme.primary,
                             ),
@@ -303,7 +299,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         },
                         child: Text(
                           '로그인',
-                          style: textTheme.subtitle1!.copyWith(
+                          style: textTheme.bodyText1!.copyWith(
                             color: (pwEmpty || idEmpty) ? colorScheme.tertiary : colorScheme.secondary, //수정해야 됨.
                           ),
                         ),
@@ -315,7 +311,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       },
                       child: Text(
                         '회원가입',
-                        style: textTheme.subtitle1?.copyWith(
+                        style: textTheme.bodyText1?.copyWith(
                           color: colorScheme.primary,
                         ),
                       ),
