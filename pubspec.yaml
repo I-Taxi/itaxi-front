@@ -182,6 +182,9 @@ flutter:
     - assets/icon/not_owner.png
     - assets/icon/owner.png
     - assets/icon/phone.png
+    - assets/icon/calendar.png
+    - assets/icon/logo_type.png
+    - assets/icon/person.png
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg
