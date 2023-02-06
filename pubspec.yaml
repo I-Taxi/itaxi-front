@@ -117,6 +117,8 @@ flutter:
     - assets/button/add_timeline.png
     - assets/button/contact.png
     - assets/button/new_message.png
+    - assets/button/send.png
+    - assets/button/message.png
 
     # arrow
     - assets/arrow/arrow.png
@@ -170,8 +172,6 @@ flutter:
     - assets/profile.png
     - assets/change_profile.png
     - assets/background.png
-    - assets/icon_KTX.png
-    - assets/icon_Car.png
     - assets/banner.png
     - assets/contact.png
     - assets/first_chat.png
@@ -183,6 +183,9 @@ flutter:
     - assets/icon/not_owner.png
     - assets/icon/owner.png
     - assets/icon/phone.png
+    - assets/icon/icon-LogOut.png
+    - assets/icon/icon-Car.png
+    - assets/icon/icon-KTX.png
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

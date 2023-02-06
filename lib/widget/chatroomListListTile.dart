@@ -2,18 +2,31 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:intl/intl.dart';
 import 'package:itaxi/chat/chatRoomScreen.dart';
 import 'package:itaxi/chat/newChatroomScreen.dart';
+import 'package:itaxi/controller/addPostController.dart';
+import 'package:itaxi/controller/chatRoomController.dart';
+import 'package:itaxi/controller/historyController.dart';
+import 'package:itaxi/controller/postController.dart';
+import 'package:itaxi/model/post.dart';
 
 Widget chatroomListListTile(
-  BuildContext context,
-) {
+    {required BuildContext context, required Post post}) {
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
+  late AddPostController _addPostController = Get.find();
+  late PostController _postController = Get.find();
+  HistoryController _historyController = Get.put(HistoryController());
+  late ChatRoomController _chatRoomController = Get.put(ChatRoomController());
+  String time = post.deptTime ?? 'null';
 
   return InkWell(
-    onTap: () {
-      Get.to(() => NewChatroomScreen());
+    onTap: () async {
+      await _historyController.getHistorys();
+      _chatRoomController.getPost(post: post);
+      _chatRoomController.getChats(post: post);
+      Get.to(() => const NewChatroomScreen());
     },
     child: Container(
       width: 342.w,
@@ -26,7 +39,9 @@ Widget chatroomListListTile(
           SizedBox(
             width: 56.w,
             height: 56.h,
-            child: Image.asset('assets/icon_KTX.png'),
+            child: post.postType != null
+                ? Image.asset('assets/icon/icon-Car.png')
+                : Image.asset('assets/icon/icon-KTX.png'),
           ),
           SizedBox(
             width: 16.w,
@@ -40,14 +55,17 @@ Widget chatroomListListTile(
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Text(
-                            "출발지-도착지(12/25)",
-                            style: textTheme.subtitle2?.copyWith(
-                              color: colorScheme.onTertiary,
+                          Flexible(
+                            child: Text(
+                              "${post.departure!.name}-${post.destination!.name}(${DateFormat('Md').format(DateTime.parse(time))})",
+                              style: textTheme.subtitle2?.copyWith(
+                                color: colorScheme.onTertiary,
+                              ),
+                              maxLines: 1,
                             ),
                           ),
                           Text(
-                            "00:00 출발",
+                            "${DateFormat.Hm().format(DateTime.parse(time))} 출발",
                             style: textTheme.bodyText2?.copyWith(
                               color: colorScheme.onTertiary,
                             ),
@@ -58,14 +76,16 @@ Widget chatroomListListTile(
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
+                          // for (int i = 0; i < post.joiners!.length; i++)
+                          //   if (post.joiners![i].owner!)
                           Text(
-                            "방장: 김형진학부생",
+                            "방장: ${post.id}",
                             style: textTheme.bodyText2?.copyWith(
                               color: colorScheme.tertiaryContainer,
                             ),
                           ),
                           Text(
-                            "1명",
+                            "${post.capacity}명",
                             style: textTheme.bodyText2?.copyWith(
                               color: colorScheme.tertiary,
                             ),
