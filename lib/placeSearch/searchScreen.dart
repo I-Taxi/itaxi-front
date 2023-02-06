@@ -51,301 +51,331 @@ class _SearchScreenState extends State<SearchScreen> {
     final textTheme = Theme.of(context).textTheme;
 
     return GestureDetector(
-      onTap: (){
+      onTap: () {
         FocusManager.instance.primaryFocus?.unfocus();
       },
       child: Scaffold(
           appBar: AppBar(
-              shadowColor: colorScheme.shadow,
-              elevation: 0.0,
-              centerTitle: true,
-              title: Text(
+            shadowColor: colorScheme.shadow,
+            elevation: 0.0,
+            centerTitle: true,
+            title: Text(
               '검색',
               style: textTheme.subtitle1?.copyWith(
                 color: colorScheme.onPrimary,
+              ),
             ),
-          ),
-          leading: IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: Icon(
-              Icons.chevron_left_outlined,
-              color: colorScheme.tertiary,
+            leading: IconButton(
+              onPressed: () {
+                Get.back();
+              },
+              icon: Icon(
+                Icons.chevron_left_outlined,
+                color: colorScheme.tertiary,
+              ),
             ),
-          ),
-           actions: [
-             TextButton(
-                 onPressed: (){
-                   print(_placeSearchController.selectedPlace!.name);
-                   if (_placeSearchController.depOrDst == 0) {
-                     if (_placeController.dst != null && _placeSearchController.selectedPlace!.name == _placeController.dst!.name) {
-                       // [TODO]: 출발지 도착지 같을때 띄우는거
-                       placeSearchSnackBar(context: context, title: const Text('춥발지를 다시 선택해주세요.'), color: colorScheme.error);
-                     }
-                     else {
-                       _placeSearchController.setDeparture();
-                       _placeSearchController.selectedIndex = -1;
-                       _placeSearchController.changeSearchQuery('');
-                       Get.back();
-                     }
-                   }
-                   else {
-                     if (_placeController.dep != null && _placeSearchController.selectedPlace!.name == _placeController.dep!.name) {
-                       // [TODO]: 출발지 도착지 같을때 띄우는거
-                       placeSearchSnackBar(context: context, title: const Text('도착지를 다시 선택해주세요.'), color: colorScheme.error);
-                     }
-                     else {
-                       _placeSearchController.setDestination();
-                       _placeSearchController.selectedIndex = -1;
-                       _placeSearchController.changeSearchQuery('');
-                       Get.back();
-                     }
-                   }
-                 },
-                 child: Text(
-                   "다음",
+            actions: [
+              TextButton(
+                  onPressed: () {
+                    if (_placeSearchController.depOrDst == 0) {
+                      if (_placeSearchController.selectedPlace == null ||
+                          _placeController.dst != null &&
+                              _placeSearchController.selectedPlace!.name ==
+                                  _placeController.dst!.name) {
+                        // [TODO]: 출발지 도착지 같을때 띄우는거
+                        placeSearchSnackBar(
+                            context: context,
+                            title: const Text('출발지를 다시 선택해주세요.'),
+                            color: colorScheme.error);
+                      } else {
+                        _placeController.selectDep(
+                            place: _placeSearchController.selectedPlace!);
+                        _placeSearchController.selectedIndex = -1;
+                        _placeSearchController.changeSearchQuery('');
+                        Get.back();
+                      }
+                    } else {
+                      if (_placeSearchController.selectedPlace == null ||
+                          _placeController.dep != null &&
+                              _placeSearchController.selectedPlace!.name ==
+                                  _placeController.dep!.name) {
+                        // [TODO]: 출발지 도착지 같을때 띄우는거
+                        placeSearchSnackBar(
+                            context: context,
+                            title: const Text('도착지를 다시 선택해주세요.'),
+                            color: colorScheme.error);
+                      } else {
+                        _placeController.selectDst(
+                            place: _placeSearchController.selectedPlace!);
+                        _placeSearchController.selectedIndex = -1;
+                        _placeSearchController.changeSearchQuery('');
+                        Get.back();
+                      }
+                    }
+                  },
+                  child: Text(
+                    "다음",
                     style: textTheme.subtitle2?.copyWith(
                       color: colorScheme.secondary,
-                   ),
-                 )
-             )
-           ],
-        ),
-        backgroundColor: colorScheme.background,
-        body: ColorfulSafeArea(
-          color: colorScheme.primary,
-          child: GetBuilder<PlaceSearchController>(
-          builder: (_) {
-            return Padding(
-              padding: const EdgeInsets.all(24),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 5.0.h,
-                  ),
-                  Container(
-                    alignment: Alignment.center,
-                    height: 46.0.h,
-                    child: TextField(//검색창 화면
-                      textAlignVertical: TextAlignVertical.bottom,
-                        style: textTheme.bodyText1?.copyWith(
-                          color: colorScheme.tertiary
-                      ),
-                      controller: _searchTextController,
-                      decoration: InputDecoration(
-                        filled: true,
-                        fillColor: Color(0xFFF1F1F1),
-                        border: OutlineInputBorder(
-                          borderRadius: BorderRadius.circular(24.0),
-                          borderSide: BorderSide.none,
-                        ),
-                        suffixIcon: IconButton(
-                          onPressed: (){},
-                          icon: const Icon(
-                            Icons.search,
-                            size: 20
-                          ),
-                          color: colorScheme.tertiary,
-                        ),
-                        hintText: "$depOrDst를 입력하세요",
-                          hintStyle: textTheme.bodyText1?.copyWith(
-                          color: colorScheme.tertiary
-                        ),
-                        //prefixIconColor :
-                      ),
-                      onChanged: (value){
-                        _placeSearchController.changeSearchQuery(value);
-                      },
                     ),
-                  ),
-                  // 자동완성 리스트
-                  // [TODO]: 자동완성 부분 UI 완성
-                  if (_placeSearchController.suggestions.isNotEmpty)
+                  ))
+            ],
+          ),
+          backgroundColor: colorScheme.background,
+          body: ColorfulSafeArea(
+            color: colorScheme.primary,
+            child: GetBuilder<PlaceSearchController>(builder: (_) {
+              return Padding(
+                padding: const EdgeInsets.all(24),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 5.0.h,
+                    ),
                     Container(
-                      height: 50.0 + 30.0.h * suggestions.length,
-                      child: ListView.builder(
-                        padding: EdgeInsets.all(25),
-                        itemCount: suggestions.length,
-                        itemBuilder: (context, idx) {
-                          return GestureDetector(
-                            behavior: HitTestBehavior.opaque,
-                            onTap: () {
-                              _searchTextController.text = suggestions[idx].name!;
-                              _placeSearchController.changeSearchQuery(suggestions[idx].name!);
-                              _placeSearchController.setResultByQuery();
-                              _placeSearchController.selectedIndex = -1;
-                            },
-                            child: Container(
-                              height: 30.0.h,
-                              alignment: Alignment.centerLeft,
-                              child: Padding(
-                                padding: const EdgeInsets.all(5.0),
-                                child: Text(suggestions[idx].name!),
-                              ),
-                            ),
-                          );
+                      alignment: Alignment.center,
+                      height: 46.0.h,
+                      child: TextField(
+                        //검색창 화면
+                        textAlignVertical: TextAlignVertical.bottom,
+                        style: textTheme.bodyText1
+                            ?.copyWith(color: colorScheme.tertiary),
+                        controller: _searchTextController,
+                        decoration: InputDecoration(
+                          filled: true,
+                          fillColor: Color(0xFFF1F1F1),
+                          border: OutlineInputBorder(
+                            borderRadius: BorderRadius.circular(24.0),
+                            borderSide: BorderSide.none,
+                          ),
+                          suffixIcon: IconButton(
+                            onPressed: () {},
+                            icon: const Icon(Icons.search, size: 20),
+                            color: colorScheme.tertiary,
+                          ),
+                          hintText: "$depOrDst를 입력하세요",
+                          hintStyle: textTheme.bodyText1
+                              ?.copyWith(color: colorScheme.tertiary),
+                          //prefixIconColor :
+                        ),
+                        onChanged: (value) {
+                          _placeSearchController.changeSearchQuery(value);
                         },
                       ),
                     ),
-                  SizedBox(
-                    height: 35.0.h,
-                  ),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      ElevatedButton(
+                    // 자동완성 리스트
+                    // [TODO]: 자동완성 부분 UI 완성
+                    if (_placeSearchController.suggestions.isNotEmpty)
+                      Container(
+                        height: 50.0 + 30.0.h * suggestions.length,
+                        child: ListView.builder(
+                          padding: EdgeInsets.all(25),
+                          itemCount: suggestions.length,
+                          itemBuilder: (context, idx) {
+                            return GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap: () {
+                                _searchTextController.text =
+                                    suggestions[idx].name!;
+                                _placeSearchController
+                                    .changeSearchQuery(suggestions[idx].name!);
+                                _placeSearchController.setResultByQuery();
+                                _placeSearchController.selectedIndex = -1;
+                              },
+                              child: Container(
+                                height: 30.0.h,
+                                alignment: Alignment.centerLeft,
+                                child: Padding(
+                                  padding: const EdgeInsets.all(5.0),
+                                  child: Text(suggestions[idx].name!),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
+                      ),
+                    SizedBox(
+                      height: 35.0.h,
+                    ),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      children: [
+                        ElevatedButton(
                           style: ElevatedButton.styleFrom(
                             elevation: 0,
-                            backgroundColor: (_placeSearchController.placeType == 5) ? colorScheme.secondary : colorScheme.primary,
+                            backgroundColor:
+                                (_placeSearchController.placeType == 5)
+                                    ? colorScheme.secondary
+                                    : colorScheme.primary,
                             shape: RoundedRectangleBorder(
                               borderRadius: BorderRadius.circular(8.0),
                             ),
                           ),
-                          onPressed: (){
+                          onPressed: () {
                             _placeSearchController.placeType = 5;
                             _placeSearchController.changeSearchQuery('');
                             _placeSearchController.fetchFavoritePlace();
                             _placeSearchController.selectedIndex = -1;
                           },
-                        child: Text(
-                          '내 장소',
+                          child: Text(
+                            '내 장소',
                             style: textTheme.subtitle2!.copyWith(
-                            color: (_placeSearchController.placeType == 5) ? colorScheme.primary : colorScheme.tertiary,
+                              color: (_placeSearchController.placeType == 5)
+                                  ? colorScheme.primary
+                                  : colorScheme.tertiary,
+                            ),
                           ),
                         ),
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          elevation: 0,
-                          backgroundColor: (_placeSearchController.placeType == 0) ? colorScheme.secondary : colorScheme.primary,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            elevation: 0,
+                            backgroundColor:
+                                (_placeSearchController.placeType == 0)
+                                    ? colorScheme.secondary
+                                    : colorScheme.primary,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
                           ),
-                        ),
-                        onPressed: () {
-                          _placeSearchController.placeType = 0;
-                          _placeSearchController.selectedIndex = -1;
-                          // 리스트 보여주기
-                        },
-                        child: Text(
-                          '한동대',
+                          onPressed: () {
+                            _placeSearchController.placeType = 0;
+                            _placeSearchController.selectedIndex = -1;
+                            // 리스트 보여주기
+                          },
+                          child: Text(
+                            '한동대',
                             style: textTheme.subtitle2!.copyWith(
-                            color: (_placeSearchController.placeType == 0) ? colorScheme.primary : colorScheme.tertiary,
+                              color: (_placeSearchController.placeType == 0)
+                                  ? colorScheme.primary
+                                  : colorScheme.tertiary,
+                            ),
                           ),
                         ),
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          elevation: 0,
-                          backgroundColor: (_placeSearchController.placeType == 1) ? colorScheme.secondary : colorScheme.primary,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            elevation: 0,
+                            backgroundColor:
+                                (_placeSearchController.placeType == 1)
+                                    ? colorScheme.secondary
+                                    : colorScheme.primary,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
                           ),
-                        ),
-                        onPressed: (){
-                          _placeSearchController.placeType = 1;
-                          _placeSearchController.selectedIndex = -1;
-                          // 리스트 보여주기
-                        },
-                        child: Text(
-                          '양덕',
+                          onPressed: () {
+                            _placeSearchController.placeType = 1;
+                            _placeSearchController.selectedIndex = -1;
+                            // 리스트 보여주기
+                          },
+                          child: Text(
+                            '양덕',
                             style: textTheme.subtitle2!.copyWith(
-                            color: (_placeSearchController.placeType == 1) ? colorScheme.primary : colorScheme.tertiary,
+                              color: (_placeSearchController.placeType == 1)
+                                  ? colorScheme.primary
+                                  : colorScheme.tertiary,
+                            ),
                           ),
                         ),
-                      ),
-                      ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          elevation: 0,
-                          backgroundColor: _placeSearchController.placeType == 2 ? colorScheme.secondary : colorScheme.primary,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(8.0),
+                        ElevatedButton(
+                          style: ElevatedButton.styleFrom(
+                            elevation: 0,
+                            backgroundColor:
+                                _placeSearchController.placeType == 2
+                                    ? colorScheme.secondary
+                                    : colorScheme.primary,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(8.0),
+                            ),
                           ),
-                        ),
-                        onPressed: (){
-                          _placeSearchController.placeType = 2;
-                          _placeSearchController.selectedIndex = -1;
-                          // 리스트 보여주기
-                        },
-                        child: Text(
-                          '타지역',
+                          onPressed: () {
+                            _placeSearchController.placeType = 2;
+                            _placeSearchController.selectedIndex = -1;
+                            // 리스트 보여주기
+                          },
+                          child: Text(
+                            '타지역',
                             style: textTheme.subtitle2!.copyWith(
-                            color: (_placeSearchController.placeType == 2) ? colorScheme.primary : colorScheme.tertiary,
+                              color: (_placeSearchController.placeType == 2)
+                                  ? colorScheme.primary
+                                  : colorScheme.tertiary,
+                            ),
                           ),
                         ),
-                      ),
-                    ],
-                  ),
-                  Divider(
-                      thickness: 1,
-                      height: 1,
-                      color: colorScheme.tertiary
-                  ),
-                  _placeSearchController.placeType == 5
-                    ? favoritePlaceSearchTile(
-                      placeList: _placeSearchController.favoritePlaces,
-                      context: context,
-                      favoritePressed: () async {
-                        ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                        int _resCode = await _placeSearchController.removeFavoritePlace();
-                        if (_resCode == 0) {
-                          placeSearchSnackBar(
-                              context: context,
-                              title: Text(
-                                "제거되었습니다.",
-                                    style: textTheme.subtitle2?.copyWith(color: colorScheme.primary),
-                              ),
-                              color: Colors.red,
-                          );
-                        }
-                      },
-                    )
-                    : _placeSearchController.hasResult
-                      ? placeSearchTile(
-                        placeList: _placeSearchController.typeFilteredResultList,
-                        context: context,
-                        favoritePressed: () async {
-                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                          int _resCode = await _placeSearchController.addFavoritePlace();
-                          if (_resCode == 0) {
-                            placeSearchSnackBar(
-                                context: context,
-                                title: Text(
-                                  "즐겨찾기에 추가되었습니다.",
-                                  style: textTheme.subtitle2?.copyWith(color: colorScheme.primary)
-                                ),
-                                color: Colors.green
-                            );
-                          }
-                        },
-                      )
-                      : placeSearchTile(
-                        placeList: _placeSearchController.typeFilteredList,
-                        context: context,
-                        favoritePressed: () async {
-                          ScaffoldMessenger.of(context).hideCurrentSnackBar();
-                          int _resCode = await _placeSearchController.addFavoritePlace();
-                          if (_resCode == 0) {
-                            placeSearchSnackBar(
-                                context: context,
-                                title: Text(
-                                  "즐겨찾기에 추가되었습니다.",
-                                          style: textTheme.subtitle2?.copyWith(
-                                    color: colorScheme.primary,
+                      ],
+                    ),
+                    Divider(
+                        thickness: 1, height: 1, color: colorScheme.tertiary),
+                    _placeSearchController.placeType == 5
+                        ? favoritePlaceSearchTile(
+                            placeList: _placeSearchController.favoritePlaces,
+                            context: context,
+                            favoritePressed: () async {
+                              ScaffoldMessenger.of(context)
+                                  .hideCurrentSnackBar();
+                              int _resCode = await _placeSearchController
+                                  .removeFavoritePlace();
+                              if (_resCode == 0) {
+                                placeSearchSnackBar(
+                                  context: context,
+                                  title: Text(
+                                    "제거되었습니다.",
+                                    style: textTheme.subtitle2
+                                        ?.copyWith(color: colorScheme.primary),
                                   ),
-                                ),
-                                color: Colors.green
-                            );
-                          }
-                        },
-                      ),
-                ],
-              ),
-            );
-          }),
-          )
-        ),
+                                  color: Colors.red,
+                                );
+                              }
+                            },
+                          )
+                        : _placeSearchController.hasResult
+                            ? placeSearchTile(
+                                placeList: _placeSearchController
+                                    .typeFilteredResultList,
+                                context: context,
+                                favoritePressed: () async {
+                                  ScaffoldMessenger.of(context)
+                                      .hideCurrentSnackBar();
+                                  int _resCode = await _placeSearchController
+                                      .addFavoritePlace();
+                                  if (_resCode == 0) {
+                                    placeSearchSnackBar(
+                                        context: context,
+                                        title: Text("즐겨찾기에 추가되었습니다.",
+                                            style: textTheme.subtitle2
+                                                ?.copyWith(
+                                                    color:
+                                                        colorScheme.primary)),
+                                        color: Colors.green);
+                                  }
+                                },
+                              )
+                            : placeSearchTile(
+                                placeList:
+                                    _placeSearchController.typeFilteredList,
+                                context: context,
+                                favoritePressed: () async {
+                                  ScaffoldMessenger.of(context)
+                                      .hideCurrentSnackBar();
+                                  int _resCode = await _placeSearchController
+                                      .addFavoritePlace();
+                                  if (_resCode == 0) {
+                                    placeSearchSnackBar(
+                                        context: context,
+                                        title: Text(
+                                          "즐겨찾기에 추가되었습니다.",
+                                          style: textTheme.subtitle2?.copyWith(
+                                            color: colorScheme.primary,
+                                          ),
+                                        ),
+                                        color: Colors.green);
+                                  }
+                                },
+                              ),
+                  ],
+                ),
+              );
+            }),
+          )),
     );
   }
 }

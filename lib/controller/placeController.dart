@@ -17,6 +17,8 @@ class PlaceController extends GetxController {
 
   Place? dep; // 출발지
   Place? dst; // 도착지
+  bool hasDep = false;
+  bool hasDst = false;
 
   @override
   void initState() {
@@ -54,7 +56,10 @@ class PlaceController extends GetxController {
 
   void selectDep({required Place place}) {
     dep = place;
+    if (!hasDep) hasDep = true;
+    print(456);
     update();
+    print(123);
     _postController.getPosts(
       depId: dep?.id,
       dstId: dst?.id,
@@ -66,6 +71,7 @@ class PlaceController extends GetxController {
 
   void selectDst({required Place place}) {
     dst = place;
+    if (!hasDst) hasDst = true;
     update();
     _postController.getPosts(
       depId: dep?.id,

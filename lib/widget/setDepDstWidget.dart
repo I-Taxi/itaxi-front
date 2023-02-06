@@ -65,17 +65,25 @@ Padding lookupSetDepDstWidget(
               children: [
                 Padding(
                   padding: EdgeInsets.only(left: 5.w, bottom: 17.h),
-                  child: GestureDetector(
-                    onTap: () {
-                      _placeSearchController.changeDepOrDst(0);
-                      Get.to(() => SearchScreen());
-                    },
-                    child: Text(
-                      "출발지 입력",
-                      style: textTheme.subtitle2
-                          ?.copyWith(color: colorScheme.onTertiary),
-                    ),
-                  ),
+                  child: GetBuilder<PlaceController>(builder: (_) {
+                    return GestureDetector(
+                      onTap: () {
+                        _placeSearchController.changeDepOrDst(0);
+                        Get.to(() => SearchScreen());
+                      },
+                      child: !(_placeController.hasDep)
+                          ? Text(
+                              "출발지 입력",
+                              style: textTheme.subtitle2
+                                  ?.copyWith(color: colorScheme.onTertiary),
+                            )
+                          : Text(
+                              _placeController.dep!.name!,
+                              style: textTheme.subtitle2
+                                  ?.copyWith(color: colorScheme.onTertiary),
+                            ),
+                    );
+                  }),
                 ),
                 Container(
                   width: 180.w,
@@ -84,17 +92,25 @@ Padding lookupSetDepDstWidget(
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 5.w, top: 17.h),
-                  child: GestureDetector(
-                    onTap: () {
-                      _placeSearchController.changeDepOrDst(1);
-                      Get.to(() => SearchScreen());
-                    },
-                    child: Text(
-                      "도착지 입력",
-                      style: textTheme.subtitle2
-                          ?.copyWith(color: colorScheme.onTertiary),
-                    ),
-                  ),
+                  child: GetBuilder<PlaceController>(builder: (_) {
+                    return GestureDetector(
+                      onTap: () {
+                        _placeSearchController.changeDepOrDst(1);
+                        Get.to(() => SearchScreen());
+                      },
+                      child: !(_placeController.hasDst)
+                          ? Text(
+                              "도착지 입력",
+                              style: textTheme.subtitle2
+                                  ?.copyWith(color: colorScheme.onTertiary),
+                            )
+                          : Text(
+                              _placeController.dst!.name!,
+                              style: textTheme.subtitle2
+                                  ?.copyWith(color: colorScheme.onTertiary),
+                            ),
+                    );
+                  }),
                 ),
               ],
             ),
@@ -146,17 +162,25 @@ Padding gatherSetDepDstWidget(
               children: [
                 Padding(
                   padding: EdgeInsets.only(left: 5.w, bottom: 17.h),
-                  child: GestureDetector(
-                    onTap: () {
-                      _placeSearchController.changeDepOrDst(0);
-                      Get.to(() => SearchScreen());
-                    },
-                    child: Text(
-                      "출발지 입력",
-                      style: textTheme.subtitle2
-                          ?.copyWith(color: colorScheme.onTertiary),
-                    ),
-                  ),
+                  child: GetBuilder<PlaceController>(builder: (_) {
+                    return GestureDetector(
+                      onTap: () {
+                        _placeSearchController.changeDepOrDst(0);
+                        Get.to(() => SearchScreen());
+                      },
+                      child: !(_placeController.hasDep)
+                          ? Text(
+                              "출발지 입력",
+                              style: textTheme.subtitle2
+                                  ?.copyWith(color: colorScheme.onTertiary),
+                            )
+                          : Text(
+                              _placeController.dep!.name!,
+                              style: textTheme.subtitle2
+                                  ?.copyWith(color: colorScheme.onTertiary),
+                            ),
+                    );
+                  }),
                 ),
                 Container(
                   width: 180.w,
@@ -165,17 +189,25 @@ Padding gatherSetDepDstWidget(
                 ),
                 Padding(
                   padding: EdgeInsets.only(left: 5.w, top: 17.h),
-                  child: GestureDetector(
-                    onTap: () {
-                      _placeSearchController.changeDepOrDst(1);
-                      Get.to(() => SearchScreen());
-                    },
-                    child: Text(
-                      "도착지 입력",
-                      style: textTheme.subtitle2
-                          ?.copyWith(color: colorScheme.onTertiary),
-                    ),
-                  ),
+                  child: GetBuilder<PlaceController>(builder: (_) {
+                    return GestureDetector(
+                      onTap: () {
+                        _placeSearchController.changeDepOrDst(1);
+                        Get.to(() => SearchScreen());
+                      },
+                      child: !(_placeController.hasDst)
+                          ? Text(
+                              "도착지 입력",
+                              style: textTheme.subtitle2
+                                  ?.copyWith(color: colorScheme.onTertiary),
+                            )
+                          : Text(
+                              _placeController.dst!.name!,
+                              style: textTheme.subtitle2
+                                  ?.copyWith(color: colorScheme.onTertiary),
+                            ),
+                    );
+                  }),
                 ),
               ],
             ),
@@ -568,15 +600,14 @@ ElevatedButton lookupButton(TextTheme textTheme, ColorScheme colorScheme) {
       ));
 }
 
-ElevatedButton gatherButton(
-    TextTheme textTheme, ColorScheme colorScheme, ScreenController controller, BuildContext context) {
+ElevatedButton gatherButton(TextTheme textTheme, ColorScheme colorScheme,
+    ScreenController controller, BuildContext context) {
   return ElevatedButton(
       style: ElevatedButton.styleFrom(
-        primary: colorScheme.onPrimaryContainer,
-        minimumSize: Size(342.w, 57.h),
-        shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))
-      ),
+          primary: colorScheme.onPrimaryContainer,
+          minimumSize: Size(342.w, 57.h),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))),
       onPressed: () async {
         if (_placeController.dep == null) {
           snackBar(context: context, title: '출발지를 선택해주세요.');
