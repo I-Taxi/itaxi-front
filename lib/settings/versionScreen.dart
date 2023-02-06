@@ -13,7 +13,6 @@ class VersionScreen extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         elevation: 0,
-        centerTitle: true,
         backgroundColor: colorScheme.secondary,
         automaticallyImplyLeading: false,
         actions: [
@@ -21,7 +20,7 @@ class VersionScreen extends StatelessWidget {
               onPressed: (){
                 Get.back();
               },
-              icon: Icon(Icons.clear_sharp, color: colorScheme.tertiary,)
+              icon: Icon(Icons.clear_sharp, color: colorScheme.primary, size: 24,)
           )
         ],
       ),
@@ -34,11 +33,13 @@ class VersionScreen extends StatelessWidget {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
+                SizedBox(
+                  height: 12.h,
+                ),
                 Text(
                   '버전정보/개발자',
-                  style: textTheme.headline1?.copyWith(
+                  style: textTheme.headline2?.copyWith(
                     color: colorScheme.primary,
-                    fontWeight: FontWeight.bold
                   ),
                 ),
                 SizedBox(
@@ -55,8 +56,8 @@ class VersionScreen extends StatelessWidget {
                 Align(
                   alignment: Alignment.center,
                   child: Text(
-                    'Ver.2.0',
-                    style: textTheme.subtitle1?.copyWith(
+                    'Ver.3.0',
+                    style: textTheme.subtitle2?.copyWith(
                       color: colorScheme.primary,
                     ),
                   ),
@@ -83,7 +84,7 @@ class VersionScreen extends StatelessWidget {
                     ),
                     Text(
                       'iTaxi',
-                      style: textTheme.subtitle1?.copyWith(
+                      style: textTheme.subtitle2?.copyWith(
                         color: colorScheme.onPrimary,
                       ),
                     ),

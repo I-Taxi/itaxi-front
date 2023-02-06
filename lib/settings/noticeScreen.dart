@@ -39,7 +39,8 @@ class _NoticeScreenState extends State<NoticeScreen> {
               },
               icon: Icon(
                 Icons.clear_sharp,
-                color: colorScheme.tertiary,
+                color: colorScheme.tertiaryContainer,
+                size: 24,
               ),
             ),
           ]
@@ -60,10 +61,9 @@ class _NoticeScreenState extends State<NoticeScreen> {
               ),
               Text(
                 '공지사항',
-                style: textTheme.headline1?.copyWith(
-                    color: colorScheme.onPrimary,
-                    fontWeight: FontWeight.bold,
-                    fontSize: 24),
+                style: textTheme.headline2?.copyWith(
+                    color: colorScheme.onTertiary,
+                ),
               ),
               SizedBox(
                 height: 29.h,
