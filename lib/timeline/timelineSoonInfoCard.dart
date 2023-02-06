@@ -11,7 +11,7 @@ import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import 'HorizontalDashedDivider.dart';
+import '../widget/HorizontalDashedDivider.dart';
 
 Container timelineSoonInfoCard({required BuildContext context, required Post post}) {
   final colorScheme = Theme.of(context).colorScheme;
