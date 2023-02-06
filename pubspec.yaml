@@ -141,6 +141,7 @@ flutter:
     # place
     - assets/place/departure.png
     - assets/place/destination.png
+    - assets/place/dep-dest.png
 
     # type
     - assets/type/car_1.png
