@@ -1,7 +1,6 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:itaxi/gatherScreen.dart';
 import 'package:itaxi/timeline/checkPlaceScreen.dart';
 import 'package:itaxi/settings/settingScreen.dart';
 import 'package:toggle_switch/toggle_switch.dart';
@@ -21,8 +20,8 @@ import 'package:itaxi/controller/userController.dart';
 
 import 'package:itaxi/placeSearch/searchScreen.dart';
 import 'package:itaxi/placeSearch/placeSearchController.dart';
-import 'package:itaxi/gatherScreen.dart';
 import 'package:itaxi/widget/postTypeToggleButton.dart';
+import 'package:itaxi/widget/setDepDstWidget.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -56,9 +55,10 @@ class _MainScreenState extends State<MainScreen> {
       ),
       postType: _screenController.currentTabIndex,
     );
-    _placeController
-        .getPlaces()
-        .then((_) => _placeSearchController = Get.put(PlaceSearchController()));
+    _placeController.getPlaces().then((_) {
+      _placeSearchController = Get.put(PlaceSearchController());
+      _screenController.setMainScreenLoaded();
+    });
   }
 
   @override
@@ -125,372 +125,83 @@ class _MainScreenState extends State<MainScreen> {
                   SizedBox(
                     height: 52.37.h,
                   ),
-                  Container(
-                    height: 433.63.h,
-                    width: 342.w,
-                    decoration: BoxDecoration(
-                        color: colorScheme.primary,
-                        borderRadius: BorderRadius.circular(36.0),
-                        boxShadow: [
-                          BoxShadow(
-                              color: colorScheme.shadow,
-                              blurRadius: 40,
-                              offset: Offset(2, 4))
-                        ]),
-                    child: Column(
-                      children: [
-                        Padding(
-                          padding: EdgeInsets.only(
-                              left: 23.w, right: 23.w, top: 20.63.h),
-                          child: postTypeToggleButton(
-                              context: context, controller: controller),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.fromLTRB(23.w, 20.h, 24.w, 8.h),
-                          child: Container(
-                            width: 295.w,
-                            height: 120.h,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8),
-                              color: colorScheme.primaryContainer,
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  width: 19.w,
-                                ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.center,
+                  controller.mainScreenLoaded
+                      ? Container(
+                          height: 433.63.h,
+                          width: 342.w,
+                          decoration: BoxDecoration(
+                              color: colorScheme.primary,
+                              borderRadius: BorderRadius.circular(36.0),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: colorScheme.shadow,
+                                    blurRadius: 40,
+                                    offset: Offset(2, 4))
+                              ]),
+                          child: controller.currentToggle == 0
+                              ? Column(
                                   children: [
-                                    Image(
-                                      image: AssetImage(
-                                          'assets/place/dep-dest.png'),
-                                      width: 23.w,
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 23.w,
+                                          right: 23.w,
+                                          top: 20.63.h),
+                                      child: postTypeToggleButton(
+                                          context: context,
+                                          controller: controller),
                                     ),
+                                    lookupSetDepDstWidget(
+                                        colorScheme, textTheme, controller),
+                                    lookupSetTimeWidget(
+                                        colorScheme, context, textTheme),
+                                    lookupSetPostTypeWidget(
+                                        colorScheme, controller, context),
+                                    lookupSetCapacityWidget(
+                                        colorScheme, controller, textTheme)
+                                  ],
+                                )
+                              : Column(
+                                  children: [
+                                    Padding(
+                                      padding: EdgeInsets.only(
+                                          left: 23.w,
+                                          right: 23.w,
+                                          top: 20.63.h),
+                                      child: postTypeToggleButton(
+                                          context: context,
+                                          controller: controller),
+                                    ),
+                                    gatherSetDepDstWidget(
+                                        colorScheme, textTheme, controller),
+                                    gatherSetTimeWidget(
+                                        colorScheme, context, textTheme),
+                                    gatherSetPostTypeWidget(
+                                        colorScheme, controller, context),
+                                    lookupSetCapacityWidget(
+                                        colorScheme, controller, textTheme)
                                   ],
                                 ),
-                                SizedBox(
-                                  width: 19.w,
-                                ),
-                                Container(
-                                  height: 118.h,
-                                  child: Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 5.w, bottom: 17.h),
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            _placeSearchController
-                                                .changeDepOrDst(0);
-                                            Get.to(() => SearchScreen());
-                                          },
-                                          child: Text(
-                                            "출발지 입력",
-                                            style: textTheme.subtitle2
-                                                ?.copyWith(
-                                                    color:
-                                                        colorScheme.onTertiary),
-                                          ),
-                                        ),
-                                      ),
-                                      Container(
-                                        width: 180.w,
-                                        height: 1.h,
-                                        color: Color(0xffE1E1E1),
-                                      ),
-                                      Padding(
-                                        padding: EdgeInsets.only(
-                                            left: 5.w, top: 17.h),
-                                        child: GestureDetector(
-                                          onTap: () {
-                                            _placeSearchController
-                                                .changeDepOrDst(1);
-                                            Get.to(() => SearchScreen());
-                                          },
-                                          child: Text(
-                                            "도착지 입력",
-                                            style: textTheme.subtitle2
-                                                ?.copyWith(
-                                                    color:
-                                                        colorScheme.onTertiary),
-                                          ),
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                controller.currentToggle == 0
-                                    ? IconButton(
-                                        onPressed: () {},
-                                        icon: Image.asset('assets/change.png'),
-                                        iconSize: 36,
-                                        color: colorScheme.tertiary,
-                                      )
-                                    : Column(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.center,
-                                        children: [
-                                          IconButton(
-                                            constraints: BoxConstraints(),
-                                            padding: EdgeInsets.only(
-                                                left: 8.w, bottom: 10.5.h),
-                                            onPressed: () {},
-                                            icon: Image.asset(
-                                                'assets/change.png'),
-                                            iconSize: 36,
-                                            color: colorScheme.tertiary,
-                                          ),
-                                          IconButton(
-                                            constraints: BoxConstraints(),
-                                            padding: EdgeInsets.only(
-                                                left: 8.w, top: 10.5.h),
-                                            onPressed: () {
-                                              controller.changeStopOver(1);
-                                            },
-                                            icon: Image.asset(
-                                                'assets/addPlace.png'),
-                                            iconSize: 36,
-                                            color: colorScheme.tertiary,
-                                          ),
-                                        ],
-                                      ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              right: 24.w, left: 23.w, bottom: 8.h),
-                          child: Container(
-                            height: 56.h,
-                            width: 295.w,
-                            decoration: BoxDecoration(
-                              color: colorScheme.primaryContainer,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                SizedBox(
-                                  width: 20.w,
-                                ),
-                                GestureDetector(
-                                  behavior: HitTestBehavior.opaque,
-                                  onTap: () {
-                                    _dateController.selectDate(context);
-                                  },
-                                  child: ImageIcon(
-                                    AssetImage('assets/icon/calendar.png'),
-                                    size: 24,
-                                    color: colorScheme.tertiaryContainer,
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 25.w,
-                                ),
-                                Text(
-                                  DateFormat('MM월 dd일 (E)')
-                                      .format(//요일 설정 해줘야 함.
-                                          _dateController.pickedDate!),
-                                  style: textTheme.subtitle2
-                                      ?.copyWith(color: colorScheme.onTertiary),
-                                )
-                              ],
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(
-                              right: 24.w, left: 23.w, bottom: 8.h),
-                          child: Container(
-                            //getbuilder controller를 써야 함.
-                            width: 295.w,
-                            height: 56.59.h,
-                            decoration: BoxDecoration(
-                              color: colorScheme.primaryContainer,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Row(
-                              // crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  width: 19.w,
-                                ),
-                                ImageIcon(
-                                  AssetImage('assets/icon/logo_type.png'),
-                                  size: 24,
-                                  color: colorScheme.tertiaryContainer,
-                                ),
-                                SizedBox(width: 74.83.w),
-                                GestureDetector(
-                                  behavior: HitTestBehavior.opaque,
-                                  onTap: () {
-                                    _screenController.changeTabIndex(0);
-                                    _postController.getPosts(
-                                      depId: _placeController.dep?.id,
-                                      dstId: _placeController.dst?.id,
-                                      time: _dateController.formattingDateTime(
-                                        _dateController.mergeDateAndTime(),
-                                      ),
-                                      postType:
-                                          _screenController.currentTabIndex,
-                                    );
-                                  },
-                                  child:
-                                      (_screenController.currentTabIndex == 0)
-                                          ? selectedTabView(
-                                              viewTitle: '전체',
-                                              context: context,
-                                            )
-                                          : unSelectedTabView(
-                                              viewTitle: '전체',
-                                              context: context,
-                                            ),
-                                ),
-                                SizedBox(
-                                  width: 16.0.w,
-                                ),
-                                GestureDetector(
-                                  behavior: HitTestBehavior.opaque,
-                                  onTap: () {
-                                    _screenController.changeTabIndex(1);
-                                    _postController.getPosts(
-                                      depId: _placeController.dep?.id,
-                                      dstId: _placeController.dst?.id,
-                                      time: _dateController.formattingDateTime(
-                                        _dateController.mergeDateAndTime(),
-                                      ),
-                                      postType:
-                                          _screenController.currentTabIndex,
-                                    );
-                                  },
-                                  child:
-                                      (_screenController.currentTabIndex == 1)
-                                          ? selectedTabView(
-                                              viewTitle: '택시',
-                                              context: context,
-                                            )
-                                          : unSelectedTabView(
-                                              viewTitle: '택시',
-                                              context: context,
-                                            ),
-                                ),
-                                SizedBox(
-                                  width: 16.0.w,
-                                ),
-                                GestureDetector(
-                                  behavior: HitTestBehavior.opaque,
-                                  onTap: () {
-                                    _screenController.changeTabIndex(2);
-                                    _postController.getPosts(
-                                      depId: _placeController.dep?.id,
-                                      dstId: _placeController.dst?.id,
-                                      time: _dateController.formattingDateTime(
-                                        _dateController.mergeDateAndTime(),
-                                      ),
-                                      postType:
-                                          _screenController.currentTabIndex,
-                                    );
-                                  },
-                                  child:
-                                      (_screenController.currentTabIndex == 2)
-                                          ? selectedTabView(
-                                              viewTitle: '카풀',
-                                              context: context,
-                                            )
-                                          : unSelectedTabView(
-                                              viewTitle: '카풀',
-                                              context: context,
-                                            ),
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
-                        Padding(
-                          padding: EdgeInsets.only(left: 23.w, right: 24.w),
-                          child: Container(
-                            height: 56.59.h,
-                            width: 295.w,
-                            decoration: BoxDecoration(
-                              color: colorScheme.primaryContainer,
-                              borderRadius: BorderRadius.circular(8),
-                            ),
-                            child: Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                SizedBox(
-                                  width: 19.w,
-                                ),
-                                ImageIcon(
-                                  AssetImage('assets/icon/person.png'),
-                                  size: 24,
-                                  color: colorScheme.tertiaryContainer,
-                                ),
-                                SizedBox(width: 76.17.w),
-                                IconButton(
-                                  onPressed: () {
-                                    if (personCount != 1)
-                                      setState(() {
-                                        personCount--;
-                                      });
-                                  },
-                                  icon: Image.asset('assets/removeP.png'),
-                                  color: (personCount == 1)
-                                      ? colorScheme.tertiaryContainer
-                                      : colorScheme.secondary,
-                                ),
-                                SizedBox(
-                                  width: 8.w,
-                                ),
-                                Text("$personCount명",
-                                    style: textTheme.subtitle2?.copyWith(
-                                        color: colorScheme.onTertiary)),
-                                SizedBox(
-                                  width: 8.w,
-                                ),
-                                IconButton(
-                                  onPressed: () {
-                                    if (personCount != 4)
-                                      setState(() {
-                                        personCount++;
-                                      });
-                                  },
-                                  icon: Image.asset('assets/addPerson.png'),
-                                  color: (personCount == 4)
-                                      ? colorScheme.tertiaryContainer
-                                      : colorScheme.secondary,
-                                ),
-                              ],
-                            ),
-                          ),
                         )
-                      ],
-                    ),
-                  ),
+                      : Container(
+                          height: 433.63.h,
+                          width: 342.w,
+                          decoration: BoxDecoration(
+                              color: colorScheme.primary,
+                              borderRadius: BorderRadius.circular(36.0),
+                              boxShadow: [
+                                BoxShadow(
+                                    color: colorScheme.shadow,
+                                    blurRadius: 40,
+                                    offset: Offset(2, 4))
+                              ]),
+                        ),
                   SizedBox(
                     height: 60.h,
                   ),
-                  ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        primary: Colors.blueAccent,
-                        minimumSize: Size(342.w, 57.h),
-                      ),
-                      onPressed: () {
-                        Get.to(CheckPlaceScreen());
-                      },
-                      child: Text(
-                        "조회하기",
-                        style: textTheme.subtitle2?.copyWith(
-                          color: colorScheme.primary,
-                        ),
-                      )),
+                  if (controller.mainScreenLoaded)
+                    controller.currentToggle == 0
+                    ? lookupButton(textTheme, colorScheme)
+                    : gatherButton(textTheme, colorScheme, controller, context),
                 ],
               )),
         ],

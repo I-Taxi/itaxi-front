@@ -61,6 +61,7 @@ class ITaxiTheme {
     primary: Color(0xFFFFFFFF),
     onPrimary: Colors.black,
     primaryContainer: Color(0xfffbfbfb),
+    onPrimaryContainer: Color(0xff388bdd),
     secondary: Color(0xff70b1f2), //Color(0xff3fa9f5) - 기존 color
     onSecondary: Color(0xFFFFFFFF),
     secondaryContainer: Color(0XFF509DE9),
