@@ -172,7 +172,7 @@ flutter:
     - assets/icon_KTX.png
     - assets/icon_Car.png
     - assets/banner.png
-    - assets/contact.png
+    - assets/button/contact.png
     - assets/first_chat.png
 
     # icon
