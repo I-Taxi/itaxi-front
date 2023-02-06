@@ -286,11 +286,14 @@ Padding lookupSetTimeWidget(
           SizedBox(
             width: 25.w,
           ),
-          Text(
-            DateFormat('MM월 dd일 (E)').format(//요일 설정 해줘야 함.
-                _dateController.pickedDate!),
-            style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
-          )
+          GetBuilder<DateController>(builder: (_) {
+            return Text(
+              DateFormat('MM월 dd일 (E)').format(//요일 설정 해줘야 함.
+                  _dateController.pickedDate!),
+              style:
+                  textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
+            );
+          })
         ],
       ),
     ),
@@ -328,11 +331,14 @@ Padding gatherSetTimeWidget(
           SizedBox(
             width: 25.w,
           ),
-          Text(
-            DateFormat('MM월 dd일 (E) HH:MM').format(//요일 설정 해줘야 함.
-                _dateController.pickedDate!),
-            style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
-          )
+          GetBuilder<DateController>(builder: (_) {
+            return Text(
+              DateFormat('MM월 dd일 (E) HH:MM').format(//요일 설정 해줘야 함.
+                  _dateController.pickedDate!),
+              style:
+                  textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
+            );
+          })
         ],
       ),
     ),
@@ -585,7 +591,7 @@ Padding lookupSetCapacityWidget(
 ElevatedButton lookupButton(TextTheme textTheme, ColorScheme colorScheme) {
   return ElevatedButton(
       style: ElevatedButton.styleFrom(
-          primary: colorScheme.onPrimaryContainer,
+          backgroundColor: colorScheme.onPrimaryContainer,
           minimumSize: Size(342.w, 57.h),
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))),
@@ -600,57 +606,66 @@ ElevatedButton lookupButton(TextTheme textTheme, ColorScheme colorScheme) {
       ));
 }
 
-ElevatedButton gatherButton(TextTheme textTheme, ColorScheme colorScheme,
+GetBuilder gatherButton(TextTheme textTheme, ColorScheme colorScheme,
     ScreenController controller, BuildContext context) {
-  return ElevatedButton(
-      style: ElevatedButton.styleFrom(
-          primary: colorScheme.onPrimaryContainer,
-          minimumSize: Size(342.w, 57.h),
-          shape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))),
-      onPressed: () async {
-        if (_placeController.dep == null) {
-          snackBar(context: context, title: '출발지를 선택해주세요.');
-        } else if (_placeController.dep!.id == -1) {
-          snackBar(context: context, title: '출발지를 다시 선택해주세요.');
-        } else if (_placeController.dst == null) {
-          snackBar(context: context, title: '도착지를 선택해주세요.');
-        } else if (_placeController.dst!.id == -1) {
-          snackBar(context: context, title: '도착지를 다시 선택해주세요.');
-        } else if (DateTime.now()
-                .difference(_dateController.mergeDateAndTime())
-                .isNegative ==
-            false) {
-          snackBar(context: context, title: '출발시간을 다시 선택해주세요.');
-        } else if (_addPostController.capacity == 0) {
-          snackBar(context: context, title: '최대인원을 선택해주세요.');
-        } else {
-          Post post = Post(
-            uid: _userController.uid,
-            postType: controller.currentTabIndex,
-            departure: _placeController.dep,
-            destination: _placeController.dst,
-            deptTime: _dateController.formattingDateTime(
-              _dateController.mergeDateAndTime(),
+  return GetBuilder<AddPostController>(
+    builder: (_) {
+      return ElevatedButton(
+          style: ElevatedButton.styleFrom(
+              backgroundColor: 
+              _addPostController.loaded
+              ? colorScheme.onPrimaryContainer
+              : colorScheme.tertiaryContainer,
+              minimumSize: Size(342.w, 57.h),
+              shape:
+                  RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))),
+          onPressed: () async {
+            if (_addPostController.loaded) {
+              if (_placeController.dep == null) {
+                snackBar(context: context, title: '출발지를 선택해주세요.');
+              } else if (_placeController.dep!.id == -1) {
+                snackBar(context: context, title: '출발지를 다시 선택해주세요.');
+              } else if (_placeController.dst == null) {
+                snackBar(context: context, title: '도착지를 선택해주세요.');
+              } else if (_placeController.dst!.id == -1) {
+                snackBar(context: context, title: '도착지를 다시 선택해주세요.');
+              } else if (DateTime.now()
+                      .difference(_dateController.mergeDateAndTime())
+                      .isNegative ==
+                  false) {
+                snackBar(context: context, title: '출발시간을 다시 선택해주세요.');
+              } else if (_addPostController.capacity == 0) {
+                snackBar(context: context, title: '최대인원을 선택해주세요.');
+              } else {
+                Post post = Post(
+                  uid: _userController.uid,
+                  postType: controller.currentTabIndex,
+                  departure: _placeController.dep,
+                  destination: _placeController.dst,
+                  deptTime: _dateController.formattingDateTime(
+                    _dateController.mergeDateAndTime(),
+                  ),
+                  capacity: _addPostController.capacity,
+                );
+                Get.back();
+                await _addPostController.fetchAddPost(post: post);
+                await _postController.getPosts(
+                  depId: _placeController.dep?.id,
+                  dstId: _placeController.dst?.id,
+                  time: _dateController.formattingDateTime(
+                    _dateController.mergeDateAndTime(),
+                  ),
+                  postType: controller.currentTabIndex,
+                );
+              }
+            }
+          },
+          child: Text(
+            "방 만들기",
+            style: textTheme.subtitle2?.copyWith(
+              color: colorScheme.primary,
             ),
-            capacity: _addPostController.capacity,
-          );
-          Get.back();
-          await _addPostController.fetchAddPost(post: post);
-          await _postController.getPosts(
-            depId: _placeController.dep?.id,
-            dstId: _placeController.dst?.id,
-            time: _dateController.formattingDateTime(
-              _dateController.mergeDateAndTime(),
-            ),
-            postType: controller.currentTabIndex,
-          );
-        }
-      },
-      child: Text(
-        "방 만들기",
-        style: textTheme.subtitle2?.copyWith(
-          color: colorScheme.primary,
-        ),
-      ));
+          ));
+    }
+  );
 }
