@@ -88,16 +88,29 @@ class _MainScreenState extends State<MainScreen> {
                         Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
-                            Text(
-                              "I-TAXI",
-                              style: textTheme.headline3?.copyWith(
-                                color: colorScheme.primary,
-                              ),
+                            Row(
+                              children: [
+                                SizedBox(
+                                  height: 31.h,
+                                  child: Text(
+                                    "I-TAXI",
+                                    style: textTheme.headline3?.copyWith(
+                                      color: colorScheme.primary,
+                                    ),
+                                  ),
+                                ),
+                              ],
                             ),
-                            Text(
-                              "어디든지 자유롭게 이동하세요!",
-                              style: textTheme.subtitle1?.copyWith(
-                                color: colorScheme.primary,
+                            SizedBox(
+                              height: 2.37.h,
+                            ),
+                            SizedBox(
+                              height: 30.h,
+                              child: Text(
+                                "어디든지 부담없이 이동하세요!",
+                                style: textTheme.subtitle1?.copyWith(
+                                  color: colorScheme.primary,
+                                ),
                               ),
                             )
                           ],
@@ -112,14 +125,20 @@ class _MainScreenState extends State<MainScreen> {
                       ],
                     ),
                     SizedBox(
-                      height: 58.37.h,
+                      height: 52.37.h,
                     ),
                     Container(
                       height: 433.63.h,
                       width: 342.w,
                       decoration: BoxDecoration(
                           color: colorScheme.primary,
-                          borderRadius: BorderRadius.circular(36.0)),
+                          borderRadius: BorderRadius.circular(36.0),
+                          boxShadow: [
+                            BoxShadow(
+                                color: colorScheme.shadow,
+                                blurRadius: 40,
+                                offset: Offset(2, 4))
+                          ]),
                       child: Column(
                         children: [
                           Padding(
@@ -130,21 +149,23 @@ class _MainScreenState extends State<MainScreen> {
                           ),
                           Padding(
                             padding: EdgeInsets.fromLTRB(23.w, 20.h, 24.w, 8.h),
-                            child: SizedBox(
+                            child: Container(
                               width: 295.w,
                               height: 120.h,
+                              decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(8),
+                                color: colorScheme.primaryContainer,
+                              ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
-                                // crossAxisAlignment: CrossAxisAlignment.center,
+                                crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
                                   SizedBox(
                                     width: 19.w,
                                   ),
                                   Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
                                     children: [
-                                      SizedBox(
-                                        height: 5.h,
-                                      ),
                                       Image(
                                         image: AssetImage(
                                             'assets/place/dep-dest.png'),
@@ -155,27 +176,30 @@ class _MainScreenState extends State<MainScreen> {
                                   SizedBox(
                                     width: 19.w,
                                   ),
-                                  SizedBox(
-                                    width: 180.w,
-                                    height: 120.h,
+                                  Container(
+                                    height: 118.h,
                                     child: Column(
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
-                                      // mainAxisAlignment: MainAxisAlignment.start,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.center,
                                       children: [
-                                        TextButton(
-                                          onPressed: () {
-                                            _placeSearchController
-                                                .changeDepOrDst(0);
-                                            Get.to(() => SearchScreen());
-                                          },
-                                          // style: TextButton.styleFrom(fixedSize: Size(85.w, 18.h)),
-                                          child: Text(
-                                            "출발지 입력",
-                                            style: textTheme.subtitle2
-                                                ?.copyWith(
-                                                    color:
-                                                        colorScheme.onTertiary),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 5.w, bottom: 17.h),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              _placeSearchController
+                                                  .changeDepOrDst(0);
+                                              Get.to(() => SearchScreen());
+                                            },
+                                            child: Text(
+                                              "출발지 입력",
+                                              style: textTheme.subtitle2
+                                                  ?.copyWith(
+                                                      color: colorScheme
+                                                          .onTertiary),
+                                            ),
                                           ),
                                         ),
                                         Container(
@@ -183,19 +207,22 @@ class _MainScreenState extends State<MainScreen> {
                                           height: 1.h,
                                           color: Color(0xffE1E1E1),
                                         ),
-                                        TextButton(
-                                          onPressed: () {
-                                            _placeSearchController
-                                                .changeDepOrDst(1);
-                                            Get.to(() => SearchScreen());
-                                          },
-                                          // style: TextButton.styleFrom(fixedSize: Size(85.w, 18.h)),
-                                          child: Text(
-                                            "도착지 입력",
-                                            style: textTheme.subtitle2
-                                                ?.copyWith(
-                                                    color:
-                                                        colorScheme.onTertiary),
+                                        Padding(
+                                          padding: EdgeInsets.only(
+                                              left: 5.w, top: 17.h),
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              _placeSearchController
+                                                  .changeDepOrDst(1);
+                                              Get.to(() => SearchScreen());
+                                            },
+                                            child: Text(
+                                              "도착지 입력",
+                                              style: textTheme.subtitle2
+                                                  ?.copyWith(
+                                                      color: colorScheme
+                                                          .onTertiary),
+                                            ),
                                           ),
                                         ),
                                       ],
@@ -212,10 +239,15 @@ class _MainScreenState extends State<MainScreen> {
                             ),
                           ),
                           Padding(
-                            padding: EdgeInsets.only(right: 24.w, left: 23.w),
-                            child: SizedBox(
-                              height: 20.h,
+                            padding: EdgeInsets.only(
+                                right: 24.w, left: 23.w, bottom: 8.h),
+                            child: Container(
+                              height: 56.h,
                               width: 295.w,
+                              decoration: BoxDecoration(
+                                color: colorScheme.primaryContainer,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
                               child: Row(
                                 mainAxisAlignment: MainAxisAlignment.start,
                                 children: [
@@ -237,7 +269,7 @@ class _MainScreenState extends State<MainScreen> {
                                     width: 25.w,
                                   ),
                                   Text(
-                                    DateFormat('M월 d일, EE')
+                                    DateFormat('MM월 dd일 (E)')
                                         .format(//요일 설정 해줘야 함.
                                             _dateController.pickedDate!),
                                     style: textTheme.subtitle2?.copyWith(
@@ -249,11 +281,15 @@ class _MainScreenState extends State<MainScreen> {
                           ),
                           Padding(
                             padding: EdgeInsets.only(
-                                right: 24.w, left: 23.w, top: 8.h),
-                            child: SizedBox(
+                                right: 24.w, left: 23.w, bottom: 8.h),
+                            child: Container(
                               //getbuilder controller를 써야 함.
                               width: 295.w,
                               height: 56.59.h,
+                              decoration: BoxDecoration(
+                                color: colorScheme.primaryContainer,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
                               child: Row(
                                 // crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
@@ -356,10 +392,14 @@ class _MainScreenState extends State<MainScreen> {
                           ),
                           Padding(
                             padding: EdgeInsets.only(
-                                left: 23.w, right: 24.w, bottom: 24.82.h),
-                            child: SizedBox(
+                                left: 23.w, right: 24.w),
+                            child: Container(
                               height: 56.59.h,
                               width: 295.w,
+                              decoration: BoxDecoration(
+                                color: colorScheme.primaryContainer,
+                                borderRadius: BorderRadius.circular(8),
+                              ),
                               child: Row(
                                 crossAxisAlignment: CrossAxisAlignment.center,
                                 children: [
