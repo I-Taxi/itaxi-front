@@ -20,7 +20,7 @@ import 'package:itaxi/signInUp/signInScreen.dart';
 class SignUpController extends GetxController {
   late String studentId;
   late String customId;
-  late String customPw;
+  String customPw = ""; // 나중에 수정 요망.
   late String name;
   late String phone;
   late String bank;
@@ -76,6 +76,7 @@ class SignUpController extends GetxController {
     // print(FirebaseAuth.instance.currentUser!.displayName.toString());
     customId = "${customId}@handong.ac.kr";
     try {
+      print(customId);
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: customId, password: customPw);
       FirebaseAuth.instance.currentUser?.sendEmailVerification();
@@ -89,9 +90,9 @@ class SignUpController extends GetxController {
         bankOwner: "2",
       );
       encryptUser(login);
+      print(customId);
       await fetchAddUser(login: login);
       // Get.to(const SignInScreen());
-      Get.back();
     } on FirebaseAuthException catch (e) {
       if (e.code == 'weak-password') {
         throw Exception('the password provided is too weak');

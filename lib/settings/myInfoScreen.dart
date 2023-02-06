@@ -12,6 +12,8 @@ import 'package:itaxi/controller/signInController.dart';
 import 'package:itaxi/controller/navigationController.dart';
 import '../widget/mainDialog.dart';
 import 'package:itaxi/settings/settingScreen.dart';
+import 'package:itaxi/settings/findPhoneNumScreen.dart';
+import 'package:itaxi/settings/resetPWScreen.dart';
 
 class MyInfoScreen extends StatefulWidget {
   const MyInfoScreen({Key? key}) : super(key: key);
@@ -159,14 +161,14 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                             ),
                             _management(
                                 title: "휴대폰 번호 재설정",
-                                //nextPage: ,
+                                nextPage: FindPhoneNumScreen(),
                                 context: context),
                             SizedBox(
                               height: 18.5.h,
                             ),
                             _management(
                                 title: "비밀번호 재설정",
-                                //nextPage: ,
+                                nextPage: ResetPWScreen(),
                                 context: context),
                             SizedBox(
                               height: 18.5.h,
@@ -194,7 +196,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                             SizedBox(
                               height: 28.5.h,
                             ),
-                            _management(title: "계좌번호 변경", context: context)
+                            //_management(title: "계좌번호 변경", context: context)
                           ],
                         ),
                       );
@@ -228,7 +230,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
 
   Widget _management({
     required String title,
-    //required nextPage,
+    required nextPage,
     required BuildContext context,
   }) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -283,8 +285,8 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
       children: [
         GestureDetector(
           onTap: () {
-            deletedUserDialog(context, '회원탈퇴',
-                '현재 모집중인 방이 있거나, 입장하신 방이 있는 경우에는 회원탈퇴가 되지 않습니다.\n정말로 탈퇴하시겠습니까?');
+            deletedUserDialog(context, '회원 탈퇴 하시겠어요?',
+                '지금 당장 필요하지 않아도\n언제나 한동대학교 계정을 통해서\n다시 가입하실 수 있어요');
           },
           child: Container(
             child: Row(
@@ -294,13 +296,6 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                   title,
                   style:
                       textTheme.bodyText1!.copyWith(color: Color(0xffE67373)),
-                ),
-                SizedBox(
-                  width: 32.w,
-                ),
-                Icon(
-                  Icons.arrow_forward,
-                  size: 15.63.w,
                 ),
               ],
             ),
@@ -324,17 +319,17 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
           return Dialog(
             elevation: 0,
             shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(4.0),
+              borderRadius: BorderRadius.circular(24.0),
             ),
             child: Container(
               width: 360.w,
               height: 240.h,
               alignment: Alignment.center,
               padding: EdgeInsets.fromLTRB(
-                28.0.w,
-                32.0.h,
-                28.0.w,
-                12.0.h,
+                36.0.w,
+                24.0.h,
+                36.0.w,
+                24.0.h,
               ),
               child: Column(
                 children: <Widget>[
@@ -354,29 +349,47 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                     ),
                   ),
                   const Spacer(),
-                  TextButton(
-                    onPressed: () async {
-                      Get.back();
-                      print("체크1");
-                      print(_userController.isDeleted);
-                      await _userController.fetchDeleteUsers();
-                      print(_userController.isDeleted);
-                      if (_userController.isDeleted == 1) {
-                        _signInController.deleteUser();
-                        await SettingScreen.storage.delete(key: "login");
-                        _signInController.reset();
-                        _navController.changeIndex(1);
-                      } else {
-                        Get.back();
-                        mainDialog(context, '회원탈퇴',
-                            '현재 모집중이거나 입장하신 방이 있습니다. 해당 방을 나가신 후 다시 시도해주세요.');
-                      }
-                    },
-                    child: Text(
-                      "확인",
-                      style: textTheme.headline1
-                          ?.copyWith(color: colorScheme.tertiary),
-                    ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      TextButton(
+                        onPressed: () async {
+                          Get.back();
+                        },
+                        child: Text(
+                          "취소",
+                          style: textTheme.headline1
+                              ?.copyWith(color: colorScheme.error),
+                        ),
+                      ),
+                      SizedBox(
+                        width: 78.w,
+                      ),
+                      TextButton(
+                        onPressed: () async {
+                          Get.back();
+                          print("체크1");
+                          print(_userController.isDeleted);
+                          await _userController.fetchDeleteUsers();
+                          print(_userController.isDeleted);
+                          if (_userController.isDeleted == 1) {
+                            _signInController.deleteUser();
+                            await SettingScreen.storage.delete(key: "login");
+                            _signInController.reset();
+                            _navController.changeIndex(1);
+                          } else {
+                            Get.back();
+                            mainDialog(context, '회원탈퇴',
+                                '현재 모집중이거나 입장하신 방이 있습니다. 해당 방을 나가신 후 다시 시도해주세요.');
+                          }
+                        },
+                        child: Text(
+                          "탈퇴",
+                          style: textTheme.headline1
+                              ?.copyWith(color: colorScheme.error),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),

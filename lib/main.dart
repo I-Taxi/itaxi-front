@@ -34,6 +34,10 @@ late AndroidNotificationChannel channel;
 late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
 void main() async {
+
+  //임시로 OS Error: CERTIFICATE_VERIFY_FAILED 해결
+  HttpOverrides.global = new MyHttpOverrides();
+
   // firebase_core 패키지 필요
   WidgetsFlutterBinding.ensureInitialized();
   // WidgetsBinding widgetsBinding = WidgetsFlutterBinding.ensureInitialized();

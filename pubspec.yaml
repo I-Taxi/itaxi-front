@@ -115,6 +115,7 @@ flutter:
     - assets/button/mail.png
     - assets/button/phone.png
     - assets/button/add_timeline.png
+    - assets/button/contact.png
 
     # arrow
     - assets/arrow/arrow.png

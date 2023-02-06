@@ -39,7 +39,7 @@ class TermOfServiceScreen extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Text(
-                    '개인정보처리방침',
+                    '이용약관',
                     style: textTheme.headline1?.copyWith(
                         color: colorScheme.onPrimary,
                         fontWeight: FontWeight.bold,

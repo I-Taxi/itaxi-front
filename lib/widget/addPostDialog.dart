@@ -221,7 +221,6 @@ void addPostDialog({required BuildContext context}) {
                     '출발시간',
                     style: textTheme.headline2?.copyWith(
                       color: colorScheme.tertiary,
-                      fontFamily: 'NotoSans',
                     ),
                   ),
                   const Spacer(),
@@ -252,200 +251,113 @@ void addPostDialog({required BuildContext context}) {
               SizedBox(
                 height: 20.0.h,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text(
-                    '최대인원',
-                    style: textTheme.headline2?.copyWith(
-                      color: colorScheme.tertiary,
-                      fontFamily: 'NotoSans',
-                    ),
-                  ),
-                  GetBuilder<AddPostController>(
-                    builder: (_) {
-                      return Row(
-                        children: [
-                          GestureDetector(
-                            behavior: HitTestBehavior.opaque,
-                            onTap: () {
-                              _addPostController.changeCapacity(2);
-                            },
-                            child: (_addPostController.capacity == 2)
-                                ? Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 10.w,
-                                    ),
-                                    child: Text(
-                                      '2',
-                                      style: textTheme.headline2?.copyWith(color: colorScheme.secondary),
-                                    ),
-                                  )
-                                : Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 10.w,
-                                    ),
-                                    child: Text(
-                                      '2',
-                                      style: textTheme.headline2?.copyWith(color: colorScheme.tertiary),
-                                    ),
-                                  ),
-                          ),
-                          SizedBox(
-                            width: 8.w,
-                          ),
-                          GestureDetector(
-                            behavior: HitTestBehavior.opaque,
-                            onTap: () {
-                              _addPostController.changeCapacity(3);
-                            },
-                            child: (_addPostController.capacity == 3)
-                                ? Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 10.w,
-                                    ),
-                                    child: Text(
-                                      '3',
-                                      style: textTheme.headline2?.copyWith(color: colorScheme.secondary),
-                                    ),
-                                  )
-                                : Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 10.w,
-                                    ),
-                                    child: Text(
-                                      '3',
-                                      style: textTheme.headline2?.copyWith(color: colorScheme.tertiary),
-                                    ),
-                                  ),
-                          ),
-                          SizedBox(
-                            width: 8.w,
-                          ),
-                          GestureDetector(
-                            behavior: HitTestBehavior.opaque,
-                            onTap: () {
-                              _addPostController.changeCapacity(4);
-                            },
-                            child: (_addPostController.capacity == 4)
-                                ? Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 10.w,
-                                    ),
-                                    child: Text(
-                                      '4',
-                                      style: textTheme.headline2?.copyWith(color: colorScheme.secondary),
-                                    ),
-                                  )
-                                : Container(
-                                    padding: EdgeInsets.symmetric(
-                                      horizontal: 10.w,
-                                    ),
-                                    child: Text(
-                                      '4',
-                                      style: textTheme.headline2?.copyWith(color: colorScheme.tertiary),
-                                    ),
-                                  ),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ],
-              ),
-              SizedBox(
-                height: 20.0.h,
-              ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Text(
-                    '나의 짐',
-                    style: textTheme.headline2?.copyWith(
-                      color: colorScheme.tertiary,
-                      fontFamily: 'NotoSans',
-                    ),
-                  ),
-                  GetBuilder<AddPostController>(
-                    builder: (_) {
-                      return Row(
-                        children: [
-                          GestureDetector(
-                            behavior: HitTestBehavior.opaque,
-                            onTap: () {
-                              _addPostController.changeLuggage(0);
-                            },
-                            child: (_addPostController.luggage == 0)
-                                ? Container(
-                                    padding: EdgeInsets.symmetric(horizontal: 6.w),
-                                    child: Text(
-                                      '없음',
-                                      style: textTheme.headline2?.copyWith(color: colorScheme.secondary),
-                                    ),
-                                  )
-                                : Container(
-                                    padding: EdgeInsets.symmetric(horizontal: 6.w),
-                                    child: Text(
-                                      '없음',
-                                      style: textTheme.headline2?.copyWith(color: colorScheme.tertiary),
-                                    ),
-                                  ),
-                          ),
-                          SizedBox(
-                            width: 8.w,
-                          ),
-                          GestureDetector(
-                            behavior: HitTestBehavior.opaque,
-                            onTap: () {
-                              _addPostController.changeLuggage(1);
-                            },
-                            child: (_addPostController.luggage == 1)
-                                ? Container(
-                                    padding: EdgeInsets.symmetric(horizontal: 6.w),
-                                    child: Text(
-                                      '소',
-                                      style: textTheme.headline2?.copyWith(color: colorScheme.secondary),
-                                    ),
-                                  )
-                                : Container(
-                                    padding: EdgeInsets.symmetric(horizontal: 6.w),
-                                    child: Text(
-                                      '소',
-                                      style: textTheme.headline2?.copyWith(color: colorScheme.tertiary),
-                                    ),
-                                  ),
-                          ),
-                          SizedBox(
-                            width: 8.w,
-                          ),
-                          GestureDetector(
-                            behavior: HitTestBehavior.opaque,
-                            onTap: () {
-                              _addPostController.changeLuggage(2);
-                            },
-                            child: (_addPostController.luggage == 2)
-                                ? Container(
-                                    padding: EdgeInsets.symmetric(horizontal: 6.w),
-                                    child: Text(
-                                      '대',
-                                      style: textTheme.headline2?.copyWith(color: colorScheme.secondary),
-                                    ),
-                                  )
-                                : Container(
-                                    padding: EdgeInsets.symmetric(horizontal: 6.w),
-                                    child: Text(
-                                      '대',
-                                      style: textTheme.headline2?.copyWith(color: colorScheme.tertiary),
-                                    ),
-                                  ),
-                          ),
-                        ],
-                      );
-                    },
-                  ),
-                ],
-              ),
+              // Row(
+              //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              //   crossAxisAlignment: CrossAxisAlignment.center,
+              //   children: [
+              //     Text(
+              //       '최대인원',
+              //       style: textTheme.headline2?.copyWith(
+              //         color: colorScheme.tertiary,
+              //       ),
+              //     ),
+              //     // GetBuilder<AddPostController>(
+              //     //   builder: (_) {
+              //     //     return Row(
+              //     //       children: [
+              //     //         GestureDetector(
+              //     //           behavior: HitTestBehavior.opaque,
+              //     //           onTap: () {
+              //     //             _addPostController.changeCapacity(2);
+              //     //           },
+              //     //           child: (_addPostController.capacity == 2)
+              //     //               ? Container(
+              //     //                   padding: EdgeInsets.symmetric(
+              //     //                     horizontal: 10.w,
+              //     //                   ),
+              //     //                   child: Text(
+              //     //                     '2',
+              //     //                     style: textTheme.headline2?.copyWith(
+              //     //                         color: colorScheme.secondary),
+              //     //                   ),
+              //     //                 )
+              //     //               : Container(
+              //     //                   padding: EdgeInsets.symmetric(
+              //     //                     horizontal: 10.w,
+              //     //                   ),
+              //     //                   child: Text(
+              //     //                     '2',
+              //     //                     style: textTheme.headline2?.copyWith(
+              //     //                         color: colorScheme.tertiary),
+              //     //                   ),
+              //     //                 ),
+              //     //         ),
+              //     //         SizedBox(
+              //     //           width: 8.w,
+              //     //         ),
+              //     //         GestureDetector(
+              //     //           behavior: HitTestBehavior.opaque,
+              //     //           onTap: () {
+              //     //             _addPostController.changeCapacity(3);
+              //     //           },
+              //     //           child: (_addPostController.capacity == 3)
+              //     //               ? Container(
+              //     //                   padding: EdgeInsets.symmetric(
+              //     //                     horizontal: 10.w,
+              //     //                   ),
+              //     //                   child: Text(
+              //     //                     '3',
+              //     //                     style: textTheme.headline2?.copyWith(
+              //     //                         color: colorScheme.secondary),
+              //     //                   ),
+              //     //                 )
+              //     //               : Container(
+              //     //                   padding: EdgeInsets.symmetric(
+              //     //                     horizontal: 10.w,
+              //     //                   ),
+              //     //                   child: Text(
+              //     //                     '3',
+              //     //                     style: textTheme.headline2?.copyWith(
+              //     //                         color: colorScheme.tertiary),
+              //     //                   ),
+              //     //                 ),
+              //     //         ),
+              //     //         SizedBox(
+              //     //           width: 8.w,
+              //     //         ),
+              //     //         GestureDetector(
+              //     //           behavior: HitTestBehavior.opaque,
+              //     //           onTap: () {
+              //     //             _addPostController.changeCapacity(4);
+              //     //           },
+              //     //           child: (_addPostController.capacity == 4)
+              //     //               ? Container(
+              //     //                   padding: EdgeInsets.symmetric(
+              //     //                     horizontal: 10.w,
+              //     //                   ),
+              //     //                   child: Text(
+              //     //                     '4',
+              //     //                     style: textTheme.headline2?.copyWith(
+              //     //                         color: colorScheme.secondary),
+              //     //                   ),
+              //     //                 )
+              //     //               : Container(
+              //     //                   padding: EdgeInsets.symmetric(
+              //     //                     horizontal: 10.w,
+              //     //                   ),
+              //     //                   child: Text(
+              //     //                     '4',
+              //     //                     style: textTheme.headline2?.copyWith(
+              //     //                         color: colorScheme.tertiary),
+              //     //                   ),
+              //     //                 ),
+              //     //         ),
+              //     //       ],
+              //     //     );
+              //     //   },
+              //     // ),
+              //   ],
+              // ),
               const Spacer(),
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceAround,

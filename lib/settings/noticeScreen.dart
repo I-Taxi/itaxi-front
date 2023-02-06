@@ -30,69 +30,81 @@ class _NoticeScreenState extends State<NoticeScreen> {
     return Scaffold(
       appBar: AppBar(
         shadowColor: colorScheme.shadow,
-        elevation: 1.0,
-        centerTitle: true,
-        title: Text(
-          '공지사항',
-          style: textTheme.subtitle1?.copyWith(
-            color: colorScheme.onPrimary,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: Icon(
-            Icons.arrow_back_rounded,
-            color: colorScheme.tertiary,
-          ),
-        ),
+        elevation: 0.0,
+          automaticallyImplyLeading: false,
+          actions: [
+            IconButton(
+              onPressed: () {
+                Get.back();
+              },
+              icon: Icon(
+                Icons.clear_sharp,
+                color: colorScheme.tertiary,
+              ),
+            ),
+          ]
       ),
       backgroundColor: colorScheme.background,
       body: ColorfulSafeArea(
         color: colorScheme.primary,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.only(
-              left: 16.0.w,
-              right: 16.0.w,
-            ),
-            child: FutureBuilder<List<Notice>>(
-              future: _noticeController.notices,
-              builder: (BuildContext context, snapshot) {
-                if (snapshot.hasData) {
-                  if (snapshot.data!.isNotEmpty) {
-                    return ListView.builder(
-                      physics: ScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return noticeListTile(
-                          context: context,
-                          notice: snapshot.data![index],
+        child: Padding(
+          padding: EdgeInsets.only(
+            left: 24.0.w,
+            right: 24.0.w,
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              SizedBox(
+                height: 28.h,
+              ),
+              Text(
+                '공지사항',
+                style: textTheme.headline1?.copyWith(
+                    color: colorScheme.onPrimary,
+                    fontWeight: FontWeight.bold,
+                    fontSize: 24),
+              ),
+              SizedBox(
+                height: 29.h,
+              ),
+              SingleChildScrollView(
+                child: FutureBuilder<List<Notice>>(
+                  future: _noticeController.notices,
+                  builder: (BuildContext context, snapshot) {
+                    if (snapshot.hasData) {
+                      if (snapshot.data!.isNotEmpty) {
+                        return ListView.builder(
+                          physics: ScrollPhysics(),
+                          shrinkWrap: true,
+                          itemCount: snapshot.data!.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return noticeListTile(
+                              context: context,
+                              notice: snapshot.data![index],
+                            );
+                          },
                         );
-                      },
+                      } else {
+                        return noticeIsEmpty(context);
+                      }
+                    } else if (snapshot.hasError) {
+                      return Center(
+                        child: Text(
+                          '${snapshot.error}',
+                          style: textTheme.headline2?.copyWith(
+                            color: colorScheme.tertiary,
+                          ),
+                        ),
+                      );
+                    }
+                    return LinearProgressIndicator(
+                      color: colorScheme.secondary,
                     );
-                  } else {
-                    return noticeIsEmpty(context);
-                  }
-                } else if (snapshot.hasError) {
-                  return Center(
-                    child: Text(
-                      '${snapshot.error}',
-                      style: textTheme.headline2?.copyWith(
-                        color: colorScheme.tertiary,
-                        fontFamily: 'NotoSans',
-                      ),
-                    ),
-                  );
-                }
-                return LinearProgressIndicator(
-                  color: colorScheme.secondary,
-                );
-              },
-            ),
+                  },
+                ),
+              ),
+            ],
           ),
         ),
       ),
@@ -113,7 +125,6 @@ class _NoticeScreenState extends State<NoticeScreen> {
             '공지사항이 없습니다',
             style: textTheme.headline2?.copyWith(
               color: colorScheme.tertiary,
-              fontFamily: 'NotoSans',
             ),
           ),
         ],

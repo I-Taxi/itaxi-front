@@ -24,7 +24,7 @@ class CheckPlaceScreen extends StatefulWidget {
 }
 
 class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
-  ScreenController _tabViewController = Get.put(ScreenController());
+  ScreenController _screenController = Get.put(ScreenController());
   AddPostController _addPostController = Get.put(AddPostController());
   PostController _postController = Get.put(PostController());
   PlaceController _placeController = Get.put(PlaceController());
@@ -43,7 +43,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
       time: _dateController.formattingDateTime(
         _dateController.mergeDateAndTime(),
       ),
-      postType: _tabViewController.currentTabIndex,
+      postType: _screenController.currentTabIndex,
     );
     _placeController.getPlaces();
   }
@@ -91,8 +91,11 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text("출발지",
-                          style: textTheme.subtitle1?.copyWith(color: colorScheme.primary)),
+                      Text(
+                          _placeController.dep!.name!,
+                          style: textTheme.subtitle1?.copyWith(
+                            
+                              color: colorScheme.primary)),
                       SizedBox(
                         width: 37.0.w,
                       ),
@@ -104,8 +107,11 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                       SizedBox(
                         width: 36.0.w,
                       ),
-                      Text("도착지",
-                          style: textTheme.subtitle1?.copyWith(color: colorScheme.primary)),
+                      Text(
+                          _placeController.dst!.name!,
+                          style: textTheme.subtitle1?.copyWith(
+                             
+                              color: colorScheme.primary)),
                     ],
                   ),
                   Padding(
@@ -269,7 +275,6 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                                       .add(const Duration(days: 2))),
                                   style: textTheme.subtitle1?.copyWith(
                                     color: colorScheme.tertiary,
-                                    fontFamily: 'NotoSans',
                                   ),
                                 ),
                               ),
@@ -645,7 +650,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                         time: _dateController.formattingDateTime(
                           _dateController.mergeDateAndTime(),
                         ),
-                        postType: _tabViewController.currentTabIndex,
+                        postType: _screenController.currentTabIndex,
                       );
                     },
                     child: GetBuilder<PostController>(
@@ -736,7 +741,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                   time: _dateController.formattingDateTime(
                     _dateController.mergeDateAndTime(),
                   ),
-                  postType: _tabViewController.currentTabIndex,
+                  postType: _screenController.currentTabIndex,
                 );
               },
               child: Container(
