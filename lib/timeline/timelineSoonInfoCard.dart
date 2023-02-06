@@ -9,6 +9,7 @@ import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/model/post.dart';
+import 'package:itaxi/timeline/timelineDetailScreen.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../widget/HorizontalDashedDivider.dart';
@@ -146,7 +147,17 @@ Container timelineSoonInfoCard({required BuildContext context, required Post pos
                         ],
                       ),
                       const Spacer(),
-                      Image.asset(width: 81.w, 'assets/button/go_descript.png')
+                      GestureDetector(
+                          onTap: () async {
+                            if (post.postType == null) {
+                              // TODO: ktx container 제작하면 연결
+                              _historyController.getHistoryInfo(postId: post.id!);
+                            } else {
+                              _historyController.getHistoryInfo(postId: post.id!);
+                              Get.to(() => TimelineDetailScreen());
+                            }
+                          },
+                          child: Image.asset(width: 81.w, 'assets/button/go_descript.png'))
                     ],
                   ),
                   SizedBox(
