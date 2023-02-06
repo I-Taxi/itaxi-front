@@ -73,7 +73,7 @@ class ITaxiTheme {
     onSurface: Colors.black,
     tertiary: Color(0xff919191),
     tertiaryContainer: Color(0xff717171),
-    shadow: Color(0x33000000),
+    shadow: Color.fromRGBO(0, 0, 0, 0.15),
     brightness: Brightness.light,
     onTertiary: Color(0XFF3E3E3E),
   );
