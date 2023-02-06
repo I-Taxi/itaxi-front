@@ -60,6 +60,8 @@ class ITaxiTheme {
   static const ColorScheme lightColorScheme = ColorScheme(
     primary: Color(0xFFFFFFFF),
     onPrimary: Colors.black,
+    primaryContainer: Color(0xfffbfbfb),
+    onPrimaryContainer: Color(0xff388bdd),
     secondary: Color(0xff70b1f2), //Color(0xff3fa9f5) - 기존 color
     onSecondary: Color(0xFFFFFFFF),
     secondaryContainer: Color(0XFF509DE9),
@@ -72,7 +74,9 @@ class ITaxiTheme {
     onSurface: Colors.black,
     tertiary: Color(0xff919191),
     tertiaryContainer: Color(0xff717171),
-    shadow: Color(0xffCCCCCC),
+    onTertiaryContainer: Color(0xFFFBFBFB),
+    shadow: Color.fromRGBO(0, 0, 0, 0.15),
+
     brightness: Brightness.light,
     onTertiary: Color(0XFF3E3E3E),
     inverseSurface: Color(0xff00CE21),

@@ -528,10 +528,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ? colorScheme.secondary
             : colorScheme.tertiaryContainer,
         child: InkWell(
-          onTap: () async {
+          onTap: () {
             if (agree1 && agree2 && _formKey.currentState!.validate()) {
               signUpDialog(context, '메일 인증');
-              _signUpController.signUp();
             }
           },
           child: SizedBox(
@@ -564,12 +563,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ),
             child: Container(
               width: 312.w,
-              height: 258.h,
+              height: 273.h,
               alignment: Alignment.center,
               padding: EdgeInsets.fromLTRB(
-                24.0.w,
+                36.0.w,
                 24.0.h,
-                24.0.w,
+                36.0.w,
                 24.0.h,
               ),
               child: Column(
@@ -586,18 +585,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   RichText(
                       text: TextSpan(
                     text:
-                        '회원가입 시 입력하신 handong.ac.kr 계정으로 인증메일이 보내집니다.\n메일이 오지 않은 경우, ',
-                    style: textTheme.subtitle1
-                        ?.copyWith(color: colorScheme.onPrimary),
+                        '입력한 이메일 주소로 비밀번호 재설정\n링크를 보내드렸습니다.\n\n메일이 보이지 않는다면, ',
+                    style: textTheme.bodyText1
+                        ?.copyWith(color: colorScheme.onTertiary),
                     children: <TextSpan>[
                       TextSpan(
                         text: '스팸함',
-                        style: textTheme.subtitle1
+                        style: textTheme.bodyText1
                             ?.copyWith(color: colorScheme.secondary),
                       ),
                       TextSpan(
                         text: '을 확인해주세요.',
-                        style: textTheme.subtitle1
+                        style: textTheme.bodyText1
                             ?.copyWith(color: colorScheme.onPrimary),
                       )
                     ],
@@ -610,17 +609,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   // ),
                   const Spacer(),
                   SizedBox(
-                    height: 20.h,
+                    height: 10.h,
                   ),
                   TextButton(
                     onPressed: () async {
+                      _signUpController.signUp();
                       Get.back();
                       Get.back();
                     },
                     child: Text(
                       "확인",
                       style: textTheme.subtitle2
-                          ?.copyWith(color: colorScheme.tertiary),
+                          ?.copyWith(color: colorScheme.tertiaryContainer),
                     ),
                   ),
                 ],
