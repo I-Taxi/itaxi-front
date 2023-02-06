@@ -21,7 +21,7 @@ import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/placeSearch/searchScreen.dart';
 import 'package:itaxi/placeSearch/placeSearchController.dart';
 import 'package:itaxi/widget/postTypeToggleButton.dart';
-import 'package:itaxi/widget/setDepDstWidget.dart';
+import 'package:itaxi/widget/mainScreenSettingWidget.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);

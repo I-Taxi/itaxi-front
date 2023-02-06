@@ -81,4 +81,11 @@ class PlaceController extends GetxController {
       postType: _tabViewController.currentTabIndex,
     );
   }
+
+  void swapDepAndDst() {
+    Place? temp = dep;
+    dep = dst;
+    dst = temp;
+    update();
+  }
 }

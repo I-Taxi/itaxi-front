@@ -19,7 +19,7 @@ Widget selectedTabView(
     child: Text(
       viewTitle,
       style: textTheme.subtitle2?.copyWith(
-        color: colorScheme.tertiary,
+        color: colorScheme.onPrimaryContainer,
       ),
     ),
   );
