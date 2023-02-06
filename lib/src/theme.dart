@@ -63,6 +63,7 @@ class ITaxiTheme {
     secondary: Color(0xff70b1f2), //Color(0xff3fa9f5) - 기존 color
     onSecondary: Color(0xFFFFFFFF),
     secondaryContainer: Color(0XFF509DE9),
+    onSecondaryContainer: Color(0xff388BDD),
     error: Color(0xffb00020),
     onError: Colors.white,
     background: Color(0xFFFFFFFF),
@@ -74,6 +75,8 @@ class ITaxiTheme {
     shadow: Color(0xffCCCCCC),
     brightness: Brightness.light,
     onTertiary: Color(0XFF3E3E3E),
+    inverseSurface: Color(0xff00CE21),
+
   );
 
   static const TextTheme textThemeDefault = TextTheme(
