@@ -61,7 +61,7 @@ class BugScreen extends StatelessWidget {
               },
               icon: Icon(
                 Icons.clear_sharp,
-                color: colorScheme.tertiary,
+                color: colorScheme.tertiaryContainer,
               ),
             ),
           ]),
@@ -80,10 +80,9 @@ class BugScreen extends StatelessWidget {
               children: [
                 Text(
                   '버그 제보',
-                  style: textTheme.headline1?.copyWith(
-                      color: colorScheme.onPrimary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24),
+                  style: textTheme.headline2?.copyWith(
+                      color: colorScheme.onTertiary,
+                      ),
                 ),
                 SizedBox(
                   height: 57.h,
@@ -94,11 +93,12 @@ class BugScreen extends StatelessWidget {
                     children: [
                       Text(
                         '이용에 불편함을 끼쳐드려 죄송합니다.\n'
-                        '여러분의 제보는 앱의 퀄리티를 높이는데 사용됩니다.\n\n\n'
-                        '1. 해당 버그가 나타난 페이지를 캡쳐해서 보내주세요.\n'
-                        '2. 보이지 않는 버그라면, 페이지/어떤 동작을 할 때 발생했는지 자세히 적어주세요.\n\n',
+                        '여러분의 제보는 앱의 퀄리티를 높이는데\n사용됩니다.\n\n\n'
+                        ' 1. 해당 버그가 나타난 페이지를 캡쳐해서\n    보내주세요.\n\n'
+                        ' 2. 만약 보이지 않는 버그라면, 페이지와\n     어떤 동작을 할 때 발생했는지 자세하게\n     적어주세요.\n\n',
                         style: textTheme.bodyText1!.copyWith(
-                          color: colorScheme.tertiaryContainer,
+                          color: colorScheme.onTertiary,
+                          fontSize: 20,
                         ),
                       )
                     ],

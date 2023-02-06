@@ -23,6 +23,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
               icon: Icon(
                 Icons.clear_sharp,
                 color: colorScheme.tertiary,
+                size: 24,
               ),
             ),
           ]),
@@ -40,10 +41,9 @@ class PrivacyPolicyScreen extends StatelessWidget {
                 children: [
                   Text(
                     '개인정보처리방침',
-                    style: textTheme.headline1?.copyWith(
+                    style: textTheme.headline2?.copyWith(
                         color: colorScheme.onPrimary,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24),
+                    )
                   ),
                   SizedBox(
                     height: 57.h,
@@ -94,6 +94,9 @@ class PrivacyPolicyScreen extends StatelessWidget {
                     '3.대검찰청 인터넷범죄수사센터 (http://icic.sppo.go.kr/02-3480-3600)\n'
                     '4.경찰청 사이버테러대응센터(www.ctrc.go.kr/)\n\n'
                     'https://i-taxi.github.io/for-privacy-policy/',
+                      style: textTheme.bodyText1?.copyWith(
+                        color: colorScheme.onTertiary,
+                      )
                   )
                 ],
               ),

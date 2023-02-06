@@ -21,7 +21,7 @@ import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/placeSearch/searchScreen.dart';
 import 'package:itaxi/placeSearch/placeSearchController.dart';
 import 'package:itaxi/widget/postTypeToggleButton.dart';
-import 'package:itaxi/widget/setDepDstWidget.dart';
+import 'package:itaxi/widget/mainScreenSettingWidget.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -80,51 +80,106 @@ class _MainScreenState extends State<MainScreen> {
               padding: EdgeInsets.only(left: 24.h, top: 55.63.h, right: 26.4.w),
               child: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            children: [
-                              SizedBox(
-                                height: 31.h,
-                                child: Text(
-                                  "I-TAXI",
-                                  style: textTheme.headline3?.copyWith(
-                                    color: colorScheme.primary,
-                                  ),
-                                ),
-                              ),
-                            ],
-                          ),
                           SizedBox(
-                            height: 2.37.h,
-                          ),
-                          SizedBox(
-                            height: 30.h,
+                            height: 31.h,
                             child: Text(
-                              "어디든지 부담없이 이동하세요!",
-                              style: textTheme.subtitle1?.copyWith(
+                              "I-TAXI",
+                              style: textTheme.headline3?.copyWith(
                                 color: colorScheme.primary,
                               ),
                             ),
-                          )
+                          ),
+                          IconButton(
+                            padding: EdgeInsets.zero,
+                            constraints: BoxConstraints(),
+                            color: colorScheme.primary,
+                            onPressed: () {
+                              Get.to(SettingScreen());
+                            },
+                            icon: Icon(Icons.menu),
+                            iconSize: 24.w,
+                          ),
                         ],
                       ),
-                      IconButton(
-                        color: colorScheme.primary,
-                        onPressed: () {
-                          Get.to(SettingScreen());
+                      controller.hasNotice
+                          ? SizedBox(
+                              height: 0.37.h,
+                            )
+                          : SizedBox(
+                              height: 2.37.h,
+                            ),
+                      GestureDetector(
+                        onTap: () {
+                          controller.toggleHasNotice();
                         },
-                        icon: Icon(Icons.menu),
-                      ),
+                        child: controller.hasNotice
+                            ? Row(
+                              children: [
+                                Container(
+                                    height: 44.h,
+                                    decoration: BoxDecoration(
+                                      color: colorScheme.surfaceVariant,
+                                      borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(24),
+                                          bottomLeft: Radius.circular(24),
+                                          bottomRight: Radius.circular(24)),
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(left: 16.w, right: 24.w),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          ImageIcon(
+                                            AssetImage(
+                                                'assets/icon/notice_info.png'),
+                                            size: 23,
+                                            color: colorScheme.primary,
+                                          ),
+                                          SizedBox(
+                                            width: 8.w,
+                                          ),
+                                          Text(
+                                            "iTaxi를 이용해 주셔서 감사합니다 :)",
+                                            style: textTheme.subtitle2?.copyWith(
+                                                color: colorScheme.primary),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  ),
+                                  Container()
+                              ],
+                            )
+                            : Container(
+                              alignment: Alignment.centerLeft,
+                              child: SizedBox(
+                                  height: 30.h,
+                                  child: Text(
+                                    "어디든지 부담없이 이동하세요!",
+                                    style: textTheme.subtitle1?.copyWith(
+                                      color: colorScheme.primary,
+                                    ),
+                                  ),
+                                ),
+                            ),
+                      )
                     ],
                   ),
-                  SizedBox(
-                    height: 52.37.h,
-                  ),
+                  controller.hasNotice
+                      ? SizedBox(
+                          height: 40.37.h,
+                        )
+                      : SizedBox(
+                          height: 52.37.h,
+                        ),
                   controller.mainScreenLoaded
                       ? Container(
                           height: 433.63.h,
@@ -200,8 +255,9 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                   if (controller.mainScreenLoaded)
                     controller.currentToggle == 0
-                    ? lookupButton(textTheme, colorScheme)
-                    : gatherButton(textTheme, colorScheme, controller, context),
+                        ? lookupButton(textTheme, colorScheme)
+                        : gatherButton(
+                            textTheme, colorScheme, controller, context),
                 ],
               )),
         ],

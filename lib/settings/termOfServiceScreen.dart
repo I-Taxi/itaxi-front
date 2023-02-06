@@ -40,13 +40,12 @@ class TermOfServiceScreen extends StatelessWidget {
                 children: [
                   Text(
                     '이용약관',
-                    style: textTheme.headline1?.copyWith(
-                        color: colorScheme.onPrimary,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 24),
+                    style: textTheme.headline2?.copyWith(
+                        color: colorScheme.onTertiary,
+                        ),
                   ),
                   SizedBox(
-                    height: 54.h,
+                    height: 57.h,
                   ),
                   Text('제 1장 총칙\n'
                       '제 1조(목적)\n'
@@ -98,7 +97,11 @@ class TermOfServiceScreen extends StatelessWidget {
                       '⑤ 회사의 업무상 또는 기술상의 장애로 인하여 서비스를 개시하지 못하는 경우 회사는 공지사항 등에 이를 공지하거나 E-mail 등의 방법으로 고객에게 통지합니다. 단, 회사가 통제할 수 없는 사유로 인하여 사전 공지가 불가능한 경우에는 사후에 공지합니다.\n\n'
                       '제 23조 (분쟁의 해결 및 관할법원)\n'
                       '① 서비스 이용과 관련하여 회사와 고객 사이에 분쟁이 발생한 경우, 회사와 고객은 분쟁의 해결을 위해 성실히 협의합니다.\n'
-                      '② 제1항의 협의에서도 분쟁이 해결되지 않을 경우 양 당사자는 정보통신망 이용촉진 및 정보보호 등에 관한 법률 제33조의 규정에 의한 개인정보분쟁조정위원회에 분쟁조정을 신청할 수 있습니다.\n'),
+                      '② 제1항의 협의에서도 분쟁이 해결되지 않을 경우 양 당사자는 정보통신망 이용촉진 및 정보보호 등에 관한 법률 제33조의 규정에 의한 개인정보분쟁조정위원회에 분쟁조정을 신청할 수 있습니다.\n',
+                    style: textTheme.bodyText1?.copyWith(
+                      color: colorScheme.onTertiary,
+                    ),
+                  ),
                 ],
               ),
             )),

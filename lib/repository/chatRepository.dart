@@ -7,7 +7,7 @@ import 'package:itaxi/controller/historyController.dart';
 
 class ChatRepository {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
-  HistoryController _historyController = Get.find();
+  HistoryController _historyController = Get.put(HistoryController());
 
   Future<void> setPost({required Post post}) async {
     DocumentReference reference =
