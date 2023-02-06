@@ -188,6 +188,7 @@ flutter:
     - assets/icon/calendar.png
     - assets/icon/logo_type.png
     - assets/icon/person.png
+    - assets/icon/notice_info.png
 
     # background
     - assets/background/timeline_bg.png

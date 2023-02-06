@@ -99,17 +99,61 @@ class _MainScreenState extends State<MainScreen> {
                               ),
                             ],
                           ),
-                          SizedBox(
-                            height: 2.37.h,
-                          ),
-                          SizedBox(
-                            height: 30.h,
-                            child: Text(
-                              "어디든지 부담없이 이동하세요!",
-                              style: textTheme.subtitle1?.copyWith(
-                                color: colorScheme.primary,
-                              ),
-                            ),
+                          controller.hasNotice
+                              ? SizedBox(
+                                  height: 0.37.h,
+                                )
+                              : SizedBox(
+                                  height: 2.37.h,
+                                ),
+                          GestureDetector(
+                            onTap: () {
+                              controller.toggleHasNotice();
+                            },
+                            child: controller.hasNotice
+                                ? Container(
+                                    height: 44.h,
+                                    decoration: BoxDecoration(
+                                      color: colorScheme.surfaceVariant,
+                                      borderRadius: BorderRadius.only(
+                                          topRight: Radius.circular(24),
+                                          bottomLeft: Radius.circular(24),
+                                          bottomRight: Radius.circular(24)),
+                                    ),
+                                    alignment: Alignment.center,
+                                    child: Padding(
+                                      padding: EdgeInsets.only(left: 16.w, right: 24.w),
+                                      child: Row(
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.center,
+                                        children: [
+                                          ImageIcon(
+                                            AssetImage(
+                                                'assets/icon/notice_info.png'),
+                                            size: 23,
+                                            color: colorScheme.primary,
+                                          ),
+                                          SizedBox(
+                                            width: 8.w,
+                                          ),
+                                          Text(
+                                            "폭설 내리는 중! 조심하세요 :)",
+                                            style: textTheme.subtitle2?.copyWith(
+                                                color: colorScheme.primary),
+                                          ),
+                                        ],
+                                      ),
+                                    ),
+                                  )
+                                : SizedBox(
+                                    height: 30.h,
+                                    child: Text(
+                                      "어디든지 부담없이 이동하세요!",
+                                      style: textTheme.subtitle1?.copyWith(
+                                        color: colorScheme.primary,
+                                      ),
+                                    ),
+                                  ),
                           )
                         ],
                       ),
@@ -122,9 +166,13 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                     ],
                   ),
-                  SizedBox(
-                    height: 52.37.h,
-                  ),
+                  controller.hasNotice
+                      ? SizedBox(
+                          height: 40.37.h,
+                        )
+                      : SizedBox(
+                          height: 52.37.h,
+                        ),
                   controller.mainScreenLoaded
                       ? Container(
                           height: 433.63.h,
@@ -200,8 +248,9 @@ class _MainScreenState extends State<MainScreen> {
                   ),
                   if (controller.mainScreenLoaded)
                     controller.currentToggle == 0
-                    ? lookupButton(textTheme, colorScheme)
-                    : gatherButton(textTheme, colorScheme, controller, context),
+                        ? lookupButton(textTheme, colorScheme)
+                        : gatherButton(
+                            textTheme, colorScheme, controller, context),
                 ],
               )),
         ],
