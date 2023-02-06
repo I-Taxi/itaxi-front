@@ -80,38 +80,48 @@ class _MainScreenState extends State<MainScreen> {
               padding: EdgeInsets.only(left: 24.h, top: 55.63.h, right: 26.4.w),
               child: Column(
                 children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          Row(
-                            children: [
-                              SizedBox(
-                                height: 31.h,
-                                child: Text(
-                                  "I-TAXI",
-                                  style: textTheme.headline3?.copyWith(
-                                    color: colorScheme.primary,
-                                  ),
-                                ),
+                          SizedBox(
+                            height: 31.h,
+                            child: Text(
+                              "I-TAXI",
+                              style: textTheme.headline3?.copyWith(
+                                color: colorScheme.primary,
                               ),
-                            ],
+                            ),
                           ),
-                          controller.hasNotice
-                              ? SizedBox(
-                                  height: 0.37.h,
-                                )
-                              : SizedBox(
-                                  height: 2.37.h,
-                                ),
-                          GestureDetector(
-                            onTap: () {
-                              controller.toggleHasNotice();
+                          IconButton(
+                            padding: EdgeInsets.zero,
+                            constraints: BoxConstraints(),
+                            color: colorScheme.primary,
+                            onPressed: () {
+                              Get.to(SettingScreen());
                             },
-                            child: controller.hasNotice
-                                ? Container(
+                            icon: Icon(Icons.menu),
+                            iconSize: 24.w,
+                          ),
+                        ],
+                      ),
+                      controller.hasNotice
+                          ? SizedBox(
+                              height: 0.37.h,
+                            )
+                          : SizedBox(
+                              height: 2.37.h,
+                            ),
+                      GestureDetector(
+                        onTap: () {
+                          controller.toggleHasNotice();
+                        },
+                        child: controller.hasNotice
+                            ? Row(
+                              children: [
+                                Container(
                                     height: 44.h,
                                     decoration: BoxDecoration(
                                       color: colorScheme.surfaceVariant,
@@ -137,33 +147,30 @@ class _MainScreenState extends State<MainScreen> {
                                             width: 8.w,
                                           ),
                                           Text(
-                                            "폭설 내리는 중! 조심하세요 :)",
+                                            "iTaxi를 이용해 주셔서 감사합니다 :)",
                                             style: textTheme.subtitle2?.copyWith(
                                                 color: colorScheme.primary),
                                           ),
                                         ],
                                       ),
                                     ),
-                                  )
-                                : SizedBox(
-                                    height: 30.h,
-                                    child: Text(
-                                      "어디든지 부담없이 이동하세요!",
-                                      style: textTheme.subtitle1?.copyWith(
-                                        color: colorScheme.primary,
-                                      ),
+                                  ),
+                                  Container()
+                              ],
+                            )
+                            : Container(
+                              alignment: Alignment.centerLeft,
+                              child: SizedBox(
+                                  height: 30.h,
+                                  child: Text(
+                                    "어디든지 부담없이 이동하세요!",
+                                    style: textTheme.subtitle1?.copyWith(
+                                      color: colorScheme.primary,
                                     ),
                                   ),
-                          )
-                        ],
-                      ),
-                      IconButton(
-                        color: colorScheme.primary,
-                        onPressed: () {
-                          Get.to(SettingScreen());
-                        },
-                        icon: Icon(Icons.menu),
-                      ),
+                                ),
+                            ),
+                      )
                     ],
                   ),
                   controller.hasNotice
