@@ -171,18 +171,14 @@ class _SettingScreenState extends State<SettingScreen> {
             Spacer(),
             IconButton(
               onPressed: () {
-                setState(() {
-                  _logout;
-                });
+                _logout(context: context);
               },
               icon: Icon(Icons.logout),
               color: colorScheme.tertiary,
             ),
             GestureDetector(
               onTap: () {
-                setState(() {
-                  _logout;
-                });
+                _logout(context: context);
               },
               child: Text(
                 "로그아웃",
@@ -205,6 +201,7 @@ class _SettingScreenState extends State<SettingScreen> {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         GestureDetector(
           onTap: () {
@@ -218,18 +215,35 @@ class _SettingScreenState extends State<SettingScreen> {
           ),
         ),
         Spacer(),
-        Transform.scale(
-          scale: 0.6,
-          child: CupertinoSwitch(
-              value: alarm,
-              activeColor: Color(0xff00CE21),
-              thumbColor: colorScheme.primary,
-              onChanged: (bool value) {
-                setState(() {
-                  alarm = value;
-                });
-              }),
+        Container(
+          height: 17.h,
+          width: 34.w,
+          child: FittedBox(
+            fit: BoxFit.contain,
+            child: CupertinoSwitch(
+                value: alarm,
+                activeColor: colorScheme.inverseSurface,
+                thumbColor: colorScheme.primary,
+                trackColor: colorScheme.tertiary,
+                onChanged: (bool value) {
+                  setState(() {
+                    alarm = value;
+                  });
+                }),
+          ),
         )
+        // Transform.scale(
+        //   scale: 1.0,
+        //   child: CupertinoSwitch(
+        //       value: alarm,
+        //       activeColor: Color(0xff00CE21),
+        //       thumbColor: colorScheme.primary,
+        //       onChanged: (bool value) {
+        //         setState(() {
+        //           alarm = value;
+        //         });
+        //       }),
+        // )
       ],
     );
   }
@@ -269,15 +283,15 @@ class _SettingScreenState extends State<SettingScreen> {
               height: 240.h,
               padding: EdgeInsets.fromLTRB(
                 36.0.w,
-                24.0.h,
+                50.0.h,
                 36.0.w,
-                24.0.h,
+                50.0.h,
               ),
               child: Column(
                 children: [
                   Text(
                     "로그아웃 하시겠습니까?",
-                    style: textTheme.subtitle1?.copyWith(color: colorScheme.secondary),
+                    style: textTheme.subtitle1?.copyWith(color: colorScheme.onSecondaryContainer),
                   ),
                   const Spacer(),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -286,7 +300,7 @@ class _SettingScreenState extends State<SettingScreen> {
                         child: Text(
                           "취소",
                           style: textTheme.subtitle1?.copyWith(
-                            color: colorScheme.tertiary,
+                            color: colorScheme.tertiaryContainer,
                           ),
                         )),
                     SizedBox(
@@ -297,13 +311,14 @@ class _SettingScreenState extends State<SettingScreen> {
                           await SettingScreen.storage.delete(key: "login");
                           _signInController.reset();
                           _signInController.signedOutState();
-                          _navController.changeIndex(1);
+                          _navController.changeIndex(0);
+                          Navigator.pop(context);
                           Navigator.pop(context);
                         },
                         child: Text(
                           "확인",
                           style: textTheme.subtitle1?.copyWith(
-                            color: colorScheme.secondary,
+                            color: colorScheme.onSecondaryContainer,
                           ),
                         )),
                   ])
@@ -335,76 +350,4 @@ class _SettingScreenState extends State<SettingScreen> {
   //     },
   //   );
   // }
-
-  // 현재 모집중이거나 입장한 방이 있을 경우 dialog
-  void deletedUserDialog(BuildContext context, String? title, String? content) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return Dialog(
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(4.0),
-            ),
-            child: Container(
-              width: 360.w,
-              height: 240.h,
-              alignment: Alignment.center,
-              padding: EdgeInsets.fromLTRB(
-                28.0.w,
-                32.0.h,
-                28.0.w,
-                12.0.h,
-              ),
-              child: Column(
-                children: <Widget>[
-                  Text(
-                    title as String,
-                    style: textTheme.subtitle1?.copyWith(
-                      color: colorScheme.secondary,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 16.h,
-                  ),
-                  Text(
-                    content as String,
-                    style: textTheme.bodyText1?.copyWith(
-                      color: colorScheme.onPrimary,
-                    ),
-                  ),
-                  const Spacer(),
-                  TextButton(
-                    onPressed: () async {
-                      Get.back();
-                      print("체크1");
-                      print(_userController.isDeleted);
-                      await _userController.fetchDeleteUsers();
-                      print(_userController.isDeleted);
-                      if (_userController.isDeleted == 1) {
-                        _signInController.deleteUser();
-                        await SettingScreen.storage.delete(key: "login");
-                        _signInController.reset();
-                        _navController.changeIndex(1);
-                      } else {
-                        Get.back();
-                        mainDialog(context, '회원탈퇴',
-                            '현재 모집중이거나 입장하신 방이 있습니다. 해당 방을 나가신 후 다시 시도해주세요.');
-                      }
-                    },
-                    child: Text(
-                      "확인",
-                      style: textTheme.subtitle1
-                          ?.copyWith(color: colorScheme.tertiary),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
-  }
 }
