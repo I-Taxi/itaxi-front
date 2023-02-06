@@ -13,19 +13,19 @@ Widget chatroomListListTile(
 
   return InkWell(
     onTap: () {
-      Get.to(NewChatroomScreen());
+      Get.to(() => NewChatroomScreen());
     },
     child: Container(
       width: 342.w,
-      height: 84.h,
+      height: 88.h,
       decoration: BoxDecoration(
           border: Border(bottom: BorderSide(color: colorScheme.shadow))),
       child: Padding(
         padding: EdgeInsets.only(top: 16.h, bottom: 16.h),
         child: Row(children: [
           SizedBox(
-            width: 40.w,
-            height: 40.h,
+            width: 56.w,
+            height: 56.h,
             child: Image.asset('assets/icon_KTX.png'),
           ),
           SizedBox(
@@ -42,14 +42,14 @@ Widget chatroomListListTile(
                         children: [
                           Text(
                             "출발지-도착지(12/25)",
-                            style: textTheme.bodyMedium?.copyWith(
-                                color: colorScheme.inversePrimary,
-                                fontWeight: FontWeight.bold),
+                            style: textTheme.subtitle2?.copyWith(
+                              color: colorScheme.onTertiary,
+                            ),
                           ),
                           Text(
                             "00:00 출발",
-                            style: textTheme.bodySmall?.copyWith(
-                              color: colorScheme.inversePrimary,
+                            style: textTheme.bodyText2?.copyWith(
+                              color: colorScheme.onTertiary,
                             ),
                           ),
                         ],
@@ -60,15 +60,15 @@ Widget chatroomListListTile(
                         children: [
                           Text(
                             "방장: 김형진학부생",
-                            style: textTheme.bodySmall?.copyWith(
-                                color: colorScheme.shadow,
-                                fontWeight: FontWeight.bold),
+                            style: textTheme.bodyText2?.copyWith(
+                              color: colorScheme.tertiaryContainer,
+                            ),
                           ),
                           Text(
                             "1명",
-                            style: textTheme.bodySmall?.copyWith(
-                                color: colorScheme.shadow,
-                                fontWeight: FontWeight.bold),
+                            style: textTheme.bodyText2?.copyWith(
+                              color: colorScheme.tertiary,
+                            ),
                           ),
                         ],
                       )

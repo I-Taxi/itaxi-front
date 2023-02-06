@@ -71,7 +71,8 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
           padding: EdgeInsets.zero,
           children: [
             Container(
-              height: 152.h,
+              height: 158.h,
+              width: 325.w,
               decoration: BoxDecoration(
                 color: colorScheme.secondary,
               ),
@@ -85,10 +86,12 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                     children: [
                       Text(
                         "출발지-도착지 #1225(날짜)",
-                        style: textTheme.headline5?.copyWith(
-                            color: colorScheme.primary,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold),
+                        style: textTheme.subtitle1?.copyWith(
+                          color: colorScheme.primary,
+                        ),
+                      ),
+                      SizedBox(
+                        width: 8.w,
                       ),
                       IconButton(
                         onPressed: () {},
@@ -103,6 +106,7 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
             ),
             Container(
               height: 180.h,
+              width: 325.w,
               child: Padding(
                 padding: EdgeInsets.fromLTRB(24.w, 24.h, 24.w, 36.h),
                 child: Column(
@@ -110,10 +114,7 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                     children: [
                       Text(
                         "출발/도착지",
-                        style: textTheme.bodyMedium?.copyWith(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: textTheme.subtitle2?.copyWith(),
                       ),
                       SizedBox(
                         height: 24.h,
@@ -125,12 +126,10 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                             size: 18,
                           ),
                           SizedBox(
-                            width: 8.w,
+                            width: 5.w,
                           ),
                           Text("포항고속버스터미널",
-                              style: textTheme.bodyMedium?.copyWith(
-                                fontSize: 16,
-                              ))
+                              style: textTheme.bodyText1?.copyWith())
                         ],
                       ),
                       SizedBox(
@@ -143,19 +142,17 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                             size: 18,
                           ),
                           SizedBox(
-                            width: 8.w,
+                            width: 5.w,
                           ),
                           Text("포항고속버스터미널",
-                              style: textTheme.bodyMedium?.copyWith(
-                                fontSize: 16,
-                              ))
+                              style: textTheme.bodyText1?.copyWith())
                         ],
                       ),
                     ]),
               ),
             ),
             const Divider(
-              thickness: 1,
+              thickness: 0.5,
             ),
             Container(
               height: 276.h,
@@ -166,10 +163,7 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                     children: [
                       Text(
                         "대화상대",
-                        style: textTheme.bodyMedium?.copyWith(
-                          fontSize: 16,
-                          fontWeight: FontWeight.bold,
-                        ),
+                        style: textTheme.subtitle2?.copyWith(),
                       ),
                       SizedBox(
                         height: 24.h,
@@ -185,18 +179,25 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                             width: 2.w,
                           ),
                           Text("김형진학부생",
-                              style: textTheme.bodyMedium?.copyWith(
-                                fontSize: 16,
-                              )),
+                              style: textTheme.bodyText1?.copyWith()),
                           const Spacer(),
                           SizedBox(
                             width: 16.w,
                           ),
-                          const Icon(Icons.call_outlined),
+                          Image.asset(
+                            'assets/button/phone.png',
+                            width: 24.w,
+                            height: 24.h,
+                            color: colorScheme.tertiaryContainer,
+                          ),
                           SizedBox(
                             width: 16.w,
                           ),
-                          const Icon(Icons.email_outlined),
+                          Image.asset(
+                            'assets/button/message.png',
+                            width: 24.w,
+                            height: 24.h,
+                          ),
                         ],
                       ),
                       SizedBox(
@@ -204,22 +205,26 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                       ),
                       Row(
                         children: [
-                          SizedBox(
-                            width: 2.w,
-                          ),
                           Text("김형진학부생",
-                              style: textTheme.bodyMedium?.copyWith(
-                                fontSize: 16,
-                              )),
+                              style: textTheme.bodyText1?.copyWith()),
                           const Spacer(),
                           SizedBox(
                             width: 16.w,
                           ),
-                          const Icon(Icons.call_outlined),
+                          Image.asset(
+                            'assets/button/phone.png',
+                            width: 24.w,
+                            height: 24.h,
+                            color: colorScheme.tertiaryContainer,
+                          ),
                           SizedBox(
                             width: 16.w,
                           ),
-                          const Icon(Icons.email_outlined),
+                          Image.asset(
+                            'assets/button/message.png',
+                            width: 24.w,
+                            height: 24.h,
+                          ),
                         ],
                       ),
                       SizedBox(
@@ -227,22 +232,26 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                       ),
                       Row(
                         children: [
-                          SizedBox(
-                            width: 2.w,
-                          ),
                           Text("김형진학부생",
-                              style: textTheme.bodyMedium?.copyWith(
-                                fontSize: 16,
-                              )),
+                              style: textTheme.bodyText1?.copyWith()),
                           const Spacer(),
                           SizedBox(
                             width: 16.w,
                           ),
-                          const Icon(Icons.call_outlined),
+                          Image.asset(
+                            'assets/button/phone.png',
+                            width: 24.w,
+                            height: 24.h,
+                            color: colorScheme.tertiaryContainer,
+                          ),
                           SizedBox(
                             width: 16.w,
                           ),
-                          const Icon(Icons.email_outlined),
+                          Image.asset(
+                            'assets/button/message.png',
+                            width: 24.w,
+                            height: 24.h,
+                          ),
                         ],
                       ),
                       SizedBox(
@@ -250,29 +259,33 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                       ),
                       Row(
                         children: [
-                          SizedBox(
-                            width: 2.w,
-                          ),
                           Text("김형진학부생",
-                              style: textTheme.bodyMedium?.copyWith(
-                                fontSize: 16,
-                              )),
+                              style: textTheme.bodyText1?.copyWith()),
                           const Spacer(),
                           SizedBox(
                             width: 16.w,
                           ),
-                          const Icon(Icons.call_outlined),
+                          Image.asset(
+                            'assets/button/phone.png',
+                            width: 24.w,
+                            height: 24.h,
+                            color: colorScheme.tertiaryContainer,
+                          ),
                           SizedBox(
                             width: 16.w,
                           ),
-                          const Icon(Icons.email_outlined),
+                          Image.asset(
+                            'assets/button/message.png',
+                            width: 24.w,
+                            height: 24.h,
+                          ),
                         ],
                       ),
                     ]),
               ),
             ),
             const Divider(
-              thickness: 1,
+              thickness: 0.5,
             ),
             SizedBox(
               height: 152.h,
@@ -282,16 +295,14 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
               child: Padding(
                 padding: EdgeInsets.only(bottom: 43.h, left: 30.w),
                 child: Row(children: [
-                  const Icon(
-                    Icons.logout,
-                    size: 24,
-                  ),
+                  Image.asset('assets/icon/icon-LogOut.png'),
                   SizedBox(
                     width: 5.w,
                   ),
                   Text(
                     "방 나가기",
-                    style: textTheme.bodySmall?.copyWith(fontSize: 13),
+                    style: textTheme.bodyText2
+                        ?.copyWith(color: colorScheme.tertiaryContainer),
                   )
                 ]),
               ),
@@ -312,14 +323,16 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                     onPressed: () {
                       Get.back();
                     },
-                    icon: const Icon(Icons.arrow_back_ios),
+                    icon: Icon(
+                      Icons.arrow_back_ios,
+                      size: 24,
+                      color: colorScheme.tertiaryContainer,
+                    ),
                   ),
                   Text(
                     "출발지-도착지 (날짜)",
-                    style: textTheme.headline5?.copyWith(
-                      color: colorScheme.onPrimary,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 16,
+                    style: textTheme.subtitle1?.copyWith(
+                      color: colorScheme.onTertiary,
                     ),
                   ),
                   IconButton(
@@ -327,7 +340,11 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                       //ScaffoldState().openDrawer();
                       _scaffoldKey.currentState!.openEndDrawer();
                     },
-                    icon: const Icon(Icons.menu),
+                    icon: Icon(
+                      Icons.menu,
+                      size: 24,
+                      color: colorScheme.tertiaryContainer,
+                    ),
                   ),
                 ],
               ),
@@ -336,15 +353,11 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
             //   height: 9.h,
             // ),
             //Image.asset('assets/first_chat.png'),
-            // SizedBox(
-            //   height: 565.h,
-            // ),
             SizedBox(height: 15.h),
-
             Text(
-              "1월 24일",
-              style: textTheme.bodySmall
-                  ?.copyWith(color: colorScheme.shadow, fontSize: 13),
+              "1월 24일 (화)",
+              style: textTheme.bodyText2
+                  ?.copyWith(color: colorScheme.tertiaryContainer),
             ),
             SizedBox(
               height: 20.h,
@@ -358,11 +371,11 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                   youChatListTile(context, "동해물과 백두산이?", false),
                   meChatListTile(context, "안녕하세요", true),
                   meChatListTile(context, "하느님이?", false),
-                  SizedBox(height: 29.h),
+                  SizedBox(height: 21.h),
                   Container(
                     decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(5),
-                        color: Colors.grey[200]),
+                        color: colorScheme.onBackground),
                     width: 181.w,
                     height: 24.h,
                     child: Padding(
@@ -370,9 +383,8 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                           EdgeInsets.symmetric(vertical: 4.h, horizontal: 8.w),
                       child: Text(
                         "OOO학부생 님이 입장하셨습니다",
-                        style: textTheme.bodySmall?.copyWith(
-                          fontSize: 12,
-                          color: colorScheme.tertiary,
+                        style: textTheme.bodyText2?.copyWith(
+                          color: colorScheme.tertiaryContainer,
                         ),
                       ),
                     ),
@@ -410,11 +422,8 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                               BorderSide(width: 1, color: (Colors.grey[200])!),
                           borderRadius: BorderRadius.circular(24),
                         ),
-                        fillColor: Colors.grey[200],
-                        suffixIcon: IconButton(
-                            icon: const Icon(Icons.send),
-                            onPressed: () {},
-                            color: Colors.grey[400]),
+                        fillColor: colorScheme.onBackground,
+                        suffixIcon: Image.asset('assets/button/send.png'),
                         hintText: '',
                         hintStyle: textTheme.subtitle1?.copyWith(
                           color: colorScheme.onPrimary,

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
@@ -15,17 +17,16 @@ Widget meChatListTile(BuildContext context, String content, bool isFirst) {
               children: [
                 Text(
                   "00:00 AM",
-                  style: textTheme.bodyText1?.copyWith(
-                    color: colorScheme.shadow,
-                    fontSize: 10,
+                  style: textTheme.bodyText2?.copyWith(
+                    color: colorScheme.tertiaryContainer,
+                    fontSize: Platform.isIOS ? 11 : 10,
                   ),
                 ),
                 SizedBox(width: 7.w),
                 Text(
                   "You",
-                  style: textTheme.bodyText1?.copyWith(
-                    color: colorScheme.onPrimary,
-                    fontSize: 13,
+                  style: textTheme.bodyText2?.copyWith(
+                    color: colorScheme.onTertiary,
                   ),
                 ),
               ],
@@ -49,10 +50,7 @@ Widget meChatListTile(BuildContext context, String content, bool isFirst) {
             ),
             child: SelectableText(
               content,
-              style: textTheme.subtitle1?.copyWith(
-                color: colorScheme.primary,
-                fontSize: 16,
-              ),
+              style: textTheme.bodyText1?.copyWith(color: colorScheme.primary),
             ),
           ),
         ],
@@ -73,15 +71,15 @@ Widget youChatListTile(BuildContext context, String content, bool isFirst) {
               children: [
                 Text(
                   "OOO학부생",
-                  style: textTheme.subtitle1
-                      ?.copyWith(color: colorScheme.onPrimary, fontSize: 13),
+                  style: textTheme.bodyText2
+                      ?.copyWith(color: colorScheme.onTertiary),
                 ),
                 SizedBox(width: 5.w),
                 Text(
                   "00:00 AM",
-                  style: textTheme.bodyText1?.copyWith(
-                    color: colorScheme.shadow,
-                    fontSize: 10,
+                  style: textTheme.bodyText2?.copyWith(
+                    color: colorScheme.tertiaryContainer,
+                    fontSize: Platform.isIOS ? 11 : 10,
                   ),
                 ),
               ],
@@ -97,7 +95,7 @@ Widget youChatListTile(BuildContext context, String content, bool isFirst) {
             padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 8.h),
             constraints: BoxConstraints(minWidth: 36.w),
             decoration: BoxDecoration(
-              color: Colors.grey[200],
+              color: colorScheme.onBackground,
               borderRadius: const BorderRadius.only(
                   topRight: Radius.circular(12),
                   bottomLeft: Radius.circular(12),
@@ -105,9 +103,8 @@ Widget youChatListTile(BuildContext context, String content, bool isFirst) {
             ),
             child: SelectableText(
               content,
-              style: textTheme.subtitle1?.copyWith(
-                color: colorScheme.onPrimary,
-                fontSize: 16,
+              style: textTheme.bodyText1?.copyWith(
+                color: colorScheme.onTertiary,
               ),
             ),
           ),
