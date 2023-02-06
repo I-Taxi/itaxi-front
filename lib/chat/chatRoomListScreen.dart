@@ -37,7 +37,7 @@ class ChatroomListScreen extends StatelessWidget {
                       padding: EdgeInsets.only(right: 7.w, bottom: 5.h),
                       child: Align(
                         alignment: Alignment.bottomRight,
-                        child: Image.asset('assets/contact.png'),
+                        child: Image.asset('assets/button/contact.png'),
                       ),
                     )
                   ],
