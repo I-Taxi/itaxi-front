@@ -17,6 +17,7 @@ import 'package:itaxi/placeSearch/placeSearchController.dart';
 import 'package:itaxi/settings/settingScreen.dart';
 import 'package:itaxi/widget/snackBar.dart';
 import 'package:itaxi/model/post.dart';
+import 'package:itaxi/widget/postTypeToggleButton.dart';
 
 class GatherScreen extends StatefulWidget {
   const GatherScreen({Key? key}) : super(key: key);
@@ -116,40 +117,8 @@ class _GatherScreenState extends State<GatherScreen> {
                         Padding(
                           padding: EdgeInsets.only(
                               left: 23.w, right: 23.w, top: 20.63.h),
-                          child: SizedBox(
-                            width: 295.0.w,
-                            height: 57.h,
-                            child: FittedBox(
-                              fit: BoxFit.fill,
-                              child: ToggleSwitch(
-                                borderColor: [Color(0xf6f6f6f6)],
-                                borderWidth: 2.0,
-                                cornerRadius: 30.0,
-                                activeBgColors: [
-                                  [colorScheme.primary],
-                                  [colorScheme.primary]
-                                ],
-                                inactiveBgColor: Color(0xfff6f6f6),
-                                initialLabelIndex: 1,
-                                totalSwitches: 2,
-                                labels: ["조회", "모집"],
-                                customTextStyles: [
-                                  TextStyle(
-                                    fontSize: 10.0,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                  TextStyle(
-                                    fontSize: 10.0,
-                                    fontWeight: FontWeight.w600,
-                                  ),
-                                ],
-                                radiusStyle: true,
-                                onToggle: (index) {
-                                  controller.changeToggleIndex(0);
-                                },
-                              ),
-                            ),
-                          ),
+                          child: postTypeToggleButton(
+                              context: context, controller: controller),
                         ),
                         Padding(
                           padding: EdgeInsets.fromLTRB(23.w, 20.h, 24.w, 8.h),
@@ -195,8 +164,7 @@ class _GatherScreenState extends State<GatherScreen> {
                                             style: textTheme.headline2
                                                 ?.copyWith(
                                                     color:
-                                                        colorScheme.onPrimary)
-                                        ),
+                                                        colorScheme.onPrimary)),
                                       ),
                                       Container(
                                         width: 180.w,
@@ -217,9 +185,8 @@ class _GatherScreenState extends State<GatherScreen> {
                                                 : _placeController.dep!.name!,
                                             style: textTheme.headline2
                                                 ?.copyWith(
-                                                color:
-                                                colorScheme.onPrimary)
-                                        ),
+                                                    color:
+                                                        colorScheme.onPrimary)),
                                       ),
                                     ],
                                   ),
@@ -277,7 +244,8 @@ class _GatherScreenState extends State<GatherScreen> {
                                 Text(
                                   DateFormat('M월 d일, EE').format(//요일 설정 해줘야 함.
                                       _dateController.pickedDate!),
-                                  style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
+                                  style: textTheme.subtitle2
+                                      ?.copyWith(color: colorScheme.onTertiary),
                                 )
                               ],
                             ),
@@ -380,7 +348,8 @@ class _GatherScreenState extends State<GatherScreen> {
                                 IconButton(
                                   onPressed: () {
                                     if (_addPostController.capacity != 1)
-                                      _addPostController.decreaseCapacity(_addPostController.capacity);
+                                      _addPostController.decreaseCapacity(
+                                          _addPostController.capacity);
                                   },
                                   icon: Image.asset('assets/removeP.png'),
                                   color: (_addPostController.capacity == 1)
@@ -436,8 +405,8 @@ class _GatherScreenState extends State<GatherScreen> {
                         } else if (_placeController.dst!.id == -1) {
                           snackBar(context: context, title: '도착지를 다시 선택해주세요.');
                         } else if (DateTime.now()
-                            .difference(_dateController.mergeDateAndTime())
-                            .isNegative ==
+                                .difference(_dateController.mergeDateAndTime())
+                                .isNegative ==
                             false) {
                           snackBar(context: context, title: '출발시간을 다시 선택해주세요.');
                         } else if (_addPostController.capacity == 0) {
