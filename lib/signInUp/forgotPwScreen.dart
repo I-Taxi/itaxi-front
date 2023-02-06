@@ -62,8 +62,9 @@ class _ForgotPwScreenState extends State<ForgotPwScreen> {
                   horizontal: 24.0.w,
                 ),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text('비밀번호 찾기', style: textTheme.headline1?.copyWith(
+                    Text('비밀번호 찾기', style: textTheme.headline2?.copyWith(
                       color: colorScheme.onPrimary,
                       fontWeight: FontWeight.bold
                     ),),
@@ -77,8 +78,11 @@ class _ForgotPwScreenState extends State<ForgotPwScreen> {
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: InputDecoration(
                       hintText: "가입한 이메일을 입력해주세요",
+                      hintStyle: textTheme.bodyText1?.copyWith(
+                        color: colorScheme.tertiary,
+                      ),
                       suffixText: '@handong.ac.kr',
-                      suffixStyle: textTheme.subtitle1?.copyWith(
+                      suffixStyle: textTheme.bodyText1?.copyWith(
                         color: colorScheme.onPrimary,
                       ),
                       enabledBorder: UnderlineInputBorder(
@@ -118,26 +122,6 @@ class _ForgotPwScreenState extends State<ForgotPwScreen> {
                 SizedBox(
                   height: 59.0.h,
                 ),
-                ElevatedButton(
-                  style: ElevatedButton.styleFrom(
-                    elevation: 0,
-                    backgroundColor: isValueEmpty ? colorScheme.tertiary : colorScheme.secondary,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(8.0),
-                    ),
-                  ),
-                  onPressed: () async {
-                    if (_formKey.currentState!.validate()) {
-                      showConfirmDialog(context);
-                    }
-                  },
-                  child: Text(
-                    '완료',
-                    style: textTheme.subtitle1!.copyWith(
-                      color: colorScheme.primary,
-                    ),
-                  ),
-                  ),
                 ],
               ),
             ),
@@ -152,13 +136,17 @@ class _ForgotPwScreenState extends State<ForgotPwScreen> {
             await _signInController.sendPasswordResetEmailByKorean();
           },
           child: SizedBox(
-            height: kToolbarHeight,
+            height: 94.h,
             width: double.infinity,
-            child: Center(
-              child: Text(
-                "이메일로 재설정 링크 받기",
-                style: textTheme.subtitle1!.copyWith(
-                  color: colorScheme.onPrimary
+            child: Padding(
+              padding: EdgeInsets.only(top: 18.h),
+              child: Align(
+                alignment: Alignment.topCenter,
+                child: Text(
+                  "이메일로 재설정 링크 받기",
+                  style: textTheme.subtitle1!.copyWith(
+                    color: colorScheme.onPrimary
+                  ),
                 ),
               ),
             ),

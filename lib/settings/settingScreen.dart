@@ -77,18 +77,14 @@ class _SettingScreenState extends State<SettingScreen> {
           children: [
             RichText(
               text: TextSpan(
-                  text: "OOO학부생\n",
-                  style: textTheme.headline1?.copyWith(
-                      color: colorScheme.onPrimary,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 22),
+                  text: "OOO학부생\n", //"${snapshot.data!.name.toString()}학부생",
+                  style: textTheme.headline3?.copyWith(
+                    color: colorScheme.onPrimary,
+                  ),
                   children: <TextSpan>[
                     TextSpan(
-                      text: "handongin@handong.ac.kr",
-                      style: textTheme.headline1?.copyWith(
-                          color: colorScheme.tertiaryContainer,
-                          fontWeight: FontWeight.w400,
-                          fontSize: 8),
+                      text: "handongin@handong.ac.kr", //snapshot.data!.email.toString(),
+                      style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiaryContainer),
                     )
                   ]),
             ),
@@ -114,7 +110,7 @@ class _SettingScreenState extends State<SettingScreen> {
           color: Color(0xE1E1E1E1),
         ),
         SizedBox(
-          height: 20.h,
+          height: 23.h,
         ),
         _settingListTile(
           title: '공지사항',
@@ -122,15 +118,7 @@ class _SettingScreenState extends State<SettingScreen> {
           context: context,
         ),
         SizedBox(
-          height: 28.h,
-        ),
-        _settingListTile(
-          title: '버전정보/개발자',
-          nextPage: const VersionScreen(),
-          context: context,
-        ),
-        SizedBox(
-          height: 20.h,
+          height: 22.h,
         ),
         _alarmListTile(
           title: '알림',
@@ -138,7 +126,7 @@ class _SettingScreenState extends State<SettingScreen> {
           context: context,
         ),
         SizedBox(
-          height: 20.h,
+          height: 22.h,
         ),
         _settingListTile(
           title: '버그제보',
@@ -146,7 +134,7 @@ class _SettingScreenState extends State<SettingScreen> {
           context: context,
         ),
         SizedBox(
-          height: 28.h,
+          height: 22.h,
         ),
         _settingListTile(
           title: '약관',
@@ -154,7 +142,15 @@ class _SettingScreenState extends State<SettingScreen> {
           context: context,
         ),
         SizedBox(
-          height: 28.h,
+          height: 22.h,
+        ),
+        _settingListTile(
+          title: '버전정보/개발자',
+          nextPage: const VersionScreen(),
+          context: context,
+        ),
+        SizedBox(
+          height: 22.h,
         ),
         _settingListTile(
           title: '개인정보처리방침',
@@ -162,22 +158,21 @@ class _SettingScreenState extends State<SettingScreen> {
           context: context,
         ),
         SizedBox(
-          height: 28.h,
+          height: 200.h,
         ),
         Row(
           children: [
             Text(
               "Created by CRA",
-              style: textTheme.bodyText1?.copyWith(
+              style: textTheme.bodyText2?.copyWith(
                 color: colorScheme.tertiaryContainer,
-                fontWeight: FontWeight.w400,
               ),
             ),
             Spacer(),
             IconButton(
               onPressed: () {
                 setState(() {
-                  _logout(context: context);
+                  _logout;
                 });
               },
               icon: Icon(Icons.logout),
@@ -186,14 +181,12 @@ class _SettingScreenState extends State<SettingScreen> {
             GestureDetector(
               onTap: () {
                 setState(() {
-                  _logout(context: context);
+                  _logout;
                 });
               },
               child: Text(
                 "로그아웃",
-                style: textTheme.bodyText1?.copyWith(
-                  color: colorScheme.tertiaryContainer,
-                  fontWeight: FontWeight.w400,
+                style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiaryContainer
                 ),
               ),
             )
@@ -220,8 +213,8 @@ class _SettingScreenState extends State<SettingScreen> {
           child: Text(
             title,
             textAlign: TextAlign.start,
-            style: textTheme.headline1?.copyWith(
-                color: colorScheme.onPrimary, fontWeight: FontWeight.w500),
+            style: textTheme.subtitle1?.copyWith(
+                color: colorScheme.onPrimary),
           ),
         ),
         Spacer(),
@@ -255,8 +248,7 @@ class _SettingScreenState extends State<SettingScreen> {
       child: Text(
         title,
         textAlign: TextAlign.start,
-        style: textTheme.headline1?.copyWith(
-            color: colorScheme.onPrimary, fontWeight: FontWeight.w500),
+        style: textTheme.subtitle1?.copyWith(color: colorScheme.onPrimary),
       ),
     );
   }
@@ -269,46 +261,55 @@ class _SettingScreenState extends State<SettingScreen> {
     showDialog(
         context: context,
         builder: (BuildContext context) {
-          return AlertDialog(
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
-            title: Align(
-              alignment: Alignment.center,
-              child: Text(
-                "로그아웃 하시겠습니까?",
-                style: textTheme.headline1?.copyWith(
-                    color: colorScheme.secondary, fontWeight: FontWeight.w500),
+          return Dialog(
+            elevation: 0,
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+            child: Container(
+              width: 360.w,
+              height: 240.h,
+              padding: EdgeInsets.fromLTRB(
+                36.0.w,
+                24.0.h,
+                36.0.w,
+                24.0.h,
+              ),
+              child: Column(
+                children: [
+                  Text(
+                    "로그아웃 하시겠습니까?",
+                    style: textTheme.subtitle1?.copyWith(color: colorScheme.secondary),
+                  ),
+                  const Spacer(),
+                  Row(mainAxisAlignment: MainAxisAlignment.center, children: [
+                    TextButton(
+                        onPressed: () => Navigator.pop(context, "취소"),
+                        child: Text(
+                          "취소",
+                          style: textTheme.subtitle1?.copyWith(
+                            color: colorScheme.tertiary,
+                          ),
+                        )),
+                    SizedBox(
+                      width: 60.w,
+                    ),
+                    TextButton(
+                        onPressed: () async {
+                          await SettingScreen.storage.delete(key: "login");
+                          _signInController.reset();
+                          _signInController.signedOutState();
+                          _navController.changeIndex(1);
+                          Navigator.pop(context);
+                        },
+                        child: Text(
+                          "확인",
+                          style: textTheme.subtitle1?.copyWith(
+                            color: colorScheme.secondary,
+                          ),
+                        )),
+                  ])
+                ],
               ),
             ),
-            actions: <Widget>[
-              Row(mainAxisAlignment: MainAxisAlignment.center, children: [
-                TextButton(
-                    onPressed: () => Navigator.pop(context, "취소"),
-                    child: Text(
-                      "취소",
-                      style: textTheme.headline1?.copyWith(
-                        color: colorScheme.tertiary,
-                      ),
-                    )),
-                SizedBox(
-                  width: 60.w,
-                ),
-                TextButton(
-                    onPressed: () async {
-                      await SettingScreen.storage.delete(key: "login");
-                      _signInController.reset();
-                      _signInController.signedOutState();
-                      _navController.changeIndex(1);
-                      Navigator.pop(context);
-                    },
-                    child: Text(
-                      "확인",
-                      style: textTheme.headline1?.copyWith(
-                        color: colorScheme.secondary,
-                      ),
-                    )),
-              ])
-            ],
           );
         });
   }
@@ -362,7 +363,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 children: <Widget>[
                   Text(
                     title as String,
-                    style: textTheme.headline1?.copyWith(
+                    style: textTheme.subtitle1?.copyWith(
                       color: colorScheme.secondary,
                     ),
                   ),
@@ -371,7 +372,7 @@ class _SettingScreenState extends State<SettingScreen> {
                   ),
                   Text(
                     content as String,
-                    style: textTheme.subtitle1?.copyWith(
+                    style: textTheme.bodyText1?.copyWith(
                       color: colorScheme.onPrimary,
                     ),
                   ),
@@ -396,7 +397,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     },
                     child: Text(
                       "확인",
-                      style: textTheme.headline1
+                      style: textTheme.subtitle1
                           ?.copyWith(color: colorScheme.tertiary),
                     ),
                   ),

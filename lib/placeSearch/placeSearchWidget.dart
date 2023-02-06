@@ -150,18 +150,24 @@ Widget placeSearchTile({
                   title: RichText(
                       textAlign: TextAlign.center,
                       text: TextSpan(
-                          text: '원하는 출발지라면 ',
-                          style: textTheme.subtitle1?.copyWith(
+                      text: '원하는 출발지라면 ',
+                      style: textTheme.subtitle2?.copyWith(
+                        color: colorScheme.primary,
+                      ),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: "다음",
+                          style: textTheme.subtitle2?.copyWith(
+                            color: colorScheme.secondary,
+                          ),
+                        ),
+                        TextSpan(
+                          text: "을 눌러주세요.",
+                          style: textTheme.subtitle2?.copyWith(
                             color: colorScheme.primary,
                           ),
-                          children: <TextSpan>[
-                            TextSpan(text: "다음", style: textTheme.subtitle1?.copyWith(
-                                color: colorScheme.secondary,
-                                fontWeight: FontWeight.bold
-                              ),
-                            ),
-                            TextSpan(text: "을 눌러주세요."),
-                          ],
+                        ),
+                      ],
                       )
                   ),
                   color: Colors.green,
@@ -174,7 +180,10 @@ Widget placeSearchTile({
               ),
               onPressed: favoritePressed,
             ),
-            title: Text(placeList[index].name!),
+            title: Text(
+              placeList[index].name!,
+              style: textTheme.bodyText1?.copyWith(color: (index == _placeSearchController.selectedIndex) ? colorScheme.secondary : colorScheme.onTertiary),
+            ),
           );
         }
     ),
@@ -218,16 +227,22 @@ Widget favoritePlaceSearchTile({
                     textAlign: TextAlign.center,
                     text: TextSpan(
                       text: '원하는 출발지라면 ',
-                      style: textTheme.subtitle1?.copyWith(
+                      style: textTheme.subtitle2?.copyWith(
                         color: colorScheme.primary,
                       ),
                       children: <TextSpan>[
-                        TextSpan(text: "다음", style: textTheme.subtitle1?.copyWith(
+                        TextSpan(
+                          text: "다음",
+                          style: textTheme.subtitle2?.copyWith(
                             color: colorScheme.secondary,
-                            fontWeight: FontWeight.bold
                         ),
                         ),
-                        TextSpan(text: "을 눌러주세요."),
+                        TextSpan(
+                          text: "을 눌러주세요.",
+                          style: textTheme.subtitle2?.copyWith(
+                            color: colorScheme.primary,
+                          ),
+                        ),
                       ],
                     )
                 ),

@@ -42,12 +42,16 @@ Widget meChatListTile(BuildContext context, String content, bool isFirst) {
             constraints: BoxConstraints(minWidth: 36.w),
             decoration: BoxDecoration(
               color: colorScheme.secondary,
-              borderRadius: BorderRadius.circular(12.0),
+              borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(12),
+                  bottomLeft: Radius.circular(12),
+                  bottomRight: Radius.circular(12)),
             ),
             child: SelectableText(
               content,
               style: textTheme.subtitle1?.copyWith(
                 color: colorScheme.primary,
+                fontSize: 16,
               ),
             ),
           ),
@@ -72,11 +76,11 @@ Widget youChatListTile(BuildContext context, String content, bool isFirst) {
                   style: textTheme.subtitle1
                       ?.copyWith(color: colorScheme.onPrimary, fontSize: 13),
                 ),
-                SizedBox(width: 7.w),
+                SizedBox(width: 5.w),
                 Text(
                   "00:00 AM",
                   style: textTheme.bodyText1?.copyWith(
-                    color: colorScheme.tertiary,
+                    color: colorScheme.shadow,
                     fontSize: 10,
                   ),
                 ),
@@ -93,13 +97,17 @@ Widget youChatListTile(BuildContext context, String content, bool isFirst) {
             padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 8.h),
             constraints: BoxConstraints(minWidth: 36.w),
             decoration: BoxDecoration(
-              color: colorScheme.shadow,
-              borderRadius: BorderRadius.circular(12.0),
+              color: Colors.grey[200],
+              borderRadius: const BorderRadius.only(
+                  topRight: Radius.circular(12),
+                  bottomLeft: Radius.circular(12),
+                  bottomRight: Radius.circular(12)),
             ),
             child: SelectableText(
               content,
               style: textTheme.subtitle1?.copyWith(
                 color: colorScheme.onPrimary,
+                fontSize: 16,
               ),
             ),
           ),

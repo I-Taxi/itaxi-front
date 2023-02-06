@@ -62,8 +62,7 @@ class _SearchScreenState extends State<SearchScreen> {
               title: Text(
               '검색',
               style: textTheme.subtitle1?.copyWith(
-              color: colorScheme.onPrimary,
-              fontWeight: FontWeight.bold,
+                color: colorScheme.onPrimary,
             ),
           ),
           leading: IconButton(
@@ -106,9 +105,8 @@ class _SearchScreenState extends State<SearchScreen> {
                  },
                  child: Text(
                    "다음",
-                   style: textTheme.subtitle1?.copyWith(
-                     color: colorScheme.secondary,
-                     fontWeight: FontWeight.bold,
+                    style: textTheme.subtitle2?.copyWith(
+                      color: colorScheme.secondary,
                    ),
                  )
              )
@@ -131,7 +129,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     height: 46.0.h,
                     child: TextField(//검색창 화면
                       textAlignVertical: TextAlignVertical.bottom,
-                      style: textTheme.headline1?.copyWith(
+                        style: textTheme.bodyText1?.copyWith(
                           color: colorScheme.tertiary
                       ),
                       controller: _searchTextController,
@@ -151,7 +149,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           color: colorScheme.tertiary,
                         ),
                         hintText: "$depOrDst를 입력하세요",
-                        hintStyle: textTheme.headline1?.copyWith(
+                          hintStyle: textTheme.bodyText1?.copyWith(
                           color: colorScheme.tertiary
                         ),
                         //prefixIconColor :
@@ -212,7 +210,7 @@ class _SearchScreenState extends State<SearchScreen> {
                           },
                         child: Text(
                           '내 장소',
-                          style: textTheme.subtitle1!.copyWith(
+                            style: textTheme.subtitle2!.copyWith(
                             color: (_placeSearchController.placeType == 5) ? colorScheme.primary : colorScheme.tertiary,
                           ),
                         ),
@@ -232,7 +230,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         },
                         child: Text(
                           '한동대',
-                          style: textTheme.subtitle1!.copyWith(
+                            style: textTheme.subtitle2!.copyWith(
                             color: (_placeSearchController.placeType == 0) ? colorScheme.primary : colorScheme.tertiary,
                           ),
                         ),
@@ -252,7 +250,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         },
                         child: Text(
                           '양덕',
-                          style: textTheme.subtitle1!.copyWith(
+                            style: textTheme.subtitle2!.copyWith(
                             color: (_placeSearchController.placeType == 1) ? colorScheme.primary : colorScheme.tertiary,
                           ),
                         ),
@@ -272,7 +270,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         },
                         child: Text(
                           '타지역',
-                          style: textTheme.subtitle1!.copyWith(
+                            style: textTheme.subtitle2!.copyWith(
                             color: (_placeSearchController.placeType == 2) ? colorScheme.primary : colorScheme.tertiary,
                           ),
                         ),
@@ -296,9 +294,7 @@ class _SearchScreenState extends State<SearchScreen> {
                               context: context,
                               title: Text(
                                 "제거되었습니다.",
-                                style: textTheme.headline2?.copyWith(
-                                  color: colorScheme.primary,
-                                ),
+                                    style: textTheme.subtitle2?.copyWith(color: colorScheme.primary),
                               ),
                               color: Colors.red,
                           );
@@ -316,10 +312,8 @@ class _SearchScreenState extends State<SearchScreen> {
                             placeSearchSnackBar(
                                 context: context,
                                 title: Text(
-                                    "즐겨찾기에 추가되었습니다.",
-                                    style: textTheme.headline2?.copyWith(
-                                      color: colorScheme.primary,
-                                    ),
+                                  "즐겨찾기에 추가되었습니다.",
+                                  style: textTheme.subtitle2?.copyWith(color: colorScheme.primary)
                                 ),
                                 color: Colors.green
                             );
@@ -337,7 +331,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                 context: context,
                                 title: Text(
                                   "즐겨찾기에 추가되었습니다.",
-                                  style: textTheme.headline2?.copyWith(
+                                          style: textTheme.subtitle2?.copyWith(
                                     color: colorScheme.primary,
                                   ),
                                 ),

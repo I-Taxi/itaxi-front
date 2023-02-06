@@ -29,16 +29,16 @@ void mainDialog(BuildContext context, String? title, String? content) {
               children: <Widget>[
                 Text(
                   title as String,
-                  style: textTheme.headline1?.copyWith(
+                  style: textTheme.subtitle1?.copyWith(
                     color: colorScheme.secondary,
                   ),
                 ),
                 SizedBox(
-                  height: 16.h,
+                  height: 30.h,
                 ),
                 Text(
                   content as String,
-                  style: textTheme.subtitle1?.copyWith(
+                  style: textTheme.bodyText1?.copyWith(
                     color: colorScheme.onPrimary,
                   ),
                 ),
@@ -49,7 +49,7 @@ void mainDialog(BuildContext context, String? title, String? content) {
                   },
                   child: Text(
                     "확인",
-                    style: textTheme.headline1
+                    style: textTheme.subtitle2
                         ?.copyWith(color: colorScheme.tertiary),
                   ),
                 ),

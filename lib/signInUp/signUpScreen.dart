@@ -43,7 +43,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
 
   bool _isValidPhone(String val) {
-    return RegExp(r'^010-?([0-9]{4})-?([0-9]{4})$').hasMatch(val);
+    return RegExp(r'^010?([0-9]{4})?([0-9]{4})$').hasMatch(val);
   }
 
   checkFields() {
@@ -70,8 +70,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     return Scaffold(
       appBar: AppBar(
         shadowColor: colorScheme.shadow,
-        elevation: 1.0,
-        centerTitle: true,
+        elevation: 0.0,
         leading: Padding(
           padding: EdgeInsets.only(left: 18.w),
           child: IconButton(
@@ -102,6 +101,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   horizontal: 24.0.w,
                 ),
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
                       '회원가입',
@@ -110,7 +110,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-
                     SizedBox(
                       height: 44.h,
                     ),
@@ -127,7 +126,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           color: colorScheme.tertiary,
                         ),
                         suffixText: '@handong.ac.kr',
-                        suffixStyle: textTheme.subtitle1?.copyWith(
+                        suffixStyle: textTheme.bodyText2?.copyWith(
                           color: colorScheme.tertiary,
                         ),
                         enabledBorder: UnderlineInputBorder(
@@ -220,8 +219,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
                         hintText: '비밀번호 확인',
-                        hintStyle: textTheme.subtitle1?.copyWith(
-                          fontSize: Platform.isIOS ? 14 : 12,
+                        hintStyle: textTheme.subtitle2?.copyWith(
                           color: colorScheme.tertiary,
                         ),
                         enabledBorder: UnderlineInputBorder(
@@ -254,7 +252,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                       validator: (value) {
-                        if (value!.isEmpty) {
+                         if (value!.isEmpty) {
                           return '비밀번호를 한 번 더 입력해주세요';
                         } else if (_signUpController.customPw != value) {
                           return '비밀번호와 같지 않습니다';
@@ -273,8 +271,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
                         hintText: '김한동',
-                        hintStyle: textTheme.subtitle1?.copyWith(
-                          fontSize: Platform.isIOS ? 14 : 12,
+                        hintStyle: textTheme.subtitle2?.copyWith(
                           color: colorScheme.tertiary,
                         ),
                         enabledBorder: UnderlineInputBorder(
@@ -312,7 +309,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       decoration: InputDecoration(
                         hintText: '010-0000-0000',
                         hintStyle: textTheme.subtitle1?.copyWith(
-                          fontSize: Platform.isIOS ? 14 : 12,
                           color: colorScheme.tertiary,
                         ),
                         enabledBorder: UnderlineInputBorder(
@@ -334,8 +330,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       validator: (value) {
                         if (value!.isEmpty)
                           return '전화번호를 입력해주세요';
-                        else if (!_isValidPhone(value))
-                          return '- 를 포함해 형식에 맞게 입력해주세요';
+                        //else if (!_isValidPhone(value)){}
+                          //return '- 를 포함해 형식에 맞게 입력해주세요';
                         return null;
                       },
                     ),
@@ -433,8 +429,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         RawMaterialButton(
                           child: Text(
                             '이용약관 보기',
-                            style: textTheme.subtitle1?.copyWith(
-                              fontSize: Platform.isIOS ? 14 : 12,
+                            style: textTheme.bodyText2?.copyWith(
                               color: colorScheme.tertiary,
                               decoration: TextDecoration.underline,
                             ),
@@ -448,8 +443,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           children: [
                             Text(
                               '약관에 동의합니다',
-                              style: textTheme.subtitle1?.copyWith(
-                                fontSize: Platform.isIOS ? 14 : 12,
+                              style: textTheme.bodyText2?.copyWith(
                                 color: colorScheme.tertiary,
                               ),
                             ),
@@ -481,8 +475,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         RawMaterialButton(
                           child: Text(
                             '개인정보처리방침 보기',
-                            style: textTheme.subtitle1?.copyWith(
-                              fontSize: Platform.isIOS ? 14 : 12,
+                            style: textTheme.bodyText2?.copyWith(
                               color: colorScheme.tertiary,
                               decoration: TextDecoration.underline,
                             ),
@@ -496,8 +489,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           children: [
                             Text(
                               '약관에 동의합니다',
-                              style: textTheme.subtitle1?.copyWith(
-                                fontSize: Platform.isIOS ? 14 : 12,
+                              style: textTheme.bodyText2?.copyWith(
                                 color: colorScheme.tertiary,
                               ),
                             ),
@@ -532,12 +524,14 @@ class _SignUpScreenState extends State<SignUpScreen> {
         ),
       ),
       bottomNavigationBar: Material(
-        color: agree1 & agree2 & _formKey.currentState!.validate() ? colorScheme.tertiaryContainer : colorScheme.secondary,
+        color: agree1 && agree2 && _formKey.currentState!.validate()
+            ? colorScheme.secondary
+            : colorScheme.tertiaryContainer,
         child: InkWell(
-          onTap: () {
-            if(agree1 & agree2 & _formKey.currentState!.validate()){
-              _signUpController.signUp();
+          onTap: () async {
+            if (agree1 && agree2 && _formKey.currentState!.validate()) {
               signUpDialog(context, '메일 인증');
+              _signUpController.signUp();
             }
           },
           child: SizedBox(
@@ -546,9 +540,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: Center(
               child: Text(
                 "가입 완료",
-                style: textTheme.subtitle1!.copyWith(
-                    color: colorScheme.onPrimary
-                ),
+                style:
+                    textTheme.subtitle1!.copyWith(color: colorScheme.onPrimary),
               ),
             ),
           ),
@@ -583,7 +576,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 children: <Widget>[
                   Text(
                     title as String,
-                    style: textTheme.headline1?.copyWith(
+                    style: textTheme.subtitle1?.copyWith(
                       color: colorScheme.secondary,
                     ),
                   ),
@@ -626,7 +619,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     },
                     child: Text(
                       "확인",
-                      style: textTheme.headline2
+                      style: textTheme.subtitle2
                           ?.copyWith(color: colorScheme.tertiary),
                     ),
                   ),
