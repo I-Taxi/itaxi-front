@@ -167,6 +167,7 @@ flutter:
     - assets/delStopover.png
     - assets/car_new.png
     - assets/profile.png
+    - assets/profile_camera.png
     - assets/change_profile.png
     - assets/background.png
     - assets/icon_KTX.png
@@ -174,6 +175,7 @@ flutter:
     - assets/banner.png
     - assets/button/contact.png
     - assets/first_chat.png
+    - assets/logout.png
 
     # icon
     - assets/icon/boarding_complete.png
