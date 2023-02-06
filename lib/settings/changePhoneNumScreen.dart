@@ -32,12 +32,12 @@ class _FindPhoneNumScreenState extends State<FindPhoneNumScreen> {
     return RegExp(r'^010-?([0-9]{4})-?([0-9]{4})$').hasMatch(val);
   }
 
-  void initState() {
-    super.initState();
-    _phoneController.text = _userController.phone.toString();
-    _bankController.text = _userController.bank.toString();
-    _bankAddressController.text = _userController.bankAddress.toString();
-  }
+  // void initState() {
+  //   super.initState();
+  //   _phoneController.text = _userController.phone.toString();
+  //   _bankController.text = _userController.bank.toString();
+  //   _bankAddressController.text = _userController.bankAddress.toString();
+  // }
 
 
   @override
@@ -136,26 +136,6 @@ class _FindPhoneNumScreenState extends State<FindPhoneNumScreen> {
                         ),
                     SizedBox(
                       height: 59.0.h,
-                    ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        elevation: 0,
-                        backgroundColor: isValueEmpty ? colorScheme.tertiary : colorScheme.secondary,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          showConfirmDialog(context);
-                        }
-                      },
-                      child: Text(
-                        '완료',
-                        style: textTheme.subtitle1!.copyWith(
-                          color: colorScheme.primary,
-                        ),
-                      ),
                     ),
                   ],
                 ),
