@@ -93,7 +93,15 @@ Widget historyListContainer({required BuildContext context, required Post post})
             ),
             SizedBox(height: 10.h),
             OutlinedButton(
-              onPressed: () {},
+              onPressed: () {
+                // TODO: ktx container 제작하면 연결
+                if (post.postType == null) {
+                  _historyController.getHistoryInfo(postId: post.id!);
+                } else {
+                  _historyController.getHistoryInfo(postId: post.id!);
+                  Get.to(() => TimelineDetailScreen());
+                }
+              },
               style: OutlinedButton.styleFrom(minimumSize: Size(342.w, 40.h), side: BorderSide(width: 1, color: colorScheme.onPrimaryContainer), shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8)))),
               child: Text('상세보기', style: textTheme.bodyText2?.copyWith(color: colorScheme.onPrimaryContainer)),
             )
