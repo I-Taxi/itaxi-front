@@ -21,6 +21,27 @@ Container timelineSoonInfoCard({required BuildContext context, required Post pos
 
   _historyController.getHistoryInfo(postId: post.id!);
 
+  Text postTypeToText(int? postType) {
+    if (postType == 0) {
+      return Text(
+        '택시',
+        style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
+      );
+    } else if (postType == 1) {
+      return Text(
+        '카풀',
+        style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
+      );
+    } else if (postType == 2) {
+      return Text(
+        'KTX',
+        style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
+      );
+    } else {
+      return const Text('error');
+    }
+  }
+
   return Container(
     width: 339.w,
     height: 230.h,
@@ -28,7 +49,7 @@ Container timelineSoonInfoCard({required BuildContext context, required Post pos
       BoxShadow(
         color: colorScheme.shadow,
         blurRadius: 40,
-        offset: Offset(2, 4),
+        offset: const Offset(2, 4),
       )
     ]),
     child: FutureBuilder<Post>(
@@ -102,10 +123,7 @@ Container timelineSoonInfoCard({required BuildContext context, required Post pos
                             height: 15.h,
                           ),
                           // TODO: post type별로 text 다르게 나오게 하기
-                          Text(
-                            '${snapshot.data!.postType}',
-                            style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
-                          ),
+                          postTypeToText(snapshot.data!.postType),
                         ],
                       ),
                       SizedBox(
