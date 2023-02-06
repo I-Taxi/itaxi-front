@@ -12,8 +12,9 @@ import 'package:itaxi/controller/signInController.dart';
 import 'package:itaxi/controller/navigationController.dart';
 import '../widget/mainDialog.dart';
 import 'package:itaxi/settings/settingScreen.dart';
-import 'package:itaxi/settings/findPhoneNumScreen.dart';
+import 'package:itaxi/settings/changePhoneNumScreen.dart';
 import 'package:itaxi/settings/resetPWScreen.dart';
+import 'package:itaxi/settings/changeAccountScreen.dart';
 
 class MyInfoScreen extends StatefulWidget {
   const MyInfoScreen({Key? key}) : super(key: key);
@@ -181,22 +182,17 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                                 ),
                                 _deleteUserAccount(
                                     title: "회원 탈퇴하기",
-                                    //nextPage: ,
                                     context: context),
-                                SizedBox(
-                                  height: 18.5.h,
-                                ),
                               ],
                             ),
                           ),
-                          SizedBox(
-                            height: 21.h,
-                          ),
                           Container(
+                            width: 390.w,
+                            height: 156.h,
                             decoration: BoxDecoration(
                               border: Border(
-                                top: BorderSide(width: 0.5, color: colorScheme.tertiaryContainer),
-                                bottom: BorderSide(width: 0.5, color: colorScheme.tertiaryContainer)
+                                top: BorderSide(width: 0.1, color: colorScheme.tertiary),
+                                bottom: BorderSide(width: 0.1, color: colorScheme.tertiary)
                               )
                             ),
                             child: Padding(
@@ -204,6 +200,9 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
+                                  SizedBox(
+                                    height: 36.h,
+                                  ),
                                   Text(
                                     "결제 관리",
                                     style: textTheme.subtitle1!.copyWith(
@@ -211,9 +210,9 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                                     ),
                                   ),
                                   SizedBox(
-                                    height: 28.5.h,
+                                    height: 26.h,
                                   ),
-                                  //_management(title: "계좌번호 추가/변경", context: context)
+                                  _management(title: "계좌번호 추가/변경", nextPage: ChangeAccountScreen(), context: context)
                                 ],
                               ),
                             ),
@@ -258,7 +257,9 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
     return Column(
       children: [
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            Get.to(nextPage);
+          },
           child: Container(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
