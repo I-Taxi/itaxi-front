@@ -188,6 +188,8 @@ flutter:
     - assets/icon/calendar.png
     - assets/icon/logo_type.png
     - assets/icon/person.png
+    - assets/icon/car_gray.png
+    - assets/icon/ktx_gray.png
     - assets/icon/notice_info.png
 
     # background
