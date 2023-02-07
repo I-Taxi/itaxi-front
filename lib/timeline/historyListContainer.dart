@@ -68,7 +68,6 @@ Widget historyListContainer({required BuildContext context, required Post post})
                 children: [
                   CarTrainSelector(post.postType),
                   SizedBox(width: 22.w),
-                  // TODO: 출발지 도착지 긴거는 짧게 매핑
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -76,7 +75,7 @@ Widget historyListContainer({required BuildContext context, required Post post})
                       SizedBox(width: 125.w),
                       Text('출발', style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiaryContainer)),
                       SizedBox(height: 7.0.h),
-                      Text(AbbreviatePlaceName(post.departure?.name), style: textTheme.bodyText1?.copyWith(color: colorScheme.onTertiary)),
+                      Text(abbreviatePlaceName(post.departure?.name), style: textTheme.bodyText1?.copyWith(color: colorScheme.onTertiary)),
                     ],
                   ),
                   SizedBox(width: 2.w),
@@ -86,7 +85,7 @@ Widget historyListContainer({required BuildContext context, required Post post})
                     children: [
                       Text('도착', style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiaryContainer)),
                       SizedBox(height: 7.0.h),
-                      Text(AbbreviatePlaceName(post.destination?.name), style: textTheme.bodyText1?.copyWith(color: colorScheme.onTertiary)),
+                      Text(abbreviatePlaceName(post.destination?.name), style: textTheme.bodyText1?.copyWith(color: colorScheme.onTertiary)),
                     ],
                   ),
                 ],
@@ -100,7 +99,7 @@ Widget historyListContainer({required BuildContext context, required Post post})
                   _historyController.getHistoryInfo(postId: post.id!);
                 } else {
                   _historyController.getHistoryInfo(postId: post.id!);
-                  Get.to(() => TimelineDetailScreen());
+                  Get.to(() => const TimelineDetailScreen());
                 }
               },
               style: OutlinedButton.styleFrom(minimumSize: Size(342.w, 40.h), side: BorderSide(width: 1, color: colorScheme.onPrimaryContainer), shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8)))),

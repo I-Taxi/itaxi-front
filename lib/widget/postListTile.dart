@@ -13,7 +13,6 @@ import 'package:itaxi/model/chat.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/widget/snackBar.dart';
 
-import 'package:itaxi/widget/soonTimelineListTile.dart';
 import 'package:itaxi/controller/screenController.dart';
 import 'package:itaxi/controller/placeController.dart';
 import 'package:itaxi/controller/dateController.dart';

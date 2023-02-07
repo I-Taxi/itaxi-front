@@ -10,6 +10,7 @@ import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/timeline/timelineDetailScreen.dart';
+import 'package:itaxi/widget/postTypeToString.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../widget/HorizontalDashedDivider.dart';
@@ -19,29 +20,6 @@ Container timelineSoonInfoCard({required BuildContext context, required Post pos
   final textTheme = Theme.of(context).textTheme;
   late PostController _postController = Get.find();
   late HistoryController _historyController = Get.find();
-
-  _historyController.getHistoryInfo(postId: post.id!);
-
-  Text postTypeToText(int? postType) {
-    if (postType == 0) {
-      return Text(
-        '택시',
-        style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
-      );
-    } else if (postType == 1) {
-      return Text(
-        '카풀',
-        style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
-      );
-    } else if (postType == 2) {
-      return Text(
-        'KTX',
-        style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
-      );
-    } else {
-      return const Text('error');
-    }
-  }
 
   return Container(
     width: 339.w,
@@ -76,7 +54,7 @@ Container timelineSoonInfoCard({required BuildContext context, required Post pos
                         width: 20.w,
                       ),
                       Text(
-                        '${snapshot.data!.departure?.name}',
+                        '${post.departure?.name}',
                         style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
                       ),
                       const Spacer(),
@@ -93,7 +71,7 @@ Container timelineSoonInfoCard({required BuildContext context, required Post pos
                         width: 20.w,
                       ),
                       Text(
-                        '${snapshot.data!.destination?.name}',
+                        '${post.destination?.name}',
                         style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
                       ),
                       const Spacer(),
@@ -117,13 +95,16 @@ Container timelineSoonInfoCard({required BuildContext context, required Post pos
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            DateFormat('MM/dd').format(DateTime.parse(snapshot.data!.deptTime!)),
+                            DateFormat('MM/dd').format(DateTime.parse(post.deptTime!)),
                             style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
                           ),
                           SizedBox(
                             height: 15.h,
                           ),
-                          postTypeToText(snapshot.data!.postType),
+                          Text(
+                            postTypeToString(post.postType),
+                            style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
+                          ),
                         ],
                       ),
                       SizedBox(
@@ -133,14 +114,14 @@ Container timelineSoonInfoCard({required BuildContext context, required Post pos
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            DateFormat('HH:mm').format(DateTime.parse(snapshot.data!.deptTime!)),
+                            DateFormat('HH:mm').format(DateTime.parse(post.deptTime!)),
                             style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
                           ),
                           SizedBox(
                             height: 15.h,
                           ),
                           Text(
-                            '${snapshot.data!.participantNum}/${snapshot.data!.capacity}명',
+                            '${post.participantNum}/${post.capacity}명',
                             style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
                           ),
                         ],
@@ -150,10 +131,9 @@ Container timelineSoonInfoCard({required BuildContext context, required Post pos
                           onTap: () async {
                             if (post.postType == null) {
                               // TODO: ktx container 제작하면 연결
-                              _historyController.getHistoryInfo(postId: post.id!);
                             } else {
                               _historyController.getHistoryInfo(postId: post.id!);
-                              Get.to(() => TimelineDetailScreen());
+                              Get.to(() => const TimelineDetailScreen());
                             }
                           },
                           child: Image.asset(width: 81.w, 'assets/button/go_descript.png'))
