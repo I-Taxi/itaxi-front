@@ -4,8 +4,7 @@ import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:itaxi/controller/signInController.dart';
-import 'package:itaxi/src/theme.dart';
+import 'package:itaxi/controller/signUpController.dart';
 
 class ResetPWScreen extends StatefulWidget {
   ResetPWScreen({Key? key}) : super(key: key);
@@ -15,13 +14,19 @@ class ResetPWScreen extends StatefulWidget {
 }
 
 class _ResetPWScreenState extends State<ResetPWScreen> {
-  SignInController _signInController = Get.find();
+  SignUpController _signUpController = Get.find();
 
 
-  final _emailController = TextEditingController();
+  final _pwController = TextEditingController();
+
+  Pattern pattern = r'^(?=.*[a-zA-Z0-9]{6,})';
+  late RegExp regExp;
 
   final _formKey = GlobalKey<FormState>();
-  bool isValueEmpty = true; // 메일 입력 여부 판별
+  bool isValueEmpty = true; // 비밀번호 입력 여부 판별
+
+  bool _isObscure1 = true;
+  bool _isObscure2 = true;
 
 
   @override
@@ -42,10 +47,7 @@ class _ResetPWScreenState extends State<ResetPWScreen> {
           onPressed: () {
             Get.back();
           },
-          icon: Icon(
-            Icons.arrow_back_rounded,
-            color: colorScheme.tertiary,
-          ),
+          icon: Image.asset("assets/arrow/arrow_back_1.png", color: colorScheme.tertiaryContainer, width: 11.62.w, height: 20.51.h,)
         ),
       ),
       backgroundColor: colorScheme.background,
@@ -58,91 +60,146 @@ class _ResetPWScreenState extends State<ResetPWScreen> {
           },
           child: Form(
             key: _formKey,
-            child: SingleChildScrollView(
-              child: Padding(
-                padding: EdgeInsets.symmetric(
-                  vertical: 39.0.h,
-                  horizontal: 24.0.w,
-                ),
-                child: Column(
-                  children: [
-                    Text('비밀번호 재설정', style: textTheme.headline1?.copyWith(
-                        color: colorScheme.onPrimary,
-                        fontWeight: FontWeight.bold
-                    ),),
-                    SizedBox(
-                      height: 52.0.h,
-                    ),
-                    // 이메일 입력
-                    TextFormField(
-                        controller: _emailController,
-                        autocorrect: false,
-                        autovalidateMode: AutovalidateMode.onUserInteraction,
-                        decoration: InputDecoration(
-                          hintText: "가입한 이메일을 입력해주세요",
-                          suffixText: '@handong.ac.kr',
-                          suffixStyle: textTheme.subtitle1?.copyWith(
-                            color: colorScheme.onPrimary,
-                          ),
-                          enabledBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: colorScheme.onPrimary,
-                              width: 1.0,
-                            ),
-                          ),
-                          focusedBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                              color: colorScheme.secondary,
-                              width: 1.0,
-                            ),
-                          ),
+            child: Padding(
+              padding: EdgeInsets.symmetric(
+                vertical: 12.0.h,
+                horizontal: 24.0.w,
+              ),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Text('비밀번호 재설정', style: textTheme.headline2?.copyWith(
+                      color: colorScheme.onTertiary,
+                  ),),
+                  SizedBox(
+                    height: 52.0.h,
+                  ),
+                  // 이메일 입력
+                  TextFormField(
+                    controller: _pwController,
+                    autocorrect: false,
+                    obscureText: _isObscure1,
+                    cursorColor: colorScheme.tertiary,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    decoration: InputDecoration(
+                      hintText: '비밀번호 입력',
+                      hintStyle: textTheme.subtitle1?.copyWith(
+                        fontSize: Platform.isIOS ? 14 : 12,
+                        color: colorScheme.tertiary,
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: colorScheme.tertiary,
+                          width: 0.5,
                         ),
-                        onChanged: (value) {
-                          _signInController.email = '$value@handong.ac.kr';
-                          if(value.length > 0){
-                            setState(() {
-                              isValueEmpty = false;
-                            });
-                          }
-                          else{
-                            setState(() {
-                              isValueEmpty = true;
-                            });
-                          }
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: colorScheme.secondary,
+                          width: 1.0,
+                        ),
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _isObscure1
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          size: 20.h,
+                          color: colorScheme.tertiary,
+                        ),
+                        onPressed: () {
+                          setState(
+                                () {
+                              _isObscure1 = !_isObscure1;
+                            },
+                          );
                         },
-                        validator: (value) {
-                          if (value!.isEmpty) {
-                            return '이메일을 입력해주세요';
-                          }
-                          else {
-                            return null;
-                          }
-                        }),
-                    SizedBox(
-                      height: 59.0.h,
-                    ),
-                    ElevatedButton(
-                      style: ElevatedButton.styleFrom(
-                        elevation: 0,
-                        backgroundColor: isValueEmpty ? colorScheme.tertiary : colorScheme.secondary,
-                        shape: RoundedRectangleBorder(
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                      ),
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          showConfirmDialog(context);
-                        }
-                      },
-                      child: Text(
-                        '완료',
-                        style: textTheme.subtitle1!.copyWith(
-                          color: colorScheme.primary,
-                        ),
                       ),
                     ),
-                  ],
-                ),
+                    onChanged: (value) {
+                      _signUpController.customPw = value;
+                    },
+                    validator: (value) {
+                      if (value!.isEmpty) return '비밀번호를 입력해주세요';
+                      regExp = RegExp(pattern.toString());
+                      if (!regExp.hasMatch(value))
+                        return '문자와 숫자 6자리 이상 사용해주세요';
+                      return null;
+                    },
+                  ),
+                  SizedBox(
+                    height: 32.0.h,
+                  ),
+                  // Password 확인 입력
+                  TextFormField(
+                    autocorrect: false,
+                    obscureText: _isObscure2,
+                    cursorColor: colorScheme.tertiary,
+                    autovalidateMode: AutovalidateMode.onUserInteraction,
+                    decoration: InputDecoration(
+                      hintText: '비밀번호 확인',
+                      hintStyle: textTheme.subtitle2?.copyWith(
+                        color: colorScheme.tertiary,
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: colorScheme.tertiary,
+                          width: 0.5,
+                        ),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                          color: colorScheme.secondary,
+                          width: 1.0,
+                        ),
+                      ),
+                      suffixIcon: IconButton(
+                        icon: Icon(
+                          _isObscure2
+                              ? Icons.visibility_off
+                              : Icons.visibility,
+                          size: 20.h,
+                          color: colorScheme.tertiary,
+                        ),
+                        onPressed: () {
+                          setState(
+                                () {
+                              _isObscure2 = !_isObscure2;
+                            },
+                          );
+                        },
+                      ),
+                    ),
+                    validator: (value) {
+                      if (value!.isEmpty) {
+                        return '비밀번호를 한 번 더 입력해주세요';
+                      } else if (_signUpController.customPw != value) {
+                        return '비밀번호와 같지 않습니다';
+                      }
+                      return null;
+                    },
+                  ),
+                  // ElevatedButton(
+                  //   style: ElevatedButton.styleFrom(
+                  //     elevation: 0,
+                  //     backgroundColor: isValueEmpty ? colorScheme.tertiary : colorScheme.secondary,
+                  //     shape: RoundedRectangleBorder(
+                  //       borderRadius: BorderRadius.circular(8.0),
+                  //     ),
+                  //   ),
+                  //   onPressed: () async {
+                  //     if (_formKey.currentState!.validate()) {
+                  //       showConfirmDialog(context);
+                  //     }
+                  //   },
+                  //   child: Text(
+                  //     '완료',
+                  //     style: textTheme.subtitle1!.copyWith(
+                  //       color: colorScheme.primary,
+                  //     ),
+                  //   ),
+                  // ),
+                ],
               ),
             ),
           ),
@@ -152,7 +209,10 @@ class _ResetPWScreenState extends State<ResetPWScreen> {
         color: isValueEmpty ? colorScheme.tertiaryContainer : colorScheme.secondary,
         child: InkWell(
           onTap: () async{
-            await _signInController.sendPasswordResetEmailByKorean();
+
+            if (_formKey.currentState!.validate()) {
+              showConfirmDialog(context);
+            }
           },
           child: SizedBox(
             height: kToolbarHeight,
@@ -239,7 +299,7 @@ class _ResetPWScreenState extends State<ResetPWScreen> {
                 const Spacer(),
                 TextButton(
                   onPressed: () async {
-                    await _signInController.sendPasswordResetEmailByKorean();
+                    // await _signInController.sendPasswordResetEmailByKorean();
                     Get.back();
                     Get.back();
                   },

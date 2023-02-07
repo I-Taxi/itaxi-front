@@ -43,7 +43,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _formKey = GlobalKey<FormState>();
 
   bool _isValidPhone(String val) {
-    return RegExp(r'^010?([0-9]{4})?([0-9]{4})$').hasMatch(val);
+    return RegExp(r'^010-?([0-9]{4})-?([0-9]{4})$').hasMatch(val);
   }
 
   checkFields() {
@@ -72,15 +72,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
         shadowColor: colorScheme.shadow,
         elevation: 0.0,
         leading: Padding(
-          padding: EdgeInsets.only(left: 18.w),
+          padding: EdgeInsets.only(left: 15.w),
           child: IconButton(
             onPressed: () {
               Get.back();
             },
-            icon: Icon(
-              Icons.arrow_back_rounded,
-              color: colorScheme.tertiary,
-            ),
+            icon: Image.asset("assets/arrow/arrow_back_1.png", color: colorScheme.tertiaryContainer, width: 11.62.w, height: 20.51.h)
           ),
         ),
       ),
@@ -97,7 +94,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             child: SingleChildScrollView(
               child: Padding(
                 padding: EdgeInsets.symmetric(
-                  vertical: 20.h,
+                  vertical: 12.h,
                   horizontal: 24.0.w,
                 ),
                 child: Column(
@@ -105,9 +102,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   children: [
                     Text(
                       '회원가입',
-                      style: textTheme.headline1?.copyWith(
-                        color: colorScheme.onPrimary,
-                        fontWeight: FontWeight.bold,
+                      style: textTheme.headline2?.copyWith(
+                        color: colorScheme.onTertiary,
                       ),
                     ),
                     SizedBox(
@@ -121,13 +117,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
                         hintText: '아이디 입력',
-                        hintStyle: textTheme.subtitle1?.copyWith(
-                          fontSize: Platform.isIOS ? 14 : 12,
-                          color: colorScheme.tertiary,
+                        hintStyle: textTheme.bodyText1?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
                         ),
                         suffixText: '@handong.ac.kr',
-                        suffixStyle: textTheme.bodyText2?.copyWith(
-                          color: colorScheme.tertiary,
+                        suffixStyle: textTheme.bodyText1?.copyWith(
+                          color: colorScheme.onTertiary,
                         ),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
@@ -164,9 +159,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
                         hintText: '비밀번호 입력',
-                        hintStyle: textTheme.subtitle1?.copyWith(
-                          fontSize: Platform.isIOS ? 14 : 12,
-                          color: colorScheme.tertiary,
+                        hintStyle: textTheme.bodyText1?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
                         ),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
@@ -219,8 +213,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
                         hintText: '비밀번호 확인',
-                        hintStyle: textTheme.subtitle2?.copyWith(
-                          color: colorScheme.tertiary,
+                        hintStyle: textTheme.bodyText1?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
                         ),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
@@ -271,8 +265,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       decoration: InputDecoration(
                         hintText: '김한동',
-                        hintStyle: textTheme.subtitle2?.copyWith(
-                          color: colorScheme.tertiary,
+                        hintStyle: textTheme.bodyText1?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
                         ),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
@@ -307,9 +301,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       keyboardType: TextInputType.number,
                       // inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       decoration: InputDecoration(
-                        hintText: '010-0000-0000',
-                        hintStyle: textTheme.subtitle1?.copyWith(
-                          color: colorScheme.tertiary,
+                        hintText: '전화번호',
+                        hintStyle: textTheme.bodyText1?.copyWith(
+                          color: colorScheme.onSurfaceVariant,
                         ),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
@@ -330,8 +324,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       validator: (value) {
                         if (value!.isEmpty)
                           return '전화번호를 입력해주세요';
-                        //else if (!_isValidPhone(value)){}
-                          //return '- 를 포함해 형식에 맞게 입력해주세요';
+                        else if (!_isValidPhone(value))
+                          return '전화번호 형식에 맞게 입력해주세요';
                         return null;
                       },
                     ),
@@ -430,8 +424,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: Text(
                             '이용약관 보기',
                             style: textTheme.bodyText2?.copyWith(
-                              color: colorScheme.tertiary,
-                              decoration: TextDecoration.underline,
+                              color: colorScheme.onSecondaryContainer,
                             ),
                           ),
                           onPressed: () {
@@ -476,8 +469,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           child: Text(
                             '개인정보처리방침 보기',
                             style: textTheme.bodyText2?.copyWith(
-                              color: colorScheme.tertiary,
-                              decoration: TextDecoration.underline,
+                              color: colorScheme.onSecondaryContainer,
                             ),
                           ),
                           onPressed: () {
@@ -526,7 +518,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       bottomNavigationBar: Material(
         color: agree1 && agree2 && _formKey.currentState!.validate()
             ? colorScheme.secondary
-            : colorScheme.tertiaryContainer,
+            : colorScheme.onSurfaceVariant,
         child: InkWell(
           onTap: () {
             if (agree1 && agree2 && _formKey.currentState!.validate()) {
@@ -534,13 +526,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
             }
           },
           child: SizedBox(
-            height: kToolbarHeight,
+            height: 94.h,
             width: double.infinity,
-            child: Center(
-              child: Text(
-                "가입 완료",
-                style:
-                    textTheme.subtitle1!.copyWith(color: colorScheme.onPrimary),
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: Padding(
+                padding: EdgeInsets.only(top: 18.h),
+                child: Text(
+                  "가입 완료",
+                  style:
+                      textTheme.bodyText1!.copyWith(color: colorScheme.onTertiaryContainer, fontSize: 17),
+                ),
               ),
             ),
           ),
