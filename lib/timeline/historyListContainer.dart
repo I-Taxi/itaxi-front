@@ -6,6 +6,7 @@ import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/timeline/timelineDetailScreen.dart';
+import 'package:itaxi/widget/abbreviatePlaceName.dart';
 
 Widget historyListContainer({required BuildContext context, required Post post}) {
   final colorScheme = Theme.of(context).colorScheme;
@@ -75,7 +76,7 @@ Widget historyListContainer({required BuildContext context, required Post post})
                       SizedBox(width: 125.w),
                       Text('출발', style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiaryContainer)),
                       SizedBox(height: 7.0.h),
-                      Text('${post.departure?.name}', style: textTheme.bodyText1?.copyWith(color: colorScheme.onTertiary)),
+                      Text(AbbreviatePlaceName(post.departure?.name), style: textTheme.bodyText1?.copyWith(color: colorScheme.onTertiary)),
                     ],
                   ),
                   SizedBox(width: 2.w),
@@ -85,7 +86,7 @@ Widget historyListContainer({required BuildContext context, required Post post})
                     children: [
                       Text('도착', style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiaryContainer)),
                       SizedBox(height: 7.0.h),
-                      Text('${post.destination?.name}', style: textTheme.bodyText1?.copyWith(color: colorScheme.onTertiary)),
+                      Text(AbbreviatePlaceName(post.destination?.name), style: textTheme.bodyText1?.copyWith(color: colorScheme.onTertiary)),
                     ],
                   ),
                 ],
