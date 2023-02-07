@@ -123,7 +123,6 @@ Container timelineSoonInfoCard({required BuildContext context, required Post pos
                           SizedBox(
                             height: 15.h,
                           ),
-                          // TODO: post type별로 text 다르게 나오게 하기
                           postTypeToText(snapshot.data!.postType),
                         ],
                       ),
@@ -134,7 +133,7 @@ Container timelineSoonInfoCard({required BuildContext context, required Post pos
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            DateFormat('MM/dd').format(DateTime.parse(snapshot.data!.deptTime!)),
+                            DateFormat('HH:mm').format(DateTime.parse(snapshot.data!.deptTime!)),
                             style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
                           ),
                           SizedBox(
