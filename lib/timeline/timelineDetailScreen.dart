@@ -3,14 +3,31 @@ import 'dart:io';
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:intl/intl.dart';
 import 'package:itaxi/controller/historyController.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:itaxi/timeline/passengerListTile.dart';
+import 'package:itaxi/widget/postTypeToString.dart';
 import 'package:onboarding/onboarding.dart';
 
 import '../model/post.dart';
 
 class TimelineDetailScreen extends StatelessWidget {
   const TimelineDetailScreen({Key? key}) : super(key: key);
+
+  Container insertBordingCompleteIcon(String? time) {
+    if (DateTime.now().difference(DateTime.parse(time!)).isNegative == false) {
+      return Container(
+        padding: EdgeInsets.fromLTRB(15.w, 0.h, 0.w, 0.h),
+        child: Image.asset(
+          width: 57,
+          'assets/icon/boarding_complete.png',
+        ),
+      );
+    } else {
+      return Container(padding: EdgeInsets.fromLTRB(15.w, 0.h, 0.w, 0.h));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -47,316 +64,147 @@ class TimelineDetailScreen extends StatelessWidget {
                                   height: 65.h,
                                   color: colorScheme.primary,
                                   child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                    crossAxisAlignment: CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
-                                        // TODO: ㅇㅇㅇ 이름으로 바꾸기
-                                        // snapshot.data!.postType == 1 ? '택시' : '카풀',
-                                        'OOO님의 카풀',
+                                        '${snapshot.data!.joiners![0].memberName}님의 ${postTypeToString(snapshot.data!.postType)}',
                                         style: textTheme.headline3?.copyWith(
                                           color: colorScheme.onTertiary,
                                         ),
                                       ),
-                                      SizedBox(
-                                        width: 15.w,
-                                      ),
-                                      // TODO: image 계산/탑승 완료일 때 띄우기
-                                      Image.asset(
-                                        width: 57,
-                                        'assets/icon/boarding_complete.png',
-                                      ),
+                                      insertBordingCompleteIcon(snapshot.data!.deptTime),
                                     ],
                                   ),
                                 ),
-                                SizedBox(
-                                  height: 12.h,
-                                ),
+                                SizedBox(height: 8.h),
                                 Container(
-                                  padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 16.h),
-                                  height: 110.h,
-                                  color: colorScheme.primary,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.center,
+                                  height: 500.h,
+                                  decoration: BoxDecoration(color: colorScheme.primary),
+                                  child: ListView(
                                     children: [
-                                      Text(
-                                        '출발일자',
-                                        style: textTheme.subtitle2?.copyWith(
-                                          color: colorScheme.onTertiary,
+                                      Container(
+                                        padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 16.h),
+                                        height: 110.h,
+                                        color: colorScheme.primary,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Text(
+                                              '출발일자/시간',
+                                              style: textTheme.subtitle2?.copyWith(
+                                                color: colorScheme.onTertiary,
+                                              ),
+                                            ),
+                                            SizedBox(height: 20.h),
+                                            Row(
+                                              children: [
+                                                Text(
+                                                  // TODO: 날짜 정보 띄우기
+                                                  DateFormat('yyyy년 MM월 dd일 (E) HH:mm').format(DateTime.parse(snapshot.data!.deptTime!)),
+                                                  style: textTheme.bodyText1?.copyWith(
+                                                    color: colorScheme.onTertiary,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
                                         ),
                                       ),
-                                      SizedBox(
-                                        height: 20.h,
+                                      Divider(
+                                        thickness: 8.h,
+                                        color: colorScheme.onBackground,
                                       ),
-                                      Row(
-                                        children: [
-                                          Text(
-                                            // TODO: 날짜 정보 띄우기
-                                            '2023년 00월 00일 (토)',
-                                            style: textTheme.bodyText1?.copyWith(
-                                              color: colorScheme.onTertiary,
+                                      Container(
+                                        padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 16.h),
+                                        height: 140.h,
+                                        color: colorScheme.primary,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              '출발/목적지',
+                                              style: textTheme.subtitle2?.copyWith(
+                                                color: colorScheme.onTertiary,
+                                              ),
                                             ),
-                                          ),
-                                        ],
+                                            SizedBox(
+                                              height: 20.h,
+                                            ),
+                                            Row(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children: [
+                                                Image.asset(
+                                                  width: 18,
+                                                  'assets/icon/location.png',
+                                                ),
+                                                SizedBox(
+                                                  width: 5.w,
+                                                ),
+                                                Text(
+                                                  '${snapshot.data!.departure?.name}',
+                                                  style: textTheme.bodyText1?.copyWith(
+                                                    color: colorScheme.onTertiary,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                            SizedBox(
+                                              height: 20.h,
+                                            ),
+                                            Row(
+                                              crossAxisAlignment: CrossAxisAlignment.center,
+                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              children: [
+                                                Image.asset(
+                                                  width: 18,
+                                                  'assets/icon/location.png',
+                                                ),
+                                                SizedBox(
+                                                  width: 5.w,
+                                                ),
+                                                Text(
+                                                  '${snapshot.data!.destination?.name}',
+                                                  style: textTheme.bodyText1?.copyWith(
+                                                    color: colorScheme.onTertiary,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                      Divider(
+                                        thickness: 8.h,
+                                        color: colorScheme.onBackground,
+                                      ),
+                                      Container(
+                                        padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 24.h),
+                                        color: colorScheme.primary,
+                                        child: Column(
+                                          crossAxisAlignment: CrossAxisAlignment.start,
+                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          children: [
+                                            Text(
+                                              '탑승 인원',
+                                              style: textTheme.subtitle2?.copyWith(
+                                                color: colorScheme.onTertiary,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              height: 16.h,
+                                            ),
+                                            for (int i = 0; i < snapshot.data!.joiners!.length; i++) passengerListTile(context: context, joiner: snapshot.data!.joiners![i]),
+                                            SizedBox(
+                                              height: 20.h,
+                                            ),
+                                          ],
+                                        ),
                                       ),
                                     ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 2.h,
-                                ),
-                                Container(
-                                  padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 16.h),
-                                  height: 140.h,
-                                  color: colorScheme.primary,
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        '출발/목적지',
-                                        style: textTheme.subtitle2?.copyWith(
-                                          color: colorScheme.onTertiary,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 20.h,
-                                      ),
-                                      Row(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        children: [
-                                          Image.asset(
-                                            width: 18,
-                                            'assets/icon/location.png',
-                                          ),
-                                          SizedBox(
-                                            width: 5.w,
-                                          ),
-                                          Text(
-                                            // TODO: 장소 정보 띄우기
-                                            '포항고속버스터미널',
-                                            style: textTheme.bodyText1?.copyWith(
-                                              color: colorScheme.onTertiary,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      SizedBox(
-                                        height: 20.h,
-                                      ),
-                                      Row(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        children: [
-                                          Image.asset(
-                                            width: 18,
-                                            'assets/icon/location.png',
-                                          ),
-                                          SizedBox(
-                                            width: 5.w,
-                                          ),
-                                          Text(
-                                            // TODO: 장소 정보 띄우기
-                                            '포항고속버스터미널',
-                                            style: textTheme.bodyText1?.copyWith(
-                                              color: colorScheme.onTertiary,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 2.h,
-                                ),
-                                SingleChildScrollView(
-                                  child: Container(
-                                    padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 16.h),
-                                    height: 240.h,
-                                    color: colorScheme.primary,
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          '탑승 인원',
-                                          style: textTheme.subtitle2?.copyWith(
-                                            color: colorScheme.onTertiary,
-                                          ),
-                                        ),
-                                        SizedBox(
-                                          height: 20.h,
-                                        ),
-                                        Row(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Image.asset(
-                                                  width: 39,
-                                                  'assets/icon/owner.png',
-                                                ),
-                                                SizedBox(
-                                                  width: 15.w,
-                                                ),
-                                                Text(
-                                                  // TODO: 인원 정보 띄우기
-                                                  '최영준',
-                                                  style: textTheme.bodyText1?.copyWith(
-                                                    color: colorScheme.onTertiary,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Image.asset(
-                                                  width: 24,
-                                                  'assets/icon/phone.png',
-                                                ),
-                                                SizedBox(
-                                                  width: 15.w,
-                                                ),
-                                                Image.asset(
-                                                  width: 24,
-                                                  'assets/icon/message.png',
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 20.h,
-                                        ),
-                                        Row(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Image.asset(
-                                                  width: 39,
-                                                  'assets/icon/not_owner.png',
-                                                ),
-                                                SizedBox(
-                                                  width: 15.w,
-                                                ),
-                                                Text(
-                                                  // TODO: 인원 정보 띄우기
-                                                  '최영준',
-                                                  style: textTheme.bodyText1?.copyWith(
-                                                    color: colorScheme.onTertiary,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Image.asset(
-                                                  width: 24,
-                                                  'assets/icon/phone.png',
-                                                ),
-                                                SizedBox(
-                                                  width: 15.w,
-                                                ),
-                                                Image.asset(
-                                                  width: 24,
-                                                  'assets/icon/message.png',
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 20.h,
-                                        ),
-                                        Row(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Image.asset(
-                                                  width: 39,
-                                                  'assets/icon/not_owner.png',
-                                                ),
-                                                SizedBox(
-                                                  width: 15.w,
-                                                ),
-                                                Text(
-                                                  // TODO: 인원 정보 띄우기
-                                                  '최영준',
-                                                  style: textTheme.bodyText1?.copyWith(
-                                                    color: colorScheme.onTertiary,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Image.asset(
-                                                  width: 24,
-                                                  'assets/icon/phone.png',
-                                                ),
-                                                SizedBox(
-                                                  width: 15.w,
-                                                ),
-                                                Image.asset(
-                                                  width: 24,
-                                                  'assets/icon/message.png',
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 20.h,
-                                        ),
-                                        Row(
-                                          crossAxisAlignment: CrossAxisAlignment.center,
-                                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                          children: [
-                                            Row(
-                                              children: [
-                                                Image.asset(
-                                                  width: 39,
-                                                  'assets/icon/not_owner.png',
-                                                ),
-                                                SizedBox(
-                                                  width: 15.w,
-                                                ),
-                                                Text(
-                                                  // TODO: 인원 정보 띄우기
-                                                  '최영준',
-                                                  style: textTheme.bodyText1?.copyWith(
-                                                    color: colorScheme.onTertiary,
-                                                  ),
-                                                ),
-                                              ],
-                                            ),
-                                            Row(
-                                              children: [
-                                                Image.asset(
-                                                  width: 24,
-                                                  'assets/icon/phone.png',
-                                                ),
-                                                SizedBox(
-                                                  width: 15.w,
-                                                ),
-                                                Image.asset(
-                                                  width: 24,
-                                                  'assets/icon/message.png',
-                                                ),
-                                              ],
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
                                   ),
                                 ),
                                 SizedBox(

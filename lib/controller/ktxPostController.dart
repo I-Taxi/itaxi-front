@@ -31,8 +31,7 @@ class KtxPostController extends GetxController {
   Future<void> getPosts(
       {int? depId,
       int? dstId,
-      required String time,
-      required int postType}) async {
+      required String time,}) async {
     posts = fetchPost(
       depId: depId,
       dstId: dstId,

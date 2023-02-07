@@ -10,13 +10,20 @@ import 'package:itaxi/controller/timelineTabViewController.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/timeline/historyListContainer.dart';
 import 'package:itaxi/timeline/timelineSoonInfoCard.dart';
-import 'package:itaxi/widget/afterTimelineListTile.dart'; //위에 import 한 것에 원본
 import 'package:itaxi/widget/postListTile.dart';
-import 'package:itaxi/widget/soonTimelineListTile.dart';
 
-class TimelineScreen extends StatelessWidget {
+class TimelineScreen extends StatefulWidget {
   const TimelineScreen({Key? key}) : super(key: key);
 
+  @override
+  State<TimelineScreen> createState() => _TimelineScreenState();
+}
+
+class _TimelineScreenState extends State<TimelineScreen> {
+  TimelineTabViewController _timelineTabViewController = Get.put(TimelineTabViewController());
+  HistoryController _historyController = Get.put(HistoryController());
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
+    
   int catchSoonIndex(List<Post>? posts) {
     int index = 0;
     for (int i = 0; i < posts!.length; i++) {
@@ -46,12 +53,8 @@ class TimelineScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    TimelineTabViewController _timelineTabViewController = Get.put(TimelineTabViewController());
-    HistoryController _historyController = Get.put(HistoryController());
-    final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    print(1);
 
     return Stack(children: [
       Container(

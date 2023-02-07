@@ -79,6 +79,8 @@ class ITaxiTheme {
     brightness: Brightness.light,
     onTertiary: Color(0XFF3E3E3E),
     inverseSurface: Color(0xff00CE21),
+
+    outline: Color(0xffc5e1fd),
     onSurfaceVariant: Color(0xFFE1E1E1),
     inversePrimary: Color(0xffB9B9B9),
     surfaceVariant: Color(0xffff8080)
