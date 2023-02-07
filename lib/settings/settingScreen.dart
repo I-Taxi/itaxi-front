@@ -18,6 +18,8 @@ import '../controller/navigationController.dart';
 import '../controller/userController.dart';
 import 'package:flutter/cupertino.dart';
 
+import 'package:itaxi/onBoardingScreen.dart';
+
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);
 
@@ -37,7 +39,6 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
     return Scaffold(
       appBar: AppBar(
         shadowColor: colorScheme.shadow,

@@ -69,21 +69,20 @@ class ITaxiTheme {
     error: Color(0xffb00020),
     onError: Colors.white,
     background: Color(0xFFFFFFFF),
-    onBackground: Color(0XFFF1F1F1),
+    onBackground: Color(0xFFF1F1F1),
     surface: Color(0xFFFFFFFF),
     onSurface: Colors.black,
     tertiary: Color(0xff919191),
     tertiaryContainer: Color(0xff717171),
     onTertiaryContainer: Color(0xFFFBFBFB),
     shadow: Color.fromRGBO(0, 0, 0, 0.15),
-
     brightness: Brightness.light,
     onTertiary: Color(0XFF3E3E3E),
     inverseSurface: Color(0xff00CE21),
 
     outline: Color(0xffc5e1fd),
     onSurfaceVariant: Color(0xFFE1E1E1),
-    
+    inversePrimary: Color(0xffB9B9B9),
     surfaceVariant: Color(0xffff8080)
   );
 
