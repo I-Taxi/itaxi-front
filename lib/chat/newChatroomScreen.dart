@@ -98,7 +98,7 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                   child: Row(
                     children: [
                       Text(
-                        "${AbbreviatePlaceName(_chatRoomController.post.departure!.name)}-${AbbreviatePlaceName(_chatRoomController.post.destination!.name)} #${DateFormat('Md').format(DateTime.parse(time))}",
+                        "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} #${DateFormat('Md').format(DateTime.parse(time))}",
                         style: textTheme.subtitle1?.copyWith(
                           color: colorScheme.primary,
                         ),
@@ -298,7 +298,7 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                                 ),
                                 Flexible(
                                   child: Text(
-                                    "${AbbreviatePlaceName(_chatRoomController.post.departure!.name)}-${AbbreviatePlaceName(_chatRoomController.post.destination!.name)} (${DateFormat('Md').format(DateTime.parse(time))})",
+                                    "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} (${DateFormat('Md').format(DateTime.parse(time))})",
                                     style: textTheme.subtitle1?.copyWith(
                                       color: colorScheme.onTertiary,
                                     ),

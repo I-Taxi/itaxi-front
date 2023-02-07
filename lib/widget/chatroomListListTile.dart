@@ -59,7 +59,7 @@ Widget chatroomListListTile(
                         children: [
                           Flexible(
                             child: Text(
-                              "${AbbreviatePlaceName(post.departure!.name)}-${AbbreviatePlaceName(post.destination!.name)}(${DateFormat('Md').format(DateTime.parse(time))})",
+                              "${abbreviatePlaceName(post.departure!.name)}-${abbreviatePlaceName(post.destination!.name)}(${DateFormat('Md').format(DateTime.parse(time))})",
                               style: textTheme.subtitle2?.copyWith(
                                 color: colorScheme.onTertiary,
                               ),
