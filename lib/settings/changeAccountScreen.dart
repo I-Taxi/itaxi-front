@@ -60,10 +60,7 @@ class _ChangeAccountScreenState extends State<ChangeAccountScreen> {
           child: Form(
             key: _formKey,
             child: Padding(
-              padding: EdgeInsets.symmetric(
-                vertical: 12.0.h,
-                horizontal: 24.0.w,
-              ),
+              padding: EdgeInsets.fromLTRB(24.w, 12.h, 24.w, 0),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
@@ -73,9 +70,9 @@ class _ChangeAccountScreenState extends State<ChangeAccountScreen> {
                   SizedBox(
                     height: 52.0.h,
                   ),
-                  // 이메일 입력
+                  //계좌 번호 입력
                   TextFormField(
-                    controller: _bankController,
+                    controller: _bankAddressController,
                     autocorrect: false,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: InputDecoration(
@@ -100,12 +97,12 @@ class _ChangeAccountScreenState extends State<ChangeAccountScreen> {
                       _userController.bank = _bankController.text;
                       if(value.length > 0){
                         setState(() {
-                          isBankEmpty = false;
+                          isBankAddressEmpty = false;
                         });
                       }
                       else{
                         setState(() {
-                          isBankEmpty = true;
+                          isBankAddressEmpty = true;
                         });
                       }
                     },
@@ -119,8 +116,9 @@ class _ChangeAccountScreenState extends State<ChangeAccountScreen> {
                   SizedBox(
                     height: 33.h,
                   ),
+                  //계좌 은행 입력
                   TextFormField(
-                    controller: _bankAddressController,
+                    controller: _bankController,
                     autocorrect: false,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: InputDecoration(
@@ -145,12 +143,12 @@ class _ChangeAccountScreenState extends State<ChangeAccountScreen> {
                       _userController.bankAddress = _bankAddressController.text;
                       if(value.length > 0){
                         setState(() {
-                          isBankAddressEmpty = false;
+                          isBankEmpty = false;
                         });
                       }
                       else{
                         setState(() {
-                          isBankAddressEmpty = true;
+                          isBankEmpty = true;
                         });
                       }
                     },
@@ -164,6 +162,7 @@ class _ChangeAccountScreenState extends State<ChangeAccountScreen> {
                   SizedBox(
                     height: 33.h,
                   ),
+                  //예금주 입력
                   TextFormField(
                     controller: _bankOwnerNameController,
                     autocorrect: false,
@@ -205,9 +204,6 @@ class _ChangeAccountScreenState extends State<ChangeAccountScreen> {
                       return null;
                     },
                   ),
-                  SizedBox(
-                    height: 59.0.h,
-                  ),
                 ],
               ),
             ),
@@ -248,11 +244,14 @@ class _ChangeAccountScreenState extends State<ChangeAccountScreen> {
     );
   }
 
+  //위젯화 하고 싶지만, bool값이 widget 안에서 변하면 버튼 색깔을 바꾸게 하지 못해 보류함.
+
   // Widget _accountInfo({
   //   required String hintTitle,
   //   required String errorTitle,
   //   required controller,
   //   required BuildContext context,
+  //   required bool boolVar
   // }) {
   //   final colorScheme = Theme.of(context).colorScheme;
   //   final textTheme = Theme.of(context).textTheme;
@@ -281,7 +280,17 @@ class _ChangeAccountScreenState extends State<ChangeAccountScreen> {
   //           ),
   //         ),
   //         onChanged: (value) {
-  //
+  //           if(value.length > 0){
+  //             setState(() {
+  //               boolVar = false;
+  //             });
+  //           }
+  //           else {
+  //             setState(() {
+  //               boolVar = true;
+  //             });
+  //           }
+  //           print(boolVar);
   //         },
   //         validator: (value) {
   //           if (value!.isEmpty)
