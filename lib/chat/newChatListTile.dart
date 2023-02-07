@@ -69,10 +69,12 @@ Widget newChatListTile(
                         bottomLeft: Radius.circular(12),
                         bottomRight: Radius.circular(12)),
                   ),
-                  child: SelectableText(
-                    chat.chatData!,
-                    style: textTheme.bodyText1
-                        ?.copyWith(color: colorScheme.primary),
+                  child: Flexible(
+                    child: SelectableText(
+                      chat.chatData!,
+                      style: textTheme.bodyText1
+                          ?.copyWith(color: colorScheme.primary),
+                    ),
                   ),
                 ),
               ],
