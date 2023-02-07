@@ -44,19 +44,12 @@ class _SplashScreenState extends State<SplashScreen> {
                 height: 220.h,
               ),
               Image.asset(
-                width: 80.0.w,
-                height: 54.h,
-                'assets/logo_1.png',
+                width: 110.0.w,
+                height: 122.h,
+                'assets/logo_text.png',
               ),
               SizedBox(
-                height: 16.h,
-              ),
-              Text(
-                'iTaxi',
-                style: textTheme.headline1?.copyWith(color: colorScheme.primary),
-              ),
-              SizedBox(
-                height: 58.h,
+                height: 48.h,
               ),
               Text(
                 '한동이들의 No.1 교통 어플리케이션',

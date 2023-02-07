@@ -121,6 +121,7 @@ flutter:
     # arrow
     - assets/arrow/arrow.png
     - assets/arrow/arrow_back.png
+    - assets/arrow/arrow_back_1.png
     - assets/arrow/arrow_down_1.png
     - assets/arrow/arrow_down_2.png
 
