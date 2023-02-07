@@ -143,6 +143,7 @@ flutter:
     - assets/place/departure.png
     - assets/place/destination.png
     - assets/place/dep-dest.png
+    - assets/place/dep-stop-dest.png
 
     # type
     - assets/type/car_1.png
@@ -177,6 +178,7 @@ flutter:
     - assets/button/contact.png
     - assets/first_chat.png
     - assets/logout.png
+    - assets/subtract_place.png
 
     # icon
     - assets/icon/boarding_complete.png

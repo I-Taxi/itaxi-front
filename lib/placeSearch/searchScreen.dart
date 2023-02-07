@@ -25,6 +25,8 @@ class _SearchScreenState extends State<SearchScreen> {
   late List<Place> places;
   late List<Place> suggestions;
 
+  List<String> depDstString = ['출발지', '도착지', '경유지'];
+
   // final List<String> st_dest = ["출발지", "도착지"];
   // int i = 0; //출발지, 도착지 판단.
 
@@ -39,8 +41,7 @@ class _SearchScreenState extends State<SearchScreen> {
   @override
   void initState() {
     super.initState();
-    depOrDst = _placeSearchController.depOrDst == 0 ? '출발지' : '도착지';
-    print(_placeSearchController.depOrDst);
+    depOrDst = depDstString[_placeSearchController.depOrDst];
     places = _placeSearchController.places;
     suggestions = _placeSearchController.suggestions;
   }
@@ -94,7 +95,7 @@ class _SearchScreenState extends State<SearchScreen> {
                         _placeSearchController.changeSearchQuery('');
                         Get.back();
                       }
-                    } else {
+                    } else if (_placeSearchController.depOrDst == 1) {
                       if (_placeSearchController.selectedPlace == null ||
                           _placeController.dep != null &&
                               _placeSearchController.selectedPlace!.name ==
@@ -106,6 +107,25 @@ class _SearchScreenState extends State<SearchScreen> {
                             color: colorScheme.error);
                       } else {
                         _placeController.selectDst(
+                            place: _placeSearchController.selectedPlace!);
+                        _placeSearchController.selectedIndex = -1;
+                        _placeSearchController.changeSearchQuery('');
+                        Get.back();
+                      }
+                    } else {
+                      if (_placeSearchController.selectedPlace == null ||
+                          _placeController.dep != null &&
+                              _placeSearchController.selectedPlace!.name ==
+                                  _placeController.dep!.name &&
+                              _placeSearchController.selectedPlace!.name ==
+                                  _placeController.dst!.name) {
+                        // [TODO]: 출발지 도착지 같을때 띄우는거
+                        placeSearchSnackBar(
+                            context: context,
+                            title: const Text('경유지를 다시 선택해주세요.'),
+                            color: colorScheme.error);
+                      } else {
+                        _placeController.addStopOver(
                             place: _placeSearchController.selectedPlace!);
                         _placeSearchController.selectedIndex = -1;
                         _placeSearchController.changeSearchQuery('');
