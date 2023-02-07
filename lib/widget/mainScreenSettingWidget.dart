@@ -328,13 +328,13 @@ Padding gatherSetDepDstStopOverWidget(
                     child: !(_placeController.stopOver.isNotEmpty)
                         ? Text(
                             "경유지 입력",
-                            style: textTheme.subtitle2
-                                ?.copyWith(color: colorScheme.onTertiary),
+                            style: textTheme.bodyText1
+                                ?.copyWith(color: colorScheme.tertiary),
                           )
                         : Text(
                             _placeController.printStopOvers(),
-                            style: textTheme.subtitle2
-                                ?.copyWith(color: colorScheme.onTertiary),
+                            style: textTheme.bodyText1
+                                ?.copyWith(color: colorScheme.tertiary),
                           ),
                   );
                 }),
