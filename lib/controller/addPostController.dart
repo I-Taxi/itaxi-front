@@ -12,6 +12,7 @@ class AddPostController extends GetxController {
   late HistoryController _historyController = Get.put(HistoryController());
   int capacity = 1;
   int luggage = 0;
+  bool loaded = true;
 
   void increaseCapacity(int capacity) {
     this.capacity = capacity++;
@@ -29,11 +30,12 @@ class AddPostController extends GetxController {
   }
 
   Future<int> fetchAddPost({required Post post}) async {
+    loaded = false;
+    update();
     var addPostUrl = dotenv.env['API_URL'].toString();
     addPostUrl = '${addPostUrl}post';
 
     var body = utf8.encode(json.encode(post.toAddPostMap()));
-    print(post.toAddPostMap());
 
     http.Response response = await http.post(
       Uri.parse(addPostUrl),
@@ -44,13 +46,16 @@ class AddPostController extends GetxController {
     );
 
     if (response.statusCode == 200) {
-      Post result = Post.fromDocs(json.decode(utf8.decode(response.bodyBytes)));
-      post = post.copyWith(id: result.id);
-      
+      Post result = Post.fromPostAllDocs(json.decode(utf8.decode(response.bodyBytes)));
+      post = post.copyWith(id: result.id, joiners: result.joiners);
       await ChatRepository().setPost(post: post);
       await _historyController.getHistorys();
+      loaded = true;
+      update();
       return response.statusCode;
     } else {
+      loaded = true;
+      update();
       print(response.statusCode);
       print(response.body);
       throw Exception('Failed to add posts');

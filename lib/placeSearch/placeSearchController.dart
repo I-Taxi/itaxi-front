@@ -163,16 +163,6 @@ class PlaceSearchController extends GetxController {
     update();
   }
 
-  void setDeparture() {
-    _placeController.dep = selectedPlace;
-    update();
-  }
-
-  void setDestination() {
-    _placeController.dst = selectedPlace;
-    update();
-  }
-
   Future<void> selectDate(BuildContext context) async {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;
@@ -212,13 +202,11 @@ class PlaceSearchController extends GetxController {
             ),
             child: child!,
           );
-        }
-    );
+        });
 
     if (selectedDate != null) {
       _pickedDate = selectedDate;
       update();
-
     }
   }
 
@@ -286,7 +274,7 @@ class PlaceSearchController extends GetxController {
 
     http.Response response = await http.post(
       Uri.parse(favorPlaceUrl),
-      headers: <String, String> {
+      headers: <String, String>{
         "Content-type": "application/json",
       },
       body: body,
@@ -299,10 +287,8 @@ class PlaceSearchController extends GetxController {
 
     final responseBody = json.decode(utf8.decode(response.bodyBytes));
     if (responseBody["message"] == "이미 즐겨찾기로 등록된 장소입니다.") {
-
       return 1;
-    }
-    else {
+    } else {
       print(response.statusCode);
       print(response.body);
       throw Exception('Failed to Add Favorite Place');
@@ -333,8 +319,7 @@ class PlaceSearchController extends GetxController {
       });
 
       update();
-    }
-    else {
+    } else {
       print(response.statusCode);
       print(response.body);
       throw Exception('Failed to Fetch Favorite Place');
@@ -357,8 +342,7 @@ class PlaceSearchController extends GetxController {
     if (response.statusCode == 200) {
       await fetchFavoritePlace();
       return 0;
-    }
-    else {
+    } else {
       print(response.statusCode);
       print(response.body);
       throw Exception('Failed to Fetch Favorite Place');

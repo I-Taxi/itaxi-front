@@ -39,6 +39,7 @@ class SignUpController extends GetxController {
   }
 
   void encryptUser(Login login) {
+    print(login);
     login.phone = encrypter.encrypt(login.phone!, iv: iv).base64;
     login.bank = encrypter.encrypt(login.bank!, iv: iv).base64;
     login.bankAddress = encrypter.encrypt(login.bankAddress!, iv: iv).base64;
@@ -63,6 +64,7 @@ class SignUpController extends GetxController {
         body: body);
 
     if (response.statusCode == 200) {
+      print(response);
       return response;
     } else {
       print(response.statusCode);
@@ -76,7 +78,6 @@ class SignUpController extends GetxController {
     // print(FirebaseAuth.instance.currentUser!.displayName.toString());
     customId = "${customId}@handong.ac.kr";
     try {
-      print(customId);
       await FirebaseAuth.instance
           .createUserWithEmailAndPassword(email: customId, password: customPw);
       FirebaseAuth.instance.currentUser?.sendEmailVerification();
@@ -90,7 +91,6 @@ class SignUpController extends GetxController {
         bankOwner: "2",
       );
       encryptUser(login);
-      print(customId);
       await fetchAddUser(login: login);
       // Get.to(const SignInScreen());
     } on FirebaseAuthException catch (e) {

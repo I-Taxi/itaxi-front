@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
+import 'package:itaxi/model/userInfoList.dart';
 import 'package:itaxi/settings/privacyPolicyScreen.dart';
 import 'package:itaxi/settings/termOfServiceScreen.dart';
 import 'package:itaxi/settings/versionScreen.dart';
@@ -35,7 +36,7 @@ class SettingScreen extends StatefulWidget {
 class _SettingScreenState extends State<SettingScreen> {
   final SignInController _signInController = Get.find();
   final NavigationController _navController = Get.put(NavigationController());
-  final UserController _userController = Get.put(UserController());
+  final UserController _userController = Get.find();
 
   bool alarm = false;
 
@@ -62,141 +63,146 @@ class _SettingScreenState extends State<SettingScreen> {
   Widget _myListView({required BuildContext context}) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Image(
-          image: AssetImage("assets/profile.png"),
-          height: 88.w,
-          width: 88.w,
-        ),
-        SizedBox(
-          height: 16.h,
-        ),
-        Row(
-          children: [
-            RichText(
-              text: TextSpan(
-                  text: "OOO학부생\n", //"${snapshot.data!.name.toString()}학부생",
-                  style: textTheme.headline3?.copyWith(
-                    color: colorScheme.onPrimary,
-                  ),
-                  children: <TextSpan>[
-                    TextSpan(
-                      text: "handongin@handong.ac.kr", //snapshot.data!.email.toString(),
-                      style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiaryContainer),
-                    )
-                  ]),
-            ),
-            Spacer(),
-            IconButton(
-              onPressed: () {
-                Get.to(MyInfoScreen());
-              },
-              icon: Icon(
-                Icons.arrow_forward_ios,
-                size: 20.h,
-              ),
-              color: colorScheme.tertiaryContainer,
-            ),
-          ],
-        ),
-        SizedBox(
-          height: 15.h,
-        ),
-        Container(
-          height: 1.5.h,
-          width: 390.w,
-          color: Color(0xE1E1E1E1),
-        ),
-        SizedBox(
-          height: 23.h,
-        ),
-        _settingListTile(
-          title: '공지사항',
-          nextPage: NoticeScreen(),
-          context: context,
-        ),
-        SizedBox(
-          height: 22.h,
-        ),
-        _alarmListTile(
-          title: '알림',
-          nextPage: const AlarmScreen(),
-          context: context,
-        ),
-        SizedBox(
-          height: 22.h,
-        ),
-        _settingListTile(
-          title: '버그제보',
-          nextPage: BugScreen(),
-          context: context,
-        ),
-        SizedBox(
-          height: 22.h,
-        ),
-        _settingListTile(
-          title: '약관',
-          nextPage: const TermOfServiceScreen(),
-          context: context,
-        ),
-        SizedBox(
-          height: 22.h,
-        ),
-        _settingListTile(
-          title: '버전정보/개발자',
-          nextPage: const VersionScreen(),
-          context: context,
-        ),
-        SizedBox(
-          height: 22.h,
-        ),
-        _settingListTile(
-          title: '개인정보처리방침',
-          nextPage: const PrivacyPolicyScreen(),
-          context: context,
-        ),
-        SizedBox(
-          height: 200.h,
-        ),
-        Row(
-          children: [
-            Text(
-              "Created by CRA",
-              style: textTheme.bodyText2?.copyWith(
-                color: colorScheme.tertiaryContainer,
-              ),
-            ),
-            Spacer(),
-            IconButton(
-              onPressed: () {
-                setState(() {
-                  _logout;
-                });
-              },
-              icon: Icon(Icons.logout),
-              color: colorScheme.tertiary,
-            ),
-            GestureDetector(
-              onTap: () {
-                setState(() {
-                  _logout;
-                });
-              },
-              child: Text(
-                "로그아웃",
-                style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiaryContainer
+    return GetBuilder<UserController>(
+      builder: (_) {
+        return FutureBuilder<UserInfoList>(
+          future: _userController.users,
+          builder: (BuildContext context, snapshot) {
+            return Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Image(
+                  image: AssetImage("assets/profile.png"),
+                  height: 88.w,
+                  width: 88.w,
                 ),
-              ),
-            )
-          ],
-        )
-      ],
+                SizedBox(
+                  height: 16.h,
+                ),
+                Row(
+                  children: [
+                    RichText(
+                      text: TextSpan(
+                          text: "${snapshot.data!.name.toString()}학부생\n",
+                          style: textTheme.headline3?.copyWith(
+                            color: colorScheme.onPrimary,
+                          ),
+                          children: <TextSpan>[
+                            TextSpan(
+                              text: snapshot.data!.email.toString(),
+                              style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiaryContainer, fontSize: 10),
+                            )
+                          ]),
+                    ),
+                    Spacer(),
+                    IconButton(
+                      onPressed: () {
+                        Get.to(MyInfoScreen());
+                      },
+                      icon: Icon(
+                        Icons.arrow_forward_ios,
+                        size: 20.h,
+                      ),
+                      color: colorScheme.tertiaryContainer,
+                    ),
+                  ],
+                ),
+                SizedBox(
+                  height: 15.h,
+                ),
+                Container(
+                  height: 1.5.h,
+                  width: 390.w,
+                  color: Color(0xE1E1E1E1),
+                ),
+                SizedBox(
+                  height: 23.h,
+                ),
+                _settingListTile(
+                  title: '공지사항',
+                  nextPage: NoticeScreen(),
+                  context: context,
+                ),
+                SizedBox(
+                  height: 22.h,
+                ),
+                _alarmListTile(
+                  title: '알림',
+                  nextPage: const AlarmScreen(),
+                  context: context,
+                ),
+                SizedBox(
+                  height: 22.h,
+                ),
+                _settingListTile(
+                  title: '버그제보',
+                  nextPage: BugScreen(),
+                  context: context,
+                ),
+                SizedBox(
+                  height: 22.h,
+                ),
+                _settingListTile(
+                  title: '약관',
+                  nextPage: const TermOfServiceScreen(),
+                  context: context,
+                ),
+                SizedBox(
+                  height: 22.h,
+                ),
+                _settingListTile(
+                  title: '버전정보 / 개발자',
+                  nextPage: const VersionScreen(),
+                  context: context,
+                ),
+                SizedBox(
+                  height: 22.h,
+                ),
+                _settingListTile(
+                  title: '개인정보처리방침',
+                  nextPage: const PrivacyPolicyScreen(),
+                  context: context,
+                ),
+                SizedBox(
+                  height: 200.h,
+                ),
+                Row(
+                  children: [
+                    Text(
+                      "Created by CRA",
+                      style: textTheme.bodyText2?.copyWith(
+                        color: colorScheme.tertiary,
+                      ),
+                    ),
+                    Spacer(),
+                    IconButton(
+                      onPressed: () {
+                        _logout(context: context);
+                      },
+                      icon: Image.asset("assets/logout.png"),
+                      color: colorScheme.tertiary,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        _logout(context: context);
+                      },
+                      child: Text(
+                        "로그아웃",
+                        style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiary
+                        ),
+                      ),
+                    )
+                  ],
+                )
+              ],
+            );
+          }
+        );
+      }
     );
   }
 
-  // 알람 타일
+  // 알림 타일
   Widget _alarmListTile({
     required String title,
     required nextPage,
@@ -205,6 +211,7 @@ class _SettingScreenState extends State<SettingScreen> {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     return Row(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: [
         GestureDetector(
           onTap: () {
@@ -214,22 +221,39 @@ class _SettingScreenState extends State<SettingScreen> {
             title,
             textAlign: TextAlign.start,
             style: textTheme.subtitle1?.copyWith(
-                color: colorScheme.onPrimary),
+                color: colorScheme.onTertiary),
           ),
         ),
         Spacer(),
-        Transform.scale(
-          scale: 0.6,
-          child: CupertinoSwitch(
-              value: alarm,
-              activeColor: Color(0xff00CE21),
-              thumbColor: colorScheme.primary,
-              onChanged: (bool value) {
-                setState(() {
-                  alarm = value;
-                });
-              }),
+        Container(
+          height: 17.h,
+          width: 34.w,
+          child: FittedBox(
+            fit: BoxFit.contain,
+            child: CupertinoSwitch(
+                value: alarm,
+                activeColor: colorScheme.inverseSurface,
+                thumbColor: colorScheme.primary,
+                trackColor: colorScheme.tertiary,
+                onChanged: (bool value) {
+                  setState(() {
+                    alarm = value;
+                  });
+                }),
+          ),
         )
+        // Transform.scale(
+        //   scale: 1.0,
+        //   child: CupertinoSwitch(
+        //       value: alarm,
+        //       activeColor: Color(0xff00CE21),
+        //       thumbColor: colorScheme.primary,
+        //       onChanged: (bool value) {
+        //         setState(() {
+        //           alarm = value;
+        //         });
+        //       }),
+        // )
       ],
     );
   }
@@ -248,7 +272,7 @@ class _SettingScreenState extends State<SettingScreen> {
       child: Text(
         title,
         textAlign: TextAlign.start,
-        style: textTheme.subtitle1?.copyWith(color: colorScheme.onPrimary),
+        style: textTheme.subtitle1?.copyWith(color: colorScheme.onTertiary),
       ),
     );
   }
@@ -269,15 +293,15 @@ class _SettingScreenState extends State<SettingScreen> {
               height: 240.h,
               padding: EdgeInsets.fromLTRB(
                 36.0.w,
-                24.0.h,
+                50.0.h,
                 36.0.w,
-                24.0.h,
+                50.0.h,
               ),
               child: Column(
                 children: [
                   Text(
                     "로그아웃 하시겠습니까?",
-                    style: textTheme.subtitle1?.copyWith(color: colorScheme.secondary),
+                    style: textTheme.subtitle1?.copyWith(color: colorScheme.onSecondaryContainer),
                   ),
                   const Spacer(),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
@@ -286,7 +310,7 @@ class _SettingScreenState extends State<SettingScreen> {
                         child: Text(
                           "취소",
                           style: textTheme.subtitle1?.copyWith(
-                            color: colorScheme.tertiary,
+                            color: colorScheme.tertiaryContainer,
                           ),
                         )),
                     SizedBox(
@@ -297,13 +321,14 @@ class _SettingScreenState extends State<SettingScreen> {
                           await SettingScreen.storage.delete(key: "login");
                           _signInController.reset();
                           _signInController.signedOutState();
-                          _navController.changeIndex(1);
+                          _navController.changeIndex(0);
+                          Navigator.pop(context);
                           Navigator.pop(context);
                         },
                         child: Text(
                           "확인",
                           style: textTheme.subtitle1?.copyWith(
-                            color: colorScheme.secondary,
+                            color: colorScheme.onSecondaryContainer,
                           ),
                         )),
                   ])
@@ -335,76 +360,4 @@ class _SettingScreenState extends State<SettingScreen> {
   //     },
   //   );
   // }
-
-  // 현재 모집중이거나 입장한 방이 있을 경우 dialog
-  void deletedUserDialog(BuildContext context, String? title, String? content) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-
-    showDialog(
-        context: context,
-        builder: (BuildContext context) {
-          return Dialog(
-            elevation: 0,
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(4.0),
-            ),
-            child: Container(
-              width: 360.w,
-              height: 240.h,
-              alignment: Alignment.center,
-              padding: EdgeInsets.fromLTRB(
-                28.0.w,
-                32.0.h,
-                28.0.w,
-                12.0.h,
-              ),
-              child: Column(
-                children: <Widget>[
-                  Text(
-                    title as String,
-                    style: textTheme.subtitle1?.copyWith(
-                      color: colorScheme.secondary,
-                    ),
-                  ),
-                  SizedBox(
-                    height: 16.h,
-                  ),
-                  Text(
-                    content as String,
-                    style: textTheme.bodyText1?.copyWith(
-                      color: colorScheme.onPrimary,
-                    ),
-                  ),
-                  const Spacer(),
-                  TextButton(
-                    onPressed: () async {
-                      Get.back();
-                      print("체크1");
-                      print(_userController.isDeleted);
-                      await _userController.fetchDeleteUsers();
-                      print(_userController.isDeleted);
-                      if (_userController.isDeleted == 1) {
-                        _signInController.deleteUser();
-                        await SettingScreen.storage.delete(key: "login");
-                        _signInController.reset();
-                        _navController.changeIndex(1);
-                      } else {
-                        Get.back();
-                        mainDialog(context, '회원탈퇴',
-                            '현재 모집중이거나 입장하신 방이 있습니다. 해당 방을 나가신 후 다시 시도해주세요.');
-                      }
-                    },
-                    child: Text(
-                      "확인",
-                      style: textTheme.subtitle1
-                          ?.copyWith(color: colorScheme.tertiary),
-                    ),
-                  ),
-                ],
-              ),
-            ),
-          );
-        });
-  }
 }

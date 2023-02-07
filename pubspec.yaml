@@ -116,6 +116,7 @@ flutter:
     - assets/button/phone.png
     - assets/button/add_timeline.png
     - assets/button/contact.png
+    - assets/button/go_descript.png
     - assets/button/new_message.png
     - assets/button/send.png
     - assets/button/message.png
@@ -145,6 +146,7 @@ flutter:
     - assets/place/departure.png
     - assets/place/destination.png
     - assets/place/dep-dest.png
+    - assets/place/dep-stop-dest.png
 
     # type
     - assets/type/car_1.png
@@ -170,11 +172,14 @@ flutter:
     - assets/delStopover.png
     - assets/car_new.png
     - assets/profile.png
+    - assets/profile_camera.png
     - assets/change_profile.png
     - assets/background.png
     - assets/banner.png
-    - assets/contact.png
+    - assets/button/contact.png
     - assets/first_chat.png
+    - assets/logout.png
+    - assets/subtract_place.png
 
     # icon
     - assets/icon/boarding_complete.png
@@ -183,9 +188,18 @@ flutter:
     - assets/icon/not_owner.png
     - assets/icon/owner.png
     - assets/icon/phone.png
+    - assets/icon/calendar.png
+    - assets/icon/logo_type.png
+    - assets/icon/person.png
+    - assets/icon/car_gray.png
+    - assets/icon/ktx_gray.png
+    - assets/icon/notice_info.png
     - assets/icon/icon-LogOut.png
     - assets/icon/icon-Car.png
     - assets/icon/icon-KTX.png
+
+    # background
+    - assets/background/timeline_bg.png
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

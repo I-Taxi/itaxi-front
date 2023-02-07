@@ -1,9 +1,22 @@
 import 'package:get/get.dart';
 
 class ScreenController extends GetxController {
+  bool mainScreenLoaded = false;
+  bool hasNotice = false;
   int currentTabIndex = 0;
   int currentToggle = 0;
   int stopOver = 0;
+  int capacity = 2;
+
+  void toggleHasNotice() {
+    hasNotice = !hasNotice;
+    update();
+  }
+
+  void setMainScreenLoaded() {
+    mainScreenLoaded = true;
+    update();
+  }
 
   void changeTabIndex(int index) {
     currentTabIndex = index;
@@ -18,5 +31,19 @@ class ScreenController extends GetxController {
   void changeStopOver(int index) {
     stopOver = index;
     update();
+  }
+
+  void addCapacity() {
+    if (capacity < 4) {
+      capacity++;
+      update();
+    }
+  }
+
+  void subtractCapacity() {
+    if (capacity > 2) {
+      capacity--;
+      update();
+    }
   }
 }

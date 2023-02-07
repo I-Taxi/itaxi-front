@@ -1,7 +1,6 @@
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:itaxi/gatherScreen.dart';
 import 'package:itaxi/timeline/checkPlaceScreen.dart';
 import 'package:itaxi/settings/settingScreen.dart';
 import 'package:toggle_switch/toggle_switch.dart';
@@ -21,7 +20,8 @@ import 'package:itaxi/controller/userController.dart';
 
 import 'package:itaxi/placeSearch/searchScreen.dart';
 import 'package:itaxi/placeSearch/placeSearchController.dart';
-import 'package:itaxi/gatherScreen.dart';
+import 'package:itaxi/widget/postTypeToggleButton.dart';
+import 'package:itaxi/widget/mainScreenSettingWidget.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({Key? key}) : super(key: key);
@@ -38,7 +38,8 @@ class _MainScreenState extends State<MainScreen> {
   DateController _dateController = Get.put(DateController());
   UserController _userController = Get.put(UserController());
   late PlaceSearchController _placeSearchController;
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
   String e = ""; // 요일 변수
   int personCount = 1; // 인원수
 
@@ -54,7 +55,10 @@ class _MainScreenState extends State<MainScreen> {
       ),
       postType: _screenController.currentTabIndex,
     );
-    _placeController.getPlaces().then((_) => _placeSearchController = Get.put(PlaceSearchController()));
+    _placeController.getPlaces().then((_) {
+      _placeSearchController = Get.put(PlaceSearchController());
+      _screenController.setMainScreenLoaded();
+    });
   }
 
   @override
@@ -62,368 +66,218 @@ class _MainScreenState extends State<MainScreen> {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     return GetBuilder<ScreenController>(builder: (controller) {
-      if (controller.currentToggle == 0) {
-        return Stack(
-          children: [
-            Container(
-                height: 427.h,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage('assets/background.png'),
-                  ),
-                )),
-            Padding(
-                padding: EdgeInsets.only(left: 24.h, top: 55.63.h, right: 26.4.w),
-                child: Column(
+      return Stack(
+        children: [
+          Container(
+              height: 427.h,
+              decoration: BoxDecoration(
+                image: DecorationImage(
+                  fit: BoxFit.cover,
+                  image: AssetImage('assets/background.png'),
+                ),
+              )),
+          Padding(
+              padding: EdgeInsets.only(left: 24.h, top: 55.63.h, right: 26.4.w),
+              child: GetBuilder<PlaceController>(builder: (_) {
+                return Column(
                   children: [
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Text(
-                              "I-TAXI",
-                              style: textTheme.headline3?.copyWith(
-                                color: colorScheme.primary,
+                            SizedBox(
+                              height: 31.h,
+                              child: Text(
+                                "I-TAXI",
+                                style: textTheme.headline3?.copyWith(
+                                  color: colorScheme.primary,
+                                ),
                               ),
                             ),
-                            Text(
-                              "어디든지 자유롭게 이동하세요!",
-                              style: textTheme.subtitle1?.copyWith(
-                                color: colorScheme.primary,
-                              ),
-                            )
+                            IconButton(
+                              padding: EdgeInsets.zero,
+                              constraints: BoxConstraints(),
+                              color: colorScheme.primary,
+                              onPressed: () {
+                                Get.to(SettingScreen());
+                              },
+                              icon: Icon(Icons.menu),
+                              iconSize: 24.w,
+                            ),
                           ],
                         ),
-                        IconButton(
-                          color: colorScheme.primary,
-                          onPressed: () {
-                            Get.to(SettingScreen());
+                        controller.hasNotice
+                            ? SizedBox(
+                                height: 0.37.h,
+                              )
+                            : SizedBox(
+                                height: 2.37.h,
+                              ),
+                        GestureDetector(
+                          onTap: () {
+                            controller.toggleHasNotice();
                           },
-                          icon: Icon(Icons.menu),
-                        ),
+                          child: controller.hasNotice
+                              ? Row(
+                                  children: [
+                                    Container(
+                                      height: 44.h,
+                                      decoration: BoxDecoration(
+                                        color: colorScheme.surfaceVariant,
+                                        borderRadius: BorderRadius.only(
+                                            topRight: Radius.circular(24),
+                                            bottomLeft: Radius.circular(24),
+                                            bottomRight: Radius.circular(24)),
+                                      ),
+                                      alignment: Alignment.center,
+                                      child: Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 16.w, right: 24.w),
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            ImageIcon(
+                                              AssetImage(
+                                                  'assets/icon/notice_info.png'),
+                                              size: 23,
+                                              color: colorScheme.primary,
+                                            ),
+                                            SizedBox(
+                                              width: 8.w,
+                                            ),
+                                            Text(
+                                              "iTaxi를 이용해 주셔서 감사합니다 :)",
+                                              style: textTheme.subtitle2
+                                                  ?.copyWith(
+                                                      color:
+                                                          colorScheme.primary),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
+                                    ),
+                                    Container()
+                                  ],
+                                )
+                              : Container(
+                                  alignment: Alignment.centerLeft,
+                                  child: SizedBox(
+                                    height: 30.h,
+                                    child: Text(
+                                      "어디든지 부담없이 이동하세요!",
+                                      style: textTheme.subtitle1?.copyWith(
+                                        color: colorScheme.primary,
+                                      ),
+                                    ),
+                                  ),
+                                ),
+                        )
                       ],
                     ),
-                    SizedBox(
-                      height: 58.37.h,
-                    ),
-                    Container(
-                      height: 433.63.h,
-                      width: 342.w,
-                      decoration: BoxDecoration(color: colorScheme.primary, borderRadius: BorderRadius.circular(36.0)),
-                      child: Column(
-                        children: [
-                          Padding(
-                            padding: EdgeInsets.only(left: 23.w, right: 23.w, top: 20.63.h),
-                            child: SizedBox(
-                              width: 296.w,
-                              height: 57.h,
-                              child: ToggleSwitch(
-                                borderColor: [Color(0xf6f6f6f6)],
-                                borderWidth: 2.0,
-                                cornerRadius: 30.0,
-                                activeBgColors: [
-                                  [colorScheme.primary],
-                                  [colorScheme.primary]
-                                ],
-                                inactiveBgColor: Color(0xfff6f6f6),
-                                initialLabelIndex: 0,
-                                totalSwitches: 2,
-                                labels: ["조회", "모집"],
-                                customTextStyles: [
-                                  textTheme.subtitle2?.copyWith(
-                                    color: colorScheme.onTertiary,
-                                  ),
-                                ],
-                                radiusStyle: true,
-                                onToggle: (index) {
-                                  if (index == 1) controller.changeToggleIndex(1);
-                                  // 어떻게 하면 모집란으로 바로 가게 할 수 있을까???
-                                },
-                              ),
-                            ),
+                    controller.hasNotice
+                        ? SizedBox(
+                            height: 40.37.h,
+                          )
+                        : SizedBox(
+                            height: 52.37.h,
                           ),
-                          Padding(
-                            padding: EdgeInsets.fromLTRB(23.w, 20.h, 24.w, 8.h),
-                            child: SizedBox(
-                              width: 295.w,
-                              height: 120.h,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                // crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    width: 19.w,
-                                  ),
-                                  Column(
+                    controller.mainScreenLoaded
+                        ? Container(
+                            height: (controller.currentToggle == 1 &&
+                                    !_placeController.hasStopOver)
+                                ? 433.63.h
+                                : 489.63.h,
+                            width: 342.w,
+                            decoration: BoxDecoration(
+                                color: colorScheme.primary,
+                                borderRadius: BorderRadius.circular(36.0),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: colorScheme.shadow,
+                                      blurRadius: 40,
+                                      offset: Offset(2, 4))
+                                ]),
+                            child: controller.currentToggle == 0
+                                ? Column(
                                     children: [
-                                      SizedBox(
-                                        height: 5.h,
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 23.w,
+                                            right: 23.w,
+                                            top: 20.63.h),
+                                        child: postTypeToggleButton(
+                                            context: context,
+                                            controller: controller),
                                       ),
-                                      Image(
-                                        image: AssetImage('assets/place/dep-dest.png'),
-                                        width: 23.w,
+                                      lookupSetDepDstWidget(
+                                          colorScheme, textTheme, controller),
+                                      lookupSetTimeWidget(
+                                          colorScheme, context, textTheme),
+                                      lookupSetPostTypeWidget(
+                                          colorScheme, controller, context),
+                                      lookupSetCapacityWidget(
+                                          colorScheme, controller, textTheme)
+                                    ],
+                                  )
+                                : Column(
+                                    children: [
+                                      Padding(
+                                        padding: EdgeInsets.only(
+                                            left: 23.w,
+                                            right: 23.w,
+                                            top: 20.63.h),
+                                        child: postTypeToggleButton(
+                                            context: context,
+                                            controller: controller),
                                       ),
+                                      _placeController.hasStopOver
+                                          ? gatherSetDepDstStopOverWidget(
+                                              colorScheme,
+                                              textTheme,
+                                              controller)
+                                          : gatherSetDepDstWidget(colorScheme,
+                                              textTheme, controller),
+                                      gatherSetTimeWidget(
+                                          colorScheme, context, textTheme),
+                                      gatherSetPostTypeWidget(
+                                          colorScheme, controller, context),
+                                      lookupSetCapacityWidget(
+                                          colorScheme, controller, textTheme)
                                     ],
                                   ),
-                                  SizedBox(
-                                    width: 19.w,
-                                  ),
-                                  SizedBox(
-                                    width: 180.w,
-                                    height: 120.h,
-                                    child: Column(
-                                      crossAxisAlignment: CrossAxisAlignment.start,
-                                      // mainAxisAlignment: MainAxisAlignment.start,
-                                      children: [
-                                        TextButton(
-                                          onPressed: () {
-                                            _placeSearchController.changeDepOrDst(0);
-                                            Get.to(() => SearchScreen());
-                                          },
-                                          // style: TextButton.styleFrom(fixedSize: Size(85.w, 18.h)),
-                                          child: Text(
-                                            "출발지 입력",
-                                            style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
-                                          ),
-                                        ),
-                                        Container(
-                                          width: 180.w,
-                                          height: 1.h,
-                                          color: Color(0xffE1E1E1),
-                                        ),
-                                        TextButton(
-                                          onPressed: () {
-                                            _placeSearchController.changeDepOrDst(1);
-                                            Get.to(() => SearchScreen());
-                                          },
-                                          // style: TextButton.styleFrom(fixedSize: Size(85.w, 18.h)),
-                                          child: Text(
-                                            "도착지 입력",
-                                            style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ),
-                                  IconButton(
-                                    onPressed: () {},
-                                    icon: Image.asset('assets/change.png'),
-                                    iconSize: 36,
-                                    color: colorScheme.tertiary,
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(right: 24.w, left: 23.w),
-                            child: SizedBox(
-                              height: 20.h,
-                              width: 295.w,
-                              child: Row(
-                                mainAxisAlignment: MainAxisAlignment.start,
-                                children: [
-                                  SizedBox(
-                                    width: 20.w,
-                                  ),
-                                  GestureDetector(
-                                    behavior: HitTestBehavior.opaque,
-                                    onTap: () {
-                                      _dateController.selectDate(context);
-                                    },
-                                    child: Icon(
-                                      Icons.calendar_month_outlined,
-                                      size: 24,
-                                      color: colorScheme.tertiary,
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    width: 25.w,
-                                  ),
-                                  Text(
-                                    DateFormat('M월 d일, EE').format(//요일 설정 해줘야 함.
-                                        _dateController.pickedDate!),
-                                    style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
-                                  )
-                                ],
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(right: 24.w, left: 23.w, top: 8.h),
-                            child: SizedBox(
-                              //getbuilder controller를 써야 함.
-                              width: 295.w,
-                              height: 56.59.h,
-                              child: Row(
-                                // crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    width: 19.w,
-                                  ),
-                                  Icon(
-                                    Icons.add,
-                                    size: 24,
-                                    color: colorScheme.tertiary,
-                                  ),
-                                  SizedBox(width: 74.83.w),
-                                  GestureDetector(
-                                    behavior: HitTestBehavior.opaque,
-                                    onTap: () {
-                                      _screenController.changeTabIndex(0);
-                                      _postController.getPosts(
-                                        depId: _placeController.dep?.id,
-                                        dstId: _placeController.dst?.id,
-                                        time: _dateController.formattingDateTime(
-                                          _dateController.mergeDateAndTime(),
-                                        ),
-                                        postType: _screenController.currentTabIndex,
-                                      );
-                                    },
-                                    child: (_screenController.currentTabIndex == 0)
-                                        ? selectedTabView(
-                                            viewTitle: '전체',
-                                            context: context,
-                                          )
-                                        : unSelectedTabView(
-                                            viewTitle: '전체',
-                                            context: context,
-                                          ),
-                                  ),
-                                  SizedBox(
-                                    width: 16.0.w,
-                                  ),
-                                  GestureDetector(
-                                    behavior: HitTestBehavior.opaque,
-                                    onTap: () {
-                                      _screenController.changeTabIndex(1);
-                                      _postController.getPosts(
-                                        depId: _placeController.dep?.id,
-                                        dstId: _placeController.dst?.id,
-                                        time: _dateController.formattingDateTime(
-                                          _dateController.mergeDateAndTime(),
-                                        ),
-                                        postType: _screenController.currentTabIndex,
-                                      );
-                                    },
-                                    child: (_screenController.currentTabIndex == 1)
-                                        ? selectedTabView(
-                                            viewTitle: '택시',
-                                            context: context,
-                                          )
-                                        : unSelectedTabView(
-                                            viewTitle: '택시',
-                                            context: context,
-                                          ),
-                                  ),
-                                  SizedBox(
-                                    width: 16.0.w,
-                                  ),
-                                  GestureDetector(
-                                    behavior: HitTestBehavior.opaque,
-                                    onTap: () {
-                                      _screenController.changeTabIndex(2);
-                                      _postController.getPosts(
-                                        depId: _placeController.dep?.id,
-                                        dstId: _placeController.dst?.id,
-                                        time: _dateController.formattingDateTime(
-                                          _dateController.mergeDateAndTime(),
-                                        ),
-                                        postType: _screenController.currentTabIndex,
-                                      );
-                                    },
-                                    child: (_screenController.currentTabIndex == 2)
-                                        ? selectedTabView(
-                                            viewTitle: '카풀',
-                                            context: context,
-                                          )
-                                        : unSelectedTabView(
-                                            viewTitle: '카풀',
-                                            context: context,
-                                          ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                          Padding(
-                            padding: EdgeInsets.only(left: 23.w, right: 24.w, bottom: 24.82.h),
-                            child: SizedBox(
-                              height: 56.59.h,
-                              width: 295.w,
-                              child: Row(
-                                crossAxisAlignment: CrossAxisAlignment.center,
-                                children: [
-                                  SizedBox(
-                                    width: 19.w,
-                                  ),
-                                  Icon(
-                                    Icons.person,
-                                    size: 24,
-                                    color: colorScheme.tertiary,
-                                  ),
-                                  SizedBox(width: 76.17.w),
-                                  IconButton(
-                                    onPressed: () {
-                                      if (personCount != 1)
-                                        setState(() {
-                                          personCount--;
-                                        });
-                                    },
-                                    icon: Image.asset('assets/removeP.png'),
-                                    color: (personCount == 1) ? colorScheme.tertiaryContainer : colorScheme.secondary,
-                                  ),
-                                  SizedBox(
-                                    width: 8.w,
-                                  ),
-                                  Text("$personCount명", style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary)),
-                                  SizedBox(
-                                    width: 8.w,
-                                  ),
-                                  IconButton(
-                                    onPressed: () {
-                                      if (personCount != 4)
-                                        setState(() {
-                                          personCount++;
-                                        });
-                                    },
-                                    icon: Image.asset('assets/addPerson.png'),
-                                    color: (personCount == 4) ? colorScheme.tertiaryContainer : colorScheme.secondary,
-                                  ),
-                                ],
-                              ),
-                            ),
                           )
-                        ],
-                      ),
-                    ),
-                    SizedBox(
-                      height: 60.h,
-                    ),
-                    ElevatedButton(
-                        style: ElevatedButton.styleFrom(
-                          primary: Colors.blueAccent,
-                          minimumSize: Size(342.w, 57.h),
-                        ),
-                        onPressed: () {
-                          Get.to(CheckPlaceScreen());
-                        },
-                        child: Text(
-                          "조회하기",
-                          style: textTheme.subtitle2?.copyWith(
-                            color: colorScheme.primary,
+                        : Container(
+                            height: 433.63.h,
+                            width: 342.w,
+                            decoration: BoxDecoration(
+                                color: colorScheme.primary,
+                                borderRadius: BorderRadius.circular(36.0),
+                                boxShadow: [
+                                  BoxShadow(
+                                      color: colorScheme.shadow,
+                                      blurRadius: 40,
+                                      offset: Offset(2, 4))
+                                ]),
                           ),
-                        )),
+                    SizedBox(
+                      height: (controller.currentToggle == 1 &&
+                              !_placeController.hasStopOver)
+                          ? 60.h
+                          : 4.h,
+                    ),
+                    if (controller.mainScreenLoaded)
+                      controller.currentToggle == 0
+                          ? lookupButton(textTheme, colorScheme)
+                          : gatherButton(
+                              textTheme, colorScheme, controller, context),
                   ],
-                )),
-          ],
-        );
-      } else {
-        return Stack();
-      }
+                );
+              })),
+        ],
+      );
     });
   }
 }

@@ -12,8 +12,9 @@ import 'package:itaxi/controller/signInController.dart';
 import 'package:itaxi/controller/navigationController.dart';
 import '../widget/mainDialog.dart';
 import 'package:itaxi/settings/settingScreen.dart';
-import 'package:itaxi/settings/findPhoneNumScreen.dart';
+import 'package:itaxi/settings/changePhoneNumScreen.dart';
 import 'package:itaxi/settings/resetPWScreen.dart';
+import 'package:itaxi/settings/changeAccountScreen.dart';
 
 class MyInfoScreen extends StatefulWidget {
   const MyInfoScreen({Key? key}) : super(key: key);
@@ -50,7 +51,8 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
               },
               icon: Icon(
                 Icons.clear_sharp,
-                color: colorScheme.tertiary,
+                color: colorScheme.tertiaryContainer,
+                size: 24,
               ),
             ),
           ]),
@@ -65,140 +67,157 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                 builder: (BuildContext context, snapshot) {
                   if (snapshot.hasData) {
                     if (snapshot.data != null) {
-                      return Padding(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 24.w,
-                          vertical: 24.h,
-                        ),
-                        child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                                // Container(
-                                //   width: 136.w,
-                                //   height: 128.h,
-                                //   padding: EdgeInsets.symmetric(
-                                //     vertical: 44.h,
-                                //     horizontal: 38.w,
-                                //   ),
-                                //   decoration: BoxDecoration(
-                                //     color: colorScheme.secondary,
-                                //     borderRadius: const BorderRadius.all(
-                                //       Radius.circular(4),
-                                //     ),
-                                //   ),
-                                //   child: Image.asset(
-                                //     width: 58.0.w,
-                                //     height: 40.h,
-                                //     'assets/logo_2_new.png',
-                                //   ),
-                                // ),
-                                Column(
-                                  mainAxisAlignment: MainAxisAlignment.end,
-                                  crossAxisAlignment: CrossAxisAlignment.start,
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Container(
+                            color: colorScheme.onTertiaryContainer,
+                            height: 148.h,
+                            child: Center(
+                              child: Padding(
+                                padding: EdgeInsets.only(right: 24.w, left: 24.w),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                  crossAxisAlignment: CrossAxisAlignment.center,
                                   children: [
-                                    Text(
-                                      "${snapshot.data!.name.toString()}학부생",
-                                      style: textTheme.headline3!.copyWith(
-                                          color: colorScheme.onPrimary,
-                                          fontWeight: FontWeight.w700),
+                                    // Container(
+                                    //   width: 136.w,
+                                    //   height: 128.h,
+                                    //   padding: EdgeInsets.symmetric(
+                                    //     vertical: 44.h,
+                                    //     horizontal: 38.w,
+                                    //   ),
+                                    //   decoration: BoxDecoration(
+                                    //     color: colorScheme.secondary,
+                                    //     borderRadius: const BorderRadius.all(
+                                    //       Radius.circular(4),
+                                    //     ),
+                                    //   ),
+                                    //   child: Image.asset(
+                                    //     width: 58.0.w,
+                                    //     height: 40.h,
+                                    //     'assets/logo_2_new.png',
+                                    //   ),
+                                    // ),
+                                    Column(
+                                      mainAxisAlignment: MainAxisAlignment.center,
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        SizedBox(
+                                          height: 26.h,
+                                        ),
+                                        Text(
+                                          "${snapshot.data!.name.toString()}학부생",
+                                          style: textTheme.headline3!.copyWith(
+                                              color: colorScheme.onPrimary,
+                                              ),
+                                        ),
+                                        SizedBox(
+                                          height: 2.0.h,
+                                        ),
+                                        Text(
+                                          snapshot.data!.email.toString(),
+                                          overflow: TextOverflow.ellipsis,
+                                          style: textTheme.bodyText2!.copyWith(
+                                            color: colorScheme.tertiaryContainer,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 2.0.h,
+                                        ),
+                                        Text(
+                                          snapshot.data!.phone.toString(),
+                                          style: textTheme.bodyText2!.copyWith(
+                                            color: colorScheme.tertiaryContainer,
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 10.h,
+                                        ),
+                                      ],
                                     ),
-                                    SizedBox(
-                                      height: 2.0.h,
-                                    ),
-                                    Text(
-                                      snapshot.data!.email.toString(),
-                                      overflow: TextOverflow.ellipsis,
-                                      style: textTheme.bodyText2!.copyWith(
-                                        color: colorScheme.tertiaryContainer,
+                                    GestureDetector(
+                                      onTap: () {},
+                                      child: Image.asset(
+                                        "assets/profile_camera.png",
+                                        width: 88.w,
+                                        height: 91.h,
                                       ),
-                                    ),
-                                    SizedBox(
-                                      height: 2.0.h,
-                                    ),
-                                    Text(
-                                      snapshot.data!.phone.toString(),
-                                      style: textTheme.bodyText2!.copyWith(
-                                        color: colorScheme.tertiaryContainer,
-                                      ),
-                                    ),
-                                    SizedBox(
-                                      height: 10.h,
-                                    ),
+                                    )
                                   ],
                                 ),
-                                GestureDetector(
-                                  onTap: () {},
-                                  child: Image.asset(
-                                    "assets/profile.png",
-                                    width: 88.w,
-                                    height: 88.h,
+                              ),
+                            ),
+                          ),
+                          SizedBox(
+                            height: 36.h,
+                          ),
+                          Padding(
+                            padding: EdgeInsets.only(left: 24.w, right: 24.w),
+                            child: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  "계정 관리",
+                                  style: textTheme.subtitle1!.copyWith(
+                                    color: colorScheme.onPrimary,
                                   ),
-                                )
+                                ),
+                                SizedBox(
+                                  height: 28.5.h,
+                                ),
+                                _management(
+                                    title: "휴대폰 번호 재설정",
+                                    nextPage: FindPhoneNumScreen(),
+                                    context: context),
+                                SizedBox(
+                                  height: 18.5.h,
+                                ),
+                                _management(
+                                    title: "비밀번호 재설정",
+                                    nextPage: ResetPWScreen(),
+                                    context: context),
+                                SizedBox(
+                                  height: 18.5.h,
+                                ),
+                                _deleteUserAccount(
+                                    title: "회원 탈퇴하기",
+                                    context: context),
                               ],
                             ),
-                            SizedBox(
-                              height: 30.h,
+                          ),
+                          Container(
+                            width: 390.w,
+                            height: 156.h,
+                            decoration: BoxDecoration(
+                              border: Border(
+                                top: BorderSide(width: 0.1, color: colorScheme.tertiary),
+                                bottom: BorderSide(width: 0.1, color: colorScheme.tertiary)
+                              )
                             ),
-                            Container(
-                              height: 8.h,
-                              color: Color(0xffF1F1F1),
-                            ),
-                            SizedBox(
-                              height: 36.h,
-                            ),
-                            Text(
-                              "계정 관리",
-                              style: textTheme.subtitle1!.copyWith(
-                                color: colorScheme.onPrimary,
+                            child: Padding(
+                              padding: EdgeInsets.only(left: 24.w, right: 24.w),
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  SizedBox(
+                                    height: 36.h,
                                   ),
-                            ),
-                            SizedBox(
-                              height: 28.5.h,
-                            ),
-                            _management(
-                                title: "휴대폰 번호 재설정",
-                                nextPage: FindPhoneNumScreen(),
-                                context: context),
-                            SizedBox(
-                              height: 18.5.h,
-                            ),
-                            _management(
-                                title: "비밀번호 재설정",
-                                nextPage: ResetPWScreen(),
-                                context: context),
-                            SizedBox(
-                              height: 18.5.h,
-                            ),
-                            _deleteUserAccount(
-                                title: "회원 탈퇴하기",
-                                //nextPage: ,
-                                context: context),
-                            SizedBox(
-                              height: 18.5.h,
-                            ),
-                            Container(
-                              height: 8.h,
-                              color: Color(0xffF1F1F1),
-                            ),
-                            SizedBox(
-                              height: 36.h,
-                            ),
-                            Text(
-                              "결제 관리",
-                              style: textTheme.subtitle1!.copyWith(
-                                color: colorScheme.onPrimary,
+                                  Text(
+                                    "결제 관리",
+                                    style: textTheme.subtitle1!.copyWith(
+                                      color: colorScheme.onTertiary,
+                                    ),
                                   ),
+                                  SizedBox(
+                                    height: 26.h,
+                                  ),
+                                  _management(title: "계좌번호 추가/변경", nextPage: ChangeAccountScreen(), context: context)
+                                ],
+                              ),
                             ),
-                            SizedBox(
-                              height: 28.5.h,
-                            ),
-                            //_management(title: "계좌번호 변경", context: context)
-                          ],
-                        ),
+                          ),
+                        ],
                       );
                     } else {
                       return Center(
@@ -238,7 +257,9 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
     return Column(
       children: [
         GestureDetector(
-          onTap: () {},
+          onTap: () {
+            Get.to(nextPage);
+          },
           child: Container(
             child: Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -246,7 +267,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                 Text(
                   title,
                   style: textTheme.bodyText1!
-                      .copyWith(color: colorScheme.onPrimary),
+                      .copyWith(color: colorScheme.onTertiary),
                 ),
                 SizedBox(
                   width: 32.w,
