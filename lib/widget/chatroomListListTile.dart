@@ -20,10 +20,11 @@ Widget chatroomListListTile(
   HistoryController _historyController = Get.put(HistoryController());
   late ChatRoomController _chatRoomController = Get.put(ChatRoomController());
   String time = post.deptTime ?? 'null';
+  int postId = post.id ?? 0;
 
   return InkWell(
     onTap: () async {
-      await _historyController.getHistorys();
+      await _historyController.getHistoryInfo(postId: postId);
       _chatRoomController.getPost(post: post);
       _chatRoomController.getChats(post: post);
       Get.to(() => const NewChatroomScreen());
