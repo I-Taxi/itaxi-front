@@ -47,7 +47,7 @@ class _StopoverScreenState extends State<StopoverScreen> {
       time: _dateController.formattingDateTime(
         _dateController.mergeDateAndTime(),
       ),
-      postType: _screenController.currentTabIndex,
+      postType: _screenController.mainScreenCurrentTabIndex,
     );
     _placeController.getPlaces();
   }
@@ -143,7 +143,8 @@ class _StopoverScreenState extends State<StopoverScreen> {
                                 ],
                                 radiusStyle: true,
                                 onToggle: (index) {
-                                  _screenController.changeToggleIndex(0);
+                                  _screenController
+                                      .changeMainScreenToggleIndex(0);
                                 },
                               ),
                             ),
@@ -334,27 +335,29 @@ class _StopoverScreenState extends State<StopoverScreen> {
                                 GestureDetector(
                                   behavior: HitTestBehavior.opaque,
                                   onTap: () {
-                                    _screenController.changeTabIndex(0);
+                                    _screenController
+                                        .changeMainScreenTabIndex(0);
                                     _postController.getPosts(
                                       depId: _placeController.dep?.id,
                                       dstId: _placeController.dst?.id,
                                       time: _dateController.formattingDateTime(
                                         _dateController.mergeDateAndTime(),
                                       ),
-                                      postType:
-                                          _screenController.currentTabIndex,
+                                      postType: _screenController
+                                          .mainScreenCurrentTabIndex,
                                     );
                                   },
-                                  child:
-                                      (_screenController.currentTabIndex == 0)
-                                          ? selectedTabView(
-                                              viewTitle: '택시',
-                                              context: context,
-                                            )
-                                          : unSelectedTabView(
-                                              viewTitle: '택시',
-                                              context: context,
-                                            ),
+                                  child: (_screenController
+                                              .mainScreenCurrentTabIndex ==
+                                          0)
+                                      ? selectedTabView(
+                                          viewTitle: '택시',
+                                          context: context,
+                                        )
+                                      : unSelectedTabView(
+                                          viewTitle: '택시',
+                                          context: context,
+                                        ),
                                 ),
                                 SizedBox(
                                   width: 16.0.w,
@@ -362,27 +365,29 @@ class _StopoverScreenState extends State<StopoverScreen> {
                                 GestureDetector(
                                   behavior: HitTestBehavior.opaque,
                                   onTap: () {
-                                    _screenController.changeTabIndex(1);
+                                    _screenController
+                                        .changeMainScreenTabIndex(1);
                                     _postController.getPosts(
                                       depId: _placeController.dep?.id,
                                       dstId: _placeController.dst?.id,
                                       time: _dateController.formattingDateTime(
                                         _dateController.mergeDateAndTime(),
                                       ),
-                                      postType:
-                                          _screenController.currentTabIndex,
+                                      postType: _screenController
+                                          .mainScreenCurrentTabIndex,
                                     );
                                   },
-                                  child:
-                                      (_screenController.currentTabIndex == 1)
-                                          ? selectedTabView(
-                                              viewTitle: '카풀',
-                                              context: context,
-                                            )
-                                          : unSelectedTabView(
-                                              viewTitle: '카풀',
-                                              context: context,
-                                            ),
+                                  child: (_screenController
+                                              .mainScreenCurrentTabIndex ==
+                                          1)
+                                      ? selectedTabView(
+                                          viewTitle: '카풀',
+                                          context: context,
+                                        )
+                                      : unSelectedTabView(
+                                          viewTitle: '카풀',
+                                          context: context,
+                                        ),
                                 ),
                               ],
                             ),

@@ -197,6 +197,7 @@ flutter:
     - assets/icon/icon-LogOut.png
     - assets/icon/icon-Car.png
     - assets/icon/icon-KTX.png
+    - assets/icon/discount.png
 
     # background
     - assets/background/timeline_bg.png
