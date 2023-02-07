@@ -387,8 +387,7 @@ Padding gatherSetDepDstStopOverWidget(
                 onPressed: () {
                   if (_placeController.stopOver.length > 0) {
                     _placeController.popStopOver();
-                  }
-                  else if (_placeController.hasStopOver) {
+                  } else if (_placeController.hasStopOver) {
                     _placeController.changeStopOverCount(false);
                   }
                 },
@@ -570,7 +569,7 @@ Padding lookupSetPostTypeWidget(ColorScheme colorScheme,
             behavior: HitTestBehavior.opaque,
             onTap: () {
               controller.changeTabIndex(2);
-              
+
               _postController.getPosts(
                 depId: _placeController.dep?.id,
                 dstId: _placeController.dst?.id,
@@ -790,6 +789,7 @@ GetBuilder gatherButton(TextTheme textTheme, ColorScheme colorScheme,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16))),
         onPressed: () async {
+          _addPostController.capacity = controller.capacity;
           if (_addPostController.loaded) {
             if (_placeController.dep == null) {
               snackBar(context: context, title: '출발지를 선택해주세요.');
