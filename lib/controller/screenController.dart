@@ -1,15 +1,34 @@
 import 'package:get/get.dart';
 
 class ScreenController extends GetxController {
+  int capacity = 2;
+
+  // mainScreen
   bool mainScreenLoaded = false;
   bool hasNotice = false;
-  int currentTabIndex = 0;
-  int currentToggle = 0;
+  int mainScreenCurrentTabIndex = 0;
+  int mainScreenCurrentToggle = 0;
   int stopOver = 0;
-  int capacity = 2;
+
+  // ktxScreen
+  bool ktxScreenLoaded = false;
+  bool discountSelect = false;
+  int discountRate = 35;
+  int ktxScreenCurrentTabIndex = 0;
+  int ktxScreenCurrentToggle = 0;
 
   void toggleHasNotice() {
     hasNotice = !hasNotice;
+    update();
+  }
+
+  void toggleDiscount() {
+    discountSelect = !discountSelect;
+    update();
+  }
+
+  void setDiscountRate(int rate) {
+    discountRate = rate;
     update();
   }
 
@@ -18,13 +37,38 @@ class ScreenController extends GetxController {
     update();
   }
 
-  void changeTabIndex(int index) {
-    currentTabIndex = index;
+  void setMainScreenUnloaded() {
+    mainScreenLoaded = false;
     update();
   }
 
-  void changeToggleIndex(int index) {
-    currentToggle = index;
+  void setKtxScreenLoaded() {
+    ktxScreenLoaded = true;
+    update();
+  }
+
+  void setKtxScreenUnloaded() {
+    ktxScreenLoaded = false;
+    update();
+  }
+
+  void changeMainScreenTabIndex(int index) {
+    mainScreenCurrentTabIndex = index;
+    update();
+  }
+
+  void changeMainScreenToggleIndex(int index) {
+    mainScreenCurrentToggle = index;
+    update();
+  }
+
+  void changeKtxScreenTabIndex(int index) {
+    ktxScreenCurrentTabIndex = index;
+    update();
+  }
+
+  void changeKtxScreenToggleIndex(int index) {
+    ktxScreenCurrentToggle = index;
     update();
   }
 

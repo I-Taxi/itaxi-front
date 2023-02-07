@@ -66,7 +66,6 @@ class KtxPost {
   }
 
   factory KtxPost.fromPostAllDocs(Map<String, dynamic> ds) {
-    List<dynamic> stopOversFromDs = ds['stopovers'];
     return KtxPost(
       id: ds['id'],
       departure: KtxPlace.fromDocs(ds['departure']),

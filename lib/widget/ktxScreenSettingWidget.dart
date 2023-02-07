@@ -9,9 +9,9 @@ import 'package:intl/intl.dart';
 import 'package:itaxi/controller/addPostController.dart';
 import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/controller/placeController.dart';
-import 'package:itaxi/controller/postController.dart';
+import 'package:itaxi/controller/ktxPostController.dart';
 import 'package:itaxi/controller/screenController.dart';
-import 'package:itaxi/model/post.dart';
+import 'package:itaxi/model/ktxPost.dart';
 import 'package:itaxi/widget/postListTile.dart';
 import 'package:itaxi/widget/selectPlaceDialog.dart';
 import 'package:itaxi/widget/tabView.dart';
@@ -26,7 +26,7 @@ import 'package:itaxi/widget/postTypeToggleButton.dart';
 PlaceSearchController _placeSearchController = Get.find();
 PlaceController _placeController = Get.find();
 DateController _dateController = Get.find();
-PostController _postController = Get.find();
+KtxPostController _ktxPostController = Get.find();
 UserController _userController = Get.find();
 AddPostController _addPostController = Get.find();
 
@@ -515,192 +515,185 @@ Padding gatherSetTimeWidget(
   );
 }
 
-Padding lookupSetPostTypeWidget(ColorScheme colorScheme,
-    ScreenController controller, BuildContext context) {
+Padding discountWidget(
+    ColorScheme colorScheme, ScreenController controller, TextTheme textTheme) {
   return Padding(
-    padding: EdgeInsets.only(right: 24.w, left: 23.w, bottom: 8.h),
-    child: Container(
-      //getbuilder controller를 써야 함.
-      width: 295.w,
-      height: 56.59.h,
-      decoration: BoxDecoration(
-        color: colorScheme.primaryContainer,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        // crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(
-            width: 19.w,
+      padding: EdgeInsets.only(left: 23.w, right: 24.w, bottom: 8.h),
+      child: GestureDetector(
+        onTap: () {
+          controller.toggleDiscount();
+        },
+        child: Container(
+          height: 56.h,
+          width: 295.w,
+          decoration: BoxDecoration(
+            color: colorScheme.primaryContainer,
+            borderRadius: BorderRadius.circular(8),
           ),
-          ImageIcon(
-            AssetImage('assets/icon/logo_type.png'),
-            size: 24,
-            color: colorScheme.tertiaryContainer,
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              SizedBox(
+                width: 20.w,
+              ),
+              ImageIcon(
+                AssetImage('assets/icon/discount.png'),
+                size: 24,
+                color: colorScheme.tertiaryContainer,
+              ),
+              SizedBox(
+                width: 25.w,
+              ),
+              Text(
+                '할인율',
+                style: textTheme.subtitle2
+                    ?.copyWith(color: colorScheme.onTertiary),
+              ),
+              SizedBox(
+                width: 60.w,
+              ),
+              Text(
+                '${controller.discountRate}%',
+                style: textTheme.subtitle2
+                    ?.copyWith(color: colorScheme.onPrimaryContainer),
+              ),
+            ],
           ),
-          SizedBox(width: 74.83.w),
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () {
-              controller.changeMainScreenTabIndex(0);
-              _postController.getPosts(
-                depId: _placeController.dep?.id,
-                dstId: _placeController.dst?.id,
-                time: _dateController.formattingDateTime(
-                  _dateController.mergeDateAndTime(),
-                ),
-                postType: controller.mainScreenCurrentTabIndex,
-              );
-            },
-            child: (controller.mainScreenCurrentTabIndex == 0)
-                ? selectedTabView(
-                    viewTitle: '전체',
-                    context: context,
-                  )
-                : unSelectedTabView(
-                    viewTitle: '전체',
-                    context: context,
-                  ),
-          ),
-          SizedBox(
-            width: 16.0.w,
-          ),
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () {
-              controller.changeMainScreenTabIndex(2);
-
-              _postController.getPosts(
-                depId: _placeController.dep?.id,
-                dstId: _placeController.dst?.id,
-                time: _dateController.formattingDateTime(
-                  _dateController.mergeDateAndTime(),
-                ),
-                postType: controller.mainScreenCurrentTabIndex,
-              );
-            },
-            child: (controller.mainScreenCurrentTabIndex == 2)
-                ? selectedTabView(
-                    viewTitle: '택시',
-                    context: context,
-                  )
-                : unSelectedTabView(
-                    viewTitle: '택시',
-                    context: context,
-                  ),
-          ),
-          SizedBox(
-            width: 16.0.w,
-          ),
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () {
-              controller.changeMainScreenTabIndex(1);
-              _postController.getPosts(
-                depId: _placeController.dep?.id,
-                dstId: _placeController.dst?.id,
-                time: _dateController.formattingDateTime(
-                  _dateController.mergeDateAndTime(),
-                ),
-                postType: controller.mainScreenCurrentTabIndex,
-              );
-            },
-            child: (controller.mainScreenCurrentTabIndex == 1)
-                ? selectedTabView(
-                    viewTitle: '카풀',
-                    context: context,
-                  )
-                : unSelectedTabView(
-                    viewTitle: '카풀',
-                    context: context,
-                  ),
-          ),
-        ],
-      ),
-    ),
-  );
+        ),
+      ));
 }
 
-Padding gatherSetPostTypeWidget(ColorScheme colorScheme,
-    ScreenController controller, BuildContext context) {
+Padding discountActivatedWidget(
+    ColorScheme colorScheme, ScreenController controller, TextTheme textTheme) {
   return Padding(
-    padding: EdgeInsets.only(right: 24.w, left: 23.w, bottom: 8.h),
-    child: Container(
-      //getbuilder controller를 써야 함.
-      width: 295.w,
-      height: 56.59.h,
-      decoration: BoxDecoration(
-        color: colorScheme.primaryContainer,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        // crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
-          SizedBox(
-            width: 19.w,
-          ),
-          ImageIcon(
-            AssetImage('assets/icon/logo_type.png'),
-            size: 24,
-            color: colorScheme.tertiaryContainer,
-          ),
-          SizedBox(width: 74.83.w),
-          SizedBox(
-            width: 16.0.w,
-          ),
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () {
-              controller.changeMainScreenTabIndex(1);
-              _postController.getPosts(
-                depId: _placeController.dep?.id,
-                dstId: _placeController.dst?.id,
-                time: _dateController.formattingDateTime(
-                  _dateController.mergeDateAndTime(),
+      padding: EdgeInsets.only(left: 23.w, right: 24.w, bottom: 8.h),
+      child: Container(
+        height: 113.h,
+        width: 295.w,
+        decoration: BoxDecoration(
+          color: colorScheme.outline,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            GestureDetector(
+              onTap: () {
+                controller.toggleDiscount();
+              },
+              child: Container(
+                height: 56.h,
+                width: 295.w,
+                decoration: BoxDecoration(
+                  color: colorScheme.primaryContainer,
+                  borderRadius: BorderRadius.circular(8),
                 ),
-                postType: controller.mainScreenCurrentTabIndex,
-              );
-            },
-            child: (controller.mainScreenCurrentTabIndex == 1)
-                ? selectedTabView(
-                    viewTitle: '택시',
-                    context: context,
-                  )
-                : unSelectedTabView(
-                    viewTitle: '택시',
-                    context: context,
-                  ),
-          ),
-          SizedBox(
-            width: 16.0.w,
-          ),
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () {
-              controller.changeMainScreenTabIndex(2);
-              _postController.getPosts(
-                depId: _placeController.dep?.id,
-                dstId: _placeController.dst?.id,
-                time: _dateController.formattingDateTime(
-                  _dateController.mergeDateAndTime(),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    SizedBox(
+                      width: 20.w,
+                    ),
+                    ImageIcon(
+                      AssetImage('assets/icon/discount.png'),
+                      size: 24,
+                      color: colorScheme.tertiaryContainer,
+                    ),
+                    SizedBox(
+                      width: 25.w,
+                    ),
+                    Text(
+                      '할인율',
+                      style: textTheme.subtitle2
+                          ?.copyWith(color: colorScheme.onTertiary),
+                    ),
+                    SizedBox(
+                      width: 60.w,
+                    ),
+                    Text(
+                      '${controller.discountRate}%',
+                      style: textTheme.subtitle2
+                          ?.copyWith(color: colorScheme.onPrimaryContainer),
+                    ),
+                  ],
                 ),
-                postType: controller.mainScreenCurrentTabIndex,
-              );
-            },
-            child: (controller.mainScreenCurrentTabIndex == 2)
-                ? selectedTabView(
-                    viewTitle: '카풀',
-                    context: context,
-                  )
-                : unSelectedTabView(
-                    viewTitle: '카풀',
-                    context: context,
-                  ),
-          ),
-        ],
-      ),
-    ),
-  );
+              ),
+            ),
+            Padding(
+              padding: EdgeInsets.fromLTRB(29.w, 20.h, 28.w, 13.h),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        controller.setDiscountRate(15);
+                      },
+                      child: SizedBox(
+                        height: 24.h,
+                        child: Text('15%',
+                            style: textTheme.subtitle2?.copyWith(
+                                color: controller.discountRate == 15
+                                    ? colorScheme.onSurface
+                                    : colorScheme.tertiary)),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        controller.setDiscountRate(20);
+                      },
+                      child: SizedBox(
+                        height: 24.h,
+                        child: Text('20%',
+                            style: textTheme.subtitle2?.copyWith(
+                                color: controller.discountRate == 20
+                                    ? colorScheme.onSurface
+                                    : colorScheme.tertiary)),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        controller.setDiscountRate(25);
+                      },
+                      child: SizedBox(
+                        height: 24.h,
+                        child: Text('25%',
+                            style: textTheme.subtitle2?.copyWith(
+                                color: controller.discountRate == 25
+                                    ? colorScheme.onSurface
+                                    : colorScheme.tertiary)),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        controller.setDiscountRate(30);
+                      },
+                      child: SizedBox(
+                        height: 24.h,
+                        child: Text('30%',
+                            style: textTheme.subtitle2?.copyWith(
+                                color: controller.discountRate == 30
+                                    ? colorScheme.onSurface
+                                    : colorScheme.tertiary)),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        controller.setDiscountRate(35);
+                      },
+                      child: SizedBox(
+                        height: 24.h,
+                        child: Text('35%',
+                            style: textTheme.subtitle2?.copyWith(
+                                color: controller.discountRate == 35
+                                    ? colorScheme.onSurface
+                                    : colorScheme.tertiary)),
+                      ),
+                    ),
+                  ]),
+            ),
+          ],
+        ),
+      ));
 }
 
 Padding lookupSetCapacityWidget(
@@ -767,7 +760,7 @@ ElevatedButton lookupButton(TextTheme textTheme, ColorScheme colorScheme) {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))),
       onPressed: () {
-        Get.to(CheckPlaceScreen());
+        // Get.to(CheckPlaceScreen());
       },
       child: Text(
         "조회하기",
@@ -789,47 +782,45 @@ GetBuilder gatherButton(TextTheme textTheme, ColorScheme colorScheme,
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(16))),
         onPressed: () async {
-          _addPostController.capacity = controller.capacity;
-          if (_addPostController.loaded) {
-            if (_placeController.dep == null) {
-              snackBar(context: context, title: '출발지를 선택해주세요.');
-            } else if (_placeController.dep!.id == -1) {
-              snackBar(context: context, title: '출발지를 다시 선택해주세요.');
-            } else if (_placeController.dst == null) {
-              snackBar(context: context, title: '도착지를 선택해주세요.');
-            } else if (_placeController.dst!.id == -1) {
-              snackBar(context: context, title: '도착지를 다시 선택해주세요.');
-            } else if (DateTime.now()
-                    .difference(_dateController.mergeDateAndTime())
-                    .isNegative ==
-                false) {
-              snackBar(context: context, title: '출발시간을 다시 선택해주세요.');
-            } else if (_addPostController.capacity == 0) {
-              snackBar(context: context, title: '최대인원을 선택해주세요.');
-            } else {
-              Post post = Post(
-                uid: _userController.uid,
-                postType: controller.mainScreenCurrentTabIndex,
-                departure: _placeController.dep,
-                destination: _placeController.dst,
-                deptTime: _dateController.formattingDateTime(
-                  _dateController.mergeDateAndTime(),
-                ),
-                capacity: _addPostController.capacity,
-                stopovers: _placeController.stopOver,
-              );
-              Get.back();
-              await _addPostController.fetchAddPost(post: post);
-              await _postController.getPosts(
-                depId: _placeController.dep?.id,
-                dstId: _placeController.dst?.id,
-                time: _dateController.formattingDateTime(
-                  _dateController.mergeDateAndTime(),
-                ),
-                postType: controller.mainScreenCurrentTabIndex,
-              );
-            }
-          }
+          // _addPostController.capacity = controller.capacity;
+          // if (_addPostController.loaded) {
+          //   if (_placeController.dep == null) {
+          //     snackBar(context: context, title: '출발지를 선택해주세요.');
+          //   } else if (_placeController.dep!.id == -1) {
+          //     snackBar(context: context, title: '출발지를 다시 선택해주세요.');
+          //   } else if (_placeController.dst == null) {
+          //     snackBar(context: context, title: '도착지를 선택해주세요.');
+          //   } else if (_placeController.dst!.id == -1) {
+          //     snackBar(context: context, title: '도착지를 다시 선택해주세요.');
+          //   } else if (DateTime.now()
+          //           .difference(_dateController.mergeDateAndTime())
+          //           .isNegative ==
+          //       false) {
+          //     snackBar(context: context, title: '출발시간을 다시 선택해주세요.');
+          //   } else if (_addPostController.capacity == 0) {
+          //     snackBar(context: context, title: '최대인원을 선택해주세요.');
+          //   } else {
+          //     KtxPost post = KtxPost(
+          //       uid: _userController.uid,
+          //       departure: _placeController.dep,
+          //       destination: _placeController.dst,
+          //       deptTime: _dateController.formattingDateTime(
+          //         _dateController.mergeDateAndTime(),
+          //       ),
+          //       capacity: _addPostController.capacity,
+          //       stopovers: _placeController.stopOver,
+          //     );
+          //     Get.back();
+          //     await _addPostController.fetchAddPost(post: post);
+          //     await _ktxPostController.getPosts(
+          //       depId: _placeController.dep?.id,
+          //       dstId: _placeController.dst?.id,
+          //       time: _dateController.formattingDateTime(
+          //         _dateController.mergeDateAndTime(),
+          //       ),
+          //     );
+          //   }
+          // }
         },
         child: Text(
           "방 만들기",
