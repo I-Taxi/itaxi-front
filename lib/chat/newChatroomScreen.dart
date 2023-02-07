@@ -13,6 +13,7 @@ import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/model/chat.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/settings/settingScreen.dart';
+import 'package:itaxi/widget/abbreviatePlaceName.dart';
 import 'package:itaxi/widget/chatListTile.dart';
 
 class NewChatroomScreen extends StatefulWidget {
@@ -97,7 +98,7 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                   child: Row(
                     children: [
                       Text(
-                        "${_chatRoomController.post.departure!.name}-${_chatRoomController.post.destination!.name} #${DateFormat('Md').format(DateTime.parse(time))}",
+                        "${AbbreviatePlaceName(_chatRoomController.post.departure!.name)}-${AbbreviatePlaceName(_chatRoomController.post.destination!.name)} #${DateFormat('Md').format(DateTime.parse(time))}",
                         style: textTheme.subtitle1?.copyWith(
                           color: colorScheme.primary,
                         ),
@@ -297,7 +298,7 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                                 ),
                                 Flexible(
                                   child: Text(
-                                    "${_chatRoomController.post.departure!.name}-${_chatRoomController.post.destination!.name} (${DateFormat('Md').format(DateTime.parse(time))})",
+                                    "${AbbreviatePlaceName(_chatRoomController.post.departure!.name)}-${AbbreviatePlaceName(_chatRoomController.post.destination!.name)} (${DateFormat('Md').format(DateTime.parse(time))})",
                                     style: textTheme.subtitle1?.copyWith(
                                       color: colorScheme.onTertiary,
                                     ),

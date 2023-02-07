@@ -10,6 +10,7 @@ import 'package:itaxi/controller/chatRoomController.dart';
 import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/model/post.dart';
+import 'package:itaxi/widget/abbreviatePlaceName.dart';
 
 Widget chatroomListListTile(
     {required BuildContext context, required Post post}) {
@@ -58,7 +59,7 @@ Widget chatroomListListTile(
                         children: [
                           Flexible(
                             child: Text(
-                              "${post.departure!.name}-${post.destination!.name}(${DateFormat('Md').format(DateTime.parse(time))})",
+                              "${AbbreviatePlaceName(post.departure!.name)}-${AbbreviatePlaceName(post.destination!.name)}(${DateFormat('Md').format(DateTime.parse(time))})",
                               style: textTheme.subtitle2?.copyWith(
                                 color: colorScheme.onTertiary,
                               ),
