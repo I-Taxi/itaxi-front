@@ -16,13 +16,7 @@ import 'package:itaxi/settings/noticeScreen.dart';
 
 import '../controller/navigationController.dart';
 import '../controller/userController.dart';
-import '../widget/mainDialog.dart';
 import 'package:flutter/cupertino.dart';
-
-import 'package:itaxi/settings/bugScreen.dart';
-import 'package:itaxi/settings/privacyPolicyScreen.dart';
-import 'package:itaxi/settings/termOfServiceScreen.dart';
-import 'package:itaxi/settings/myInfoScreen.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);

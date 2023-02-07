@@ -81,9 +81,10 @@ class ITaxiTheme {
     onTertiary: Color(0XFF3E3E3E),
     inverseSurface: Color(0xff00CE21),
 
-    surfaceVariant: Color(0xffff8080),
-
     outline: Color(0xffc5e1fd),
+    onSurfaceVariant: Color(0xFFE1E1E1),
+    
+    surfaceVariant: Color(0xffff8080)
   );
 
   static const TextTheme textThemeDefault = TextTheme(

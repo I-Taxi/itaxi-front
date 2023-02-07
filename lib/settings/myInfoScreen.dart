@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:itaxi/controller/userController.dart';
-import 'package:itaxi/settings/userInfoRefactorScreen.dart';
 import 'package:dotted_line/dotted_line.dart';
 
 import '../model/userInfoList.dart';
@@ -15,6 +14,7 @@ import 'package:itaxi/settings/settingScreen.dart';
 import 'package:itaxi/settings/changePhoneNumScreen.dart';
 import 'package:itaxi/settings/resetPWScreen.dart';
 import 'package:itaxi/settings/changeAccountScreen.dart';
+import 'package:itaxi/signInUp/forgotPwScreen.dart';
 
 class MyInfoScreen extends StatefulWidget {
   const MyInfoScreen({Key? key}) : super(key: key);
@@ -175,7 +175,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                                 ),
                                 _management(
                                     title: "비밀번호 재설정",
-                                    nextPage: ResetPWScreen(),
+                                    nextPage: ForgotPwScreen(),
                                     context: context),
                                 SizedBox(
                                   height: 18.5.h,
