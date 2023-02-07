@@ -163,16 +163,6 @@ class PlaceSearchController extends GetxController {
     update();
   }
 
-  void setDeparture() {
-    _placeController.dep = selectedPlace;
-    update();
-  }
-
-  void setDestination() {
-    _placeController.dst = selectedPlace;
-    update();
-  }
-
   Future<void> selectDate(BuildContext context) async {
     final textTheme = Theme.of(context).textTheme;
     final colorScheme = Theme.of(context).colorScheme;

@@ -231,8 +231,175 @@ Padding gatherSetDepDstWidget(
                 constraints: BoxConstraints(),
                 padding: EdgeInsets.only(left: 8.w, top: 10.5.h),
                 onPressed: () {
-                  controller.changeStopOver(1);
+                  _placeController.changeStopOverCount(true);
                 },
+                icon: Image.asset('assets/addPlace.png'),
+                iconSize: 36,
+                color: colorScheme.tertiary,
+              ),
+            ],
+            // IconButton(
+            //   onPressed: () {},
+            //   icon: Image.asset('assets/change.png'),
+            //   iconSize: 32,
+            //   color: colorScheme.tertiary,
+            // ),
+            // IconButton(
+            //   onPressed: () {
+            //     controller.changeStopOver(1);
+            //   },
+            //   icon: Image.asset('assets/addPlace.png'),
+            //   iconSize: 32,
+            //   color: colorScheme.tertiary,
+            // ),
+          ),
+        ],
+      ),
+    ),
+  );
+}
+
+Padding gatherSetDepDstStopOverWidget(
+    ColorScheme colorScheme, TextTheme textTheme, ScreenController controller) {
+  return Padding(
+    padding: EdgeInsets.fromLTRB(23.w, 20.h, 24.w, 8.h),
+    child: Container(
+      width: 295.w,
+      height: 174.h,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(8),
+        color: colorScheme.primaryContainer,
+      ),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
+        // crossAxisAlignment: CrossAxisAlignment.center,
+        children: [
+          SizedBox(
+            width: 19.w,
+          ),
+          Center(
+            child: Image(
+              image: AssetImage('assets/place/dep-stop-dest.png'),
+              width: 23.w,
+            ),
+          ),
+          SizedBox(
+            width: 19.w,
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Padding(
+                padding: EdgeInsets.only(left: 5.w, bottom: 17.h),
+                child: GetBuilder<PlaceController>(builder: (_) {
+                  return GestureDetector(
+                    onTap: () {
+                      _placeSearchController.changeDepOrDst(0);
+                      Get.to(() => SearchScreen());
+                    },
+                    child: !(_placeController.hasDep)
+                        ? Text(
+                            "출발지 입력",
+                            style: textTheme.subtitle2
+                                ?.copyWith(color: colorScheme.onTertiary),
+                          )
+                        : Text(
+                            _placeController.dep!.name!,
+                            style: textTheme.subtitle2
+                                ?.copyWith(color: colorScheme.onTertiary),
+                          ),
+                  );
+                }),
+              ),
+              Container(
+                width: 180.w,
+                height: 1.h,
+                color: Color(0xffE1E1E1),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 5.w, top: 16.h, bottom: 17.h),
+                child: GetBuilder<PlaceController>(builder: (_) {
+                  return GestureDetector(
+                    onTap: () {
+                      _placeSearchController.changeDepOrDst(2);
+                      Get.to(() => SearchScreen());
+                    },
+                    child: !(_placeController.stopOver.isNotEmpty)
+                        ? Text(
+                            "경유지 입력",
+                            style: textTheme.subtitle2
+                                ?.copyWith(color: colorScheme.onTertiary),
+                          )
+                        : Text(
+                            _placeController.printStopOvers(),
+                            style: textTheme.subtitle2
+                                ?.copyWith(color: colorScheme.onTertiary),
+                          ),
+                  );
+                }),
+              ),
+              Container(
+                width: 180.w,
+                height: 1.h,
+                color: Color(0xffE1E1E1),
+              ),
+              Padding(
+                padding: EdgeInsets.only(left: 5.w, top: 16.h),
+                child: GetBuilder<PlaceController>(builder: (_) {
+                  return GestureDetector(
+                    onTap: () {
+                      _placeSearchController.changeDepOrDst(1);
+                      Get.to(() => SearchScreen());
+                    },
+                    child: !(_placeController.hasDst)
+                        ? Text(
+                            "도착지 입력",
+                            style: textTheme.subtitle2
+                                ?.copyWith(color: colorScheme.onTertiary),
+                          )
+                        : Text(
+                            _placeController.dst!.name!,
+                            style: textTheme.subtitle2
+                                ?.copyWith(color: colorScheme.onTertiary),
+                          ),
+                  );
+                }),
+              ),
+            ],
+          ),
+          Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              IconButton(
+                constraints: BoxConstraints(),
+                padding: EdgeInsets.only(left: 8.w, bottom: 10.5.h),
+                onPressed: () {
+                  _placeController.swapDepAndDst();
+                },
+                icon: Image.asset('assets/change.png'),
+                iconSize: 36,
+                color: colorScheme.tertiary,
+              ),
+              IconButton(
+                constraints: BoxConstraints(),
+                padding: EdgeInsets.only(left: 8.w, top: 10.5.h, bottom: 10.h),
+                onPressed: () {
+                  if (_placeController.stopOver.length > 0) {
+                    _placeController.popStopOver();
+                  }
+                  else if (_placeController.hasStopOver) {
+                    _placeController.changeStopOverCount(false);
+                  }
+                },
+                icon: Image.asset('assets/subtract_place.png'),
+                iconSize: 36,
+                color: colorScheme.tertiary,
+              ),
+              IconButton(
+                constraints: BoxConstraints(),
+                padding: EdgeInsets.only(left: 8.w, top: 10.h),
+                onPressed: () {},
                 icon: Image.asset('assets/addPlace.png'),
                 iconSize: 36,
                 color: colorScheme.tertiary,
@@ -402,7 +569,8 @@ Padding lookupSetPostTypeWidget(ColorScheme colorScheme,
           GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () {
-              controller.changeTabIndex(1);
+              controller.changeTabIndex(2);
+              
               _postController.getPosts(
                 depId: _placeController.dep?.id,
                 dstId: _placeController.dst?.id,
@@ -412,7 +580,7 @@ Padding lookupSetPostTypeWidget(ColorScheme colorScheme,
                 postType: controller.currentTabIndex,
               );
             },
-            child: (controller.currentTabIndex == 1)
+            child: (controller.currentTabIndex == 2)
                 ? selectedTabView(
                     viewTitle: '택시',
                     context: context,
@@ -428,7 +596,7 @@ Padding lookupSetPostTypeWidget(ColorScheme colorScheme,
           GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () {
-              controller.changeTabIndex(2);
+              controller.changeTabIndex(1);
               _postController.getPosts(
                 depId: _placeController.dep?.id,
                 dstId: _placeController.dst?.id,
@@ -438,7 +606,7 @@ Padding lookupSetPostTypeWidget(ColorScheme colorScheme,
                 postType: controller.currentTabIndex,
               );
             },
-            child: (controller.currentTabIndex == 2)
+            child: (controller.currentTabIndex == 1)
                 ? selectedTabView(
                     viewTitle: '카풀',
                     context: context,
@@ -648,6 +816,7 @@ GetBuilder gatherButton(TextTheme textTheme, ColorScheme colorScheme,
                   _dateController.mergeDateAndTime(),
                 ),
                 capacity: _addPostController.capacity,
+                stopovers: _placeController.stopOver,
               );
               Get.back();
               await _addPostController.fetchAddPost(post: post);
