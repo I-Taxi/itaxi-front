@@ -23,13 +23,13 @@ class AddKtxPostController extends GetxController {
     update();
   }
 
-  Future<int> fetchAddPost({required KtxPost ktxPpost}) async {
+  Future<int> fetchAddPost({required KtxPost ktxPost}) async {
     loaded = false;
     update();
     var addPostUrl = dotenv.env['API_URL'].toString();
     addPostUrl = '${addPostUrl}ktx';
 
-    var body = utf8.encode(json.encode(ktxPpost.toAddPostMap()));
+    var body = utf8.encode(json.encode(ktxPost.toAddPostMap()));
 
     http.Response response = await http.post(
       Uri.parse(addPostUrl),
@@ -41,7 +41,7 @@ class AddKtxPostController extends GetxController {
 
     if (response.statusCode == 200) {
       KtxPost result = KtxPost.fromPostAllDocs(json.decode(utf8.decode(response.bodyBytes)));
-      ktxPpost = ktxPpost.copyWith(id: result.id, joiners: result.joiners);
+      ktxPost = ktxPost.copyWith(id: result.id, joiners: result.joiners);
       // await ChatRepository().setPost(post: post);
       await _historyController.getHistorys();
       loaded = true;
