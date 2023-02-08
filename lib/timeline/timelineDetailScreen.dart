@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:itaxi/controller/historyController.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:itaxi/model/place.dart';
 import 'package:itaxi/timeline/passengerListTile.dart';
 import 'package:itaxi/widget/postTypeToString.dart';
 import 'package:onboarding/onboarding.dart';
@@ -26,6 +27,41 @@ class TimelineDetailScreen extends StatelessWidget {
       );
     } else {
       return Container(padding: EdgeInsets.fromLTRB(15.w, 0.h, 0.w, 0.h));
+    }
+  }
+
+  double addPlaceContainerSize(double size, List<Place?>? stopovers) {
+    if (stopovers!.isNotEmpty) {
+      return size + 35.h;
+    } else {
+      return size;
+    }
+  }
+
+  Container insertStopoverContainer({required BuildContext context, required List<Place?>? stopovers}) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
+
+    if (stopovers!.isNotEmpty && stopovers != null) {
+      return Container(
+        padding: EdgeInsets.fromLTRB(0.w, 11.h, 0.w, 11.h),
+        width: 300.h,
+        height: 48.h,
+        child: Row(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            SizedBox(width: 22.w),
+            Text('경유', style: textTheme.bodyText1?.copyWith(color: colorScheme.tertiaryContainer)),
+            SizedBox(width: 16.w),
+            Text('${stopovers[0]!.name}', style: textTheme.bodyText1?.copyWith(color: colorScheme.tertiaryContainer)),
+            const Spacer(),
+          ],
+        ),
+      );
+    } else {
+      return Container(
+        padding: EdgeInsets.fromLTRB(0.w, 10.h, 0.w, 10.h),
+      );
     }
   }
 
@@ -101,7 +137,6 @@ class TimelineDetailScreen extends StatelessWidget {
                                             Row(
                                               children: [
                                                 Text(
-                                                  // TODO: 날짜 정보 띄우기
                                                   DateFormat('yyyy년 MM월 dd일 (E) HH:mm').format(DateTime.parse(snapshot.data!.deptTime!)),
                                                   style: textTheme.bodyText1?.copyWith(
                                                     color: colorScheme.onTertiary,
@@ -118,7 +153,7 @@ class TimelineDetailScreen extends StatelessWidget {
                                       ),
                                       Container(
                                         padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 16.h),
-                                        height: 130.h,
+                                        height: addPlaceContainerSize(130.h, snapshot.data!.stopovers),
                                         color: colorScheme.primary,
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -152,9 +187,7 @@ class TimelineDetailScreen extends StatelessWidget {
                                                 ),
                                               ],
                                             ),
-                                            SizedBox(
-                                              height: 20.h,
-                                            ),
+                                            insertStopoverContainer(context: context, stopovers: snapshot.data!.stopovers),
                                             Row(
                                               crossAxisAlignment: CrossAxisAlignment.center,
                                               mainAxisAlignment: MainAxisAlignment.start,
