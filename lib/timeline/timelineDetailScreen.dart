@@ -85,7 +85,7 @@ class TimelineDetailScreen extends StatelessWidget {
                                     children: [
                                       Container(
                                         padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 16.h),
-                                        height: 110.h,
+                                        height: 100.h,
                                         color: colorScheme.primary,
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -118,7 +118,7 @@ class TimelineDetailScreen extends StatelessWidget {
                                       ),
                                       Container(
                                         padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 16.h),
-                                        height: 140.h,
+                                        height: 130.h,
                                         color: colorScheme.primary,
                                         child: Column(
                                           crossAxisAlignment: CrossAxisAlignment.start,
