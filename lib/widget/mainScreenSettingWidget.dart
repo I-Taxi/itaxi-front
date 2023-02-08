@@ -383,7 +383,7 @@ Padding gatherSetDepDstStopOverWidget(
               ),
               IconButton(
                 constraints: BoxConstraints(),
-                padding: EdgeInsets.only(left: 8.w, top: 10.5.h, bottom: 10.h),
+                padding: EdgeInsets.only(left: 8.w, top: 10.5.h, bottom: 52.h),
                 onPressed: () {
                   if (_placeController.stopOver.length > 0) {
                     _placeController.popStopOver();
@@ -392,14 +392,6 @@ Padding gatherSetDepDstStopOverWidget(
                   }
                 },
                 icon: Image.asset('assets/subtract_place.png'),
-                iconSize: 36,
-                color: colorScheme.tertiary,
-              ),
-              IconButton(
-                constraints: BoxConstraints(),
-                padding: EdgeInsets.only(left: 8.w, top: 10.h),
-                onPressed: () {},
-                icon: Image.asset('assets/addPlace.png'),
                 iconSize: 36,
                 color: colorScheme.tertiary,
               ),
@@ -503,8 +495,9 @@ Padding gatherSetTimeWidget(
               width: 25.w,
             ),
             GetBuilder<DateController>(builder: (_) {
+              print(_dateController.mergeDateAndTime());
               return Text(
-                DateFormat('MM월 dd일 (E) HH:MM').format(//요일 설정 해줘야 함.
+                DateFormat('MM월 dd일 (E) hh:mm').format(//요일 설정 해줘야 함.
                     _dateController.mergeDateAndTime()),
                 style: textTheme.subtitle2
                     ?.copyWith(color: colorScheme.onTertiary),
