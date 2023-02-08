@@ -201,7 +201,8 @@ flutter:
     - assets/icon/discount.png
 
     # background
-    - assets/background/timeline_bg.png
+    - assets/background/timeline_default_bg.png
+    - assets/background/timeline_rounded_bg.png
 
     # onBoarding
     - assets/onBoarding/onBoardingScreen1.png
