@@ -524,7 +524,7 @@ Padding lookupSetCapacityWidget(
           SizedBox(width: 76.17.w),
           IconButton(
             onPressed: () {
-              controller.subtractCapacity();
+              controller.ktxScreenSubtractCapacity();
             },
             icon: Image.asset('assets/removeP.png'),
             color: (controller.capacity == 1)

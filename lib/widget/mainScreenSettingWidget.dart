@@ -429,42 +429,42 @@ Padding lookupSetTimeWidget(
     ColorScheme colorScheme, BuildContext context, TextTheme textTheme) {
   return Padding(
     padding: EdgeInsets.only(right: 24.w, left: 23.w, bottom: 8.h),
-    child: Container(
-      height: 56.h,
-      width: 295.w,
-      decoration: BoxDecoration(
-        color: colorScheme.primaryContainer,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 20.w,
-          ),
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () {
-              _dateController.selectDate(context);
-            },
-            child: ImageIcon(
+    child: GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        _dateController.selectDate(context);
+      },
+      child: Container(
+        height: 56.h,
+        width: 295.w,
+        decoration: BoxDecoration(
+          color: colorScheme.primaryContainer,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: 20.w,
+            ),
+            ImageIcon(
               AssetImage('assets/icon/calendar.png'),
               size: 24,
               color: colorScheme.tertiaryContainer,
             ),
-          ),
-          SizedBox(
-            width: 25.w,
-          ),
-          GetBuilder<DateController>(builder: (_) {
-            return Text(
-              DateFormat('MM월 dd일 (E)').format(//요일 설정 해줘야 함.
-                  _dateController.pickedDate!),
-              style:
-                  textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
-            );
-          })
-        ],
+            SizedBox(
+              width: 25.w,
+            ),
+            GetBuilder<DateController>(builder: (_) {
+              return Text(
+                DateFormat('MM월 dd일 (E)').format(//요일 설정 해줘야 함.
+                    _dateController.pickedDate!),
+                style: textTheme.subtitle2
+                    ?.copyWith(color: colorScheme.onTertiary),
+              );
+            })
+          ],
+        ),
       ),
     ),
   );
@@ -474,42 +474,44 @@ Padding gatherSetTimeWidget(
     ColorScheme colorScheme, BuildContext context, TextTheme textTheme) {
   return Padding(
     padding: EdgeInsets.only(right: 24.w, left: 23.w, bottom: 8.h),
-    child: Container(
-      height: 56.h,
-      width: 295.w,
-      decoration: BoxDecoration(
-        color: colorScheme.primaryContainer,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 20.w,
-          ),
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () {
-              _dateController.selectDate(context);
-            },
-            child: ImageIcon(
+    child: GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        _dateController
+            .selectDate(context)
+            .then((_) => _dateController.selectTime(context));
+      },
+      child: Container(
+        height: 56.h,
+        width: 295.w,
+        decoration: BoxDecoration(
+          color: colorScheme.primaryContainer,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: 20.w,
+            ),
+            ImageIcon(
               AssetImage('assets/icon/calendar.png'),
               size: 24,
               color: colorScheme.tertiaryContainer,
             ),
-          ),
-          SizedBox(
-            width: 25.w,
-          ),
-          GetBuilder<DateController>(builder: (_) {
-            return Text(
-              DateFormat('MM월 dd일 (E) HH:MM').format(//요일 설정 해줘야 함.
-                  _dateController.pickedDate!),
-              style:
-                  textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
-            );
-          })
-        ],
+            SizedBox(
+              width: 25.w,
+            ),
+            GetBuilder<DateController>(builder: (_) {
+              return Text(
+                DateFormat('MM월 dd일 (E) HH:MM').format(//요일 설정 해줘야 함.
+                    _dateController.mergeDateAndTime()),
+                style: textTheme.subtitle2
+                    ?.copyWith(color: colorScheme.onTertiary),
+              );
+            })
+          ],
+        ),
       ),
     ),
   );
@@ -528,6 +530,7 @@ Padding lookupSetPostTypeWidget(ColorScheme colorScheme,
         borderRadius: BorderRadius.circular(8),
       ),
       child: Row(
+        mainAxisAlignment: MainAxisAlignment.start,
         // crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           SizedBox(
@@ -644,10 +647,7 @@ Padding gatherSetPostTypeWidget(ColorScheme colorScheme,
             size: 24,
             color: colorScheme.tertiaryContainer,
           ),
-          SizedBox(width: 74.83.w),
-          SizedBox(
-            width: 16.0.w,
-          ),
+          SizedBox(width: 96.83.w),
           GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () {
@@ -661,7 +661,7 @@ Padding gatherSetPostTypeWidget(ColorScheme colorScheme,
                 postType: controller.mainScreenCurrentTabIndex,
               );
             },
-            child: (controller.mainScreenCurrentTabIndex == 1)
+            child: (controller.mainScreenCurrentTabIndex == 2)
                 ? selectedTabView(
                     viewTitle: '택시',
                     context: context,
@@ -687,7 +687,7 @@ Padding gatherSetPostTypeWidget(ColorScheme colorScheme,
                 postType: controller.mainScreenCurrentTabIndex,
               );
             },
-            child: (controller.mainScreenCurrentTabIndex == 2)
+            child: (controller.mainScreenCurrentTabIndex == 1)
                 ? selectedTabView(
                     viewTitle: '카풀',
                     context: context,
@@ -725,30 +725,40 @@ Padding lookupSetCapacityWidget(
             size: 24,
             color: colorScheme.tertiaryContainer,
           ),
-          SizedBox(width: 76.17.w),
+          SizedBox(width: 80.w),
           IconButton(
+            constraints: BoxConstraints(),
+            padding: EdgeInsets.zero,
             onPressed: () {
-              controller.subtractCapacity();
+              controller.mainScreenSubtractCapacity();
             },
             icon: Image.asset('assets/removeP.png'),
+            iconSize: 26,
             color: (controller.capacity == 1)
                 ? colorScheme.tertiaryContainer
                 : colorScheme.secondary,
           ),
           SizedBox(
-            width: 8.w,
+            width: 12.w,
           ),
-          Text("${controller.capacity}명",
-              style:
-                  textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary)),
+          Container(
+            width: 50.w,
+            alignment: Alignment.center,
+            child: Text("${controller.capacity}명",
+                style: textTheme.subtitle2
+                    ?.copyWith(color: colorScheme.onTertiary)),
+          ),
           SizedBox(
-            width: 8.w,
+            width: 12.w,
           ),
           IconButton(
+            constraints: BoxConstraints(),
+            padding: EdgeInsets.zero,
             onPressed: () {
               controller.addCapacity();
             },
             icon: Image.asset('assets/addPerson.png'),
+            iconSize: 26,
             color: (controller.capacity == 4)
                 ? colorScheme.tertiaryContainer
                 : colorScheme.secondary,
