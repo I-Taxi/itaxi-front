@@ -5,18 +5,12 @@ class Login {
   String? email;
   String? phone;
   String? name;
-  String? bank;
-  String? bankAddress;
-  String? bankOwner;
 
   Login({
     this.uid,
     this.email,
     this.phone,
     this.name,
-    this.bank,
-    this.bankAddress,
-    this.bankOwner,
   });
 
   Login copyWith(
@@ -32,10 +26,7 @@ class Login {
         uid: uid ?? this.uid,
         email: email ?? this.email,
         phone: phone ?? this.phone,
-        name: name ?? this.name,
-        bank: bank ?? this.bank,
-        bankAddress: bankAddress ?? this.bankAddress,
-        bankOwner: bankOwner ?? this.bankOwner,
+      name: name ?? this.name,
       );
   }
 
@@ -44,10 +35,7 @@ class Login {
         uid: ds['uid'],
         email: ds['email'],
         phone: ds['phone'],
-        name: ds['name'],
-        bank: ds['bank'],
-        bankAddress: ds['bankAddress'],
-        bankOwner: ds['bankOwner'],
+      name: ds['name'],
     );
   }
 
@@ -56,10 +44,7 @@ class Login {
         uid: ss.get('uid'),
         email: ss.get('email'),
         phone: ss.get('phone'),
-        name: ss.get('name'),
-        bank: ss.get('bank'),
-        bankAddress: ss.get('bankAddress'),
-        bankOwner: ss.get('bankOwner'),
+      name: ss.get('name'),
     );
   }
 
@@ -69,9 +54,6 @@ class Login {
       'email': email.toString(),
       'phone': phone.toString(),
       'name': name.toString(),
-      'bank': bank.toString(),
-      'bankAddress': bankAddress.toString(),
-      'bankOwner': bankOwner.toString(),
     };
   }
 }

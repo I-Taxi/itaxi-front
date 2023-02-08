@@ -29,8 +29,6 @@ class _UserInfoRefactorScreenState extends State<UserInfoRefactorScreen> {
   void initState() {
     super.initState();
     _phoneController.text = _userController.phone.toString();
-    _bankController.text = _userController.bank.toString();
-    _bankAddressController.text = _userController.bankAddress.toString();
   }
 
   @override

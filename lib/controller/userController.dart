@@ -26,8 +26,6 @@ class UserController extends GetxController {
   late String? uid;
   late int? memberId;
   late String? name;
-  late String? bank;
-  late String? bankAddress;
   late String? phone;
 
   final key = Key.fromUtf8(dotenv.env['ENCRYPTION_KEY'].toString());
@@ -59,14 +57,10 @@ class UserController extends GetxController {
 
   void encryptUser(UserInfoList user) {
     user.phone = encrypter.encrypt(user.phone!, iv: iv).base64;
-    user.bank = encrypter.encrypt(user.bank!, iv: iv).base64;
-    user.bankAddress = encrypter.encrypt(user.bankAddress!, iv: iv).base64;
   }
 
   void decryptUser(UserInfoList user) {
     user.phone = encrypter.decrypt64(user.phone!, iv: iv);
-    user.bank = encrypter.decrypt64(user.bank!, iv: iv);
-    user.bankAddress = encrypter.decrypt64(user.bankAddress!, iv: iv);
   }
 
   UserInfoList userFromJson(json) {
@@ -76,8 +70,6 @@ class UserController extends GetxController {
     uid = userInfo.uid;
     memberId = userInfo.id;
     name = userInfo.name;
-    bank = userInfo.bank;
-    bankAddress = userInfo.bankAddress;
     phone = userInfo.phone;
     return userInfo;
   }
