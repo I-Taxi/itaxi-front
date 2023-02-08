@@ -40,11 +40,13 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
   Post? currentPost = null;
 
   void _scrollDown() {
-    _scrollController.animateTo(
-      _scrollController.position.maxScrollExtent,
-      curve: Curves.easeOut,
-      duration: const Duration(milliseconds: 10),
-    );
+    if (_scrollController.hasClients) {
+      _scrollController.animateTo(
+        _scrollController.position.maxScrollExtent,
+        curve: Curves.easeOut,
+        duration: const Duration(milliseconds: 10),
+      );
+    }
   }
 
   @override
@@ -92,6 +94,7 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
           future: _historyController.history,
           builder: (BuildContext context, snapshot) {
             stopovers = snapshot.data!.stopovers ?? [];
+            if (stopovers.length == 1) print(stopovers[0]!.name!);
             currentPost = snapshot.data;
             return Column(
               children: [
