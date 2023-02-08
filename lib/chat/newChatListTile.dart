@@ -61,7 +61,7 @@ Widget newChatListTile(
               children: [
                 Container(
                   padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 8.h),
-                  constraints: BoxConstraints(minWidth: 36.w),
+                  constraints: BoxConstraints(minWidth: 36.w, maxWidth: 342.w),
                   decoration: BoxDecoration(
                     color: colorScheme.secondary,
                     borderRadius: const BorderRadius.only(
@@ -69,12 +69,10 @@ Widget newChatListTile(
                         bottomLeft: Radius.circular(12),
                         bottomRight: Radius.circular(12)),
                   ),
-                  child: Flexible(
-                    child: SelectableText(
-                      chat.chatData!,
-                      style: textTheme.bodyText1
-                          ?.copyWith(color: colorScheme.primary),
-                    ),
+                  child: SelectableText(
+                    chat.chatData!,
+                    style: textTheme.bodyText1
+                        ?.copyWith(color: colorScheme.primary),
                   ),
                 ),
               ],
@@ -111,7 +109,7 @@ Widget newChatListTile(
               children: [
                 Container(
                   padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 8.h),
-                  constraints: BoxConstraints(minWidth: 36.w),
+                  constraints: BoxConstraints(minWidth: 36.w, maxWidth: 342.w),
                   decoration: BoxDecoration(
                     color: colorScheme.onBackground,
                     borderRadius: const BorderRadius.only(
