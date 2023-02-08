@@ -71,6 +71,9 @@ class _ForgotPwScreenState extends State<ForgotPwScreen> {
                   controller: _emailController,
                   autocorrect: false,
                   autovalidateMode: AutovalidateMode.onUserInteraction,
+                  style: textTheme.bodyText1?.copyWith(
+                    color: colorScheme.tertiaryContainer,
+                  ),
                   decoration: InputDecoration(
                     hintText: "가입한 이메일을 입력해주세요",
                     hintStyle: textTheme.bodyText1?.copyWith(
