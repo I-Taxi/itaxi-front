@@ -60,8 +60,8 @@ class TimelineDetailScreen extends StatelessWidget {
                             return Column(
                               children: [
                                 Container(
-                                  padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 0.h),
-                                  height: 65.h,
+                                  padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 15.h),
+                                  height: 70.h,
                                   color: colorScheme.primary,
                                   child: Row(
                                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -79,7 +79,7 @@ class TimelineDetailScreen extends StatelessWidget {
                                 ),
                                 SizedBox(height: 8.h),
                                 Container(
-                                  height: 500.h,
+                                  height: 490.h,
                                   decoration: BoxDecoration(color: colorScheme.primary),
                                   child: ListView(
                                     children: [
@@ -208,7 +208,7 @@ class TimelineDetailScreen extends StatelessWidget {
                                   ),
                                 ),
                                 SizedBox(
-                                  height: 12.h,
+                                  height: 20.h,
                                 ),
                                 Container(
                                   padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 16.h),
@@ -217,16 +217,14 @@ class TimelineDetailScreen extends StatelessWidget {
                                       backgroundColor: colorScheme.secondaryContainer,
                                       elevation: 1.0,
                                       minimumSize: Size.fromHeight(57.h),
-                                      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8))),
+                                      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
                                     ),
                                     onPressed: () {
                                       //TODO: 톡방으로 이동
                                     },
                                     child: Text(
                                       '톡방으로 이동',
-                                      style: textTheme.subtitle2?.copyWith(
-                                        color: colorScheme.primary,
-                                      ),
+                                      style: textTheme.subtitle2?.copyWith(color: colorScheme.primary),
                                     ),
                                   ),
                                 ),
