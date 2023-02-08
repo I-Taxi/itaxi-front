@@ -12,13 +12,7 @@ import 'dart:convert';
 import 'package:itaxi/model/user.dart';
 import 'package:itaxi/signInUp/signInScreen.dart';
 
-// enum SignInState {
-//   signedIn,
-//   signedOut,
-// }
-
 class SignUpController extends GetxController {
-  late String studentId;
   late String customId;
   String customPw = ""; // 나중에 수정 요망.
   late String name;
@@ -40,16 +34,10 @@ class SignUpController extends GetxController {
 
   void encryptUser(Login login) {
     login.phone = encrypter.encrypt(login.phone!, iv: iv).base64;
-    login.bank = encrypter.encrypt(login.bank!, iv: iv).base64;
-    login.bankAddress = encrypter.encrypt(login.bankAddress!, iv: iv).base64;
-    login.bankOwner = encrypter.encrypt(login.bankOwner!, iv: iv).base64;
   }
 
   void decryptUser(Login login) {
     login.phone = encrypter.decrypt64(login.phone!, iv: iv);
-    login.bank = encrypter.decrypt64(login.bank!, iv: iv);
-    login.bankAddress = encrypter.decrypt64(login.bankAddress!, iv: iv);
-    login.bankOwner = encrypter.decrypt64(login.bankOwner!, iv: iv);
   }
 
   Future<http.Response> fetchAddUser({required Login login}) async {
@@ -85,9 +73,6 @@ class SignUpController extends GetxController {
         email: FirebaseAuth.instance.currentUser!.email.toString(),
         phone: phone,
         name: name,
-        bank: "1",
-        bankAddress: "1",
-        bankOwner: "2",
       );
       encryptUser(login);
       await fetchAddUser(login: login);
@@ -101,34 +86,5 @@ class SignUpController extends GetxController {
         throw Exception(e);
       }
     }
-    // SignInController의 SignUp 함수 만들어서 적용.
-    // pop
-    // Main Screen 또는 SignInScreen으로.
   }
-
-  // 구글 로그인 (참고용), google_sign_in 패키지 필요
-  // Future<void> signInWithGoogle() async {
-  //   UserController _userController = Get.find<UserController>();
-
-  //   final GoogleSignInAccount? googleUser = await GoogleSignIn().signIn();
-  //   final GoogleSignInAuthentication? googleAuth =
-  //   await googleUser?.authentication;
-  //   final credential = GoogleAuthProvider.credential(
-  //     accessToken: googleAuth?.accessToken,
-  //     idToken: googleAuth?.idToken,
-  //   );
-
-  //   await FirebaseAuth.instance.signInWithCredential(credential);
-  //   await UserRepository().setUser();
-  //   await _userController.setUser();
-  //   loginState = LoginState.loggedGoogleIn;
-
-  //   update();
-  // }
-
-  // Future<void> signOutWithGoogle() async {
-  //   FirebaseAuth.instance.signOut();
-  //   loginState = LoginState.loggedOut;
-  //   update();
-  // }
 }
