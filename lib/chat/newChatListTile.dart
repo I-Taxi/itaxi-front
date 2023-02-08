@@ -109,7 +109,7 @@ Widget newChatListTile(
               children: [
                 Container(
                   padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 8.h),
-                  constraints: BoxConstraints(minWidth: 36.w),
+                  constraints: BoxConstraints(minWidth: 36.w, maxWidth: 342.w),
                   decoration: BoxDecoration(
                     color: colorScheme.onBackground,
                     borderRadius: const BorderRadius.only(
