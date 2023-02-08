@@ -6,7 +6,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:itaxi/controller/historyController.dart';
+import 'package:itaxi/controller/navigationController.dart';
 import 'package:itaxi/controller/timelineTabViewController.dart';
+import 'package:itaxi/home.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/timeline/historyListContainer.dart';
 import 'package:itaxi/timeline/timelineSoonInfoCard.dart';
@@ -23,22 +25,27 @@ class _TimelineScreenState extends State<TimelineScreen> {
   TimelineTabViewController _timelineTabViewController = Get.put(TimelineTabViewController());
   final HistoryController _historyController = Get.put(HistoryController());
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-    
+  final NavigationController _navController = Get.put(NavigationController());
+
   int catchSoonIndex(List<Post>? posts) {
-    int index = 0;
+    int index = -1;
     for (int i = 0; i < posts!.length; i++) {
       index = i;
       if (DateTime.now().difference(DateTime.parse(posts[i].deptTime!)).isNegative == false) {
         break;
       }
     }
+    if (index == 0 && DateTime.now().difference(DateTime.parse(posts[index].deptTime!)).isNegative == true) {
+      return 0;
+    }
+
     return index - 1;
   }
 
   Container makeSoonCard(BuildContext context, List<Post>? posts) {
     int index = catchSoonIndex(posts);
 
-    if (index == -1) {
+    if (index == -2 || index == -1) {
       return Container(padding: EdgeInsets.fromLTRB(26.w, 20.h, 26.w, 0.h));
     } else {
       return Container(
@@ -55,7 +62,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    
+
     return Scaffold(
       appBar: AppBar(
         elevation: 0.0,
@@ -138,12 +145,11 @@ class _TimelineScreenState extends State<TimelineScreen> {
                               height: 36.h,
                             ),
                             OutlinedButton(
-                              onPressed: () {},
-                              style: OutlinedButton.styleFrom(side: BorderSide(width: 0, color: colorScheme.onBackground)),
-                              child: Image.asset(
-                                width: 198,
-                                'assets/button/add_timeline.png',
-                              ),
+                              onPressed: () {
+                                _navController.changeIndex(0);
+                              },
+                              style: OutlinedButton.styleFrom(minimumSize: Size(198.w, 50.h), side: BorderSide(width: 1, color: colorScheme.onPrimaryContainer), shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8)))),
+                              child: Text('동료 구하러 가기', style: textTheme.subtitle1?.copyWith(color: colorScheme.onPrimaryContainer)),
                             )
                           ],
                         );
