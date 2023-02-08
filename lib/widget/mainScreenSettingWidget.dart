@@ -120,7 +120,7 @@ Padding lookupSetDepDstWidget(
               _placeController.swapDepAndDst();
             },
             icon: Image.asset('assets/change.png'),
-            iconSize: 36,
+            iconSize: 35,
             color: colorScheme.tertiary,
           ),
         ],

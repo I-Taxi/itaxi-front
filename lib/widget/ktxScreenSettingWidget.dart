@@ -120,7 +120,7 @@ Padding lookupSetDepDstWidget(
               _ktxPlaceController.swapDepAndDst();
             },
             icon: Image.asset('assets/change.png'),
-            iconSize: 36,
+            iconSize: 35,
             color: colorScheme.tertiary,
           ),
         ],
@@ -219,7 +219,7 @@ Padding gatherSetDepDstWidget(
               _ktxPlaceController.swapDepAndDst();
             },
             icon: Image.asset('assets/change.png'),
-            iconSize: 36,
+            iconSize: 35,
             color: colorScheme.tertiary,
           ),
         ],
