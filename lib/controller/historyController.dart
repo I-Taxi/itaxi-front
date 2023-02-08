@@ -1,23 +1,34 @@
 import 'dart:convert';
 
 import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:encrypt/encrypt.dart';
+
 import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/model/post.dart';
+import 'package:itaxi/model/joiner.dart';
 
 class HistoryController extends GetxController {
   UserController _userController = Get.put(UserController());
+
+  final key = Key.fromUtf8(dotenv.env['ENCRYPTION_KEY'].toString());
+  final iv = IV.fromLength(16);
+
+  late final Encrypter encrypter;
+
   late Future<List<Post>> historys;
   late Future<Post> history;
   late List<Post> historiesWithoutFuture;
+
+  bool loaded = false;
 
   @override
   Future<void> onInit() async {
     super.onInit();
     historys = fetchHistorys();
     historiesWithoutFuture = await historys;
+    encrypter = Encrypter(AES(key));
   }
 
   List<Post> HistorysfromJson(json) {
@@ -30,7 +41,11 @@ class HistoryController extends GetxController {
   }
 
   Post historyfromJson(json) {
-    return Post.fromJoinerAndStopoversDocs(json);
+    Post result = Post.fromJoinerAndStopoversDocs(json);
+    for (Joiner joiner in result.joiners!) {
+      joiner.memberPhone = encrypter.decrypt64(joiner.memberPhone!, iv: iv);
+    }
+    return result;
   }
 
   Future<void> getHistorys() async {
@@ -39,7 +54,9 @@ class HistoryController extends GetxController {
   }
 
   Future<void> getHistoryInfo({required int postId}) async {
+    loaded = false;
     history = fetchHistoryInfo(postId: postId);
+    loaded = true;
     update();
   }
 

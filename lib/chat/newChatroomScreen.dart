@@ -90,258 +90,281 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
     return Scaffold(
       key: _scaffoldKey,
       endDrawer: Drawer(
-        child: FutureBuilder<Post>(
-          future: _historyController.history,
-          builder: (BuildContext context, snapshot) {
-            stopovers = snapshot.data!.stopovers ?? [];
-            if (stopovers.length == 1) print(stopovers[0]!.name!);
-            currentPost = snapshot.data;
-            return Column(
-              children: [
-                Container(
-                  height: 158.h,
-                  width: 325.w,
-                  decoration: BoxDecoration(
-                    color: colorScheme.secondary,
-                  ),
-                  child: Column(children: [
-                    SizedBox(
-                      height: 44.h,
-                    ),
-                    Padding(
-                        padding: EdgeInsets.fromLTRB(24.w, 24.h, 24.w, 36.h),
-                        child: Expanded(
-                          child: Row(
-                            children: [
-                              Expanded(
-                                child: Text(
-                                  "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} #${DateFormat('Md').format(DateTime.parse(time))}",
-                                  style: textTheme.subtitle1?.copyWith(
-                                    color: colorScheme.primary,
+        child: GetBuilder<HistoryController>(builder: (_) {
+          if (_historyController.loaded) {
+            return FutureBuilder<Post>(
+              future: _historyController.history,
+              builder: (BuildContext context, snapshot) {
+                stopovers = snapshot.data!.stopovers ?? [];
+                if (stopovers.length == 1) print(stopovers[0]!.name!);
+                currentPost = snapshot.data;
+                return Column(
+                  children: [
+                    Container(
+                      height: 158.h,
+                      width: 325.w,
+                      decoration: BoxDecoration(
+                        color: colorScheme.secondary,
+                      ),
+                      child: Column(children: [
+                        SizedBox(
+                          height: 44.h,
+                        ),
+                        Padding(
+                            padding:
+                                EdgeInsets.fromLTRB(24.w, 24.h, 24.w, 36.h),
+                            child: Row(
+                              children: [
+                                Expanded(
+                                  child: Text(
+                                    "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} #${DateFormat('Md').format(DateTime.parse(time))}",
+                                    style: textTheme.subtitle1?.copyWith(
+                                      color: colorScheme.primary,
+                                    ),
                                   ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 8.w,
-                              ),
-                              IconButton(
-                                onPressed: () {},
-                                icon: const Icon(Icons.edit_outlined),
-                                iconSize: Platform.isIOS ? 18 : 16,
-                                color: colorScheme.primary,
-                              ),
-                            ],
-                          ),
-                        ))
-                  ]),
-                ),
-                Container(
-                  width: 325.w,
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(24.w, 24.h, 24.w, 36.h),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "출발/도착지",
-                            style: textTheme.subtitle2?.copyWith(),
-                          ),
-                          SizedBox(
-                            height: 24.h,
-                          ),
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.location_on_outlined,
-                                size: 18,
-                              ),
-                              SizedBox(
-                                width: 5.w,
-                              ),
-                              Text(
-                                  _chatRoomController.post.departure!.name ??
-                                      'null',
-                                  style: textTheme.bodyText1?.copyWith())
-                            ],
-                          ),
-                          if (stopovers.isNotEmpty)
-                            for (int i = 0; i < stopovers.length; i++)
-                              Column(
-                                children: [
-                                  SizedBox(
-                                    height: 8.h,
-                                  ),
-                                  Row(
-                                    children: [
-                                      SizedBox(
-                                        width: 23.w,
-                                        height: 18.h,
-                                      ),
-                                      Text(
-                                        '경유',
-                                        style: textTheme.bodyText1?.copyWith(
-                                            color:
-                                                colorScheme.tertiaryContainer),
-                                      ),
-                                      SizedBox(
-                                        width: 16.w,
-                                      ),
-                                      Text(
-                                        stopovers[i]!.name ?? '',
-                                        style: textTheme.bodyText1?.copyWith(
-                                            color:
-                                                colorScheme.tertiaryContainer),
-                                      ),
-                                    ],
-                                  ),
-                                  if ((i + 1).isEqual(stopovers.length))
-                                    SizedBox(
-                                      height: 8.h,
-                                    ),
-                                ],
-                              ),
-                          if (stopovers.isEmpty)
-                            SizedBox(
-                              height: 24.h,
-                            ),
-                          Row(
-                            children: [
-                              const Icon(
-                                Icons.location_on_outlined,
-                                size: 18,
-                              ),
-                              SizedBox(
-                                width: 5.w,
-                              ),
-                              Text(
-                                  _chatRoomController.post.destination!.name ??
-                                      'null',
-                                  style: textTheme.bodyText1?.copyWith())
-                            ],
-                          ),
-                        ]),
-                  ),
-                ),
-                const Divider(
-                  thickness: 0.5,
-                ),
-                Container(
-                  child: Padding(
-                    padding: EdgeInsets.fromLTRB(24.w, 24.h, 24.w, 36.h),
-                    child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            "대화상대",
-                            style: textTheme.subtitle2?.copyWith(),
-                          ),
-                          if (snapshot.hasData)
-                            for (int i = 0;
-                                i < snapshot.data!.joiners!.length;
-                                i++)
-                              Column(
-                                children: [
-                                  SizedBox(
-                                    height: 24.h,
-                                  ),
-                                  Row(
-                                    children: [
-                                      (snapshot.data!.joiners![i].owner ??
-                                              false)
-                                          ? const Icon(
-                                              Icons.star,
-                                              size: 18,
-                                              color: (Colors.yellow),
-                                            )
-                                          : SizedBox(),
-                                      SizedBox(
-                                        width: 2.w,
-                                      ),
-                                      Text(
-                                          snapshot.data!.joiners![i]
-                                                  .memberName ??
-                                              '',
-                                          style:
-                                              textTheme.bodyText1?.copyWith()),
-                                      const Spacer(),
-                                      SizedBox(
-                                        width: 16.w,
-                                      ),
-                                      InkWell(
-                                        child: Image.asset(
-                                          'assets/button/phone.png',
-                                          width: 24.w,
-                                          height: 24.h,
-                                          color: colorScheme.tertiaryContainer,
-                                        ),
-                                        onTap: () async {
-                                          final Uri launchUri = Uri.parse(
-                                              'tel:${snapshot.data!.joiners![i].memberPhone}');
-                                          if (await canLaunchUrl(launchUri)) {
-                                            await launchUrl(launchUri);
-                                          } else {
-                                            throw Exception('Failed call');
-                                          }
-                                        },
-                                      ),
-                                      SizedBox(
-                                        width: 16.w,
-                                      ),
-                                      InkWell(
-                                        child: Image.asset(
-                                          'assets/button/message.png',
-                                          width: 24.w,
-                                          height: 24.h,
-                                        ),
-                                        onTap: () async {
-                                          final Uri launchUri = Uri.parse(
-                                              'sms:${snapshot.data!.joiners![i].memberPhone}');
-                                          if (await canLaunchUrl(launchUri)) {
-                                            await launchUrl(launchUri);
-                                          } else {
-                                            throw Exception('Failed sms');
-                                          }
-                                        },
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                          SizedBox(),
-                        ]),
-                  ),
-                ),
-                const Divider(
-                  thickness: 0.5,
-                ),
-                const Spacer(),
-                Align(
-                  alignment: FractionalOffset.bottomLeft,
-                  child: Padding(
-                    padding: EdgeInsets.only(bottom: 43.h, left: 30.w),
-                    child: InkWell(
-                      onTap: () async {
-                        showMainDialog(context, '방 나가기', '방을 나가시겠습니까?',
-                            _postController, _historyController, currentPost!);
-                      },
-                      child: Row(children: [
-                        Image.asset('assets/icon/icon-LogOut.png'),
-                        SizedBox(
-                          width: 5.w,
-                        ),
-                        Text(
-                          "방 나가기",
-                          style: textTheme.bodyText2
-                              ?.copyWith(color: colorScheme.tertiaryContainer),
-                        )
+                                SizedBox(
+                                  width: 8.w,
+                                ),
+                                IconButton(
+                                  onPressed: () {},
+                                  icon: const Icon(Icons.edit_outlined),
+                                  iconSize: Platform.isIOS ? 18 : 16,
+                                  color: colorScheme.primary,
+                                ),
+                              ],
+                            ))
                       ]),
                     ),
-                  ),
-                ),
-              ],
+                    Container(
+                      width: 325.w,
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(24.w, 24.h, 24.w, 36.h),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "출발/도착지",
+                                style: textTheme.subtitle2?.copyWith(),
+                              ),
+                              SizedBox(
+                                height: 24.h,
+                              ),
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.location_on_outlined,
+                                    size: 18,
+                                  ),
+                                  SizedBox(
+                                    width: 5.w,
+                                  ),
+                                  Text(
+                                      _chatRoomController
+                                              .post.departure!.name ??
+                                          'null',
+                                      style: textTheme.bodyText1?.copyWith())
+                                ],
+                              ),
+                              if (stopovers.isNotEmpty)
+                                for (int i = 0; i < stopovers.length; i++)
+                                  Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 8.h,
+                                      ),
+                                      Row(
+                                        children: [
+                                          SizedBox(
+                                            width: 23.w,
+                                            height: 18.h,
+                                          ),
+                                          Text(
+                                            '경유',
+                                            style: textTheme.bodyText1
+                                                ?.copyWith(
+                                                    color: colorScheme
+                                                        .tertiaryContainer),
+                                          ),
+                                          SizedBox(
+                                            width: 16.w,
+                                          ),
+                                          Text(
+                                            stopovers[i]!.name ?? '',
+                                            style: textTheme.bodyText1
+                                                ?.copyWith(
+                                                    color: colorScheme
+                                                        .tertiaryContainer),
+                                          ),
+                                        ],
+                                      ),
+                                      if ((i + 1).isEqual(stopovers.length))
+                                        SizedBox(
+                                          height: 8.h,
+                                        ),
+                                    ],
+                                  ),
+                              if (stopovers.isEmpty)
+                                SizedBox(
+                                  height: 24.h,
+                                ),
+                              Row(
+                                children: [
+                                  const Icon(
+                                    Icons.location_on_outlined,
+                                    size: 18,
+                                  ),
+                                  SizedBox(
+                                    width: 5.w,
+                                  ),
+                                  Text(
+                                      _chatRoomController
+                                              .post.destination!.name ??
+                                          'null',
+                                      style: textTheme.bodyText1?.copyWith())
+                                ],
+                              ),
+                            ]),
+                      ),
+                    ),
+                    const Divider(
+                      thickness: 0.5,
+                    ),
+                    Container(
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(24.w, 24.h, 24.w, 36.h),
+                        child: Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                "대화상대",
+                                style: textTheme.subtitle2?.copyWith(),
+                              ),
+                              if (snapshot.hasData)
+                                for (int i = 0;
+                                    i < snapshot.data!.joiners!.length;
+                                    i++)
+                                  Column(
+                                    children: [
+                                      SizedBox(
+                                        height: 24.h,
+                                      ),
+                                      Row(
+                                        children: [
+                                          (snapshot.data!.joiners![i].owner ??
+                                                  false)
+                                              ? const Icon(
+                                                  Icons.star,
+                                                  size: 18,
+                                                  color: (Colors.yellow),
+                                                )
+                                              : SizedBox(),
+                                          SizedBox(
+                                            width: 2.w,
+                                          ),
+                                          Text(
+                                              snapshot.data!.joiners![i]
+                                                      .memberName ??
+                                                  '',
+                                              style: textTheme.bodyText1
+                                                  ?.copyWith()),
+                                          const Spacer(),
+                                          SizedBox(
+                                            width: 16.w,
+                                          ),
+                                          InkWell(
+                                            child: Image.asset(
+                                              'assets/button/phone.png',
+                                              width: 24.w,
+                                              height: 24.h,
+                                              color:
+                                                  colorScheme.tertiaryContainer,
+                                            ),
+                                            onTap: () async {
+                                              final Uri launchUri = Uri.parse(
+                                                  'tel:${snapshot.data!.joiners![i].memberPhone}');
+                                              if (await canLaunchUrl(
+                                                  launchUri)) {
+                                                await launchUrl(launchUri);
+                                              } else {
+                                                throw Exception('Failed call');
+                                              }
+                                            },
+                                          ),
+                                          SizedBox(
+                                            width: 16.w,
+                                          ),
+                                          InkWell(
+                                            child: Image.asset(
+                                              'assets/button/message.png',
+                                              width: 24.w,
+                                              height: 24.h,
+                                            ),
+                                            onTap: () async {
+                                              final Uri launchUri = Uri.parse(
+                                                  'sms:${snapshot.data!.joiners![i].memberPhone}');
+                                              if (await canLaunchUrl(
+                                                  launchUri)) {
+                                                await launchUrl(launchUri);
+                                              } else {
+                                                throw Exception('Failed sms');
+                                              }
+                                            },
+                                          )
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                              SizedBox(),
+                            ]),
+                      ),
+                    ),
+                    const Divider(
+                      thickness: 0.5,
+                    ),
+                    const Spacer(),
+                    Align(
+                      alignment: FractionalOffset.bottomLeft,
+                      child: Padding(
+                        padding: EdgeInsets.only(bottom: 43.h, left: 30.w),
+                        child: InkWell(
+                          onTap: () async {
+                            showMainDialog(
+                                context,
+                                '방 나가기',
+                                '방을 나가시겠습니까?',
+                                _postController,
+                                _historyController,
+                                currentPost!);
+                          },
+                          child: Row(children: [
+                            Image.asset('assets/icon/icon-LogOut.png'),
+                            SizedBox(
+                              width: 5.w,
+                            ),
+                            Text(
+                              "방 나가기",
+                              style: textTheme.bodyText2?.copyWith(
+                                  color: colorScheme.tertiaryContainer),
+                            )
+                          ]),
+                        ),
+                      ),
+                    ),
+                  ],
+                );
+              },
             );
-          },
-        ),
+          } else {
+            return Container(
+              height: 158.h,
+              width: 325.w,
+              decoration: BoxDecoration(
+                color: colorScheme.secondary,
+              ),
+            );
+          }
+        }),
       ),
       body: Column(
         children: [
