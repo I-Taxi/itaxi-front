@@ -6,9 +6,9 @@ import 'package:itaxi/settings/settingScreen.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:itaxi/controller/addPostController.dart';
+import 'package:itaxi/controller/addKtxPostController.dart';
 import 'package:itaxi/controller/dateController.dart';
-import 'package:itaxi/controller/placeController.dart';
+import 'package:itaxi/controller/ktxPlaceController.dart';
 import 'package:itaxi/controller/ktxPostController.dart';
 import 'package:itaxi/controller/screenController.dart';
 import 'package:itaxi/model/post.dart';
@@ -19,7 +19,7 @@ import 'package:itaxi/widget/tabView.dart';
 import 'package:itaxi/controller/userController.dart';
 
 import 'package:itaxi/placeSearch/searchScreen.dart';
-import 'package:itaxi/placeSearch/placeSearchController.dart';
+import 'package:itaxi/placeSearch/ktxPlaceSearchController.dart';
 import 'package:itaxi/widget/postTypeToggleButton.dart';
 import 'package:itaxi/widget/ktxScreenSettingWidget.dart';
 
@@ -32,26 +32,26 @@ class KtxScreen extends StatefulWidget {
 
 class _KtxScreenState extends State<KtxScreen> {
   ScreenController _screenController = Get.put(ScreenController());
-  AddPostController _addPostController = Get.put(AddPostController());
+  AddKtxPostController _addKtxPostController = Get.put(AddKtxPostController());
   KtxPostController _ktxPostController = Get.put(KtxPostController());
-  PlaceController _placeController = Get.put(PlaceController());
+  KtxPlaceController _ktxPlaceController = Get.put(KtxPlaceController());
   DateController _dateController = Get.put(DateController());
   UserController _userController = Get.put(UserController());
-  late PlaceSearchController _placeSearchController;
+  late KtxPlaceSearchController _ktxPlaceSearchController;
 
   @override
   void initState() {
     super.initState();
     _userController.getUsers();
     _ktxPostController.getPosts(
-      depId: _placeController.dep?.id,
-      dstId: _placeController.dst?.id,
+      depId: _ktxPlaceController.dep?.id,
+      dstId: _ktxPlaceController.dst?.id,
       time: _dateController.formattingDateTime(
         _dateController.mergeDateAndTime(),
       ),
     );
-    _placeController.getPlaces().then((_) {
-      _placeSearchController = Get.put(PlaceSearchController());
+    _ktxPlaceController.getPlaces().then((_) {
+      _ktxPlaceSearchController = Get.put(KtxPlaceSearchController());
       _screenController.setKtxScreenLoaded();
     });
   }
@@ -73,7 +73,7 @@ class _KtxScreenState extends State<KtxScreen> {
               )),
           Padding(
               padding: EdgeInsets.only(left: 24.h, top: 55.63.h, right: 26.4.w),
-              child: GetBuilder<PlaceController>(builder: (_) {
+              child: GetBuilder<KtxPlaceController>(builder: (_) {
                 return Column(
                   children: [
                     Column(
@@ -121,7 +121,7 @@ class _KtxScreenState extends State<KtxScreen> {
                                       height: 44.h,
                                       decoration: BoxDecoration(
                                         color: colorScheme.surfaceVariant,
-                                        borderRadius: BorderRadius.only(
+                                        borderRadius: const BorderRadius.only(
                                             topRight: Radius.circular(24),
                                             bottomLeft: Radius.circular(24),
                                             bottomRight: Radius.circular(24)),
@@ -227,13 +227,8 @@ class _KtxScreenState extends State<KtxScreen> {
                                             context: context,
                                             controller: controller),
                                       ),
-                                      _placeController.hasStopOver
-                                          ? gatherSetDepDstStopOverWidget(
-                                              colorScheme,
-                                              textTheme,
-                                              controller)
-                                          : gatherSetDepDstWidget(colorScheme,
-                                              textTheme, controller),
+                                      gatherSetDepDstWidget(
+                                          colorScheme, textTheme, controller),
                                       gatherSetTimeWidget(
                                           colorScheme, context, textTheme),
                                       controller.discountSelect

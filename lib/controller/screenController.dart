@@ -59,6 +59,12 @@ class ScreenController extends GetxController {
 
   void changeMainScreenToggleIndex(int index) {
     mainScreenCurrentToggle = index;
+    if (capacity < 2) {
+      capacity = 2;
+    }
+    if (mainScreenCurrentTabIndex == 0) {
+      mainScreenCurrentTabIndex = 2;
+    }
     update();
   }
 
@@ -84,10 +90,31 @@ class ScreenController extends GetxController {
     }
   }
 
-  void subtractCapacity() {
-    if (capacity > 2) {
-      capacity--;
-      update();
+  void mainScreenSubtractCapacity() {
+    if (mainScreenCurrentToggle == 0) {
+      if (capacity > 1) {
+        capacity--;
+        update();
+      }
+    } else {
+      if (capacity > 2) {
+        capacity--;
+        update();
+      }
+    }
+  }
+
+  void ktxScreenSubtractCapacity() {
+    if (ktxScreenCurrentToggle == 0) {
+      if (capacity > 1) {
+        capacity--;
+        update();
+      }
+    } else {
+      if (capacity > 2) {
+        capacity--;
+        update();
+      }
     }
   }
 }

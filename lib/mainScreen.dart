@@ -186,7 +186,8 @@ class _MainScreenState extends State<MainScreen> {
                           ),
                     controller.mainScreenLoaded
                         ? Container(
-                            height: (!_placeController.hasStopOver)
+                            height: (!_placeController.hasStopOver ||
+                                    controller.mainScreenCurrentToggle == 0)
                                 ? 433.63.h
                                 : 489.63.h,
                             width: 342.w,
@@ -262,7 +263,7 @@ class _MainScreenState extends State<MainScreen> {
                                 ]),
                           ),
                     SizedBox(
-                      height: (!_placeController.hasStopOver) ? 60.h : 4.h,
+                      height: (!_placeController.hasStopOver || controller.mainScreenCurrentToggle == 0) ? 60.h : 4.h,
                     ),
                     if (controller.mainScreenLoaded)
                       controller.mainScreenCurrentToggle == 0
