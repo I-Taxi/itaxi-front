@@ -9,7 +9,7 @@ import 'package:intl/intl.dart';
 import 'package:itaxi/controller/addPostController.dart';
 import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/controller/placeController.dart';
-import 'package:itaxi/controller/postController.dart';
+import 'package:itaxi/controller/ktxPostController.dart';
 import 'package:itaxi/controller/screenController.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/widget/postListTile.dart';
@@ -21,43 +21,38 @@ import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/placeSearch/searchScreen.dart';
 import 'package:itaxi/placeSearch/placeSearchController.dart';
 import 'package:itaxi/widget/postTypeToggleButton.dart';
-import 'package:itaxi/widget/mainScreenSettingWidget.dart';
+import 'package:itaxi/widget/ktxScreenSettingWidget.dart';
 
-class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
+class KtxScreen extends StatefulWidget {
+  const KtxScreen({Key? key}) : super(key: key);
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  State<KtxScreen> createState() => _KtxScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _KtxScreenState extends State<KtxScreen> {
   ScreenController _screenController = Get.put(ScreenController());
   AddPostController _addPostController = Get.put(AddPostController());
-  PostController _postController = Get.put(PostController());
+  KtxPostController _ktxPostController = Get.put(KtxPostController());
   PlaceController _placeController = Get.put(PlaceController());
   DateController _dateController = Get.put(DateController());
   UserController _userController = Get.put(UserController());
   late PlaceSearchController _placeSearchController;
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
-  String e = ""; // 요일 변수
-  int personCount = 1; // 인원수
 
   @override
   void initState() {
     super.initState();
     _userController.getUsers();
-    _postController.getPosts(
+    _ktxPostController.getPosts(
       depId: _placeController.dep?.id,
       dstId: _placeController.dst?.id,
       time: _dateController.formattingDateTime(
         _dateController.mergeDateAndTime(),
       ),
-      postType: _screenController.mainScreenCurrentTabIndex,
     );
     _placeController.getPlaces().then((_) {
       _placeSearchController = Get.put(PlaceSearchController());
-      _screenController.setMainScreenLoaded();
+      _screenController.setKtxScreenLoaded();
     });
   }
 
@@ -105,7 +100,7 @@ class _MainScreenState extends State<MainScreen> {
                               },
                               icon: Icon(Icons.menu),
                               iconSize: 24.w,
-                            )
+                            ),
                           ],
                         ),
                         controller.hasNotice
@@ -167,7 +162,7 @@ class _MainScreenState extends State<MainScreen> {
                                   child: SizedBox(
                                     height: 30.h,
                                     child: Text(
-                                      "어디든지 부담없이 이동하세요!",
+                                      "어디든지 자유롭게 이동하세요!",
                                       style: textTheme.subtitle1?.copyWith(
                                         color: colorScheme.primary,
                                       ),
@@ -179,16 +174,18 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                     controller.hasNotice
                         ? SizedBox(
-                            height: 40.37.h,
+                            height: 40.h,
                           )
                         : SizedBox(
-                            height: 52.37.h,
+                            height: 52.h,
                           ),
-                    controller.mainScreenLoaded
+                    controller.ktxScreenLoaded
                         ? Container(
-                            height: (!_placeController.hasStopOver)
-                                ? 433.63.h
-                                : 489.63.h,
+                            height: (controller.ktxScreenCurrentToggle == 1)
+                                ? (controller.discountSelect)
+                                    ? 496.h
+                                    : 446.h
+                                : 382.h,
                             width: 342.w,
                             decoration: BoxDecoration(
                                 color: colorScheme.primary,
@@ -199,7 +196,7 @@ class _MainScreenState extends State<MainScreen> {
                                       blurRadius: 40,
                                       offset: Offset(2, 4))
                                 ]),
-                            child: controller.mainScreenCurrentToggle == 0
+                            child: controller.ktxScreenCurrentToggle == 0
                                 ? Column(
                                     children: [
                                       Padding(
@@ -207,7 +204,7 @@ class _MainScreenState extends State<MainScreen> {
                                             left: 23.w,
                                             right: 23.w,
                                             top: 20.63.h),
-                                        child: postTypeToggleButton(
+                                        child: ktxPostTypeToggleButton(
                                             context: context,
                                             controller: controller),
                                       ),
@@ -215,8 +212,6 @@ class _MainScreenState extends State<MainScreen> {
                                           colorScheme, textTheme, controller),
                                       lookupSetTimeWidget(
                                           colorScheme, context, textTheme),
-                                      lookupSetPostTypeWidget(
-                                          colorScheme, controller, context),
                                       lookupSetCapacityWidget(
                                           colorScheme, controller, textTheme)
                                     ],
@@ -228,7 +223,7 @@ class _MainScreenState extends State<MainScreen> {
                                             left: 23.w,
                                             right: 23.w,
                                             top: 20.63.h),
-                                        child: postTypeToggleButton(
+                                        child: ktxPostTypeToggleButton(
                                             context: context,
                                             controller: controller),
                                       ),
@@ -241,8 +236,11 @@ class _MainScreenState extends State<MainScreen> {
                                               textTheme, controller),
                                       gatherSetTimeWidget(
                                           colorScheme, context, textTheme),
-                                      gatherSetPostTypeWidget(
-                                          colorScheme, controller, context),
+                                      controller.discountSelect
+                                          ? discountActivatedWidget(colorScheme,
+                                              controller, textTheme)
+                                          : discountWidget(colorScheme,
+                                              controller, textTheme),
                                       lookupSetCapacityWidget(
                                           colorScheme, controller, textTheme)
                                     ],
@@ -262,10 +260,14 @@ class _MainScreenState extends State<MainScreen> {
                                 ]),
                           ),
                     SizedBox(
-                      height: (!_placeController.hasStopOver) ? 60.h : 4.h,
+                      height: (controller.ktxScreenCurrentToggle == 1)
+                          ? (controller.discountSelect)
+                              ? 1.h
+                              : 47.h
+                          : 112.h,
                     ),
-                    if (controller.mainScreenLoaded)
-                      controller.mainScreenCurrentToggle == 0
+                    if (controller.ktxScreenLoaded)
+                      controller.ktxScreenCurrentToggle == 0
                           ? lookupButton(textTheme, colorScheme)
                           : gatherButton(
                               textTheme, colorScheme, controller, context),

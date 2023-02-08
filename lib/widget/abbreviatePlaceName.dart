@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-String AbbreviatePlaceName(String? place) {
+String abbreviatePlaceName(String? place) {
   if (place == '그할마(CU장량그랜드점)') {
     return '그할마';
   } else if (place == '야옹아 멍멍해봐') {

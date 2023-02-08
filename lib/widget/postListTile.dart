@@ -13,7 +13,6 @@ import 'package:itaxi/model/chat.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/widget/snackBar.dart';
 
-import 'package:itaxi/widget/soonTimelineListTile.dart';
 import 'package:itaxi/controller/screenController.dart';
 import 'package:itaxi/controller/placeController.dart';
 import 'package:itaxi/controller/dateController.dart';
@@ -69,7 +68,7 @@ Widget postListTile({
                     width: 360.w,
                     height: post.joiners![i].owner! ? 300.h : 320.h,
                     padding:
-                    EdgeInsets.fromLTRB(28.0.w, 32.0.h, 28.0.w, 12.0.h),
+                        EdgeInsets.fromLTRB(28.0.w, 32.0.h, 28.0.w, 12.0.h),
                     child: Column(
                       children: [
                         Center(
@@ -88,11 +87,11 @@ Widget postListTile({
                           children: [
                             post.joiners![i].owner!
                                 ? Text(
-                                  ownerInfo,
-                                  style: textTheme.bodyText1?.copyWith(
-                                    color: colorScheme.tertiary,
-                                  ),
-                                )
+                                    ownerInfo,
+                                    style: textTheme.bodyText1?.copyWith(
+                                      color: colorScheme.tertiary,
+                                    ),
+                                  )
                                 : Text(
                                     nonOnwerInfo,
                                     style: textTheme.bodyText1?.copyWith(
@@ -230,14 +229,14 @@ Widget postListTile({
       child: Stack(
         children: [
           Image(
-              image: AssetImage('assets/ListView_Taxi_Car.png'),
+            image: AssetImage('assets/ListView_Taxi_Car.png'),
           ),
           Row(
             children: [
               Container(
                 width: 150.w,
                 height: 120.h,
-                margin: EdgeInsets.fromLTRB(36.5.w,30.h, 64.5.w, 20.h),
+                margin: EdgeInsets.fromLTRB(36.5.w, 30.h, 64.5.w, 20.h),
                 decoration: BoxDecoration(
                   color: colorScheme.primary,
                   borderRadius: BorderRadius.circular(4.0),
@@ -252,36 +251,34 @@ Widget postListTile({
                         Text(
                           "출발 시간",
                           style: textTheme.bodyText1?.copyWith(
-                              color: colorScheme.tertiary,
+                            color: colorScheme.tertiary,
                           ),
                         ),
                         SizedBox(
                           height: 4.0.h,
                         ),
                         Text(
-                          DateFormat('HH:mm').format(DateTime.parse(post.deptTime!)),
-                          style:
-                              textTheme.subtitle1?.copyWith(
-                                  color: colorScheme.onPrimary,
-                              ),
+                          DateFormat('HH:mm')
+                              .format(DateTime.parse(post.deptTime!)),
+                          style: textTheme.subtitle1?.copyWith(
+                            color: colorScheme.onPrimary,
+                          ),
                         ),
                         SizedBox(
                           height: 24.0.h,
                         ),
                         Text(
                           "탑승 인원",
-                          style: textTheme.bodyText1?.copyWith(
-                              color: colorScheme.tertiary
-                          ),
+                          style: textTheme.bodyText1
+                              ?.copyWith(color: colorScheme.tertiary),
                         ),
                         SizedBox(
                           height: 4.0.h,
                         ),
                         Text(
                           "${post.participantNum}/4명", //이 명수도 총 인원에 따라 달라짐.
-                          style: textTheme.subtitle1?.copyWith(
-                              color: colorScheme.onPrimary
-                          ),
+                          style: textTheme.subtitle1
+                              ?.copyWith(color: colorScheme.onPrimary),
                         ),
                         // Image.asset(
                         //   width: 24.w,
@@ -299,30 +296,27 @@ Widget postListTile({
                       children: [
                         Text(
                           "출발일",
-                          style: textTheme.bodyText1?.copyWith(
-                              color: colorScheme.tertiary
-                          ),
+                          style: textTheme.bodyText1
+                              ?.copyWith(color: colorScheme.tertiary),
                         ),
                         Text(
-                          DateFormat('MM/dd').format(DateTime.parse(post.deptTime!)), //경유지 받아와야 함.
-                          style: textTheme.subtitle1?.copyWith(
-                              color: colorScheme.onPrimary
-                          ),
+                          DateFormat('MM/dd').format(
+                              DateTime.parse(post.deptTime!)), //경유지 받아와야 함.
+                          style: textTheme.subtitle1
+                              ?.copyWith(color: colorScheme.onPrimary),
                         ),
                         SizedBox(
                           height: 24.0.h,
                         ),
                         Text(
                           "모집유형",
-                          style: textTheme.bodyText1?.copyWith(
-                              color: colorScheme.tertiary
-                          ),
+                          style: textTheme.bodyText1
+                              ?.copyWith(color: colorScheme.tertiary),
                         ),
                         Text(
                           post.postType == 1 ? '택시' : '카풀', //차량 유형 받아와야 함.
-                          style: textTheme.subtitle1?.copyWith(
-                              color: colorScheme.onPrimary
-                          ),
+                          style: textTheme.subtitle1
+                              ?.copyWith(color: colorScheme.onPrimary),
                         ),
                       ],
                     ),
@@ -359,14 +353,13 @@ Widget postListTile({
               TextButton(
                 child: Text(
                   "탑승",
-                  style: textTheme.subtitle1?.copyWith(
-                      color: colorScheme.primary
-                  ),
+                  style:
+                      textTheme.subtitle1?.copyWith(color: colorScheme.primary),
                 ),
                 onPressed: () async {
                   Post post = Post(
                     uid: _userController.uid,
-                    postType: _screenController.currentTabIndex,
+                    postType: _screenController.mainScreenCurrentTabIndex,
                     departure: _placeController.dep,
                     destination: _placeController.dst,
                     deptTime: _dateController.formattingDateTime(
@@ -382,7 +375,7 @@ Widget postListTile({
                     time: _dateController.formattingDateTime(
                       _dateController.mergeDateAndTime(),
                     ),
-                    postType: _screenController.currentTabIndex,
+                    postType: _screenController.mainScreenCurrentTabIndex,
                   );
                 }, // 누르면 모집창으로 넘어가도록 바꿔야 함.
               )
@@ -393,4 +386,3 @@ Widget postListTile({
     ),
   );
 }
-

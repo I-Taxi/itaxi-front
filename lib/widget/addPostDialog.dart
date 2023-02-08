@@ -46,16 +46,21 @@ void addPostDialog({required BuildContext context}) {
                       GestureDetector(
                         behavior: HitTestBehavior.opaque,
                         onTap: () {
-                          _tabViewController.changeTabIndex(1);
+                          _tabViewController.changeMainScreenTabIndex(1);
                         },
-                        child: (_tabViewController.currentTabIndex == 1)
+                        child: (_tabViewController.mainScreenCurrentTabIndex ==
+                                1)
                             ? Text(
-                                DateFormat('택시').format(_dateController.pickedDate!),
-                                style: textTheme.headline2?.copyWith(color: colorScheme.secondary),
+                                DateFormat('택시')
+                                    .format(_dateController.pickedDate!),
+                                style: textTheme.headline2
+                                    ?.copyWith(color: colorScheme.secondary),
                               )
                             : Text(
-                                DateFormat('택시').format(_dateController.pickedDate!),
-                                style: textTheme.headline2?.copyWith(color: colorScheme.tertiary),
+                                DateFormat('택시')
+                                    .format(_dateController.pickedDate!),
+                                style: textTheme.headline2
+                                    ?.copyWith(color: colorScheme.tertiary),
                               ),
                       ),
                       SizedBox(
@@ -64,16 +69,21 @@ void addPostDialog({required BuildContext context}) {
                       GestureDetector(
                         behavior: HitTestBehavior.opaque,
                         onTap: () {
-                          _tabViewController.changeTabIndex(2);
+                          _tabViewController.changeMainScreenTabIndex(2);
                         },
-                        child: (_tabViewController.currentTabIndex == 2)
+                        child: (_tabViewController.mainScreenCurrentTabIndex ==
+                                2)
                             ? Text(
-                                DateFormat('카풀').format(_dateController.pickedDate!),
-                                style: textTheme.headline2?.copyWith(color: colorScheme.secondary),
+                                DateFormat('카풀')
+                                    .format(_dateController.pickedDate!),
+                                style: textTheme.headline2
+                                    ?.copyWith(color: colorScheme.secondary),
                               )
                             : Text(
-                                DateFormat('카풀').format(_dateController.pickedDate!),
-                                style: textTheme.headline2?.copyWith(color: colorScheme.tertiary),
+                                DateFormat('카풀')
+                                    .format(_dateController.pickedDate!),
+                                style: textTheme.headline2
+                                    ?.copyWith(color: colorScheme.tertiary),
                               ),
                       )
                     ],
@@ -98,7 +108,8 @@ void addPostDialog({required BuildContext context}) {
                       alignment: Alignment.center,
                       padding: EdgeInsets.fromLTRB(20.w, 5.h, 20.w, 5.h),
                       decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16.0)),
                         border: Border.all(
                           color: colorScheme.tertiary,
                           width: 0.3,
@@ -109,12 +120,14 @@ void addPostDialog({required BuildContext context}) {
                           return _placeController.dep == null
                               ? Text(
                                   '출발',
-                                  style: textTheme.subtitle1?.copyWith(color: colorScheme.tertiary),
+                                  style: textTheme.subtitle1
+                                      ?.copyWith(color: colorScheme.tertiary),
                                 )
                               : Text(
                                   '${_placeController.dep?.name}',
                                   overflow: TextOverflow.ellipsis,
-                                  style: textTheme.subtitle1?.copyWith(color: colorScheme.tertiary),
+                                  style: textTheme.subtitle1
+                                      ?.copyWith(color: colorScheme.tertiary),
                                 );
                         },
                       ),
@@ -147,7 +160,8 @@ void addPostDialog({required BuildContext context}) {
                       alignment: Alignment.center,
                       padding: EdgeInsets.fromLTRB(20.w, 5.h, 20.w, 5.h),
                       decoration: BoxDecoration(
-                        borderRadius: const BorderRadius.all(Radius.circular(16.0)),
+                        borderRadius:
+                            const BorderRadius.all(Radius.circular(16.0)),
                         border: Border.all(
                           color: colorScheme.tertiary,
                           width: 0.3,
@@ -158,12 +172,14 @@ void addPostDialog({required BuildContext context}) {
                           return _placeController.dst == null
                               ? Text(
                                   '도착',
-                                  style: textTheme.subtitle1?.copyWith(color: colorScheme.tertiary),
+                                  style: textTheme.subtitle1
+                                      ?.copyWith(color: colorScheme.tertiary),
                                 )
                               : Text(
                                   '${_placeController.dst?.name}',
                                   overflow: TextOverflow.ellipsis,
-                                  style: textTheme.subtitle1?.copyWith(color: colorScheme.tertiary),
+                                  style: textTheme.subtitle1
+                                      ?.copyWith(color: colorScheme.tertiary),
                                 );
                         },
                       ),
@@ -189,8 +205,10 @@ void addPostDialog({required BuildContext context}) {
                   GetBuilder<DateController>(
                     builder: (_) {
                       return Text(
-                        DateFormat('yyyy MM dd E').format(_dateController.pickedDate!),
-                        style: textTheme.headline2?.copyWith(color: colorScheme.tertiary),
+                        DateFormat('yyyy MM dd E')
+                            .format(_dateController.pickedDate!),
+                        style: textTheme.headline2
+                            ?.copyWith(color: colorScheme.tertiary),
                       );
                     },
                   ),
@@ -228,7 +246,8 @@ void addPostDialog({required BuildContext context}) {
                     builder: (_) {
                       return Text(
                         '${_dateController.pickedTime?.hour} : ${_dateController.pickedTime?.minute}',
-                        style: textTheme.headline2?.copyWith(color: colorScheme.tertiary),
+                        style: textTheme.headline2
+                            ?.copyWith(color: colorScheme.tertiary),
                       );
                     },
                   ),
@@ -368,12 +387,13 @@ void addPostDialog({required BuildContext context}) {
                     },
                     child: Text(
                       '취소',
-                      style: textTheme.headline1?.copyWith(color: colorScheme.tertiary),
+                      style: textTheme.headline1
+                          ?.copyWith(color: colorScheme.tertiary),
                     ),
                   ),
                   TextButton(
                     onPressed: () async {
-                      if (_tabViewController.currentTabIndex == 0) {
+                      if (_tabViewController.mainScreenCurrentTabIndex == 0) {
                         snackBar(context: context, title: '택시 또는 카풀을 선택해주세요.');
                       } else if (_placeController.dep == null) {
                         snackBar(context: context, title: '출발지를 선택해주세요.');
@@ -383,14 +403,18 @@ void addPostDialog({required BuildContext context}) {
                         snackBar(context: context, title: '도착지를 선택해주세요.');
                       } else if (_placeController.dst!.id == -1) {
                         snackBar(context: context, title: '도착지를 다시 선택해주세요.');
-                      } else if (DateTime.now().difference(_dateController.mergeDateAndTime()).isNegative == false) {
+                      } else if (DateTime.now()
+                              .difference(_dateController.mergeDateAndTime())
+                              .isNegative ==
+                          false) {
                         snackBar(context: context, title: '출발시간을 다시 선택해주세요.');
                       } else if (_addPostController.capacity == 0) {
                         snackBar(context: context, title: '최대인원을 선택해주세요.');
                       } else {
                         Post post = Post(
                             uid: _userController.uid,
-                            postType: _tabViewController.currentTabIndex,
+                            postType:
+                                _tabViewController.mainScreenCurrentTabIndex,
                             departure: _placeController.dep,
                             destination: _placeController.dst,
                             deptTime: _dateController.formattingDateTime(
@@ -405,13 +429,15 @@ void addPostDialog({required BuildContext context}) {
                           time: _dateController.formattingDateTime(
                             _dateController.mergeDateAndTime(),
                           ),
-                          postType: _tabViewController.currentTabIndex,
+                          postType:
+                              _tabViewController.mainScreenCurrentTabIndex,
                         );
                       }
                     },
                     child: Text(
                       '올리기',
-                      style: textTheme.headline1?.copyWith(color: colorScheme.secondary),
+                      style: textTheme.headline1
+                          ?.copyWith(color: colorScheme.secondary),
                     ),
                   ),
                 ],

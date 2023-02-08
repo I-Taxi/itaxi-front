@@ -70,7 +70,7 @@ class DateController extends GetxController {
         depId: _placeController.dep?.id,
         dstId: _placeController.dst?.id,
         time: formattingDateTime(mergeDateAndTime()),
-        postType: _tabViewController.currentTabIndex,
+        postType: _tabViewController.mainScreenCurrentTabIndex,
       );
     }
   }
@@ -128,7 +128,7 @@ class DateController extends GetxController {
       depId: _placeController.dep?.id,
       dstId: _placeController.dst?.id,
       time: formattingDateTime(mergeDateAndTime()),
-      postType: _tabViewController.currentTabIndex,
+      postType: _tabViewController.mainScreenCurrentTabIndex,
     );
   }
 
@@ -139,7 +139,7 @@ class DateController extends GetxController {
       depId: _placeController.dep?.id,
       dstId: _placeController.dst?.id,
       time: formattingDateTime(mergeDateAndTime()),
-      postType: _tabViewController.currentTabIndex,
+      postType: _tabViewController.mainScreenCurrentTabIndex,
     );
   }
 

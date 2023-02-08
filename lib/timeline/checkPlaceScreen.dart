@@ -43,7 +43,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
       time: _dateController.formattingDateTime(
         _dateController.mergeDateAndTime(),
       ),
-      postType: _screenController.currentTabIndex,
+      postType: _screenController.mainScreenCurrentTabIndex,
     );
     _placeController.getPlaces();
   }
@@ -91,11 +91,9 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(
-                          _placeController.dep!.name!,
-                          style: textTheme.subtitle1?.copyWith(
-                            
-                              color: colorScheme.primary)),
+                      Text(_placeController.dep!.name!,
+                          style: textTheme.subtitle1
+                              ?.copyWith(color: colorScheme.primary)),
                       SizedBox(
                         width: 37.0.w,
                       ),
@@ -107,11 +105,9 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                       SizedBox(
                         width: 36.0.w,
                       ),
-                      Text(
-                          _placeController.dst!.name!,
-                          style: textTheme.subtitle1?.copyWith(
-                             
-                              color: colorScheme.primary)),
+                      Text(_placeController.dst!.name!,
+                          style: textTheme.subtitle1
+                              ?.copyWith(color: colorScheme.primary)),
                     ],
                   ),
                   Padding(
@@ -650,7 +646,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                         time: _dateController.formattingDateTime(
                           _dateController.mergeDateAndTime(),
                         ),
-                        postType: _screenController.currentTabIndex,
+                        postType: _screenController.mainScreenCurrentTabIndex,
                       );
                     },
                     child: GetBuilder<PostController>(
@@ -741,7 +737,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                   time: _dateController.formattingDateTime(
                     _dateController.mergeDateAndTime(),
                   ),
-                  postType: _screenController.currentTabIndex,
+                  postType: _screenController.mainScreenCurrentTabIndex,
                 );
               },
               child: Container(

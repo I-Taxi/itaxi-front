@@ -66,7 +66,7 @@ class PlaceController extends GetxController {
       dstId: dst?.id,
       time: _dateController
           .formattingDateTime(_dateController.mergeDateAndTime()),
-      postType: _screenController.currentTabIndex,
+      postType: _screenController.mainScreenCurrentTabIndex,
     );
   }
 
@@ -79,7 +79,7 @@ class PlaceController extends GetxController {
       dstId: dst?.id,
       time: _dateController
           .formattingDateTime(_dateController.mergeDateAndTime()),
-      postType: _screenController.currentTabIndex,
+      postType: _screenController.mainScreenCurrentTabIndex,
     );
   }
 
