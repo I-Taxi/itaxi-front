@@ -58,6 +58,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
     
     return Scaffold(
       appBar: AppBar(
+        elevation: 0.0,
         toolbarHeight: 70.h,
         title: Text('타임라인', style: textTheme.subtitle1?.copyWith(color: colorScheme.primary)),
         centerTitle: true,
@@ -65,7 +66,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
           decoration: BoxDecoration(
             gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: <Color>[
               Color(0xff8fc0f1),
-              Color(0Xff62a6ea),
+              Color(0Xff76B1ED),
             ]),
           ),
         ),
@@ -115,54 +116,53 @@ class _TimelineScreenState extends State<TimelineScreen> {
                             ),
                           ],
                         );
+                      } else {
+                        // history가 없을 때
+                        return Column(
+                          crossAxisAlignment: CrossAxisAlignment.center,
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            SizedBox(
+                              height: 60.h,
+                              width: 282.w,
+                            ),
+                            Align(
+                              alignment: Alignment.center,
+                              child: Text(
+                                '아직 I-TAXI를 이용한 이력이 없어요\n어서 새로운 동료를 만나보세요',
+                                textAlign: TextAlign.center,
+                                style: textTheme.headline1?.copyWith(color: colorScheme.tertiaryContainer, fontWeight: FontWeight.w500, fontSize: 20),
+                              ),
+                            ),
+                            SizedBox(
+                              height: 36.h,
+                            ),
+                            OutlinedButton(
+                              onPressed: () {},
+                              style: OutlinedButton.styleFrom(side: BorderSide(width: 0, color: colorScheme.onBackground)),
+                              child: Image.asset(
+                                width: 198,
+                                'assets/button/add_timeline.png',
+                              ),
+                            )
+                          ],
+                        );
                       }
-                      //   } else {
-                      //     // history가 없을 때
-                      //     return Column(
-                      //       crossAxisAlignment: CrossAxisAlignment.center,
-                      //       mainAxisAlignment: MainAxisAlignment.center,
-                      //       children: [
-                      //         SizedBox(
-                      //           height: 60.h,
-                      //           width: 282.w,
-                      //         ),
-                      //         Align(
-                      //           alignment: Alignment.center,
-                      //           child: Text(
-                      //             '아직 I-TAXI를 이용한 이력이 없어요\n어서 새로운 동료를 만나보세요',
-                      //             textAlign: TextAlign.center,
-                      //             style: textTheme.headline1?.copyWith(color: colorScheme.tertiaryContainer, fontWeight: FontWeight.w500, fontSize: 20),
-                      //           ),
-                      //         ),
-                      //         SizedBox(
-                      //           height: 36.h,
-                      //         ),
-                      //         OutlinedButton(
-                      //           onPressed: () {},
-                      //           style: OutlinedButton.styleFrom(side: BorderSide(width: 0, color: colorScheme.onBackground)),
-                      //           child: Image.asset(
-                      //             width: 198,
-                      //             'assets/button/add_timeline.png',
-                      //           ),
-                      //         )
-                      //       ],
-                      //     );
-                      //   }
-                      // } else if (snapshot.hasError) {
-                      //   // history load 중에 오류 발생
-                      //   return ListView(
-                      //     children: [
-                      //       SizedBox(
-                      //         height: 160.h,
-                      //       ),
-                      //       Align(
-                      //         child: Text(
-                      //           '${snapshot.error}',
-                      //           style: textTheme.headline1?.copyWith(color: colorScheme.tertiary),
-                      //         ),
-                      //       ),
-                      //     ],
-                      //   );
+                    } else if (snapshot.hasError) {
+                      // history load 중에 오류 발생
+                      return ListView(
+                        children: [
+                          SizedBox(
+                            height: 160.h,
+                          ),
+                          Align(
+                            child: Text(
+                              '${snapshot.error}',
+                              style: textTheme.headline1?.copyWith(color: colorScheme.tertiary),
+                            ),
+                          ),
+                        ],
+                      );
                     }
                     // history data loading bar
                     return LinearProgressIndicator(

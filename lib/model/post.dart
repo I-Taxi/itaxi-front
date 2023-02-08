@@ -94,6 +94,22 @@ class Post {
     );
   }
 
+  factory Post.fromStopoverDocs(Map<String, dynamic> ds) {
+    List<dynamic>? stopOversFromDs = ds['stopovers'];
+    return Post(
+      id: ds['id'],
+      uid: ds['uid'],
+      postType: ds['postType'],
+      departure: Place.fromDocs(ds['departure']),
+      destination: Place.fromDocs(ds['destination']),
+      deptTime: ds['deptTime'],
+      capacity: ds['capacity'],
+      participantNum: ds['participantNum'],
+      status: ds['status'],
+      stopovers: (stopOversFromDs == null) ? [] : List<Place>.from(ds['stopovers'].map((json) => Place.fromStopoverDocs(json))),
+    );
+  }
+
   factory Post.fromJoinerAndStopoversDocs(Map<String, dynamic> ds) {
     List<dynamic> stopOversFromDs = ds['stopovers'];
     return Post(
