@@ -29,8 +29,8 @@ class HistoryController extends GetxController {
     return result;
   }
 
-  Post HistoryfromJson(json) {
-    return Post.fromJoinerDocs(json);
+  Post historyfromJson(json) {
+    return Post.fromJoinerAndStopoversDocs(json);
   }
 
   Future<void> getHistorys() async {
@@ -81,7 +81,8 @@ class HistoryController extends GetxController {
     );
 
     if (response.statusCode == 200) {
-      return HistoryfromJson(json.decode(utf8.decode(response.bodyBytes)));
+      print(utf8.decode(response.bodyBytes));
+      return historyfromJson(json.decode(utf8.decode(response.bodyBytes)));
     } else {
       throw Exception('Failed to load history info');
     }

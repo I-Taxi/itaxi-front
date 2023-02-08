@@ -76,25 +76,26 @@ class Post {
   factory Post.fromPostAllDocs(Map<String, dynamic> ds) {
     List<dynamic> stopOversFromDs = ds['stopovers'];
     return Post(
-        id: ds['id'],
-        uid: ds['uid'],
-        postType: ds['postType'],
-        departure: Place.fromDocs(ds['departure']),
-        destination: Place.fromDocs(ds['destination']),
-        deptTime: ds['deptTime'],
-        capacity: ds['capacity'],
-        participantNum: ds['participantNum'],
-        status: ds['status'],
-        joiners: List<Joiner>.from(
-            ds['joiners'].map((json) => Joiner.fromUidDocs(json))),
-        stopovers: (stopOversFromDs.isEmpty)
-            ? []
-            : List<Place>.from(
-                ds['stopovers'].map((json) => Place.fromDocs(json))),
-              );
+      id: ds['id'],
+      uid: ds['uid'],
+      postType: ds['postType'],
+      departure: Place.fromDocs(ds['departure']),
+      destination: Place.fromDocs(ds['destination']),
+      deptTime: ds['deptTime'],
+      capacity: ds['capacity'],
+      participantNum: ds['participantNum'],
+      status: ds['status'],
+      joiners: List<Joiner>.from(
+          ds['joiners'].map((json) => Joiner.fromUidDocs(json))),
+      stopovers: (stopOversFromDs.isEmpty)
+          ? []
+          : List<Place>.from(
+              ds['stopovers'].map((json) => Place.fromDocs(json))),
+    );
   }
 
-  factory Post.fromJoinerDocs(Map<String, dynamic> ds) {
+  factory Post.fromJoinerAndStopoversDocs(Map<String, dynamic> ds) {
+    List<dynamic> stopOversFromDs = ds['stopovers'];
     return Post(
       id: ds['id'],
       uid: ds['uid'],
@@ -107,6 +108,10 @@ class Post {
       status: ds['status'],
       joiners:
           List<Joiner>.from(ds['joiners'].map((json) => Joiner.fromDocs(json))),
+      stopovers: (stopOversFromDs.isEmpty)
+          ? []
+          : List<Place>.from(
+              ds['stopovers'].map((json) => Place.fromStopoverDocs(json))),
     );
   }
 

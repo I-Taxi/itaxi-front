@@ -36,6 +36,15 @@ class Place {
     );
   }
 
+  factory Place.fromStopoverDocs(Map<String, dynamic> ds) {
+    return Place(
+      id: ds['placeId'],
+      name: ds['placeName'],
+      placeType: ds['placeType'] ?? 0,
+      cnt: ds['cnt'] ?? 0,
+    );
+  }
+
   factory Place.fromSnapshot(DocumentSnapshot ss) {
     return Place(
       id: ss.get('id'),
