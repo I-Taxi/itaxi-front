@@ -23,7 +23,7 @@ class HistoryController extends GetxController {
   List<Post> HistorysfromJson(json) {
     List<Post> result = [];
     json.forEach((item) {
-      result.add(Post.fromDocs(item));
+      result.add(Post.fromStopoverDocs(item));
     });
 
     return result;
