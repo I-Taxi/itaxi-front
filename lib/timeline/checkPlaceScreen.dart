@@ -13,6 +13,7 @@ import 'package:itaxi/model/post.dart';
 import 'package:itaxi/widget/postListTile.dart';
 import 'package:itaxi/widget/selectPlaceDialog.dart';
 import 'package:itaxi/widget/tabView.dart';
+import 'package:itaxi/widget/abbreviatePlaceName.dart';
 
 import 'package:itaxi/controller/userController.dart';
 
@@ -87,11 +88,12 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                       bottomLeft: Radius.circular(18.0),
                       bottomRight: Radius.circular(18.0))),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(_placeController.dep!.name!,
+                      Text(abbreviatePlaceName(_placeController.dep!.name!),
                           style: textTheme.subtitle1
                               ?.copyWith(color: colorScheme.primary)),
                       SizedBox(
@@ -103,120 +105,34 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                         'assets/DeptoDes.png',
                       ),
                       SizedBox(
-                        width: 36.0.w,
+                        width: 35.5.w,
                       ),
-                      Text(_placeController.dst!.name!,
+                      Text(abbreviatePlaceName(_placeController.dst!.name!),
                           style: textTheme.subtitle1
                               ?.copyWith(color: colorScheme.primary)),
                     ],
                   ),
                   Padding(
-                    padding: EdgeInsets.only(top: 32.h, bottom: 17.h),
+                    padding: EdgeInsets.only(top: 32.h, bottom: 12.h),
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        GetBuilder<DateController>(
-                          builder: (_) {
-                            if (DateFormat.yMEd().format(DateTime.now()) !=
-                                DateFormat.yMEd()
-                                    .format(_dateController.pickedDate!)) {
-                              return GestureDetector(
-                                behavior: HitTestBehavior.opaque,
-                                onTap: () {
-                                  _dateController.beforDate();
-                                },
-                                child: Container(
-                                  height: 19.h,
-                                  width: 42.w,
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    DateFormat('MM.d').format(_dateController
-                                        .pickedDate!
-                                        .add(const Duration(days: -2))),
-                                    style: textTheme.bodyText1?.copyWith(
-                                      color: colorScheme.tertiary,
-                                    ),
-                                  ),
-                                ),
-                              );
-                            }
-                            return GestureDetector(
-                              behavior: HitTestBehavior.opaque,
-                              onTap: () {},
-                              child: Container(
-                                height: 19.h,
-                                width: 42.w,
-                                alignment: Alignment.center,
-                                child: Text(
-                                  DateFormat(' - ').format(_dateController
-                                      .pickedDate!
-                                      .add(const Duration(days: -2))),
-                                  style: textTheme.bodyText1?.copyWith(
-                                    color: colorScheme.tertiary,
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
+                        checkPlaceScreenBeforeDateWidget(textTheme, colorScheme, -2),
                         SizedBox(
-                          width: 26.w,
+                          width: 25.w,
                         ),
-                        GetBuilder<DateController>(
-                          builder: (_) {
-                            if (DateFormat.yMEd().format(DateTime.now()) !=
-                                DateFormat.yMEd()
-                                    .format(_dateController.pickedDate!)) {
-                              return GestureDetector(
-                                behavior: HitTestBehavior.opaque,
-                                onTap: () {
-                                  _dateController.beforDate();
-                                },
-                                child: Container(
-                                  height: 19.h,
-                                  width: 42.w,
-                                  alignment: Alignment.center,
-                                  child: Text(
-                                    DateFormat('MM.d').format(_dateController
-                                        .pickedDate!
-                                        .add(const Duration(days: -1))),
-                                    style: textTheme.bodyText1?.copyWith(
-                                      color: colorScheme.tertiary,
-                                    ),
-                                  ),
-                                ),
-                              );
-                            }
-                            return GestureDetector(
-                              behavior: HitTestBehavior.opaque,
-                              onTap: () {},
-                              child: Container(
-                                height: 19.h,
-                                width: 42.w,
-                                alignment: Alignment.center,
-                                child: Text(
-                                  DateFormat(' - ').format(_dateController
-                                      .pickedDate!
-                                      .add(const Duration(days: -1))),
-                                  style: textTheme.bodyText1?.copyWith(
-                                    color: colorScheme.tertiary,
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
+                        checkPlaceScreenBeforeDateWidget(textTheme, colorScheme, -1),
                         SizedBox(
-                          width: 26.w,
+                          width: 25.w,
                         ),
                         GetBuilder<DateController>(
                           builder: (_) {
                             return Container(
-                              height: 21.h,
+                              height: 24.h,
                               width: 72.w,
-                              alignment: Alignment.center,
+                              alignment: Alignment.topCenter,
                               child: Text(
-                                DateFormat('MM월 d일')
+                                DateFormat('MM월 dd일')
                                     .format(_dateController.pickedDate!),
                                 style: textTheme.subtitle2?.copyWith(
                                   color: colorScheme.primary,
@@ -226,57 +142,14 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                           },
                         ),
                         SizedBox(
-                          width: 26.w,
+                          width: 25.w,
                         ),
-                        GetBuilder<DateController>(
-                          builder: (_) {
-                            return GestureDetector(
-                              behavior: HitTestBehavior.opaque,
-                              onTap: () {
-                                _dateController.afterDate();
-                              },
-                              child: Container(
-                                height: 19.h,
-                                width: 42.w,
-                                alignment: Alignment.center,
-                                child: Text(
-                                  DateFormat('MM.d').format(_dateController
-                                      .pickedDate!
-                                      .add(const Duration(days: 1))),
-                                  style: textTheme.bodyText1?.copyWith(
-                                    color: colorScheme.tertiary,
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
+                        checkPlaceScreenAfterDateWidget(textTheme, colorScheme, 1),
                         SizedBox(
                           width: 26.w,
                         ),
-                        GetBuilder<DateController>(
-                          builder: (_) {
-                            return GestureDetector(
-                              behavior: HitTestBehavior.opaque,
-                              onTap: () {
-                                _dateController.afterDate();
-                              },
-                              child: Container(
-                                height: 19.h,
-                                width: 42.w,
-                                alignment: Alignment.center,
-                                child: Text(
-                                  DateFormat('MM.d').format(_dateController
-                                      .pickedDate!
-                                      .add(const Duration(days: 2))),
-                                  style: textTheme.subtitle1?.copyWith(
-                                    color: colorScheme.tertiary,
-                                  ),
-                                ),
-                              ),
-                            );
-                          },
-                        ),
+                        checkPlaceScreenAfterDateWidget(
+                            textTheme, colorScheme, 2),
                       ],
                     ),
                   ),
@@ -708,6 +581,78 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
         ),
       ),
     );
+  }
+
+  GetBuilder<DateController> checkPlaceScreenAfterDateWidget(TextTheme textTheme, ColorScheme colorScheme, int difference) {
+    return GetBuilder<DateController>(
+                        builder: (_) {
+                          return GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: () {
+                              _dateController.afterDate();
+                            },
+                            child: Container(
+                              height: 24.h,
+                              width: 42.w,
+                              alignment: Alignment.center,
+                              child: Text(
+                                DateFormat('MM.d').format(_dateController
+                                    .pickedDate!
+                                    .add(Duration(days: difference))),
+                                style: textTheme.bodyText1?.copyWith(
+                                  color: colorScheme.outline,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      );
+  }
+
+  GetBuilder<DateController> checkPlaceScreenBeforeDateWidget(TextTheme textTheme, ColorScheme colorScheme, int difference) {
+    return GetBuilder<DateController>(
+                        builder: (_) {
+                          if (DateTime.now().day <=
+                              _dateController.pickedDate!.add(Duration(days: difference)).day) {
+                            return GestureDetector(
+                              behavior: HitTestBehavior.opaque,
+                              onTap: () {
+                                _dateController.beforDate();
+                              },
+                              child: Container(
+                                height: 24.h,
+                                width: 42.w,
+                                alignment: Alignment.center,
+                                child: Text(
+                                  DateFormat('MM.dd').format(_dateController
+                                      .pickedDate!
+                                      .add(Duration(days: difference))),
+                                  style: textTheme.bodyText1?.copyWith(
+                                    color: colorScheme.outline,
+                                  ),
+                                ),
+                              ),
+                            );
+                          }
+                          return GestureDetector(
+                            behavior: HitTestBehavior.opaque,
+                            onTap: () {},
+                            child: Container(
+                              height: 24.h,
+                              width: 42.w,
+                              alignment: Alignment.center,
+                              child: Text(
+                                DateFormat(' - ').format(_dateController
+                                    .pickedDate!
+                                    .add(const Duration(days: -2))),
+                                style: textTheme.bodyText1?.copyWith(
+                                  color: colorScheme.tertiary,
+                                ),
+                              ),
+                            ),
+                          );
+                        },
+                      );
   }
 
   Widget postIsEmpty(BuildContext context) {
