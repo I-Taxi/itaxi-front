@@ -318,151 +318,162 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                               ],
                             ),
                           ),
-                          ListView.builder(
-                            shrinkWrap: true,
-                            controller: _scrollController,
-                            itemBuilder: (BuildContext context, int index) {
-                              return Column(
-                                children: [
-                                  if (DateTime.now()
-                                          .difference(snapshot
-                                              .data![index].chatTime!
-                                              .toDate())
-                                          .isNegative ==
-                                      false)
-                                    if (index == 0 ||
-                                        (index - 1 > 0 &&
-                                            DateTime.parse(DateFormat('yyyy-MM-dd').format(snapshot.data![index].chatTime!.toDate()))
-                                                    .compareTo(DateTime.parse(
-                                                        DateFormat('yyyy-MM-dd')
-                                                            .format(snapshot
-                                                                .data![index - 1]
-                                                                .chatTime!
-                                                                .toDate()))) !=
-                                                0))
-                                      Column(
-                                        children: [
-                                          Text(
-                                            DateFormat('M월 d일 E').format(
-                                                snapshot.data![index].chatTime!
-                                                    .toDate()),
-                                            style: textTheme.bodyText2
-                                                ?.copyWith(
-                                                    color: colorScheme
-                                                        .tertiaryContainer),
-                                          ),
-                                          SizedBox(
-                                            height: 20.h,
-                                          ),
-                                        ],
-                                      ),
-                                  snapshot.data![index].memberName == null
-                                      ? Padding(
-                                          padding: EdgeInsets.symmetric(
-                                            vertical: 6.h,
-                                          ),
-                                          child: Text(
-                                            snapshot.data![index].chatData!,
-                                            style:
-                                                textTheme.bodyText1?.copyWith(
-                                              color: colorScheme.tertiary,
-                                            ),
-                                          ),
-                                        )
-                                      : newChatListTile(
-                                          context: context,
-                                          chat: snapshot.data![index],
-                                          joiners:
-                                              _chatRoomController.post.joiners,
-                                        ),
-                                ],
-                              );
-                            },
-                            itemCount: snapshot.data!.length,
-                          ),
-                          if (isScrollDown == true &&
-                              snapshot.data![snapshot.data!.length - 1].uid !=
-                                  _userController.uid)
-                            Align(
-                              alignment: Alignment.bottomCenter,
-                              child: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    isScrollDown = false;
-                                  });
-                                  _scrollDown();
-                                },
-                                child: Container(
-                                  width: double.infinity,
-                                  height: 56.h,
-                                  decoration: BoxDecoration(
-                                    color:
-                                        colorScheme.tertiary.withOpacity(0.7),
-                                    borderRadius: BorderRadius.circular(4),
-                                  ),
-                                  child: Padding(
-                                    padding: EdgeInsets.fromLTRB(
-                                        16.w, 8.h, 16.w, 8.h),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
+                          Expanded(
+                            child: Stack(
+                              children: [
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  controller: _scrollController,
+                                  itemBuilder:
+                                      (BuildContext context, int index) {
+                                    return Column(
                                       children: [
-                                        Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
-                                          children: [
-                                            Text(
-                                              snapshot
-                                                  .data![
-                                                      snapshot.data!.length - 1]
-                                                  .memberName!,
-                                              style:
-                                                  textTheme.subtitle1?.copyWith(
-                                                color: colorScheme.primary,
-                                              ),
+                                        if (DateTime.now()
+                                                .difference(snapshot
+                                                    .data![index].chatTime!
+                                                    .toDate())
+                                                .isNegative ==
+                                            false)
+                                          if (index == 0 ||
+                                              (index - 1 > 0 &&
+                                                  DateTime.parse(DateFormat('yyyy-MM-dd')
+                                                              .format(snapshot
+                                                                  .data![index]
+                                                                  .chatTime!
+                                                                  .toDate()))
+                                                          .compareTo(DateTime.parse(
+                                                              DateFormat('yyyy-MM-dd').format(snapshot.data![index - 1].chatTime!.toDate()))) !=
+                                                      0))
+                                            Column(
+                                              children: [
+                                                Text(
+                                                  DateFormat('M월 d일 E').format(
+                                                      snapshot.data![index]
+                                                          .chatTime!
+                                                          .toDate()),
+                                                  style: textTheme.bodyText2
+                                                      ?.copyWith(
+                                                          color: colorScheme
+                                                              .tertiaryContainer),
+                                                ),
+                                                SizedBox(
+                                                  height: 20.h,
+                                                ),
+                                              ],
                                             ),
-                                            Text(
-                                              snapshot
-                                                  .data![
-                                                      snapshot.data!.length - 1]
-                                                  .chatData!,
-                                              style:
-                                                  textTheme.subtitle1?.copyWith(
-                                                color: colorScheme.primary,
+                                        snapshot.data![index].memberName == null
+                                            ? Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                  vertical: 6.h,
+                                                ),
+                                                child: Text(
+                                                  snapshot
+                                                      .data![index].chatData!,
+                                                  style: textTheme.bodyText1
+                                                      ?.copyWith(
+                                                    color: colorScheme.tertiary,
+                                                  ),
+                                                ),
+                                              )
+                                            : newChatListTile(
+                                                context: context,
+                                                chat: snapshot.data![index],
+                                                joiners: _chatRoomController
+                                                    .post.joiners,
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                        Icon(
-                                          Icons.arrow_downward_rounded,
-                                          color: colorScheme.primary,
-                                        ),
                                       ],
+                                    );
+                                  },
+                                  itemCount: snapshot.data!.length,
+                                ),
+                                if (isScrollDown == true &&
+                                    snapshot.data![snapshot.data!.length - 1]
+                                            .uid !=
+                                        _userController.uid)
+                                  Align(
+                                    alignment: Alignment.bottomCenter,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        setState(() {
+                                          isScrollDown = false;
+                                        });
+                                        _scrollDown();
+                                      },
+                                      child: Container(
+                                        width: double.infinity,
+                                        height: 56.h,
+                                        decoration: BoxDecoration(
+                                          color: colorScheme.tertiary
+                                              .withOpacity(0.7),
+                                          borderRadius:
+                                              BorderRadius.circular(4),
+                                        ),
+                                        child: Padding(
+                                          padding: EdgeInsets.fromLTRB(
+                                              16.w, 8.h, 16.w, 8.h),
+                                          child: Row(
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.spaceBetween,
+                                            children: [
+                                              Column(
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
+                                                children: [
+                                                  Text(
+                                                    snapshot
+                                                        .data![snapshot
+                                                                .data!.length -
+                                                            1]
+                                                        .memberName!,
+                                                    style: textTheme.subtitle1
+                                                        ?.copyWith(
+                                                      color:
+                                                          colorScheme.primary,
+                                                    ),
+                                                  ),
+                                                  Text(
+                                                    snapshot
+                                                        .data![snapshot
+                                                                .data!.length -
+                                                            1]
+                                                        .chatData!,
+                                                    style: textTheme.subtitle1
+                                                        ?.copyWith(
+                                                      color:
+                                                          colorScheme.primary,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                              Image.asset(
+                                                  'assets/button/new_message.png'),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
                                     ),
                                   ),
-                                ),
-                              ),
-                            ),
-                          if (isScrollDown == false && needScrollDown == true)
-                            Align(
-                              alignment: Alignment.bottomRight,
-                              child: GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    needScrollDown = false;
-                                  });
-                                  _scrollDown();
-                                },
-                                child: CircleAvatar(
-                                  backgroundColor:
-                                      colorScheme.tertiary.withOpacity(0.7),
-                                  child: Icon(
-                                    Icons.arrow_downward_rounded,
-                                    color: colorScheme.primary,
+                                if (isScrollDown == false &&
+                                    needScrollDown == true)
+                                  Padding(
+                                    padding: EdgeInsets.only(bottom: 12.h),
+                                    child: Align(
+                                      alignment: Alignment.bottomCenter,
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          setState(() {
+                                            needScrollDown = false;
+                                          });
+                                          _scrollDown();
+                                        },
+                                        child: Image.asset(
+                                            'assets/button/new_message.png'),
+                                      ),
+                                    ),
                                   ),
-                                ),
-                              ),
-                            )
+                              ],
+                            ),
+                          ),
                         ],
                       ),
                     );
@@ -581,74 +592,72 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
               },
             ),
           ),
-          Expanded(
-            child: Align(
-                alignment: FractionalOffset.bottomCenter,
-                child: Padding(
-                  padding: EdgeInsets.fromLTRB(6.w, 12.h, 6.w, 44.h),
-                  child: TextField(
-                    controller: _chatRoomController.chatTextController,
-                    cursorColor: Colors.grey[400],
-                    style: textTheme.subtitle1
-                        ?.copyWith(color: colorScheme.onPrimary),
-                    minLines: 1,
-                    maxLines: 4,
-                    decoration: InputDecoration(
-                      contentPadding:
-                          EdgeInsets.only(top: 10.h, bottom: 10.h, left: 10.w),
-                      filled: true,
-                      border: InputBorder.none,
-                      enabledBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(width: 1, color: (Colors.grey[200])!),
-                        borderRadius: BorderRadius.circular(24),
-                      ),
-                      focusedBorder: OutlineInputBorder(
-                        borderSide:
-                            BorderSide(width: 1, color: (Colors.grey[200])!),
-                        borderRadius: BorderRadius.circular(24),
-                      ),
-                      fillColor: colorScheme.onBackground,
-                      suffixIcon: GetBuilder<ChatRoomController>(
-                        builder: (_) {
-                          if (_chatRoomController.texting == true) {
-                            return GestureDetector(
-                              onTap: () async {
-                                await _chatRoomController.submitChat();
-                                _chatRoomController.clearTexting();
-                                _scrollDown();
-                              },
-                              child: Image.asset('assets/button/send.png'),
-                            );
-                          } else {
-                            return GestureDetector(
-                              onTap: () {},
-                              child: Image.asset('assets/button/send.png'),
-                            );
-                          }
-                        },
-                      ),
-                      hintText: '',
-                      hintStyle: textTheme.subtitle1?.copyWith(
-                        color: colorScheme.onPrimary,
-                      ),
+          Align(
+              alignment: FractionalOffset.bottomCenter,
+              child: Padding(
+                padding: EdgeInsets.fromLTRB(6.w, 12.h, 6.w, 44.h),
+                child: TextField(
+                  controller: _chatRoomController.chatTextController,
+                  cursorColor: Colors.grey[400],
+                  style: textTheme.subtitle1
+                      ?.copyWith(color: colorScheme.onPrimary),
+                  minLines: 1,
+                  maxLines: 4,
+                  decoration: InputDecoration(
+                    contentPadding:
+                        EdgeInsets.only(top: 10.h, bottom: 10.h, left: 10.w),
+                    filled: true,
+                    border: InputBorder.none,
+                    enabledBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(width: 1, color: (Colors.grey[200])!),
+                      borderRadius: BorderRadius.circular(24),
                     ),
-                    onChanged: (text) {
-                      if (_chatRoomController
-                          .chatTextController.text.isNotEmpty) {
-                        _chatRoomController.changeTexting(true);
-                      } else {
-                        _chatRoomController.changeTexting(false);
-                      }
-                    },
-                    onSubmitted: (text) {
-                      _chatRoomController.submitChat();
-                      _chatRoomController.clearTexting();
-                      _scrollDown();
-                    },
+                    focusedBorder: OutlineInputBorder(
+                      borderSide:
+                          BorderSide(width: 1, color: (Colors.grey[200])!),
+                      borderRadius: BorderRadius.circular(24),
+                    ),
+                    fillColor: colorScheme.onBackground,
+                    suffixIcon: GetBuilder<ChatRoomController>(
+                      builder: (_) {
+                        if (_chatRoomController.texting == true) {
+                          return GestureDetector(
+                            onTap: () async {
+                              await _chatRoomController.submitChat();
+                              _chatRoomController.clearTexting();
+                              _scrollDown();
+                            },
+                            child: Image.asset('assets/button/send.png'),
+                          );
+                        } else {
+                          return GestureDetector(
+                            onTap: () {},
+                            child: Image.asset('assets/button/send.png'),
+                          );
+                        }
+                      },
+                    ),
+                    hintText: '',
+                    hintStyle: textTheme.subtitle1?.copyWith(
+                      color: colorScheme.onPrimary,
+                    ),
                   ),
-                )),
-          ),
+                  onChanged: (text) {
+                    if (_chatRoomController
+                        .chatTextController.text.isNotEmpty) {
+                      _chatRoomController.changeTexting(true);
+                    } else {
+                      _chatRoomController.changeTexting(false);
+                    }
+                  },
+                  onSubmitted: (text) {
+                    _chatRoomController.submitChat();
+                    _chatRoomController.clearTexting();
+                    _scrollDown();
+                  },
+                ),
+              )),
         ],
       ),
 
