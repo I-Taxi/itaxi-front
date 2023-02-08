@@ -207,6 +207,10 @@ flutter:
     - assets/onBoarding/onBoardingScreen2.png
     - assets/onBoarding/onBoardingScreen3.png
     - assets/onBoarding/onBoardingScreen4.png
+    - assets/onBoarding/indicator1.png
+    - assets/onBoarding/indicator2.png
+    - assets/onBoarding/indicator3.png
+    - assets/onBoarding/indicator4.png
 
   #   - images/a_dot_burr.jpeg
   #   - images/a_dot_ham.jpeg

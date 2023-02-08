@@ -105,7 +105,7 @@ class _MainScreenState extends State<MainScreen> {
                               },
                               icon: Icon(Icons.menu),
                               iconSize: 24.w,
-                            ),
+                            )
                           ],
                         ),
                         controller.hasNotice

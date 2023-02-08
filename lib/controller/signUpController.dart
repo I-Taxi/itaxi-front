@@ -39,7 +39,6 @@ class SignUpController extends GetxController {
   }
 
   void encryptUser(Login login) {
-    print(login);
     login.phone = encrypter.encrypt(login.phone!, iv: iv).base64;
     login.bank = encrypter.encrypt(login.bank!, iv: iv).base64;
     login.bankAddress = encrypter.encrypt(login.bankAddress!, iv: iv).base64;

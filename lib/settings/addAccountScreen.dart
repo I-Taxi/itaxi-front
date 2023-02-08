@@ -2,19 +2,17 @@ import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:itaxi/controller/userController.dart';
+import 'package:itaxi/home.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-class ChangeAccountScreen extends StatefulWidget {
-  ChangeAccountScreen({Key? key}) : super(key: key);
+class AddAccountScreen extends StatefulWidget {
+  AddAccountScreen({Key? key}) : super(key: key);
 
   @override
-  State<ChangeAccountScreen> createState() => _ChangeAccountScreenState();
+  State<AddAccountScreen> createState() => _AddAccountScreenState();
 }
 
-class _ChangeAccountScreenState extends State<ChangeAccountScreen> {
-
-  static final storage = new FlutterSecureStorage(); //flutter_secure_storage
+class _AddAccountScreenState extends State<AddAccountScreen> {
 
   var data = Get.arguments;
   final _bankController = TextEditingController();
@@ -26,6 +24,8 @@ class _ChangeAccountScreenState extends State<ChangeAccountScreen> {
   bool isBankEmpty = true;
   bool isBankAddressEmpty = true;
   bool isBankOwnerNameEmpty = true;
+
+  static final storage = new FlutterSecureStorage(); //flutter_secure_storage
 
   @override
   Widget build(BuildContext context) {
@@ -63,8 +63,8 @@ class _ChangeAccountScreenState extends State<ChangeAccountScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('계좌번호 변경', style: textTheme.headline2?.copyWith(
-                      color: colorScheme.onTertiary,
+                  Text('계좌번호 추가', style: textTheme.headline2?.copyWith(
+                    color: colorScheme.onTertiary,
                   ),),
                   SizedBox(
                     height: 52.0.h,
@@ -75,7 +75,7 @@ class _ChangeAccountScreenState extends State<ChangeAccountScreen> {
                     autocorrect: false,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: InputDecoration(
-                      hintText: '변경할 계좌번호를 입력해주세요',
+                      hintText: '추가할 계좌번호를 입력해주세요',
                       hintStyle: textTheme.bodyText1?.copyWith(
                         color: colorScheme.tertiaryContainer,
                       ),
@@ -225,7 +225,7 @@ class _ChangeAccountScreenState extends State<ChangeAccountScreen> {
                 value: _bankOwnerNameController.text,
               );
               showConfirmDialog(context);
-              Get.back();
+              Get.offAll(Home());
             }
           },
           child: SizedBox(
@@ -236,7 +236,7 @@ class _ChangeAccountScreenState extends State<ChangeAccountScreen> {
               child: Padding(
                 padding: EdgeInsets.only(top: 18.h),
                 child: Text(
-                  '변경 완료',
+                  '추가 완료',
                   style: textTheme.subtitle1!.copyWith(
                     color: colorScheme.primary,
                   ),
@@ -338,7 +338,7 @@ class _ChangeAccountScreenState extends State<ChangeAccountScreen> {
             child: Column(
               children: <Widget>[
                 Text(
-                  "변경이 완료되었습니다.",
+                  "계좌가 추가되었습니다.",
                   style: textTheme.headline3?.copyWith(
                     color: colorScheme.secondary,
                   ),
