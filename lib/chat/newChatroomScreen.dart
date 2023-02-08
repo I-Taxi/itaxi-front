@@ -9,12 +9,15 @@ import 'package:intl/intl.dart';
 import 'package:itaxi/chat/newChatListTile.dart';
 import 'package:itaxi/controller/chatRoomController.dart';
 import 'package:itaxi/controller/historyController.dart';
+import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/model/chat.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/settings/settingScreen.dart';
 import 'package:itaxi/widget/abbreviatePlaceName.dart';
 import 'package:itaxi/widget/chatListTile.dart';
+import 'package:itaxi/widget/timelineDialog.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class NewChatroomScreen extends StatefulWidget {
   const NewChatroomScreen({super.key});
@@ -27,11 +30,13 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
   late TextEditingController _controller;
   late UserController _userController = Get.find();
   late ChatRoomController _chatRoomController = Get.find();
+  late PostController _postController = Get.find();
   late HistoryController _historyController = Get.find();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   ScrollController _scrollController = ScrollController();
   bool isScrollDown = false;
   bool needScrollDown = false;
+  Post? currentPost = null;
 
   void _scrollDown() {
     _scrollController.animateTo(
@@ -184,6 +189,7 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                       FutureBuilder<Post>(
                         future: _historyController.history,
                         builder: (BuildContext context, snapshot) {
+                          currentPost = snapshot.data;
                           if (snapshot.hasData) {
                             for (int i = 0;
                                 i < snapshot.data!.joiners!.length;
@@ -216,20 +222,42 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                                       SizedBox(
                                         width: 16.w,
                                       ),
-                                      Image.asset(
-                                        'assets/button/phone.png',
-                                        width: 24.w,
-                                        height: 24.h,
-                                        color: colorScheme.tertiaryContainer,
+                                      InkWell(
+                                        child: Image.asset(
+                                          'assets/button/phone.png',
+                                          width: 24.w,
+                                          height: 24.h,
+                                          color: colorScheme.tertiaryContainer,
+                                        ),
+                                        onTap: () async {
+                                          final Uri launchUri = Uri.parse(
+                                              'tel:${snapshot.data!.joiners![i].memberPhone}');
+                                          if (await canLaunchUrl(launchUri)) {
+                                            await launchUrl(launchUri);
+                                          } else {
+                                            throw Exception('Failed call');
+                                          }
+                                        },
                                       ),
                                       SizedBox(
                                         width: 16.w,
                                       ),
-                                      Image.asset(
-                                        'assets/button/message.png',
-                                        width: 24.w,
-                                        height: 24.h,
-                                      ),
+                                      InkWell(
+                                        child: Image.asset(
+                                          'assets/button/message.png',
+                                          width: 24.w,
+                                          height: 24.h,
+                                        ),
+                                        onTap: () async {
+                                          final Uri launchUri = Uri.parse(
+                                              'sms:${snapshot.data!.joiners![i].memberPhone}');
+                                          if (await canLaunchUrl(launchUri)) {
+                                            await launchUrl(launchUri);
+                                          } else {
+                                            throw Exception('Failed sms');
+                                          }
+                                        },
+                                      )
                                     ],
                                   ),
                                 ],
@@ -252,17 +280,23 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
               alignment: FractionalOffset.bottomLeft,
               child: Padding(
                 padding: EdgeInsets.only(bottom: 43.h, left: 30.w),
-                child: Row(children: [
-                  Image.asset('assets/icon/icon-LogOut.png'),
-                  SizedBox(
-                    width: 5.w,
-                  ),
-                  Text(
-                    "방 나가기",
-                    style: textTheme.bodyText2
-                        ?.copyWith(color: colorScheme.tertiaryContainer),
-                  )
-                ]),
+                child: InkWell(
+                  onTap: () async {
+                    showMainDialog(context, '방 나가기', '방을 나가시겠습니까?',
+                        _postController, _historyController, currentPost!);
+                  },
+                  child: Row(children: [
+                    Image.asset('assets/icon/icon-LogOut.png'),
+                    SizedBox(
+                      width: 5.w,
+                    ),
+                    Text(
+                      "방 나가기",
+                      style: textTheme.bodyText2
+                          ?.copyWith(color: colorScheme.tertiaryContainer),
+                    )
+                  ]),
+                ),
               ),
             ),
           ],
