@@ -7,6 +7,7 @@ import 'package:itaxi/controller/chatRoomController.dart';
 import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/controller/userController.dart';
+import 'package:itaxi/model/history.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -28,7 +29,7 @@ Future<dynamic> timelineDialog(
           width: 360.w,
           height: 360.h,
           padding: EdgeInsets.fromLTRB(20.0.w, 20.0.h, 20.0.w, 12.0.h),
-          child: FutureBuilder<Post>(
+          child: FutureBuilder<History>(
             future: _historyController.history,
             builder: (BuildContext context, snapshot) {
               if (snapshot.hasData) {
@@ -279,7 +280,7 @@ Future<dynamic> timelineDialog(
                                     '방을 나가시겠습니까?',
                                     _postController,
                                     _historyController,
-                                    snapshot.data!);
+                                    snapshot.data!.toPost());
                               },
                               child: Text(
                                 '방 나가기',
@@ -289,9 +290,10 @@ Future<dynamic> timelineDialog(
                             ),
                           TextButton(
                             onPressed: () {
-                              _chatRoomController.getPost(post: snapshot.data!);
+                              _chatRoomController.getPost(
+                                  post: snapshot.data!.toPost());
                               _chatRoomController.getChats(
-                                  post: snapshot.data!);
+                                  post: snapshot.data!.toPost());
                               Get.back();
                               Get.to(() => const ChatRoomScreen());
                             },

@@ -144,7 +144,8 @@ Container timelineSoonInfoCard(
                       if (history.postType == null) {
                         // TODO: ktx container 제작하면 연결
                       } else {
-                        _historyController.getHistoryInfo(postId: history.id!);
+                        _historyController.getHistoryInfo(
+                            postId: history.id!, postType: history.postType!);
                         Get.to(() => const TimelineDetailScreen());
                       }
                     },
@@ -298,7 +299,7 @@ Container timelineSoonInfoCard(
                           // TODO: ktx container 제작하면 연결
                         } else {
                           _historyController.getHistoryInfo(
-                              postId: history.id!);
+                              postId: history.id!, postType: history.postType!);
                           Get.to(() => const TimelineDetailScreen());
                         }
                       },
