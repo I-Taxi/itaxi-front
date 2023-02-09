@@ -23,16 +23,17 @@ Widget chatroomListListTile(
   late ChatRoomController _chatRoomController = Get.put(ChatRoomController());
   String time = history.deptTime ?? 'null';
   int postId = history.id ?? 0;
+  int postType = history.postType ?? -1;
 
   return InkWell(
     onTap: () async {
-      await _historyController.getHistoryInfo(postId: postId);
+      await _historyController.getHistoryInfo(
+          postId: postId, postType: postType);
       if (history.postType != 3) {
         _chatRoomController.getPost(post: history.toPost());
         _chatRoomController.getChats(post: history.toPost());
         Get.to(() => const NewChatroomScreen());
       }
-      
     },
     child: Container(
       width: 342.w,
@@ -85,7 +86,7 @@ Widget chatroomListListTile(
                           // for (int i = 0; i < post.joiners!.length; i++)
                           //   if (post.joiners![i].owner!)
                           Text(
-                            "방장: ${history.id}",
+                            "방장: ${history.owner}",
                             style: textTheme.bodyText2?.copyWith(
                               color: colorScheme.tertiaryContainer,
                             ),

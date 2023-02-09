@@ -12,6 +12,7 @@ import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/model/chat.dart';
+import 'package:itaxi/model/history.dart';
 import 'package:itaxi/model/place.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/settings/settingScreen.dart';
@@ -85,19 +86,18 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     String time = _chatRoomController.post.deptTime ?? 'null';
-    List<Place?> stopovers;
+    List<HistoryPlace?> stopovers;
 
     return Scaffold(
       key: _scaffoldKey,
       endDrawer: Drawer(
         child: GetBuilder<HistoryController>(builder: (_) {
           if (_historyController.loaded) {
-            return FutureBuilder<Post>(
+            return FutureBuilder<History>(
               future: _historyController.history,
               builder: (BuildContext context, snapshot) {
                 stopovers = snapshot.data!.stopovers ?? [];
-                if (stopovers.length == 1) print(stopovers[0]!.name!);
-                currentPost = snapshot.data;
+                //currentPost = snapshot.data;
                 return Column(
                   children: [
                     Container(
