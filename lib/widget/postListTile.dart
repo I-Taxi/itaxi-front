@@ -49,12 +49,14 @@ Widget postListTile({
     onTap: () async {
       bool checkId = await checkUser(post.id!);
 
-      if (post.participantNum! >= post.capacity!) {
+      if (post.joiners!.length >= post.capacity!) {
         snackBar(context: context, title: '이미 인원이 가득 찬 모집입니다.');
       } else {
-          if (checkId) {
+        for(int i = 0; i< post.joiners!.length; i++){
+          if(post.joiners![i].uid == _userController.uid){
             snackBar(context: context, title: '이미 입장한 방입니다.');
-          } else {
+            break;
+          } else if(i == post.joiners!.length -1){
             showDialog(
                 context: context,
                 builder: (BuildContext context) {
@@ -131,7 +133,9 @@ Widget postListTile({
                     ),
                   );
                 });
+            break;
           }
+        }
       }
     },
     child: Column(
