@@ -22,6 +22,7 @@ import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/placeSearch/ktxSearchScreen.dart';
 import 'package:itaxi/placeSearch/ktxPlaceSearchController.dart';
 import 'package:itaxi/widget/postTypeToggleButton.dart';
+import 'package:itaxi/widget/setTimeDateFormater.dart';
 
 KtxPlaceSearchController _ktxPlaceSearchController = Get.find();
 KtxPlaceController _ktxPlaceController = Get.find();
@@ -261,8 +262,7 @@ Padding lookupSetTimeWidget(
           ),
           GetBuilder<DateController>(builder: (_) {
             return Text(
-              DateFormat('MM월 dd일 (E)').format(//요일 설정 해줘야 함.
-                  _dateController.pickedDate!),
+              lookupDateFormater(_dateController.pickedDate),
               style:
                   textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
             );
@@ -277,42 +277,43 @@ Padding gatherSetTimeWidget(
     ColorScheme colorScheme, BuildContext context, TextTheme textTheme) {
   return Padding(
     padding: EdgeInsets.only(right: 24.w, left: 23.w, bottom: 8.h),
-    child: Container(
-      height: 56.h,
-      width: 295.w,
-      decoration: BoxDecoration(
-        color: colorScheme.primaryContainer,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 20.w,
-          ),
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () {
-              _dateController.selectDate(context);
-            },
-            child: ImageIcon(
+    child: GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        _dateController
+            .selectDate(context)
+            .then((_) => _dateController.selectTime(context));
+      },
+      child: Container(
+        height: 56.h,
+        width: 295.w,
+        decoration: BoxDecoration(
+          color: colorScheme.primaryContainer,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: 20.w,
+            ),
+            ImageIcon(
               AssetImage('assets/icon/calendar.png'),
               size: 24,
               color: colorScheme.tertiaryContainer,
             ),
-          ),
-          SizedBox(
-            width: 25.w,
-          ),
-          GetBuilder<DateController>(builder: (_) {
-            return Text(
-              DateFormat('MM월 dd일 (E) HH:MM').format(//요일 설정 해줘야 함.
-                  _dateController.pickedDate!),
-              style:
-                  textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
-            );
-          })
-        ],
+            SizedBox(
+              width: 25.w,
+            ),
+            GetBuilder<DateController>(builder: (_) {
+              return Text(
+                gatherDateFormater(_dateController.mergeDateAndTime()),
+                style: textTheme.subtitle2
+                    ?.copyWith(color: colorScheme.onTertiary),
+              );
+            })
+          ],
+        ),
       ),
     ),
   );

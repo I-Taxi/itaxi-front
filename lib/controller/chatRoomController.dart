@@ -24,6 +24,7 @@ class ChatRoomController extends GetxController {
 
   TextEditingController chatTextController = TextEditingController();
   bool texting = false;
+  bool firstSend = true;
 
   String? token;
 

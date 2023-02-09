@@ -4,10 +4,12 @@ import 'package:get/get.dart';
 import 'package:itaxi/model/chat.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/controller/historyController.dart';
+import 'package:itaxi/controller/chatRoomController.dart';
 
 class ChatRepository {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   HistoryController _historyController = Get.put(HistoryController());
+  ChatRoomController _chatRoomController = Get.find();
 
   Future<void> setPost({required Post post}) async {
     DocumentReference reference =
@@ -16,6 +18,10 @@ class ChatRepository {
   }
 
   Future<void> setChat({required Post post, required Chat chat}) async {
+    if (_chatRoomController.firstSend) {
+      await setPost(post: post);
+      _chatRoomController.firstSend = false;
+    }
     String cid = _firestore
         .collection('Post')
         .doc(post.id.toString())
@@ -33,6 +39,10 @@ class ChatRepository {
 
   // setChat 과 같은 fuction 이지만 방 입장 및 나가기 로그용
   Future<void> setChatLog({required Post post, required Chat chat}) async {
+    if (_chatRoomController.firstSend) {
+      await setPost(post: post);
+      _chatRoomController.firstSend = false;
+    }
     String cid = _firestore
         .collection('Post')
         .doc(post.id.toString())
