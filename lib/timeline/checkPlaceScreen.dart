@@ -117,11 +117,13 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        checkPlaceScreenBeforeDateWidget(textTheme, colorScheme, -2),
+                        checkPlaceScreenBeforeDateWidget(
+                            textTheme, colorScheme, -2),
                         SizedBox(
                           width: 25.w,
                         ),
-                        checkPlaceScreenBeforeDateWidget(textTheme, colorScheme, -1),
+                        checkPlaceScreenBeforeDateWidget(
+                            textTheme, colorScheme, -1),
                         SizedBox(
                           width: 25.w,
                         ),
@@ -144,7 +146,8 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                         SizedBox(
                           width: 25.w,
                         ),
-                        checkPlaceScreenAfterDateWidget(textTheme, colorScheme, 1),
+                        checkPlaceScreenAfterDateWidget(
+                            textTheme, colorScheme, 1),
                         SizedBox(
                           width: 26.w,
                         ),
@@ -583,76 +586,75 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
     );
   }
 
-  GetBuilder<DateController> checkPlaceScreenAfterDateWidget(TextTheme textTheme, ColorScheme colorScheme, int difference) {
+  GetBuilder<DateController> checkPlaceScreenAfterDateWidget(
+      TextTheme textTheme, ColorScheme colorScheme, int difference) {
     return GetBuilder<DateController>(
-                        builder: (_) {
-                          return GestureDetector(
-                            behavior: HitTestBehavior.opaque,
-                            onTap: () {
-                              _dateController.afterDate();
-                            },
-                            child: Container(
-                              height: 24.h,
-                              width: 42.w,
-                              alignment: Alignment.center,
-                              child: Text(
-                                DateFormat('MM.d').format(_dateController
-                                    .pickedDate!
-                                    .add(Duration(days: difference))),
-                                style: textTheme.bodyText1?.copyWith(
-                                  color: colorScheme.outline,
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      );
+      builder: (_) {
+        return GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {
+            _dateController.afterDate();
+          },
+          child: Container(
+            height: 24.h,
+            width: 42.w,
+            alignment: Alignment.center,
+            child: Text(
+              DateFormat('MM.d').format(
+                  _dateController.pickedDate!.add(Duration(days: difference))),
+              style: textTheme.bodyText1?.copyWith(
+                color: colorScheme.outline,
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 
-  GetBuilder<DateController> checkPlaceScreenBeforeDateWidget(TextTheme textTheme, ColorScheme colorScheme, int difference) {
+  GetBuilder<DateController> checkPlaceScreenBeforeDateWidget(
+      TextTheme textTheme, ColorScheme colorScheme, int difference) {
     return GetBuilder<DateController>(
-                        builder: (_) {
-                          if (DateTime.now().day <=
-                              _dateController.pickedDate!.add(Duration(days: difference)).day) {
-                            return GestureDetector(
-                              behavior: HitTestBehavior.opaque,
-                              onTap: () {
-                                _dateController.beforDate();
-                              },
-                              child: Container(
-                                height: 24.h,
-                                width: 42.w,
-                                alignment: Alignment.center,
-                                child: Text(
-                                  DateFormat('MM.dd').format(_dateController
-                                      .pickedDate!
-                                      .add(Duration(days: difference))),
-                                  style: textTheme.bodyText1?.copyWith(
-                                    color: colorScheme.outline,
-                                  ),
-                                ),
-                              ),
-                            );
-                          }
-                          return GestureDetector(
-                            behavior: HitTestBehavior.opaque,
-                            onTap: () {},
-                            child: Container(
-                              height: 24.h,
-                              width: 42.w,
-                              alignment: Alignment.center,
-                              child: Text(
-                                DateFormat(' - ').format(_dateController
-                                    .pickedDate!
-                                    .add(const Duration(days: -2))),
-                                style: textTheme.bodyText1?.copyWith(
-                                  color: colorScheme.tertiary,
-                                ),
-                              ),
-                            ),
-                          );
-                        },
-                      );
+      builder: (_) {
+        if (DateTime.now().day <=
+            _dateController.pickedDate!.add(Duration(days: difference)).day) {
+          return GestureDetector(
+            behavior: HitTestBehavior.opaque,
+            onTap: () {
+              _dateController.beforDate();
+            },
+            child: Container(
+              height: 24.h,
+              width: 42.w,
+              alignment: Alignment.center,
+              child: Text(
+                DateFormat('MM.dd').format(_dateController.pickedDate!
+                    .add(Duration(days: difference))),
+                style: textTheme.bodyText1?.copyWith(
+                  color: colorScheme.outline,
+                ),
+              ),
+            ),
+          );
+        }
+        return GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () {},
+          child: Container(
+            height: 24.h,
+            width: 42.w,
+            alignment: Alignment.center,
+            child: Text(
+              DateFormat(' - ').format(
+                  _dateController.pickedDate!.add(const Duration(days: -2))),
+              style: textTheme.bodyText1?.copyWith(
+                color: colorScheme.tertiary,
+              ),
+            ),
+          ),
+        );
+      },
+    );
   }
 
   Widget postIsEmpty(BuildContext context) {
@@ -662,67 +664,38 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
     return ListView(
       children: [
         Column(
-          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            Padding(
-              padding: EdgeInsets.symmetric(vertical: 40.0.h),
+            SizedBox(
+              height: 60.h,
+              width: 282.w,
+            ),
+            Align(
+              alignment: Alignment.center,
               child: Text(
-                '검색 결과가 없습니다',
-                style: textTheme.subtitle2?.copyWith(
-                  color: colorScheme.tertiary,
-                  fontFamily: 'NotoSans',
-                ),
+                '아직 I-TAXI를 이용한 이력이 없어요\n어서 새로운 동료를 만나보세요',
+                textAlign: TextAlign.center,
+                style: textTheme.headline1?.copyWith(
+                    color: colorScheme.tertiaryContainer,
+                    fontWeight: FontWeight.w500,
+                    fontSize: 20),
               ),
             ),
-            InkWell(
-              onTap: () {
-                _postController.getPosts(
-                  depId: _placeController.dep?.id,
-                  dstId: _placeController.dst?.id,
-                  time: _dateController.formattingDateTime(
-                    _dateController.mergeDateAndTime(),
-                  ),
-                  postType: _screenController.mainScreenCurrentTabIndex,
-                );
-              },
-              child: Container(
-                width: 352.0.w,
-                height: 80.0.h,
-                decoration: BoxDecoration(
-                  color: colorScheme.background,
-                  borderRadius: BorderRadius.circular(4.0),
-                  boxShadow: [
-                    BoxShadow(
-                      color: colorScheme.shadow,
-                      offset: const Offset(1.0, 1.0),
-                      blurRadius: 2.0,
-                    ),
-                  ],
-                ),
-                child: Column(
-                  children: [
-                    SizedBox(
-                      height: 18.0.h,
-                    ),
-                    Image.asset(
-                      width: 16.0.w,
-                      height: 16.0.h,
-                      'assets/button/add_2.png',
-                    ),
-                    SizedBox(
-                      height: 12.0.h,
-                    ),
-                    Text(
-                      '새로 모집하기',
-                      style: textTheme.subtitle1
-                          ?.copyWith(color: colorScheme.tertiary),
-                    )
-                  ],
-                ),
-              ),
+            SizedBox(
+              height: 36.h,
             ),
+            OutlinedButton(
+              onPressed: () {},
+              style: OutlinedButton.styleFrom(
+                  side: BorderSide(width: 0, color: colorScheme.onBackground)),
+              child: Image.asset(
+                width: 198,
+                'assets/button/add_timeline.png',
+              ),
+            )
           ],
-        ),
+        )
       ],
     );
   }
