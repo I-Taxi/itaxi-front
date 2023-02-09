@@ -4,10 +4,12 @@ import 'package:get/get.dart';
 import 'package:itaxi/model/chat.dart';
 import 'package:itaxi/model/ktxPost.dart';
 import 'package:itaxi/controller/historyController.dart';
+import 'package:itaxi/controller/chatRoomController.dart';
 
 class KtxChatRepository {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   HistoryController _historyController = Get.put(HistoryController());
+  ChatRoomController _chatRoomController = Get.find();
 
   Future<void> setPost({required KtxPost post}) async {
     DocumentReference reference =
@@ -16,6 +18,11 @@ class KtxChatRepository {
   }
 
   Future<void> setChat({required KtxPost post, required Chat chat}) async {
+    if (_chatRoomController.firstSend) {
+      print('first send');
+      await setPost(post: post);
+      _chatRoomController.firstSend = false;
+    }
     String cid = _firestore
         .collection('KtxPost')
         .doc(post.id.toString())
@@ -33,6 +40,10 @@ class KtxChatRepository {
 
   // setChat 과 같은 fuction 이지만 방 입장 및 나가기 로그용
   Future<void> setChatLog({required KtxPost post, required Chat chat}) async {
+    if (_chatRoomController.firstSend) {
+      await setPost(post: post);
+      _chatRoomController.firstSend = false;
+    }
     String cid = _firestore
         .collection('KtxPost')
         .doc(post.id.toString())

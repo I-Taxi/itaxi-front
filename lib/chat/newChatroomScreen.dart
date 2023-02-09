@@ -394,7 +394,6 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
               builder: (BuildContext context, snapshot) {
                 if (snapshot.hasData) {
                   if (snapshot.data!.isNotEmpty) {
-                    print(_chatRoomController.postType);
                     return Padding(
                       padding:
                           EdgeInsets.only(left: 18.w, right: 18.w, top: 44.h),
