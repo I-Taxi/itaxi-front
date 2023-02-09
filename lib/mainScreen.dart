@@ -34,16 +34,15 @@ class MainScreen extends StatefulWidget {
 }
 
 class _MainScreenState extends State<MainScreen> {
-
   ScreenController _screenController = Get.put(ScreenController());
   PostController _postController = Get.put(PostController());
   PlaceController _placeController = Get.put(PlaceController());
   DateController _dateController = Get.put(DateController());
   UserController _userController = Get.put(UserController());
+  AddPostController _addPostController = Get.put(AddPostController());
 
   late PlaceSearchController _placeSearchController;
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-  GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final SignInController _signInController = Get.find();
@@ -54,7 +53,7 @@ class _MainScreenState extends State<MainScreen> {
   bool alarm = false;
   bool isOpen = false;
 
-  void _openEndDrawer(){
+  void _openEndDrawer() {
     _scaffoldKey.currentState!.openEndDrawer();
   }
 
@@ -83,10 +82,8 @@ class _MainScreenState extends State<MainScreen> {
     return GetBuilder<ScreenController>(builder: (controller) {
       return Scaffold(
         key: _scaffoldKey,
-        endDrawer: Drawer(
-          child: _myListView(context: context)
-        ),
-        onEndDrawerChanged: (isOpen){
+        endDrawer: Drawer(child: _myListView(context: context)),
+        onEndDrawerChanged: (isOpen) {
           _navController.changeNavHeight(isOpen);
         },
         body: Stack(
@@ -133,166 +130,123 @@ class _MainScreenState extends State<MainScreen> {
                           ),
                           controller.hasNotice
                               ? SizedBox(
-                            height: 0.37.h,
-                          )
+                                  height: 0.37.h,
+                                )
                               : SizedBox(
-                            height: 2.37.h,
-                          ),
+                                  height: 2.37.h,
+                                ),
                           GestureDetector(
                             onTap: () {
                               controller.toggleHasNotice();
                             },
                             child: controller.hasNotice
                                 ? Row(
-                              children: [
-                                Container(
-                                  height: 44.h,
-                                  decoration: BoxDecoration(
-                                    color: colorScheme.surfaceVariant,
-                                    borderRadius: BorderRadius.only(
-                                        topRight: Radius.circular(24),
-                                        bottomLeft: Radius.circular(24),
-                                        bottomRight: Radius.circular(24)),
-                                  ),
-                                  alignment: Alignment.center,
-                                  child: Padding(
-                                    padding: EdgeInsets.only(
-                                        left: 16.w, right: 24.w),
-                                    child: Row(
-                                      mainAxisAlignment:
-                                      MainAxisAlignment.center,
-                                      children: [
-                                        ImageIcon(
-                                          AssetImage(
-                                              'assets/icon/notice_info.png'),
-                                          size: 23,
+                                    children: [
+                                      Container(
+                                        height: 44.h,
+                                        decoration: BoxDecoration(
+                                          color: colorScheme.surfaceVariant,
+                                          borderRadius: BorderRadius.only(
+                                              topRight: Radius.circular(24), bottomLeft: Radius.circular(24), bottomRight: Radius.circular(24)),
+                                        ),
+                                        alignment: Alignment.center,
+                                        child: Padding(
+                                          padding: EdgeInsets.only(left: 16.w, right: 24.w),
+                                          child: Row(
+                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            children: [
+                                              ImageIcon(
+                                                AssetImage('assets/icon/notice_info.png'),
+                                                size: 23,
+                                                color: colorScheme.primary,
+                                              ),
+                                              SizedBox(
+                                                width: 8.w,
+                                              ),
+                                              Text(
+                                                "iTaxi를 이용해 주셔서 감사합니다 :)",
+                                                style: textTheme.subtitle2?.copyWith(color: colorScheme.primary),
+                                              ),
+                                            ],
+                                          ),
+                                        ),
+                                      ),
+                                      Container()
+                                    ],
+                                  )
+                                : Container(
+                                    alignment: Alignment.centerLeft,
+                                    child: SizedBox(
+                                      height: 30.h,
+                                      child: Text(
+                                        "어디든지 부담없이 이동하세요!",
+                                        style: textTheme.subtitle1?.copyWith(
                                           color: colorScheme.primary,
                                         ),
-                                        SizedBox(
-                                          width: 8.w,
-                                        ),
-                                        Text(
-                                          "iTaxi를 이용해 주셔서 감사합니다 :)",
-                                          style: textTheme.subtitle2
-                                              ?.copyWith(
-                                              color:
-                                              colorScheme.primary),
-                                        ),
-                                      ],
+                                      ),
                                     ),
                                   ),
-                                ),
-                                Container()
-                              ],
-                            )
-                                : Container(
-                              alignment: Alignment.centerLeft,
-                              child: SizedBox(
-                                height: 30.h,
-                                child: Text(
-                                  "어디든지 부담없이 이동하세요!",
-                                  style: textTheme.subtitle1?.copyWith(
-                                    color: colorScheme.primary,
-                                  ),
-                                ),
-                              ),
-                            ),
                           )
                         ],
                       ),
                       controller.hasNotice
                           ? SizedBox(
-                        height: 40.37.h,
-                      )
+                              height: 40.37.h,
+                            )
                           : SizedBox(
-                        height: 52.37.h,
-                      ),
+                              height: 52.37.h,
+                            ),
                       controller.mainScreenLoaded
                           ? Container(
-                        height: (!_placeController.hasStopOver ||
-                            controller.mainScreenCurrentToggle == 0)
-                            ? 433.63.h
-                            : 489.63.h,
-                        width: 342.w,
-                        decoration: BoxDecoration(
-                            color: colorScheme.primary,
-                            borderRadius: BorderRadius.circular(36.0),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: colorScheme.shadow,
-                                  blurRadius: 40,
-                                  offset: Offset(2, 4))
-                            ]),
-                        child: controller.mainScreenCurrentToggle == 0
-                            ? Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  left: 23.w,
-                                  right: 23.w,
-                                  top: 20.63.h),
-                              child: postTypeToggleButton(
-                                  context: context,
-                                  controller: controller),
-                            ),
-                            lookupSetDepDstWidget(
-                                colorScheme, textTheme, controller),
-                            lookupSetTimeWidget(
-                                colorScheme, context, textTheme),
-                            lookupSetPostTypeWidget(
-                                colorScheme, controller, context),
-                            lookupSetCapacityWidget(
-                                colorScheme, controller, textTheme)
-                          ],
-                        )
-                            : Column(
-                          children: [
-                            Padding(
-                              padding: EdgeInsets.only(
-                                  left: 23.w,
-                                  right: 23.w,
-                                  top: 20.63.h),
-                              child: postTypeToggleButton(
-                                  context: context,
-                                  controller: controller),
-                            ),
-                            _placeController.hasStopOver
-                                ? gatherSetDepDstStopOverWidget(
-                                colorScheme,
-                                textTheme,
-                                controller)
-                                : gatherSetDepDstWidget(colorScheme,
-                                textTheme, controller),
-                            gatherSetTimeWidget(
-                                colorScheme, context, textTheme),
-                            gatherSetPostTypeWidget(
-                                colorScheme, controller, context),
-                            lookupSetCapacityWidget(
-                                colorScheme, controller, textTheme)
-                          ],
-                        ),
-                      )
+                              height: (!_placeController.hasStopOver || controller.mainScreenCurrentToggle == 0) ? 433.63.h : 489.63.h,
+                              width: 342.w,
+                              decoration: BoxDecoration(
+                                  color: colorScheme.primary,
+                                  borderRadius: BorderRadius.circular(36.0),
+                                  boxShadow: [BoxShadow(color: colorScheme.shadow, blurRadius: 40, offset: Offset(2, 4))]),
+                              child: controller.mainScreenCurrentToggle == 0
+                                  ? Column(
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(left: 23.w, right: 23.w, top: 20.63.h),
+                                          child: postTypeToggleButton(context: context, controller: controller),
+                                        ),
+                                        lookupSetDepDstWidget(colorScheme, textTheme, controller),
+                                        lookupSetTimeWidget(colorScheme, context, textTheme),
+                                        lookupSetPostTypeWidget(colorScheme, controller, context),
+                                        lookupSetCapacityWidget(colorScheme, controller, textTheme)
+                                      ],
+                                    )
+                                  : Column(
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsets.only(left: 23.w, right: 23.w, top: 20.63.h),
+                                          child: postTypeToggleButton(context: context, controller: controller),
+                                        ),
+                                        _placeController.hasStopOver
+                                            ? gatherSetDepDstStopOverWidget(colorScheme, textTheme, controller)
+                                            : gatherSetDepDstWidget(colorScheme, textTheme, controller),
+                                        gatherSetTimeWidget(colorScheme, context, textTheme),
+                                        gatherSetPostTypeWidget(colorScheme, controller, context),
+                                        lookupSetCapacityWidget(colorScheme, controller, textTheme)
+                                      ],
+                                    ),
+                            )
                           : Container(
-                        height: 433.63.h,
-                        width: 342.w,
-                        decoration: BoxDecoration(
-                            color: colorScheme.primary,
-                            borderRadius: BorderRadius.circular(36.0),
-                            boxShadow: [
-                              BoxShadow(
-                                  color: colorScheme.shadow,
-                                  blurRadius: 40,
-                                  offset: Offset(2, 4))
-                            ]),
-                      ),
+                              height: 433.63.h,
+                              width: 342.w,
+                              decoration: BoxDecoration(
+                                  color: colorScheme.primary,
+                                  borderRadius: BorderRadius.circular(36.0),
+                                  boxShadow: [BoxShadow(color: colorScheme.shadow, blurRadius: 40, offset: Offset(2, 4))]),
+                            ),
                       SizedBox(
                         height: (!_placeController.hasStopOver || controller.mainScreenCurrentToggle == 0) ? 60.h : 4.h,
                       ),
                       if (controller.mainScreenLoaded)
                         controller.mainScreenCurrentToggle == 0
                             ? lookupButton(textTheme, colorScheme)
-                            : gatherButton(
-                            textTheme, colorScheme, controller, context),
+                            : gatherButton(textTheme, colorScheme, controller, context),
                     ],
                   );
                 })),
@@ -301,6 +255,7 @@ class _MainScreenState extends State<MainScreen> {
       );
     });
   }
+
   Widget _myListView({required BuildContext context}) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
@@ -333,9 +288,7 @@ class _MainScreenState extends State<MainScreen> {
                               children: <TextSpan>[
                                 TextSpan(
                                   text: snapshot.data!.email.toString(),
-                                  style: textTheme.bodyText2?.copyWith(
-                                      color: colorScheme.tertiaryContainer,
-                                      fontSize: 10),
+                                  style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiaryContainer, fontSize: 10),
                                 )
                               ]),
                         ),
@@ -433,8 +386,7 @@ class _MainScreenState extends State<MainScreen> {
                           },
                           child: Text(
                             "로그아웃",
-                            style: textTheme.bodyText2
-                                ?.copyWith(color: colorScheme.tertiary),
+                            style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiary),
                           ),
                         )
                       ],
@@ -450,8 +402,7 @@ class _MainScreenState extends State<MainScreen> {
                   },
                   child: Text(
                     "로그아웃",
-                    style: textTheme.bodyText2
-                        ?.copyWith(color: colorScheme.tertiary),
+                    style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiary),
                   ),
                 ),
               );
@@ -532,8 +483,7 @@ class _MainScreenState extends State<MainScreen> {
         builder: (BuildContext context) {
           return Dialog(
             elevation: 0,
-            shape:
-            RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
             child: Container(
               width: 360.w,
               height: 240.h,
@@ -547,8 +497,7 @@ class _MainScreenState extends State<MainScreen> {
                 children: [
                   Text(
                     "로그아웃 하시겠습니까?",
-                    style: textTheme.subtitle1
-                        ?.copyWith(color: colorScheme.onSecondaryContainer),
+                    style: textTheme.subtitle1?.copyWith(color: colorScheme.onSecondaryContainer),
                   ),
                   const Spacer(),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
