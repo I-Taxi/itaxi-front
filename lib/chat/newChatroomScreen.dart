@@ -96,7 +96,6 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
             return FutureBuilder<History>(
               future: _historyController.history,
               builder: (BuildContext context, snapshot) {
-                print(snapshot.data!.stopovers![0].toString());
                 stopovers = snapshot.data!.stopovers ?? [];
                 //currentPost = snapshot.data;
                 return Column(
