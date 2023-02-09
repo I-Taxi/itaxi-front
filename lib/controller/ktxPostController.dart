@@ -8,7 +8,7 @@ import 'package:intl/intl.dart';
 import 'package:itaxi/controller/chatRoomController.dart';
 import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/controller/userController.dart';
-import 'package:itaxi/repository/chatRepository.dart';
+import 'package:itaxi/repository/ktxChatRepository.dart';
 import 'package:itaxi/model/ktxPost.dart';
 import 'package:itaxi/model/joiner.dart';
 
@@ -28,10 +28,11 @@ class KtxPostController extends GetxController {
     return result;
   }
 
-  Future<void> getPosts(
-      {int? depId,
-      int? dstId,
-      required String time,}) async {
+  Future<void> getPosts({
+    int? depId,
+    int? dstId,
+    required String time,
+  }) async {
     posts = fetchPost(
       depId: depId,
       dstId: dstId,
@@ -104,9 +105,10 @@ class KtxPostController extends GetxController {
     );
 
     if (response.statusCode == 200) {
-      KtxPost result = KtxPost.fromDocs(json.decode(utf8.decode(response.bodyBytes)));
-      // await _chatRoomController.joinChat(post: result);
-      // await ChatRepository().setPost(post: result);
+      KtxPost result =
+          KtxPost.fromDocs(json.decode(utf8.decode(response.bodyBytes)));
+      await _chatRoomController.ktxJoinChat(post: result);
+      await KtxChatRepository().setPost(post: result);
       print('join');
     } else {
       throw Exception('Failed to join');
@@ -139,13 +141,12 @@ class KtxPostController extends GetxController {
     );
     if (response.statusCode == 200) {
       print(response.body);
-      // await _chatRoomController.outChat(post: post);
-      // ChatRepository().setPost(post: post);
+      await _chatRoomController.ktxOutChat(post: post);
+      KtxChatRepository().setPost(post: post);
 
-      // _chatRoomController.changeOwnerChat(ownerName: response.body);
-      // if (_userController.memberId == owner?.memberId) {
-      //   _chatRoomController.changeOwnerChat(post: post);
-      // }
+      if (_userController.name != response.body) {
+        _chatRoomController.changeOwnerChat(ownerName: response.body);
+      }
     } else {
       throw Exception('Failed to out');
     }

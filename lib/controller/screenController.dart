@@ -13,7 +13,7 @@ class ScreenController extends GetxController {
   // ktxScreen
   bool ktxScreenLoaded = false;
   bool discountSelect = false;
-  int discountRate = 35;
+  int sale = 35;
   int ktxScreenCurrentTabIndex = 0;
   int ktxScreenCurrentToggle = 0;
 
@@ -27,8 +27,8 @@ class ScreenController extends GetxController {
     update();
   }
 
-  void setDiscountRate(int rate) {
-    discountRate = rate;
+  void setSale(int rate) {
+    sale = rate;
     update();
   }
 

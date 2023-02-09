@@ -32,20 +32,24 @@ class TimelineDetailScreen extends StatelessWidget {
   }
 
   double addPlaceContainerSize(double size, List<HistoryPlace?>? stopovers) {
-    if (stopovers!.isNotEmpty) {
+    if (stopovers != null && stopovers.isNotEmpty) {
       return size + 35.h;
     } else {
       return size;
     }
   }
 
-  Container insertStopoverContainer(
+  Container 
+  
+  
+  
+  insertStopoverContainer(
       {required BuildContext context,
       required List<HistoryPlace?>? stopovers}) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    if (stopovers!.isNotEmpty && stopovers != null) {
+    if (stopovers != null && stopovers.isNotEmpty) {
       return Container(
         padding: EdgeInsets.fromLTRB(0.w, 11.h, 0.w, 11.h),
         width: 300.h,

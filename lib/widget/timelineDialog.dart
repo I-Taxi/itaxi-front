@@ -290,10 +290,18 @@ Future<dynamic> timelineDialog(
                             ),
                           TextButton(
                             onPressed: () {
-                              _chatRoomController.getPost(
-                                  post: snapshot.data!.toPost());
-                              _chatRoomController.getChats(
-                                  post: snapshot.data!.toPost());
+                              if (snapshot.data!.postType != 3) {
+                                _chatRoomController.getPost(
+                                    post: snapshot.data!.toPost());
+                                _chatRoomController.getChats(
+                                    post: snapshot.data!.toPost());
+                              } else {
+                                _chatRoomController.getKtxPost(
+                                    ktxPost: snapshot.data!.toKtxPost());
+                                _chatRoomController.getKtxChats(
+                                    ktxPost: snapshot.data!.toKtxPost());
+                              }
+
                               Get.back();
                               Get.to(() => const ChatRoomScreen());
                             },
