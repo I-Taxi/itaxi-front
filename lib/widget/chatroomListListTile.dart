@@ -10,25 +10,29 @@ import 'package:itaxi/controller/chatRoomController.dart';
 import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/model/post.dart';
+import 'package:itaxi/model/history.dart';
 import 'package:itaxi/widget/abbreviatePlaceName.dart';
 
 Widget chatroomListListTile(
-    {required BuildContext context, required Post post}) {
+    {required BuildContext context, required History history}) {
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
   late AddPostController _addPostController = Get.find();
   late PostController _postController = Get.find();
   HistoryController _historyController = Get.put(HistoryController());
   late ChatRoomController _chatRoomController = Get.put(ChatRoomController());
-  String time = post.deptTime ?? 'null';
-  int postId = post.id ?? 0;
+  String time = history.deptTime ?? 'null';
+  int postId = history.id ?? 0;
 
   return InkWell(
     onTap: () async {
       await _historyController.getHistoryInfo(postId: postId);
-      _chatRoomController.getPost(post: post);
-      _chatRoomController.getChats(post: post);
-      Get.to(() => const NewChatroomScreen());
+      if (history.postType != 3) {
+        _chatRoomController.getPost(post: history.toPost());
+        _chatRoomController.getChats(post: history.toPost());
+        Get.to(() => const NewChatroomScreen());
+      }
+      
     },
     child: Container(
       width: 342.w,
@@ -41,7 +45,7 @@ Widget chatroomListListTile(
           SizedBox(
             width: 56.w,
             height: 56.h,
-            child: post.postType != null
+            child: history.postType != 3
                 ? Image.asset('assets/icon/icon-Car.png')
                 : Image.asset('assets/icon/icon-KTX.png'),
           ),
@@ -59,7 +63,7 @@ Widget chatroomListListTile(
                         children: [
                           Flexible(
                             child: Text(
-                              "${abbreviatePlaceName(post.departure!.name)}-${abbreviatePlaceName(post.destination!.name)}(${DateFormat('Md').format(DateTime.parse(time))})",
+                              "${abbreviatePlaceName(history.departure!.name)}-${abbreviatePlaceName(history.destination!.name)}(${DateFormat('Md').format(DateTime.parse(time))})",
                               style: textTheme.subtitle2?.copyWith(
                                 color: colorScheme.onTertiary,
                               ),
@@ -81,13 +85,13 @@ Widget chatroomListListTile(
                           // for (int i = 0; i < post.joiners!.length; i++)
                           //   if (post.joiners![i].owner!)
                           Text(
-                            "방장: ${post.id}",
+                            "방장: ${history.id}",
                             style: textTheme.bodyText2?.copyWith(
                               color: colorScheme.tertiaryContainer,
                             ),
                           ),
                           Text(
-                            "${post.capacity}명",
+                            "${history.capacity}명",
                             style: textTheme.bodyText2?.copyWith(
                               color: colorScheme.tertiary,
                             ),

@@ -19,10 +19,19 @@ class PostController extends GetxController {
   late Future<List<Post>> posts;
   bool isLoading = true;
 
-  List<Post> PostsfromJson(json) {
+  List<Post> postsfromJson(json) {
     List<Post> result = [];
     json.forEach((item) {
       result.add(Post.fromPostAllDocs(item));
+    });
+
+    return result;
+  }
+
+  List<Post> postsfromJsonWithoutJoiners(json) {
+    List<Post> result = [];
+    json.forEach((item) {
+      result.add(Post.fromStopoverDocs(item));
     });
 
     return result;
@@ -114,9 +123,12 @@ class PostController extends GetxController {
         'Content-type': 'application/json',
       },
     );
-
+    print(1);
     if (response.statusCode == 200) {
-      return PostsfromJson(json.decode(utf8.decode(response.bodyBytes)));
+      print(utf8.decode(response.bodyBytes));
+      print(2);
+      return postsfromJsonWithoutJoiners(
+          json.decode(utf8.decode(response.bodyBytes)));
     } else {
       throw Exception('Failed to load posts');
     }
