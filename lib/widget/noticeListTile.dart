@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:intl/intl.dart';
 import 'dart:core';
+import 'dart:io';
 
 import '../model/notice.dart';
 
@@ -36,8 +37,8 @@ Widget noticeListTile({
                       padding: EdgeInsets.only(left: 24.w),
                       child: Image(
                         image: AssetImage("assets/arrow/arrow_back.png"),
-                        width: 24.w,
-                        height: 24.w,
+                        width: 20.w,
+                        height: 20.w,
                         color: colorScheme.tertiaryContainer,
                       ),
                     ),
@@ -68,16 +69,16 @@ Widget noticeListTile({
                           ),
                           Text(
                             '[공지] ${notice.title}\n',
-                            style: textTheme.bodyText1!.copyWith(
-                              color: colorScheme.onTertiary
+                            style: textTheme.headline3!.copyWith(
+                              color: colorScheme.onTertiary,
                             ),
                           ),
                           Text(
                             DateFormat(
                               'yyyy/MM/dd'
                             ).format(DateTime.parse(notice.createdAt!)),
-                            style: textTheme.bodyText1!.copyWith(
-                              color: colorScheme.tertiary
+                            style: textTheme.bodyText2!.copyWith(
+                              color: colorScheme.tertiaryContainer
                             ),
                           ),
                           SizedBox(
@@ -86,8 +87,9 @@ Widget noticeListTile({
                           Text(
                             '${notice.content}',
                             textAlign: TextAlign.left,
-                            style: textTheme.headline2!.copyWith(
-                              color: colorScheme.onPrimary,
+                            style: textTheme.bodyText1!.copyWith(
+                              color: colorScheme.onTertiary,
+                                fontSize: Platform.isIOS ? 22 : 20
                             ),
                           )
                         ],

@@ -70,10 +70,7 @@ class _SearchScreenState extends State<SearchScreen> {
               onPressed: () {
                 Get.back();
               },
-              icon: Icon(
-                Icons.chevron_left_outlined,
-                color: colorScheme.tertiary,
-              ),
+              icon: Image.asset("assets/arrow/arrow_back_1.png", color: colorScheme.tertiaryContainer, width: 11.62.w, height: 20.51.h,)
             ),
             actions: [
               TextButton(
@@ -170,11 +167,11 @@ class _SearchScreenState extends State<SearchScreen> {
                           ),
                           suffixIcon: IconButton(
                             onPressed: () {},
-                            icon: const Icon(Icons.search, size: 20),
+                            icon: const Icon(Icons.search, size: 24),
                             color: colorScheme.tertiary,
                           ),
                           hintText: "$depOrDst를 입력하세요",
-                          hintStyle: textTheme.bodyText1
+                          hintStyle: textTheme.subtitle2
                               ?.copyWith(color: colorScheme.tertiary),
                           //prefixIconColor :
                         ),

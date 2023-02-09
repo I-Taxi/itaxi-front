@@ -5,7 +5,6 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:itaxi/controller/addPostController.dart';
 import 'package:itaxi/controller/dateController.dart';
-import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/controller/placeController.dart';
 import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/controller/screenController.dart';
@@ -29,9 +28,8 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
   PlaceController _placeController = Get.put(PlaceController());
   DateController _dateController = Get.put(DateController());
   UserController _userController = Get.put(UserController());
-  HistoryController _historyController = Get.put(HistoryController());
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
+  GlobalKey<RefreshIndicatorState>();
 
   @override
   void initState() {
@@ -62,10 +60,10 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
               backgroundColor: colorScheme.secondary,
               elevation: 0.0,
               leading: IconButton(
-                onPressed: () {
-                  Get.back();
-                },
-                icon: Image.asset("assets/arrow/arrow_back_1.png", color: colorScheme.primary, width: 11.62.w, height: 20.51.h)
+                  onPressed: () {
+                    Get.back();
+                  },
+                  icon: Image.asset("assets/arrow/arrow_back_1.png", color: colorScheme.primary, width: 11.62.w, height: 20.51.h)
               ),
               actions: [
                 IconButton(
@@ -164,6 +162,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
           builder: (_) {
             return Column(
               children: [
+
                 // post list
                 Expanded(
                   child: RefreshIndicator(
@@ -187,8 +186,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                           future: _postController.posts,
                           builder: (BuildContext context, snapshot) {
                             if (snapshot.hasData) {
-                              print(snapshot.data);
-                              // post가 있을 때
+                              // post가 있을 떼
                               if (snapshot.data!.isNotEmpty) {
                                 return ListView.builder(
                                   itemCount: snapshot.data!.length,
@@ -321,6 +319,8 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
     return ListView(
       children: [
         Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
               height: 192.h,
@@ -329,8 +329,8 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
               '검색된 내용이 없습니다\n직접 방을 만들어 사람들을 모아보세요!',
               textAlign: TextAlign.center,
               style: textTheme.bodyText1?.copyWith(
-                  color: colorScheme.tertiary,
-                  ),
+                color: colorScheme.tertiary,
+              ),
             ),
             SizedBox(
               height: 18.h,
@@ -340,7 +340,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
 
               },
               style: OutlinedButton.styleFrom(
-                side: BorderSide(width: 0.01, color: colorScheme.onBackground)
+                  side: BorderSide(width: 0.01, color: colorScheme.onBackground)
               ),
               child: Image.asset(
                 height: 40.h,

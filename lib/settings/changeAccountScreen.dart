@@ -74,6 +74,9 @@ class _ChangeAccountScreenState extends State<ChangeAccountScreen> {
                     controller: _bankAddressController,
                     autocorrect: false,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
+                    style: textTheme.bodyText1?.copyWith(
+                      color: colorScheme.tertiaryContainer,
+                    ),
                     decoration: InputDecoration(
                       hintText: '변경할 계좌번호를 입력해주세요',
                       hintStyle: textTheme.bodyText1?.copyWith(
@@ -119,6 +122,9 @@ class _ChangeAccountScreenState extends State<ChangeAccountScreen> {
                     controller: _bankController,
                     autocorrect: false,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
+                    style: textTheme.bodyText1?.copyWith(
+                      color: colorScheme.tertiaryContainer,
+                    ),
                     decoration: InputDecoration(
                       hintText: '해당 계좌 은행을 입력해주세요',
                       hintStyle: textTheme.bodyText1?.copyWith(
@@ -164,6 +170,9 @@ class _ChangeAccountScreenState extends State<ChangeAccountScreen> {
                     controller: _bankOwnerNameController,
                     autocorrect: false,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
+                    style: textTheme.bodyText1?.copyWith(
+                      color: colorScheme.tertiaryContainer,
+                    ),
                     decoration: InputDecoration(
                       hintText: '예금주를 입력해주세요',
                       hintStyle: textTheme.bodyText1?.copyWith(
@@ -208,7 +217,7 @@ class _ChangeAccountScreenState extends State<ChangeAccountScreen> {
         ),
       ),
       bottomNavigationBar: Material(
-        color: isBankEmpty || isBankAddressEmpty || isBankOwnerNameEmpty ? colorScheme.tertiaryContainer : colorScheme.secondary,
+        color: isBankEmpty || isBankAddressEmpty || isBankOwnerNameEmpty ? colorScheme.onSurfaceVariant : colorScheme.secondary,
         child: InkWell(
           onTap: () async{
             if (!isBankEmpty && !isBankAddressEmpty && !isBankOwnerNameEmpty) {

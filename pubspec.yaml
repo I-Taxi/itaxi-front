@@ -123,6 +123,7 @@ flutter:
 
     # arrow
     - assets/arrow/arrow.png
+    - assets/arrow/arrow_forward.png
     - assets/arrow/arrow_back.png
     - assets/arrow/arrow_back_1.png
     - assets/arrow/arrow_down_1.png
@@ -152,8 +153,10 @@ flutter:
     # type
     - assets/type/car_1.png
     - assets/type/car_2.png
+    - assets/type/car_text.png
     - assets/type/taxi_1.png
     - assets/type/taxi_2.png
+    - assets/type/taxi_text.png
     - assets/type/train_1.png
     - assets/type/train_2.png
 
