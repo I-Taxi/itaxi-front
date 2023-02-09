@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 
 void mainDialog(BuildContext context, String? title, String? content) {
   final colorScheme = Theme.of(context).colorScheme;

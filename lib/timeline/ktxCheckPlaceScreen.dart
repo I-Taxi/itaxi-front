@@ -29,7 +29,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
   DateController _dateController = Get.put(DateController());
   UserController _userController = Get.put(UserController());
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
+  GlobalKey<RefreshIndicatorState>();
 
   @override
   void initState() {
@@ -60,10 +60,10 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
               backgroundColor: colorScheme.secondary,
               elevation: 0.0,
               leading: IconButton(
-                onPressed: () {
-                  Get.back();
-                },
-                icon: Image.asset("assets/arrow/arrow_back_1.png", color: colorScheme.primary, width: 11.62.w, height: 20.51.h)
+                  onPressed: () {
+                    Get.back();
+                  },
+                  icon: Image.asset("assets/arrow/arrow_back_1.png", color: colorScheme.primary, width: 11.62.w, height: 20.51.h)
               ),
               actions: [
                 IconButton(
@@ -162,6 +162,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
           builder: (_) {
             return Column(
               children: [
+
                 // post list
                 Expanded(
                   child: RefreshIndicator(
@@ -340,7 +341,9 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
               height: 36.h,
             ),
             OutlinedButton(
-              onPressed: () {},
+              onPressed: () {
+
+              },
               style: OutlinedButton.styleFrom(
                   side: BorderSide(width: 0, color: colorScheme.onBackground)),
               child: Image.asset(
