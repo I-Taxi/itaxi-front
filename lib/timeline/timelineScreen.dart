@@ -163,7 +163,10 @@ class _TimelineScreenState extends State<TimelineScreen> {
                             ),
                             OutlinedButton(
                               onPressed: () {},
-                              style: OutlinedButton.styleFrom(side: BorderSide(width: 0, color: colorScheme.onBackground)),
+                              style: OutlinedButton.styleFrom(
+                                  side: BorderSide(
+                                      width: 0,
+                                      color: colorScheme.onBackground)),
                               child: Image.asset(
                                 width: 198,
                                 'assets/button/add_timeline.png',
