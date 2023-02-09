@@ -10,6 +10,7 @@ import 'package:itaxi/controller/navigationController.dart';
 import 'package:itaxi/controller/timelineTabViewController.dart';
 import 'package:itaxi/home.dart';
 import 'package:itaxi/model/post.dart';
+import 'package:itaxi/model/history.dart';
 import 'package:itaxi/timeline/historyListContainer.dart';
 import 'package:itaxi/timeline/timelineSoonInfoCard.dart';
 import 'package:itaxi/widget/postListTile.dart';
@@ -22,16 +23,20 @@ class TimelineScreen extends StatefulWidget {
 }
 
 class _TimelineScreenState extends State<TimelineScreen> {
-  TimelineTabViewController _timelineTabViewController = Get.put(TimelineTabViewController());
+  TimelineTabViewController _timelineTabViewController =
+      Get.put(TimelineTabViewController());
   final HistoryController _historyController = Get.put(HistoryController());
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
-  final NavigationController _navController = Get.put(NavigationController());
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+      GlobalKey<RefreshIndicatorState>();
 
-  int catchSoonIndex(List<Post>? posts) {
-    int index = -1;
-    for (int i = 0; i < posts!.length; i++) {
+  int catchSoonIndex(List<History>? historys) {
+    int index = 0;
+    for (int i = 0; i < historys!.length; i++) {
       index = i;
-      if (DateTime.now().difference(DateTime.parse(posts[i].deptTime!)).isNegative == false) {
+      if (DateTime.now()
+              .difference(DateTime.parse(historys[i].deptTime!))
+              .isNegative ==
+          false) {
         break;
       }
     }
@@ -42,8 +47,8 @@ class _TimelineScreenState extends State<TimelineScreen> {
     return index - 1;
   }
 
-  Container makeSoonCard(BuildContext context, List<Post>? posts) {
-    int index = catchSoonIndex(posts);
+  Container makeSoonCard(BuildContext context, List<History>? history) {
+    int index = catchSoonIndex(history);
 
     if (index == -2 || index == -1) {
       return Container(padding: EdgeInsets.fromLTRB(26.w, 20.h, 26.w, 0.h));
@@ -52,7 +57,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
         padding: EdgeInsets.fromLTRB(26.w, 20.h, 26.w, 0.h),
         child: timelineSoonInfoCard(
           context: context,
-          post: posts![index],
+          history: history![index],
         ),
       );
     }
@@ -67,14 +72,18 @@ class _TimelineScreenState extends State<TimelineScreen> {
       appBar: AppBar(
         elevation: 0.0,
         toolbarHeight: 70.h,
-        title: Text('타임라인', style: textTheme.subtitle1?.copyWith(color: colorScheme.primary)),
+        title: Text('타임라인',
+            style: textTheme.subtitle1?.copyWith(color: colorScheme.primary)),
         centerTitle: true,
         flexibleSpace: new Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: <Color>[
-              Color(0xff8fc0f1),
-              Color(0Xff76B1ED),
-            ]),
+            gradient: LinearGradient(
+                begin: Alignment.topCenter,
+                end: Alignment.bottomCenter,
+                colors: <Color>[
+                  Color(0xff8fc0f1),
+                  Color(0Xff76B1ED),
+                ]),
           ),
         ),
       ),
@@ -91,7 +100,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
                 _historyController.getHistorys();
               },
               child: GetBuilder<HistoryController>(builder: (_) {
-                return FutureBuilder<List<Post>>(
+                return FutureBuilder<List<History>>(
                   future: _historyController.historys,
                   builder: (BuildContext context, snapshot) {
                     if (snapshot.hasData) {
@@ -101,22 +110,27 @@ class _TimelineScreenState extends State<TimelineScreen> {
                           crossAxisAlignment: CrossAxisAlignment.center,
                           children: [
                             Container(
-                              decoration: BoxDecoration(color: colorScheme.primary),
+                              decoration:
+                                  BoxDecoration(color: colorScheme.primary),
                               height: 605.h,
                               child: ListView(
                                 children: [
                                   makeSoonCard(context, snapshot.data!),
                                   Container(
-                                    padding: EdgeInsets.fromLTRB(24.w, 26.h, 0.w, 0.h),
+                                    padding: EdgeInsets.fromLTRB(
+                                        24.w, 26.h, 0.w, 0.h),
                                     child: Text(
                                       '탑승 내역',
-                                      style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
+                                      style: textTheme.subtitle2?.copyWith(
+                                          color: colorScheme.tertiaryContainer),
                                     ),
                                   ),
-                                  for (int i = 0; i < snapshot.data!.length; i++)
+                                  for (int i = 0;
+                                      i < snapshot.data!.length;
+                                      i++)
                                     historyListContainer(
                                       context: context,
-                                      post: snapshot.data![i],
+                                      history: snapshot.data![i],
                                     ),
                                 ],
                               ),
@@ -138,18 +152,22 @@ class _TimelineScreenState extends State<TimelineScreen> {
                               child: Text(
                                 '아직 I-TAXI를 이용한 이력이 없어요\n어서 새로운 동료를 만나보세요',
                                 textAlign: TextAlign.center,
-                                style: textTheme.headline1?.copyWith(color: colorScheme.tertiaryContainer, fontWeight: FontWeight.w500, fontSize: 20),
+                                style: textTheme.headline1?.copyWith(
+                                    color: colorScheme.tertiaryContainer,
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 20),
                               ),
                             ),
                             SizedBox(
                               height: 36.h,
                             ),
                             OutlinedButton(
-                              onPressed: () {
-                                _navController.changeIndex(0);
-                              },
-                              style: OutlinedButton.styleFrom(minimumSize: Size(198.w, 50.h), side: BorderSide(width: 1, color: colorScheme.onPrimaryContainer), shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8)))),
-                              child: Text('동료 구하러 가기', style: textTheme.subtitle1?.copyWith(color: colorScheme.onPrimaryContainer)),
+                              onPressed: () {},
+                              style: OutlinedButton.styleFrom(side: BorderSide(width: 0, color: colorScheme.onBackground)),
+                              child: Image.asset(
+                                width: 198,
+                                'assets/button/add_timeline.png',
+                              ),
                             )
                           ],
                         );
@@ -164,7 +182,8 @@ class _TimelineScreenState extends State<TimelineScreen> {
                           Align(
                             child: Text(
                               '${snapshot.error}',
-                              style: textTheme.headline1?.copyWith(color: colorScheme.tertiary),
+                              style: textTheme.headline1
+                                  ?.copyWith(color: colorScheme.tertiary),
                             ),
                           ),
                         ],

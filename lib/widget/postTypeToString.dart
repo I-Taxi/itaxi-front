@@ -1,5 +1,5 @@
 String postTypeToString(int? postType) {
-  if (postType == null) {
+  if (postType == 3) {
     return 'KTX';
   } else if (postType == 1) {
     return '택시';

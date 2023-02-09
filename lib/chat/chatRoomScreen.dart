@@ -50,8 +50,9 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
       }
     });
     _chatRoomController.chats.listen((event) {
-      if (_scrollController.hasClients && _scrollController.position.pixels !=
-          _scrollController.position.maxScrollExtent) {
+      if (_scrollController.hasClients &&
+          _scrollController.position.pixels !=
+              _scrollController.position.maxScrollExtent) {
         setState(() {
           isScrollDown = true;
         });
@@ -176,7 +177,8 @@ class _ChatRoomScreenState extends State<ChatRoomScreen> {
                                           : chatListTile(
                                               context: context,
                                               chat: snapshot.data![index],
-                                              joiners: _chatRoomController.post.joiners,
+                                              joiners: _chatRoomController
+                                                  .post.joiners,
                                             ),
                                     ],
                                   );

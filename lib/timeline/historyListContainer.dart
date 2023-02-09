@@ -5,10 +5,12 @@ import 'package:intl/intl.dart';
 import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/model/post.dart';
+import 'package:itaxi/model/history.dart';
 import 'package:itaxi/timeline/timelineDetailScreen.dart';
 import 'package:itaxi/widget/abbreviatePlaceName.dart';
 
-Widget historyListContainer({required BuildContext context, required Post post}) {
+Widget historyListContainer(
+    {required BuildContext context, required History history}) {
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
   late PostController _postController = Get.find();
@@ -16,15 +18,16 @@ Widget historyListContainer({required BuildContext context, required Post post})
 
   Text timePassedChecker(String? time) {
     if (DateTime.now().difference(DateTime.parse(time!)).isNegative == true) {
-      return Text('탑승 예정', style: textTheme.bodyText2?.copyWith(color: colorScheme.secondary));
+      return Text('탑승 예정',
+          style: textTheme.bodyText2?.copyWith(color: colorScheme.secondary));
     } else {
-      return Text('탑승 완료', style: textTheme.bodyText2?.copyWith(color: colorScheme.onPrimary));
+      return Text('탑승 완료',
+          style: textTheme.bodyText2?.copyWith(color: colorScheme.onPrimary));
     }
   }
 
   Image CarTrainSelector(int? type) {
-    // TODO: back 코드 바뀌면 type == 2로 변경
-    if (type == null) {
+    if (type == 3) {
       return Image.asset(
         width: 30.w,
         'assets/icon/ktx_gray.png',
@@ -54,10 +57,12 @@ Widget historyListContainer({required BuildContext context, required Post post})
             Row(
               children: [
                 Text(
-                  DateFormat('MM/dd (E)  •  ').format(DateTime.parse(post.deptTime!)),
-                  style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiaryContainer),
+                  DateFormat('MM/dd (E)  •  ')
+                      .format(DateTime.parse(history.deptTime!)),
+                  style: textTheme.bodyText2
+                      ?.copyWith(color: colorScheme.tertiaryContainer),
                 ),
-                timePassedChecker(post.deptTime),
+                timePassedChecker(history.deptTime),
               ],
             ),
             SizedBox(height: 10.h),
@@ -66,16 +71,20 @@ Widget historyListContainer({required BuildContext context, required Post post})
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  CarTrainSelector(post.postType),
+                  CarTrainSelector(history.postType),
                   SizedBox(width: 22.w),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       SizedBox(width: 125.w),
-                      Text('출발', style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiaryContainer)),
+                      Text('출발',
+                          style: textTheme.bodyText2
+                              ?.copyWith(color: colorScheme.tertiaryContainer)),
                       SizedBox(height: 7.0.h),
-                      Text(abbreviatePlaceName(post.departure?.name), style: textTheme.bodyText1?.copyWith(color: colorScheme.onTertiary)),
+                      Text(abbreviatePlaceName(history.departure?.name),
+                          style: textTheme.bodyText1
+                              ?.copyWith(color: colorScheme.onTertiary)),
                     ],
                   ),
                   SizedBox(width: 2.w),
@@ -83,9 +92,13 @@ Widget historyListContainer({required BuildContext context, required Post post})
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('도착', style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiaryContainer)),
+                      Text('도착',
+                          style: textTheme.bodyText2
+                              ?.copyWith(color: colorScheme.tertiaryContainer)),
                       SizedBox(height: 7.0.h),
-                      Text(abbreviatePlaceName(post.destination?.name), style: textTheme.bodyText1?.copyWith(color: colorScheme.onTertiary)),
+                      Text(abbreviatePlaceName(history.destination?.name),
+                          style: textTheme.bodyText1
+                              ?.copyWith(color: colorScheme.onTertiary)),
                     ],
                   ),
                 ],
@@ -95,15 +108,24 @@ Widget historyListContainer({required BuildContext context, required Post post})
             OutlinedButton(
               onPressed: () {
                 // TODO: ktx container 제작하면 연결
-                if (post.postType == null) {
-                  _historyController.getHistoryInfo(postId: post.id!);
+                if (history.postType == null) {
+                  _historyController.getHistoryInfo(
+                      postId: history.id!, postType: history.postType!);
                 } else {
-                  _historyController.getHistoryInfo(postId: post.id!);
+                  _historyController.getHistoryInfo(
+                      postId: history.id!, postType: history.postType!);
                   Get.to(() => const TimelineDetailScreen());
                 }
               },
-              style: OutlinedButton.styleFrom(minimumSize: Size(342.w, 40.h), side: BorderSide(width: 1, color: colorScheme.onPrimaryContainer), shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8)))),
-              child: Text('상세보기', style: textTheme.bodyText2?.copyWith(color: colorScheme.onPrimaryContainer)),
+              style: OutlinedButton.styleFrom(
+                  minimumSize: Size(342.w, 40.h),
+                  side: BorderSide(
+                      width: 1, color: colorScheme.onPrimaryContainer),
+                  shape: const RoundedRectangleBorder(
+                      borderRadius: BorderRadius.all(Radius.circular(8)))),
+              child: Text('상세보기',
+                  style: textTheme.bodyText2
+                      ?.copyWith(color: colorScheme.onPrimaryContainer)),
             )
           ],
         ),

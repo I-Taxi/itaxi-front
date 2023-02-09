@@ -11,6 +11,7 @@ import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/model/post.dart';
+import 'package:itaxi/model/history.dart';
 import 'package:itaxi/widget/chatroomListListTile.dart';
 
 class ChatroomListScreen extends StatefulWidget {
@@ -43,7 +44,7 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
           _historyController.getHistorys();
         },
         child: GetBuilder<HistoryController>(builder: (_) {
-          return FutureBuilder<List<Post>>(
+          return FutureBuilder<List<History>>(
             future: _historyController.historys,
             builder: (BuildContext context, snapshot) {
               if (snapshot.hasData) {
@@ -107,7 +108,7 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
                                         .isAfter(DateTime.now()))
                                       chatroomListListTile(
                                         context: context,
-                                        post: snapshot.data![i],
+                                        history: snapshot.data![i],
                                       ),
                                   SizedBox(
                                     height: 29.h,
@@ -127,7 +128,7 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
                                         .isBefore(DateTime.now()))
                                       chatroomListListTile(
                                         context: context,
-                                        post: snapshot.data![i],
+                                        history: snapshot.data![i],
                                       ),
                                 ]),
                           ),
@@ -169,7 +170,8 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
                                       EdgeInsets.only(right: 7.w, bottom: 5.h),
                                   child: Align(
                                     alignment: Alignment.bottomRight,
-                                    child: Image.asset('assets/contact.png'),
+                                    child: Image.asset(
+                                        'assets/button/contact.png'),
                                   ),
                                 )
                               ],
@@ -271,7 +273,7 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
 //                       padding: EdgeInsets.only(right: 7.w, bottom: 5.h),
 //                       child: Align(
 //                         alignment: Alignment.bottomRight,
-//                         child: Image.asset('assets/contact.png'),
+//                         child: Image.asset('assets/button/contact.png'),
 //                       ),
 //                     )
 //                   ],

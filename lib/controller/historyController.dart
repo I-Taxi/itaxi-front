@@ -8,6 +8,8 @@ import 'package:encrypt/encrypt.dart';
 import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/model/joiner.dart';
+import 'package:itaxi/model/history.dart';
+import 'package:itaxi/model/ktxPost.dart';
 
 class HistoryController extends GetxController {
   UserController _userController = Get.put(UserController());
@@ -17,9 +19,8 @@ class HistoryController extends GetxController {
 
   late final Encrypter encrypter;
 
-  late Future<List<Post>> historys;
-  late Future<Post> history;
-  late List<Post> historiesWithoutFuture;
+  late Future<List<History>> historys;
+  late Future<History> history;
 
   bool loaded = false;
 
@@ -27,21 +28,20 @@ class HistoryController extends GetxController {
   Future<void> onInit() async {
     super.onInit();
     historys = fetchHistorys();
-    historiesWithoutFuture = await historys;
     encrypter = Encrypter(AES(key));
   }
 
-  List<Post> HistorysfromJson(json) {
-    List<Post> result = [];
+  List<History> historysfromJson(json) {
+    List<History> result = [];
     json.forEach((item) {
-      result.add(Post.fromStopoverDocs(item));
+      result.add(History.fromDocs(item));
     });
 
     return result;
   }
 
-  Post historyfromJson(json) {
-    Post result = Post.fromJoinerAndStopoversDocs(json);
+  History historyfromJson(json) {
+    History result = History.fromDetailDocs(json);
     for (Joiner joiner in result.joiners!) {
       joiner.memberPhone = encrypter.decrypt64(joiner.memberPhone!, iv: iv);
     }
@@ -53,23 +53,23 @@ class HistoryController extends GetxController {
     update();
   }
 
-  Future<void> getHistoryInfo({required int postId}) async {
+  Future<void> getHistoryInfo(
+      {required int postId, required int postType}) async {
     loaded = false;
-    history = fetchHistoryInfo(postId: postId);
+    history = fetchHistoryInfo(postId: postId, postType: postType);
     loaded = true;
     update();
   }
 
   // /itaxi/api/post/history
-  Future<List<Post>> fetchHistorys() async {
+  Future<List<History>> fetchHistorys() async {
     var historyUrl = dotenv.env['API_URL'].toString();
-    historyUrl = '${historyUrl}post/history';
+    historyUrl = '${historyUrl}history';
 
     Map<String, dynamic> map = {
       'uid': _userController.uid,
     };
     var body = utf8.encode(json.encode(map));
-
     http.Response response = await http.post(
       Uri.parse(historyUrl),
       headers: <String, String>{
@@ -79,22 +79,39 @@ class HistoryController extends GetxController {
     );
 
     if (response.statusCode == 200) {
-      return HistorysfromJson(json.decode(utf8.decode(response.bodyBytes)));
+      return historysfromJson(json.decode(utf8.decode(response.bodyBytes)));
     } else {
       print(response.statusCode);
       throw Exception('Failed to load historys');
     }
   }
 
-  Future<Post> fetchHistoryInfo({required int postId}) async {
+  Future<History> fetchHistoryInfo(
+      {required int postId, required int postType}) async {
     var historyUrl = dotenv.env['API_URL'].toString();
-    historyUrl = '${historyUrl}post/history/$postId';
+    historyUrl = '${historyUrl}history/history/$postId';
+    final Map<String, dynamic> queryParameters;
 
-    http.Response response = await http.get(
+    Map<String, dynamic> map = {
+      'uid': _userController.uid,
+    };
+    var body = utf8.encode(json.encode(map));
+
+    if (postType == 3) {
+      queryParameters = {'type': '1'};
+    } else {
+      queryParameters = {'type': '0'};
+    }
+
+    String queryString = Uri(queryParameters: queryParameters).query;
+    historyUrl = '$historyUrl?$queryString';
+
+    http.Response response = await http.post(
       Uri.parse(historyUrl),
       headers: <String, String>{
         'Content-type': 'application/json',
       },
+      body: body,
     );
 
     if (response.statusCode == 200) {

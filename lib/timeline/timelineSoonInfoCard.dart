@@ -9,29 +9,34 @@ import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/model/post.dart';
+import 'package:itaxi/model/history.dart';
 import 'package:itaxi/timeline/timelineDetailScreen.dart';
 import 'package:itaxi/widget/postTypeToString.dart';
 import 'package:url_launcher/url_launcher.dart';
 
 import '../widget/HorizontalDashedDivider.dart';
 
-Container timelineSoonInfoCard({required BuildContext context, required Post post}) {
+Container timelineSoonInfoCard(
+    {required BuildContext context, required History history}) {
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
   late PostController _postController = Get.find();
   late HistoryController _historyController = Get.find();
 
-  if (post.stopovers!.isEmpty) {
+  if (history.stopovers == null || history.stopovers!.isEmpty) {
     return Container(
       width: 339.w,
       height: 230.h,
-      decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: colorScheme.primary, boxShadow: [
-        BoxShadow(
-          color: colorScheme.shadow,
-          blurRadius: 40,
-          offset: const Offset(2, 4),
-        )
-      ]),
+      decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(16),
+          color: colorScheme.primary,
+          boxShadow: [
+            BoxShadow(
+              color: colorScheme.shadow,
+              blurRadius: 40,
+              offset: const Offset(2, 4),
+            )
+          ]),
       child: Padding(
         padding: EdgeInsets.fromLTRB(25.w, 18.h, 21.w, 0.h),
         child: Column(
@@ -39,7 +44,8 @@ Container timelineSoonInfoCard({required BuildContext context, required Post pos
           children: [
             Text(
               '곧 출발 예정',
-              style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
+              style: textTheme.subtitle2
+                  ?.copyWith(color: colorScheme.tertiaryContainer),
             ),
             SizedBox(
               height: 15.h,
@@ -52,8 +58,9 @@ Container timelineSoonInfoCard({required BuildContext context, required Post pos
                   width: 20.w,
                 ),
                 Text(
-                  '${post.departure?.name}',
-                  style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
+                  '${history.departure?.name}',
+                  style: textTheme.subtitle2
+                      ?.copyWith(color: colorScheme.onTertiary),
                 ),
                 const Spacer(),
               ],
@@ -69,8 +76,9 @@ Container timelineSoonInfoCard({required BuildContext context, required Post pos
                   width: 20.w,
                 ),
                 Text(
-                  '${post.destination?.name}',
-                  style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
+                  '${history.destination?.name}',
+                  style: textTheme.subtitle2
+                      ?.copyWith(color: colorScheme.onTertiary),
                 ),
                 const Spacer(),
               ],
@@ -93,15 +101,18 @@ Container timelineSoonInfoCard({required BuildContext context, required Post pos
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      DateFormat('MM/dd').format(DateTime.parse(post.deptTime!)),
-                      style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
+                      DateFormat('MM/dd')
+                          .format(DateTime.parse(history.deptTime!)),
+                      style: textTheme.subtitle2
+                          ?.copyWith(color: colorScheme.tertiaryContainer),
                     ),
                     SizedBox(
                       height: 15.h,
                     ),
                     Text(
-                      postTypeToString(post.postType),
-                      style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
+                      postTypeToString(history.postType),
+                      style: textTheme.subtitle2
+                          ?.copyWith(color: colorScheme.tertiaryContainer),
                     ),
                   ],
                 ),
@@ -112,29 +123,34 @@ Container timelineSoonInfoCard({required BuildContext context, required Post pos
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Text(
-                      DateFormat('HH:mm').format(DateTime.parse(post.deptTime!)),
-                      style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
+                      DateFormat('HH:mm')
+                          .format(DateTime.parse(history.deptTime!)),
+                      style: textTheme.subtitle2
+                          ?.copyWith(color: colorScheme.tertiaryContainer),
                     ),
                     SizedBox(
                       height: 15.h,
                     ),
                     Text(
-                      '${post.participantNum}/${post.capacity}명',
-                      style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
+                      '${history.participantNum}/${history.capacity}명',
+                      style: textTheme.subtitle2
+                          ?.copyWith(color: colorScheme.tertiaryContainer),
                     ),
                   ],
                 ),
                 const Spacer(),
                 GestureDetector(
                     onTap: () async {
-                      if (post.postType == null) {
+                      if (history.postType == null) {
                         // TODO: ktx container 제작하면 연결
                       } else {
-                        _historyController.getHistoryInfo(postId: post.id!);
+                        _historyController.getHistoryInfo(
+                            postId: history.id!, postType: history.postType!);
                         Get.to(() => const TimelineDetailScreen());
                       }
                     },
-                    child: Image.asset(width: 81.w, 'assets/button/go_descript.png'))
+                    child: Image.asset(
+                        width: 81.w, 'assets/button/go_descript.png'))
               ],
             ),
             SizedBox(
@@ -149,19 +165,24 @@ Container timelineSoonInfoCard({required BuildContext context, required Post pos
     return Container(
         width: 339.w,
         height: 268.h,
-        decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: colorScheme.primary, boxShadow: [
-          BoxShadow(
-            color: colorScheme.shadow,
-            blurRadius: 40,
-            offset: const Offset(2, 4),
-          )
-        ]),
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16),
+            color: colorScheme.primary,
+            boxShadow: [
+              BoxShadow(
+                color: colorScheme.shadow,
+                blurRadius: 40,
+                offset: const Offset(2, 4),
+              )
+            ]),
         child: Padding(
             padding: EdgeInsets.fromLTRB(25.w, 18.h, 21.w, 0.h),
-            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            child:
+                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Text(
                 '곧 출발 예정',
-                style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
+                style: textTheme.subtitle2
+                    ?.copyWith(color: colorScheme.tertiaryContainer),
               ),
               SizedBox(
                 height: 15.h,
@@ -174,8 +195,9 @@ Container timelineSoonInfoCard({required BuildContext context, required Post pos
                     width: 20.w,
                   ),
                   Text(
-                    '${post.departure?.name}',
-                    style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
+                    '${history.departure?.name}',
+                    style: textTheme.subtitle2
+                        ?.copyWith(color: colorScheme.onTertiary),
                   ),
                   const Spacer(),
                 ],
@@ -187,9 +209,13 @@ Container timelineSoonInfoCard({required BuildContext context, required Post pos
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   SizedBox(width: 44.w),
-                  Text('경유', style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer)),
+                  Text('경유',
+                      style: textTheme.subtitle2
+                          ?.copyWith(color: colorScheme.tertiaryContainer)),
                   SizedBox(width: 16.w),
-                  Text('${post.stopovers![0]!.name}', style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer)),
+                  Text('${history.stopovers![0]!.name}',
+                      style: textTheme.subtitle2
+                          ?.copyWith(color: colorScheme.tertiaryContainer)),
                   const Spacer(),
                 ],
               ),
@@ -204,8 +230,9 @@ Container timelineSoonInfoCard({required BuildContext context, required Post pos
                     width: 20.w,
                   ),
                   Text(
-                    '${post.destination?.name}',
-                    style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
+                    '${history.destination?.name}',
+                    style: textTheme.subtitle2
+                        ?.copyWith(color: colorScheme.onTertiary),
                   ),
                   const Spacer(),
                 ],
@@ -228,15 +255,18 @@ Container timelineSoonInfoCard({required BuildContext context, required Post pos
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        DateFormat('MM/dd').format(DateTime.parse(post.deptTime!)),
-                        style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
+                        DateFormat('MM/dd')
+                            .format(DateTime.parse(history.deptTime!)),
+                        style: textTheme.subtitle2
+                            ?.copyWith(color: colorScheme.tertiaryContainer),
                       ),
                       SizedBox(
                         height: 15.h,
                       ),
                       Text(
-                        postTypeToString(post.postType),
-                        style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
+                        postTypeToString(history.postType),
+                        style: textTheme.subtitle2
+                            ?.copyWith(color: colorScheme.tertiaryContainer),
                       ),
                     ],
                   ),
@@ -247,29 +277,34 @@ Container timelineSoonInfoCard({required BuildContext context, required Post pos
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        DateFormat('HH:mm').format(DateTime.parse(post.deptTime!)),
-                        style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
+                        DateFormat('HH:mm')
+                            .format(DateTime.parse(history.deptTime!)),
+                        style: textTheme.subtitle2
+                            ?.copyWith(color: colorScheme.tertiaryContainer),
                       ),
                       SizedBox(
                         height: 15.h,
                       ),
                       Text(
-                        '${post.participantNum}/${post.capacity}명',
-                        style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
+                        '${history.participantNum}/${history.capacity}명',
+                        style: textTheme.subtitle2
+                            ?.copyWith(color: colorScheme.tertiaryContainer),
                       ),
                     ],
                   ),
                   const Spacer(),
                   GestureDetector(
                       onTap: () async {
-                        if (post.postType == null) {
+                        if (history.postType == null) {
                           // TODO: ktx container 제작하면 연결
                         } else {
-                          _historyController.getHistoryInfo(postId: post.id!);
+                          _historyController.getHistoryInfo(
+                              postId: history.id!, postType: history.postType!);
                           Get.to(() => const TimelineDetailScreen());
                         }
                       },
-                      child: Image.asset(width: 81.w, 'assets/button/go_descript.png'))
+                      child: Image.asset(
+                          width: 81.w, 'assets/button/go_descript.png'))
                 ],
               ),
               SizedBox(
