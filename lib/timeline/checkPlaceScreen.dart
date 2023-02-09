@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:itaxi/controller/addPostController.dart';
 import 'package:itaxi/controller/dateController.dart';
+import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/controller/placeController.dart';
 import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/controller/screenController.dart';
@@ -28,6 +29,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
   PlaceController _placeController = Get.put(PlaceController());
   DateController _dateController = Get.put(DateController());
   UserController _userController = Get.put(UserController());
+  HistoryController _historyController = Get.put(HistoryController());
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
       GlobalKey<RefreshIndicatorState>();
 
@@ -185,7 +187,8 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                           future: _postController.posts,
                           builder: (BuildContext context, snapshot) {
                             if (snapshot.hasData) {
-                              // post가 있을 떼
+                              print(snapshot.data);
+                              // post가 있을 때
                               if (snapshot.data!.isNotEmpty) {
                                 return ListView.builder(
                                   itemCount: snapshot.data!.length,
@@ -318,33 +321,30 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
     return ListView(
       children: [
         Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              height: 60.h,
-              width: 282.w,
+              height: 192.h,
             ),
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                '아직 I-TAXI를 이용한 이력이 없어요\n어서 새로운 동료를 만나보세요',
-                textAlign: TextAlign.center,
-                style: textTheme.headline1?.copyWith(
-                    color: colorScheme.tertiaryContainer,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 20),
-              ),
+            Text(
+              '검색된 내용이 없습니다\n직접 방을 만들어 사람들을 모아보세요!',
+              textAlign: TextAlign.center,
+              style: textTheme.bodyText1?.copyWith(
+                  color: colorScheme.tertiary,
+                  ),
             ),
             SizedBox(
-              height: 36.h,
+              height: 18.h,
             ),
             OutlinedButton(
-              onPressed: () {},
+              onPressed: () {
+
+              },
               style: OutlinedButton.styleFrom(
-                  side: BorderSide(width: 0, color: colorScheme.onBackground)),
+                side: BorderSide(width: 0.01, color: colorScheme.onBackground)
+              ),
               child: Image.asset(
-                width: 198,
+                height: 40.h,
+                width: 178.w,
                 'assets/button/add_timeline.png',
               ),
             )

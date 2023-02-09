@@ -64,10 +64,11 @@ class ITaxiTheme {
     onPrimaryContainer: Color(0xff388bdd),
     secondary: Color(0xff70b1f2), //Color(0xff3fa9f5) - 기존 color
     onSecondary: Color(0xFFFFFFFF),
-    secondaryContainer: Color(0XFF509DE9),
+    secondaryContainer: Color(0xFF509DE9),
     onSecondaryContainer: Color(0xff388BDD),
     error: Color(0xffb00020),
     onError: Colors.white,
+    errorContainer: Color(0xffE67373),
     background: Color(0xFFFFFFFF),
     onBackground: Color(0xFFF1F1F1),
     surface: Color(0xFFFFFFFF),

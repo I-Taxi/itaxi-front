@@ -217,7 +217,7 @@ class _ChangeAccountScreenState extends State<ChangeAccountScreen> {
         ),
       ),
       bottomNavigationBar: Material(
-        color: isBankEmpty || isBankAddressEmpty || isBankOwnerNameEmpty ? colorScheme.tertiaryContainer : colorScheme.secondary,
+        color: isBankEmpty || isBankAddressEmpty || isBankOwnerNameEmpty ? colorScheme.onSurfaceVariant : colorScheme.secondary,
         child: InkWell(
           onTap: () async{
             if (!isBankEmpty && !isBankAddressEmpty && !isBankOwnerNameEmpty) {

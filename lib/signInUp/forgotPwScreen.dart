@@ -229,7 +229,7 @@ class _ForgotPwScreenState extends State<ForgotPwScreen> {
                     },
                     child: Text(
                       "확인",
-                      style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiary),
+                      style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
                     ),
                   ),
                 ),

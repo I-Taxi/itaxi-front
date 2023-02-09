@@ -350,13 +350,13 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                 36.0.w,
                 24.0.h,
                 36.0.w,
-                24.0.h,
+                28.0.h,
               ),
               child: Column(
                 children: <Widget>[
                   Text(
                     title as String,
-                    style: textTheme.headline1?.copyWith(
+                    style: textTheme.subtitle1?.copyWith(
                       color: colorScheme.secondary,
                     ),
                   ),
@@ -365,8 +365,8 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                   ),
                   Text(
                     content as String,
-                    style: textTheme.subtitle1?.copyWith(
-                      color: colorScheme.onPrimary,
+                    style: textTheme.bodyText1?.copyWith(
+                      color: colorScheme.onTertiary,
                     ),
                   ),
                   const Spacer(),
@@ -379,8 +379,8 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                         },
                         child: Text(
                           "취소",
-                          style: textTheme.headline1
-                              ?.copyWith(color: colorScheme.error),
+                          style: textTheme.subtitle2
+                              ?.copyWith(color: colorScheme.tertiaryContainer),
                         ),
                       ),
                       SizedBox(
@@ -406,8 +406,8 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                         },
                         child: Text(
                           "탈퇴",
-                          style: textTheme.headline1
-                              ?.copyWith(color: colorScheme.error),
+                          style: textTheme.subtitle2
+                              ?.copyWith(color: colorScheme.errorContainer),
                         ),
                       ),
                     ],

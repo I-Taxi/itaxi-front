@@ -323,31 +323,28 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SizedBox(
-              height: 60.h,
-              width: 282.w,
+              height: 192.h,
             ),
-            Align(
-              alignment: Alignment.center,
-              child: Text(
-                '아직 I-TAXI를 이용한 이력이 없어요\n어서 새로운 동료를 만나보세요',
-                textAlign: TextAlign.center,
-                style: textTheme.headline1?.copyWith(
-                    color: colorScheme.tertiaryContainer,
-                    fontWeight: FontWeight.w500,
-                    fontSize: 20),
+            Text(
+              '검색된 내용이 없습니다\n직접 방을 만들어 사람들을 모아보세요!',
+              textAlign: TextAlign.center,
+              style: textTheme.bodyText1?.copyWith(
+                color: colorScheme.tertiary,
               ),
             ),
             SizedBox(
-              height: 36.h,
+              height: 18.h,
             ),
             OutlinedButton(
               onPressed: () {
 
               },
               style: OutlinedButton.styleFrom(
-                  side: BorderSide(width: 0, color: colorScheme.onBackground)),
+                  side: BorderSide(width: 0.01, color: colorScheme.onBackground)
+              ),
               child: Image.asset(
-                width: 198,
+                height: 40.h,
+                width: 178.w,
                 'assets/button/add_timeline.png',
               ),
             )
