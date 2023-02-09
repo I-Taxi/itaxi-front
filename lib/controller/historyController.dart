@@ -20,7 +20,7 @@ class HistoryController extends GetxController {
   late final Encrypter encrypter;
 
   late Future<List<History>> historys;
-  late Future<Post> history;
+  late Future<History> history;
 
   bool loaded = false;
 
@@ -40,8 +40,8 @@ class HistoryController extends GetxController {
     return result;
   }
 
-  Post historyfromJson(json) {
-    Post result = Post.fromJoinerAndStopoversDocs(json);
+  History historyfromJson(json) {
+    History result = History.fromDetailDocs(json);
     for (Joiner joiner in result.joiners!) {
       joiner.memberPhone = encrypter.decrypt64(joiner.memberPhone!, iv: iv);
     }
@@ -53,9 +53,10 @@ class HistoryController extends GetxController {
     update();
   }
 
-  Future<void> getHistoryInfo({required int postId}) async {
+  Future<void> getHistoryInfo(
+      {required int postId, required int postType}) async {
     loaded = false;
-    history = fetchHistoryInfo(postId: postId);
+    history = fetchHistoryInfo(postId: postId, postType: postType);
     loaded = true;
     update();
   }
@@ -85,15 +86,32 @@ class HistoryController extends GetxController {
     }
   }
 
-  Future<Post> fetchHistoryInfo({required int postId}) async {
+  Future<History> fetchHistoryInfo(
+      {required int postId, required int postType}) async {
     var historyUrl = dotenv.env['API_URL'].toString();
-    historyUrl = '${historyUrl}post/history/$postId';
+    historyUrl = '${historyUrl}history/history/$postId';
+    final Map<String, dynamic> queryParameters;
 
-    http.Response response = await http.get(
+    Map<String, dynamic> map = {
+      'uid': _userController.uid,
+    };
+    var body = utf8.encode(json.encode(map));
+
+    if (postType == 3) {
+      queryParameters = {'type': '1'};
+    } else {
+      queryParameters = {'type': '0'};
+    }
+
+    String queryString = Uri(queryParameters: queryParameters).query;
+    historyUrl = '$historyUrl?$queryString';
+
+    http.Response response = await http.post(
       Uri.parse(historyUrl),
       headers: <String, String>{
         'Content-type': 'application/json',
       },
+      body: body,
     );
 
     if (response.statusCode == 200) {

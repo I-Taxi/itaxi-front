@@ -6,6 +6,7 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:itaxi/controller/historyController.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:itaxi/model/history.dart';
 import 'package:itaxi/model/place.dart';
 import 'package:itaxi/timeline/passengerListTile.dart';
 import 'package:itaxi/widget/postTypeToString.dart';
@@ -30,19 +31,25 @@ class TimelineDetailScreen extends StatelessWidget {
     }
   }
 
-  double addPlaceContainerSize(double size, List<Place?>? stopovers) {
-    if (stopovers!.isNotEmpty) {
+  double addPlaceContainerSize(double size, List<HistoryPlace?>? stopovers) {
+    if (stopovers != null && stopovers.isNotEmpty) {
       return size + 35.h;
     } else {
       return size;
     }
   }
 
-  Container insertStopoverContainer({required BuildContext context, required List<Place?>? stopovers}) {
+  Container 
+  
+  
+  
+  insertStopoverContainer(
+      {required BuildContext context,
+      required List<HistoryPlace?>? stopovers}) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
-    if (stopovers!.isNotEmpty && stopovers != null) {
+    if (stopovers != null && stopovers.isNotEmpty) {
       return Container(
         padding: EdgeInsets.fromLTRB(0.w, 11.h, 0.w, 11.h),
         width: 300.h,
@@ -51,9 +58,13 @@ class TimelineDetailScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(width: 22.w),
-            Text('경유', style: textTheme.bodyText1?.copyWith(color: colorScheme.tertiaryContainer)),
+            Text('경유',
+                style: textTheme.bodyText1
+                    ?.copyWith(color: colorScheme.tertiaryContainer)),
             SizedBox(width: 16.w),
-            Text('${stopovers[0]!.name}', style: textTheme.bodyText1?.copyWith(color: colorScheme.tertiaryContainer)),
+            Text('${stopovers[0]!.name}',
+                style: textTheme.bodyText1
+                    ?.copyWith(color: colorScheme.tertiaryContainer)),
             const Spacer(),
           ],
         ),
@@ -70,7 +81,8 @@ class TimelineDetailScreen extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     HistoryController _historyController = Get.find();
-    final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
+    final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+        GlobalKey<RefreshIndicatorState>();
 
     return Scaffold(
         appBar: AppBar(
@@ -88,7 +100,7 @@ class TimelineDetailScreen extends StatelessWidget {
                   _historyController.getHistorys();
                 },
                 child: GetBuilder<HistoryController>(builder: (_) {
-                  return FutureBuilder<Post>(
+                  return FutureBuilder<History>(
                       future: _historyController.history,
                       builder: (BuildContext context, snapshot) {
                         if (snapshot.hasData) {
@@ -96,11 +108,13 @@ class TimelineDetailScreen extends StatelessWidget {
                             return Column(
                               children: [
                                 Container(
-                                  padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 15.h),
+                                  padding: EdgeInsets.fromLTRB(
+                                      24.w, 16.h, 24.w, 15.h),
                                   height: 70.h,
                                   color: colorScheme.primary,
                                   child: Row(
-                                    crossAxisAlignment: CrossAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
                                     mainAxisAlignment: MainAxisAlignment.start,
                                     children: [
                                       Text(
@@ -109,27 +123,33 @@ class TimelineDetailScreen extends StatelessWidget {
                                           color: colorScheme.onTertiary,
                                         ),
                                       ),
-                                      insertBordingCompleteIcon(snapshot.data!.deptTime),
+                                      insertBordingCompleteIcon(
+                                          snapshot.data!.deptTime),
                                     ],
                                   ),
                                 ),
                                 SizedBox(height: 8.h),
                                 Container(
                                   height: 490.h,
-                                  decoration: BoxDecoration(color: colorScheme.primary),
+                                  decoration:
+                                      BoxDecoration(color: colorScheme.primary),
                                   child: ListView(
                                     children: [
                                       Container(
-                                        padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 16.h),
+                                        padding: EdgeInsets.fromLTRB(
+                                            24.w, 16.h, 24.w, 16.h),
                                         height: 100.h,
                                         color: colorScheme.primary,
                                         child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: [
                                             Text(
                                               '출발일자/시간',
-                                              style: textTheme.subtitle2?.copyWith(
+                                              style:
+                                                  textTheme.subtitle2?.copyWith(
                                                 color: colorScheme.onTertiary,
                                               ),
                                             ),
@@ -137,9 +157,15 @@ class TimelineDetailScreen extends StatelessWidget {
                                             Row(
                                               children: [
                                                 Text(
-                                                  DateFormat('yyyy년 MM월 dd일 (E) HH:mm').format(DateTime.parse(snapshot.data!.deptTime!)),
-                                                  style: textTheme.bodyText1?.copyWith(
-                                                    color: colorScheme.onTertiary,
+                                                  DateFormat(
+                                                          'yyyy년 MM월 dd일 (E) HH:mm')
+                                                      .format(DateTime.parse(
+                                                          snapshot.data!
+                                                              .deptTime!)),
+                                                  style: textTheme.bodyText1
+                                                      ?.copyWith(
+                                                    color:
+                                                        colorScheme.onTertiary,
                                                   ),
                                                 ),
                                               ],
@@ -152,16 +178,21 @@ class TimelineDetailScreen extends StatelessWidget {
                                         color: colorScheme.onBackground,
                                       ),
                                       Container(
-                                        padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 16.h),
-                                        height: addPlaceContainerSize(130.h, snapshot.data!.stopovers),
+                                        padding: EdgeInsets.fromLTRB(
+                                            24.w, 16.h, 24.w, 16.h),
+                                        height: addPlaceContainerSize(
+                                            130.h, snapshot.data!.stopovers),
                                         color: colorScheme.primary,
                                         child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
                                           children: [
                                             Text(
                                               '출발/목적지',
-                                              style: textTheme.subtitle2?.copyWith(
+                                              style:
+                                                  textTheme.subtitle2?.copyWith(
                                                 color: colorScheme.onTertiary,
                                               ),
                                             ),
@@ -169,8 +200,10 @@ class TimelineDetailScreen extends StatelessWidget {
                                               height: 20.h,
                                             ),
                                             Row(
-                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
                                               children: [
                                                 Image.asset(
                                                   width: 18,
@@ -181,16 +214,23 @@ class TimelineDetailScreen extends StatelessWidget {
                                                 ),
                                                 Text(
                                                   '${snapshot.data!.departure?.name}',
-                                                  style: textTheme.bodyText1?.copyWith(
-                                                    color: colorScheme.onTertiary,
+                                                  style: textTheme.bodyText1
+                                                      ?.copyWith(
+                                                    color:
+                                                        colorScheme.onTertiary,
                                                   ),
                                                 ),
                                               ],
                                             ),
-                                            insertStopoverContainer(context: context, stopovers: snapshot.data!.stopovers),
+                                            insertStopoverContainer(
+                                                context: context,
+                                                stopovers:
+                                                    snapshot.data!.stopovers),
                                             Row(
-                                              crossAxisAlignment: CrossAxisAlignment.center,
-                                              mainAxisAlignment: MainAxisAlignment.start,
+                                              crossAxisAlignment:
+                                                  CrossAxisAlignment.center,
+                                              mainAxisAlignment:
+                                                  MainAxisAlignment.start,
                                               children: [
                                                 Image.asset(
                                                   width: 18,
@@ -201,8 +241,10 @@ class TimelineDetailScreen extends StatelessWidget {
                                                 ),
                                                 Text(
                                                   '${snapshot.data!.destination?.name}',
-                                                  style: textTheme.bodyText1?.copyWith(
-                                                    color: colorScheme.onTertiary,
+                                                  style: textTheme.bodyText1
+                                                      ?.copyWith(
+                                                    color:
+                                                        colorScheme.onTertiary,
                                                   ),
                                                 ),
                                               ],
@@ -215,22 +257,34 @@ class TimelineDetailScreen extends StatelessWidget {
                                         color: colorScheme.onBackground,
                                       ),
                                       Container(
-                                        padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 24.h),
+                                        padding: EdgeInsets.fromLTRB(
+                                            24.w, 16.h, 24.w, 24.h),
                                         color: colorScheme.primary,
                                         child: Column(
-                                          crossAxisAlignment: CrossAxisAlignment.start,
-                                          mainAxisAlignment: MainAxisAlignment.start,
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.start,
                                           children: [
                                             Text(
                                               '탑승 인원',
-                                              style: textTheme.subtitle2?.copyWith(
+                                              style:
+                                                  textTheme.subtitle2?.copyWith(
                                                 color: colorScheme.onTertiary,
                                               ),
                                             ),
                                             SizedBox(
                                               height: 16.h,
                                             ),
-                                            for (int i = 0; i < snapshot.data!.joiners!.length; i++) passengerListTile(context: context, joiner: snapshot.data!.joiners![i]),
+                                            for (int i = 0;
+                                                i <
+                                                    snapshot
+                                                        .data!.joiners!.length;
+                                                i++)
+                                              passengerListTile(
+                                                  context: context,
+                                                  joiner: snapshot
+                                                      .data!.joiners![i]),
                                             SizedBox(
                                               height: 20.h,
                                             ),
@@ -244,20 +298,25 @@ class TimelineDetailScreen extends StatelessWidget {
                                   height: 20.h,
                                 ),
                                 Container(
-                                  padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 16.h),
+                                  padding: EdgeInsets.fromLTRB(
+                                      24.w, 16.h, 24.w, 16.h),
                                   child: ElevatedButton(
                                     style: ElevatedButton.styleFrom(
-                                      backgroundColor: colorScheme.secondaryContainer,
+                                      backgroundColor:
+                                          colorScheme.secondaryContainer,
                                       elevation: 1.0,
                                       minimumSize: Size.fromHeight(57.h),
-                                      shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
+                                      shape: const RoundedRectangleBorder(
+                                          borderRadius: BorderRadius.all(
+                                              Radius.circular(16))),
                                     ),
                                     onPressed: () {
                                       //TODO: 톡방으로 이동
                                     },
                                     child: Text(
                                       '톡방으로 이동',
-                                      style: textTheme.subtitle2?.copyWith(color: colorScheme.primary),
+                                      style: textTheme.subtitle2?.copyWith(
+                                          color: colorScheme.primary),
                                     ),
                                   ),
                                 ),

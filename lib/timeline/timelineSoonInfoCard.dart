@@ -23,7 +23,7 @@ Container timelineSoonInfoCard(
   late PostController _postController = Get.find();
   late HistoryController _historyController = Get.find();
 
-  if (history.stopovers!.isEmpty) {
+  if (history.stopovers == null || history.stopovers!.isEmpty) {
     return Container(
       width: 339.w,
       height: 230.h,
@@ -144,7 +144,8 @@ Container timelineSoonInfoCard(
                       if (history.postType == null) {
                         // TODO: ktx container 제작하면 연결
                       } else {
-                        _historyController.getHistoryInfo(postId: history.id!);
+                        _historyController.getHistoryInfo(
+                            postId: history.id!, postType: history.postType!);
                         Get.to(() => const TimelineDetailScreen());
                       }
                     },
@@ -298,7 +299,7 @@ Container timelineSoonInfoCard(
                           // TODO: ktx container 제작하면 연결
                         } else {
                           _historyController.getHistoryInfo(
-                              postId: history.id!);
+                              postId: history.id!, postType: history.postType!);
                           Get.to(() => const TimelineDetailScreen());
                         }
                       },

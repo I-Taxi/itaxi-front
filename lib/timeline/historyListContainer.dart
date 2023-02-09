@@ -109,9 +109,11 @@ Widget historyListContainer(
               onPressed: () {
                 // TODO: ktx container 제작하면 연결
                 if (history.postType == null) {
-                  _historyController.getHistoryInfo(postId: history.id!);
+                  _historyController.getHistoryInfo(
+                      postId: history.id!, postType: history.postType!);
                 } else {
-                  _historyController.getHistoryInfo(postId: history.id!);
+                  _historyController.getHistoryInfo(
+                      postId: history.id!, postType: history.postType!);
                   Get.to(() => const TimelineDetailScreen());
                 }
               },
