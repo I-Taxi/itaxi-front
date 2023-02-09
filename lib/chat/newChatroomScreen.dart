@@ -82,6 +82,7 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
         });
       }
     });
+
     super.initState();
   }
 
@@ -89,9 +90,9 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    String time = _chatRoomController.postType != 3 ?
-     _chatRoomController.post.deptTime ?? 'null'
-     : _chatRoomController.ktxPost.deptTime ?? 'null';
+    String time = _chatRoomController.postType != 3
+        ? _chatRoomController.post.deptTime ?? 'null'
+        : _chatRoomController.ktxPost.deptTime ?? 'null';
     List<HistoryPlace?> stopovers;
     bool isOwner = false;
 
@@ -104,8 +105,11 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
               future: _historyController.history,
               builder: (BuildContext context, snapshot) {
                 stopovers = snapshot.data!.stopovers ?? [];
-                currentPost = _chatRoomController.post;
-                currentKtxPost = _chatRoomController.ktxPost;
+                if (_chatRoomController.postType != 3) {
+                  currentPost = _chatRoomController.post;
+                } else {
+                  currentKtxPost = _chatRoomController.ktxPost;
+                }
 
                 for (int i = 0; i < snapshot.data!.joiners!.length; i++) {
                   String? checkOwner = snapshot.data!.joiners![i].uid;
