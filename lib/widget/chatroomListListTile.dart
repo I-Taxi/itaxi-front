@@ -29,14 +29,16 @@ Widget chatroomListListTile(
     onTap: () async {
       await _historyController.getHistoryInfo(
           postId: postId, postType: postType);
-      if (history.postType != 3) {
-        _chatRoomController.getPost(post: history.toPost());
-        _chatRoomController.getChats(post: history.toPost());
-      } else {
-        _chatRoomController.getKtxPost(ktxPost: history.toKtxPost());
-        _chatRoomController.getKtxChats(ktxPost: history.toKtxPost());
-      }
-      Get.to(() => const NewChatroomScreen());
+      _historyController.history.then((value) {
+        if (value.postType != 3) {
+          _chatRoomController.getPost(post: value.toPost());
+          _chatRoomController.getChats(post: value.toPost());
+        } else {
+          _chatRoomController.getKtxPost(ktxPost: value.toKtxPost());
+          _chatRoomController.getKtxChats(ktxPost: value.toKtxPost());
+        }
+        Get.to(() => const NewChatroomScreen());
+      });
     },
     child: Container(
       width: 342.w,
