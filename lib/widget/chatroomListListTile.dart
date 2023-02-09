@@ -32,8 +32,11 @@ Widget chatroomListListTile(
       if (history.postType != 3) {
         _chatRoomController.getPost(post: history.toPost());
         _chatRoomController.getChats(post: history.toPost());
-        Get.to(() => const NewChatroomScreen());
+      } else {
+        _chatRoomController.getKtxPost(ktxPost: history.toKtxPost());
+        _chatRoomController.getKtxChats(ktxPost: history.toKtxPost());
       }
+      Get.to(() => const NewChatroomScreen());
     },
     child: Container(
       width: 342.w,

@@ -23,7 +23,7 @@ Container timelineSoonInfoCard(
   late PostController _postController = Get.find();
   late HistoryController _historyController = Get.find();
 
-  if (history.stopovers!.isEmpty) {
+  if (history.stopovers == null || history.stopovers!.isEmpty) {
     return Container(
       width: 339.w,
       height: 230.h,

@@ -10,6 +10,7 @@ class KtxPost {
   String? deptTime;
   int? capacity;
   int? participantNum;
+  int? sale;
   int? status;
   List<Joiner>? joiners;
 
@@ -22,6 +23,7 @@ class KtxPost {
     this.capacity,
     this.participantNum,
     this.status,
+    this.sale,
     this.joiners,
   });
 
@@ -37,7 +39,7 @@ class KtxPost {
     int? largeLuggageNum,
     int? smallLuggageNum,
     int? status,
-    int? luggage,
+    int? sale,
     List<Joiner>? joiners,
   }) {
     return KtxPost(
@@ -49,6 +51,7 @@ class KtxPost {
       capacity: capacity ?? this.capacity,
       participantNum: participantNum ?? this.participantNum,
       status: status ?? this.status,
+      sale: sale ?? this.sale,
       joiners: joiners ?? this.joiners,
     );
   }
@@ -61,6 +64,7 @@ class KtxPost {
       deptTime: ds['deptTime'],
       capacity: ds['capacity'],
       participantNum: ds['participantNum'],
+      sale: ds['sale'],
       status: ds['status'],
     );
   }
@@ -74,6 +78,7 @@ class KtxPost {
       capacity: ds['capacity'],
       participantNum: ds['participantNum'],
       status: ds['status'],
+      sale: ds['sale'],
       joiners: List<Joiner>.from(
           ds['joiners'].map((json) => Joiner.fromUidDocs(json))),
     );
@@ -88,6 +93,7 @@ class KtxPost {
       capacity: ds['capacity'],
       participantNum: ds['participantNum'],
       status: ds['status'],
+      sale: ds['sale'],
       joiners:
           List<Joiner>.from(ds['joiners'].map((json) => Joiner.fromDocs(json))),
     );
@@ -114,6 +120,7 @@ class KtxPost {
       'capacity': capacity,
       'participantNum': participantNum,
       'status': status,
+      'sale': sale,
       'joiners': joiners,
     };
   }
@@ -124,6 +131,7 @@ class KtxPost {
       "dstId": destination!.id,
       "deptTime": deptTime,
       "capacity": capacity,
+      'sale': sale,
       "uid": uid,
     };
   }
