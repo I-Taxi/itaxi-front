@@ -1,4 +1,5 @@
 import 'package:get/get.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ScreenController extends GetxController {
   int capacity = 2;
@@ -17,6 +18,10 @@ class ScreenController extends GetxController {
   int ktxScreenCurrentTabIndex = 0;
   int ktxScreenCurrentToggle = 0;
 
+  // timeline
+  bool enlargement = true;
+  double backgroundHeight = 108.h;
+
   void toggleHasNotice() {
     hasNotice = !hasNotice;
     update();
@@ -24,6 +29,23 @@ class ScreenController extends GetxController {
 
   void toggleDiscount() {
     discountSelect = !discountSelect;
+    update();
+  }
+
+  void setUnenlargement() {
+    enlargement = false;
+    update();
+  }
+
+  void setEnlargement() {
+    enlargement = true;
+    update();
+  }
+
+  void setBackgroundHeight(double top, double bottom, double max, double scrollHeight) {
+    backgroundHeight = bottom - (bottom - top) / max * scrollHeight;
+    if (backgroundHeight < top) backgroundHeight = top;
+    print(backgroundHeight);
     update();
   }
 
