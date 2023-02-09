@@ -85,7 +85,9 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    String time = _chatRoomController.post.deptTime ?? 'null';
+    String time = _chatRoomController.postType != 3 ?
+     _chatRoomController.post.deptTime ?? 'null'
+     : _chatRoomController.ktxPost.deptTime ?? 'null';
     List<HistoryPlace?> stopovers;
 
     return Scaffold(
@@ -392,6 +394,7 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
               builder: (BuildContext context, snapshot) {
                 if (snapshot.hasData) {
                   if (snapshot.data!.isNotEmpty) {
+                    print(_chatRoomController.postType);
                     return Padding(
                       padding:
                           EdgeInsets.only(left: 18.w, right: 18.w, top: 44.h),
@@ -623,7 +626,9 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                                 ),
                                 Flexible(
                                   child: Text(
-                                    "${_chatRoomController.post.departure!.name}-${_chatRoomController.post.destination!.name} (${DateFormat('Md').format(DateTime.parse(time))})",
+                                    _chatRoomController.postType != 3
+                                        ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} (${DateFormat('Md').format(DateTime.parse(time))})"
+                                        : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} (${DateFormat('Md').format(DateTime.parse(time))})",
                                     style: textTheme.subtitle1?.copyWith(
                                       color: colorScheme.onTertiary,
                                     ),

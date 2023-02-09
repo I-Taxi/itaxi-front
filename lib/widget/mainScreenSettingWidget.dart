@@ -22,6 +22,7 @@ import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/placeSearch/searchScreen.dart';
 import 'package:itaxi/placeSearch/placeSearchController.dart';
 import 'package:itaxi/widget/postTypeToggleButton.dart';
+import 'package:itaxi/widget/setTimeDateFormater.dart';
 
 PlaceSearchController _placeSearchController = Get.find();
 PlaceController _placeController = Get.find();
@@ -449,8 +450,7 @@ Padding lookupSetTimeWidget(
             ),
             GetBuilder<DateController>(builder: (_) {
               return Text(
-                DateFormat('MM월 dd일 (E)').format(//요일 설정 해줘야 함.
-                    _dateController.pickedDate!),
+                lookupDateFormater(_dateController.pickedDate),
                 style: textTheme.subtitle2
                     ?.copyWith(color: colorScheme.onTertiary),
               );
@@ -495,10 +495,8 @@ Padding gatherSetTimeWidget(
               width: 25.w,
             ),
             GetBuilder<DateController>(builder: (_) {
-              print(_dateController.mergeDateAndTime());
               return Text(
-                DateFormat('MM월 dd일 (E) hh:mm').format(//요일 설정 해줘야 함.
-                    _dateController.mergeDateAndTime()),
+                gatherDateFormater(_dateController.mergeDateAndTime()),
                 style: textTheme.subtitle2
                     ?.copyWith(color: colorScheme.onTertiary),
               );
