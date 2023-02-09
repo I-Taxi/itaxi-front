@@ -356,7 +356,7 @@ Padding discountWidget(
                 width: 60.w,
               ),
               Text(
-                '${controller.discountRate}%',
+                '${controller.sale}%',
                 style: textTheme.subtitle2
                     ?.copyWith(color: colorScheme.onPrimaryContainer),
               ),
@@ -414,7 +414,7 @@ Padding discountActivatedWidget(
                       width: 60.w,
                     ),
                     Text(
-                      '${controller.discountRate}%',
+                      '${controller.sale}%',
                       style: textTheme.subtitle2
                           ?.copyWith(color: colorScheme.onPrimaryContainer),
                     ),
@@ -429,65 +429,65 @@ Padding discountActivatedWidget(
                   children: [
                     GestureDetector(
                       onTap: () {
-                        controller.setDiscountRate(15);
+                        controller.setSale(15);
                       },
                       child: SizedBox(
                         height: 24.h,
                         child: Text('15%',
                             style: textTheme.subtitle2?.copyWith(
-                                color: controller.discountRate == 15
+                                color: controller.sale == 15
                                     ? colorScheme.onSurface
                                     : colorScheme.tertiary)),
                       ),
                     ),
                     GestureDetector(
                       onTap: () {
-                        controller.setDiscountRate(20);
+                        controller.setSale(20);
                       },
                       child: SizedBox(
                         height: 24.h,
                         child: Text('20%',
                             style: textTheme.subtitle2?.copyWith(
-                                color: controller.discountRate == 20
+                                color: controller.sale == 20
                                     ? colorScheme.onSurface
                                     : colorScheme.tertiary)),
                       ),
                     ),
                     GestureDetector(
                       onTap: () {
-                        controller.setDiscountRate(25);
+                        controller.setSale(25);
                       },
                       child: SizedBox(
                         height: 24.h,
                         child: Text('25%',
                             style: textTheme.subtitle2?.copyWith(
-                                color: controller.discountRate == 25
+                                color: controller.sale == 25
                                     ? colorScheme.onSurface
                                     : colorScheme.tertiary)),
                       ),
                     ),
                     GestureDetector(
                       onTap: () {
-                        controller.setDiscountRate(30);
+                        controller.setSale(30);
                       },
                       child: SizedBox(
                         height: 24.h,
                         child: Text('30%',
                             style: textTheme.subtitle2?.copyWith(
-                                color: controller.discountRate == 30
+                                color: controller.sale == 30
                                     ? colorScheme.onSurface
                                     : colorScheme.tertiary)),
                       ),
                     ),
                     GestureDetector(
                       onTap: () {
-                        controller.setDiscountRate(35);
+                        controller.setSale(35);
                       },
                       child: SizedBox(
                         height: 24.h,
                         child: Text('35%',
                             style: textTheme.subtitle2?.copyWith(
-                                color: controller.discountRate == 35
+                                color: controller.sale == 35
                                     ? colorScheme.onSurface
                                     : colorScheme.tertiary)),
                       ),
@@ -586,6 +586,7 @@ GetBuilder gatherButton(TextTheme textTheme, ColorScheme colorScheme,
                 borderRadius: BorderRadius.circular(16))),
         onPressed: () async {
           _addKtxPostController.capacity = controller.capacity;
+          _addKtxPostController.sale = controller.sale;
           if (_addKtxPostController.loaded) {
             if (_ktxPlaceController.dep == null) {
               snackBar(context: context, title: '출발지를 선택해주세요.');
@@ -610,6 +611,7 @@ GetBuilder gatherButton(TextTheme textTheme, ColorScheme colorScheme,
                 deptTime: _dateController.formattingDateTime(
                   _dateController.mergeDateAndTime(),
                 ),
+                sale: _addKtxPostController.sale,
                 capacity: _addKtxPostController.capacity,
               );
               Get.back();

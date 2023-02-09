@@ -6,11 +6,12 @@ import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/model/ktxPost.dart';
-import 'package:itaxi/repository/chatRepository.dart';
+import 'package:itaxi/repository/ktxChatRepository.dart';
 
 class AddKtxPostController extends GetxController {
   late HistoryController _historyController = Get.put(HistoryController());
   int capacity = 1;
+  int sale = 35;
   bool loaded = true;
 
   void increaseCapacity(int capacity) {
@@ -20,6 +21,11 @@ class AddKtxPostController extends GetxController {
 
   void decreaseCapacity(int capacity) {
     this.capacity = capacity--;
+    update();
+  }
+
+  void setSale(int to) {
+    sale = to;
     update();
   }
 
@@ -40,9 +46,10 @@ class AddKtxPostController extends GetxController {
     );
 
     if (response.statusCode == 200) {
-      KtxPost result = KtxPost.fromPostAllDocs(json.decode(utf8.decode(response.bodyBytes)));
+      KtxPost result =
+          KtxPost.fromPostAllDocs(json.decode(utf8.decode(response.bodyBytes)));
       ktxPost = ktxPost.copyWith(id: result.id, joiners: result.joiners);
-      // await ChatRepository().setPost(post: post);
+      await KtxChatRepository().setPost(post: ktxPost);
       await _historyController.getHistorys();
       loaded = true;
       update();

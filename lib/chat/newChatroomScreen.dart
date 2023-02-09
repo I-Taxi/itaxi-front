@@ -117,7 +117,9 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                               children: [
                                 Expanded(
                                   child: Text(
-                                    "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} #${DateFormat('Md').format(DateTime.parse(time))}",
+                                    _chatRoomController.postType != 3
+                                        ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} #${DateFormat('Md').format(DateTime.parse(time))}"
+                                        : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} #${DateFormat('Md').format(DateTime.parse(time))}",
                                     style: textTheme.subtitle1?.copyWith(
                                       color: colorScheme.primary,
                                     ),
@@ -159,11 +161,19 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                                   SizedBox(
                                     width: 5.w,
                                   ),
-                                  Text(
-                                      _chatRoomController
-                                              .post.departure!.name ??
-                                          'null',
-                                      style: textTheme.bodyText1?.copyWith())
+                                  _chatRoomController.postType != 3
+                                      ? Text(
+                                          _chatRoomController
+                                                  .post.departure!.name ??
+                                              'null',
+                                          style:
+                                              textTheme.bodyText1?.copyWith())
+                                      : Text(
+                                          _chatRoomController
+                                                  .ktxPost.departure!.name ??
+                                              'null',
+                                          style:
+                                              textTheme.bodyText1?.copyWith())
                                 ],
                               ),
                               if (stopovers.isNotEmpty)
@@ -217,11 +227,19 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                                   SizedBox(
                                     width: 5.w,
                                   ),
-                                  Text(
-                                      _chatRoomController
-                                              .post.destination!.name ??
-                                          'null',
-                                      style: textTheme.bodyText1?.copyWith())
+                                  _chatRoomController.postType != 3
+                                      ? Text(
+                                          _chatRoomController
+                                                  .post.destination!.name ??
+                                              'null',
+                                          style:
+                                              textTheme.bodyText1?.copyWith())
+                                      : Text(
+                                          _chatRoomController
+                                                  .ktxPost.destination!.name ??
+                                              'null',
+                                          style:
+                                              textTheme.bodyText1?.copyWith())
                                 ],
                               ),
                             ]),
@@ -396,7 +414,9 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                                 ),
                                 Flexible(
                                   child: Text(
-                                    "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} (${DateFormat('Md').format(DateTime.parse(time))})",
+                                    _chatRoomController.postType != 3
+                                        ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} (${DateFormat('Md').format(DateTime.parse(time))})"
+                                        : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} (${DateFormat('Md').format(DateTime.parse(time))})",
                                     style: textTheme.subtitle1?.copyWith(
                                       color: colorScheme.onTertiary,
                                     ),
@@ -477,7 +497,12 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                                                 context: context,
                                                 chat: snapshot.data![index],
                                                 joiners: _chatRoomController
-                                                    .post.joiners,
+                                                            .postType !=
+                                                        3
+                                                    ? _chatRoomController
+                                                        .post.joiners
+                                                    : _chatRoomController
+                                                        .ktxPost.joiners,
                                               ),
                                       ],
                                     );

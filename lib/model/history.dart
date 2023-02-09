@@ -106,10 +106,11 @@ class History {
         postType: ds["postType"],
         sale: ds["sale"],
         status: ds["status"],
-        stopovers: List<HistoryPlace>.from(
-            ds["stopovers"].map((x) => HistoryPlace.fromDocs(x))),
+        stopovers: ds["stopovers"] == null
+            ? null
+            : List<HistoryPlace>.from(
+                ds["stopovers"].map((x) => HistoryPlace.fromDocs(x))),
       );
-
 
   factory History.fromDetailDocs(Map<String, dynamic> ds) => History(
         capacity: ds["capacity"],
@@ -124,8 +125,10 @@ class History {
         status: ds["status"],
         joiners:
             List<Joiner>.from(ds["joiners"].map((x) => Joiner.fromDocs(x))),
-        stopovers: List<HistoryPlace>.from(
-            ds["stopovers"].map((x) => HistoryPlace.fromDocs(x))),
+        stopovers: ds["stopovers"] == null
+            ? null
+            : List<HistoryPlace>.from(
+                ds["stopovers"].map((x) => HistoryPlace.fromDocs(x))),
       );
 
   Map<String, dynamic> toMap() => {
