@@ -175,7 +175,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                                 ),
                                 _management(
                                     title: "비밀번호 재설정",
-                                    nextPage: ForgotPwScreen(),
+                                    nextPage: ResetPWScreen(),
                                     context: context),
                                 SizedBox(
                                   height: 18.5.h,

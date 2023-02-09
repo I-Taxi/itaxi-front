@@ -14,7 +14,7 @@ class ResetPWScreen extends StatefulWidget {
 }
 
 class _ResetPWScreenState extends State<ResetPWScreen> {
-  SignUpController _signUpController = Get.find();
+  SignUpController _signUpController = Get.put(SignUpController());
 
 
   final _pwController = TextEditingController();
@@ -68,7 +68,7 @@ class _ResetPWScreenState extends State<ResetPWScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('비밀번호 재설정', style: textTheme.headline2?.copyWith(
+                  Text('비밀번호 변경', style: textTheme.headline2?.copyWith(
                       color: colorScheme.onTertiary,
                   ),),
                   SizedBox(
@@ -82,15 +82,14 @@ class _ResetPWScreenState extends State<ResetPWScreen> {
                     cursorColor: colorScheme.tertiary,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: InputDecoration(
-                      hintText: '비밀번호 입력',
-                      hintStyle: textTheme.subtitle1?.copyWith(
-                        fontSize: Platform.isIOS ? 14 : 12,
+                      hintText: '새로운 비밀번호를 입력해주세요',
+                      hintStyle: textTheme.bodyText1?.copyWith(
                         color: colorScheme.tertiary,
                       ),
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
                           color: colorScheme.tertiary,
-                          width: 0.5,
+                          width: 1.0,
                         ),
                       ),
                       focusedBorder: UnderlineInputBorder(
@@ -128,7 +127,7 @@ class _ResetPWScreenState extends State<ResetPWScreen> {
                     },
                   ),
                   SizedBox(
-                    height: 32.0.h,
+                    height: 33.0.h,
                   ),
                   // Password 확인 입력
                   TextFormField(
@@ -137,14 +136,14 @@ class _ResetPWScreenState extends State<ResetPWScreen> {
                     cursorColor: colorScheme.tertiary,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
                     decoration: InputDecoration(
-                      hintText: '비밀번호 확인',
-                      hintStyle: textTheme.subtitle2?.copyWith(
+                      hintText: '다시 한 번 입력해주세요',
+                      hintStyle: textTheme.bodyText1?.copyWith(
                         color: colorScheme.tertiary,
                       ),
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
                           color: colorScheme.tertiary,
-                          width: 0.5,
+                          width: 1.0,
                         ),
                       ),
                       focusedBorder: UnderlineInputBorder(
@@ -179,26 +178,6 @@ class _ResetPWScreenState extends State<ResetPWScreen> {
                       return null;
                     },
                   ),
-                  // ElevatedButton(
-                  //   style: ElevatedButton.styleFrom(
-                  //     elevation: 0,
-                  //     backgroundColor: isValueEmpty ? colorScheme.tertiary : colorScheme.secondary,
-                  //     shape: RoundedRectangleBorder(
-                  //       borderRadius: BorderRadius.circular(8.0),
-                  //     ),
-                  //   ),
-                  //   onPressed: () async {
-                  //     if (_formKey.currentState!.validate()) {
-                  //       showConfirmDialog(context);
-                  //     }
-                  //   },
-                  //   child: Text(
-                  //     '완료',
-                  //     style: textTheme.subtitle1!.copyWith(
-                  //       color: colorScheme.primary,
-                  //     ),
-                  //   ),
-                  // ),
                 ],
               ),
             ),
@@ -206,22 +185,26 @@ class _ResetPWScreenState extends State<ResetPWScreen> {
         ),
       ),
       bottomNavigationBar: Material(
-        color: isValueEmpty ? colorScheme.tertiaryContainer : colorScheme.secondary,
+        color: isValueEmpty ? colorScheme.onSurfaceVariant : colorScheme.secondary,
         child: InkWell(
           onTap: () async{
-
             if (_formKey.currentState!.validate()) {
               showConfirmDialog(context);
             }
           },
           child: SizedBox(
-            height: kToolbarHeight,
+            height: 94.h,
             width: double.infinity,
-            child: Center(
-              child: Text(
-                "이메일로 재설정 링크 받기",
-                style: textTheme.subtitle1!.copyWith(
-                    color: colorScheme.onPrimary
+            child: Align(
+              alignment: Alignment.topCenter,
+              child: Padding(
+                padding: EdgeInsets.only(top: 18.h),
+                child: Text(
+                  '추가 완료',
+                  style: textTheme.bodyText1!.copyWith(
+                    fontSize: Platform.isIOS ? 19 : 17,
+                    color: colorScheme.onTertiaryContainer,
+                  ),
                 ),
               ),
             ),
@@ -231,7 +214,7 @@ class _ResetPWScreenState extends State<ResetPWScreen> {
     );
   }
 
-  void showConfirmDialog(context) {
+  void showConfirmDialog(context)  {
     final colorScheme = Theme
         .of(context)
         .colorScheme;
@@ -240,76 +223,22 @@ class _ResetPWScreenState extends State<ResetPWScreen> {
         .textTheme;
     showDialog(
       context: context,
-      builder: (BuildContext context) {
+      builder: (BuildContext context)  {
         return Dialog(
           elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(7.0),
+            borderRadius: BorderRadius.circular(24.0),
           ),
           child: Container(
             width: 312.w,
-            height: 262.h,
-            alignment: Alignment.center,
-            padding: EdgeInsets.fromLTRB(
-              36.0.w,
-              24.0.h,
-              36.0.w,
-              28.0.h,
-            ),
-            child: Column(
-              children: <Widget>[
-                Text(
-                  "메일이 전송되었습니다",
-                  style: textTheme.headline1?.copyWith(
-                    color: colorScheme.secondary,
-                  ),
+            height: 172.h,
+            child: Center(
+              child: Text(
+                "변경이 완료되었습니다.",
+                style: textTheme.headline3?.copyWith(
+                  color: colorScheme.secondary,
                 ),
-                SizedBox(
-                  height: 15.h,
-                ),
-                Text(
-                  '입력한 이메일 주소로 비밀번호 재설정 링크를 보내드렸습니다.',
-                  style: textTheme.subtitle1?.copyWith(
-                    color: colorScheme.onPrimary,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-                SizedBox(
-                  height: 15.h,
-                ),
-                RichText(
-                  text: TextSpan(
-                      text: "메일이 보이지 않는다면, ",
-                      style: textTheme.subtitle1?.copyWith(
-                          color: colorScheme.onPrimary
-                      ),
-                      children: <TextSpan>[
-                        TextSpan(text: "스팸함을\n", style: textTheme.subtitle1?.copyWith(
-                            color: colorScheme.secondary
-                        )),
-                        TextSpan(
-                            text: "확인해주세요", style: textTheme.subtitle1?.copyWith(
-                            color: colorScheme.onPrimary
-                        )
-                        )
-                      ]
-                  ),
-                ),
-
-                const Spacer(),
-                TextButton(
-                  onPressed: () async {
-                    // await _signInController.sendPasswordResetEmailByKorean();
-                    Get.back();
-                    Get.back();
-                  },
-                  child: Text(
-                    "확인",
-                    style: textTheme.headline1
-                        ?.copyWith(color: colorScheme.tertiary),
-                  ),
-                ),
-              ],
+              ),
             ),
           ),
         );
