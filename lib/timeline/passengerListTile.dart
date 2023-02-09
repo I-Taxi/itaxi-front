@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itaxi/model/joiner.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 Widget passengerListTile({required BuildContext context, required Joiner joiner}) {
   final colorScheme = Theme.of(context).colorScheme;
@@ -30,16 +31,38 @@ Widget passengerListTile({required BuildContext context, required Joiner joiner}
           ),
         ),
         const Spacer(),
-        Image.asset(
-          width: 24,
-          'assets/icon/phone.png',
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () async {
+            final Uri launchUri = Uri.parse('tel:${joiner.memberPhone}');
+            if (await canLaunchUrl(launchUri)) {
+              await launchUrl(launchUri);
+            } else {
+              throw Exception('Failed call');
+            }
+          },
+          child: Image.asset(
+            width: 24,
+            'assets/icon/phone.png',
+          ),
         ),
         SizedBox(
           width: 15.w,
         ),
-        Image.asset(
-          width: 24,
-          'assets/icon/message.png',
+        GestureDetector(
+          behavior: HitTestBehavior.opaque,
+          onTap: () async {
+            final Uri launchUri = Uri.parse('sms:${joiner.memberPhone}');
+            if (await canLaunchUrl(launchUri)) {
+              await launchUrl(launchUri);
+            } else {
+              throw Exception('Failed sms');
+            }
+          },
+          child: Image.asset(
+            width: 24,
+            'assets/icon/message.png',
+          ),
         ),
       ],
     ),
