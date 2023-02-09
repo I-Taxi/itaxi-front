@@ -9,10 +9,12 @@ import 'package:intl/intl.dart';
 import 'package:itaxi/chat/newChatListTile.dart';
 import 'package:itaxi/controller/chatRoomController.dart';
 import 'package:itaxi/controller/historyController.dart';
+import 'package:itaxi/controller/ktxPostController.dart';
 import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/model/chat.dart';
 import 'package:itaxi/model/history.dart';
+import 'package:itaxi/model/ktxPost.dart';
 import 'package:itaxi/model/place.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/settings/settingScreen.dart';
@@ -33,12 +35,14 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
   late UserController _userController = Get.find();
   late ChatRoomController _chatRoomController = Get.find();
   late PostController _postController = Get.find();
+  late KtxPostController _ktxPostController = Get.find();
   late HistoryController _historyController = Get.find();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   ScrollController _scrollController = ScrollController();
   bool isScrollDown = false;
   bool needScrollDown = false;
   Post? currentPost = null;
+  KtxPost? currentKtxPost = null;
 
   void _scrollDown() {
     if (_scrollController.hasClients) {
@@ -97,7 +101,8 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
               future: _historyController.history,
               builder: (BuildContext context, snapshot) {
                 stopovers = snapshot.data!.stopovers ?? [];
-                //currentPost = snapshot.data;
+                currentPost = _chatRoomController.post;
+                currentKtxPost = _chatRoomController.ktxPost;
                 return Column(
                   children: [
                     Container(
@@ -154,9 +159,10 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                               ),
                               Row(
                                 children: [
-                                  const Icon(
-                                    Icons.location_on_outlined,
-                                    size: 18,
+                                  Image.asset(
+                                    'assets/icon/location.png',
+                                    width: 18.w,
+                                    height: 18.h,
                                   ),
                                   SizedBox(
                                     width: 5.w,
@@ -220,9 +226,10 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                                 ),
                               Row(
                                 children: [
-                                  const Icon(
-                                    Icons.location_on_outlined,
-                                    size: 18,
+                                  Image.asset(
+                                    'assets/icon/location.png',
+                                    width: 18.w,
+                                    height: 18.h,
                                   ),
                                   SizedBox(
                                     width: 5.w,
@@ -347,13 +354,16 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                         padding: EdgeInsets.only(bottom: 43.h, left: 30.w),
                         child: InkWell(
                           onTap: () async {
-                            showMainDialog(
+                            showExitDialog(
                                 context,
                                 '방 나가기',
                                 '방을 나가시겠습니까?',
                                 _postController,
+                                _ktxPostController,
                                 _historyController,
-                                currentPost!);
+                                _chatRoomController,
+                                currentPost!,
+                                currentKtxPost!);
                           },
                           child: Row(children: [
                             Image.asset('assets/icon/icon-LogOut.png'),
@@ -439,75 +449,81 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                           Expanded(
                             child: Stack(
                               children: [
-                                ListView.builder(
-                                  shrinkWrap: true,
-                                  controller: _scrollController,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
-                                    return Column(
-                                      children: [
-                                        if (DateTime.now()
-                                                .difference(snapshot
-                                                    .data![index].chatTime!
-                                                    .toDate())
-                                                .isNegative ==
-                                            false)
-                                          if (index == 0 ||
-                                              (index - 1 > 0 &&
-                                                  DateTime.parse(DateFormat('yyyy-MM-dd')
-                                                              .format(snapshot
-                                                                  .data![index]
-                                                                  .chatTime!
-                                                                  .toDate()))
-                                                          .compareTo(DateTime.parse(
-                                                              DateFormat('yyyy-MM-dd').format(snapshot.data![index - 1].chatTime!.toDate()))) !=
-                                                      0))
-                                            Column(
-                                              children: [
-                                                Text(
-                                                  DateFormat('M월 d일 E').format(
-                                                      snapshot.data![index]
-                                                          .chatTime!
-                                                          .toDate()),
-                                                  style: textTheme.bodyText2
-                                                      ?.copyWith(
-                                                          color: colorScheme
-                                                              .tertiaryContainer),
-                                                ),
-                                                SizedBox(
-                                                  height: 20.h,
-                                                ),
-                                              ],
-                                            ),
-                                        snapshot.data![index].memberName == null
-                                            ? Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                  vertical: 6.h,
-                                                ),
-                                                child: Text(
-                                                  snapshot
-                                                      .data![index].chatData!,
-                                                  style: textTheme.bodyText1
-                                                      ?.copyWith(
-                                                    color: colorScheme.tertiary,
+                                MediaQuery.removePadding(
+                                  context: context,
+                                  child: ListView.builder(
+                                    shrinkWrap: true,
+                                    controller: _scrollController,
+                                    itemBuilder:
+                                        (BuildContext context, int index) {
+                                      return Column(
+                                        children: [
+                                          if (DateTime.now()
+                                                  .difference(snapshot
+                                                      .data![index].chatTime!
+                                                      .toDate())
+                                                  .isNegative ==
+                                              false)
+                                            if (index == 0 ||
+                                                (index - 1 > 0 &&
+                                                    DateTime.parse(DateFormat('yyyy-MM-dd').format(snapshot.data![index].chatTime!.toDate())).compareTo(
+                                                            DateTime.parse(DateFormat(
+                                                                    'yyyy-MM-dd')
+                                                                .format(snapshot
+                                                                    .data![index - 1]
+                                                                    .chatTime!
+                                                                    .toDate()))) !=
+                                                        0))
+                                              Column(
+                                                children: [
+                                                  Text(
+                                                    DateFormat('M월 d일 E')
+                                                        .format(snapshot
+                                                            .data![index]
+                                                            .chatTime!
+                                                            .toDate()),
+                                                    style: textTheme.bodyText2
+                                                        ?.copyWith(
+                                                            color: colorScheme
+                                                                .tertiaryContainer),
                                                   ),
-                                                ),
-                                              )
-                                            : newChatListTile(
-                                                context: context,
-                                                chat: snapshot.data![index],
-                                                joiners: _chatRoomController
-                                                            .postType !=
-                                                        3
-                                                    ? _chatRoomController
-                                                        .post.joiners
-                                                    : _chatRoomController
-                                                        .ktxPost.joiners,
+                                                  SizedBox(
+                                                    height: 20.h,
+                                                  ),
+                                                ],
                                               ),
-                                      ],
-                                    );
-                                  },
-                                  itemCount: snapshot.data!.length,
+                                          snapshot.data![index].memberName ==
+                                                  null
+                                              ? Padding(
+                                                  padding: EdgeInsets.symmetric(
+                                                    vertical: 6.h,
+                                                  ),
+                                                  child: Text(
+                                                    snapshot
+                                                        .data![index].chatData!,
+                                                    style: textTheme.bodyText1
+                                                        ?.copyWith(
+                                                      color:
+                                                          colorScheme.tertiary,
+                                                    ),
+                                                  ),
+                                                )
+                                              : newChatListTile(
+                                                  context: context,
+                                                  chat: snapshot.data![index],
+                                                  joiners: _chatRoomController
+                                                              .postType !=
+                                                          3
+                                                      ? _chatRoomController
+                                                          .post.joiners
+                                                      : _chatRoomController
+                                                          .ktxPost.joiners,
+                                                ),
+                                        ],
+                                      );
+                                    },
+                                    itemCount: snapshot.data!.length,
+                                  ),
                                 ),
                                 if (isScrollDown == true &&
                                     snapshot.data![snapshot.data!.length - 1]
@@ -789,148 +805,79 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
               )),
         ],
       ),
-
-      // Padding(
-      //   padding: EdgeInsets.only(left: 18.w, right: 18.w, top: 44.h),
-      //   child: Column(
-      //     children: [
-      //       Container(
-      //         height: 56.h,
-      //         child: Row(
-      //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      //           children: [
-      //             IconButton(
-      //               onPressed: () {
-      //                 Get.back();
-      //               },
-      //               icon: Icon(
-      //                 Icons.arrow_back_ios,
-      //                 size: 24,
-      //                 color: colorScheme.tertiaryContainer,
-      //               ),
-      //             ),
-      //             Flexible(
-      //               child: Text(
-      //                 "${_chatRoomController.post.departure!.name}-${_chatRoomController.post.destination!.name} (${DateFormat('Md').format(DateTime.parse(time))})",
-      //                 style: textTheme.subtitle1?.copyWith(
-      //                   color: colorScheme.onTertiary,
-      //                 ),
-      //                 maxLines: 1,
-      //               ),
-      //             ),
-      //             IconButton(
-      //               onPressed: () {
-      //                 _scaffoldKey.currentState!.openEndDrawer();
-      //               },
-      //               icon: Icon(
-      //                 Icons.menu,
-      //                 size: 24,
-      //                 color: colorScheme.tertiaryContainer,
-      //               ),
-      //             ),
-      //           ],
-      //         ),
-      //       ),
-      //       // SizedBox(
-      //       //   height: 9.h,
-      //       // ),
-      //       //Image.asset('assets/first_chat.png'),
-      //       SizedBox(height: 15.h),
-      //       Text(
-      //         "1월 24일 (화)",
-      //         style: textTheme.bodyText2
-      //             ?.copyWith(color: colorScheme.tertiaryContainer),
-      //       ),
-      //       SizedBox(
-      //         height: 20.h,
-      //       ),
-
-      //       Padding(
-      //         padding: EdgeInsets.only(left: 6.w, right: 6.w),
-      //         child: Column(
-      //           children: [
-      //             youChatListTile(context, "안녕하세요", true),
-      //             youChatListTile(context, "동해물과 백두산이?", false),
-      //             meChatListTile(context, "안녕하세요", true),
-      //             meChatListTile(context, "하느님이?", false),
-      //             SizedBox(height: 21.h),
-      //             Container(
-      //               decoration: BoxDecoration(
-      //                   borderRadius: BorderRadius.circular(5),
-      //                   color: colorScheme.onBackground),
-      //               width: 181.w,
-      //               height: 24.h,
-      //               child: Padding(
-      //                 padding:
-      //                     EdgeInsets.symmetric(vertical: 4.h, horizontal: 8.w),
-      //                 child: Text(
-      //                   "OOO학부생 님이 입장하셨습니다",
-      //                   style: textTheme.bodyText2?.copyWith(
-      //                     color: colorScheme.tertiaryContainer,
-      //                   ),
-      //                 ),
-      //               ),
-      //             ),
-      //             SizedBox(height: 17.h),
-      //             youChatListTile(context, "혹시 두명 탈 수 있나요?", true),
-      //           ],
-      //         ),
-      //       ),
-      //       //Image.asset('assets/new_message.png'),
-      //       Expanded(
-      //         child: Align(
-      //             alignment: FractionalOffset.bottomCenter,
-      //             child: Padding(
-      //               padding: EdgeInsets.fromLTRB(6.w, 12.h, 6.w, 44.h),
-      //               child: TextField(
-      //                 // controller: _controller,
-      //                 cursorColor: Colors.grey[400],
-      //                 style: textTheme.subtitle1
-      //                     ?.copyWith(color: colorScheme.onPrimary),
-      //                 minLines: 1,
-      //                 maxLines: 4,
-      //                 decoration: InputDecoration(
-      //                   contentPadding: EdgeInsets.only(
-      //                       top: 10.h, bottom: 10.h, left: 10.w),
-      //                   filled: true,
-      //                   border: InputBorder.none,
-      //                   enabledBorder: OutlineInputBorder(
-      //                     borderSide:
-      //                         BorderSide(width: 1, color: (Colors.grey[200])!),
-      //                     borderRadius: BorderRadius.circular(24),
-      //                   ),
-      //                   focusedBorder: OutlineInputBorder(
-      //                     borderSide:
-      //                         BorderSide(width: 1, color: (Colors.grey[200])!),
-      //                     borderRadius: BorderRadius.circular(24),
-      //                   ),
-      //                   fillColor: colorScheme.onBackground,
-      //                   suffixIcon: Image.asset('assets/button/send.png'),
-      //                   hintText: '',
-      //                   hintStyle: textTheme.subtitle1?.copyWith(
-      //                     color: colorScheme.onPrimary,
-      //                   ),
-      //                 ),
-
-      //                 onChanged: (text) {
-      //                   if (_chatRoomController
-      //                       .chatTextController.text.isNotEmpty) {
-      //                     _chatRoomController.changeTexting(true);
-      //                   } else {
-      //                     _chatRoomController.changeTexting(false);
-      //                   }
-      //                 },
-      //                 onSubmitted: (text) {
-      //                   _chatRoomController.submitChat();
-      //                   _chatRoomController.clearTexting();
-      //                   _scrollDown();
-      //                 },
-      //               ),
-      //             )),
-      //       ),
-      //     ],
-      //   ),
-      // ),
     );
   }
+}
+
+Future<dynamic> showExitDialog(
+    BuildContext context,
+    String? title,
+    String? content,
+    PostController _postController,
+    KtxPostController _ktxPostController,
+    HistoryController _historyController,
+    ChatRoomController _chatRoomController,
+    Post post,
+    KtxPost ktxPost) async {
+  final colorScheme = Theme.of(context).colorScheme;
+  final textTheme = Theme.of(context).textTheme;
+
+  showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return Dialog(
+          elevation: 0,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(4.0),
+          ),
+          child: Container(
+            width: 360.w,
+            height: 180.h,
+            alignment: Alignment.center,
+            padding: EdgeInsets.fromLTRB(
+              28.0.w,
+              32.0.h,
+              28.0.w,
+              12.0.h,
+            ),
+            child: Column(
+              children: <Widget>[
+                Text(
+                  title as String,
+                  style: textTheme.headline3?.copyWith(
+                    color: colorScheme.secondary,
+                  ),
+                ),
+                SizedBox(
+                  height: 10.h,
+                ),
+                Text(
+                  content as String,
+                  style: textTheme.subtitle2?.copyWith(
+                    color: colorScheme.onPrimary,
+                  ),
+                ),
+                // const Spacer(),
+                TextButton(
+                  onPressed: () async {
+                    if (_chatRoomController.postType != 3)
+                      await _postController.fetchOutJoin(post: post);
+                    else
+                      await _ktxPostController.fetchOutJoin(post: ktxPost);
+                    await _historyController.getHistorys();
+                    Get.back();
+                    Get.back();
+                    Get.back();
+                  },
+                  child: Text(
+                    "나가기",
+                    style: textTheme.headline2
+                        ?.copyWith(color: colorScheme.tertiary),
+                  ),
+                ),
+              ],
+            ),
+          ),
+        );
+      });
 }
