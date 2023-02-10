@@ -126,6 +126,7 @@ Widget placeSearchTile({
     children: [
       for (int index = 0; index < placeList.length; index++)
         GestureDetector(
+          behavior: HitTestBehavior.opaque,
           onTap: () {
             ScaffoldMessenger.of(context).hideCurrentSnackBar();
             // if 문 추가해서 내 장소인지 나머지 구간들인지 구별해야 함.
@@ -220,13 +221,14 @@ Widget favoritePlaceSearchTile({
       children: [
         for (int index = 0; index < placeList.length; index++)
           GestureDetector(
+            behavior: HitTestBehavior.opaque,
             onTap: () {
               ScaffoldMessenger.of(context).hideCurrentSnackBar();
               // if 문 추가해서 내 장소인지 나머지 구간들인지 구별해야 함.
               _placeSearchController.selectedIndex = index;
               _placeSearchController.favoriteSelectedPlace = placeList[index];
               _placeSearchController.selectedPlace = placeList[index].place;
-
+          
               placeSearchSnackBar(
                 context: context,
                 title: RichText(
@@ -280,7 +282,7 @@ Widget favoritePlaceSearchTile({
                                   )
                                 : textTheme.bodyText1?.copyWith(
                                     color: colorScheme.onTertiary,
-                                  ))
+                                  )),
                       ],
                     ),
                     if (index == _placeSearchController.selectedIndex)
@@ -299,65 +301,6 @@ Widget favoritePlaceSearchTile({
           )
       ],
     ),
-    // child: ListView.builder(
-    //     scrollDirection: Axis.vertical,
-    //     shrinkWrap: true,
-    //     itemCount: placeList.length,
-    //     itemBuilder: (_, int index) {
-    //       return ListTile(
-    //         //   trailing: Checkbox(
-    //         //     value: widget.selectedList[index],
-    //         // ),
-    //         selectedColor: colorScheme.secondary,
-    //         selected: index == _placeSearchController.selectedIndex,
-    //         leading: const Icon(
-    //           Icons.location_on,
-    //         ),
-    //         onTap: () {
-    //           ScaffoldMessenger.of(context).hideCurrentSnackBar();
-    //           // if 문 추가해서 내 장소인지 나머지 구간들인지 구별해야 함.
-    //           _placeSearchController.selectedIndex = index;
-    //           _placeSearchController.favoriteSelectedPlace = placeList[index];
-    //           _placeSearchController.selectedPlace = placeList[index].place;
-
-    //           placeSearchSnackBar(
-    //             context: context,
-    //             title: RichText(
-    //                 textAlign: TextAlign.center,
-    //                 text: TextSpan(
-    //                   text: '원하는 출발지라면 ',
-    //                   style: textTheme.subtitle2?.copyWith(
-    //                     color: colorScheme.primary,
-    //                   ),
-    //                   children: <TextSpan>[
-    //                     TextSpan(
-    //                       text: "다음",
-    //                       style: textTheme.subtitle2?.copyWith(
-    //                         color: colorScheme.onSecondaryContainer,
-    //                       ),
-    //                     ),
-    //                     TextSpan(
-    //                       text: "을 눌러주세요.",
-    //                       style: textTheme.subtitle2?.copyWith(
-    //                         color: colorScheme.primary,
-    //                       ),
-    //                     ),
-    //                   ],
-    //                 )),
-    //             color: Color(0xff69c077),
-    //           );
-    //         },
-    //         trailing: IconButton(
-    //           icon: Icon((_placeSearchController.placeType == 5) ? Icons.delete : Icons.add,
-    //               color: (index == _placeSearchController.selectedIndex) ? colorScheme.secondary : colorScheme.primary),
-    //           onPressed: favoritePressed,
-    //         ),
-    //         title: Text(
-    //           placeList[index].place!.name!,
-    //           style: textTheme.bodyText1?.copyWith(color: colorScheme.onPrimary),
-    //         ),
-    //       );
-    //     }),
   );
 }
 

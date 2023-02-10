@@ -7,6 +7,7 @@ class ScreenController extends GetxController {
   // mainScreen
   bool mainScreenLoaded = false;
   bool hasNotice = false;
+  bool isCheckScreen = false;
   int mainScreenCurrentTabIndex = 0;
   int mainScreenCurrentToggle = 0;
   int stopOver = 0;
@@ -29,6 +30,11 @@ class ScreenController extends GetxController {
 
   void toggleDiscount() {
     discountSelect = !discountSelect;
+    update();
+  }
+
+  void setCheckScreen(bool to) {
+    isCheckScreen = to;
     update();
   }
 
