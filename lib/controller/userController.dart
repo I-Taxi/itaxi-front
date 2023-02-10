@@ -135,6 +135,15 @@ class UserController extends GetxController {
     }
   }
 
+  Future<void> changePassword(String newPassword) async {
+    User user = FirebaseAuth.instance.currentUser!;
+    try {
+      await user.updatePassword(newPassword);
+    } catch (e) {
+      print(e);
+    }
+  }
+
   // 회원탈퇴
   Future<http.Response> fetchDeleteUsers() async {
     uid = FirebaseAuth.instance.currentUser!.uid;
