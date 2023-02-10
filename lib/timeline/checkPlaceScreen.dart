@@ -196,74 +196,6 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                         });
                   }),
                 ),
-                //              child: RefreshIndicator(
-                // key: _refreshIndicatorKey,
-                // color: colorScheme.tertiary,
-                // backgroundColor: colorScheme.background,
-                // strokeWidth: 2.0,
-                // onRefresh: () async {
-                //   _postController.getPosts(
-                //     depId: _placeController.dep?.id,
-                //     dstId: _placeController.dst?.id,
-                //     time: _dateController.formattingDateTime(
-                //       _dateController.mergeDateAndTime(),
-                //     ),
-                //     postType: _screenController.mainScreenCurrentTabIndex,
-                //   );
-                // },
-                // Container(
-                //   color: colorScheme.onBackground,
-                //   child: GetBuilder<PostController>(
-                //     builder: (_) {
-                //       return FutureBuilder<List<Post>>(
-                //         future: _postController.posts,
-                //         builder: (BuildContext context, snapshot) {
-                //           if (snapshot.hasData) {
-                //             print(snapshot.data);
-                //             // post가 있을 때
-                //             if (snapshot.data!.isNotEmpty) {
-                //               return ListView.builder(
-                //                 itemCount: snapshot.data!.length,
-                //                 itemBuilder: (BuildContext context, int index) {
-                //                   return postListTile(
-                //                     context: context,
-                //                     post: snapshot.data![index],
-                //                   );
-                //                 },
-                //               );
-                //             }
-                //             // post가 없을 때
-                //             else {
-                //               return postIsEmpty(context);
-                //             }
-                //           }
-                //           // post load 중에 오류 발생
-                //           else if (snapshot.hasError) {
-                //             return ListView(
-                //               children: [
-                //                 SizedBox(
-                //                   height: 40.h,
-                //                 ),
-                //                 Align(
-                //                   child: Text(
-                //                     '${snapshot.error}',
-                //                     style: textTheme.subtitle2?.copyWith(
-                //                       color: colorScheme.tertiary,
-                //                     ),
-                //                   ),
-                //                 ),
-                //               ],
-                //             );
-                //           }
-                //           // post data loading bar
-                //           return LinearProgressIndicator(
-                //             color: colorScheme.secondary,
-                //           );
-                //         },
-                //       );
-                //     },
-                //   ),
-                // ),
               ],
             );
           }),
@@ -354,6 +286,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
               textAlign: TextAlign.center,
               style: textTheme.bodyText1?.copyWith(
                 color: colorScheme.tertiary,
+                height: 1.5,
               ),
             ),
             SizedBox(
