@@ -26,6 +26,7 @@ class TimelineScreen extends StatefulWidget {
 class _TimelineScreenState extends State<TimelineScreen> {
   TimelineTabViewController _timelineTabViewController = Get.put(TimelineTabViewController());
   final HistoryController _historyController = Get.put(HistoryController());
+
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   final NavigationController _navController = Get.put(NavigationController());
   final ScreenController _screenController = Get.find();
@@ -131,8 +132,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
                                     child: Container(
                                       decoration: BoxDecoration(
                                         borderRadius: BorderRadius.only(bottomLeft: Radius.circular(16), bottomRight: Radius.circular(16)),
-                                        gradient: LinearGradient(
-                                            begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: <Color>[Color(0Xff76B1ED), Color(0xff62A6EA)]),
+                                        gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: <Color>[Color(0Xff76B1ED), Color(0xff62A6EA)]),
                                       ),
                                     ),
                                   ),
@@ -173,10 +173,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
                                               child: Container(
                                                 decoration: BoxDecoration(
                                                   borderRadius: BorderRadius.only(bottomLeft: Radius.circular(16), bottomRight: Radius.circular(16)),
-                                                  gradient: LinearGradient(
-                                                      begin: Alignment.topCenter,
-                                                      end: Alignment.bottomCenter,
-                                                      colors: <Color>[Color(0Xff76B1ED), Color(0xff62A6EA)]),
+                                                  gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: <Color>[Color(0Xff76B1ED), Color(0xff62A6EA)]),
                                                 ),
                                               ),
                                             ),
@@ -233,10 +230,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
                                 onPressed: () {
                                   _navController.changeIndex(0);
                                 },
-                                style: OutlinedButton.styleFrom(
-                                    minimumSize: Size(198.w, 50.h),
-                                    side: BorderSide(width: 1, color: colorScheme.onPrimaryContainer),
-                                    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8)))),
+                                style: OutlinedButton.styleFrom(minimumSize: Size(198.w, 50.h), side: BorderSide(width: 1, color: colorScheme.onPrimaryContainer), shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(8)))),
                                 child: Text('동료 구하러 가기', style: textTheme.subtitle1?.copyWith(color: colorScheme.onPrimaryContainer)),
                               )
                             ],
@@ -256,6 +250,17 @@ class _TimelineScreenState extends State<TimelineScreen> {
                                 style: textTheme.headline1?.copyWith(color: colorScheme.tertiary),
                               ),
                             ),
+                            SizedBox(
+                              height: 36.h,
+                            ),
+                            OutlinedButton(
+                              onPressed: () {},
+                              style: OutlinedButton.styleFrom(side: BorderSide(width: 0, color: colorScheme.onBackground)),
+                              child: Image.asset(
+                                width: 198,
+                                'assets/button/add_timeline.png',
+                              ),
+                            )
                           ],
                         );
                       }
