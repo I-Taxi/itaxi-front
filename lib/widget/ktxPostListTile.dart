@@ -9,7 +9,7 @@ import 'package:itaxi/controller/navigationController.dart';
 import 'package:itaxi/controller/ktxPostController.dart';
 import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/controller/chatRoomController.dart';
-import 'package:itaxi/chat/newChatroomScreen.dart';
+import 'package:itaxi/chat/chatroomDetailScreen.dart';
 import 'package:itaxi/model/ktxPost.dart';
 import 'package:itaxi/widget/snackBar.dart';
 
@@ -102,7 +102,7 @@ Widget ktxPostListTile({
                                         _chatRoomController.getKtxPost(ktxPost: value.toKtxPost());
                                         _chatRoomController.getKtxChats(ktxPost: value.toKtxPost());
                                       }
-                                      Get.to(() => const NewChatroomScreen());
+                                      Get.to(() => const ChatRoomDetailScreen());
                                     });
                                   },
                                   child: Text(

@@ -17,7 +17,7 @@ import 'package:itaxi/model/history.dart';
 import 'package:itaxi/controller/screenController.dart';
 import 'package:itaxi/controller/placeController.dart';
 import 'package:itaxi/controller/dateController.dart';
-import 'package:itaxi/chat/newChatroomScreen.dart';
+import 'package:itaxi/chat/chatroomDetailScreen.dart';
 
 Widget postListTile({
   required BuildContext context,
@@ -107,7 +107,7 @@ Widget postListTile({
                                           _chatRoomController.getKtxPost(ktxPost: value.toKtxPost());
                                           _chatRoomController.getKtxChats(ktxPost: value.toKtxPost());
                                         }
-                                        Get.to(() => const NewChatroomScreen());
+                                        Get.to(() => const ChatRoomDetailScreen());
                                       });
                                     },
                                     child: Text(
