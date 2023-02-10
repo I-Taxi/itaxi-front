@@ -451,11 +451,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                   onPressed: () {
                                     _scaffoldKey.currentState!.openEndDrawer();
                                   },
-                                  icon: Icon(
-                                    Icons.menu,
-                                    size: 24,
-                                    color: colorScheme.tertiaryContainer,
-                                  ),
+                                  icon: Image.asset('assets/button/menu.png'),
                                 ),
                               ],
                             ),
@@ -542,18 +538,56 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                               ],
                                             ),
                                         snapshot.data![index].memberName == null
-                                            ? Padding(
-                                                padding: EdgeInsets.symmetric(
-                                                  vertical: 6.h,
-                                                ),
-                                                child: Text(
-                                                  snapshot
-                                                      .data![index].chatData!,
-                                                  style: textTheme.bodyText1
-                                                      ?.copyWith(
-                                                    color: colorScheme.tertiary,
-                                                  ),
-                                                ),
+                                            ? Column(
+                                                children: [
+                                                  index > 0 &&
+                                                          snapshot
+                                                                  .data![
+                                                                      index - 1]
+                                                                  .memberName ==
+                                                              null
+                                                      ? SizedBox()
+                                                      : SizedBox(
+                                                          height: 21.h,
+                                                        ),
+                                                  Container(
+                                                      decoration: BoxDecoration(
+                                                          color: colorScheme
+                                                              .onBackground,
+                                                          borderRadius:
+                                                              const BorderRadius
+                                                                      .all(
+                                                                  Radius
+                                                                      .circular(
+                                                                          5))),
+                                                      child: Padding(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                vertical: 6.h,
+                                                                horizontal:
+                                                                    8.w),
+                                                        child: Text(
+                                                          snapshot.data![index]
+                                                              .chatData!,
+                                                          style: textTheme
+                                                              .bodyText2
+                                                              ?.copyWith(
+                                                            color: colorScheme
+                                                                .tertiaryContainer,
+                                                          ),
+                                                        ),
+                                                      )),
+                                                  index > 0 &&
+                                                          snapshot
+                                                                  .data![
+                                                                      index - 1]
+                                                                  .memberName ==
+                                                              null
+                                                      ? SizedBox()
+                                                      : SizedBox(
+                                                          height: 17.h,
+                                                        )
+                                                ],
                                               )
                                             : ChatDetailListTile(
                                                 context: context,
@@ -699,11 +733,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                   onPressed: () {
                                     _scaffoldKey.currentState!.openEndDrawer();
                                   },
-                                  icon: Icon(
-                                    Icons.menu,
-                                    size: 24,
-                                    color: colorScheme.tertiaryContainer,
-                                  ),
+                                  icon: Image.asset('assets/button/menu.png'),
                                 ),
                               ],
                             ),
@@ -925,11 +955,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                 onPressed: () {
                                   _scaffoldKey.currentState!.openEndDrawer();
                                 },
-                                icon: Icon(
-                                  Icons.menu,
-                                  size: 24,
-                                  color: colorScheme.tertiaryContainer,
-                                ),
+                                icon: Image.asset('assets/button/menu.png'),
                               ),
                             ],
                           ),
@@ -1157,12 +1183,20 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                               _chatRoomController.clearTexting();
                               _scrollDown();
                             },
-                            child: Image.asset('assets/button/send.png'),
+                            child: Padding(
+                              padding:
+                                  EdgeInsets.fromLTRB(0.w, 2.h, 8.68.w, 1.68.h),
+                              child: Image.asset('assets/button/send.png'),
+                            ),
                           );
                         } else {
                           return GestureDetector(
                             onTap: () {},
-                            child: Image.asset('assets/button/send.png'),
+                            child: Padding(
+                              padding:
+                                  EdgeInsets.fromLTRB(0.w, 2.h, 8.68.w, 1.68.h),
+                              child: Image.asset('assets/button/send.png'),
+                            ),
                           );
                         }
                       },
