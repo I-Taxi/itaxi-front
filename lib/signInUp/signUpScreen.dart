@@ -102,8 +102,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   children: [
                     Text(
                       '회원가입',
-                      style: textTheme.headline2?.copyWith(
+                      style: textTheme.subtitle2?.copyWith(
                         color: colorScheme.onTertiary,
+                        fontSize: 32.sp,
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                     SizedBox(

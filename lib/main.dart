@@ -34,6 +34,7 @@ late AndroidNotificationChannel channel;
 late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
 void main() async {
+
   //임시로 OS Error: CERTIFICATE_VERIFY_FAILED 해결
   HttpOverrides.global = new MyHttpOverrides();
 
@@ -129,6 +130,7 @@ class _MyAppState extends State<MyApp> {
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
         _onBoarding();
+
       },
     );
 

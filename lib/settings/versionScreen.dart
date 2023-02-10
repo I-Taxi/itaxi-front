@@ -85,7 +85,7 @@ class VersionScreen extends StatelessWidget {
                     Text(
                       'iTaxi',
                       style: textTheme.subtitle2?.copyWith(
-                        color: colorScheme.onPrimary,
+                        color: colorScheme.primary,
                       ),
                     ),
                     SizedBox(
