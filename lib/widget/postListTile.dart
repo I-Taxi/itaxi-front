@@ -174,7 +174,7 @@ Widget postListTile({
                           width: 44.w,
                           height: 24.h,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(7.9931.r), color: colorScheme.outlineVariant),
+                              borderRadius: BorderRadius.circular(7.9931.r), color: colorScheme.outline),
                           alignment: Alignment.center,
                           child: Text(
                             '카풀',

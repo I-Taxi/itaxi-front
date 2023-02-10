@@ -179,22 +179,25 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                   height: 8.h,
                 ),
                 Expanded(
-                  child: GetBuilder<PostController>(builder: (_) {
-                    return FutureBuilder<List<Post>>(
-                        future: _postController.posts,
-                        builder: (context, snapshot) {
-                          if (snapshot.data == null || snapshot.data!.length == 0) return postIsEmpty(context);
-                          return RefreshIndicator(
-                            onRefresh: () async {},
-                            child: ListView(
-                              children: [
-                                for (int index = 0; index < snapshot.data!.length; index++)
-                                  postListTile(context: context, post: snapshot.data![index])
-                              ],
-                            ),
-                          );
-                        });
-                  }),
+                  child: Container(
+                    color: colorScheme.onBackground,
+                    child: GetBuilder<PostController>(builder: (_) {
+                      return FutureBuilder<List<Post>>(
+                          future: _postController.posts,
+                          builder: (context, snapshot) {
+                            if (snapshot.data == null || snapshot.data!.length == 0) return postIsEmpty(context);
+                            return RefreshIndicator(
+                              onRefresh: () async {},
+                              child: ListView(
+                                children: [
+                                  for (int index = 0; index < snapshot.data!.length; index++)
+                                    postListTile(context: context, post: snapshot.data![index])
+                                ],
+                              ),
+                            );
+                          });
+                    }),
+                  ),
                 ),
               ],
             );
@@ -220,7 +223,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
             child: Text(
               DateFormat('MM.d').format(_dateController.pickedDate!.add(Duration(days: difference))),
               style: textTheme.bodyText1?.copyWith(
-                color: colorScheme.outline,
+                color: colorScheme.surfaceTint,
               ),
             ),
           ),
@@ -246,7 +249,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
               child: Text(
                 DateFormat('MM.dd').format(_dateController.pickedDate!.add(Duration(days: difference))),
                 style: textTheme.bodyText1?.copyWith(
-                  color: colorScheme.outline,
+                  color: colorScheme.surfaceTint,
                 ),
               ),
             ),
@@ -262,7 +265,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
             child: Text(
               DateFormat(' - ').format(_dateController.pickedDate!.add(const Duration(days: -2))),
               style: textTheme.bodyText1?.copyWith(
-                color: colorScheme.tertiary,
+                color: colorScheme.surfaceTint,
               ),
             ),
           ),
