@@ -287,7 +287,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                           title: Text("즐겨찾기에 추가되었습니다.",
                                               textAlign: TextAlign.center,
                                               style: textTheme.subtitle2?.copyWith(color: colorScheme.primary)),
-                                          color: colorScheme.outlineVariant);
+                                          color: colorScheme.outline);
                                     }
                                   },
                                 )
@@ -307,7 +307,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                               color: colorScheme.primary,
                                             ),
                                           ),
-                                          color: colorScheme.outlineVariant);
+                                          color: colorScheme.outline);
                                     }
                                   },
                                 ),
