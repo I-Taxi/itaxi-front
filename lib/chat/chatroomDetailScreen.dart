@@ -23,14 +23,14 @@ import 'package:itaxi/widget/chatListTile.dart';
 import 'package:itaxi/widget/timelineDialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class NewChatroomScreen extends StatefulWidget {
-  const NewChatroomScreen({super.key});
+class ChatRoomDetailScreen extends StatefulWidget {
+  const ChatRoomDetailScreen({super.key});
 
   @override
-  State<NewChatroomScreen> createState() => _NewChatroomScreenState();
+  State<ChatRoomDetailScreen> createState() => _ChatRoomDetailScreenState();
 }
 
-class _NewChatroomScreenState extends State<NewChatroomScreen> {
+class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
   late TextEditingController _controller;
   late UserController _userController = Get.find();
   late ChatRoomController _chatRoomController = Get.find();
@@ -437,7 +437,7 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                                                     ),
                                                   ),
                                                 )
-                                              : newChatListTile(
+                                              : ChatDetailListTile(
                                                   context: context,
                                                   chat: snapshot.data![index],
                                                   joiners: _chatRoomController.postType != 3

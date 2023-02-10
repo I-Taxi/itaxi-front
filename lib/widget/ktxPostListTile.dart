@@ -8,13 +8,15 @@ import 'package:itaxi/controller/navigationController.dart';
 import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/controller/chatRoomController.dart';
-import 'package:itaxi/chat/chatRoomScreen.dart';
+import 'package:itaxi/chat/chatRoomDetailScreen.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/widget/snackBar.dart';
 
 import 'package:itaxi/controller/screenController.dart';
 import 'package:itaxi/controller/placeController.dart';
 import 'package:itaxi/controller/dateController.dart';
+
+import '../chat/chatroomDetailScreen.dart';
 
 Widget postListTile({
   required BuildContext context,
@@ -120,7 +122,7 @@ Widget postListTile({
                                 _chatRoomController.getPost(post: post);
                                 _chatRoomController.getChats(post: post);
                                 Get.back();
-                                Get.to(() => const ChatRoomScreen());
+                                Get.to(() => const ChatRoomDetailScreen());
                               },
                               child: Text(
                                 '입장',
@@ -199,7 +201,7 @@ Widget postListTile({
                                 _chatRoomController.getPost(post: post);
                                 _chatRoomController.getChats(post: post);
                                 Get.back();
-                                Get.to(() => const ChatRoomScreen());
+                                Get.to(() => const ChatRoomDetailScreen());
                               },
                               child: Text(
                                 '입장',

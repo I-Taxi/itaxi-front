@@ -8,14 +8,14 @@ import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/model/chat.dart';
 import 'package:itaxi/widget/chatListTile.dart';
 
-class ChatRoomScreen extends StatefulWidget {
-  const ChatRoomScreen({Key? key}) : super(key: key);
+class ChatRoomScreen_bak extends StatefulWidget {
+  const ChatRoomScreen_bak({Key? key}) : super(key: key);
 
   @override
-  State<ChatRoomScreen> createState() => _ChatRoomScreenState();
+  State<ChatRoomScreen_bak> createState() => _ChatRoomScreen_bakState();
 }
 
-class _ChatRoomScreenState extends State<ChatRoomScreen> {
+class _ChatRoomScreen_bakState extends State<ChatRoomScreen_bak> {
   late UserController _userController = Get.find();
   late ChatRoomController _chatRoomController = Get.find();
   ScrollController _scrollController = ScrollController();

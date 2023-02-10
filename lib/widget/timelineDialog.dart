@@ -303,7 +303,7 @@ Future<dynamic> timelineDialog(
                               }
 
                               Get.back();
-                              Get.to(() => const ChatRoomScreen());
+                              Get.to(() => const ChatRoomScreen_bak());
                             },
                             child: Text(
                               '채팅방 입장',

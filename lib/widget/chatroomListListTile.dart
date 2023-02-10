@@ -37,7 +37,7 @@ Widget chatroomListListTile(
           _chatRoomController.getKtxPost(ktxPost: value.toKtxPost());
           _chatRoomController.getKtxChats(ktxPost: value.toKtxPost());
         }
-        Get.to(() => const NewChatroomScreen());
+        Get.to(() => const ChatRoomDetailScreen());
       });
     },
     child: Container(
