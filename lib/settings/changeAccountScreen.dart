@@ -94,6 +94,21 @@ class _ChangeAccountScreenState extends State<ChangeAccountScreen> {
                           width: 1.0,
                         ),
                       ),
+                      errorStyle: textTheme.bodyText2?.copyWith(
+                        color: colorScheme.surfaceVariant,
+                      ),
+                      errorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: colorScheme.surfaceVariant,
+                              width: 1.0
+                          )
+                      ),
+                      focusedErrorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: colorScheme.surfaceVariant,
+                              width: 1.0
+                          )
+                      ),
                     ),
                     onChanged: (value) {
                       if(value.length > 0){
@@ -142,6 +157,21 @@ class _ChangeAccountScreenState extends State<ChangeAccountScreen> {
                           width: 1.0,
                         ),
                       ),
+                      errorStyle: textTheme.bodyText2?.copyWith(
+                        color: colorScheme.surfaceVariant,
+                      ),
+                      errorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: colorScheme.surfaceVariant,
+                              width: 1.0
+                          )
+                      ),
+                      focusedErrorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: colorScheme.surfaceVariant,
+                              width: 1.0
+                          )
+                      ),
                     ),
                     onChanged: (value) {
                       if(value.length > 0){
@@ -189,6 +219,21 @@ class _ChangeAccountScreenState extends State<ChangeAccountScreen> {
                           color: colorScheme.secondary,
                           width: 1.0,
                         ),
+                      ),
+                      errorStyle: textTheme.bodyText2?.copyWith(
+                        color: colorScheme.surfaceVariant,
+                      ),
+                      errorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: colorScheme.surfaceVariant,
+                              width: 1.0
+                          )
+                      ),
+                      focusedErrorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: colorScheme.surfaceVariant,
+                              width: 1.0
+                          )
                       ),
                     ),
                     onChanged: (value) {

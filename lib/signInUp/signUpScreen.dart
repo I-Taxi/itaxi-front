@@ -22,8 +22,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final _pwController = TextEditingController();
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
-  final _bankController = TextEditingController();
-  final _bankAddressController = TextEditingController();
 
   bool agree1 = false;
   bool agree2 = false;

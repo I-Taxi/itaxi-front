@@ -540,7 +540,6 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                     TextButton(
                         onPressed: () async {
-                          await SettingScreen.storage.delete(key: "login");
                           _signInController.reset();
                           _signInController.signedOutState();
                           _navController.changeIndex(0);
