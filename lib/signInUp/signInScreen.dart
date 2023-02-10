@@ -99,7 +99,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     TextFormField(
                       controller: _idController,
                       autocorrect: false,
-                      style: textTheme.bodyText1?.copyWith(
+                      style: textTheme.bodyText2?.copyWith(
                         color: colorScheme.primary,
                       ),
                       decoration: InputDecoration(
@@ -152,11 +152,11 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                     ),
                     TextFormField(
-                        controller: _pwController,
-                        autocorrect: false,
-                        obscureText: _isObscure,
-                        style: textTheme.bodyText1?.copyWith(
-                          color: colorScheme.primary,
+                      controller: _pwController,
+                      autocorrect: false,
+                      obscureText: _isObscure,
+                        style: textTheme.bodyText2?.copyWith(
+                        color: colorScheme.primary,
                         ),
                         decoration: InputDecoration(
                           suffixText: '',
@@ -211,8 +211,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         Text(
                           '자동 로그인',
                           style: textTheme.bodyText2!.copyWith(
-                            fontSize: Platform.isIOS ? 14 : 12,
-                            color: colorScheme.primary,
+                            color: colorScheme.onTertiaryContainer,
                           ),
                         ),
                         Checkbox(
@@ -238,8 +237,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           child: Text(
                             '비밀번호 찾기',
                             style: textTheme.bodyText2!.copyWith(
-                              fontSize: Platform.isIOS ? 14 : 12,
-                              color: colorScheme.primary,
+                              color: colorScheme.onTertiaryContainer,
                             ),
                           ),
                         ),
@@ -293,7 +291,7 @@ class _SignInScreenState extends State<SignInScreen> {
                       child: Text(
                         '회원가입',
                         style: textTheme.bodyText1?.copyWith(
-                          color: colorScheme.primary,
+                          color: colorScheme.onTertiaryContainer,
                         ),
                       ),
                     ),

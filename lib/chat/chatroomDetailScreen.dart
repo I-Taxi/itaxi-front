@@ -94,252 +94,258 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
       key: _scaffoldKey,
       endDrawer: Drawer(
         child: GetBuilder<HistoryController>(builder: (_) {
-          if (_historyController.loaded) {
-            return FutureBuilder<History>(
-              future: _historyController.history,
-              builder: (BuildContext context, snapshot) {
-                stopovers = snapshot.data!.stopovers ?? [];
-                if (_chatRoomController.postType != 3) {
-                  currentPost = _chatRoomController.post;
-                } else {
-                  currentKtxPost = _chatRoomController.ktxPost;
-                }
+          return FutureBuilder<History>(
+            future: _historyController.history,
+            builder: (BuildContext context, snapshot) {
+              if (snapshot.data == null) {
+                return Container(
+                  height: 158.h,
+                  width: 325.w,
+                  decoration: BoxDecoration(
+                    color: colorScheme.secondary,
+                  ),
+                );
+              }
+              stopovers = snapshot.data?.stopovers ?? [];
+              if (_chatRoomController.postType != 3) {
+                currentPost = _chatRoomController.post;
+              } else {
+                currentKtxPost = _chatRoomController.ktxPost;
+              }
 
-                for (int i = 0; i < snapshot.data!.joiners!.length; i++) {
-                  String? checkOwner = snapshot.data!.joiners![i].uid;
-                  if ((checkOwner ?? '') == _userController.uid) {
-                    isOwner = true;
-                  }
+              for (int i = 0; i < snapshot.data!.joiners!.length; i++) {
+                String? checkOwner = snapshot.data!.joiners![i].uid;
+                if ((checkOwner ?? '') == _userController.uid) {
+                  isOwner = true;
                 }
-                return Column(
-                  children: [
-                    Container(
-                      height: 158.h,
-                      width: 325.w,
-                      decoration: BoxDecoration(
-                        color: colorScheme.secondary,
+              }
+              return Column(
+                children: [
+                  Container(
+                    height: 158.h,
+                    width: 325.w,
+                    decoration: BoxDecoration(
+                      color: colorScheme.secondary,
+                    ),
+                    child: Column(children: [
+                      SizedBox(
+                        height: 44.h,
                       ),
-                      child: Column(children: [
-                        SizedBox(
-                          height: 44.h,
+                      Padding(
+                          padding: EdgeInsets.fromLTRB(24.w, 24.h, 24.w, 36.h),
+                          child: Row(
+                            children: [
+                              Expanded(
+                                child: Text(
+                                  _chatRoomController.postType != 3
+                                      ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} #${DateFormat('Md').format(DateTime.parse(time))}"
+                                      : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} #${DateFormat('Md').format(DateTime.parse(time))}",
+                                  style: textTheme.subtitle1?.copyWith(
+                                    color: colorScheme.primary,
+                                  ),
+                                ),
+                              ),
+                              SizedBox(
+                                width: 8.w,
+                              ),
+                              IconButton(
+                                onPressed: () {},
+                                icon: const Icon(Icons.edit_outlined),
+                                iconSize: Platform.isIOS ? 18 : 16,
+                                color: colorScheme.primary,
+                              ),
+                            ],
+                          ))
+                    ]),
+                  ),
+                  Container(
+                    width: 325.w,
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(24.w, 24.h, 24.w, 36.h),
+                      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                        Text(
+                          "출발/도착지",
+                          style: textTheme.subtitle2?.copyWith(),
                         ),
-                        Padding(
-                            padding: EdgeInsets.fromLTRB(24.w, 24.h, 24.w, 36.h),
-                            child: Row(
-                              children: [
-                                Expanded(
-                                  child: Text(
-                                    _chatRoomController.postType != 3 ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} #${DateFormat('Md').format(DateTime.parse(time))}" : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} #${DateFormat('Md').format(DateTime.parse(time))}",
-                                    style: textTheme.subtitle1?.copyWith(
-                                      color: colorScheme.primary,
-                                    ),
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 8.w,
-                                ),
-                                IconButton(
-                                  onPressed: () {},
-                                  icon: const Icon(Icons.edit_outlined),
-                                  iconSize: Platform.isIOS ? 18 : 16,
-                                  color: colorScheme.primary,
-                                ),
-                              ],
-                            ))
-                      ]),
-                    ),
-                    Container(
-                      width: 325.w,
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(24.w, 24.h, 24.w, 36.h),
-                        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                          Text(
-                            "출발/도착지",
-                            style: textTheme.subtitle2?.copyWith(),
-                          ),
-                          SizedBox(
-                            height: 24.h,
-                          ),
-                          Row(
-                            children: [
-                              Image.asset(
-                                'assets/icon/location.png',
-                                width: 18.w,
-                                height: 18.h,
-                              ),
-                              SizedBox(
-                                width: 5.w,
-                              ),
-                              _chatRoomController.postType != 3 ? Text(_chatRoomController.post.departure!.name ?? 'null', style: textTheme.bodyText1?.copyWith()) : Text(_chatRoomController.ktxPost.departure!.name ?? 'null', style: textTheme.bodyText1?.copyWith())
-                            ],
-                          ),
-                          if (stopovers.isNotEmpty)
-                            for (int i = 0; i < stopovers.length; i++)
-                              Column(
-                                children: [
-                                  SizedBox(
-                                    height: 8.h,
-                                  ),
-                                  Row(
-                                    children: [
-                                      SizedBox(
-                                        width: 23.w,
-                                        height: 18.h,
-                                      ),
-                                      Text(
-                                        '경유',
-                                        style: textTheme.bodyText1?.copyWith(color: colorScheme.tertiaryContainer),
-                                      ),
-                                      SizedBox(
-                                        width: 16.w,
-                                      ),
-                                      Text(
-                                        stopovers[i]!.name ?? '',
-                                        style: textTheme.bodyText1?.copyWith(color: colorScheme.tertiaryContainer),
-                                      ),
-                                    ],
-                                  ),
-                                  if ((i + 1).isEqual(stopovers.length))
-                                    SizedBox(
-                                      height: 8.h,
-                                    ),
-                                ],
-                              ),
-                          if (stopovers.isEmpty)
-                            SizedBox(
-                              height: 24.h,
+                        SizedBox(
+                          height: 24.h,
+                        ),
+                        Row(
+                          children: [
+                            Image.asset(
+                              'assets/icon/location.png',
+                              width: 18.w,
+                              height: 18.h,
                             ),
-                          Row(
-                            children: [
-                              Image.asset(
-                                'assets/icon/location.png',
-                                width: 18.w,
-                                height: 18.h,
-                              ),
-                              SizedBox(
-                                width: 5.w,
-                              ),
-                              _chatRoomController.postType != 3 ? Text(_chatRoomController.post.destination!.name ?? 'null', style: textTheme.bodyText1?.copyWith()) : Text(_chatRoomController.ktxPost.destination!.name ?? 'null', style: textTheme.bodyText1?.copyWith())
-                            ],
-                          ),
-                        ]),
-                      ),
-                    ),
-                    const Divider(
-                      thickness: 0.5,
-                    ),
-                    Container(
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(24.w, 24.h, 24.w, 36.h),
-                        child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                          Text(
-                            "대화상대",
-                            style: textTheme.subtitle2?.copyWith(),
-                          ),
-                          if (snapshot.hasData)
-                            for (int i = 0; i < snapshot.data!.joiners!.length; i++)
-                              Column(
-                                children: [
-                                  SizedBox(
-                                    height: 24.h,
-                                  ),
-                                  Row(
-                                    children: [
-                                      (snapshot.data!.joiners![i].owner ?? false)
-                                          ? const Icon(
-                                              Icons.star,
-                                              size: 18,
-                                              color: (Colors.yellow),
-                                            )
-                                          : SizedBox(),
-                                      SizedBox(
-                                        width: 2.w,
-                                      ),
-                                      Text(snapshot.data!.joiners![i].memberName ?? '', style: textTheme.bodyText1?.copyWith()),
-                                      const Spacer(),
-                                      SizedBox(
-                                        width: 16.w,
-                                      ),
-                                      InkWell(
-                                        child: Image.asset(
-                                          'assets/button/phone.png',
-                                          width: 24.w,
-                                          height: 24.h,
-                                          color: colorScheme.tertiaryContainer,
-                                        ),
-                                        onTap: () async {
-                                          final Uri launchUri = Uri.parse('tel:${snapshot.data!.joiners![i].memberPhone}');
-                                          if (await canLaunchUrl(launchUri)) {
-                                            await launchUrl(launchUri);
-                                          } else {
-                                            throw Exception('Failed call');
-                                          }
-                                        },
-                                      ),
-                                      SizedBox(
-                                        width: 16.w,
-                                      ),
-                                      InkWell(
-                                        child: Image.asset(
-                                          'assets/button/message.png',
-                                          width: 24.w,
-                                          height: 24.h,
-                                        ),
-                                        onTap: () async {
-                                          final Uri launchUri = Uri.parse('sms:${snapshot.data!.joiners![i].memberPhone}');
-                                          if (await canLaunchUrl(launchUri)) {
-                                            await launchUrl(launchUri);
-                                          } else {
-                                            throw Exception('Failed sms');
-                                          }
-                                        },
-                                      )
-                                    ],
-                                  ),
-                                ],
-                              ),
-                          SizedBox(),
-                        ]),
-                      ),
-                    ),
-                    const Divider(
-                      thickness: 0.5,
-                    ),
-                    const Spacer(),
-                    Align(
-                      alignment: FractionalOffset.bottomLeft,
-                      child: Padding(
-                        padding: EdgeInsets.only(bottom: 43.h, left: 30.w),
-                        child: InkWell(
-                          onTap: () async {
-                            showExitDialog(context, '방 나가기', '방을 나가시겠습니까?', _postController, _ktxPostController, _historyController, _chatRoomController, currentPost!, currentKtxPost!);
-                          },
-                          child: Row(children: [
-                            Image.asset('assets/icon/icon-LogOut.png'),
                             SizedBox(
                               width: 5.w,
                             ),
-                            Text(
-                              "방 나가기",
-                              style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiaryContainer),
-                            )
-                          ]),
+                            _chatRoomController.postType != 3
+                                ? Text(_chatRoomController.post.departure!.name ?? 'null', style: textTheme.bodyText1?.copyWith())
+                                : Text(_chatRoomController.ktxPost.departure!.name ?? 'null', style: textTheme.bodyText1?.copyWith())
+                          ],
                         ),
+                        if (stopovers.isNotEmpty)
+                          for (int i = 0; i < stopovers.length; i++)
+                            Column(
+                              children: [
+                                SizedBox(
+                                  height: 8.h,
+                                ),
+                                Row(
+                                  children: [
+                                    SizedBox(
+                                      width: 23.w,
+                                      height: 18.h,
+                                    ),
+                                    Text(
+                                      '경유',
+                                      style: textTheme.bodyText1?.copyWith(color: colorScheme.tertiaryContainer),
+                                    ),
+                                    SizedBox(
+                                      width: 16.w,
+                                    ),
+                                    Text(
+                                      stopovers[i]!.name ?? '',
+                                      style: textTheme.bodyText1?.copyWith(color: colorScheme.tertiaryContainer),
+                                    ),
+                                  ],
+                                ),
+                                if ((i + 1).isEqual(stopovers.length))
+                                  SizedBox(
+                                    height: 8.h,
+                                  ),
+                              ],
+                            ),
+                        if (stopovers.isEmpty)
+                          SizedBox(
+                            height: 24.h,
+                          ),
+                        Row(
+                          children: [
+                            Image.asset(
+                              'assets/icon/location.png',
+                              width: 18.w,
+                              height: 18.h,
+                            ),
+                            SizedBox(
+                              width: 5.w,
+                            ),
+                            _chatRoomController.postType != 3
+                                ? Text(_chatRoomController.post.destination!.name ?? 'null', style: textTheme.bodyText1?.copyWith())
+                                : Text(_chatRoomController.ktxPost.destination!.name ?? 'null', style: textTheme.bodyText1?.copyWith())
+                          ],
+                        ),
+                      ]),
+                    ),
+                  ),
+                  const Divider(
+                    thickness: 0.5,
+                  ),
+                  Container(
+                    child: Padding(
+                      padding: EdgeInsets.fromLTRB(24.w, 24.h, 24.w, 36.h),
+                      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                        Text(
+                          "대화상대",
+                          style: textTheme.subtitle2?.copyWith(),
+                        ),
+                        if (snapshot.hasData)
+                          for (int i = 0; i < snapshot.data!.joiners!.length; i++)
+                            Column(
+                              children: [
+                                SizedBox(
+                                  height: 24.h,
+                                ),
+                                Row(
+                                  children: [
+                                    (snapshot.data!.joiners![i].owner ?? false)
+                                        ? const Icon(
+                                            Icons.star,
+                                            size: 18,
+                                            color: (Colors.yellow),
+                                          )
+                                        : SizedBox(),
+                                    SizedBox(
+                                      width: 2.w,
+                                    ),
+                                    Text(snapshot.data!.joiners![i].memberName ?? '', style: textTheme.bodyText1?.copyWith()),
+                                    const Spacer(),
+                                    SizedBox(
+                                      width: 16.w,
+                                    ),
+                                    InkWell(
+                                      child: Image.asset(
+                                        'assets/button/phone.png',
+                                        width: 24.w,
+                                        height: 24.h,
+                                        color: colorScheme.tertiaryContainer,
+                                      ),
+                                      onTap: () async {
+                                        final Uri launchUri = Uri.parse('tel:${snapshot.data!.joiners![i].memberPhone}');
+                                        if (await canLaunchUrl(launchUri)) {
+                                          await launchUrl(launchUri);
+                                        } else {
+                                          throw Exception('Failed call');
+                                        }
+                                      },
+                                    ),
+                                    SizedBox(
+                                      width: 16.w,
+                                    ),
+                                    InkWell(
+                                      child: Image.asset(
+                                        'assets/button/message.png',
+                                        width: 24.w,
+                                        height: 24.h,
+                                      ),
+                                      onTap: () async {
+                                        final Uri launchUri = Uri.parse('sms:${snapshot.data!.joiners![i].memberPhone}');
+                                        if (await canLaunchUrl(launchUri)) {
+                                          await launchUrl(launchUri);
+                                        } else {
+                                          throw Exception('Failed sms');
+                                        }
+                                      },
+                                    )
+                                  ],
+                                ),
+                              ],
+                            ),
+                        SizedBox(),
+                      ]),
+                    ),
+                  ),
+                  const Divider(
+                    thickness: 0.5,
+                  ),
+                  const Spacer(),
+                  Align(
+                    alignment: FractionalOffset.bottomLeft,
+                    child: Padding(
+                      padding: EdgeInsets.only(bottom: 43.h, left: 30.w),
+                      child: InkWell(
+                        onTap: () async {
+                          showExitDialog(context, '방 나가기', '방을 나가시겠습니까?', _postController, _ktxPostController, _historyController, _chatRoomController,
+                              currentPost!, currentKtxPost!);
+                        },
+                        child: Row(children: [
+                          Image.asset('assets/icon/icon-LogOut.png'),
+                          SizedBox(
+                            width: 5.w,
+                          ),
+                          Text(
+                            "방 나가기",
+                            style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiaryContainer),
+                          )
+                        ]),
                       ),
                     ),
-                  ],
-                );
-              },
-            );
-          } else {
-            return Container(
-              height: 158.h,
-              width: 325.w,
-              decoration: BoxDecoration(
-                color: colorScheme.secondary,
-              ),
-            );
-          }
+                  ),
+                ],
+              );
+            },
+          );
         }),
       ),
       body: Column(
@@ -403,7 +409,11 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                                       return Column(
                                         children: [
                                           if (DateTime.now().difference(snapshot.data![index].chatTime!.toDate()).isNegative == false)
-                                            if (index == 0 || (index - 1 > 0 && DateTime.parse(DateFormat('yyyy-MM-dd').format(snapshot.data![index].chatTime!.toDate())).compareTo(DateTime.parse(DateFormat('yyyy-MM-dd').format(snapshot.data![index - 1].chatTime!.toDate()))) != 0))
+                                            if (index == 0 ||
+                                                (index - 1 > 0 &&
+                                                    DateTime.parse(DateFormat('yyyy-MM-dd').format(snapshot.data![index].chatTime!.toDate())).compareTo(
+                                                            DateTime.parse(DateFormat('yyyy-MM-dd').format(snapshot.data![index - 1].chatTime!.toDate()))) !=
+                                                        0))
                                               Column(
                                                 children: [
                                                   Text(
@@ -430,7 +440,9 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                                               : newChatListTile(
                                                   context: context,
                                                   chat: snapshot.data![index],
-                                                  joiners: _chatRoomController.postType != 3 ? _chatRoomController.post.joiners : _chatRoomController.ktxPost.joiners,
+                                                  joiners: _chatRoomController.postType != 3
+                                                      ? _chatRoomController.post.joiners
+                                                      : _chatRoomController.ktxPost.joiners,
                                                 ),
                                         ],
                                       );
@@ -725,7 +737,9 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                               ),
                               Flexible(
                                 child: Text(
-                                  "${_chatRoomController.post.departure!.name}-${_chatRoomController.post.destination!.name} (${DateFormat('Md').format(DateTime.parse(time))})",
+                                  _chatRoomController.postType != 3
+                                      ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} (${DateFormat('Md').format(DateTime.parse(time))})"
+                                      : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} (${DateFormat('Md').format(DateTime.parse(time))})",
                                   style: textTheme.subtitle1?.copyWith(
                                     color: colorScheme.onTertiary,
                                   ),
@@ -980,7 +994,8 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
   }
 }
 
-Future<dynamic> showExitDialog(BuildContext context, String? title, String? content, PostController _postController, KtxPostController _ktxPostController, HistoryController _historyController, ChatRoomController _chatRoomController, Post post, KtxPost ktxPost) async {
+Future<dynamic> showExitDialog(BuildContext context, String? title, String? content, PostController _postController, KtxPostController _ktxPostController,
+    HistoryController _historyController, ChatRoomController _chatRoomController, Post post, KtxPost ktxPost) async {
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
 

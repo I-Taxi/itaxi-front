@@ -115,6 +115,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       autocorrect: false,
                       cursorColor: colorScheme.tertiary,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
+                      style: textTheme.bodyText1?.copyWith(
+                        color: colorScheme.tertiaryContainer,
+                      ),
                       decoration: InputDecoration(
                         hintText: '아이디 입력',
                         hintStyle: textTheme.bodyText1?.copyWith(
@@ -157,6 +160,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       obscureText: _isObscure1,
                       cursorColor: colorScheme.tertiary,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
+                      style: textTheme.bodyText1?.copyWith(
+                        color: colorScheme.tertiaryContainer,
+                      ),
                       decoration: InputDecoration(
                         hintText: '비밀번호 입력',
                         hintStyle: textTheme.bodyText1?.copyWith(
@@ -211,6 +217,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       obscureText: _isObscure2,
                       cursorColor: colorScheme.tertiary,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
+                      style: textTheme.bodyText1?.copyWith(
+                        color: colorScheme.tertiaryContainer,
+                      ),
                       decoration: InputDecoration(
                         hintText: '비밀번호 확인',
                         hintStyle: textTheme.bodyText1?.copyWith(
@@ -263,6 +272,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       autocorrect: false,
                       cursorColor: colorScheme.tertiary,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
+                      style: textTheme.bodyText1?.copyWith(
+                        color: colorScheme.tertiaryContainer,
+                      ),
                       decoration: InputDecoration(
                         hintText: '김한동',
                         hintStyle: textTheme.bodyText1?.copyWith(
@@ -300,6 +312,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       keyboardType: TextInputType.number,
                       // inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                      style: textTheme.bodyText1?.copyWith(
+                        color: colorScheme.tertiaryContainer,
+                      ),
                       decoration: InputDecoration(
                         hintText: '전화번호',
                         hintStyle: textTheme.bodyText1?.copyWith(

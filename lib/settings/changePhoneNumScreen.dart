@@ -88,6 +88,9 @@ class _FindPhoneNumScreenState extends State<FindPhoneNumScreen> {
                       controller: _phoneController,
                       autocorrect: false,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
+                      style: textTheme.bodyText1?.copyWith(
+                        color: colorScheme.tertiaryContainer,
+                      ),
                       decoration: InputDecoration(
                         hintText: "변경할 전화번호를 입력해주세요",
                         hintStyle: textTheme.bodyText1?.copyWith(

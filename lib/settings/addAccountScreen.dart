@@ -74,6 +74,9 @@ class _AddAccountScreenState extends State<AddAccountScreen> {
                     controller: _bankAddressController,
                     autocorrect: false,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
+                    style: textTheme.bodyText1?.copyWith(
+                      color: colorScheme.tertiaryContainer,
+                    ),
                     decoration: InputDecoration(
                       hintText: '추가할 계좌번호를 입력해주세요',
                       hintStyle: textTheme.bodyText1?.copyWith(
@@ -119,6 +122,9 @@ class _AddAccountScreenState extends State<AddAccountScreen> {
                     controller: _bankController,
                     autocorrect: false,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
+                    style: textTheme.bodyText1?.copyWith(
+                      color: colorScheme.tertiaryContainer,
+                    ),
                     decoration: InputDecoration(
                       hintText: '해당 계좌 은행을 입력해주세요',
                       hintStyle: textTheme.bodyText1?.copyWith(
@@ -164,6 +170,9 @@ class _AddAccountScreenState extends State<AddAccountScreen> {
                     controller: _bankOwnerNameController,
                     autocorrect: false,
                     autovalidateMode: AutovalidateMode.onUserInteraction,
+                    style: textTheme.bodyText1?.copyWith(
+                      color: colorScheme.tertiaryContainer,
+                    ),
                     decoration: InputDecoration(
                       hintText: '예금주를 입력해주세요',
                       hintStyle: textTheme.bodyText1?.copyWith(
