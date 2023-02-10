@@ -20,10 +20,7 @@ class TermOfServiceScreen extends StatelessWidget {
               onPressed: () {
                 Get.back();
               },
-              icon: Icon(
-                Icons.clear_sharp,
-                color: colorScheme.tertiary,
-              ),
+              icon: Image.asset("assets/button/clear.png", width: 24.w, height: 24.h,)
             ),
           ]),
       backgroundColor: colorScheme.primary,

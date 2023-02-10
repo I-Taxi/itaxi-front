@@ -18,108 +18,105 @@ Widget noticeListTile({
   return Theme(
     data: theme,
     child: Column(
-      mainAxisAlignment: MainAxisAlignment.start,
+      crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        ListTile(
-          onTap: (){
-            Navigator.push(
-            context,
-            MaterialPageRoute<Widget>(builder: (BuildContext context){
-              return Scaffold(
-                backgroundColor: colorScheme.background,
-                appBar: AppBar(
-                  elevation: 0.0,
-                  leading: GestureDetector(
-                    onTap: (){
-                      Navigator.pop(context);
-                    },
-                    child: Padding(
+        Padding(
+          padding: EdgeInsets.only(left: 8.w),
+          child: ListTile(
+            onTap: (){
+              Navigator.push(
+              context,
+              MaterialPageRoute<Widget>(builder: (BuildContext context){
+                return Scaffold(
+                  backgroundColor: colorScheme.background,
+                  appBar: AppBar(
+                    elevation: 0.0,
+                    leading: Padding(
                       padding: EdgeInsets.only(left: 24.w),
-                      child: Image(
-                        image: AssetImage("assets/arrow/arrow_back.png"),
-                        width: 20.w,
-                        height: 20.w,
-                        color: colorScheme.tertiaryContainer,
-                      ),
-                    ),
-                  ),
-                  actions: [
-                    IconButton(
+                      child: IconButton(
                         onPressed: (){
                           Navigator.pop(context);
                         },
-                        icon: Icon(Icons.clear_rounded,
-                        color: colorScheme.tertiary,
-                          size: 24,
-                        )
+                        icon: Image.asset("assets/arrow/arrow_back_2.png", width: 20.w, height: 20.h,),
+                      ),
                     ),
-                  ],
-                ),
-                body: ColorfulSafeArea(
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.vertical,
-                    child: Padding(
-                      padding: EdgeInsets.only(left: 24.w, right: 24.w),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          SizedBox(
-                            height: 24.h
-                          ),
-                          Text(
-                            '[공지] ${notice.title}\n',
-                            style: textTheme.headline3!.copyWith(
-                              color: colorScheme.onTertiary,
+                    actions: [
+                      IconButton(
+                          onPressed: (){
+                            Navigator.pop(context);
+                          },
+                          icon: Image.asset("assets/button/clear.png", width: 20.w, height: 20.h,)
+                      ),
+                    ],
+                  ),
+                  body: ColorfulSafeArea(
+                    child: SingleChildScrollView(
+                      scrollDirection: Axis.vertical,
+                      child: Padding(
+                        padding: EdgeInsets.only(left: 24.w, right: 24.w),
+                        child: Column(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              height: 24.h
                             ),
-                          ),
-                          Text(
-                            DateFormat(
-                              'yyyy/MM/dd'
-                            ).format(DateTime.parse(notice.createdAt!)),
-                            style: textTheme.bodyText2!.copyWith(
-                              color: colorScheme.tertiaryContainer
+                            Text(
+                              '[공지] ${notice.title}\n',
+                              style: textTheme.headline3!.copyWith(
+                                color: colorScheme.onTertiary,
+                              ),
                             ),
-                          ),
-                          SizedBox(
-                            height: 52.h,
-                          ),
-                          Text(
-                            '${notice.content}',
-                            textAlign: TextAlign.left,
-                            style: textTheme.bodyText1!.copyWith(
-                              color: colorScheme.onTertiary,
-                                fontSize: Platform.isIOS ? 22 : 20
+                            Text(
+                              DateFormat(
+                                'yyyy/MM/dd'
+                              ).format(DateTime.parse(notice.createdAt!)),
+                              style: textTheme.bodyText2!.copyWith(
+                                color: colorScheme.tertiaryContainer
+                              ),
                             ),
-                          )
-                        ],
+                            SizedBox(
+                              height: 52.h,
+                            ),
+                            Text(
+                              '${notice.content}',
+                              textAlign: TextAlign.left,
+                              style: textTheme.bodyText1!.copyWith(
+                                color: colorScheme.onTertiary,
+                              ),
+                            )
+                          ],
+                        ),
                       ),
                     ),
                   ),
-                ),
+                );
+              })
               );
-            })
-            );
-          },
-          title: Text(
-            '[공지] ${notice.title}\n',
-            style: textTheme.bodyText1!.copyWith(
-              color: colorScheme.onTertiary
+            },
+            title: Text(
+              '[공지] ${notice.title}\n',
+              style: textTheme.bodyText1!.copyWith(
+                color: colorScheme.onTertiary
+              ),
             ),
-          ),
-          subtitle: Text(
-            DateFormat('yyyy/MM/dd').format(DateTime.parse(notice.createdAt!)),
-            style: textTheme.bodyText2!.copyWith(
-              color: colorScheme.tertiary
+            subtitle: Text(
+              DateFormat('yyyy/MM/dd').format(DateTime.parse(notice.createdAt!)),
+              style: textTheme.bodyText2!.copyWith(
+                color: colorScheme.tertiary
+              ),
             ),
           ),
         ),
         SizedBox(
           height: 6.h,
         ),
-        Divider(
-          color: colorScheme.tertiaryContainer,
-          height: 1.h,
+        Padding(
+          padding: EdgeInsets.only(left: 24.w, right: 24.w),
+          child: Divider(
+            color: colorScheme.tertiaryContainer,
+            height: 1.h,
+          ),
         )
       ],
     )

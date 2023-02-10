@@ -266,33 +266,41 @@ class _MainScreenState extends State<MainScreen> {
           future: _userController.users,
           builder: (BuildContext context, snapshot) {
             if (snapshot.hasData) {
-              return Padding(
-                padding: EdgeInsets.only(top: 87.h, left: 35.w, right: 24.w),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    Image(
+              return Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  Padding(
+                    padding: EdgeInsets.only(top: 87.h, left: 35.w, right: 24.w),
+                    child: Image(
                       image: AssetImage("assets/profile.png"),
                       height: 88.w,
                       width: 88.w,
                     ),
-                    SizedBox(
-                      height: 16.h,
-                    ),
-                    Row(
+                  ),
+                  SizedBox(
+                    height: 22.h,
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 35.w, right: 24.w),
+                    child: Row(
                       children: [
-                        RichText(
-                          text: TextSpan(
-                              text: "${snapshot.data!.name.toString()}학부생\n",
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              "${snapshot.data!.name.toString()}학부생",
                               style: textTheme.headline3?.copyWith(
                                 color: colorScheme.onPrimary,
                               ),
-                              children: <TextSpan>[
-                                TextSpan(
-                                  text: snapshot.data!.email.toString(),
-                                  style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiaryContainer, fontSize: 10),
-                                )
-                              ]),
+                            ),
+                            SizedBox(
+                              height: 6.h,
+                            ),
+                            Text(
+                              snapshot.data!.email.toString(),
+                              style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiaryContainer, fontSize: 10.sp),
+                            ),
+                          ],
                         ),
                         Spacer(),
                         IconButton(
@@ -301,100 +309,108 @@ class _MainScreenState extends State<MainScreen> {
                           },
                           icon: Icon(
                             Icons.arrow_forward_ios,
-                            size: 20.h,
+                            size: 16.h,
                           ),
                           color: colorScheme.tertiaryContainer,
                         ),
                       ],
                     ),
-                    SizedBox(
-                      height: 15.h,
-                    ),
-                    Container(
-                      height: 1.5.h,
-                      width: 390.w,
-                      color: Color(0xE1E1E1E1),
-                    ),
-                    SizedBox(
-                      height: 23.h,
-                    ),
-                    _settingListTile(
-                      title: '공지사항',
-                      nextPage: NoticeScreen(),
-                      context: context,
-                    ),
-                    SizedBox(
-                      height: 22.h,
-                    ),
-                    _alarmListTile(
-                      title: '알림',
-                      nextPage: const AlarmScreen(),
-                      context: context,
-                    ),
-                    SizedBox(
-                      height: 22.h,
-                    ),
-                    _settingListTile(
-                      title: '버그제보',
-                      nextPage: BugScreen(),
-                      context: context,
-                    ),
-                    SizedBox(
-                      height: 22.h,
-                    ),
-                    _settingListTile(
-                      title: '약관',
-                      nextPage: const TermOfServiceScreen(),
-                      context: context,
-                    ),
-                    SizedBox(
-                      height: 22.h,
-                    ),
-                    _settingListTile(
-                      title: '버전정보 / 개발자',
-                      nextPage: const VersionScreen(),
-                      context: context,
-                    ),
-                    SizedBox(
-                      height: 22.h,
-                    ),
-                    _settingListTile(
-                      title: '개인정보처리방침',
-                      nextPage: const PrivacyPolicyScreen(),
-                      context: context,
-                    ),
-                    SizedBox(
-                      height: 200.h,
-                    ),
-                    Row(
+                  ),
+                  SizedBox(
+                    height: 16.h,
+                  ),
+                  Container(
+                    height: 1.5.h,
+                    width: 390.w,
+                    color: Color(0xE1E1E1E1),
+                  ),
+                  Padding(
+                    padding: EdgeInsets.only(left: 35.w, right: 24.w),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text(
-                          "Created by CRA",
-                          style: textTheme.bodyText2?.copyWith(
-                            color: colorScheme.tertiary,
-                          ),
+                        SizedBox(
+                          height: 28.h,
                         ),
-                        Spacer(),
-                        IconButton(
-                          onPressed: () {
-                            _logout(context: context);
-                          },
-                          icon: Image.asset("assets/logout.png"),
-                          color: colorScheme.tertiary,
+                        _settingListTile(
+                          title: '공지사항',
+                          nextPage: NoticeScreen(),
+                          context: context,
                         ),
-                        GestureDetector(
-                          onTap: () {
-                            _logout(context: context);
-                          },
-                          child: Text(
-                            "로그아웃",
-                            style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiary),
-                          ),
+                        SizedBox(
+                          height: 32.h,
+                        ),
+                        _alarmListTile(
+                          title: '알림',
+                          nextPage: const AlarmScreen(),
+                          context: context,
+                        ),
+                        SizedBox(
+                          height: 32.h,
+                        ),
+                        _settingListTile(
+                          title: '버그제보',
+                          nextPage: BugScreen(),
+                          context: context,
+                        ),
+                        SizedBox(
+                          height: 32.h,
+                        ),
+                        _settingListTile(
+                          title: '약관',
+                          nextPage: const TermOfServiceScreen(),
+                          context: context,
+                        ),
+                        SizedBox(
+                          height: 32.h,
+                        ),
+                        _settingListTile(
+                          title: '버전정보 / 개발자',
+                          nextPage: const VersionScreen(),
+                          context: context,
+                        ),
+                        SizedBox(
+                          height: 32.h,
+                        ),
+                        _settingListTile(
+                          title: '개인정보처리방침',
+                          nextPage: const PrivacyPolicyScreen(),
+                          context: context,
+                        ),
+                        SizedBox(
+                          height: 205.h,
+                        ),
+                        Row(
+                          children: [
+                            Text(
+                              "Created by CRA",
+                              style: textTheme.bodyText2?.copyWith(
+                                color: colorScheme.tertiary,
+                              ),
+                            ),
+                            Spacer(),
+                            IconButton(
+                              onPressed: () {
+                                _logout(context: context);
+                              },
+                              icon: Image.asset("assets/logout.png"),
+                              color: colorScheme.tertiary,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                _logout(context: context);
+                              },
+                              child: Text(
+                                "로그아웃",
+                                style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiaryContainer),
+                              ),
+                            )
+                          ],
                         )
                       ],
-                    )
-                  ],
-                ),
+                    ),
+                  )
+                ],
               );
             } else {
               return Container(
@@ -438,8 +454,9 @@ class _MainScreenState extends State<MainScreen> {
         Container(
           height: 17.h,
           width: 34.w,
-          child: FittedBox(
-            fit: BoxFit.contain,
+          child: Transform.scale(
+            transformHitTests: false,
+            scale: .6,
             child: CupertinoSwitch(
                 value: alarm,
                 activeColor: colorScheme.inverseSurface,

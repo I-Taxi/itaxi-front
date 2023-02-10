@@ -20,7 +20,7 @@ class VersionScreen extends StatelessWidget {
               onPressed: (){
                 Get.back();
               },
-              icon: Icon(Icons.clear_sharp, color: colorScheme.primary, size: 24,)
+              icon: Image.asset("assets/button/clear.png", width: 24.w, height: 24.w, color: colorScheme.primary,)
           )
         ],
       ),
@@ -69,7 +69,7 @@ class VersionScreen extends StatelessWidget {
                   alignment: Alignment.center,
                   child: Text(
                     '최신 버전을 사용하고 있습니다.',
-                    style: textTheme.subtitle1?.copyWith(
+                    style: textTheme.subtitle2?.copyWith(
                       color: colorScheme.primary,
                     ),
                   ),
