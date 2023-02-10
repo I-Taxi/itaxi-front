@@ -177,7 +177,7 @@ class Post {
   Map<String, dynamic> toFirestoreMap() {
     List<int?> membersId = [];
     String postName = "";
-
+    print(joiners);
     for (Joiner? joiner in joiners!) {
       membersId.add(joiner!.memberId);
     }

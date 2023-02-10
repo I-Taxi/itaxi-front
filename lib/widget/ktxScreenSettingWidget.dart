@@ -23,6 +23,7 @@ import 'package:itaxi/placeSearch/ktxSearchScreen.dart';
 import 'package:itaxi/placeSearch/ktxPlaceSearchController.dart';
 import 'package:itaxi/widget/postTypeToggleButton.dart';
 import 'package:itaxi/widget/setTimeDateFormater.dart';
+import 'package:itaxi/timeline/ktxCheckPlaceScreen.dart';
 
 KtxPlaceSearchController _ktxPlaceSearchController = Get.find();
 KtxPlaceController _ktxPlaceController = Get.find();
@@ -512,7 +513,7 @@ ElevatedButton lookupButton(TextTheme textTheme, ColorScheme colorScheme) {
           minimumSize: Size(342.w, 57.h),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))),
       onPressed: () {
-        // Get.to(CheckPlaceScreen());
+        Get.to(() => KtxCheckPlaceScreen());
       },
       child: Text(
         "조회하기",

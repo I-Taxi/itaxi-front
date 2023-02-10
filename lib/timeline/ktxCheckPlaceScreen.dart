@@ -3,29 +3,29 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:itaxi/controller/addPostController.dart';
+import 'package:itaxi/controller/addKtxPostController.dart';
 import 'package:itaxi/controller/dateController.dart';
-import 'package:itaxi/controller/placeController.dart';
-import 'package:itaxi/controller/postController.dart';
+import 'package:itaxi/controller/ktxPlaceController.dart';
+import 'package:itaxi/controller/ktxPostController.dart';
 import 'package:itaxi/controller/screenController.dart';
-import 'package:itaxi/model/post.dart';
-import 'package:itaxi/widget/postListTile.dart';
+import 'package:itaxi/model/ktxPost.dart';
+import 'package:itaxi/widget/ktxPostListTile.dart';
 import 'package:itaxi/widget/abbreviatePlaceName.dart';
 
 import 'package:itaxi/controller/userController.dart';
 
-class CheckPlaceScreen extends StatefulWidget {
-  const CheckPlaceScreen({Key? key}) : super(key: key);
+class KtxCheckPlaceScreen extends StatefulWidget {
+  const KtxCheckPlaceScreen({Key? key}) : super(key: key);
 
   @override
-  State<CheckPlaceScreen> createState() => _CheckPlaceScreenState();
+  State<KtxCheckPlaceScreen> createState() => _KtxCheckPlaceScreenState();
 }
 
-class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
+class _KtxCheckPlaceScreenState extends State<KtxCheckPlaceScreen> {
   ScreenController _screenController = Get.put(ScreenController());
-  AddPostController _addPostController = Get.put(AddPostController());
-  PostController _postController = Get.put(PostController());
-  PlaceController _placeController = Get.put(PlaceController());
+  AddKtxPostController _addKtxPostController = Get.put(AddKtxPostController());
+  KtxPostController _ktxPostController = Get.put(KtxPostController());
+  KtxPlaceController _ktxPlaceController = Get.put(KtxPlaceController());
   DateController _dateController = Get.put(DateController());
   UserController _userController = Get.put(UserController());
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
@@ -35,15 +35,14 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
   void initState() {
     super.initState();
     _userController.getUsers();
-    _postController.getPosts(
-      depId: _placeController.dep?.id,
-      dstId: _placeController.dst?.id,
+    _ktxPostController.getPosts(
+      depId: _ktxPlaceController.dep?.id,
+      dstId: _ktxPlaceController.dst?.id,
       time: _dateController.formattingDateTime(
         _dateController.mergeDateAndTime(),
       ),
-      postType: _screenController.mainScreenCurrentTabIndex,
     );
-    _placeController.getPlaces();
+    _ktxPlaceController.getPlaces();
   }
 
   @override
@@ -87,7 +86,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      Text(abbreviatePlaceName(_placeController.dep!.name!),
+                      Text(abbreviatePlaceName(_ktxPlaceController.dep!.name!),
                           style: textTheme.subtitle1
                               ?.copyWith(color: colorScheme.primary)),
                       SizedBox(
@@ -101,7 +100,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                       SizedBox(
                         width: 35.5.w,
                       ),
-                      Text(abbreviatePlaceName(_placeController.dst!.name!),
+                      Text(abbreviatePlaceName(_ktxPlaceController.dst!.name!),
                           style: textTheme.subtitle1
                               ?.copyWith(color: colorScheme.primary)),
                     ],
@@ -171,19 +170,18 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                     backgroundColor: colorScheme.background,
                     strokeWidth: 2.0,
                     onRefresh: () async {
-                      _postController.getPosts(
-                        depId: _placeController.dep?.id,
-                        dstId: _placeController.dst?.id,
+                      _ktxPostController.getPosts(
+                        depId: _ktxPlaceController.dep?.id,
+                        dstId: _ktxPlaceController.dst?.id,
                         time: _dateController.formattingDateTime(
                           _dateController.mergeDateAndTime(),
                         ),
-                        postType: _screenController.mainScreenCurrentTabIndex,
                       );
                     },
-                    child: GetBuilder<PostController>(
+                    child: GetBuilder<KtxPostController>(
                       builder: (_) {
-                        return FutureBuilder<List<Post>>(
-                          future: _postController.posts,
+                        return FutureBuilder<List<KtxPost>>(
+                          future: _ktxPostController.posts,
                           builder: (BuildContext context, snapshot) {
                             if (snapshot.hasData) {
                               // post가 있을 떼
@@ -192,7 +190,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                                   itemCount: snapshot.data!.length,
                                   itemBuilder:
                                       (BuildContext context, int index) {
-                                    return postListTile(
+                                    return ktxPostListTile(
                                       context: context,
                                       post: snapshot.data![index],
                                     );
@@ -337,7 +335,6 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
             ),
             OutlinedButton(
               onPressed: () {
-
               },
               style: OutlinedButton.styleFrom(
                   side: BorderSide(width: 0.01, color: colorScheme.onBackground)

@@ -2,30 +2,33 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:itaxi/controller/addPostController.dart';
+import 'package:intl/intl.dart';
+import 'package:itaxi/controller/addKtxPostController.dart';
 import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/controller/navigationController.dart';
-import 'package:itaxi/controller/postController.dart';
+import 'package:itaxi/controller/ktxPostController.dart';
 import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/controller/chatRoomController.dart';
-import 'package:itaxi/chat/chatRoomScreen.dart';
-import 'package:itaxi/model/post.dart';
+import 'package:itaxi/chat/newChatroomScreen.dart';
+import 'package:itaxi/model/ktxPost.dart';
 import 'package:itaxi/widget/snackBar.dart';
 
 import 'package:itaxi/controller/screenController.dart';
-import 'package:itaxi/controller/placeController.dart';
+import 'package:itaxi/controller/ktxPlaceController.dart';
 import 'package:itaxi/controller/dateController.dart';
 
-Widget postListTile({
+Widget ktxPostListTile({
   required BuildContext context,
-  required Post post,
+  required KtxPost post,
 }) {
-  late AddPostController _addPostController = Get.find();
-  late PostController _postController = Get.find();
+  late AddKtxPostController _addKtxPostController = Get.find();
+  late KtxPostController _ktxPostController = Get.find();
+  late DateController _dateController = Get.find();
   late NavigationController _navigationController = Get.find();
   HistoryController _historyController = Get.put(HistoryController());
   late UserController _userController = Get.find();
   late ChatRoomController _chatRoomController = Get.put(ChatRoomController());
+  late KtxPlaceController _ktxPlaceController = Get.find();
 
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
@@ -33,189 +36,89 @@ Widget postListTile({
   return GestureDetector(
     behavior: HitTestBehavior.opaque,
     onTap: () {
-      String ownerInfo = '''
-  ${_userController.name}님이 방장입니다.
-                              
-  알아두면 좋습니다.
-  1. 탑승할 차량의 번호를 꼭 알려 주세요.
-  2. 모일 장소를 미리 정하세요.
-  3. 정산 방법을 제시하세요.
-      ''';
-      String nonOnwerInfo = '''
-  ${_userController.name}님 환영합니다.
-  
-  알아두면 좋습니다.
-  1. 탑승할 차량의 번호를 숙지하세요.
-  2. 모일 장소를 숙지하세요.
-  3. 정산 완료 시 채팅으로 꼭 기록을 
-  남겨 주세요.
-      ''';
       if (post.joiners!.length >= post.capacity!) {
         snackBar(context: context, title: '이미 인원이 가득 찬 모집입니다.');
       } else {
         for (int i = 0; i < post.joiners!.length; i++) {
-          if (post.joiners![i].uid == _userController.uid) {
-            showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return Dialog(
-                  elevation: 0,
-                  child: Container(
-                    width: 360.w,
-                    height: post.joiners![i].owner! ? 300.h : 320.h,
-                    padding:
-                    EdgeInsets.fromLTRB(28.0.w, 32.0.h, 28.0.w, 12.0.h),
-                    child: Column(
-                      children: [
-                        Center(
-                          child: Text(
-                            '채팅방 안내',
-                            style: textTheme.headline1?.copyWith(
-                              color: colorScheme.onPrimary,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10.0.h,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            post.joiners![i].owner!
-                                ? Text(
-                              ownerInfo,
-                              style: textTheme.bodyText1?.copyWith(
-                                color: colorScheme.tertiary,
-                              ),
-                            )
-                                : Text(
-                              nonOnwerInfo,
-                              style: textTheme.bodyText1?.copyWith(
-                                color: colorScheme.tertiary,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20.0.h,
-                        ),
-                        const Spacer(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            TextButton(
-                              onPressed: () {
-                                Get.back();
-                              },
-                              child: Text(
-                                '취소',
-                                style: textTheme.headline1
-                                    ?.copyWith(color: colorScheme.tertiary),
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () async {
-                                await _historyController.getHistorys();
-                                _navigationController.changeIndex(0);
-                                _chatRoomController.getPost(post: post);
-                                _chatRoomController.getChats(post: post);
-                                Get.back();
-                                Get.to(() => const ChatRoomScreen());
-                              },
-                              child: Text(
-                                '입장',
-                                style: textTheme.headline1
-                                    ?.copyWith(color: colorScheme.secondary),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                );
-              },
-            );
+          print("${post.joiners![i].memberId} 탑승자들 member ID");
+          print("${_userController.memberId} 내 member ID");
+          if (post.joiners![i].memberId == _userController.memberId) {
+            snackBar(context: context, title: '이미 입장한 방입니다.');
             break;
           } else if (i == post.joiners!.length - 1) {
             showDialog(
-              context: context,
-              builder: (BuildContext context) {
-                return Dialog(
-                  elevation: 0,
-                  child: Container(
-                    width: 360.w,
-                    height: 293.h,
-                    padding:
-                    EdgeInsets.fromLTRB(28.0.w, 32.0.h, 28.0.w, 12.0.h),
-                    child: Column(
-                      children: [
-                        Center(
-                          child: Text(
-                            '방 입장 안내',
-                            style: textTheme.headline1?.copyWith(
-                              color: colorScheme.onPrimary,
-                            ),
-                          ),
-                        ),
-                        SizedBox(
-                          height: 10.0.h,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Text(
-                              nonOnwerInfo,
-                              style: textTheme.bodyText1?.copyWith(
-                                color: colorScheme.tertiary,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(
-                          height: 20.0.h,
-                        ),
-                        const Spacer(),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-                            TextButton(
-                              onPressed: () {
-                                Get.back();
-                              },
-                              child: Text(
-                                '취소',
-                                style: textTheme.headline1
-                                    ?.copyWith(color: colorScheme.tertiary),
-                              ),
-                            ),
-                            TextButton(
-                              onPressed: () async {
-                                await _postController.fetchJoin(
-                                    post: post,
-                                    luggage: _addPostController.luggage);
-                                await _historyController.getHistorys();
-                                _navigationController.changeIndex(0);
-                                _chatRoomController.getPost(post: post);
-                                _chatRoomController.getChats(post: post);
-                                Get.back();
-                                Get.to(() => const ChatRoomScreen());
-                              },
-                              child: Text(
-                                '입장',
-                                style: textTheme.headline1
-                                    ?.copyWith(color: colorScheme.secondary),
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
+                context: context,
+                builder: (BuildContext context) {
+                  return Dialog(
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(24.0),
                     ),
-                  ),
-                );
-              },
-            );
-            break;
+                    child: Container(
+                      width: 312.w,
+                      height: 230.h,
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(62.w, 52.h, 62.w, 52.h),
+                        child: Column(
+                          children: <Widget>[
+                            Text(
+                              "톡방에 참여하시겠어요?",
+                              style: textTheme.subtitle1?.copyWith(
+                                color: colorScheme.secondary,
+                              ),
+                            ),
+                            const Spacer(),
+                            Row(
+                              children: [
+                                TextButton(
+                                  onPressed: () async {
+                                    Get.back();
+                                  },
+                                  child: Text(
+                                    "취소",
+                                    style: textTheme.subtitle2?.copyWith(
+                                        color: colorScheme.tertiaryContainer),
+                                  ),
+                                ),
+                                const Spacer(),
+                                TextButton(
+                                  onPressed: () async {
+                                    await _ktxPostController.fetchJoin(ktxPost: post);
+                                    await _ktxPostController.getPosts(
+                                      depId: _ktxPlaceController.dep?.id,
+                                      dstId: _ktxPlaceController.dst?.id,
+                                      time: _dateController.formattingDateTime(
+                                        _dateController.mergeDateAndTime(),
+                                      ),
+                                    );
+                                    Get.back();
+                                    await _historyController.getHistoryInfo(
+                                        postId: post.id!, postType: 3); //수정 요망
+                                    _historyController.history.then((value) {
+                                      if (value.postType != 3) {
+                                        _chatRoomController.getPost(post: value.toPost());
+                                        _chatRoomController.getChats(post: value.toPost());
+                                      } else {
+                                        _chatRoomController.getKtxPost(ktxPost: value.toKtxPost());
+                                        _chatRoomController.getKtxChats(ktxPost: value.toKtxPost());
+                                      }
+                                      Get.to(() => const NewChatroomScreen());
+                                    });
+                                  },
+                                  child: Text(
+                                    "입장",
+                                    style: textTheme.subtitle2?.copyWith(
+                                        color: colorScheme.onPrimaryContainer),
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  );
+                });
           }
         }
       }
@@ -225,29 +128,28 @@ Widget postListTile({
         SizedBox(
           height: 1.5.h,
         ),
-        GestureDetector(
-          onTap: ()  {
-            chatParticipation(context, "톡방에 참여하시겠어요?");
-          },
-          child: Container(
-            height: 92.h,
-            color: colorScheme.background,
-            child: Padding(
-              padding: EdgeInsets.only(left: 24.w, right: 24.w),
-              child: Row(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "00:00",
-                    style: textTheme.subtitle1?.copyWith(
-                      color: colorScheme.onTertiary,
-                    ),
+        Container(
+          height: 92.h,
+          color: colorScheme.background,
+          child: Padding(
+            padding: EdgeInsets.only(left: 24.w, right: 24.w),
+            child: Row(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  DateFormat('HH:mm').format(DateTime.parse(post.deptTime!)),
+                  style: textTheme.subtitle1?.copyWith(
+                    color: colorScheme.onTertiary,
                   ),
-                  SizedBox(
-                    width: 21.w,
-                  ),
-                  Column(
+                ),
+                SizedBox(
+                  width: 41.w,
+                ),
+                Padding(
+                  padding: EdgeInsets.only(top: 20.h),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
                       Text(
                         "KTX",
@@ -257,124 +159,29 @@ Widget postListTile({
                         ),
                       ),
                       Text(
-                        "30%",
-                        style: textTheme.subtitle1?.copyWith(
+                        "${post.sale}%",
+                        style: textTheme.subtitle2?.copyWith(
                           color: colorScheme.secondary,
                         ),
                       )
                     ],
                   ),
-                  Image(
-                    image: post.postType == 1 ? AssetImage("assets/type/taxi_text.png") : AssetImage("assets/type/car_text.png"),
-                    width: 44.w,
-                    height: 24.h,
-                  ),
-                  const Spacer(),
-                  Text(
-                    "${post.participantNum}/4명",
-                    style: textTheme.subtitle1
-                        ?.copyWith(color: colorScheme.onTertiary),
-                  ),
-                  SizedBox(
-                    width: 22.w,
-                  ),
-                  Image(image: AssetImage("assets/arrow/arrow_forward.png", ),color: colorScheme.tertiary, width: 10.w, height: 10.h,)
-                ],
-              ),
+                ),
+                const Spacer(),
+                Text(
+                  "${post.participantNum}/${post.capacity}명",
+                  style: textTheme.subtitle1
+                      ?.copyWith(color: colorScheme.onTertiary),
+                ),
+                SizedBox(
+                  width: 22.w,
+                ),
+                Image(image: AssetImage("assets/arrow/arrow_forward.png", ),color: colorScheme.tertiary, width: 10.w, height: 10.h,)
+              ],
             ),
           ),
         ),
       ],
     ),
   );
-}
-
-void chatParticipation(BuildContext context, String? title) {
-  final colorScheme = Theme.of(context).colorScheme;
-  final textTheme = Theme.of(context).textTheme;
-
-  late ScreenController _screenController = Get.find();
-  late PlaceController _placeController = Get.find();
-  late DateController _dateController = Get.find();
-  late AddPostController _addPostController = Get.find();
-  late PostController _postController = Get.find();
-  late UserController _userController = Get.find();
-
-  showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return Dialog(
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24.0),
-          ),
-          child: Container(
-            width: 312.w,
-            height: 230.h,
-            alignment: Alignment.center,
-            padding: EdgeInsets.fromLTRB(
-              62.0.w,
-              52.0.h,
-              62.0.w,
-              52.0.h,
-            ),
-            child: Column(
-              children: <Widget>[
-                Text(
-                  title as String,
-                  style: textTheme.subtitle1?.copyWith(
-                    color: colorScheme.secondary,
-                  ),
-                ),
-                const Spacer(),
-                Row(
-                  children: [
-                    TextButton(
-                      onPressed: () async {
-                        Get.back();
-                      },
-                      child: Text(
-                        "취소",
-                        style: textTheme.subtitle2
-                            ?.copyWith(color: colorScheme.tertiaryContainer),
-                      ),
-                    ),
-                    const Spacer(),
-                    TextButton(
-                      onPressed: () async {
-                        Post post = Post(
-                          uid: _userController.uid,
-                          postType: _screenController.mainScreenCurrentTabIndex,
-                          departure: _placeController.dep,
-                          destination: _placeController.dst,
-                          deptTime: _dateController.formattingDateTime(
-                            _dateController.mergeDateAndTime(),
-                          ),
-                          capacity: _addPostController.capacity,
-                        );
-                        Get.back();
-                        Get.back();
-                        await _addPostController.fetchAddPost(post: post);
-                        await _postController.getPosts(
-                          depId: _placeController.dep?.id,
-                          dstId: _placeController.dst?.id,
-                          time: _dateController.formattingDateTime(
-                            _dateController.mergeDateAndTime(),
-                          ),
-                          postType: _screenController.mainScreenCurrentTabIndex,
-                        );
-                      },
-                      child: Text(
-                        "확인",
-                        style: textTheme.subtitle2
-                            ?.copyWith(color: colorScheme.onPrimaryContainer),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
-            ),
-          ),
-        );
-      });
 }
