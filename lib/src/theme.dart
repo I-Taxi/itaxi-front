@@ -81,11 +81,10 @@ class ITaxiTheme {
       brightness: Brightness.light,
       onTertiary: Color(0xFF3E3E3E),
       inverseSurface: Color(0xff00CE21),
-      outline: Color(0xffc5e1fd),
+    outline: Color(0xff69c077),
       onSurfaceVariant: Color(0xFFE1E1E1),
       inversePrimary: Color(0xffB9B9B9),
-      surfaceVariant: Color(0xffff8080),
-      outlineVariant: Color(0xff69c077),
+    surfaceVariant: Color(0xffff8080),
       );
 
   static TextTheme textThemeDefault = TextTheme(

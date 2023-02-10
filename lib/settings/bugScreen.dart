@@ -6,8 +6,13 @@ import 'package:get/get.dart';
 
 import 'package:itaxi/widget/mainDialog.dart';
 
+
 class BugScreen extends StatelessWidget {
   BugScreen({Key? key}) : super(key: key);
+
+  List<String> str = [
+    ""
+  ];
 
   // 버그제보 상단의 버그제보방법 글
   var mainBody = "[버그 제보 방법]\n";
@@ -92,15 +97,36 @@ class BugScreen extends StatelessWidget {
                   child: Column(
                     children: [
                       Text(
-                        '이용에 불편함을 끼쳐드려 죄송합니다.\n'
-                        '여러분의 제보는 앱의 퀄리티를 높이는데\n사용됩니다.\n\n\n'
-                        ' 1. 해당 버그가 나타난 페이지를 캡쳐해서\n    보내주세요.\n\n'
-                        ' 2. 만약 보이지 않는 버그라면, 페이지와\n     어떤 동작을 할 때 발생했는지 자세하게\n     적어주세요.\n\n',
+                        '이용에 불편함을 끼쳐드려 죄송합니다. 여러분의 제보는 앱의 퀄리티를 높이는데 사용됩니다.\n\n\n',
                         style: textTheme.bodyText1!.copyWith(
                           color: colorScheme.onTertiary,
-                          fontSize: 20,
+                            fontSize: 20.sp
                         ),
-                      )
+                      ),
+                      RichText(
+                          text: TextSpan(
+                            style: textTheme.bodyText1!.copyWith(
+                              color: colorScheme.onTertiary,
+                                fontSize: 20.sp
+                            ),
+                              children: [
+                                TextSpan(text: "1. "),
+                                TextSpan(text: "해당 버그가 나타난 페이지를 캡쳐해서 보내주세요.\n",)
+                              ]
+                          ),
+                      ),
+                      RichText(
+                        text: TextSpan(
+                            style: textTheme.bodyText1!.copyWith(
+                              color: colorScheme.onTertiary,
+                              fontSize: 20.sp
+                            ),
+                            children: [
+                              TextSpan(text: "2. "),
+                              TextSpan(text: "만약 보이지 않는 버그라면, 페이지와 어떤 동작을 할 때 발생했는지 자세하게 적어주세요.",)
+                            ]
+                        ),
+                      ),
                     ],
                   ),
                 ),
@@ -137,7 +163,7 @@ class BugScreen extends StatelessWidget {
                   alignment: Alignment.center,
                   child: SizedBox(
                     width: 198.w,
-                    height: 44.h,
+                    height: 50.h,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
                           elevation: 0,
@@ -151,10 +177,13 @@ class BugScreen extends StatelessWidget {
                         _sendEmail(context);
                       },
                       // textTheme 적용 해야함
-                      child: Text(
-                        '제보하기',
-                        style: textTheme.subtitle1!.copyWith(
-                          color: colorScheme.secondary,
+                      child: Align(
+                        alignment: Alignment.center,
+                        child: Text(
+                          '제보하기',
+                          style: textTheme.subtitle1!.copyWith(
+                            color: colorScheme.secondary,
+                          ),
                         ),
                       ),
                     ),

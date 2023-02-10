@@ -4,6 +4,8 @@ import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:itaxi/chat/chatRoomDetailScreen.dart';
+import 'package:itaxi/controller/chatRoomController.dart';
 import 'package:itaxi/controller/historyController.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itaxi/model/history.dart';
@@ -77,25 +79,26 @@ class TimelineDetailScreen extends StatelessWidget {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     HistoryController _historyController = Get.find();
+    late ChatRoomController _chatRoomController = Get.put(ChatRoomController());
     final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
         GlobalKey<RefreshIndicatorState>();
     List<String> korDays = ['월', '화', '수', '목', '금', '토', '일'];
 
     return Scaffold(
-        appBar: AppBar(
-          shadowColor: colorScheme.background,
-          elevation: 0.0,
-          automaticallyImplyLeading: false,
-          actions: [
-            Padding(
-                padding: EdgeInsets.only(right: 8.w),
-                child: GestureDetector(
-                  behavior: HitTestBehavior.opaque,
-                  onTap: () => Get.back(),
-                  child: Image.asset('assets/icon/icon-Exit.png'),
-                )),
-          ],
-        ),
+        // appBar: AppBar(
+        //   shadowColor: colorScheme.background,
+        //   elevation: 0.0,
+        //   automaticallyImplyLeading: false,
+        //   actions: [
+        //     Padding(
+        //         padding: EdgeInsets.only(right: 8.w),
+        //         child: GestureDetector(
+        //           behavior: HitTestBehavior.opaque,
+        //           onTap: () => Get.back(),
+        //           child: Image.asset('assets/icon/icon-Exit.png'),
+        //         )),
+        //   ],
+        // ),
         backgroundColor: colorScheme.onBackground,
         body: ColorfulSafeArea(
             color: colorScheme.tertiary,
@@ -116,22 +119,40 @@ class TimelineDetailScreen extends StatelessWidget {
                               children: [
                                 Container(
                                   padding: EdgeInsets.fromLTRB(
-                                      24.w, 16.h, 24.w, 15.h),
-                                  height: 70.h,
+                                      24.w, 61.36.h, 24.w, 22.47.h),
+                                  height: 156.h,
                                   color: colorScheme.primary,
-                                  child: Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment: MainAxisAlignment.start,
+                                  child: Column(
                                     children: [
-                                      Text(
-                                        '${snapshot.data!.joiners![0].memberName}님의 ${postTypeToString(snapshot.data!.postType)}',
-                                        style: textTheme.headline3?.copyWith(
-                                          color: colorScheme.onTertiary,
+                                      Align(
+                                        alignment: Alignment.centerRight,
+                                        child: GestureDetector(
+                                          behavior: HitTestBehavior.opaque,
+                                          onTap: () => Get.back(),
+                                          child: Image.asset(
+                                              'assets/icon/icon-Exit.png'),
                                         ),
                                       ),
-                                      insertBordingCompleteIcon(
-                                          snapshot.data!.deptTime),
+                                      SizedBox(
+                                        height: 18.1.h,
+                                      ),
+                                      Row(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.center,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            '${snapshot.data!.joiners![0].memberName}님의 ${postTypeToString(snapshot.data!.postType)}',
+                                            style:
+                                                textTheme.headline3?.copyWith(
+                                              color: colorScheme.onTertiary,
+                                            ),
+                                          ),
+                                          insertBordingCompleteIcon(
+                                              snapshot.data!.deptTime),
+                                        ],
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -317,8 +338,26 @@ class TimelineDetailScreen extends StatelessWidget {
                                           borderRadius: BorderRadius.all(
                                               Radius.circular(16))),
                                     ),
-                                    onPressed: () {
-                                      //TODO: 톡방으로 이동
+                                    onPressed: () async {
+                                      await _historyController.getHistoryInfo(
+                                          postId: snapshot.data!.id ?? 0,
+                                          postType:
+                                              snapshot.data!.postType ?? -1);
+                                      _historyController.history.then((value) {
+                                        if (value.postType != 3) {
+                                          _chatRoomController.getPost(
+                                              post: value.toPost());
+                                          _chatRoomController.getChats(
+                                              post: value.toPost());
+                                        } else {
+                                          _chatRoomController.getKtxPost(
+                                              ktxPost: value.toKtxPost());
+                                          _chatRoomController.getKtxChats(
+                                              ktxPost: value.toKtxPost());
+                                        }
+                                        Get.to(
+                                            () => const ChatRoomDetailScreen());
+                                      });
                                     },
                                     child: Text(
                                       '톡방으로 이동',
