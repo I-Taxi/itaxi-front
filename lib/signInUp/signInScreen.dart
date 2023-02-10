@@ -152,11 +152,11 @@ class _SignInScreenState extends State<SignInScreen> {
                       ),
                     ),
                     TextFormField(
-                      controller: _pwController,
-                      autocorrect: false,
-                      obscureText: _isObscure,
-                        style: textTheme.bodyText2?.copyWith(
-                        color: colorScheme.primary,
+                        controller: _pwController,
+                        autocorrect: false,
+                        obscureText: _isObscure,
+                        style: textTheme.bodyText1?.copyWith(
+                          color: colorScheme.primary,
                         ),
                         decoration: InputDecoration(
                           suffixText: '',
