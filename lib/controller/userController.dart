@@ -11,6 +11,7 @@ import 'dart:convert';
 
 import 'package:itaxi/model/userInfoList.dart';
 import 'package:itaxi/fcm/fcmController.dart';
+import 'package:itaxi/widget/mainDialog.dart';
 
 class UserController extends GetxController {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -104,16 +105,12 @@ class UserController extends GetxController {
     userUrl = '${userUrl}member';
 
     var encryptPhone = encrypter.encrypt(phone!, iv: iv).base64;
-    var encryptBank = encrypter.encrypt("1", iv: iv).base64;
-    var encryptBankAddress = encrypter.encrypt("1", iv: iv).base64;
 
     http.Response response = await http.patch(
       Uri.parse(userUrl),
       headers: <String, String>{'Content-type': 'application/json'},
       body: json.encode(
         {
-          'bank': encryptBank,
-          'bankAddress': encryptBankAddress,
           'phone': encryptPhone,
           'uid': FirebaseAuth.instance.currentUser!.uid,
         },
@@ -138,7 +135,7 @@ class UserController extends GetxController {
     http.Response response = await http.patch(
       Uri.parse(userUrl),
       headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
+        'Content-Type': 'application/json',
       },
       body: body,
     );
@@ -147,10 +144,14 @@ class UserController extends GetxController {
       print(response.statusCode);
       isDeleted = 1;
       return response;
-    } else {
-      print(response.statusCode);
-      print(response.body);
-      throw Exception('Failed to Delete User');
+    }else{
+      return response;
     }
+
+    //else {
+      //print(response.statusCode);
+      //print(utf8.decode(response.bodyBytes));
+      //throw Exception('Failed to Delete User');
+    //}
   }
 }

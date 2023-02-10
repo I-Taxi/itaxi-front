@@ -12,7 +12,7 @@ void mainDialog(BuildContext context, String? title, String? content) {
         return Dialog(
           elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(4.0),
+            borderRadius: BorderRadius.circular(24.0.r),
           ),
           child: Container(
             width: 360.w,

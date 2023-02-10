@@ -28,6 +28,14 @@ class _ResetPWScreenState extends State<ResetPWScreen> {
   bool _isObscure1 = true;
   bool _isObscure2 = true;
 
+  checkFields() {
+    final form = _formKey.currentState;
+    if (form!.validate()) {
+      form.save();
+      return true;
+    }
+    return false;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -88,7 +96,7 @@ class _ResetPWScreenState extends State<ResetPWScreen> {
                       ),
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
-                          color: colorScheme.tertiary,
+                          color: colorScheme.tertiaryContainer,
                           width: 1.0,
                         ),
                       ),
@@ -97,6 +105,21 @@ class _ResetPWScreenState extends State<ResetPWScreen> {
                           color: colorScheme.secondary,
                           width: 1.0,
                         ),
+                      ),
+                      errorStyle: textTheme.bodyText2?.copyWith(
+                        color: colorScheme.surfaceVariant,
+                      ),
+                      errorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: colorScheme.surfaceVariant,
+                              width: 1.0
+                          )
+                      ),
+                      focusedErrorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: colorScheme.surfaceVariant,
+                              width: 1.0
+                          )
                       ),
                       suffixIcon: IconButton(
                         icon: Icon(
@@ -119,7 +142,7 @@ class _ResetPWScreenState extends State<ResetPWScreen> {
                       _signUpController.customPw = value;
                     },
                     validator: (value) {
-                      if (value!.isEmpty) return '비밀번호를 입력해주세요';
+                      if (value!.isEmpty || value == null) return '비밀번호를 입력해주세요';
                       regExp = RegExp(pattern.toString());
                       if (!regExp.hasMatch(value))
                         return '문자와 숫자 6자리 이상 사용해주세요';
@@ -142,7 +165,7 @@ class _ResetPWScreenState extends State<ResetPWScreen> {
                       ),
                       enabledBorder: UnderlineInputBorder(
                         borderSide: BorderSide(
-                          color: colorScheme.tertiary,
+                          color: colorScheme.tertiaryContainer,
                           width: 1.0,
                         ),
                       ),
@@ -151,6 +174,21 @@ class _ResetPWScreenState extends State<ResetPWScreen> {
                           color: colorScheme.secondary,
                           width: 1.0,
                         ),
+                      ),
+                      errorStyle: textTheme.bodyText2?.copyWith(
+                        color: colorScheme.surfaceVariant,
+                      ),
+                      errorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: colorScheme.surfaceVariant,
+                              width: 1.0
+                          )
+                      ),
+                      focusedErrorBorder: UnderlineInputBorder(
+                          borderSide: BorderSide(
+                              color: colorScheme.surfaceVariant,
+                              width: 1.0
+                          )
                       ),
                       suffixIcon: IconButton(
                         icon: Icon(
@@ -185,10 +223,11 @@ class _ResetPWScreenState extends State<ResetPWScreen> {
         ),
       ),
       bottomNavigationBar: Material(
-        color: isValueEmpty ? colorScheme.onSurfaceVariant : colorScheme.secondary,
+        color: _formKey.currentState != null && _formKey.currentState!.validate() ? colorScheme.secondary : colorScheme.onSurfaceVariant,
         child: InkWell(
           onTap: () async{
-            if (_formKey.currentState!.validate()) {
+            print("눌렸니?");
+            if (_formKey.currentState != null && _formKey.currentState!.validate()) {
               showConfirmDialog(context);
             }
           },
@@ -224,6 +263,9 @@ class _ResetPWScreenState extends State<ResetPWScreen> {
     showDialog(
       context: context,
       builder: (BuildContext context)  {
+        Future.delayed(Duration(seconds: 2), (){
+          Navigator.of(context).pop(true);
+        });
         return Dialog(
           elevation: 0,
           shape: RoundedRectangleBorder(
