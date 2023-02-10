@@ -3,6 +3,8 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
+import 'package:itaxi/controller/ktxPlaceController.dart';
+import 'package:itaxi/controller/ktxPostController.dart';
 import 'package:itaxi/controller/placeController.dart';
 import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/controller/screenController.dart';
@@ -11,6 +13,8 @@ class DateController extends GetxController {
   late ScreenController _tabViewController = Get.find();
   late PostController _postController = Get.find();
   late PlaceController _placeController = Get.find();
+  late KtxPostController _ktxPostController = Get.find();
+  late KtxPlaceController _ktxPlaceController = Get.find();
   late DateTime pickedDate;
   late TimeOfDay pickedTime;
 
@@ -132,6 +136,16 @@ class DateController extends GetxController {
     );
   }
 
+  void beforeKtxDate() {
+    pickedDate = pickedDate!.add(const Duration(days: -1));
+    update();
+    _ktxPostController.getPosts(
+      depId: _ktxPlaceController.dep?.id,
+      dstId: _ktxPlaceController.dst?.id,
+      time: formattingDateTime(mergeDateAndTime()),
+    );
+  }
+
   void afterDate() {
     pickedDate = pickedDate!.add(const Duration(days: 1));
     update();
@@ -140,6 +154,16 @@ class DateController extends GetxController {
       dstId: _placeController.dst?.id,
       time: formattingDateTime(mergeDateAndTime()),
       postType: _tabViewController.mainScreenCurrentTabIndex,
+    );
+  }
+
+  void afterKtxDate() {
+    pickedDate = pickedDate!.add(const Duration(days: 1));
+    update();
+    _ktxPostController.getPosts(
+      depId: _ktxPlaceController.dep?.id,
+      dstId: _ktxPlaceController.dst?.id,
+      time: formattingDateTime(mergeDateAndTime()),
     );
   }
 

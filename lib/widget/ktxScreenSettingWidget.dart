@@ -31,8 +31,10 @@ DateController _dateController = Get.find();
 KtxPostController _ktxPostController = Get.find();
 UserController _userController = Get.find();
 AddKtxPostController _addKtxPostController = Get.find();
+ScreenController _screenController = Get.find();
 
-Padding lookupSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, ScreenController controller) {
+Padding lookupSetDepDstWidget(
+    ColorScheme colorScheme, TextTheme textTheme, ScreenController controller) {
   return Padding(
     padding: EdgeInsets.fromLTRB(23.w, 20.h, 24.w, 8.h),
     child: Container(
@@ -75,11 +77,13 @@ Padding lookupSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
                       child: !(_ktxPlaceController.hasDep)
                           ? Text(
                               "출발지 입력",
-                              style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
+                              style: textTheme.subtitle2
+                                  ?.copyWith(color: colorScheme.onTertiary),
                             )
                           : Text(
                               _ktxPlaceController.dep!.name!,
-                              style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
+                              style: textTheme.subtitle2
+                                  ?.copyWith(color: colorScheme.onTertiary),
                             ),
                     );
                   }),
@@ -100,11 +104,13 @@ Padding lookupSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
                       child: !(_ktxPlaceController.hasDst)
                           ? Text(
                               "도착지 입력",
-                              style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
+                              style: textTheme.subtitle2
+                                  ?.copyWith(color: colorScheme.onTertiary),
                             )
                           : Text(
                               _ktxPlaceController.dst!.name!,
-                              style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
+                              style: textTheme.subtitle2
+                                  ?.copyWith(color: colorScheme.onTertiary),
                             ),
                     );
                   }),
@@ -126,7 +132,8 @@ Padding lookupSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
   );
 }
 
-Padding gatherSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, ScreenController controller) {
+Padding gatherSetDepDstWidget(
+    ColorScheme colorScheme, TextTheme textTheme, ScreenController controller) {
   return Padding(
     padding: EdgeInsets.fromLTRB(23.w, 20.h, 24.w, 8.h),
     child: Container(
@@ -169,11 +176,13 @@ Padding gatherSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
                       child: !(_ktxPlaceController.hasDep)
                           ? Text(
                               "출발지 입력",
-                              style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
+                              style: textTheme.subtitle2
+                                  ?.copyWith(color: colorScheme.onTertiary),
                             )
                           : Text(
                               _ktxPlaceController.dep!.name!,
-                              style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
+                              style: textTheme.subtitle2
+                                  ?.copyWith(color: colorScheme.onTertiary),
                             ),
                     );
                   }),
@@ -194,11 +203,13 @@ Padding gatherSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
                       child: !(_ktxPlaceController.hasDst)
                           ? Text(
                               "도착지 입력",
-                              style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
+                              style: textTheme.subtitle2
+                                  ?.copyWith(color: colorScheme.onTertiary),
                             )
                           : Text(
                               _ktxPlaceController.dst!.name!,
-                              style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
+                              style: textTheme.subtitle2
+                                  ?.copyWith(color: colorScheme.onTertiary),
                             ),
                     );
                   }),
@@ -220,7 +231,8 @@ Padding gatherSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
   );
 }
 
-Padding lookupSetTimeWidget(ColorScheme colorScheme, BuildContext context, TextTheme textTheme) {
+Padding lookupSetTimeWidget(
+    ColorScheme colorScheme, BuildContext context, TextTheme textTheme) {
   return Padding(
     padding: EdgeInsets.only(right: 24.w, left: 23.w, bottom: 8.h),
     child: Container(
@@ -253,7 +265,8 @@ Padding lookupSetTimeWidget(ColorScheme colorScheme, BuildContext context, TextT
           GetBuilder<DateController>(builder: (_) {
             return Text(
               lookupDateFormater(_dateController.pickedDate),
-              style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
+              style:
+                  textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
             );
           })
         ],
@@ -262,13 +275,16 @@ Padding lookupSetTimeWidget(ColorScheme colorScheme, BuildContext context, TextT
   );
 }
 
-Padding gatherSetTimeWidget(ColorScheme colorScheme, BuildContext context, TextTheme textTheme) {
+Padding gatherSetTimeWidget(
+    ColorScheme colorScheme, BuildContext context, TextTheme textTheme) {
   return Padding(
     padding: EdgeInsets.only(right: 24.w, left: 23.w, bottom: 8.h),
     child: GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
-        _dateController.selectDate(context).then((_) => _dateController.selectTime(context));
+        _dateController
+            .selectDate(context)
+            .then((_) => _dateController.selectTime(context));
       },
       child: Container(
         height: 56.h,
@@ -294,7 +310,8 @@ Padding gatherSetTimeWidget(ColorScheme colorScheme, BuildContext context, TextT
             GetBuilder<DateController>(builder: (_) {
               return Text(
                 gatherDateFormater(_dateController.mergeDateAndTime()),
-                style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
+                style: textTheme.subtitle2
+                    ?.copyWith(color: colorScheme.onTertiary),
               );
             })
           ],
@@ -304,7 +321,8 @@ Padding gatherSetTimeWidget(ColorScheme colorScheme, BuildContext context, TextT
   );
 }
 
-Padding discountWidget(ColorScheme colorScheme, ScreenController controller, TextTheme textTheme) {
+Padding discountWidget(
+    ColorScheme colorScheme, ScreenController controller, TextTheme textTheme) {
   return Padding(
       padding: EdgeInsets.only(left: 23.w, right: 24.w, bottom: 8.h),
       child: GestureDetector(
@@ -334,14 +352,16 @@ Padding discountWidget(ColorScheme colorScheme, ScreenController controller, Tex
               ),
               Text(
                 '할인율',
-                style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
+                style: textTheme.subtitle2
+                    ?.copyWith(color: colorScheme.onTertiary),
               ),
               SizedBox(
                 width: 60.w,
               ),
               Text(
                 '${controller.sale}%',
-                style: textTheme.subtitle2?.copyWith(color: colorScheme.onPrimaryContainer),
+                style: textTheme.subtitle2
+                    ?.copyWith(color: colorScheme.onPrimaryContainer),
               ),
             ],
           ),
@@ -349,14 +369,15 @@ Padding discountWidget(ColorScheme colorScheme, ScreenController controller, Tex
       ));
 }
 
-Padding discountActivatedWidget(ColorScheme colorScheme, ScreenController controller, TextTheme textTheme) {
+Padding discountActivatedWidget(
+    ColorScheme colorScheme, ScreenController controller, TextTheme textTheme) {
   return Padding(
       padding: EdgeInsets.only(left: 23.w, right: 24.w, bottom: 8.h),
       child: Container(
         height: 113.h,
         width: 295.w,
         decoration: BoxDecoration(
-          color: colorScheme.outline,
+          color: colorScheme.surfaceTint,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Column(
@@ -389,14 +410,16 @@ Padding discountActivatedWidget(ColorScheme colorScheme, ScreenController contro
                     ),
                     Text(
                       '할인율',
-                      style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
+                      style: textTheme.subtitle2
+                          ?.copyWith(color: colorScheme.onTertiary),
                     ),
                     SizedBox(
                       width: 60.w,
                     ),
                     Text(
                       '${controller.sale}%',
-                      style: textTheme.subtitle2?.copyWith(color: colorScheme.onPrimaryContainer),
+                      style: textTheme.subtitle2
+                          ?.copyWith(color: colorScheme.onPrimaryContainer),
                     ),
                   ],
                 ),
@@ -404,60 +427,83 @@ Padding discountActivatedWidget(ColorScheme colorScheme, ScreenController contro
             ),
             Padding(
               padding: EdgeInsets.fromLTRB(29.w, 20.h, 28.w, 13.h),
-              child: Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
-                GestureDetector(
-                  onTap: () {
-                    controller.setSale(15);
-                  },
-                  child: SizedBox(
-                    height: 24.h,
-                    child: Text('15%', style: textTheme.subtitle2?.copyWith(color: controller.sale == 15 ? colorScheme.onSurface : colorScheme.tertiary)),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    controller.setSale(20);
-                  },
-                  child: SizedBox(
-                    height: 24.h,
-                    child: Text('20%', style: textTheme.subtitle2?.copyWith(color: controller.sale == 20 ? colorScheme.onSurface : colorScheme.tertiary)),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    controller.setSale(25);
-                  },
-                  child: SizedBox(
-                    height: 24.h,
-                    child: Text('25%', style: textTheme.subtitle2?.copyWith(color: controller.sale == 25 ? colorScheme.onSurface : colorScheme.tertiary)),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    controller.setSale(30);
-                  },
-                  child: SizedBox(
-                    height: 24.h,
-                    child: Text('30%', style: textTheme.subtitle2?.copyWith(color: controller.sale == 30 ? colorScheme.onSurface : colorScheme.tertiary)),
-                  ),
-                ),
-                GestureDetector(
-                  onTap: () {
-                    controller.setSale(35);
-                  },
-                  child: SizedBox(
-                    height: 24.h,
-                    child: Text('35%', style: textTheme.subtitle2?.copyWith(color: controller.sale == 35 ? colorScheme.onSurface : colorScheme.tertiary)),
-                  ),
-                ),
-              ]),
+              child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    GestureDetector(
+                      onTap: () {
+                        controller.setSale(15);
+                      },
+                      child: SizedBox(
+                        height: 24.h,
+                        child: Text('15%',
+                            style: textTheme.subtitle2?.copyWith(
+                                color: controller.sale == 15
+                                    ? colorScheme.onSurface
+                                    : colorScheme.tertiary)),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        controller.setSale(20);
+                      },
+                      child: SizedBox(
+                        height: 24.h,
+                        child: Text('20%',
+                            style: textTheme.subtitle2?.copyWith(
+                                color: controller.sale == 20
+                                    ? colorScheme.onSurface
+                                    : colorScheme.tertiary)),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        controller.setSale(25);
+                      },
+                      child: SizedBox(
+                        height: 24.h,
+                        child: Text('25%',
+                            style: textTheme.subtitle2?.copyWith(
+                                color: controller.sale == 25
+                                    ? colorScheme.onSurface
+                                    : colorScheme.tertiary)),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        controller.setSale(30);
+                      },
+                      child: SizedBox(
+                        height: 24.h,
+                        child: Text('30%',
+                            style: textTheme.subtitle2?.copyWith(
+                                color: controller.sale == 30
+                                    ? colorScheme.onSurface
+                                    : colorScheme.tertiary)),
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        controller.setSale(35);
+                      },
+                      child: SizedBox(
+                        height: 24.h,
+                        child: Text('35%',
+                            style: textTheme.subtitle2?.copyWith(
+                                color: controller.sale == 35
+                                    ? colorScheme.onSurface
+                                    : colorScheme.tertiary)),
+                      ),
+                    ),
+                  ]),
             ),
           ],
         ),
       ));
 }
 
-Padding lookupSetCapacityWidget(ColorScheme colorScheme, ScreenController controller, TextTheme textTheme) {
+Padding lookupSetCapacityWidget(
+    ColorScheme colorScheme, ScreenController controller, TextTheme textTheme) {
   return Padding(
     padding: EdgeInsets.only(left: 23.w, right: 24.w),
     child: Container(
@@ -484,12 +530,16 @@ Padding lookupSetCapacityWidget(ColorScheme colorScheme, ScreenController contro
               controller.ktxScreenSubtractCapacity();
             },
             icon: Image.asset('assets/removeP.png'),
-            color: (controller.capacity == 1) ? colorScheme.tertiaryContainer : colorScheme.secondary,
+            color: (controller.capacity == 1)
+                ? colorScheme.tertiaryContainer
+                : colorScheme.secondary,
           ),
           SizedBox(
             width: 8.w,
           ),
-          Text("${controller.capacity}명", style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary)),
+          Text("${controller.capacity}명",
+              style:
+                  textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary)),
           SizedBox(
             width: 8.w,
           ),
@@ -498,7 +548,9 @@ Padding lookupSetCapacityWidget(ColorScheme colorScheme, ScreenController contro
               controller.addCapacity();
             },
             icon: Image.asset('assets/addPerson.png'),
-            color: (controller.capacity == 4) ? colorScheme.tertiaryContainer : colorScheme.secondary,
+            color: (controller.capacity == 4)
+                ? colorScheme.tertiaryContainer
+                : colorScheme.secondary,
           ),
         ],
       ),
@@ -511,9 +563,10 @@ ElevatedButton lookupButton(TextTheme textTheme, ColorScheme colorScheme) {
       style: ElevatedButton.styleFrom(
           backgroundColor: colorScheme.onPrimaryContainer,
           minimumSize: Size(342.w, 57.h),
-          shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))),
+          shape:
+              RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))),
       onPressed: () {
-        Get.to(() => KtxCheckPlaceScreen());
+        _screenController.setKtxCheckScreen(true);
       },
       child: Text(
         "조회하기",
@@ -523,13 +576,17 @@ ElevatedButton lookupButton(TextTheme textTheme, ColorScheme colorScheme) {
       ));
 }
 
-GetBuilder gatherButton(TextTheme textTheme, ColorScheme colorScheme, ScreenController controller, BuildContext context) {
+GetBuilder gatherButton(TextTheme textTheme, ColorScheme colorScheme,
+    ScreenController controller, BuildContext context) {
   return GetBuilder<AddKtxPostController>(builder: (_) {
     return ElevatedButton(
         style: ElevatedButton.styleFrom(
-            backgroundColor: _addKtxPostController.loaded ? colorScheme.onPrimaryContainer : colorScheme.tertiaryContainer,
+            backgroundColor: _addKtxPostController.loaded
+                ? colorScheme.onPrimaryContainer
+                : colorScheme.tertiaryContainer,
             minimumSize: Size(342.w, 57.h),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))),
+            shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16))),
         onPressed: () async {
           _addKtxPostController.capacity = controller.capacity;
           _addKtxPostController.sale = controller.sale;
@@ -542,7 +599,10 @@ GetBuilder gatherButton(TextTheme textTheme, ColorScheme colorScheme, ScreenCont
               snackBar(context: context, title: '도착지를 선택해주세요.');
             } else if (_ktxPlaceController.dst!.id == -1) {
               snackBar(context: context, title: '도착지를 다시 선택해주세요.');
-            } else if (DateTime.now().difference(_dateController.mergeDateAndTime()).isNegative == false) {
+            } else if (DateTime.now()
+                    .difference(_dateController.mergeDateAndTime())
+                    .isNegative ==
+                false) {
               snackBar(context: context, title: '출발시간을 다시 선택해주세요.');
             } else if (_addKtxPostController.capacity == 0) {
               snackBar(context: context, title: '최대인원을 선택해주세요.');

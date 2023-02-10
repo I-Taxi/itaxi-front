@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:get/get.dart';
 import 'package:itaxi/controller/screenController.dart';
 
-Widget postTypeToggleButton(
-    {required BuildContext context, required ScreenController controller}) {
+import '../controller/placeController.dart';
+
+PlaceController _placeController = Get.find();
+
+Widget postTypeToggleButton({required BuildContext context, required ScreenController controller}) {
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
 
@@ -11,9 +15,7 @@ Widget postTypeToggleButton(
       width: 296.w,
       height: 57.h,
       child: Container(
-        decoration: BoxDecoration(
-            color: colorScheme.onBackground,
-            borderRadius: BorderRadius.circular(30)),
+        decoration: BoxDecoration(color: colorScheme.onBackground, borderRadius: BorderRadius.circular(30)),
         child: controller.mainScreenCurrentToggle == 0
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -21,8 +23,7 @@ Widget postTypeToggleButton(
                 children: [
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(24)),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
                         padding: EdgeInsets.fromLTRB(4.w, 4.h, 3.w, 4.h),
                         fixedSize: Size(140.w, 49.h),
                         backgroundColor: colorScheme.primary,
@@ -30,8 +31,7 @@ Widget postTypeToggleButton(
                     onPressed: () {},
                     child: Text(
                       "조회",
-                      style: textTheme.subtitle2
-                          ?.copyWith(color: colorScheme.onTertiary),
+                      style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
                     ),
                   ),
                   TextButton(
@@ -40,12 +40,15 @@ Widget postTypeToggleButton(
                       fixedSize: Size(140.w, 49.h),
                     ),
                     onPressed: () {
+                      _placeController.dep = null;
+                      _placeController.dst = null;
+                      _placeController.hasDep = false;
+                      _placeController.hasDst = false;
                       controller.changeMainScreenToggleIndex(1);
                     },
                     child: Text(
                       "모집",
-                      style: textTheme.bodyText1
-                          ?.copyWith(color: colorScheme.tertiaryContainer),
+                      style: textTheme.bodyText1?.copyWith(color: colorScheme.tertiaryContainer),
                     ),
                   ),
                 ],
@@ -54,9 +57,7 @@ Widget postTypeToggleButton(
                 width: 296.w,
                 height: 57.h,
                 child: Container(
-                  decoration: BoxDecoration(
-                      color: colorScheme.onBackground,
-                      borderRadius: BorderRadius.circular(30)),
+                  decoration: BoxDecoration(color: colorScheme.onBackground, borderRadius: BorderRadius.circular(30)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -67,18 +68,20 @@ Widget postTypeToggleButton(
                           fixedSize: Size(140.w, 49.h),
                         ),
                         onPressed: () {
+                          _placeController.dep = null;
+                          _placeController.dst = null;
+                          _placeController.hasDep = false;
+                          _placeController.hasDst = false;
                           controller.changeMainScreenToggleIndex(0);
                         },
                         child: Text(
                           "조회",
-                          style: textTheme.bodyText1
-                              ?.copyWith(color: colorScheme.tertiaryContainer),
+                          style: textTheme.bodyText1?.copyWith(color: colorScheme.tertiaryContainer),
                         ),
                       ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(24)),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
                             padding: EdgeInsets.fromLTRB(4.w, 4.h, 3.w, 4.h),
                             fixedSize: Size(140.w, 49.h),
                             backgroundColor: colorScheme.primary,
@@ -86,8 +89,7 @@ Widget postTypeToggleButton(
                         onPressed: () {},
                         child: Text(
                           "모집",
-                          style: textTheme.subtitle2
-                              ?.copyWith(color: colorScheme.onTertiary),
+                          style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
                         ),
                       ),
                     ],
@@ -96,8 +98,7 @@ Widget postTypeToggleButton(
       ));
 }
 
-Widget ktxPostTypeToggleButton(
-    {required BuildContext context, required ScreenController controller}) {
+Widget ktxPostTypeToggleButton({required BuildContext context, required ScreenController controller}) {
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
 
@@ -105,9 +106,7 @@ Widget ktxPostTypeToggleButton(
       width: 296.w,
       height: 57.h,
       child: Container(
-        decoration: BoxDecoration(
-            color: colorScheme.onBackground,
-            borderRadius: BorderRadius.circular(30)),
+        decoration: BoxDecoration(color: colorScheme.onBackground, borderRadius: BorderRadius.circular(30)),
         child: controller.ktxScreenCurrentToggle == 0
             ? Row(
                 mainAxisAlignment: MainAxisAlignment.center,
@@ -115,8 +114,7 @@ Widget ktxPostTypeToggleButton(
                 children: [
                   ElevatedButton(
                     style: ElevatedButton.styleFrom(
-                        shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(24)),
+                        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
                         padding: EdgeInsets.fromLTRB(4.w, 4.h, 3.w, 4.h),
                         fixedSize: Size(140.w, 49.h),
                         backgroundColor: colorScheme.primary,
@@ -124,8 +122,7 @@ Widget ktxPostTypeToggleButton(
                     onPressed: () {},
                     child: Text(
                       "조회",
-                      style: textTheme.subtitle2
-                          ?.copyWith(color: colorScheme.onTertiary),
+                      style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
                     ),
                   ),
                   TextButton(
@@ -138,8 +135,7 @@ Widget ktxPostTypeToggleButton(
                     },
                     child: Text(
                       "모집",
-                      style: textTheme.bodyText1
-                          ?.copyWith(color: colorScheme.tertiaryContainer),
+                      style: textTheme.bodyText1?.copyWith(color: colorScheme.tertiaryContainer),
                     ),
                   ),
                 ],
@@ -148,9 +144,7 @@ Widget ktxPostTypeToggleButton(
                 width: 296.w,
                 height: 57.h,
                 child: Container(
-                  decoration: BoxDecoration(
-                      color: colorScheme.onBackground,
-                      borderRadius: BorderRadius.circular(30)),
+                  decoration: BoxDecoration(color: colorScheme.onBackground, borderRadius: BorderRadius.circular(30)),
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     crossAxisAlignment: CrossAxisAlignment.center,
@@ -165,14 +159,12 @@ Widget ktxPostTypeToggleButton(
                         },
                         child: Text(
                           "조회",
-                          style: textTheme.bodyText1
-                              ?.copyWith(color: colorScheme.tertiaryContainer),
+                          style: textTheme.bodyText1?.copyWith(color: colorScheme.tertiaryContainer),
                         ),
                       ),
                       ElevatedButton(
                         style: ElevatedButton.styleFrom(
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(24)),
+                            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
                             padding: EdgeInsets.fromLTRB(4.w, 4.h, 3.w, 4.h),
                             fixedSize: Size(140.w, 49.h),
                             backgroundColor: colorScheme.primary,
@@ -180,8 +172,7 @@ Widget ktxPostTypeToggleButton(
                         onPressed: () {},
                         child: Text(
                           "모집",
-                          style: textTheme.subtitle2
-                              ?.copyWith(color: colorScheme.onTertiary),
+                          style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
                         ),
                       ),
                     ],

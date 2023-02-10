@@ -7,6 +7,7 @@ class ScreenController extends GetxController {
   // mainScreen
   bool mainScreenLoaded = false;
   bool hasNotice = false;
+  bool isCheckScreen = false;
   int mainScreenCurrentTabIndex = 0;
   int mainScreenCurrentToggle = 0;
   int stopOver = 0;
@@ -14,6 +15,7 @@ class ScreenController extends GetxController {
   // ktxScreen
   bool ktxScreenLoaded = false;
   bool discountSelect = false;
+  bool isKtxCheckScreen = false;
   int sale = 35;
   int ktxScreenCurrentTabIndex = 0;
   int ktxScreenCurrentToggle = 0;
@@ -32,6 +34,16 @@ class ScreenController extends GetxController {
     update();
   }
 
+  void setCheckScreen(bool to) {
+    isCheckScreen = to;
+    update();
+  }
+
+  void setKtxCheckScreen(bool to) {
+    isKtxCheckScreen = to;
+    update();
+  }
+
   void setUnenlargement() {
     enlargement = false;
     update();
@@ -42,7 +54,8 @@ class ScreenController extends GetxController {
     update();
   }
 
-  void setBackgroundHeight(double top, double bottom, double max, double scrollHeight) {
+  void setBackgroundHeight(
+      double top, double bottom, double max, double scrollHeight) {
     backgroundHeight = bottom - (bottom - top) / max * scrollHeight;
     if (backgroundHeight < top) backgroundHeight = top;
     print(backgroundHeight);

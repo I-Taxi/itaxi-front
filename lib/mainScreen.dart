@@ -13,6 +13,7 @@ import 'package:itaxi/controller/screenController.dart';
 import 'package:itaxi/controller/userController.dart';
 
 import 'package:itaxi/placeSearch/placeSearchController.dart';
+import 'package:itaxi/timeline/checkPlaceScreen.dart';
 import 'package:itaxi/widget/postTypeToggleButton.dart';
 import 'package:itaxi/widget/mainScreenSettingWidget.dart';
 import 'package:flutter/cupertino.dart';
@@ -52,7 +53,6 @@ class _MainScreenState extends State<MainScreen> {
 
   String e = ""; // 요일 변수
   int personCount = 1; // 인원수
-  bool alarm = false;
   bool isOpen = false;
 
   void _openEndDrawer() {
@@ -82,6 +82,7 @@ class _MainScreenState extends State<MainScreen> {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     return GetBuilder<ScreenController>(builder: (controller) {
+      if (controller.isCheckScreen) return CheckPlaceScreen();
       return Scaffold(
         key: _scaffoldKey,
         endDrawer: Drawer(child: _myListView(context: context)),
@@ -149,7 +150,9 @@ class _MainScreenState extends State<MainScreen> {
                                         decoration: BoxDecoration(
                                           color: colorScheme.surfaceVariant,
                                           borderRadius: BorderRadius.only(
-                                              topRight: Radius.circular(24), bottomLeft: Radius.circular(24), bottomRight: Radius.circular(24)),
+                                              topRight: Radius.circular(24),
+                                              bottomLeft: Radius.circular(24),
+                                              bottomRight: Radius.circular(24)),
                                         ),
                                         alignment: Alignment.center,
                                         child: Padding(
@@ -200,12 +203,16 @@ class _MainScreenState extends State<MainScreen> {
                             ),
                       controller.mainScreenLoaded
                           ? Container(
-                              height: (!_placeController.hasStopOver || controller.mainScreenCurrentToggle == 0) ? 433.63.h : 489.63.h,
+                              height: (!_placeController.hasStopOver || controller.mainScreenCurrentToggle == 0)
+                                  ? 433.63.h
+                                  : 489.63.h,
                               width: 342.w,
                               decoration: BoxDecoration(
                                   color: colorScheme.primary,
                                   borderRadius: BorderRadius.circular(36.0),
-                                  boxShadow: [BoxShadow(color: colorScheme.shadow, blurRadius: 40.r, offset: Offset(2.w, 4.h))]),
+                                  boxShadow: [
+                                    BoxShadow(color: colorScheme.shadow, blurRadius: 40.r, offset: Offset(2.w, 4.h))
+                                  ]),
                               child: controller.mainScreenCurrentToggle == 0
                                   ? Column(
                                       children: [
@@ -240,7 +247,9 @@ class _MainScreenState extends State<MainScreen> {
                               decoration: BoxDecoration(
                                   color: colorScheme.primary,
                                   borderRadius: BorderRadius.circular(36.0),
-                                  boxShadow: [BoxShadow(color: colorScheme.shadow, blurRadius: 40, offset: Offset(2, 4))]),
+                                  boxShadow: [
+                                    BoxShadow(color: colorScheme.shadow, blurRadius: 40, offset: Offset(2, 4))
+                                  ]),
                             ),
                       SizedBox(
                         height: (!_placeController.hasStopOver || controller.mainScreenCurrentToggle == 0) ? 60.h : 4.h,
@@ -458,14 +467,12 @@ class _MainScreenState extends State<MainScreen> {
             transformHitTests: false,
             scale: .6,
             child: CupertinoSwitch(
-                value: alarm,
+                value: _userController.alarm,
                 activeColor: colorScheme.inverseSurface,
                 thumbColor: colorScheme.primary,
                 trackColor: colorScheme.tertiary,
                 onChanged: (bool value) {
-                  setState(() {
-                    alarm = value;
-                  });
+                  _userController.setAlarm(value);
                 }),
           ),
         )

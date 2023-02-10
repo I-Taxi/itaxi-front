@@ -131,6 +131,7 @@ flutter:
     - assets/arrow/arrow_back_2.png
     - assets/arrow/arrow_down_1.png
     - assets/arrow/arrow_down_2.png
+    - assets/arrow/arrow_downward.png
 
     # luggage
     - assets/luggage/human.png
