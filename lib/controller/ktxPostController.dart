@@ -43,8 +43,7 @@ class KtxPostController extends GetxController {
   }
 
   // Posts 데이터 가져오기
-  Future<List<KtxPost>> fetchPost(
-      {int? depId, int? dstId, required String time}) async {
+  Future<List<KtxPost>> fetchPost({int? depId, int? dstId, required String time}) async {
     var postUrl = dotenv.env['API_URL'].toString();
     final Map<String, dynamic> queryParameters;
     if ((depId == null || depId == -1) && (dstId == null || dstId == -1)) {
@@ -86,6 +85,30 @@ class KtxPostController extends GetxController {
     }
   }
 
+  Future<KtxPost> fetchPostInfo({required int? id}) async {
+    var postUrl = dotenv.env['API_URL'].toString();
+    postUrl = '${postUrl}ktx/$id';
+
+    http.Response response = await http.post(
+      Uri.parse(postUrl),
+      headers: <String, String>{
+        'Content-type': 'application/json',
+      },
+      body: {
+        'uid': _userController.uid,
+      },
+    );
+
+    if (response.statusCode == 200) {
+      print(utf8.decode(response.bodyBytes));
+      return KtxPost.fromDocs(json.decode(utf8.decode(response.bodyBytes)));
+    } else {
+      print(response.statusCode);
+      print(utf8.decode(response.bodyBytes));
+      throw Exception('Failed to load post info');
+    }
+  }
+
   // /itaxi/api/post/{postId}/join
   Future<void> fetchJoin({required KtxPost ktxPost}) async {
     var joinUrl = dotenv.env['API_URL'].toString();
@@ -105,8 +128,7 @@ class KtxPostController extends GetxController {
     );
 
     if (response.statusCode == 200) {
-      KtxPost result =
-          KtxPost.fromDocs(json.decode(utf8.decode(response.bodyBytes)));
+      KtxPost result = KtxPost.fromDocs(json.decode(utf8.decode(response.bodyBytes)));
       await _chatRoomController.ktxJoinChat(post: result);
       await KtxChatRepository().setPost(post: result);
       print('join');

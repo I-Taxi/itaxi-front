@@ -37,11 +37,7 @@ class PostController extends GetxController {
     return result;
   }
 
-  Future<void> getPosts(
-      {int? depId,
-      int? dstId,
-      required String time,
-      required int postType}) async {
+  Future<void> getPosts({int? depId, int? dstId, required String time, required int postType}) async {
     posts = fetchPost(
       depId: depId,
       dstId: dstId,
@@ -53,11 +49,7 @@ class PostController extends GetxController {
   }
 
   // Posts 데이터 가져오기
-  Future<List<Post>> fetchPost(
-      {int? depId,
-      int? dstId,
-      required String time,
-      required int postType}) async {
+  Future<List<Post>> fetchPost({int? depId, int? dstId, required String time, required int postType}) async {
     var postUrl = dotenv.env['API_URL'].toString();
     final Map<String, dynamic> queryParameters;
     if ((depId == null || depId == -1) && (dstId == null || dstId == -1)) {
@@ -127,10 +119,37 @@ class PostController extends GetxController {
     if (response.statusCode == 200) {
       print(utf8.decode(response.bodyBytes));
       print(2);
-      return postsfromJsonWithoutJoiners(
-          json.decode(utf8.decode(response.bodyBytes)));
+      return postsfromJson(json.decode(utf8.decode(response.bodyBytes)));
     } else {
       throw Exception('Failed to load posts');
+    }
+  }
+
+  Future<Post> fetchPostInfo({required int? id}) async {
+    var postUrl = dotenv.env['API_URL'].toString();
+    postUrl = '${postUrl}post/$id';
+
+    Map<String, String?> map = {
+      'uid': _userController.uid,
+    };
+
+    var body = utf8.encode(json.encode(map));
+
+    http.Response response = await http.post(
+      Uri.parse(postUrl),
+      headers: <String, String>{
+        'Content-type': 'application/json',
+      },
+      body: body,
+    );
+
+    if (response.statusCode == 200) {
+      print(utf8.decode(response.bodyBytes));
+      return Post.fromDocs(json.decode(utf8.decode(response.bodyBytes)));
+    } else {
+      print(response.statusCode);
+      print(utf8.decode(response.bodyBytes));
+      throw Exception('Failed to load post info');
     }
   }
 

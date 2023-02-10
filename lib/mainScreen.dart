@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:itaxi/controller/chatRoomController.dart';
 import 'package:itaxi/settings/settingScreen.dart';
 import 'package:get/get.dart';
 import 'package:itaxi/controller/addPostController.dart';
@@ -40,6 +41,7 @@ class _MainScreenState extends State<MainScreen> {
   DateController _dateController = Get.put(DateController());
   UserController _userController = Get.put(UserController());
   AddPostController _addPostController = Get.put(AddPostController());
+  ChatRoomController _chatRoomController = Get.put(ChatRoomController());
 
   late PlaceSearchController _placeSearchController;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
