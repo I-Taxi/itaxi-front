@@ -234,7 +234,8 @@ class TimelineDetailScreen extends StatelessWidget {
                                                   MainAxisAlignment.start,
                                               children: [
                                                 Image.asset(
-                                                  width: 18,
+                                                  width: 18.w,
+                                                  height: 18.h,
                                                   'assets/icon/location.png',
                                                 ),
                                                 SizedBox(
@@ -261,7 +262,8 @@ class TimelineDetailScreen extends StatelessWidget {
                                                   MainAxisAlignment.start,
                                               children: [
                                                 Image.asset(
-                                                  width: 18,
+                                                  width: 18.w,
+                                                  height: 18.h,
                                                   'assets/icon/location.png',
                                                 ),
                                                 SizedBox(

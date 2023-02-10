@@ -59,75 +59,81 @@ class _KtxSearchScreenState extends State<KtxSearchScreen> {
           appBar: AppBar(
             shadowColor: colorScheme.shadow,
             elevation: 0.0,
-            centerTitle: true,
-            title: Text(
-              '검색',
-              style: textTheme.subtitle1?.copyWith(
-                color: colorScheme.onPrimary,
-              ),
-            ),
-            leading: IconButton(
-              onPressed: () {
-                Get.back();
-              },
-              icon: Icon(
-                Icons.chevron_left_outlined,
-                color: colorScheme.tertiary,
-              ),
-            ),
-            actions: [
-              TextButton(
+            title: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                IconButton(
                   onPressed: () {
-                    if (_ktxPlaceSearchController.depOrDst == 0) {
-                      if (_ktxPlaceSearchController.selectedPlace == null ||
-                          _ktxPlaceController.dst != null &&
-                              _ktxPlaceSearchController.selectedPlace!.name ==
-                                  _ktxPlaceController.dst!.name) {
-                        // [TODO]: 출발지 도착지 같을때 띄우는거
-                        placeSearchSnackBar(
-                            context: context,
-                            title: const Text('출발지를 다시 선택해주세요.'),
-                            color: colorScheme.error);
-                      } else {
-                        _ktxPlaceController.selectDep(
-                            place: _ktxPlaceSearchController.selectedPlace!);
-                        _ktxPlaceSearchController.selectedIndex = -1;
-                        _ktxPlaceSearchController.changeSearchQuery('');
-                        Get.back();
-                      }
-                    } else if (_ktxPlaceSearchController.depOrDst == 1) {
-                      if (_ktxPlaceSearchController.selectedPlace == null ||
-                          _ktxPlaceController.dep != null &&
-                              _ktxPlaceSearchController.selectedPlace!.name ==
-                                  _ktxPlaceController.dep!.name) {
-                        // [TODO]: 출발지 도착지 같을때 띄우는거
-                        placeSearchSnackBar(
-                            context: context,
-                            title: const Text('도착지를 다시 선택해주세요.'),
-                            color: colorScheme.error);
-                      } else {
-                        _ktxPlaceController.selectDst(
-                            place: _ktxPlaceSearchController.selectedPlace!);
-                        _ktxPlaceSearchController.selectedIndex = -1;
-                        _ktxPlaceSearchController.changeSearchQuery('');
-                        Get.back();
-                      }
-                    }
+                    Get.back();
                   },
-                  child: Text(
-                    "다음",
-                    style: textTheme.subtitle2?.copyWith(
-                      color: colorScheme.secondary,
-                    ),
-                  ))
-            ],
+                  icon: Icon(
+                    Icons.arrow_back_ios,
+                    color: colorScheme.tertiaryContainer,
+                  ),
+                ),
+                Spacer(),
+                Text(
+                  '검색',
+                  style: textTheme.subtitle1?.copyWith(
+                    color: colorScheme.onPrimary,
+                  ),
+                ),
+                Spacer(),
+                TextButton(
+                    onPressed: () {
+                      if (_ktxPlaceSearchController.depOrDst == 0) {
+                        if (_ktxPlaceSearchController.selectedPlace == null ||
+                            _ktxPlaceController.dst != null &&
+                                _ktxPlaceSearchController.selectedPlace!.name ==
+                                    _ktxPlaceController.dst!.name) {
+                          // [TODO]: 출발지 도착지 같을때 띄우는거
+                          placeSearchSnackBar(
+                              context: context,
+                              title: const Text('출발지를 다시 선택해주세요.'),
+                              color: colorScheme.error);
+                        } else {
+                          _ktxPlaceController.selectDep(
+                              place: _ktxPlaceSearchController.selectedPlace!);
+                          _ktxPlaceSearchController.selectedIndex = -1;
+                          _ktxPlaceSearchController.changeSearchQuery('');
+                          Get.back();
+                        }
+                      } else if (_ktxPlaceSearchController.depOrDst == 1) {
+                        if (_ktxPlaceSearchController.selectedPlace == null ||
+                            _ktxPlaceController.dep != null &&
+                                _ktxPlaceSearchController.selectedPlace!.name ==
+                                    _ktxPlaceController.dep!.name) {
+                          // [TODO]: 출발지 도착지 같을때 띄우는거
+                          placeSearchSnackBar(
+                              context: context,
+                              title: const Text('도착지를 다시 선택해주세요.'),
+                              color: colorScheme.error);
+                        } else {
+                          _ktxPlaceController.selectDst(
+                              place: _ktxPlaceSearchController.selectedPlace!);
+                          _ktxPlaceSearchController.selectedIndex = -1;
+                          _ktxPlaceSearchController.changeSearchQuery('');
+                          Get.back();
+                        }
+                      }
+                    },
+                    child: Text(
+                      "다음",
+                      style: textTheme.subtitle2?.copyWith(
+                        color: colorScheme.secondary,
+                      ),
+                    ))
+              ],
+            ),
+            automaticallyImplyLeading: false,
           ),
           backgroundColor: colorScheme.background,
           body: ColorfulSafeArea(
             color: colorScheme.primary,
             child: GetBuilder<KtxPlaceSearchController>(builder: (_) {
               return Padding(
-                padding: const EdgeInsets.all(24),
+                padding: EdgeInsets.fromLTRB(24.w, 8.h, 24.w, 24.h),
                 child: Column(
                   children: [
                     SizedBox(

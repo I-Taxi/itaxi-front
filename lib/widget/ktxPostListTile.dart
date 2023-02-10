@@ -83,7 +83,8 @@ Widget ktxPostListTile({
                                 const Spacer(),
                                 TextButton(
                                   onPressed: () async {
-                                    await _ktxPostController.fetchJoin(ktxPost: post);
+                                    await _ktxPostController.fetchJoin(
+                                        ktxPost: post);
                                     await _ktxPostController.getPosts(
                                       depId: _ktxPlaceController.dep?.id,
                                       dstId: _ktxPlaceController.dst?.id,
@@ -96,13 +97,18 @@ Widget ktxPostListTile({
                                         postId: post.id!, postType: 3); //수정 요망
                                     _historyController.history.then((value) {
                                       if (value.postType != 3) {
-                                        _chatRoomController.getPost(post: value.toPost());
-                                        _chatRoomController.getChats(post: value.toPost());
+                                        _chatRoomController.getPost(
+                                            post: value.toPost());
+                                        _chatRoomController.getChats(
+                                            post: value.toPost());
                                       } else {
-                                        _chatRoomController.getKtxPost(ktxPost: value.toKtxPost());
-                                        _chatRoomController.getKtxChats(ktxPost: value.toKtxPost());
+                                        _chatRoomController.getKtxPost(
+                                            ktxPost: value.toKtxPost());
+                                        _chatRoomController.getKtxChats(
+                                            ktxPost: value.toKtxPost());
                                       }
-                                      Get.to(() => const ChatRoomDetailScreen());
+                                      Get.to(
+                                          () => const ChatRoomDetailScreen());
                                     });
                                   },
                                   child: Text(
@@ -126,57 +132,87 @@ Widget ktxPostListTile({
     child: Column(
       children: [
         SizedBox(
-          height: 1.5.h,
+          height: 1.h,
         ),
         Container(
-          height: 92.h,
+          height: 96.h,
           color: colorScheme.background,
           child: Padding(
-            padding: EdgeInsets.only(left: 24.w, right: 24.w),
+            padding: EdgeInsets.fromLTRB(24.w, 24.h, 24.w, 24.h),
             child: Row(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.start,
               children: [
-                Text(
-                  DateFormat('HH:mm').format(DateTime.parse(post.deptTime!)),
-                  style: textTheme.subtitle1?.copyWith(
-                    color: colorScheme.onTertiary,
-                  ),
-                ),
-                SizedBox(
-                  width: 41.w,
-                ),
-                Padding(
-                  padding: EdgeInsets.only(top: 20.h),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                Row(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.start,
                     children: [
-                      Text(
-                        "KTX",
-                        style: textTheme.bodyText1?.copyWith(
-                          fontSize: Platform.isIOS ? 22 : 20,
-                          color: colorScheme.onTertiary,
-                        ),
+                      Column(
+                        children: [
+                          SizedBox(
+                            height: 1.5.h,
+                          ),
+                          Text(
+                            DateFormat('HH:mm')
+                                .format(DateTime.parse(post.deptTime!)),
+                            style: textTheme.subtitle1?.copyWith(
+                                color: colorScheme.onTertiary,
+                                fontWeight: FontWeight.w600),
+                          ),
+                        ],
                       ),
-                      Text(
-                        "${post.sale}%",
-                        style: textTheme.subtitle2?.copyWith(
-                          color: colorScheme.secondary,
+                      SizedBox(
+                        width: 41.w,
+                      ),
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            "KTX",
+                            style: textTheme.bodyText1?.copyWith(
+                              fontSize: Platform.isIOS ? 22 : 20,
+                              color: colorScheme.onTertiary,
+                            ),
+                          ),
+                          Text(
+                            "${post.sale}%",
+                            style: textTheme.subtitle2?.copyWith(
+                              color: colorScheme.secondary,
+                            ),
+                          ),
+                        ],
+                      ),
+                    ]),
+                Spacer(),
+                Column(
+                  children: [
+                    SizedBox(
+                      height: 1.5.h,
+                    ),
+                    Row(
+                      children: [
+                        Text(
+                          "${post.participantNum}/${post.capacity}명",
+                          style: textTheme.subtitle1?.copyWith(
+                              color: colorScheme.onTertiary,
+                              fontWeight: FontWeight.w500),
                         ),
-                      )
-                    ],
-                  ),
+                        SizedBox(
+                          width: 22.w,
+                        ),
+                        Image(
+                          image: AssetImage(
+                            "assets/arrow/arrow_forward.png",
+                          ),
+                          color: colorScheme.tertiary,
+                          width: 10.w,
+                          height: 10.h,
+                        )
+                      ],
+                    ),
+                  ],
                 ),
-                const Spacer(),
-                Text(
-                  "${post.participantNum}/${post.capacity}명",
-                  style: textTheme.subtitle1
-                      ?.copyWith(color: colorScheme.onTertiary),
-                ),
-                SizedBox(
-                  width: 22.w,
-                ),
-                Image(image: AssetImage("assets/arrow/arrow_forward.png", ),color: colorScheme.tertiary, width: 10.w, height: 10.h,)
               ],
             ),
           ),
