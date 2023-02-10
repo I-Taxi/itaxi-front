@@ -377,7 +377,7 @@ Padding discountActivatedWidget(
         height: 113.h,
         width: 295.w,
         decoration: BoxDecoration(
-          color: colorScheme.outline,
+          color: colorScheme.surfaceTint,
           borderRadius: BorderRadius.circular(8),
         ),
         child: Column(
