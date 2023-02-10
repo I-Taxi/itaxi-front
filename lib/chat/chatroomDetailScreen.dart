@@ -326,11 +326,9 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                         ),
                                         InkWell(
                                           child: Image.asset(
-                                            'assets/button/phone.png',
+                                            'assets/icon/phone.png',
                                             width: 24.w,
                                             height: 24.h,
-                                            color:
-                                                colorScheme.tertiaryContainer,
                                           ),
                                           onTap: () async {
                                             final Uri launchUri = Uri.parse(
@@ -347,11 +345,9 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                         ),
                                         InkWell(
                                           child: Image.asset(
-                                            'assets/button/message.png',
+                                            'assets/icon/message.png',
                                             width: 24.w,
                                             height: 24.h,
-                                            color:
-                                                colorScheme.tertiaryContainer,
                                           ),
                                           onTap: () async {
                                             final Uri launchUri = Uri.parse(
@@ -530,7 +526,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                               children: [
                                                 Text(
                                                   DateFormat(
-                                                          'M월 d일 (${korDays[snapshot.data![index].chatTime!.toDate().weekday]})')
+                                                          'M월 d일 (${korDays[snapshot.data![index].chatTime!.toDate().weekday - 1]})')
                                                       .format(snapshot
                                                           .data![index]
                                                           .chatTime!
