@@ -205,7 +205,7 @@ class _MainScreenState extends State<MainScreen> {
                               decoration: BoxDecoration(
                                   color: colorScheme.primary,
                                   borderRadius: BorderRadius.circular(36.0),
-                                  boxShadow: [BoxShadow(color: colorScheme.shadow, blurRadius: 40, offset: Offset(2, 4))]),
+                                  boxShadow: [BoxShadow(color: colorScheme.shadow, blurRadius: 40.r, offset: Offset(2.w, 4.h))]),
                               child: controller.mainScreenCurrentToggle == 0
                                   ? Column(
                                       children: [

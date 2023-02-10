@@ -3,7 +3,7 @@ import 'package:get/get.dart';
 
 class NavigationController extends GetxController {
   int currentIndex = 0;
-  int navHeight = 110;
+  int navHeight = 98;
   PageController pageController = PageController();
 
   void changeIndex(int index) {
