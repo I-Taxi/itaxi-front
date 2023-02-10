@@ -9,7 +9,7 @@ import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/model/chat.dart';
 import 'package:itaxi/model/joiner.dart';
 
-Widget newChatListTile(
+Widget ChatDetailListTile(
     {required BuildContext context,
     required Chat chat,
     required List<Joiner>? joiners}) {

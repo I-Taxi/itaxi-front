@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
-import 'package:itaxi/chat/chatRoomScreen.dart';
-import 'package:itaxi/chat/newChatroomScreen.dart';
+import 'package:itaxi/chat/chatRoomScreen_bak.dart';
+import 'package:itaxi/chat/chatRoomDetailScreen.dart';
 import 'package:itaxi/controller/addPostController.dart';
 import 'package:itaxi/controller/chatRoomController.dart';
 import 'package:itaxi/controller/historyController.dart';
@@ -13,8 +13,7 @@ import 'package:itaxi/model/post.dart';
 import 'package:itaxi/model/history.dart';
 import 'package:itaxi/widget/abbreviatePlaceName.dart';
 
-Widget chatroomListListTile(
-    {required BuildContext context, required History history}) {
+Widget chatroomListListTile({required BuildContext context, required History history}) {
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
   late AddPostController _addPostController = Get.find();
@@ -27,8 +26,7 @@ Widget chatroomListListTile(
 
   return InkWell(
     onTap: () async {
-      await _historyController.getHistoryInfo(
-          postId: postId, postType: postType);
+      await _historyController.getHistoryInfo(postId: postId, postType: postType);
       _historyController.history.then((value) {
         if (value.postType != 3) {
           _chatRoomController.getPost(post: value.toPost());
@@ -37,24 +35,28 @@ Widget chatroomListListTile(
           _chatRoomController.getKtxPost(ktxPost: value.toKtxPost());
           _chatRoomController.getKtxChats(ktxPost: value.toKtxPost());
         }
-        Get.to(() => const NewChatroomScreen());
+        Get.to(() => const ChatRoomDetailScreen());
       });
     },
     child: Container(
       width: 342.w,
       height: 88.h,
-      decoration: BoxDecoration(
-          border: Border(bottom: BorderSide(color: colorScheme.shadow))),
+      decoration: BoxDecoration(border: Border(bottom: BorderSide(color: colorScheme.shadow))),
       child: Padding(
         padding: EdgeInsets.only(top: 16.h, bottom: 16.h),
         child: Row(children: [
-          SizedBox(
-            width: 56.w,
-            height: 56.h,
-            child: history.postType != 3
-                ? Image.asset('assets/icon/icon-Car.png')
-                : Image.asset('assets/icon/icon-KTX.png'),
-          ),
+          history.postType != 3
+              ? Image.asset(
+                  'assets/icon/icon-Car.png',
+                  width: 56.w,
+                  height: 56.h,
+                  fit: BoxFit.fill,
+                )
+              : Image.asset('assets/icon/icon-KTX.png',
+                  width: 56.w,
+                  height: 56.h,
+                  fit: BoxFit.fill,
+                ),
           SizedBox(
             width: 16.w,
           ),
@@ -91,13 +93,13 @@ Widget chatroomListListTile(
                           // for (int i = 0; i < post.joiners!.length; i++)
                           //   if (post.joiners![i].owner!)
                           Text(
-                            "방장: ${history.owner}",
+                            "방장: ${history.ownerName}",
                             style: textTheme.bodyText2?.copyWith(
                               color: colorScheme.tertiaryContainer,
                             ),
                           ),
                           Text(
-                            "${history.capacity}명",
+                            "${history.participantNum}명",
                             style: textTheme.bodyText2?.copyWith(
                               color: colorScheme.tertiary,
                             ),

@@ -34,7 +34,6 @@ late AndroidNotificationChannel channel;
 late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
 void main() async {
-
   //임시로 OS Error: CERTIFICATE_VERIFY_FAILED 해결
   HttpOverrides.global = new MyHttpOverrides();
 
@@ -51,22 +50,16 @@ void main() async {
   channel = const AndroidNotificationChannel(
     'high_importance_channel', // id
     'High Importance Notifications', // title
-    description:
-        'This channel is used for important notifications.', // description
+    description: 'This channel is used for important notifications.', // description
     importance: Importance.high,
   );
 
   flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
-  await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<
-          AndroidFlutterLocalNotificationsPlugin>()
-      ?.createNotificationChannel(channel);
+  await flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()?.createNotificationChannel(channel);
 
-  const AndroidInitializationSettings initSettingsAndroid =
-      AndroidInitializationSettings('@mipmap/ic_launcher');
-  const DarwinInitializationSettings initSettingsIOS =
-      DarwinInitializationSettings(
+  const AndroidInitializationSettings initSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
+  const DarwinInitializationSettings initSettingsIOS = DarwinInitializationSettings(
     requestAlertPermission: true,
     requestBadgePermission: true,
     requestSoundPermission: true,
@@ -78,7 +71,7 @@ void main() async {
   await flutterLocalNotificationsPlugin.initialize(
     initSettings,
   );
-  
+
   // iOS
   await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
     alert: true,
@@ -110,28 +103,28 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
-    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-      var notification = message.notification;
-      var android = message.notification?.android;
+    // FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+    //   var notification = message.notification;
+    //   var android = message.notification?.android;
 
-      print('Got a message whilst in the foreground!');
-      print(channel.description);
+    //   print('Got a message whilst in the foreground!');
+    //   print(channel.description);
 
-      // android 인 경우
-      if (notification != null && android != null) {
-        await flutterLocalNotificationsPlugin.show(
-            notification.hashCode,
-            notification.title,
-            notification.body,
-            NotificationDetails(
-                android: AndroidNotificationDetails(
-              channel.id,
-              channel.name,
-              channelDescription: channel.description,
-              icon: android.smallIcon,
-            )));
-      }
-    });
+    //   // android 인 경우
+    //   if (notification != null && android != null) {
+    //     await flutterLocalNotificationsPlugin.show(
+    //         notification.hashCode,
+    //         notification.title,
+    //         notification.body,
+    //         NotificationDetails(
+    //             android: AndroidNotificationDetails(
+    //           channel.id,
+    //           channel.name,
+    //           channelDescription: channel.description,
+    //           icon: android.smallIcon,
+    //         )));
+    //   }
+    // });
 
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
@@ -174,10 +167,10 @@ class _MyAppState extends State<MyApp> {
           debugShowCheckedModeBanner: false,
           home: GetBuilder<SignInController>(
             builder: (_) {
+              print(_signInController.signInState);
               if (_signInController.signInState == SignInState.start) {
                 return const SplashScreen();
-              } else if (_signInController.signInState ==
-                  SignInState.signedOut) {
+              } else if (_signInController.signInState == SignInState.signedOut) {
                 return const SignInScreen();
               } else {
                 if (isOnBoarding == 1) {
@@ -197,8 +190,6 @@ class _MyAppState extends State<MyApp> {
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
-    return super.createHttpClient(context)
-      ..badCertificateCallback =
-          (X509Certificate cert, String host, int port) => true;
+    return super.createHttpClient(context)..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
   }
 }

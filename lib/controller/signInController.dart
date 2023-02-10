@@ -26,6 +26,8 @@ class SignInController extends GetxController {
   String? userInfo = "";
   static final storage = new FlutterSecureStorage();
 
+  bool loaded = false;
+
   void signedStart() {
     signInState = SignInState.start;
     update();
@@ -67,7 +69,8 @@ class SignInController extends GetxController {
     // 데이터 없을 경우 null 반환
     userInfo = await storage.read(key: "login");
     // UserInfo 값 확인
-
+    loaded = true;
+    update();
     // user 정보가 있을 경우 바로 main으로 넘어가게 함
     if (userInfo != null) {
       id = userInfo!.split(" ")[1];
@@ -83,8 +86,7 @@ class SignInController extends GetxController {
     num = 5;
     try {
       await FirebaseAuth.instance
-          .signInWithEmailAndPassword(
-              email: id, password: pw) //아이디와 비밀번호로 로그인 시도
+          .signInWithEmailAndPassword(email: id, password: pw) //아이디와 비밀번호로 로그인 시도
           .then((value) {
         value.user!.emailVerified == true //이메일 인증 여부
             ? {
@@ -138,5 +140,4 @@ class SignInController extends GetxController {
     signedOutState();
     update();
   }
-
 }

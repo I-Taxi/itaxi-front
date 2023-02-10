@@ -12,7 +12,7 @@ class History {
     this.deptTime,
     this.destination,
     this.id,
-    this.owner,
+    this.ownerName,
     this.participantNum,
     this.postType,
     this.sale,
@@ -26,7 +26,7 @@ class History {
   String? deptTime;
   HistoryPlace? destination;
   int? id;
-  String? owner;
+  String? ownerName;
   int? participantNum;
   int? postType;
   int? sale;
@@ -54,7 +54,7 @@ class History {
         deptTime: deptTime ?? this.deptTime,
         destination: destination ?? this.destination,
         id: id ?? this.id,
-        owner: owner ?? this.owner,
+        ownerName: owner ?? this.ownerName,
         participantNum: participantNum ?? this.participantNum,
         postType: postType ?? this.postType,
         sale: sale ?? this.sale,
@@ -101,15 +101,12 @@ class History {
         deptTime: ds["deptTime"],
         destination: HistoryPlace.fromDocs(ds["destination"]),
         id: ds["id"],
-        owner: ds["owner"],
+        ownerName: ds["ownerName"],
         participantNum: ds["participantNum"],
         postType: ds["postType"],
         sale: ds["sale"],
         status: ds["status"],
-        stopovers: ds["stopovers"] == null
-            ? null
-            : List<HistoryPlace>.from(
-                ds["stopovers"].map((x) => HistoryPlace.fromDocs(x))),
+        stopovers: ds["stopovers"] == null ? null : List<HistoryPlace>.from(ds["stopovers"].map((x) => HistoryPlace.fromDocs(x))),
       );
 
   factory History.fromDetailDocs(Map<String, dynamic> ds) => History(
@@ -118,17 +115,13 @@ class History {
         deptTime: ds["deptTime"],
         destination: HistoryPlace.fromDocs(ds["destination"]),
         id: ds["id"],
-        owner: ds["owner"],
+        ownerName: ds["ownerName"],
         participantNum: ds["participantNum"],
         postType: ds["postType"],
         sale: ds["sale"],
         status: ds["status"],
-        joiners:
-            List<Joiner>.from(ds["joiners"].map((x) => Joiner.fromDocs(x))),
-        stopovers: ds["stopovers"] == null
-            ? null
-            : List<HistoryPlace>.from(
-                ds["stopovers"].map((x) => HistoryPlace.fromDocs(x))),
+        joiners: List<Joiner>.from(ds["joiners"].map((x) => Joiner.fromDocs(x))),
+        stopovers: ds["stopovers"] == null ? null : List<HistoryPlace>.from(ds["stopovers"].map((x) => HistoryPlace.fromDocs(x))),
       );
 
   Map<String, dynamic> toMap() => {
@@ -137,7 +130,7 @@ class History {
         "deptTime": deptTime,
         "destination": destination,
         "id": id,
-        "owner": owner,
+        "ownerName": ownerName,
         "participantNum": participantNum,
         "postType": postType,
         "sale": sale,

@@ -189,10 +189,11 @@ class PostController extends GetxController {
     Joiner? owner;
 
     post.joiners?.forEach((joiner) {
+      print(1);
       if (joiner.owner!) {
         owner = joiner;
       }
-      post.joiners?.remove(joiner);
+      // post.joiners?.remove(joiner);
     });
 
     Map<String, dynamic> map = {
@@ -211,13 +212,27 @@ class PostController extends GetxController {
       print(response.body);
       await _chatRoomController.outChat(post: post);
       ChatRepository().setPost(post: post);
-
-      _chatRoomController.changeOwnerChat(ownerName: response.body);
+      int oldOwnerId = -1;
+      for (Joiner joiner in post.joiners!) {
+        if (joiner.owner!) {
+          oldOwnerId = joiner.memberId!;
+        }
+      }
+      int newOwnerId = int.parse(response.body);
+      if (post.participantNum! > 1 && newOwnerId != oldOwnerId) {
+        String newOwnerName = '';
+        for (Joiner joiner in post.joiners!) {
+          if (newOwnerId == joiner.memberId) {
+            newOwnerName = joiner.memberName!;
+          }
+        }
+        _chatRoomController.changeOwnerChat(ownerName: newOwnerName);
+      }
       // if (_userController.memberId == owner?.memberId) {
       //   _chatRoomController.changeOwnerChat(post: post);
       // }
     } else {
-      throw Exception('Failed to out');
+      throw Exception(json.decode(utf8.decode(response.bodyBytes)));
     }
   }
 }
