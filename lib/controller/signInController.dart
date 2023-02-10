@@ -30,19 +30,16 @@ class SignInController extends GetxController {
 
   void signedStart() {
     signInState = SignInState.start;
-    print(111);
     update();
   }
 
   void signedInState() {
     signInState = SignInState.signedIn;
-    print(222);
     update();
   }
 
   void signedOutState() {
     signInState = SignInState.signedOut;
-    print(333);
     update();
   }
 
@@ -72,7 +69,6 @@ class SignInController extends GetxController {
     // 데이터 없을 경우 null 반환
     userInfo = await storage.read(key: "login");
     // UserInfo 값 확인
-    print('asyncMethod');
     loaded = true;
     update();
     // user 정보가 있을 경우 바로 main으로 넘어가게 함
@@ -87,7 +83,6 @@ class SignInController extends GetxController {
   }
 
   Future<void> signIn() async {
-    print('signin');
     num = 5;
     try {
       await FirebaseAuth.instance

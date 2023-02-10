@@ -42,7 +42,7 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
         backgroundColor: colorScheme.background,
         strokeWidth: 2.0,
         onRefresh: () async {
-          _historyController.getHistorys();
+          await _historyController.getHistorys();
         },
         child: GetBuilder<HistoryController>(builder: (_) {
           return FutureBuilder<List<History>>(
@@ -73,7 +73,12 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
                             ),
                             child: Stack(
                               children: [
-                                Image.asset('assets/banner.png'),
+                                Image.asset(
+                                  'assets/banner.png',
+                                  width: 342.w,
+                                  height: 75.h,
+                                  fit: BoxFit.fill,
+                                ),
                                 Padding(
                                   padding: EdgeInsets.only(right: 7.w, bottom: 5.h),
                                   child: Align(
