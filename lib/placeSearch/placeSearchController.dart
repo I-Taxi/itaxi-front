@@ -149,14 +149,14 @@ class PlaceSearchController extends GetxController {
     if (_hasResult) {
       _typeFilteredResultList.clear();
       _searchResult.forEach((place) {
-        if (place.placeType == _placeType) {
+        if (place.placeType == _placeType || place.placeType! - 3 == _placeType) {
           _typeFilteredResultList.add(place);
         }
       });
     }
     _typeFilteredList.clear();
     places.forEach((place) {
-      if (place.placeType == _placeType) {
+      if (place.placeType == _placeType || place.placeType! - 3 == _placeType) {
         _typeFilteredList.add(place);
       }
     });
@@ -257,8 +257,7 @@ class PlaceSearchController extends GetxController {
   }
 
   DateTime mergeDateAndTime() {
-    return DateTime(_pickedDate.year, _pickedDate.month, _pickedDate.day,
-        _pickedTime.hour, _pickedTime.minute);
+    return DateTime(_pickedDate.year, _pickedDate.month, _pickedDate.day, _pickedTime.hour, _pickedTime.minute);
   }
 
   Future<int> addFavoritePlace() async {
@@ -331,7 +330,7 @@ class PlaceSearchController extends GetxController {
     favorPlaceUrl = '${favorPlaceUrl}favorite/delete/${favoriteSelectedPlace!.id}';
     var body = json.encode(<String, String>{"uid": _userController!.uid!});
 
-    http.Response response = await http.delete(
+    http.Response response = await http.put(
       Uri.parse(favorPlaceUrl),
       headers: <String, String>{
         'Content-type': 'application/json',

@@ -84,7 +84,9 @@ class ITaxiTheme {
       outline: Color(0xffc5e1fd),
       onSurfaceVariant: Color(0xFFE1E1E1),
       inversePrimary: Color(0xffB9B9B9),
-      surfaceVariant: Color(0xffff8080));
+      surfaceVariant: Color(0xffff8080),
+      outlineVariant: Color(0xff69c077),
+      );
 
   static TextTheme textThemeDefault = TextTheme(
     headline1: TextStyle(fontSize: 40.sp, fontFamily: 'Black'),
