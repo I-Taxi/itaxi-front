@@ -6,6 +6,7 @@ import 'package:itaxi/controller/noticeController.dart';
 import 'package:itaxi/widget/noticeListTile.dart';
 
 import 'package:itaxi/model/notice.dart';
+import 'dart:ui';
 
 class NoticeScreen extends StatefulWidget {
   const NoticeScreen({Key? key}) : super(key: key);
@@ -16,6 +17,9 @@ class NoticeScreen extends StatefulWidget {
 
 class _NoticeScreenState extends State<NoticeScreen> {
   NoticeController _noticeController = Get.put(NoticeController());
+
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
+
 
 
   @override
@@ -40,7 +44,7 @@ class _NoticeScreenState extends State<NoticeScreen> {
               icon: Icon(
                 Icons.clear_sharp,
                 color: colorScheme.tertiaryContainer,
-                size: 24,
+                size: 30,
               ),
             ),
           ]
@@ -48,64 +52,75 @@ class _NoticeScreenState extends State<NoticeScreen> {
       backgroundColor: colorScheme.background,
       body: ColorfulSafeArea(
         color: colorScheme.primary,
-        child: Padding(
-          padding: EdgeInsets.only(
-            left: 24.0.w,
-            right: 24.0.w,
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              SizedBox(
-                height: 28.h,
-              ),
-              Text(
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 28.h,
+            ),
+            Padding(
+              padding: EdgeInsets.only(left: 24.w),
+              child: Text(
                 '공지사항',
                 style: textTheme.headline2?.copyWith(
-                    color: colorScheme.onTertiary,
+                  color: colorScheme.onTertiary,
                 ),
               ),
-              SizedBox(
-                height: 29.h,
-              ),
-              SingleChildScrollView(
-                child: FutureBuilder<List<Notice>>(
-                  future: _noticeController.notices,
-                  builder: (BuildContext context, snapshot) {
-                    if (snapshot.hasData) {
-                      if (snapshot.data!.isNotEmpty) {
-                        return ListView.builder(
-                          physics: ScrollPhysics(),
-                          shrinkWrap: true,
-                          itemCount: snapshot.data!.length,
-                          itemBuilder: (BuildContext context, int index) {
-                            return noticeListTile(
-                              context: context,
-                              notice: snapshot.data![index],
+            ),
+            SizedBox(
+              height: 45.h,
+            ),
+            Expanded(
+              child: RefreshIndicator(
+                key: _refreshIndicatorKey,
+                color: colorScheme.tertiary,
+                backgroundColor: colorScheme.background,
+                strokeWidth: 2.0,
+                onRefresh: () async {
+                  _noticeController.getNotices();
+                },
+                child: GetBuilder<NoticeController>(
+                  builder: (_) {
+                    return FutureBuilder<List<Notice>>(
+                      future: _noticeController.notices,
+                      builder: (BuildContext context, snapshot) {
+                        if (snapshot.hasData) {
+                          if (snapshot.data!.isNotEmpty) {
+                            return ListView.builder(
+                              padding: EdgeInsets.zero,
+                              physics: ScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: snapshot.data!.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return noticeListTile(
+                                  context: context,
+                                  notice: snapshot.data![index],
+                                );
+                              },
                             );
-                          },
+                          } else {
+                            return noticeIsEmpty(context);
+                          }
+                        } else if (snapshot.hasError) {
+                          return Center(
+                            child: Text(
+                              '${snapshot.error}',
+                              style: textTheme.headline2?.copyWith(
+                                color: colorScheme.tertiary,
+                              ),
+                            ),
+                          );
+                        }
+                        return LinearProgressIndicator(
+                          color: colorScheme.secondary,
                         );
-                      } else {
-                        return noticeIsEmpty(context);
-                      }
-                    } else if (snapshot.hasError) {
-                      return Center(
-                        child: Text(
-                          '${snapshot.error}',
-                          style: textTheme.headline2?.copyWith(
-                            color: colorScheme.tertiary,
-                          ),
-                        ),
-                      );
-                    }
-                    return LinearProgressIndicator(
-                      color: colorScheme.secondary,
+                      },
                     );
-                  },
+                  }
                 ),
               ),
-            ],
-          ),
+            ),
+          ],
         ),
       ),
     );

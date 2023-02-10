@@ -120,6 +120,7 @@ flutter:
     - assets/button/new_message.png
     - assets/button/send.png
     - assets/button/message.png
+    - assets/button/clear.png
     - assets/button/menu.png
 
     # arrow
@@ -127,6 +128,7 @@ flutter:
     - assets/arrow/arrow_forward.png
     - assets/arrow/arrow_back.png
     - assets/arrow/arrow_back_1.png
+    - assets/arrow/arrow_back_2.png
     - assets/arrow/arrow_down_1.png
     - assets/arrow/arrow_down_2.png
 
