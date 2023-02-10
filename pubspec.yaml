@@ -204,6 +204,7 @@ flutter:
     - assets/icon/discount.png
     - assets/icon/trash_can.png
     - assets/icon/add.png
+    - assets/icon/icon-Exit.png
 
     # background
     - assets/background/timeline_default_bg.png
