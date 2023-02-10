@@ -78,15 +78,18 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                   _screenController.setCheckScreen(false);
                 },
                 icon: Image.asset("assets/arrow/arrow_back_1.png",
-                    color: colorScheme.primary, width: 24.w, height: 24.h)),
+                    color: colorScheme.primary, width: 20.w, height: 20.h)),
             actions: [
               Padding(
                 padding: EdgeInsets.only(right: 12.r),
                 child: IconButton(
                   onPressed: () {},
-                  icon: const Icon(Icons.menu),
-                  color: colorScheme.background,
-                  iconSize: 24.r,
+                  icon: Image.asset(
+                    "assets/button/menu.png",
+                    color: colorScheme.background,
+                    width: 24.w,
+                    height: 24.h,
+                  ),
                 ),
               ),
             ],
