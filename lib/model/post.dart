@@ -85,12 +85,8 @@ class Post {
       capacity: ds['capacity'],
       participantNum: ds['participantNum'],
       status: ds['status'],
-      joiners: List<Joiner>.from(
-          ds['joiners'].map((json) => Joiner.fromUidDocs(json))),
-      stopovers: (stopOversFromDs.isEmpty)
-          ? []
-          : List<Place>.from(
-              ds['stopovers'].map((json) => Place.fromDocs(json))),
+      joiners: List<Joiner>.from(ds['joiners'].map((json) => Joiner.fromUidDocs(json))),
+      stopovers: (stopOversFromDs.isEmpty) ? [] : List<Place>.from(ds['stopovers'].map((json) => Place.fromDocs(json))),
     );
   }
 
@@ -122,12 +118,8 @@ class Post {
       capacity: ds['capacity'],
       participantNum: ds['participantNum'],
       status: ds['status'],
-      joiners:
-          List<Joiner>.from(ds['joiners'].map((json) => Joiner.fromDocs(json))),
-      stopovers: (stopOversFromDs.isEmpty)
-          ? []
-          : List<Place>.from(
-              ds['stopovers'].map((json) => Place.fromStopoverDocs(json))),
+      joiners: List<Joiner>.from(ds['joiners'].map((json) => Joiner.fromDocs(json))),
+      stopovers: (stopOversFromDs.isEmpty) ? [] : List<Place>.from(ds['stopovers'].map((json) => Place.fromStopoverDocs(json))),
     );
   }
 
@@ -169,8 +161,7 @@ class Post {
       "dstId": destination!.id,
       "deptTime": deptTime,
       "capacity": capacity,
-      "stopoverIds":
-          List<int>.from(stopovers!.map((stopover) => stopover!.id!)),
+      "stopoverIds": (stopovers == null || stopovers!.isEmpty) ? [] : List<int>.from(stopovers!.map((stopover) => stopover!.id!)),
     };
   }
 

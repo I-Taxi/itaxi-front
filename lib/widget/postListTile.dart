@@ -48,7 +48,7 @@ Widget postListTile({
     behavior: HitTestBehavior.opaque,
     onTap: () async {
       bool checkId = await checkUser(post.id!);
-      _postController.fetchPostInfo(post: post);
+      // _postController.fetchPostInfo(post: post);
       if (post.participantNum! >= post.capacity!) {
         snackBar(context: context, title: '이미 인원이 가득 찬 모집입니다.');
       } else {
