@@ -70,6 +70,8 @@ Padding lookupSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
                     return GestureDetector(
                       onTap: () {
                         _placeSearchController.changeDepOrDst(0);
+                        _placeSearchController.changeIsLookup(true);
+                        _placeSearchController.filterPlacesByIndex();
                         Get.to(() => SearchScreen());
                       },
                       child: !(_placeController.hasDep)
@@ -95,6 +97,8 @@ Padding lookupSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
                     return GestureDetector(
                       onTap: () {
                         _placeSearchController.changeDepOrDst(1);
+                        _placeSearchController.changeIsLookup(true);
+                        _placeSearchController.filterPlacesByIndex();
                         Get.to(() => SearchScreen());
                       },
                       child: !(_placeController.hasDst)
@@ -164,6 +168,8 @@ Padding gatherSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
                     return GestureDetector(
                       onTap: () {
                         _placeSearchController.changeDepOrDst(0);
+                        _placeSearchController.changeIsLookup(false);
+                        _placeSearchController.filterPlacesByIndex();
                         Get.to(() => SearchScreen());
                       },
                       child: !(_placeController.hasDep)
@@ -189,6 +195,8 @@ Padding gatherSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
                     return GestureDetector(
                       onTap: () {
                         _placeSearchController.changeDepOrDst(1);
+                        _placeSearchController.changeIsLookup(false);
+                        _placeSearchController.filterPlacesByIndex();
                         Get.to(() => SearchScreen());
                       },
                       child: !(_placeController.hasDst)

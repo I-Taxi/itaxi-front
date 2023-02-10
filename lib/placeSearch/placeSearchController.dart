@@ -40,6 +40,7 @@ class PlaceSearchController extends GetxController {
   late List<FavoritePlace> favoritePlaces = [];
 
   bool _hasResult = false;
+  bool isLookup = true;
 
   int get currentIndex => _currentIndex;
   int get postType => _postType;
@@ -123,6 +124,11 @@ class PlaceSearchController extends GetxController {
     update();
   }
 
+  void changeIsLookup(bool to) {
+    isLookup = to;
+    update();
+  }
+
   void setResultByQuery() {
     _hasResult = true;
     _searchResult.clear();
@@ -149,14 +155,14 @@ class PlaceSearchController extends GetxController {
     if (_hasResult) {
       _typeFilteredResultList.clear();
       _searchResult.forEach((place) {
-        if (place.placeType == _placeType || place.placeType! - 3 == _placeType) {
+        if (place.placeType == _placeType || (place.placeType! - 3 == _placeType && isLookup)) {
           _typeFilteredResultList.add(place);
         }
       });
     }
     _typeFilteredList.clear();
     places.forEach((place) {
-      if (place.placeType == _placeType || place.placeType! - 3 == _placeType) {
+      if (place.placeType == _placeType || (place.placeType! - 3 == _placeType && isLookup)) {
         _typeFilteredList.add(place);
       }
     });
