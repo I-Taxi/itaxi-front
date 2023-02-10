@@ -32,6 +32,8 @@ class UserController extends GetxController {
   late final Encrypter encrypter;
   late String? token;
 
+  bool alarm = false;
+
   @override
   void onInit() {
     super.onInit();
@@ -43,6 +45,11 @@ class UserController extends GetxController {
   @override
   void dispose() {
     super.dispose();
+  }
+
+  void setAlarm(bool to) {
+    alarm = to;
+    update();
   }
 
   Future<void> getUsers() async {
@@ -86,7 +93,8 @@ class UserController extends GetxController {
 
     final body = jsonEncode({"uid": uid});
 
-    http.Response response = await http.post(Uri.parse(userUrl), headers: <String, String>{'Content-type': 'application/json'}, body: body);
+    http.Response response =
+        await http.post(Uri.parse(userUrl), headers: <String, String>{'Content-type': 'application/json'}, body: body);
 
     if (response.statusCode == 200) {
       UserInfoList result = userFromJson(json.decode(utf8.decode(response.bodyBytes)));

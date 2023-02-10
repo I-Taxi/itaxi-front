@@ -53,7 +53,6 @@ class _MainScreenState extends State<MainScreen> {
 
   String e = ""; // 요일 변수
   int personCount = 1; // 인원수
-  bool alarm = false;
   bool isOpen = false;
 
   void _openEndDrawer() {
@@ -468,14 +467,12 @@ class _MainScreenState extends State<MainScreen> {
             transformHitTests: false,
             scale: .6,
             child: CupertinoSwitch(
-                value: alarm,
+                value: _userController.alarm,
                 activeColor: colorScheme.inverseSurface,
                 thumbColor: colorScheme.primary,
                 trackColor: colorScheme.tertiary,
                 onChanged: (bool value) {
-                  setState(() {
-                    alarm = value;
-                  });
+                  _userController.setAlarm(value);
                 }),
           ),
         )
