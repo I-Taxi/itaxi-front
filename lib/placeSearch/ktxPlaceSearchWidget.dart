@@ -5,7 +5,6 @@ import 'package:itaxi/controller/ktxPlaceController.dart';
 import 'package:itaxi/model/ktxPlace.dart';
 import 'package:itaxi/placeSearch/ktxPlaceSearchController.dart';
 
-
 Widget selectedView({required String viewText, required BuildContext context}) {
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
@@ -74,7 +73,8 @@ Widget unSelectedTypeView(
   );
 }
 
-Widget searchTypeView({required String viewText, required BuildContext context}) {
+Widget searchTypeView(
+    {required String viewText, required BuildContext context}) {
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
 
@@ -96,7 +96,8 @@ Widget searchTypeView({required String viewText, required BuildContext context})
   );
 }
 
-Widget unselectedSearchTypeView({required String viewText, required BuildContext context}) {
+Widget unselectedSearchTypeView(
+    {required String viewText, required BuildContext context}) {
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
 
@@ -127,15 +128,20 @@ Widget placeSearchTile({
         scrollDirection: Axis.vertical,
         shrinkWrap: true,
         itemCount: placeList.length,
-        itemBuilder: (_, int index){
+        itemBuilder: (_, int index) {
           return ListTile(
             //   trailing: Checkbox(
             //     value: widget.selectedList[index],
             // ),
             selectedColor: colorScheme.secondary,
             selected: index == _ktxPlaceSearchController.selectedIndex,
-            leading: const Icon(
-              Icons.location_on,
+            leading: Image.asset(
+              'assets/icon/location.png',
+              width: 24.w,
+              height: 24.h,
+              color: index == _ktxPlaceSearchController.selectedIndex
+                  ? colorScheme.onSecondaryContainer
+                  : colorScheme.tertiaryContainer,
             ),
             onTap: () {
               ScaffoldMessenger.of(context).hideCurrentSnackBar();
@@ -144,10 +150,10 @@ Widget placeSearchTile({
               _ktxPlaceSearchController.selectedPlace = placeList[index];
 
               placeSearchSnackBar(
-                  context: context,
-                  title: RichText(
-                      textAlign: TextAlign.center,
-                      text: TextSpan(
+                context: context,
+                title: RichText(
+                    textAlign: TextAlign.center,
+                    text: TextSpan(
                       text: '원하는 출발지라면 ',
                       style: textTheme.subtitle2?.copyWith(
                         color: colorScheme.primary,
@@ -166,18 +172,19 @@ Widget placeSearchTile({
                           ),
                         ),
                       ],
-                      )
-                  ),
-                  color: Colors.green,
+                    )),
+                color: Colors.green,
               );
             },
             title: Text(
               placeList[index].name!,
-              style: textTheme.bodyText1?.copyWith(color: (index == _ktxPlaceSearchController.selectedIndex) ? colorScheme.secondary : colorScheme.onTertiary),
+              style: textTheme.bodyText1?.copyWith(
+                  color: (index == _ktxPlaceSearchController.selectedIndex)
+                      ? colorScheme.secondary
+                      : colorScheme.onTertiary),
             ),
           );
-        }
-    ),
+        }),
   );
 }
 
@@ -193,9 +200,7 @@ ScaffoldFeatureController<SnackBar, SnackBarClosedReason> placeSearchSnackBar({
       content: title,
       backgroundColor: color,
       behavior: SnackBarBehavior.floating,
-      shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(16)
-      ),
+      shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       duration: const Duration(seconds: 2),
     ),
   );

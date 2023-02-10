@@ -5,6 +5,7 @@ import 'package:itaxi/controller/navigationController.dart';
 import 'package:itaxi/controller/signInController.dart';
 import 'package:itaxi/timeline/checkPlaceScreen.dart';
 import 'package:itaxi/settings/settingScreen.dart';
+import 'package:itaxi/timeline/ktxCheckPlaceScreen.dart';
 import 'package:toggle_switch/toggle_switch.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
@@ -80,6 +81,7 @@ class _KtxScreenState extends State<KtxScreen> {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     return GetBuilder<ScreenController>(builder: (controller) {
+      if (_screenController.isKtxCheckScreen) return KtxCheckPlaceScreen();
       return Scaffold(
         key: _scaffoldKey,
         endDrawer: Drawer(child: _myListView(context: context)),
@@ -97,7 +99,8 @@ class _KtxScreenState extends State<KtxScreen> {
                   ),
                 )),
             Padding(
-                padding: EdgeInsets.only(left: 24.h, top: 55.63.h, right: 26.4.w),
+                padding:
+                    EdgeInsets.only(left: 24.h, top: 55.63.h, right: 26.4.w),
                 child: GetBuilder<KtxPlaceController>(builder: (_) {
                   return Column(
                     children: [
@@ -153,12 +156,15 @@ class _KtxScreenState extends State<KtxScreen> {
                                         ),
                                         alignment: Alignment.center,
                                         child: Padding(
-                                          padding: EdgeInsets.only(left: 16.w, right: 24.w),
+                                          padding: EdgeInsets.only(
+                                              left: 16.w, right: 24.w),
                                           child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.center,
                                             children: [
                                               ImageIcon(
-                                                AssetImage('assets/icon/notice_info.png'),
+                                                AssetImage(
+                                                    'assets/icon/notice_info.png'),
                                                 size: 23,
                                                 color: colorScheme.primary,
                                               ),
@@ -167,7 +173,10 @@ class _KtxScreenState extends State<KtxScreen> {
                                               ),
                                               Text(
                                                 "iTaxi를 이용해 주셔서 감사합니다 :)",
-                                                style: textTheme.subtitle2?.copyWith(color: colorScheme.primary),
+                                                style: textTheme.subtitle2
+                                                    ?.copyWith(
+                                                        color: colorScheme
+                                                            .primary),
                                               ),
                                             ],
                                           ),
@@ -210,32 +219,55 @@ class _KtxScreenState extends State<KtxScreen> {
                                   color: colorScheme.primary,
                                   borderRadius: BorderRadius.circular(36.0),
                                   boxShadow: [
-                                    BoxShadow(color: colorScheme.shadow, blurRadius: 40, offset: Offset(2, 4))
+                                    BoxShadow(
+                                        color: colorScheme.shadow,
+                                        blurRadius: 40,
+                                        offset: Offset(2, 4))
                                   ]),
                               child: controller.ktxScreenCurrentToggle == 0
                                   ? Column(
                                       children: [
                                         Padding(
-                                          padding: EdgeInsets.only(left: 23.w, right: 23.w, top: 20.63.h),
-                                          child: ktxPostTypeToggleButton(context: context, controller: controller),
+                                          padding: EdgeInsets.only(
+                                              left: 23.w,
+                                              right: 23.w,
+                                              top: 20.63.h),
+                                          child: ktxPostTypeToggleButton(
+                                              context: context,
+                                              controller: controller),
                                         ),
-                                        lookupSetDepDstWidget(colorScheme, textTheme, controller),
-                                        lookupSetTimeWidget(colorScheme, context, textTheme),
-                                        lookupSetCapacityWidget(colorScheme, controller, textTheme)
+                                        lookupSetDepDstWidget(
+                                            colorScheme, textTheme, controller),
+                                        lookupSetTimeWidget(
+                                            colorScheme, context, textTheme),
+                                        lookupSetCapacityWidget(
+                                            colorScheme, controller, textTheme)
                                       ],
                                     )
                                   : Column(
                                       children: [
                                         Padding(
-                                          padding: EdgeInsets.only(left: 23.w, right: 23.w, top: 20.63.h),
-                                          child: ktxPostTypeToggleButton(context: context, controller: controller),
+                                          padding: EdgeInsets.only(
+                                              left: 23.w,
+                                              right: 23.w,
+                                              top: 20.63.h),
+                                          child: ktxPostTypeToggleButton(
+                                              context: context,
+                                              controller: controller),
                                         ),
-                                        gatherSetDepDstWidget(colorScheme, textTheme, controller),
-                                        gatherSetTimeWidget(colorScheme, context, textTheme),
+                                        gatherSetDepDstWidget(
+                                            colorScheme, textTheme, controller),
+                                        gatherSetTimeWidget(
+                                            colorScheme, context, textTheme),
                                         controller.discountSelect
-                                            ? discountActivatedWidget(colorScheme, controller, textTheme)
-                                            : discountWidget(colorScheme, controller, textTheme),
-                                        lookupSetCapacityWidget(colorScheme, controller, textTheme)
+                                            ? discountActivatedWidget(
+                                                colorScheme,
+                                                controller,
+                                                textTheme)
+                                            : discountWidget(colorScheme,
+                                                controller, textTheme),
+                                        lookupSetCapacityWidget(
+                                            colorScheme, controller, textTheme)
                                       ],
                                     ),
                             )
@@ -246,7 +278,10 @@ class _KtxScreenState extends State<KtxScreen> {
                                   color: colorScheme.primary,
                                   borderRadius: BorderRadius.circular(36.0),
                                   boxShadow: [
-                                    BoxShadow(color: colorScheme.shadow, blurRadius: 40, offset: Offset(2, 4))
+                                    BoxShadow(
+                                        color: colorScheme.shadow,
+                                        blurRadius: 40,
+                                        offset: Offset(2, 4))
                                   ]),
                             ),
                       SizedBox(
@@ -259,7 +294,8 @@ class _KtxScreenState extends State<KtxScreen> {
                       if (controller.ktxScreenLoaded)
                         controller.ktxScreenCurrentToggle == 0
                             ? lookupButton(textTheme, colorScheme)
-                            : gatherButton(textTheme, colorScheme, controller, context),
+                            : gatherButton(
+                                textTheme, colorScheme, controller, context),
                     ],
                   );
                 })),
@@ -281,7 +317,8 @@ class _KtxScreenState extends State<KtxScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding: EdgeInsets.only(top: 87.h, left: 35.w, right: 24.w),
+                    padding:
+                        EdgeInsets.only(top: 87.h, left: 35.w, right: 24.w),
                     child: Image(
                       image: AssetImage("assets/profile.png"),
                       height: 88.w,
@@ -309,8 +346,9 @@ class _KtxScreenState extends State<KtxScreen> {
                             ),
                             Text(
                               snapshot.data!.email.toString(),
-                              style:
-                                  textTheme.bodyText2?.copyWith(color: colorScheme.tertiaryContainer, fontSize: 10.sp),
+                              style: textTheme.bodyText2?.copyWith(
+                                  color: colorScheme.tertiaryContainer,
+                                  fontSize: 10.sp),
                             ),
                           ],
                         ),
@@ -414,7 +452,8 @@ class _KtxScreenState extends State<KtxScreen> {
                               },
                               child: Text(
                                 "로그아웃",
-                                style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiaryContainer),
+                                style: textTheme.bodyText2?.copyWith(
+                                    color: colorScheme.tertiaryContainer),
                               ),
                             )
                           ],
@@ -432,7 +471,8 @@ class _KtxScreenState extends State<KtxScreen> {
                   },
                   child: Text(
                     "로그아웃",
-                    style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiary),
+                    style: textTheme.bodyText2
+                        ?.copyWith(color: colorScheme.tertiary),
                   ),
                 ),
               );
@@ -512,7 +552,8 @@ class _KtxScreenState extends State<KtxScreen> {
         builder: (BuildContext context) {
           return Dialog(
             elevation: 0,
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+            shape:
+                RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
             child: Container(
               width: 360.w,
               height: 240.h,
@@ -526,7 +567,8 @@ class _KtxScreenState extends State<KtxScreen> {
                 children: [
                   Text(
                     "로그아웃 하시겠습니까?",
-                    style: textTheme.subtitle1?.copyWith(color: colorScheme.onSecondaryContainer),
+                    style: textTheme.subtitle1
+                        ?.copyWith(color: colorScheme.onSecondaryContainer),
                   ),
                   const Spacer(),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
