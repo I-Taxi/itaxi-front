@@ -53,12 +53,13 @@ class HistoryController extends GetxController {
     update();
   }
 
-  Future<void> getHistoryInfo(
-      {required int postId, required int postType}) async {
+  Future<void> getHistoryInfo({required int postId, required int postType}) async {
     loaded = false;
     history = fetchHistoryInfo(postId: postId, postType: postType);
-    loaded = true;
-    update();
+    history.then((_) {
+      loaded = true;
+      update();
+    });
   }
 
   // /itaxi/api/post/history
@@ -86,10 +87,9 @@ class HistoryController extends GetxController {
     }
   }
 
-  Future<History> fetchHistoryInfo(
-      {required int postId, required int postType}) async {
+  Future<History> fetchHistoryInfo({required int postId, required int postType}) async {
     var historyUrl = dotenv.env['API_URL'].toString();
-    historyUrl = '${historyUrl}history/history/$postId';
+    historyUrl = '${historyUrl}history/$postId';
     final Map<String, dynamic> queryParameters;
 
     Map<String, dynamic> map = {
