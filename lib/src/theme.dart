@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
 
 class ITaxiTheme {
   // static const _lightFillColor = Color(0xffffffff);
@@ -58,52 +59,50 @@ class ITaxiTheme {
   }
 
   static const ColorScheme lightColorScheme = ColorScheme(
-    primary: Color(0xFFFFFFFF),
-    onPrimary: Colors.black,
-    primaryContainer: Color(0xfffbfbfb),
-    onPrimaryContainer: Color(0xff388bdd),
-    secondary: Color(0xff70b1f2), //Color(0xff3fa9f5) - 기존 color
-    onSecondary: Color(0xFFFFFFFF),
-    secondaryContainer: Color(0xFF509DE9),
-    onSecondaryContainer: Color(0xff388BDD),
-    error: Color(0xffb00020),
-    onError: Colors.white,
-    errorContainer: Color(0xffE67373),
-    background: Color(0xFFFFFFFF),
-    onBackground: Color(0xFFF1F1F1),
-    surface: Color(0xFFFFFFFF),
-    onSurface: Colors.black,
-    tertiary: Color(0xff919191),
-    tertiaryContainer: Color(0xff717171),
-    onTertiaryContainer: Color(0xFFFBFBFB),
-    shadow: Color.fromRGBO(0, 0, 0, 0.15),
-    brightness: Brightness.light,
-    onTertiary: Color(0xFF3E3E3E),
-    inverseSurface: Color(0xff00CE21),
+      primary: Color(0xFFFFFFFF),
+      onPrimary: Colors.black,
+      primaryContainer: Color(0xfffbfbfb),
+      onPrimaryContainer: Color(0xff388bdd),
+      secondary: Color(0xff70b1f2), //Color(0xff3fa9f5) - 기존 color
+      onSecondary: Color(0xFFFFFFFF),
+      secondaryContainer: Color(0xFF509DE9),
+      onSecondaryContainer: Color(0xff388BDD),
+      error: Color(0xffb00020),
+      onError: Colors.white,
+      errorContainer: Color(0xffE67373),
+      background: Color(0xFFFFFFFF),
+      onBackground: Color(0xFFF1F1F1),
+      surface: Color(0xFFFFFFFF),
+      onSurface: Colors.black,
+      tertiary: Color(0xff919191),
+      tertiaryContainer: Color(0xff717171),
+      onTertiaryContainer: Color(0xFFFBFBFB),
+      shadow: Color.fromRGBO(0, 0, 0, 0.15),
+      brightness: Brightness.light,
+      onTertiary: Color(0xFF3E3E3E),
+      inverseSurface: Color(0xff00CE21),
+      outline: Color(0xffc5e1fd),
+      onSurfaceVariant: Color(0xFFE1E1E1),
+      inversePrimary: Color(0xffB9B9B9),
+      surfaceVariant: Color(0xffff8080));
 
-    outline: Color(0xffc5e1fd),
-    onSurfaceVariant: Color(0xFFE1E1E1),
-    inversePrimary: Color(0xffB9B9B9),
-    surfaceVariant: Color(0xffff8080)
+  static TextTheme textThemeDefault = TextTheme(
+    headline1: TextStyle(fontSize: 40.sp, fontFamily: 'Black'),
+    headline2: TextStyle(fontSize: 32.sp, fontFamily: 'Bold'),
+    headline3: TextStyle(fontSize: 24.sp, fontFamily: 'Bold'),
+    subtitle1: TextStyle(fontSize: 20.sp, fontFamily: 'Medium'),
+    subtitle2: TextStyle(fontSize: 16.sp, fontFamily: 'SemiBold'),
+    bodyText1: TextStyle(fontSize: 16.sp, fontFamily: 'Regular'),
+    bodyText2: TextStyle(fontSize: 13.sp, fontFamily: 'Regular'),
   );
 
-  static const TextTheme textThemeDefault = TextTheme(
-    headline1: TextStyle(fontSize: 40, fontFamily: 'Black'),
-    headline2: TextStyle(fontSize: 32, fontFamily: 'Bold'),
-    headline3: TextStyle(fontSize: 24, fontFamily: 'Bold'),
-    subtitle1: TextStyle(fontSize: 20, fontFamily: 'Medium'),
-    subtitle2: TextStyle(fontSize: 16, fontFamily: 'SemiBold'),
-    bodyText1: TextStyle(fontSize: 16, fontFamily: 'Regular'),
-    bodyText2: TextStyle(fontSize: 13, fontFamily: 'Regular'),
-  );
-
-  static const TextTheme textThemeIOS = TextTheme(
-    headline1: TextStyle(fontSize: 42, fontFamily: 'Black'),
-    headline2: TextStyle(fontSize: 34, fontFamily: 'Bold'),
-    headline3: TextStyle(fontSize: 26, fontFamily: 'Bold'),
-    subtitle1: TextStyle(fontSize: 22, fontFamily: 'Medium'),
-    subtitle2: TextStyle(fontSize: 18, fontFamily: 'SemiBold'),
-    bodyText1: TextStyle(fontSize: 18, fontFamily: 'Regular'),
-    bodyText2: TextStyle(fontSize: 15, fontFamily: 'Regular'),
+  static TextTheme textThemeIOS = TextTheme(
+    headline1: TextStyle(fontSize: 42.sp, fontFamily: 'Black'),
+    headline2: TextStyle(fontSize: 34.sp, fontFamily: 'Bold'),
+    headline3: TextStyle(fontSize: 26.sp, fontFamily: 'Bold'),
+    subtitle1: TextStyle(fontSize: 22.sp, fontFamily: 'Medium'),
+    subtitle2: TextStyle(fontSize: 18.sp, fontFamily: 'SemiBold'),
+    bodyText1: TextStyle(fontSize: 18.sp, fontFamily: 'Regular'),
+    bodyText2: TextStyle(fontSize: 15.sp, fontFamily: 'Regular'),
   );
 }
