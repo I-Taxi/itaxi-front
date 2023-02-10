@@ -1,5 +1,3 @@
-import 'dart:io';
-
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
@@ -118,7 +116,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       cursorColor: colorScheme.tertiary,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       style: textTheme.bodyText1?.copyWith(
-                        color: colorScheme.tertiaryContainer,
+                        color: colorScheme.onTertiary,
                       ),
                       decoration: InputDecoration(
                         hintText: '아이디 입력',
@@ -131,8 +129,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
-                            color: colorScheme.tertiary,
-                            width: 0.5,
+                            color: colorScheme.tertiaryContainer,
+                            width: 1.0,
                           ),
                         ),
                         focusedBorder: UnderlineInputBorder(
@@ -140,6 +138,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             color: colorScheme.secondary,
                             width: 1.0,
                           ),
+                        ),
+                        errorStyle: textTheme.bodyText2?.copyWith(
+                          color: colorScheme.surfaceVariant,
+                        ),
+                        errorBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: colorScheme.surfaceVariant,
+                                width: 1.0
+                            )
+                        ),
+                        focusedErrorBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: colorScheme.surfaceVariant,
+                                width: 1.0
+                            )
                         ),
                       ),
                       onChanged: (value) {
@@ -163,7 +176,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       cursorColor: colorScheme.tertiary,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       style: textTheme.bodyText1?.copyWith(
-                        color: colorScheme.tertiaryContainer,
+                        color: colorScheme.onTertiary,
                       ),
                       decoration: InputDecoration(
                         hintText: '비밀번호 입력',
@@ -172,8 +185,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
-                            color: colorScheme.tertiary,
-                            width: 0.5,
+                            color: colorScheme.tertiaryContainer,
+                            width: 1.0,
                           ),
                         ),
                         focusedBorder: UnderlineInputBorder(
@@ -181,6 +194,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             color: colorScheme.secondary,
                             width: 1.0,
                           ),
+                        ),
+                        errorStyle: textTheme.bodyText2?.copyWith(
+                          color: colorScheme.surfaceVariant,
+                        ),
+                        errorBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: colorScheme.surfaceVariant,
+                                width: 1.0
+                            )
+                        ),
+                        focusedErrorBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: colorScheme.surfaceVariant,
+                                width: 1.0
+                            )
                         ),
                         suffixIcon: IconButton(
                           icon: Icon(
@@ -220,7 +248,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       cursorColor: colorScheme.tertiary,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       style: textTheme.bodyText1?.copyWith(
-                        color: colorScheme.tertiaryContainer,
+                        color: colorScheme.onTertiary,
                       ),
                       decoration: InputDecoration(
                         hintText: '비밀번호 확인',
@@ -229,15 +257,30 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
-                            color: colorScheme.tertiary,
-                            width: 0.5,
+                            color: colorScheme.tertiaryContainer,
+                            width: 1.0,
                           ),
+                        ),
+                        errorStyle: textTheme.bodyText2?.copyWith(
+                          color: colorScheme.surfaceVariant,
                         ),
                         focusedBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
                             color: colorScheme.secondary,
                             width: 1.0,
                           ),
+                        ),
+                        errorBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: colorScheme.surfaceVariant,
+                                width: 1.0
+                            )
+                        ),
+                        focusedErrorBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: colorScheme.surfaceVariant,
+                                width: 1.0
+                            )
                         ),
                         suffixIcon: IconButton(
                           icon: Icon(
@@ -275,17 +318,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       cursorColor: colorScheme.tertiary,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       style: textTheme.bodyText1?.copyWith(
-                        color: colorScheme.tertiaryContainer,
+                        color: colorScheme.onTertiary,
                       ),
                       decoration: InputDecoration(
-                        hintText: '김한동',
+                        hintText: '이름',
                         hintStyle: textTheme.bodyText1?.copyWith(
                           color: colorScheme.onSurfaceVariant,
                         ),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
-                            color: colorScheme.tertiary,
-                            width: 0.5,
+                            color: colorScheme.tertiaryContainer,
+                            width: 1.0,
                           ),
                         ),
                         focusedBorder: UnderlineInputBorder(
@@ -293,6 +336,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             color: colorScheme.secondary,
                             width: 1.0,
                           ),
+                        ),
+                        errorStyle: textTheme.bodyText2?.copyWith(
+                          color: colorScheme.surfaceVariant,
+                        ),
+                        errorBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: colorScheme.surfaceVariant,
+                                width: 1.0
+                            )
+                        ),
+                        focusedErrorBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: colorScheme.surfaceVariant,
+                                width: 1.0
+                            )
                         ),
                       ),
                       onChanged: (value) {
@@ -313,9 +371,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       cursorColor: colorScheme.tertiary,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       keyboardType: TextInputType.number,
-                      // inputFormatters: [FilteringTextInputFormatter.digitsOnly],
                       style: textTheme.bodyText1?.copyWith(
-                        color: colorScheme.tertiaryContainer,
+                        color: colorScheme.onTertiary,
                       ),
                       decoration: InputDecoration(
                         hintText: '전화번호',
@@ -324,8 +381,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
-                            color: colorScheme.tertiary,
-                            width: 0.5,
+                            color: colorScheme.tertiaryContainer,
+                            width: 1.0,
                           ),
                         ),
                         focusedBorder: UnderlineInputBorder(
@@ -333,6 +390,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             color: colorScheme.secondary,
                             width: 1.0,
                           ),
+                        ),
+                        errorStyle: textTheme.bodyText2?.copyWith(
+                          color: colorScheme.surfaceVariant,
+                        ),
+                        errorBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: colorScheme.surfaceVariant,
+                                width: 1.0
+                            )
+                        ),
+                        focusedErrorBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: colorScheme.surfaceVariant,
+                                width: 1.0
+                            )
                         ),
                       ),
                       onChanged: (value) {
@@ -349,107 +421,29 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     SizedBox(
                       height: 34.0.h,
                     ),
-                    // Align(
-                    //   alignment: Alignment.bottomLeft,
-                    //   child: Text(
-                    //     '은행명',
-                    //     style: textTheme.subtitle1?.copyWith(
-                    //       fontSize: Platform.isIOS ? 14 : 12,
-                    //       color: colorScheme.tertiary,
-                    //     ),
-                    //   ),
-                    // ),
-                    // 은행 입력
-                    // TextFormField(
-                    //     controller: _bankController,
-                    //     autocorrect: false,
-                    //     cursorColor: colorScheme.tertiary,
-                    //     autovalidateMode: AutovalidateMode.onUserInteraction,
-                    //     decoration: InputDecoration(
-                    //       enabledBorder: UnderlineInputBorder(
-                    //         borderSide: BorderSide(
-                    //           color: colorScheme.tertiary,
-                    //           width: 0.3,
-                    //         ),
-                    //       ),
-                    //       focusedBorder: UnderlineInputBorder(
-                    //         borderSide: BorderSide(
-                    //           color: colorScheme.secondary,
-                    //           width: 1.0,
-                    //         ),
-                    //       ),
-                    //     ),
-                    //     onChanged: (value) {
-                    //       _signUpController.bank = value;
-                    //     },
-                    //     validator: (value) {
-                    //       if (value!.isEmpty) return '은행명을 적어주세요';
-                    //       return null;
-                    //     }),
-                    // SizedBox(
-                    //   height: 12.0.h,
-                    // ),
-                    // Align(
-                    //   alignment: Alignment.bottomLeft,
-                    //   child: Text(
-                    //     '계좌번호',
-                    //     style: textTheme.subtitle1?.copyWith(
-                    //       fontSize: Platform.isIOS ? 14 : 12,
-                    //       color: colorScheme.tertiary,
-                    //     ),
-                    //   ),
-                    // ),
-                    // 계좌 입력
-                    // TextFormField(
-                    //   controller: _bankAddressController,
-                    //   autocorrect: false,
-                    //   cursorColor: colorScheme.tertiary,
-                    //   keyboardType: TextInputType.number,
-                    //   autovalidateMode: AutovalidateMode.onUserInteraction,
-                    //   decoration: InputDecoration(
-                    //     enabledBorder: UnderlineInputBorder(
-                    //       borderSide: BorderSide(
-                    //         color: colorScheme.tertiary,
-                    //         width: 0.3,
-                    //       ),
-                    //     ),
-                    //     focusedBorder: UnderlineInputBorder(
-                    //       borderSide: BorderSide(
-                    //         color: colorScheme.secondary,
-                    //         width: 1.0,
-                    //       ),
-                    //     ),
-                    //   ),
-                    //   onChanged: (value) {
-                    //     _signUpController.bankAddress = value;
-                    //   },
-                    //   validator: (value) {
-                    //     if (value!.isEmpty) return '계좌번호를 입력해주세요';
-                    //     return null;
-                    //   },
-                    // ),
-                    // SizedBox(
-                    //   height: 12.0.h,
-                    // ),
 
                     // 이용약관
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
-                        RawMaterialButton(
-                          child: Text(
-                            '이용약관 보기',
-                            style: textTheme.bodyText2?.copyWith(
-                              color: colorScheme.onSecondaryContainer,
+                        Container(
+                          width: 50.w,
+                          height: 16.h,
+                          child: RawMaterialButton(
+                            child: Text(
+                              '이용약관',
+                              style: textTheme.bodyText2?.copyWith(
+                                color: colorScheme.onSecondaryContainer,
+                              ),
                             ),
+                            onPressed: () {
+                              Get.to(TermOfServiceScreen());
+                              // Navigate
+                            },
                           ),
-                          onPressed: () {
-                            Get.to(TermOfServiceScreen());
-                            // Navigate
-                          },
                         ),
                         Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Text(
                               '약관에 동의합니다',
@@ -480,11 +474,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     // 개인정보 처리 방침
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
                       children: <Widget>[
                         RawMaterialButton(
                           child: Text(
-                            '개인정보처리방침 보기',
+                            '개인정보처리방침',
                             style: textTheme.bodyText2?.copyWith(
                               color: colorScheme.onSecondaryContainer,
                             ),
