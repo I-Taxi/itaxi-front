@@ -9,7 +9,6 @@ import 'package:itaxi/mainScreen.dart';
 import 'package:itaxi/ktxScreen.dart';
 import 'package:itaxi/timeline/timelineScreen.dart';
 
-
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);
 
@@ -19,91 +18,96 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final pageList = [
-      const MainScreen(),
-      const KtxScreen(),
-      const ChatroomListScreen(),
-      const TimelineScreen()
-    ];
+    final pageList = [const MainScreen(), const KtxScreen(), const ChatroomListScreen(), const TimelineScreen()];
 
     return GetBuilder<NavigationController>(
       builder: (_) {
         return Scaffold(
           body: pageList[_navController.currentIndex],
           bottomNavigationBar: Container(
-            height: _navController.navHeight.h,
-            child: BottomNavigationBar(
-              type: BottomNavigationBarType.fixed,
-              showSelectedLabels: false,
-              showUnselectedLabels: false,
-              currentIndex: _navController.currentIndex,
-              backgroundColor: colorScheme.primary,
-              selectedItemColor: colorScheme.secondary,
-              unselectedItemColor: colorScheme.tertiary,
-              onTap: (value) {
-                _navController.changeIndex(value);
-              },
-              items: [
-                BottomNavigationBarItem(
-                  label: "car_taxi",
-                  activeIcon: Image.asset(
-                    width: 89.5.w,
-                    height: 48.h,
-                    'assets/newType/car_taxi.png',
-                    color: colorScheme.secondary,
+              width: 390.w,
+              height: _navController.navHeight.h,
+              decoration: BoxDecoration(
+                  color: colorScheme.primary, boxShadow: [BoxShadow(color: Color.fromRGBO(0, 0, 0, 0.4), blurRadius: 3.r, offset: Offset(-1.w, 3.h))]),
+              padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 8.h),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  GestureDetector(
+                    onTap: () {
+                      _navController.changeIndex(0);
+                    },
+                    child: _navController.currentIndex == 0
+                        ? Image.asset(
+                            width: 89.5.w,
+                            height: 48.h,
+                            'assets/newType/car_taxi.png',
+                            color: colorScheme.secondary,
+                          )
+                        : Image.asset(
+                            width: 89.5.w,
+                            height: 48.h,
+                            'assets/newType/car_taxi.png',
+                            color: colorScheme.tertiary,
+                          ),
                   ),
-                  icon: Image.asset(
-                    width: 89.5.w,
-                    height: 48.h,
-                    'assets/newType/car_taxi.png',
-                    color: colorScheme.tertiary,
+                  GestureDetector(
+                    onTap: () {
+                      _navController.changeIndex(1);
+                    },
+                    child: _navController.currentIndex == 1
+                        ? Image.asset(
+                            width: 89.5.w,
+                            height: 48.h,
+                            'assets/newType/ktx.png',
+                            color: colorScheme.secondary,
+                          )
+                        : Image.asset(
+                            width: 89.5.w,
+                            height: 48.h,
+                            'assets/newType/ktx.png',
+                            color: colorScheme.tertiary,
+                          ),
                   ),
-                ),
-                BottomNavigationBarItem(
-                  label: "KTX",
-                  activeIcon: Image.asset(
-                    width: 89.5.w,
-                    height: 48.h,
-                    'assets/newType/ktx.png',
-                    color: colorScheme.secondary,
+                  GestureDetector(
+                    onTap: () {
+                      _navController.changeIndex(2);
+                    },
+                    child: _navController.currentIndex == 2
+                        ? Image.asset(
+                            width: 89.5.w,
+                            height: 48.h,
+                            'assets/newType/messenger.png',
+                            color: colorScheme.secondary,
+                          )
+                        : Image.asset(
+                            width: 89.5.w,
+                            height: 48.h,
+                            'assets/newType/messenger.png',
+                            color: colorScheme.tertiary,
+                          ),
                   ),
-                  icon: Image.asset(
-                    width: 89.5.w,
-                    height: 48.h,
-                    'assets/newType/ktx.png',
+                  GestureDetector(
+                    onTap: () {
+                      _navController.changeIndex(3);
+                    },
+                    child: _navController.currentIndex == 3
+                        ? Image.asset(
+                            width: 89.5.w,
+                            height: 48.h,
+                            'assets/newType/timeline.png',
+                            color: colorScheme.secondary,
+                          )
+                        : Image.asset(
+                            width: 89.5.w,
+                            height: 48.h,
+                            'assets/newType/timeline.png',
+                            color: colorScheme.tertiary,
+                          ),
                   ),
-                ),
-                BottomNavigationBarItem(
-                  label: "messenger",
-                  activeIcon: Image.asset(
-                    width: 89.5.w,
-                    height: 48.h,
-                    'assets/newType/messenger.png',
-                    color: colorScheme.secondary,
-                  ),
-                  icon: Image.asset(
-                    width: 89.5.w,
-                    height: 48.h,
-                    'assets/newType/messenger.png',
-                  ),
-                ),
-                BottomNavigationBarItem(
-                  label: "timeline",
-                  activeIcon: Image.asset(
-                    width: 89.5.w,
-                    height: 48.h,
-                    'assets/newType/timeline.png',
-                    color: colorScheme.secondary,
-                  ),
-                  icon: Image.asset(
-                    width: 89.5.w,
-                    height: 48.h,
-                    'assets/newType/timeline.png',
-                  ),
-                )
-              ],
-            ),
-          ),
+                ],
+              )),
         );
       },
     );
