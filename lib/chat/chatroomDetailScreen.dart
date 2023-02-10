@@ -451,11 +451,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                   onPressed: () {
                                     _scaffoldKey.currentState!.openEndDrawer();
                                   },
-                                  icon: Icon(
-                                    Icons.menu,
-                                    size: 24,
-                                    color: colorScheme.tertiaryContainer,
-                                  ),
+                                  icon: Image.asset('assets/button/menu.png'),
                                 ),
                               ],
                             ),
@@ -737,11 +733,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                   onPressed: () {
                                     _scaffoldKey.currentState!.openEndDrawer();
                                   },
-                                  icon: Icon(
-                                    Icons.menu,
-                                    size: 24,
-                                    color: colorScheme.tertiaryContainer,
-                                  ),
+                                  icon: Image.asset('assets/button/menu.png'),
                                 ),
                               ],
                             ),
@@ -963,11 +955,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                 onPressed: () {
                                   _scaffoldKey.currentState!.openEndDrawer();
                                 },
-                                icon: Icon(
-                                  Icons.menu,
-                                  size: 24,
-                                  color: colorScheme.tertiaryContainer,
-                                ),
+                                icon: Image.asset('assets/button/menu.png'),
                               ),
                             ],
                           ),
@@ -1195,12 +1183,20 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                               _chatRoomController.clearTexting();
                               _scrollDown();
                             },
-                            child: Image.asset('assets/button/send.png'),
+                            child: Padding(
+                              padding:
+                                  EdgeInsets.fromLTRB(0.w, 2.h, 8.68.w, 1.68.h),
+                              child: Image.asset('assets/button/send.png'),
+                            ),
                           );
                         } else {
                           return GestureDetector(
                             onTap: () {},
-                            child: Image.asset('assets/button/send.png'),
+                            child: Padding(
+                              padding:
+                                  EdgeInsets.fromLTRB(0.w, 2.h, 8.68.w, 1.68.h),
+                              child: Image.asset('assets/button/send.png'),
+                            ),
                           );
                         }
                       },
