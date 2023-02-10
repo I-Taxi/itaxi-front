@@ -362,7 +362,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                                 ?.copyWith(
                                                     color:
                                                         colorScheme.primary)),
-                                        color: Colors.green);
+                                        color: Color(0xff69c077));
                                   }
                                 },
                               )
@@ -384,7 +384,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                             color: colorScheme.primary,
                                           ),
                                         ),
-                                        color: Colors.green);
+                                        color: Color(0xff69c077));
                                   }
                                 },
                               ),

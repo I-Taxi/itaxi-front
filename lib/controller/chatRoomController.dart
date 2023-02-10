@@ -60,7 +60,7 @@ class ChatRoomController extends GetxController {
   void getKtxPost({required KtxPost ktxPost}) {
     this.ktxPost = ktxPost;
     postType = 3;
-    ChatRepository().setPost(post: post);
+    KtxChatRepository().setPost(post: ktxPost);
     update();
   }
 

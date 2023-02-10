@@ -100,7 +100,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
             builder: (BuildContext context, snapshot) {
               if (snapshot.data == null) {
                 return Container(
-                  height: 158.h,
+                  height: 134.h,
                   width: 325.w,
                   decoration: BoxDecoration(
                     color: colorScheme.secondary,
@@ -403,55 +403,53 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                           Expanded(
                             child: Stack(
                               children: [
-                                MediaQuery.removePadding(
-                                  context: context,
-                                  child: ListView.builder(
-                                    shrinkWrap: true,
-                                    controller: _scrollController,
-                                    itemBuilder: (BuildContext context, int index) {
-                                      return Column(
-                                        children: [
-                                          if (DateTime.now().difference(snapshot.data![index].chatTime!.toDate()).isNegative == false)
-                                            if (index == 0 ||
-                                                (index - 1 > 0 &&
-                                                    DateTime.parse(DateFormat('yyyy-MM-dd').format(snapshot.data![index].chatTime!.toDate())).compareTo(
-                                                            DateTime.parse(DateFormat('yyyy-MM-dd').format(snapshot.data![index - 1].chatTime!.toDate()))) !=
-                                                        0))
-                                              Column(
-                                                children: [
-                                                  Text(
-                                                    DateFormat('M월 d일 E').format(snapshot.data![index].chatTime!.toDate()),
-                                                    style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiaryContainer),
-                                                  ),
-                                                  SizedBox(
-                                                    height: 20.h,
-                                                  ),
-                                                ],
-                                              ),
-                                          snapshot.data![index].memberName == null
-                                              ? Padding(
-                                                  padding: EdgeInsets.symmetric(
-                                                    vertical: 6.h,
-                                                  ),
-                                                  child: Text(
-                                                    snapshot.data![index].chatData!,
-                                                    style: textTheme.bodyText1?.copyWith(
-                                                      color: colorScheme.tertiary,
-                                                    ),
-                                                  ),
-                                                )
-                                              : ChatDetailListTile(
-                                                  context: context,
-                                                  chat: snapshot.data![index],
-                                                  joiners: _chatRoomController.postType != 3
-                                                      ? _chatRoomController.post.joiners
-                                                      : _chatRoomController.ktxPost.joiners,
+                                ListView.builder(
+                                  shrinkWrap: true,
+                                  controller: _scrollController,
+                                  itemBuilder: (BuildContext context, int index) {
+                                    List<String> korDays = ['월', '화', '수', '목', '금', '토', '일'];
+                                    return Column(
+                                      children: [
+                                        if (DateTime.now().difference(snapshot.data![index].chatTime!.toDate()).isNegative == false)
+                                          if (index == 0 ||
+                                              (index - 1 > 0 &&
+                                                  DateTime.parse(DateFormat('yyyy-MM-dd').format(snapshot.data![index].chatTime!.toDate())).compareTo(
+                                                          DateTime.parse(DateFormat('yyyy-MM-dd').format(snapshot.data![index - 1].chatTime!.toDate()))) !=
+                                                      0))
+                                            Column(
+                                              children: [
+                                                Text(
+                                                  DateFormat('M월 d일 (${korDays[snapshot.data![index].chatTime!.toDate().weekday]})').format(snapshot.data![index].chatTime!.toDate()),
+                                                  style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiaryContainer),
                                                 ),
-                                        ],
-                                      );
-                                    },
-                                    itemCount: snapshot.data!.length,
-                                  ),
+                                                SizedBox(
+                                                  height: 20.h,
+                                                ),
+                                              ],
+                                            ),
+                                        snapshot.data![index].memberName == null
+                                            ? Padding(
+                                                padding: EdgeInsets.symmetric(
+                                                  vertical: 6.h,
+                                                ),
+                                                child: Text(
+                                                  snapshot.data![index].chatData!,
+                                                  style: textTheme.bodyText1?.copyWith(
+                                                    color: colorScheme.tertiary,
+                                                  ),
+                                                ),
+                                              )
+                                            : ChatDetailListTile(
+                                                context: context,
+                                                chat: snapshot.data![index],
+                                                joiners: _chatRoomController.postType != 3
+                                                    ? _chatRoomController.post.joiners
+                                                    : _chatRoomController.ktxPost.joiners,
+                                              ),
+                                      ],
+                                    );
+                                  },
+                                  itemCount: snapshot.data!.length,
                                 ),
                                 if (isScrollDown == true && snapshot.data![snapshot.data!.length - 1].uid != _userController.uid)
                                   Align(

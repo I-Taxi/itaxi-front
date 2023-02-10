@@ -158,7 +158,7 @@ Widget placeSearchTile({
                         TextSpan(
                           text: "다음",
                           style: textTheme.subtitle2?.copyWith(
-                            color: colorScheme.secondary,
+                            color: colorScheme.onSecondaryContainer,
                           ),
                         ),
                         TextSpan(
@@ -170,7 +170,7 @@ Widget placeSearchTile({
                       ],
                       )
                   ),
-                  color: Colors.green,
+                  color: Color(0xff69c077),
               );
             },
             trailing: IconButton(
@@ -234,7 +234,7 @@ Widget favoritePlaceSearchTile({
                         TextSpan(
                           text: "다음",
                           style: textTheme.subtitle2?.copyWith(
-                            color: colorScheme.secondary,
+                            color: colorScheme.onSecondaryContainer,
                         ),
                         ),
                         TextSpan(
@@ -246,7 +246,7 @@ Widget favoritePlaceSearchTile({
                       ],
                     )
                 ),
-                color: Colors.green,
+                color: Color(0xff69c077),
               );
             },
             trailing: IconButton(
