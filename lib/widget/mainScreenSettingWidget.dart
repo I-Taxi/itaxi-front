@@ -562,7 +562,7 @@ Padding lookupSetPostTypeWidget(ColorScheme colorScheme,
           GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () {
-              controller.changeMainScreenTabIndex(2);
+              controller.changeMainScreenTabIndex(1);
 
               _postController.getPosts(
                 depId: _placeController.dep?.id,
@@ -573,7 +573,7 @@ Padding lookupSetPostTypeWidget(ColorScheme colorScheme,
                 postType: controller.mainScreenCurrentTabIndex,
               );
             },
-            child: (controller.mainScreenCurrentTabIndex == 2)
+            child: (controller.mainScreenCurrentTabIndex == 1)
                 ? selectedTabView(
                     viewTitle: '택시',
                     context: context,
@@ -589,7 +589,7 @@ Padding lookupSetPostTypeWidget(ColorScheme colorScheme,
           GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () {
-              controller.changeMainScreenTabIndex(1);
+              controller.changeMainScreenTabIndex(2);
               _postController.getPosts(
                 depId: _placeController.dep?.id,
                 dstId: _placeController.dst?.id,
@@ -599,7 +599,7 @@ Padding lookupSetPostTypeWidget(ColorScheme colorScheme,
                 postType: controller.mainScreenCurrentTabIndex,
               );
             },
-            child: (controller.mainScreenCurrentTabIndex == 1)
+            child: (controller.mainScreenCurrentTabIndex == 2)
                 ? selectedTabView(
                     viewTitle: '카풀',
                     context: context,

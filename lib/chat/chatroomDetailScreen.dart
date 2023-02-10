@@ -22,6 +22,7 @@ import 'package:itaxi/widget/abbreviatePlaceName.dart';
 import 'package:itaxi/widget/chatListTile.dart';
 import 'package:itaxi/widget/timelineDialog.dart';
 import 'package:url_launcher/url_launcher.dart';
+import 'package:itaxi/widget/showErrorDialog.dart';
 
 class ChatRoomDetailScreen extends StatefulWidget {
   const ChatRoomDetailScreen({super.key});
@@ -35,7 +36,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
   late UserController _userController = Get.find();
   late ChatRoomController _chatRoomController = Get.find();
   late PostController _postController = Get.find();
-  late KtxPostController _ktxPostController = Get.find();
+  late KtxPostController _ktxPostController = Get.put(KtxPostController());
   late HistoryController _historyController = Get.find();
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   ScrollController _scrollController = ScrollController();
@@ -327,7 +328,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                       child: InkWell(
                         onTap: () async {
                           showExitDialog(context, '방 나가기', '방을 나가시겠습니까?', _postController, _ktxPostController, _historyController, _chatRoomController,
-                              currentPost!, currentKtxPost!);
+                              currentPost, currentKtxPost);
                         },
                         child: Row(children: [
                           Image.asset('assets/icon/icon-LogOut.png'),
@@ -377,7 +378,9 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                 ),
                                 Flexible(
                                   child: Text(
-                                    _chatRoomController.postType != 3 ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} (${DateFormat('Md').format(DateTime.parse(time))})" : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} (${DateFormat('Md').format(DateTime.parse(time))})",
+                                    _chatRoomController.postType != 3
+                                        ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} (${DateFormat('Md').format(DateTime.parse(time))})"
+                                        : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} (${DateFormat('Md').format(DateTime.parse(time))})",
                                     style: textTheme.subtitle1?.copyWith(
                                       color: colorScheme.onTertiary,
                                     ),
@@ -540,7 +543,9 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                 ),
                                 Flexible(
                                   child: Text(
-                                    _chatRoomController.postType != 3 ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} (${DateFormat('Md').format(DateTime.parse(time))})" : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} (${DateFormat('Md').format(DateTime.parse(time))})",
+                                    _chatRoomController.postType != 3
+                                        ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} (${DateFormat('Md').format(DateTime.parse(time))})"
+                                        : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} (${DateFormat('Md').format(DateTime.parse(time))})",
                                     style: textTheme.subtitle1?.copyWith(
                                       color: colorScheme.onTertiary,
                                     ),
@@ -995,7 +1000,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
 }
 
 Future<dynamic> showExitDialog(BuildContext context, String? title, String? content, PostController _postController, KtxPostController _ktxPostController,
-    HistoryController _historyController, ChatRoomController _chatRoomController, Post post, KtxPost ktxPost) async {
+    HistoryController _historyController, ChatRoomController _chatRoomController, Post? post, KtxPost? ktxPost) async {
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
 
@@ -1005,52 +1010,82 @@ Future<dynamic> showExitDialog(BuildContext context, String? title, String? cont
         return Dialog(
           elevation: 0,
           shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(4.0),
+            borderRadius: BorderRadius.circular(24.0),
           ),
           child: Container(
-            width: 360.w,
-            height: 180.h,
+            width: 312.w,
+            height: 268.h,
             alignment: Alignment.center,
-            padding: EdgeInsets.fromLTRB(
-              28.0.w,
-              32.0.h,
-              28.0.w,
-              12.0.h,
-            ),
+            padding: EdgeInsets.fromLTRB(36.w, 24.h, 36.w, 24.h),
             child: Column(
               children: <Widget>[
-                Text(
-                  title as String,
-                  style: textTheme.headline3?.copyWith(
-                    color: colorScheme.secondary,
+                SizedBox(
+                  height: 30.h,
+                  child: Text(
+                    title as String,
+                    style: textTheme.subtitle1?.copyWith(
+                      color: colorScheme.secondary,
+                    ),
                   ),
                 ),
                 SizedBox(
-                  height: 10.h,
+                  height: 32.h,
                 ),
-                Text(
-                  content as String,
-                  style: textTheme.subtitle2?.copyWith(
-                    color: colorScheme.onPrimary,
+                Container(
+                  width: 240.w,
+                  height: 99.h,
+                  alignment: Alignment.topLeft,
+                  child: Text(
+                    content as String,
+                    style: textTheme.bodyText1?.copyWith(
+                      color: colorScheme.onPrimary,
+                    ),
                   ),
                 ),
                 // const Spacer(),
-                TextButton(
-                  onPressed: () async {
-                    if (_chatRoomController.postType != 3) {
-                      await _postController.fetchOutJoin(post: post);
-                    } else {
-                      await _ktxPostController.fetchOutJoin(post: ktxPost);
-                    }
-                    await _historyController.getHistorys();
-                    Get.back();
-                    Get.back();
-                    Get.back();
-                  },
-                  child: Text(
-                    "나가기",
-                    style: textTheme.headline2?.copyWith(color: colorScheme.tertiary),
-                  ),
+                SizedBox(
+                  height: 32.h,
+                ),
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    GestureDetector(
+                      onTap: () async {
+                        try {
+                          if (_chatRoomController.postType != 3) {
+                            await _postController.fetchOutJoin(post: post!);
+                          } else {
+                            await _ktxPostController.fetchOutJoin(post: ktxPost!);
+                          }
+                          await _historyController.getHistorys();
+                          Get.back();
+                          Get.back();
+                          Get.back();
+                        } catch (e) {
+                          print(e);
+                          Get.back();
+                          Get.back();
+                          showErrorDialog(context, textTheme, colorScheme, e);
+                        }
+                      },
+                      child: Text(
+                        "나가기",
+                        style: textTheme.subtitle2?.copyWith(color: colorScheme.secondary),
+                      ),
+                    ),
+                    SizedBox(
+                      width: 78.w,
+                    ),
+                    GestureDetector(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: Text(
+                        "취소",
+                        style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
+                      ),
+                    ),
+                  ],
                 ),
               ],
             ),
