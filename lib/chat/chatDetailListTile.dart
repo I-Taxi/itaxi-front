@@ -11,6 +11,7 @@ import 'package:itaxi/model/joiner.dart';
 
 Widget ChatDetailListTile(
     {required BuildContext context,
+    required bool isFirst,
     required Chat chat,
     required List<Joiner>? joiners}) {
   final colorScheme = Theme.of(context).colorScheme;
@@ -26,7 +27,6 @@ Widget ChatDetailListTile(
     }
   });
 
-  var isFirst = true;
   return (_userController.uid == chat.uid)
       ? Column(
           crossAxisAlignment: CrossAxisAlignment.end,
@@ -45,7 +45,7 @@ Widget ChatDetailListTile(
                       ),
                       SizedBox(width: 7.w),
                       Text(
-                        chat.memberName!,
+                        "You",
                         style: textTheme.bodyText2?.copyWith(
                           color: colorScheme.onTertiary,
                         ),
@@ -61,7 +61,7 @@ Widget ChatDetailListTile(
               children: [
                 Container(
                   padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 8.h),
-                  constraints: BoxConstraints(minWidth: 36.w, maxWidth: 342.w),
+                  constraints: BoxConstraints(minWidth: 36.w, maxWidth: 236.w),
                   decoration: BoxDecoration(
                     color: colorScheme.secondary,
                     borderRadius: const BorderRadius.only(
@@ -76,6 +76,9 @@ Widget ChatDetailListTile(
                   ),
                 ),
               ],
+            ),
+            SizedBox(
+              height: 4.h,
             ),
           ],
         )
@@ -109,7 +112,7 @@ Widget ChatDetailListTile(
               children: [
                 Container(
                   padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 8.h),
-                  constraints: BoxConstraints(minWidth: 36.w, maxWidth: 342.w),
+                  constraints: BoxConstraints(minWidth: 36.w, maxWidth: 236.w),
                   decoration: BoxDecoration(
                     color: colorScheme.onBackground,
                     borderRadius: const BorderRadius.only(
@@ -125,6 +128,9 @@ Widget ChatDetailListTile(
                   ),
                 ),
               ],
+            ),
+            SizedBox(
+              height: 4.h,
             ),
           ],
         );

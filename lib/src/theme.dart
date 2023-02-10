@@ -97,12 +97,12 @@ class ITaxiTheme {
   );
 
   static TextTheme textThemeIOS = TextTheme(
-    headline1: TextStyle(fontSize: 42.sp, fontFamily: 'Black'),
-    headline2: TextStyle(fontSize: 34.sp, fontFamily: 'Bold'),
-    headline3: TextStyle(fontSize: 26.sp, fontFamily: 'Bold'),
-    subtitle1: TextStyle(fontSize: 22.sp, fontFamily: 'Medium'),
-    subtitle2: TextStyle(fontSize: 18.sp, fontFamily: 'SemiBold'),
-    bodyText1: TextStyle(fontSize: 18.sp, fontFamily: 'Regular'),
-    bodyText2: TextStyle(fontSize: 15.sp, fontFamily: 'Regular'),
+    headline1: TextStyle(fontSize: 40.sp, fontFamily: 'Black'),
+    headline2: TextStyle(fontSize: 32.sp, fontFamily: 'Bold'),
+    headline3: TextStyle(fontSize: 24.sp, fontFamily: 'Bold'),
+    subtitle1: TextStyle(fontSize: 20.sp, fontFamily: 'Medium'),
+    subtitle2: TextStyle(fontSize: 16.sp, fontFamily: 'SemiBold'),
+    bodyText1: TextStyle(fontSize: 16.sp, fontFamily: 'Regular'),
+    bodyText2: TextStyle(fontSize: 13.sp, fontFamily: 'Regular'),
   );
 }
