@@ -49,6 +49,8 @@ Widget postListTile({
     onTap: () async {
       bool checkId = await checkUser(post.id!);
 
+      print("${post.joiners!.length} 명수");
+
       if (post.joiners!.length >= post.capacity!) {
         snackBar(context: context, title: '이미 인원이 가득 찬 모집입니다.');
       } else {
