@@ -61,31 +61,38 @@ Widget postListTile({
                         width: 312.w,
                         height: 230.h,
                         child: Padding(
-                          padding: EdgeInsets.fromLTRB(62.w, 52.h, 62.w, 52.h),
+                          padding: EdgeInsets.only(top: 57.h, bottom: 52.h),
                           child: Column(
                             children: <Widget>[
                               Text(
                                 "톡방에 참여하시겠어요?",
                                 style: textTheme.subtitle1?.copyWith(
                                   color: colorScheme.secondary,
+                                  fontWeight: FontWeight.w500
                                 ),
                               ),
-                              const Spacer(),
+                              SizedBox(
+                                height: 69.h,
+                              ),
                               Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
-                                  TextButton(
-                                    onPressed: () async {
+                                  GestureDetector(
+                                    behavior: HitTestBehavior.opaque,
+                                    onTap: () async {
                                       Get.back();
                                     },
                                     child: Text(
                                       "취소",
-                                      style: textTheme.subtitle2?.copyWith(
-                                          color: colorScheme.tertiaryContainer),
+                                      style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
                                     ),
                                   ),
-                                  const Spacer(),
-                                  TextButton(
-                                    onPressed: () async {
+                                  SizedBox(
+                                    width: 78.w,
+                                  ),
+                                  GestureDetector(
+                                    behavior: HitTestBehavior.opaque,
+                                    onTap: () async {
                                       await _postController.fetchJoin(post: post);
                                       await _postController.getPosts(
                                         depId: _placeController.dep?.id,
@@ -93,8 +100,7 @@ Widget postListTile({
                                         time: _dateController.formattingDateTime(
                                           _dateController.mergeDateAndTime(),
                                         ),
-                                        postType: _screenController
-                                            .mainScreenCurrentTabIndex,
+                                        postType: _screenController.mainScreenCurrentTabIndex,
                                       );
                                       Get.back();
                                       await _historyController.getHistoryInfo(
@@ -112,8 +118,7 @@ Widget postListTile({
                                     },
                                     child: Text(
                                       "입장",
-                                      style: textTheme.subtitle2?.copyWith(
-                                          color: colorScheme.onPrimaryContainer),
+                                      style: textTheme.subtitle2?.copyWith(color: colorScheme.onPrimaryContainer),
                                     ),
                                   ),
                                 ],
@@ -135,34 +140,57 @@ Widget postListTile({
           ),
           Container(
             height: 92.h,
-            color: colorScheme.background,
+            decoration: BoxDecoration(
+                color: colorScheme.background,
+                border: Border(bottom: BorderSide(color: colorScheme.onSurfaceVariant, width: 1))),
             child: Padding(
               padding: EdgeInsets.only(left: 24.w, right: 24.w),
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
-                mainAxisAlignment: MainAxisAlignment.center,
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
                     DateFormat('HH:mm').format(DateTime.parse(post.deptTime!)),
                     style: textTheme.subtitle1?.copyWith(
                       color: colorScheme.onTertiary,
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
                   SizedBox(
                     width: 21.w,
                   ),
-                  Image(
-                    image: post.postType == 2
-                        ? AssetImage("assets/type/taxi_text.png")
-                        : AssetImage("assets/type/car_text.png"),
-                    width: 44.w,
-                    height: 24.h,
-                  ),
+                  post.postType == 1
+                      ? Container(
+                          width: 44.w,
+                          height: 24.h,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(7.9931.r), color: colorScheme.secondary),
+                          alignment: Alignment.center,
+                          child: Text(
+                            '택시',
+                            style: textTheme.bodyText1?.copyWith(color: colorScheme.onSecondary),
+                          ))
+                      : Container(
+                          width: 44.w,
+                          height: 24.h,
+                          decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(7.9931.r), color: colorScheme.outlineVariant),
+                          alignment: Alignment.center,
+                          child: Text(
+                            '카풀',
+                            style: textTheme.bodyText1?.copyWith(color: colorScheme.onSecondary),
+                          )),
+                  // Image(
+                  //   image: post.postType == 2
+                  //       ? AssetImage("assets/type/taxi_text.png")
+                  //       : AssetImage("assets/type/car_text.png"),
+                  //   width: 44.w,
+                  //   height: 24.h,
+                  // ),
                   const Spacer(),
                   Text(
                     "${post.participantNum}/${post.capacity}명",
-                    style: textTheme.subtitle1
-                        ?.copyWith(color: colorScheme.onTertiary),
+                    style: textTheme.subtitle1?.copyWith(color: colorScheme.onTertiary, fontWeight: FontWeight.w500),
                   ),
                   SizedBox(
                     width: 22.w,
@@ -172,8 +200,8 @@ Widget postListTile({
                       "assets/arrow/arrow_forward.png",
                     ),
                     color: colorScheme.tertiary,
-                    width: 10.w,
-                    height: 10.h,
+                    width: 12.w,
+                    height: 12.h,
                   )
                 ],
               ),
