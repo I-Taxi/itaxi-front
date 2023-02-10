@@ -6,7 +6,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
-import 'package:itaxi/chat/newChatListTile.dart';
+import 'package:itaxi/chat/chatDetailListTile.dart';
 import 'package:itaxi/controller/chatRoomController.dart';
 import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/controller/ktxPostController.dart';
@@ -23,14 +23,14 @@ import 'package:itaxi/widget/chatListTile.dart';
 import 'package:itaxi/widget/timelineDialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class NewChatroomScreen extends StatefulWidget {
-  const NewChatroomScreen({super.key});
+class ChatRoomDetailScreen extends StatefulWidget {
+  const ChatRoomDetailScreen({super.key});
 
   @override
-  State<NewChatroomScreen> createState() => _NewChatroomScreenState();
+  State<ChatRoomDetailScreen> createState() => _ChatRoomDetailScreenState();
 }
 
-class _NewChatroomScreenState extends State<NewChatroomScreen> {
+class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
   late TextEditingController _controller;
   late UserController _userController = Get.find();
   late ChatRoomController _chatRoomController = Get.find();
@@ -377,9 +377,7 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                                 ),
                                 Flexible(
                                   child: Text(
-                                    _chatRoomController.postType != 3
-                                        ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} (${DateFormat('Md').format(DateTime.parse(time))})"
-                                        : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} (${DateFormat('Md').format(DateTime.parse(time))})",
+                                    _chatRoomController.postType != 3 ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} (${DateFormat('Md').format(DateTime.parse(time))})" : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} (${DateFormat('Md').format(DateTime.parse(time))})",
                                     style: textTheme.subtitle1?.copyWith(
                                       color: colorScheme.onTertiary,
                                     ),
@@ -439,7 +437,7 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                                                     ),
                                                   ),
                                                 )
-                                              : newChatListTile(
+                                              : ChatDetailListTile(
                                                   context: context,
                                                   chat: snapshot.data![index],
                                                   joiners: _chatRoomController.postType != 3
@@ -542,9 +540,7 @@ class _NewChatroomScreenState extends State<NewChatroomScreen> {
                                 ),
                                 Flexible(
                                   child: Text(
-                                    _chatRoomController.postType != 3
-                                        ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} (${DateFormat('Md').format(DateTime.parse(time))})"
-                                        : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} (${DateFormat('Md').format(DateTime.parse(time))})",
+                                    _chatRoomController.postType != 3 ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} (${DateFormat('Md').format(DateTime.parse(time))})" : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} (${DateFormat('Md').format(DateTime.parse(time))})",
                                     style: textTheme.subtitle1?.copyWith(
                                       color: colorScheme.onTertiary,
                                     ),

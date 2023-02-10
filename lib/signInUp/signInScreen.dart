@@ -23,7 +23,7 @@ class SignInScreen extends StatefulWidget {
 }
 
 class _SignInScreenState extends State<SignInScreen> {
-  SignInController _signInController = Get.put(SignInController());
+  SignInController _signInController = Get.find();
 
   static final storage = new FlutterSecureStorage();
 

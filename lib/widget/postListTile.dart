@@ -8,7 +8,8 @@ import 'package:itaxi/controller/navigationController.dart';
 import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/controller/chatRoomController.dart';
-import 'package:itaxi/chat/chatRoomScreen.dart';
+import 'package:itaxi/model/chat.dart';
+import 'package:itaxi/chat/chatRoomScreen_bak.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/widget/snackBar.dart';
 import 'package:itaxi/model/history.dart';
@@ -48,7 +49,7 @@ Widget postListTile({
     behavior: HitTestBehavior.opaque,
     onTap: () async {
       bool checkId = await checkUser(post.id!);
-      _postController.fetchPostInfo(post: post);
+      _postController.fetchPostInfo(id: post.id);
       if (post.participantNum! >= post.capacity!) {
         snackBar(context: context, title: '이미 인원이 가득 찬 모집입니다.');
       } else {
@@ -106,7 +107,7 @@ Widget postListTile({
                                   ),
                                   capacity: _addPostController.capacity,
                                 );
-                                Get.to(() => const ChatRoomScreen());
+                                Get.to(() => const ChatRoomScreen_bak());
                                 await _addPostController.fetchAddPost(post: post);
                                 await _postController.getPosts(
                                   depId: _placeController.dep?.id,
