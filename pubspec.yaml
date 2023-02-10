@@ -121,6 +121,7 @@ flutter:
     - assets/button/send.png
     - assets/button/message.png
     - assets/button/clear.png
+    - assets/button/menu.png
 
     # arrow
     - assets/arrow/arrow.png
@@ -204,6 +205,9 @@ flutter:
     - assets/icon/icon-Car.png
     - assets/icon/icon-KTX.png
     - assets/icon/discount.png
+    - assets/icon/trash_can.png
+    - assets/icon/add.png
+    - assets/icon/icon-Exit.png
 
     # background
     - assets/background/timeline_default_bg.png

@@ -36,7 +36,7 @@ class PlaceController extends GetxController {
 
   // Places 데이터 가져오기
   List<Place> PlacefromJson(json) {
-    List<Place> result = [Place(id: -1, name: '전체', placeType: 0, cnt: 0)];
+    List<Place> result = [];
     json.forEach((item) {
       result.add(Place.fromDocs(item));
     });
