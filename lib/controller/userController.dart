@@ -74,8 +74,7 @@ class UserController extends GetxController {
 
   Future<int> updateUserFirestore() async {
     final token = await _fcmController.getToken();
-    DocumentReference reference =
-        _firestore.collection('Users').doc(memberId.toString());
+    DocumentReference reference = _firestore.collection('Users').doc(memberId.toString());
     await reference.set({"memberId": memberId, "token": token});
     return 0;
   }
@@ -87,13 +86,10 @@ class UserController extends GetxController {
 
     final body = jsonEncode({"uid": uid});
 
-    http.Response response = await http.post(Uri.parse(userUrl),
-        headers: <String, String>{'Content-type': 'application/json'},
-        body: body);
+    http.Response response = await http.post(Uri.parse(userUrl), headers: <String, String>{'Content-type': 'application/json'}, body: body);
 
     if (response.statusCode == 200) {
-      UserInfoList result =
-          userFromJson(json.decode(utf8.decode(response.bodyBytes)));
+      UserInfoList result = userFromJson(json.decode(utf8.decode(response.bodyBytes)));
       decryptUser(result);
 
       return result;
