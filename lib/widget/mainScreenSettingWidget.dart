@@ -622,7 +622,7 @@ Padding gatherSetPostTypeWidget(ColorScheme colorScheme, ScreenController contro
                 postType: controller.mainScreenCurrentTabIndex,
               );
             },
-            child: (controller.mainScreenCurrentTabIndex == 2)
+            child: (controller.mainScreenCurrentTabIndex == 1)
                 ? selectedTabView(
                     viewTitle: '택시',
                     context: context,
@@ -648,7 +648,7 @@ Padding gatherSetPostTypeWidget(ColorScheme colorScheme, ScreenController contro
                 postType: controller.mainScreenCurrentTabIndex,
               );
             },
-            child: (controller.mainScreenCurrentTabIndex == 1)
+            child: (controller.mainScreenCurrentTabIndex == 2)
                 ? selectedTabView(
                     viewTitle: '카풀',
                     context: context,
