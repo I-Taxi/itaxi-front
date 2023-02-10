@@ -3,8 +3,8 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
-import 'package:itaxi/chat/chatRoomScreen.dart';
-import 'package:itaxi/chat/newChatroomScreen.dart';
+import 'package:itaxi/chat/chatRoomScreen_bak.dart';
+import 'package:itaxi/chat/chatRoomDetailScreen.dart';
 import 'package:itaxi/controller/addPostController.dart';
 import 'package:itaxi/controller/chatRoomController.dart';
 import 'package:itaxi/controller/historyController.dart';
@@ -37,7 +37,7 @@ Widget chatroomListListTile(
           _chatRoomController.getKtxPost(ktxPost: value.toKtxPost());
           _chatRoomController.getKtxChats(ktxPost: value.toKtxPost());
         }
-        Get.to(() => const NewChatroomScreen());
+        Get.to(() => const ChatRoomDetailScreen());
       });
     },
     child: Container(
