@@ -10,6 +10,7 @@ import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/controller/userController.dart';
+import 'package:itaxi/controller/navigationController.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/model/history.dart';
 import 'package:itaxi/widget/chatroomListListTile.dart';
@@ -30,8 +31,8 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
     DateController _dateController = Get.put(DateController());
     UserController _userController = Get.put(UserController());
     HistoryController _historyController = Get.put(HistoryController());
-    final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-        GlobalKey<RefreshIndicatorState>();
+    final NavigationController _navController = Get.put(NavigationController());
+    final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
 
     return Scaffold(
       backgroundColor: colorScheme.background,
@@ -51,8 +52,7 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
                 // history가 있을 때
                 if (snapshot.data!.isNotEmpty) {
                   return Padding(
-                    padding:
-                        EdgeInsets.only(left: 24.w, top: 55.h, right: 24.w),
+                    padding: EdgeInsets.only(left: 24.w, top: 55.h, right: 24.w),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -75,12 +75,10 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
                               children: [
                                 Image.asset('assets/banner.png'),
                                 Padding(
-                                  padding:
-                                      EdgeInsets.only(right: 7.w, bottom: 5.h),
+                                  padding: EdgeInsets.only(right: 7.w, bottom: 5.h),
                                   child: Align(
                                     alignment: Alignment.bottomRight,
-                                    child: Image.asset(
-                                        'assets/button/contact.png'),
+                                    child: Image.asset('assets/button/contact.png'),
                                   ),
                                 )
                               ],
@@ -90,47 +88,37 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
                         ),
                         Expanded(
                           child: SingleChildScrollView(
-                            child: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(
-                                    "탑승 예정 톡방",
-                                    style: textTheme.bodyText2?.copyWith(
-                                      color: colorScheme.tertiaryContainer,
-                                    ),
+                            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                              Text(
+                                "탑승 예정 톡방",
+                                style: textTheme.bodyText2?.copyWith(
+                                  color: colorScheme.tertiaryContainer,
+                                ),
+                              ),
+                              // if deptTime is later than current time
+                              for (int i = snapshot.data!.length - 1; i >= 0; i--)
+                                if (DateTime.tryParse(snapshot.data![i].deptTime!)!.isAfter(DateTime.now()))
+                                  chatroomListListTile(
+                                    context: context,
+                                    history: snapshot.data![i],
                                   ),
-                                  // if deptTime is later than current time
-                                  for (int i = snapshot.data!.length - 1;
-                                      i >= 0;
-                                      i--)
-                                    if (DateTime.tryParse(
-                                            snapshot.data![i].deptTime!)!
-                                        .isAfter(DateTime.now()))
-                                      chatroomListListTile(
-                                        context: context,
-                                        history: snapshot.data![i],
-                                      ),
-                                  SizedBox(
-                                    height: 29.h,
+                              SizedBox(
+                                height: 29.h,
+                              ),
+                              Text(
+                                "전체 톡방 내역",
+                                style: textTheme.bodyText2?.copyWith(
+                                  color: colorScheme.tertiaryContainer,
+                                ),
+                              ),
+                              // if deptTime is earlier than current time
+                              for (int i = snapshot.data!.length - 1; i >= 0; i--)
+                                if (DateTime.tryParse(snapshot.data![i].deptTime!)!.isBefore(DateTime.now()))
+                                  chatroomListListTile(
+                                    context: context,
+                                    history: snapshot.data![i],
                                   ),
-                                  Text(
-                                    "전체 톡방 내역",
-                                    style: textTheme.bodyText2?.copyWith(
-                                      color: colorScheme.tertiaryContainer,
-                                    ),
-                                  ),
-                                  // if deptTime is earlier than current time
-                                  for (int i = snapshot.data!.length - 1;
-                                      i >= 0;
-                                      i--)
-                                    if (DateTime.tryParse(
-                                            snapshot.data![i].deptTime!)!
-                                        .isBefore(DateTime.now()))
-                                      chatroomListListTile(
-                                        context: context,
-                                        history: snapshot.data![i],
-                                      ),
-                                ]),
+                            ]),
                           ),
                         )
                       ],
@@ -141,16 +129,18 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
                 // history가 없을 때
                 else {
                   return Padding(
-                    padding:
-                        EdgeInsets.only(left: 24.w, top: 55.h, right: 24.w),
+                    padding: EdgeInsets.only(left: 24.w, top: 55.h, right: 24.w),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.start,
                       children: [
-                        Text(
-                          "채팅",
-                          style: textTheme.headline2?.copyWith(
-                            color: colorScheme.onTertiary,
+                        Container(
+                          alignment: Alignment.centerLeft,
+                          child: Text(
+                            "채팅",
+                            style: textTheme.headline2?.copyWith(
+                              color: colorScheme.onTertiary,
+                            ),
                           ),
                         ),
                         SizedBox(
@@ -166,12 +156,10 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
                               children: [
                                 Image.asset('assets/banner.png'),
                                 Padding(
-                                  padding:
-                                      EdgeInsets.only(right: 7.w, bottom: 5.h),
+                                  padding: EdgeInsets.only(right: 7.w, bottom: 5.h),
                                   child: Align(
                                     alignment: Alignment.bottomRight,
-                                    child: Image.asset(
-                                        'assets/button/contact.png'),
+                                    child: Image.asset('assets/button/contact.png'),
                                   ),
                                 )
                               ],
@@ -179,30 +167,34 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
                         SizedBox(
                           height: 13.h,
                         ),
-                        Align(
-                          alignment: Alignment.center,
-                          child: Text(
-                            '아직 I-TAXI를 이용한 이력이 없어요\n어서 새로운 동료를 만나보세요',
-                            textAlign: TextAlign.center,
-                            style: textTheme.headline1?.copyWith(
-                                color: colorScheme.tertiaryContainer,
-                                fontWeight: FontWeight.w500,
-                                fontSize: 20),
+                        Expanded(
+                          child: Align(
+                            alignment: Alignment.center,
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Text(
+                                  '아직 입장한 톡방이 없습니다\n방을 새로 만들거나 기존 방에 참여해보세요!',
+                                  textAlign: TextAlign.center,
+                                  style: textTheme.headline1?.copyWith(color: colorScheme.tertiaryContainer, fontWeight: FontWeight.w500, fontSize: 20),
+                                ),
+                                SizedBox(
+                                  height: 18.h,
+                                ),
+                                OutlinedButton(
+                                  onPressed: () {
+                                    _navController.changeIndex(0);
+                                  },
+                                  child: Image.asset(
+                                    width: 198,
+                                    'assets/button/add_timeline.png',
+                                  ),
+                                  style: OutlinedButton.styleFrom(side: BorderSide(width: 0, color: colorScheme.onBackground)),
+                                )
+                              ],
+                            ),
                           ),
                         ),
-                        SizedBox(
-                          height: 36.h,
-                        ),
-                        OutlinedButton(
-                          onPressed: () {},
-                          child: Image.asset(
-                            width: 198,
-                            'assets/button/add_timeline.png',
-                          ),
-                          style: OutlinedButton.styleFrom(
-                              side: BorderSide(
-                                  width: 0, color: colorScheme.onBackground)),
-                        )
                       ],
                     ),
                   );
@@ -219,8 +211,7 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
                     Align(
                       child: Text(
                         '${snapshot.error}',
-                        style: textTheme.headline1
-                            ?.copyWith(color: colorScheme.tertiary),
+                        style: textTheme.headline1?.copyWith(color: colorScheme.tertiary),
                       ),
                     ),
                   ],
