@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'dart:core';
 
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
@@ -481,20 +482,20 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                       '토',
                                       '일'
                                     ];
+
                                     if (index != 0) {
-                                      DateFormat('jm')
-                                                  .format(snapshot
-                                                      .data![index].chatTime!
-                                                      .toDate())
-                                                  .toString() ==
-                                              DateFormat('jm')
-                                                  .format(snapshot
-                                                      .data![index - 1]
-                                                      .chatTime!
-                                                      .toDate())
-                                                  .toString()
-                                          ? isFirst = true
-                                          : isFirst = false;
+                                      final difference = snapshot
+                                          .data![index].chatTime!
+                                          .toDate()
+                                          .difference(snapshot
+                                              .data![index - 1].chatTime!
+                                              .toDate());
+                                      if (difference.inMinutes >= 1) {
+                                        isFirst = true;
+                                      } else {
+                                        isFirst = false;
+                                      }
+
                                       if (snapshot.data![index].memberId !=
                                           snapshot.data![index - 1].memberId) {
                                         isFirst = true;
