@@ -16,7 +16,7 @@ import 'package:itaxi/controller/screenController.dart';
 import 'package:itaxi/controller/placeController.dart';
 import 'package:itaxi/controller/dateController.dart';
 
-import '../chat/chatroomDetailScreen.dart';
+import '../chat/chatRoomDetailScreen.dart';
 
 Widget postListTile({
   required BuildContext context,
