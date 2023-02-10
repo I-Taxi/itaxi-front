@@ -204,17 +204,15 @@ class _KtxCheckPlaceScreenState extends State<KtxCheckPlaceScreen> {
                               return postIsEmpty(context);
                             return RefreshIndicator(
                               onRefresh: () async {},
-                              child: Expanded(
-                                child: ListView(
-                                  children: [
-                                    for (int index = 0;
-                                        index < snapshot.data!.length;
-                                        index++)
-                                      ktxPostListTile(
-                                          context: context,
-                                          post: snapshot.data![index])
-                                  ],
-                                ),
+                              child: ListView(
+                                children: [
+                                  for (int index = 0;
+                                      index < snapshot.data!.length;
+                                      index++)
+                                    ktxPostListTile(
+                                        context: context,
+                                        post: snapshot.data![index])
+                                ],
                               ),
                             );
                           });
@@ -445,7 +443,7 @@ class _KtxCheckPlaceScreenState extends State<KtxCheckPlaceScreen> {
         return GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () {
-            _dateController.afterDate();
+            _dateController.afterKtxDate();
           },
           child: Container(
             height: 24.h,
@@ -473,7 +471,7 @@ class _KtxCheckPlaceScreenState extends State<KtxCheckPlaceScreen> {
           return GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () {
-              _dateController.beforDate();
+              _dateController.beforeKtxDate();
             },
             child: Container(
               height: 24.h,
