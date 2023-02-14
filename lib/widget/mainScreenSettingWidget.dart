@@ -786,7 +786,7 @@ GetBuilder gatherButton(
                 _navigationController.changeIndex(3);
               } else {
                 _addPostController.completeLoad();
-                if (context.mounted) snackBar(context: context, title: '알 수없는 에러로 방 만들기에 실패했습니다.');
+                // if (context.mounted) snackBar(context: context, title: '알 수 없는 에러로 방 만들기에 실패했습니다.');
               }
             }
           }

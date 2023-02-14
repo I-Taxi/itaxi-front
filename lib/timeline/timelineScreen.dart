@@ -136,9 +136,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Container(
-                                // decoration:
-                                //     BoxDecoration(color: colorScheme.primary),
-                                height: 605.h,
+                                height: 636.h,
                                 child: Stack(
                                     alignment: Alignment.topCenter,
                                     children: [
