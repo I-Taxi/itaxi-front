@@ -36,8 +36,7 @@ class KtxPlaceController extends GetxController {
 
   // Places 데이터 가져오기
   List<KtxPlace> PlacefromJson(json) {
-    List<KtxPlace> result = [
-      KtxPlace(id: -1, name: '전체', cnt: 0)];
+    List<KtxPlace> result = [];
     json.forEach((item) {
       result.add(KtxPlace.fromDocs(item));
     });
