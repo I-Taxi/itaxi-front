@@ -155,7 +155,7 @@ class _SignInScreenState extends State<SignInScreen> {
                         controller: _pwController,
                         autocorrect: false,
                         obscureText: _isObscure,
-                        style: textTheme.bodyText1?.copyWith(
+                        style: textTheme.bodyText2?.copyWith(
                           color: colorScheme.primary,
                         ),
                         decoration: InputDecoration(
