@@ -466,8 +466,8 @@ class _KtxCheckPlaceScreenState extends State<KtxCheckPlaceScreen> {
       TextTheme textTheme, ColorScheme colorScheme, int difference) {
     return GetBuilder<DateController>(
       builder: (_) {
-        if (DateTime.now().day <=
-            _dateController.pickedDate!.add(Duration(days: difference)).day) {
+        Duration diff = DateTime.now().difference(_dateController.pickedDate!.add(Duration(days: difference)));
+        if (diff.inDays >= 0) {
           return GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () {

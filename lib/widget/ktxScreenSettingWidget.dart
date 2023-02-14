@@ -11,6 +11,7 @@ import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/controller/ktxPlaceController.dart';
 import 'package:itaxi/controller/ktxPostController.dart';
 import 'package:itaxi/controller/screenController.dart';
+import 'package:itaxi/controller/navigationController.dart';
 import 'package:itaxi/model/ktxPost.dart';
 import 'package:itaxi/widget/postListTile.dart';
 import 'package:itaxi/widget/selectPlaceDialog.dart';
@@ -32,6 +33,7 @@ KtxPostController _ktxPostController = Get.find();
 UserController _userController = Get.find();
 AddKtxPostController _addKtxPostController = Get.find();
 ScreenController _screenController = Get.find();
+NavigationController _navigationController = Get.find();
 
 Padding lookupSetDepDstWidget(
     ColorScheme colorScheme, TextTheme textTheme, ScreenController controller) {
@@ -617,7 +619,7 @@ GetBuilder gatherButton(TextTheme textTheme, ColorScheme colorScheme,
                 sale: _addKtxPostController.sale,
                 capacity: _addKtxPostController.capacity,
               );
-              Get.back();
+              _navigationController.changeIndex(3);
               await _addKtxPostController.fetchAddPost(ktxPost: post);
               await _ktxPostController.getPosts(
                 depId: _ktxPlaceController.dep?.id,
