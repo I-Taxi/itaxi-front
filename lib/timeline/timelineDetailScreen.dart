@@ -118,7 +118,7 @@ class TimelineDetailScreen extends StatelessWidget {
                             Container(
                               padding: EdgeInsets.fromLTRB(
                                   24.w, 61.36.h, 24.w, 22.47.h),
-                              height: 156.h,
+                              height: 156.47.h,
                               color: colorScheme.primary,
                               child: Column(
                                 children: [
