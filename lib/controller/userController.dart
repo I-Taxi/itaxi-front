@@ -160,15 +160,14 @@ class UserController extends GetxController {
     if (response.statusCode == 200) {
       print(response.statusCode);
       isDeleted = 1;
-      return response;
-    } else {
-      return response;
     }
-
-    //else {
-    //print(response.statusCode);
-    //print(utf8.decode(response.bodyBytes));
-    //throw Exception('Failed to Delete User');
-    //}
+    else if(json.decode(utf8.decode(response.bodyBytes))["message"] == "다른 방에 입장해있으면 탈퇴할 수 없습니다."){
+      print(json.decode(utf8.decode(response.bodyBytes))["message"]);
+      isDeleted = 2;
+    }
+    else{
+      throw Exception('Failed to Delete User');
+    }
+    return response;
   }
 }
