@@ -159,7 +159,12 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
                             ),
                             child: Stack(
                               children: [
-                                Image.asset('assets/banner.png'),
+                                Image.asset(
+                                  'assets/banner.png',
+                                  width: 342.w,
+                                  height: 75.h,
+                                  fit: BoxFit.fill,
+                                ),
                                 Padding(
                                   padding: EdgeInsets.only(right: 7.w, bottom: 5.h),
                                   child: Align(
