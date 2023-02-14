@@ -259,21 +259,25 @@ class _SignInScreenState extends State<SignInScreen> {
                         onPressed: () async {
                           await _signInController.signIn();
                           setState(() {
-                            if (_signInController.num == 0) {
-                              return mainDialog(context, '이메일 인증 오류', '인증 이메일을 확인해주시기 바랍니다.\n받은편지함에 없는 경우, 스팸함을 확인해주세요.');
-                            } else if (_signInController.num == 1) {
-                              return mainDialog(context, '등록되지 않은 이메일', '등록되지 않은 이메일입니다.\n혹시 인증 이메일이 만료되었다면 itaxi.cra.handong@gmail.com로 메일 보내주세요.');
-                            } else if (_signInController.num == 2) {
+                            if (_signInController.signInErrorState == 0) {
+                              return mainDialog(
+                                  context, '이메일 인증 오류', '인증 이메일을 확인해주시기 바랍니다.\n받은편지함에 없는 경우, 스팸함을 확인해주세요.');
+                            } else if (_signInController.signInErrorState == 1) {
+                              return mainDialog(context, '등록되지 않은 이메일',
+                                  '등록되지 않은 이메일입니다.\n혹시 인증 이메일이 만료되었다면 itaxi.cra.handong@gmail.com로 메일 보내주세요.');
+                            } else if (_signInController.signInErrorState == 2) {
                               return mainDialog(context, '비밀번호 오류', '비밀번호가 틀립니다.\n비밀번호를 다시 확인해주세요.');
-                            } else if (_signInController.num == 3) {
+                            } else if (_signInController.signInErrorState == 3) {
                               return mainDialog(context, '아이디와 비밀번호 입력', '아이디와 비밀번호를 입력해주세요.');
-                            } else if (_signInController.num == 4) {
+                            } else if (_signInController.signInErrorState == 4) {
                               return mainDialog(context, '네트워크 오류', '네트워크 연결을 확인해주세요');
                             }
                           });
 
                           _rememberId
-                              ? await storage.write(key: "login", value: "id ${_idController.text}@handong.ac.kr password ${_pwController.text}")
+                              ? await storage.write(
+                                  key: "login",
+                                  value: "id ${_idController.text}@handong.ac.kr password ${_pwController.text}")
                               : () {};
                         },
                         child: Text(

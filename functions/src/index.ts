@@ -30,7 +30,7 @@ export const sendByToken = functions.firestore
                     const token = member.data()!["token"];
                     
                     const title = memberName + "(" + postName + ")";
-                    if (token != null && member.data()!["memberId"] != memberId) {
+                    if (memberName != null && token != null && member.data()!["memberId"] != memberId) {
                         const message = {
                             notification: {
                                 title: title,

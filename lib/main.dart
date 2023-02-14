@@ -9,8 +9,6 @@ import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
-import 'dart:io';
-
 import 'package:get/get.dart';
 import 'package:itaxi/controller/signInController.dart';
 import 'package:itaxi/firebase_options.dart';

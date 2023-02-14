@@ -189,7 +189,6 @@ class PostController extends GetxController {
     Joiner? owner;
 
     post.joiners?.forEach((joiner) {
-      print(1);
       if (joiner.owner!) {
         owner = joiner;
       }
