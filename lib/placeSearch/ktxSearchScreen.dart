@@ -90,7 +90,7 @@ class _KtxSearchScreenState extends State<KtxSearchScreen> {
                           // [TODO]: 출발지 도착지 같을때 띄우는거
                           placeSearchSnackBar(
                               context: context,
-                              title: const Text('출발지를 다시 선택해주세요.'),
+                              title: const Text('출발지를 다시 선택해주세요.', textAlign: TextAlign.center),
                               color: colorScheme.error);
                         } else {
                           _ktxPlaceController.selectDep(
@@ -107,7 +107,7 @@ class _KtxSearchScreenState extends State<KtxSearchScreen> {
                           // [TODO]: 출발지 도착지 같을때 띄우는거
                           placeSearchSnackBar(
                               context: context,
-                              title: const Text('도착지를 다시 선택해주세요.'),
+                              title: const Text('도착지를 다시 선택해주세요.', textAlign: TextAlign.center),
                               color: colorScheme.error);
                         } else {
                           _ktxPlaceController.selectDst(
