@@ -730,7 +730,9 @@ ElevatedButton lookupButton(TextTheme textTheme, ColorScheme colorScheme) {
           minimumSize: Size(342.w, 57.h),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))),
       onPressed: () {
-        _screenController.setCheckScreen(true);
+        if(_placeController.hasDep && _placeController.hasDst){
+          _screenController.setCheckScreen(true);
+        }
       },
       child: Text(
         "조회하기",
