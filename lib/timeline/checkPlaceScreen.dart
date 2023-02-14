@@ -140,17 +140,17 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                           children: [
                             checkPlaceScreenBeforeDateWidget(textTheme, colorScheme, -2),
                             SizedBox(
-                              width: 25.w,
+                              width: 24.w,
                             ),
                             checkPlaceScreenBeforeDateWidget(textTheme, colorScheme, -1),
                             SizedBox(
-                              width: 25.w,
+                              width: 23.w,
                             ),
                             GetBuilder<DateController>(
                               builder: (_) {
                                 return Container(
                                   height: 24.h,
-                                  width: 72.w,
+                                  width: 74.w,
                                   alignment: Alignment.topCenter,
                                   child: Text(
                                     DateFormat('MM월 dd일').format(_dateController.pickedDate!),
@@ -162,11 +162,11 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                               },
                             ),
                             SizedBox(
-                              width: 25.w,
+                              width: 23.w,
                             ),
                             checkPlaceScreenAfterDateWidget(textTheme, colorScheme, 1),
                             SizedBox(
-                              width: 26.w,
+                              width: 24.w,
                             ),
                             checkPlaceScreenAfterDateWidget(textTheme, colorScheme, 2),
                           ],
@@ -218,7 +218,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
           },
           child: Container(
             height: 24.h,
-            width: 42.w,
+            width: 44.w,
             alignment: Alignment.center,
             child: Text(
               DateFormat('MM.d').format(_dateController.pickedDate!.add(Duration(days: difference))),
@@ -237,7 +237,8 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
     return GetBuilder<DateController>(
       builder: (_) {
         Duration diff = DateTime.now().difference(_dateController.pickedDate!.add(Duration(days: difference)));
-        if (diff.inDays >= 0) {
+        print(diff.inDays);
+        if (diff.inDays <= 0) {
           return GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () {
@@ -245,7 +246,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
             },
             child: Container(
               height: 24.h,
-              width: 42.w,
+              width: 44.w,
               alignment: Alignment.center,
               child: Text(
                 DateFormat('MM.dd').format(_dateController.pickedDate!.add(Duration(days: difference))),
@@ -261,7 +262,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
           onTap: () {},
           child: Container(
             height: 24.h,
-            width: 42.w,
+            width: 44.w,
             alignment: Alignment.center,
             child: Text(
               DateFormat(' - ').format(_dateController.pickedDate!.add(const Duration(days: -2))),

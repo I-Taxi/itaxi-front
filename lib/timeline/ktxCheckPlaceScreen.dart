@@ -150,18 +150,18 @@ class _KtxCheckPlaceScreenState extends State<KtxCheckPlaceScreen> {
                             checkPlaceScreenBeforeDateWidget(
                                 textTheme, colorScheme, -2),
                             SizedBox(
-                              width: 25.w,
+                              width: 24.w,
                             ),
                             checkPlaceScreenBeforeDateWidget(
                                 textTheme, colorScheme, -1),
                             SizedBox(
-                              width: 25.w,
+                              width: 23.w,
                             ),
                             GetBuilder<DateController>(
                               builder: (_) {
                                 return Container(
                                   height: 24.h,
-                                  width: 72.w,
+                                  width: 74.w,
                                   alignment: Alignment.topCenter,
                                   child: Text(
                                     DateFormat('MM월 dd일')
@@ -174,12 +174,12 @@ class _KtxCheckPlaceScreenState extends State<KtxCheckPlaceScreen> {
                               },
                             ),
                             SizedBox(
-                              width: 25.w,
+                              width: 23.w,
                             ),
                             checkPlaceScreenAfterDateWidget(
                                 textTheme, colorScheme, 1),
                             SizedBox(
-                              width: 26.w,
+                              width: 24.w,
                             ),
                             checkPlaceScreenAfterDateWidget(
                                 textTheme, colorScheme, 2),
@@ -225,215 +225,6 @@ class _KtxCheckPlaceScreenState extends State<KtxCheckPlaceScreen> {
         )
       ],
     );
-    // Scaffold(
-    //   appBar: PreferredSize(
-    //     preferredSize: Size.fromHeight(206.h),
-    //     child: Column(
-    //       children: [
-    //         // AppBar(
-    //         //   backgroundColor: colorScheme.secondary,
-    //         //   elevation: 0.0,
-    //         //   leading: IconButton(
-    //         //       onPressed: () {
-    //         //         Get.back();
-    //         //       },
-    //         //       icon: Image.asset("assets/arrow/arrow_back_1.png",
-    //         //           color: colorScheme.primary,
-    //         //           width: 11.62.w,
-    //         //           height: 20.51.h)),
-    //         //   actions: [
-    //         //     IconButton(
-    //         //       onPressed: () {},
-    //         //       icon: const Icon(Icons.menu),
-    //         //       color: colorScheme.background,
-    //         //     ),
-    //         //   ],
-    //         // ),
-    //         Container(
-    //           decoration: BoxDecoration(
-    //             color: colorScheme.secondary,
-    //           ),
-    //           height: 100.h,
-    //           child: Column(children: [
-    //             IconButton(
-    //                 onPressed: () {
-    //                   Get.back();
-    //                 },
-    //                 icon: Image.asset("assets/arrow/arrow_back_1.png",
-    //                     color: colorScheme.primary,
-    //                     width: 11.62.w,
-    //                     height: 20.51.h)),
-    //             IconButton(
-    //               onPressed: () {},
-    //               icon: const Icon(Icons.menu),
-    //               color: colorScheme.background,
-    //             ),
-    //           ]),
-    //         ),
-    //         Container(
-    //           height: 106.h,
-    //           alignment: Alignment.center,
-    //           decoration: BoxDecoration(
-    //               color: colorScheme.secondary,
-    //               borderRadius: BorderRadius.only(
-    //                   bottomLeft: Radius.circular(18.0),
-    //                   bottomRight: Radius.circular(18.0))),
-    //           child: Column(
-    //             mainAxisAlignment: MainAxisAlignment.end,
-    //             children: [
-    //               Row(
-    //                 mainAxisAlignment: MainAxisAlignment.center,
-    //                 children: [
-    //                   Text(abbreviatePlaceName(_ktxPlaceController.dep!.name!),
-    //                       style: textTheme.subtitle1
-    //                           ?.copyWith(color: colorScheme.primary)),
-    //                   SizedBox(
-    //                     width: 37.0.w,
-    //                   ),
-    //                   Image.asset(
-    //                     width: 102.5.w,
-    //                     height: 16.52.h,
-    //                     'assets/DeptoDes.png',
-    //                   ),
-    //                   SizedBox(
-    //                     width: 35.5.w,
-    //                   ),
-    //                   Text(abbreviatePlaceName(_ktxPlaceController.dst!.name!),
-    //                       style: textTheme.subtitle1
-    //                           ?.copyWith(color: colorScheme.primary)),
-    //                 ],
-    //               ),
-    //               Padding(
-    //                 padding: EdgeInsets.only(top: 32.h, bottom: 12.h),
-    //                 child: Row(
-    //                   mainAxisAlignment: MainAxisAlignment.center,
-    //                   children: [
-    //                     checkPlaceScreenBeforeDateWidget(
-    //                         textTheme, colorScheme, -2),
-    //                     SizedBox(
-    //                       width: 25.w,
-    //                     ),
-    //                     checkPlaceScreenBeforeDateWidget(
-    //                         textTheme, colorScheme, -1),
-    //                     SizedBox(
-    //                       width: 25.w,
-    //                     ),
-    //                     GetBuilder<DateController>(
-    //                       builder: (_) {
-    //                         return Container(
-    //                           height: 24.h,
-    //                           width: 72.w,
-    //                           alignment: Alignment.topCenter,
-    //                           child: Text(
-    //                             DateFormat('MM월 dd일')
-    //                                 .format(_dateController.pickedDate!),
-    //                             style: textTheme.subtitle2?.copyWith(
-    //                               color: colorScheme.primary,
-    //                             ),
-    //                           ),
-    //                         );
-    //                       },
-    //                     ),
-    //                     SizedBox(
-    //                       width: 25.w,
-    //                     ),
-    //                     checkPlaceScreenAfterDateWidget(
-    //                         textTheme, colorScheme, 1),
-    //                     SizedBox(
-    //                       width: 26.w,
-    //                     ),
-    //                     checkPlaceScreenAfterDateWidget(
-    //                         textTheme, colorScheme, 2),
-    //                   ],
-    //                 ),
-    //               ),
-    //             ],
-    //           ),
-    //         ),
-    //       ],
-    //     ),
-    //   ),
-    //   backgroundColor: colorScheme.onBackground,
-    //   body: ColorfulSafeArea(
-    //     child: GetBuilder<ScreenController>(
-    //       builder: (_) {
-    //         return Column(
-    //           children: [
-    //             // post list
-    //             Expanded(
-    //               child: RefreshIndicator(
-    //                 key: _refreshIndicatorKey,
-    //                 color: colorScheme.tertiary,
-    //                 backgroundColor: colorScheme.background,
-    //                 strokeWidth: 2.0,
-    //                 onRefresh: () async {
-    //                   _ktxPostController.getPosts(
-    //                     depId: _ktxPlaceController.dep?.id,
-    //                     dstId: _ktxPlaceController.dst?.id,
-    //                     time: _dateController.formattingDateTime(
-    //                       _dateController.mergeDateAndTime(),
-    //                     ),
-    //                   );
-    //                 },
-    //                 child: GetBuilder<KtxPostController>(
-    //                   builder: (_) {
-    //                     return FutureBuilder<List<KtxPost>>(
-    //                       future: _ktxPostController.posts,
-    //                       builder: (BuildContext context, snapshot) {
-    //                         if (snapshot.hasData) {
-    //                           // post가 있을 떼
-    //                           if (snapshot.data!.isNotEmpty) {
-    //                             return ListView.builder(
-    //                               itemCount: snapshot.data!.length,
-    //                               itemBuilder:
-    //                                   (BuildContext context, int index) {
-    //                                 return ktxPostListTile(
-    //                                   context: context,
-    //                                   post: snapshot.data![index],
-    //                                 );
-    //                               },
-    //                             );
-    //                           }
-    //                           // post가 없을 때
-    //                           else {
-    //                             return postIsEmpty(context);
-    //                           }
-    //                         }
-    //                         // post load 중에 오류 발생
-    //                         else if (snapshot.hasError) {
-    //                           return ListView(
-    //                             children: [
-    //                               SizedBox(
-    //                                 height: 40.h,
-    //                               ),
-    //                               Align(
-    //                                 child: Text(
-    //                                   '${snapshot.error}',
-    //                                   style: textTheme.subtitle2?.copyWith(
-    //                                     color: colorScheme.tertiary,
-    //                                   ),
-    //                                 ),
-    //                               ),
-    //                             ],
-    //                           );
-    //                         }
-
-    //                         // post data loading bar
-    //                         return LinearProgressIndicator(
-    //                           color: colorScheme.secondary,
-    //                         );
-    //                       },
-    //                     );
-    //                   },
-    //                 ),
-    //               ),
-    //             ),
-    //           ],
-    //         );
-    //       },
-    //     ),
-    //   ),
-    // );
   }
 
   GetBuilder<DateController> checkPlaceScreenAfterDateWidget(
@@ -447,7 +238,7 @@ class _KtxCheckPlaceScreenState extends State<KtxCheckPlaceScreen> {
           },
           child: Container(
             height: 24.h,
-            width: 42.w,
+            width: 44.w,
             alignment: Alignment.center,
             child: Text(
               DateFormat('MM.d').format(
@@ -475,7 +266,7 @@ class _KtxCheckPlaceScreenState extends State<KtxCheckPlaceScreen> {
             },
             child: Container(
               height: 24.h,
-              width: 42.w,
+              width: 44.w,
               alignment: Alignment.center,
               child: Text(
                 DateFormat('MM.dd').format(_dateController.pickedDate!
@@ -492,7 +283,7 @@ class _KtxCheckPlaceScreenState extends State<KtxCheckPlaceScreen> {
           onTap: () {},
           child: Container(
             height: 24.h,
-            width: 42.w,
+            width: 44.w,
             alignment: Alignment.center,
             child: Text(
               DateFormat(' - ').format(
