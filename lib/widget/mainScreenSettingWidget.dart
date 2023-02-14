@@ -1,19 +1,14 @@
-import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:itaxi/timeline/checkPlaceScreen.dart';
-import 'package:itaxi/settings/settingScreen.dart';
-import 'package:toggle_switch/toggle_switch.dart';
+import 'package:itaxi/controller/navigationController.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
+import 'package:http/http.dart' as http;
 import 'package:itaxi/controller/addPostController.dart';
 import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/controller/placeController.dart';
 import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/controller/screenController.dart';
 import 'package:itaxi/model/post.dart';
-import 'package:itaxi/widget/postListTile.dart';
-import 'package:itaxi/widget/selectPlaceDialog.dart';
 import 'package:itaxi/widget/tabView.dart';
 import 'package:itaxi/widget/snackBar.dart';
 
@@ -21,7 +16,6 @@ import 'package:itaxi/controller/userController.dart';
 
 import 'package:itaxi/placeSearch/searchScreen.dart';
 import 'package:itaxi/placeSearch/placeSearchController.dart';
-import 'package:itaxi/widget/postTypeToggleButton.dart';
 import 'package:itaxi/widget/setTimeDateFormater.dart';
 
 PlaceSearchController _placeSearchController = Get.find();
@@ -31,6 +25,7 @@ PostController _postController = Get.find();
 UserController _userController = Get.find();
 AddPostController _addPostController = Get.find();
 ScreenController _screenController = Get.find();
+NavigationController _navigationController = Get.find();
 
 Padding lookupSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, ScreenController controller) {
   return Padding(
@@ -775,16 +770,22 @@ GetBuilder gatherButton(
                 capacity: _addPostController.capacity,
                 stopovers: _placeController.stopOver,
               );
-              Get.back();
-              await _addPostController.fetchAddPost(post: post);
-              await _postController.getPosts(
-                depId: _placeController.dep?.id,
-                dstId: _placeController.dst?.id,
-                time: _dateController.formattingDateTime(
-                  _dateController.mergeDateAndTime(),
-                ),
-                postType: controller.mainScreenCurrentTabIndex,
-              );
+
+              http.Response response = await _addPostController.fetchAddPost(post: post);
+              if (response.statusCode == 200) {
+                await _postController.getPosts(
+                  depId: _placeController.dep?.id,
+                  dstId: _placeController.dst?.id,
+                  time: _dateController.formattingDateTime(
+                    _dateController.mergeDateAndTime(),
+                  ),
+                  postType: controller.mainScreenCurrentTabIndex,
+                );
+                _navigationController.changeIndex(3);
+              } else {
+                _addPostController.completeLoad();
+                if (context.mounted) snackBar(context: context, title: '알 수없는 에러로 방 만들기에 실패했습니다.');
+              }
             }
           }
         },

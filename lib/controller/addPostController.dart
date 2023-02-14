@@ -29,9 +29,18 @@ class AddPostController extends GetxController {
     update();
   }
 
-  Future<int> fetchAddPost({required Post post}) async {
+  void unloaded() {
     loaded = false;
     update();
+  }
+
+  void completeLoad() {
+    loaded = true;
+    update();
+  }
+
+  Future<http.Response> fetchAddPost({required Post post}) async {
+    unloaded();
     var addPostUrl = dotenv.env['API_URL'].toString();
     addPostUrl = '${addPostUrl}post';
 
@@ -46,17 +55,14 @@ class AddPostController extends GetxController {
     );
 
     if (response.statusCode == 200) {
-      Post result =
-          Post.fromPostAllDocs(json.decode(utf8.decode(response.bodyBytes)));
+      Post result = Post.fromPostAllDocs(json.decode(utf8.decode(response.bodyBytes)));
       post = post.copyWith(id: result.id, joiners: result.joiners);
       await ChatRepository().setPost(post: post);
       await _historyController.getHistorys();
-      loaded = true;
-      update();
-      return response.statusCode;
+      completeLoad();
+      return response;
     } else {
-      loaded = true;
-      update();
+      completeLoad();
       print(response.statusCode);
       print(response.body);
       throw Exception('Failed to add posts');
