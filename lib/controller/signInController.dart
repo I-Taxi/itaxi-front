@@ -14,7 +14,7 @@ class SignInController extends GetxController {
 
   SignInState signInState = SignInState.start;
 
-  late int num;
+  late int signInErrorState;
 
   late String id;
   late String pw;
@@ -46,7 +46,7 @@ class SignInController extends GetxController {
   @override
   onInit() {
     super.onInit();
-    num = 5;
+    signInErrorState = 5;
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
         _asyncMethod();
@@ -83,7 +83,7 @@ class SignInController extends GetxController {
   }
 
   Future<void> signIn() async {
-    num = 5;
+    signInErrorState = 5;
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: id, password: pw) //아이디와 비밀번호로 로그인 시도
@@ -94,7 +94,7 @@ class SignInController extends GetxController {
                 update(),
               }
             : {
-                num = 0,
+                signInErrorState = 0,
                 update(),
               };
         // : throw Exception('이메일 확인 안됨');
@@ -102,20 +102,23 @@ class SignInController extends GetxController {
       });
     } on FirebaseAuthException catch (e) {
       //로그인 예외처리
+      await storage.delete(key: 'login');
+      signedOutState();
+
       if (e.code == 'user-not-found') {
-        num = 1;
+        signInErrorState = 1;
         update();
         // throw Exception('등록되지 않은 이메일입니다');
       } else if (e.code == 'wrong-password') {
-        num = 2;
+        signInErrorState = 2;
         update();
         // throw Exception('비밀번호가 틀렸습니다');
       } else if (e.code == 'network-request-failed') {
-        num = 3;
+        signInErrorState = 3;
         update();
       } else {
         print(e.code);
-        num = 4;
+        signInErrorState = 4;
         update();
         // throw Exception(e.code);
       }

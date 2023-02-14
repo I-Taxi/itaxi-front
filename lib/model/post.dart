@@ -182,4 +182,22 @@ class Post {
       'postName': postName,
     };
   }
+
+  Map<String, dynamic> toFirestoreOutChatMap() {
+    List<int?> membersId = [];
+    String postName = "";
+    print(joiners);
+    for (Joiner? joiner in joiners!) {
+      membersId.add(joiner!.memberId);
+    }
+
+    postName = "(${departure!.name!}) -> (${destination!.name!})";
+
+    return {
+      'id': id,
+      'postType': postType,
+      'membersId': membersId,
+      'postName': postName,
+    };
+  }
 }
