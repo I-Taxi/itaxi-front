@@ -414,7 +414,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                               Get.back();
                               Get.back();
                               Get.back();
-                            } else {
+                            } else if(_userController.isDeleted == 2){
                               mainDialog(context, '회원탈퇴',
                                   '현재 모집중이거나 입장하신 방이 있습니다. 해당 방을 나가신 후 다시 시도해주세요.');
                             }
