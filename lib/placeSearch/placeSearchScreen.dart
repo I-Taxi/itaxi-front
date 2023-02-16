@@ -308,22 +308,22 @@ class _PlaceSearchScreenState extends State<PlaceSearchScreen> {
                   behavior: HitTestBehavior.opaque,
                   onTap: () async {
                     if (_placeSearchController.postType == 0) {
-                      placeSearchSnackBar(context: context, title: const Text('택시 또는 카풀을 선택해주세요.'), color: Colors.red);
+                      placeSearchSnackBar(context: context, title: const Text('택시 또는 카풀을 선택해주세요.', textAlign: TextAlign.center), color: Colors.red);
                     } else if (_placeController.dep == null) {
-                      placeSearchSnackBar(context: context, title: const Text('출발지를 선택해주세요.'), color: Colors.red);
+                      placeSearchSnackBar(context: context, title: const Text('출발지를 선택해주세요.', textAlign: TextAlign.center), color: Colors.red);
                     } else if (_placeController.dep!.id == -1) {
-                      placeSearchSnackBar(context: context, title: const Text('출발지를 다시 선택해주세요.'), color: Colors.red);
+                      placeSearchSnackBar(context: context, title: const Text('출발지를 다시 선택해주세요.', textAlign: TextAlign.center), color: Colors.red);
                     } else if (_placeController.dst == null) {
-                      placeSearchSnackBar(context: context, title: const Text('도착지를 선택해주세요.'), color: Colors.red);
+                      placeSearchSnackBar(context: context, title: const Text('도착지를 선택해주세요.', textAlign: TextAlign.center), color: Colors.red);
                     } else if (_placeController.dst!.id == -1) {
-                      placeSearchSnackBar(context: context, title: const Text('도착지를 다시 선택해주세요.'), color: Colors.red);
+                      placeSearchSnackBar(context: context, title: const Text('도착지를 다시 선택해주세요.', textAlign: TextAlign.center), color: Colors.red);
                     } else if (DateTime.now()
                         .difference(_dateController.mergeDateAndTime())
                         .isNegative ==
                         false) {
-                      placeSearchSnackBar(context: context, title: const Text('출발시간을 다시 선택해주세요.'), color: Colors.red);
+                      placeSearchSnackBar(context: context, title: const Text('출발시간을 다시 선택해주세요.', textAlign: TextAlign.center), color: Colors.red);
                     } else if (_placeSearchController.peopleCount == 0) {
-                      placeSearchSnackBar(context: context, title: const Text('최대인원을 선택해주세요.'), color: Colors.red);
+                      placeSearchSnackBar(context: context, title: const Text('최대인원을 선택해주세요.', textAlign: TextAlign.center), color: Colors.red);
                     } else {
                       Post post = Post(
                           uid: _userController.uid,
