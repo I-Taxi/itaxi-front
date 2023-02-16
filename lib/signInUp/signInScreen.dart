@@ -27,9 +27,6 @@ class _SignInScreenState extends State<SignInScreen> {
 
   static final storage = new FlutterSecureStorage();
 
-  // 자동로그인 on/off
-  bool _rememberId = false;
-
   // 텍스트필드 숨김 on/off
   bool _isObscure = true;
 
@@ -215,18 +212,14 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                         ),
                         Checkbox(
-                          value: _rememberId,
+                          value: _signInController.rememberId,
                           activeColor: colorScheme.primary,
                           checkColor: colorScheme.secondary,
                           side: BorderSide(
                             color: colorScheme.primary,
                           ),
                           onChanged: (value) {
-                            setState(
-                              () {
-                                _rememberId = !_rememberId;
-                              },
-                            );
+                            _signInController.rememberId = !_signInController.rememberId;
                           },
                         ),
                         const Spacer(),
@@ -274,7 +267,7 @@ class _SignInScreenState extends State<SignInScreen> {
                             }
                           });
 
-                          _rememberId
+                          _signInController.rememberId
                               ? await storage.write(
                                   key: "login",
                                   value: "id ${_idController.text}@handong.ac.kr password ${_pwController.text}")

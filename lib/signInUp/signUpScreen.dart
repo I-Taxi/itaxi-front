@@ -34,7 +34,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   // Pattern pattern = r'^(?=.*[a-zA-Z]{3,})(?=.*\d{3,})';
 
   // 문자 숫자 6자 이상
-  Pattern pattern = r'^(?=.*[a-zA-Z0-9]{6,})';
+  Pattern pattern = r"^(?=.*[A-Za-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{6,}$";
   late RegExp regExp;
   final _formKey = GlobalKey<FormState>();
 
@@ -232,7 +232,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         if (value!.isEmpty) return '비밀번호를 입력해주세요';
                         regExp = RegExp(pattern.toString());
                         if (!regExp.hasMatch(value))
-                          return '문자와 숫자 6자리 이상 사용해주세요';
+                          return '문자와 숫자, 특수문자를 결합해 6자리 이상 사용해주세요';
                         return null;
                       },
                     ),
