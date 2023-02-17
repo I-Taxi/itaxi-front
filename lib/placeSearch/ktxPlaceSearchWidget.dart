@@ -173,7 +173,7 @@ Widget placeSearchTile({
                         ),
                       ],
                     )),
-                color: Colors.green,
+                color: Color(0xff69c077),
               );
             },
             title: Text(
@@ -200,6 +200,8 @@ ScaffoldFeatureController<SnackBar, SnackBarClosedReason> placeSearchSnackBar({
       content: title,
       backgroundColor: color,
       behavior: SnackBarBehavior.floating,
+      width: 343.w,
+      padding: EdgeInsets.only(top: 22.h, bottom: 22.h),
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16)),
       duration: const Duration(seconds: 2),
     ),
