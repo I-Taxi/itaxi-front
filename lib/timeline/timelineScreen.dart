@@ -26,12 +26,10 @@ class TimelineScreen extends StatefulWidget {
 }
 
 class _TimelineScreenState extends State<TimelineScreen> {
-  TimelineTabViewController _timelineTabViewController =
-      Get.put(TimelineTabViewController());
+  TimelineTabViewController _timelineTabViewController = Get.put(TimelineTabViewController());
   final HistoryController _historyController = Get.put(HistoryController());
 
-  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
-      GlobalKey<RefreshIndicatorState>();
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
   final NavigationController _navController = Get.put(NavigationController());
   final ScreenController _screenController = Get.find();
   final ScrollController _scrollController = ScrollController();
@@ -40,18 +38,11 @@ class _TimelineScreenState extends State<TimelineScreen> {
     int index = 0;
     for (int i = 0; i < historys!.length; i++) {
       index = i;
-      if (DateTime.now()
-              .difference(DateTime.parse(historys[i].deptTime!))
-              .isNegative ==
-          false) {
+      if (DateTime.now().difference(DateTime.parse(historys[i].deptTime!)).isNegative == false) {
         break;
       }
     }
-    if (index == 0 &&
-        DateTime.now()
-                .difference(DateTime.parse(historys[index].deptTime!))
-                .isNegative ==
-            true) {
+    if (index == 0 && DateTime.now().difference(DateTime.parse(historys[index].deptTime!)).isNegative == true) {
       return 0;
     }
 
@@ -59,9 +50,13 @@ class _TimelineScreenState extends State<TimelineScreen> {
   }
 
   Container makeSoonCard(BuildContext context, List<History>? history) {
+    final colorScheme = Theme.of(context).colorScheme;
     int index = catchSoonIndex(history);
     if (index == -2 || index == -1) {
-      return Container(padding: EdgeInsets.fromLTRB(26.w, 0, 26.w, 0.h));
+      return Container(
+        padding: EdgeInsets.fromLTRB(26.w, 0, 26.w, 0.h),
+        child: emptyCard(context: context),
+      );
     } else {
       return Container(
         padding: EdgeInsets.fromLTRB(26.w, 0, 26.w, 0.h),
@@ -74,12 +69,13 @@ class _TimelineScreenState extends State<TimelineScreen> {
   }
 
   void checkScrollPos() {
-    if (_screenController.enlargement && _scrollController.offset >= 130.h) {
+    print(_scrollController.offset);
+    if (_screenController.enlargement && _scrollController.offset >= _screenController.triggerScrollHeigth) {
       _screenController.setUnenlargement();
-    } else if (_scrollController.offset <= 130.h) {
+    } else if (_scrollController.offset <= _screenController.triggerScrollHeigth) {
       if (!_screenController.enlargement) _screenController.setEnlargement();
       _screenController.setBackgroundHeight(
-          75.h, 106.h, 130.h, _scrollController.offset);
+          75.h, 106.h, _screenController.triggerScrollHeigth, _scrollController.offset);
     }
   }
 
@@ -99,18 +95,14 @@ class _TimelineScreenState extends State<TimelineScreen> {
         elevation: 0.0,
         shadowColor: Color(0Xff76B1ED),
         toolbarHeight: 70.h,
-        title: Text('타임라인',
-            style: textTheme.subtitle1?.copyWith(color: colorScheme.primary)),
+        title: Text('타임라인', style: textTheme.subtitle1?.copyWith(color: colorScheme.primary)),
         centerTitle: true,
         flexibleSpace: new Container(
           decoration: BoxDecoration(
-            gradient: LinearGradient(
-                begin: Alignment.topCenter,
-                end: Alignment.bottomCenter,
-                colors: <Color>[
-                  Color(0xff8fc0f1),
-                  Color(0Xff76B1ED),
-                ]),
+            gradient: LinearGradient(begin: Alignment.topCenter, end: Alignment.bottomCenter, colors: <Color>[
+              Color(0xff8fc0f1),
+              Color(0Xff76B1ED),
+            ]),
           ),
         ),
       ),
@@ -133,142 +125,107 @@ class _TimelineScreenState extends State<TimelineScreen> {
                     builder: (BuildContext context, snapshot) {
                       if (snapshot.hasData) {
                         // history가 있을 때
-                        if (snapshot.data!.isNotEmpty) {
+                        if (snapshot.data != null && snapshot.data!.isNotEmpty) {
+                          int index = catchSoonIndex(snapshot.data!);
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            if (index == -2 || index == -1) {
+                              _screenController.setTriggerScrollHeight(80.h);
+                            } else {
+                              _screenController.setTriggerScrollHeight(130.h);
+                            }
+                          });
                           return Column(
                             crossAxisAlignment: CrossAxisAlignment.center,
                             children: [
                               Container(
                                 height: Platform.isIOS ? 620.h : 636.h,
-                                child: Stack(
-                                    alignment: Alignment.topCenter,
-                                    children: [
-                                      SizedBox(
-                                        height:
-                                            _screenController.backgroundHeight,
-                                        width: double.infinity,
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.only(
-                                                bottomLeft: Radius.circular(16),
-                                                bottomRight:
-                                                    Radius.circular(16)),
-                                            gradient: LinearGradient(
-                                                begin: Alignment.topCenter,
-                                                end: Alignment.bottomCenter,
-                                                colors: <Color>[
-                                                  Color(0Xff76B1ED),
-                                                  Color(0xff62A6EA)
-                                                ]),
+                                child: Stack(alignment: Alignment.topCenter, children: [
+                                  SizedBox(
+                                    height: _screenController.backgroundHeight,
+                                    width: double.infinity,
+                                    child: Container(
+                                      decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.only(
+                                            bottomLeft: Radius.circular(16), bottomRight: Radius.circular(16)),
+                                        gradient: LinearGradient(
+                                            begin: Alignment.topCenter,
+                                            end: Alignment.bottomCenter,
+                                            colors: <Color>[Color(0Xff76B1ED), Color(0xff62A6EA)]),
+                                      ),
+                                    ),
+                                  ),
+                                  Center(
+                                    child: ListView(
+                                      controller: _scrollController,
+                                      children: [
+                                        makeSoonCard(context, snapshot.data!),
+                                        Container(
+                                          padding: EdgeInsets.fromLTRB(24.w, 26.h, 0.w, 0.h),
+                                          child: Text(
+                                            '탑승 내역',
+                                            style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
                                           ),
                                         ),
-                                      ),
-                                      Center(
-                                        child: ListView(
-                                          controller: _scrollController,
-                                          children: [
-                                            makeSoonCard(
-                                                context, snapshot.data!),
-                                            Container(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  24.w, 26.h, 0.w, 0.h),
-                                              child: Text(
-                                                '탑승 내역',
-                                                style: textTheme.subtitle2
-                                                    ?.copyWith(
-                                                        color: colorScheme
-                                                            .tertiaryContainer),
-                                              ),
-                                            ),
-                                            Container(
-                                              padding: EdgeInsets.only(
-                                                  top: _screenController
-                                                          .enlargement
-                                                      ? 0
-                                                      : 136.h),
-                                            ),
-                                            for (int i = 0;
-                                                i < snapshot.data!.length;
-                                                i++)
-                                              historyListContainer(
-                                                context: context,
-                                                history: snapshot.data![i],
-                                              ),
-                                          ],
+                                        Container(
+                                          padding: EdgeInsets.only(top: _screenController.enlargement ? 0 : 136.h),
                                         ),
-                                      ),
-                                      if (!_screenController.enlargement)
-                                        SizedBox(
-                                          height: 156.h,
-                                          width: double.infinity,
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                color: colorScheme.primary),
-                                            child: Stack(
+                                        for (int i = 0; i < snapshot.data!.length; i++)
+                                          historyListContainer(
+                                            context: context,
+                                            history: snapshot.data![i],
+                                          ),
+                                      ],
+                                    ),
+                                  ),
+                                  if (!_screenController.enlargement)
+                                    SizedBox(
+                                      height: 156.h,
+                                      width: double.infinity,
+                                      child: Container(
+                                        decoration: BoxDecoration(color: colorScheme.primary),
+                                        child: Stack(
+                                          children: [
+                                            SizedBox(
+                                              height: 75.h,
+                                              width: double.infinity,
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  borderRadius: BorderRadius.only(
+                                                      bottomLeft: Radius.circular(16),
+                                                      bottomRight: Radius.circular(16)),
+                                                  gradient: LinearGradient(
+                                                      begin: Alignment.topCenter,
+                                                      end: Alignment.bottomCenter,
+                                                      colors: <Color>[Color(0Xff76B1ED), Color(0xff62A6EA)]),
+                                                ),
+                                              ),
+                                            ),
+                                            Column(
+                                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                               children: [
-                                                SizedBox(
-                                                  height: 75.h,
-                                                  width: double.infinity,
-                                                  child: Container(
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.only(
-                                                              bottomLeft: Radius
-                                                                  .circular(16),
-                                                              bottomRight:
-                                                                  Radius
-                                                                      .circular(
-                                                                          16)),
-                                                      gradient: LinearGradient(
-                                                          begin: Alignment
-                                                              .topCenter,
-                                                          end: Alignment
-                                                              .bottomCenter,
-                                                          colors: <Color>[
-                                                            Color(0Xff76B1ED),
-                                                            Color(0xff62A6EA)
-                                                          ]),
-                                                    ),
+                                                makeSoonCard(context, snapshot.data!),
+                                                Container(
+                                                  padding: EdgeInsets.fromLTRB(24.w, 27.h, 0.w, 0.h),
+                                                  alignment: Alignment.centerLeft,
+                                                  child: Text(
+                                                    '탑승 내역',
+                                                    style: textTheme.subtitle2
+                                                        ?.copyWith(color: colorScheme.tertiaryContainer),
                                                   ),
                                                 ),
-                                                Column(
-                                                  mainAxisAlignment:
-                                                      MainAxisAlignment
-                                                          .spaceBetween,
-                                                  children: [
-                                                    makeSoonCard(context,
-                                                        snapshot.data!),
-                                                    Container(
-                                                      padding:
-                                                          EdgeInsets.fromLTRB(
-                                                              24.w,
-                                                              27.h,
-                                                              0.w,
-                                                              0.h),
-                                                      alignment:
-                                                          Alignment.centerLeft,
-                                                      child: Text(
-                                                        '탑승 내역',
-                                                        style: textTheme
-                                                            .subtitle2
-                                                            ?.copyWith(
-                                                                color: colorScheme
-                                                                    .tertiaryContainer),
-                                                      ),
-                                                    ),
-                                                    Container(
-                                                      height: 7.h,
-                                                      decoration: BoxDecoration(
-                                                        color: colorScheme
-                                                            .onBackground,
-                                                      ),
-                                                    ),
-                                                  ],
+                                                Container(
+                                                  height: 7.h,
+                                                  decoration: BoxDecoration(
+                                                    color: colorScheme.onBackground,
+                                                  ),
                                                 ),
                                               ],
                                             ),
-                                          ),
+                                          ],
                                         ),
-                                    ]),
+                                      ),
+                                    ),
+                                ]),
                               ),
                             ],
                           );
@@ -288,9 +245,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
                                   '아직 I-TAXI를 이용한 이력이 없어요\n어서 새로운 동료를 만나보세요',
                                   textAlign: TextAlign.center,
                                   style: textTheme.headline1?.copyWith(
-                                      color: colorScheme.tertiaryContainer,
-                                      fontWeight: FontWeight.w500,
-                                      fontSize: 20),
+                                      color: colorScheme.tertiaryContainer, fontWeight: FontWeight.w500, fontSize: 20),
                                 ),
                               ),
                               SizedBox(
@@ -302,15 +257,11 @@ class _TimelineScreenState extends State<TimelineScreen> {
                                 },
                                 style: OutlinedButton.styleFrom(
                                     minimumSize: Size(198.w, 50.h),
-                                    side: BorderSide(
-                                        width: 1,
-                                        color: colorScheme.onPrimaryContainer),
+                                    side: BorderSide(width: 1, color: colorScheme.onPrimaryContainer),
                                     shape: const RoundedRectangleBorder(
-                                        borderRadius: BorderRadius.all(
-                                            Radius.circular(8)))),
+                                        borderRadius: BorderRadius.all(Radius.circular(8)))),
                                 child: Text('동료 구하러 가기',
-                                    style: textTheme.subtitle1?.copyWith(
-                                        color: colorScheme.onPrimaryContainer)),
+                                    style: textTheme.subtitle1?.copyWith(color: colorScheme.onPrimaryContainer)),
                               )
                             ],
                           );
@@ -326,8 +277,7 @@ class _TimelineScreenState extends State<TimelineScreen> {
                             Align(
                               child: Text(
                                 '${snapshot.error}',
-                                style: textTheme.headline1
-                                    ?.copyWith(color: colorScheme.tertiary),
+                                style: textTheme.headline1?.copyWith(color: colorScheme.tertiary),
                               ),
                             ),
                             SizedBox(
@@ -335,10 +285,8 @@ class _TimelineScreenState extends State<TimelineScreen> {
                             ),
                             OutlinedButton(
                               onPressed: () {},
-                              style: OutlinedButton.styleFrom(
-                                  side: BorderSide(
-                                      width: 0,
-                                      color: colorScheme.onBackground)),
+                              style:
+                                  OutlinedButton.styleFrom(side: BorderSide(width: 0, color: colorScheme.onBackground)),
                               child: Image.asset(
                                 width: 198,
                                 'assets/button/add_timeline.png',

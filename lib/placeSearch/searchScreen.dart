@@ -91,7 +91,13 @@ class _SearchScreenState extends State<SearchScreen> {
                                 _placeSearchController.selectedPlace!.name == _placeController.dst!.name) {
                           // [TODO]: 출발지 도착지 같을때 띄우는거
                           placeSearchSnackBar(
-                              context: context, title: const Text('출발지를 다시 선택해주세요.'), color: colorScheme.error);
+                              context: context,
+                              title: Text(
+                                '출발지를 다시 선택해주세요.',
+                                textAlign: TextAlign.center,
+                                style: textTheme.subtitle2?.copyWith(color: colorScheme.primary),
+                              ),
+                              color: colorScheme.surfaceVariant);
                         } else {
                           _placeController.selectDep(place: _placeSearchController.selectedPlace!);
                           _placeSearchController.selectedIndex = -1;
@@ -105,7 +111,13 @@ class _SearchScreenState extends State<SearchScreen> {
                                 _placeSearchController.selectedPlace!.name == _placeController.dep!.name) {
                           // [TODO]: 출발지 도착지 같을때 띄우는거
                           placeSearchSnackBar(
-                              context: context, title: const Text('도착지를 다시 선택해주세요.'), color: colorScheme.error);
+                              context: context,
+                              title: Text(
+                                '도착지를 다시 선택해주세요.',
+                                textAlign: TextAlign.center,
+                                style: textTheme.subtitle2?.copyWith(color: colorScheme.primary),
+                              ),
+                              color: colorScheme.surfaceVariant);
                         } else {
                           _placeController.selectDst(place: _placeSearchController.selectedPlace!);
                           _placeSearchController.selectedIndex = -1;
@@ -120,7 +132,13 @@ class _SearchScreenState extends State<SearchScreen> {
                                 _placeSearchController.selectedPlace!.name == _placeController.dst!.name) {
                           // [TODO]: 출발지 도착지 같을때 띄우는거
                           placeSearchSnackBar(
-                              context: context, title: const Text('경유지를 다시 선택해주세요.'), color: colorScheme.error);
+                              context: context,
+                              title: Text(
+                                '경유지를 다시 선택해주세요.',
+                                textAlign: TextAlign.center,
+                                style: textTheme.subtitle2?.copyWith(color: colorScheme.primary),
+                              ),
+                              color: colorScheme.surfaceVariant);
                         } else {
                           _placeController.addStopOver(place: _placeSearchController.selectedPlace!);
                           _placeSearchController.selectedIndex = -1;
