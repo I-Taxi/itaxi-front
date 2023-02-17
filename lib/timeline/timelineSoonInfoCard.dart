@@ -20,8 +20,60 @@ String infoCardDateFormater(String dateTime) {
   return DateFormat('MM/dd').format(DateTime.parse(dateTime));
 }
 
-Container timelineSoonInfoCard(
-    {required BuildContext context, required History history}) {
+Container emptyCard({required BuildContext context}) {
+  final colorScheme = Theme.of(context).colorScheme;
+  final textTheme = Theme.of(context).textTheme;
+  final ScreenController _screenController = Get.find();
+  if (!_screenController.enlargement) {
+    return Container(
+      width: 339.w,
+      height: 94.h,
+      alignment: Alignment.center,
+      decoration: BoxDecoration(color: colorScheme.primary, borderRadius: BorderRadius.circular(16.r), boxShadow: [
+        BoxShadow(
+          color: colorScheme.shadow,
+          blurRadius: 40,
+          offset: const Offset(2, 4),
+        ),
+      ]),
+      child: Text(
+        '탑승 예정인 방이 없습니다.',
+        textAlign: TextAlign.center,
+        style: textTheme.bodyText1?.copyWith(
+          color: colorScheme.tertiary,
+          height: 1.5,
+        ),
+      ),
+    );
+  }
+  return Container(
+    width: 339.w,
+    height: 153.h,
+    decoration: BoxDecoration(color: colorScheme.primary, borderRadius: BorderRadius.circular(16.r), boxShadow: [
+      BoxShadow(
+        color: colorScheme.shadow,
+        blurRadius: 40,
+        offset: const Offset(2, 4),
+      ),
+    ]),
+    child: Padding(
+      padding: EdgeInsets.fromLTRB(0, 53.h, 0, 52.h),
+      child: SizedBox(
+        height: 48.h,
+        child: Text(
+          '탑승 예정인 방이 없습니다.\n어서 새로운 동료를 만나보세요!',
+          textAlign: TextAlign.center,
+          style: textTheme.bodyText1?.copyWith(
+            color: colorScheme.tertiary,
+            height: 1.5,
+          ),
+        ),
+      ),
+    ),
+  );
+}
+
+Container timelineSoonInfoCard({required BuildContext context, required History history}) {
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
   late PostController _postController = Get.find();
@@ -34,16 +86,13 @@ Container timelineSoonInfoCard(
     return Container(
       width: 339.w,
       height: 94.h,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          color: colorScheme.primary,
-          boxShadow: [
-            BoxShadow(
-              color: colorScheme.shadow,
-              blurRadius: 40,
-              offset: const Offset(2, 4),
-            )
-          ]),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: colorScheme.primary, boxShadow: [
+        BoxShadow(
+          color: colorScheme.shadow,
+          blurRadius: 40,
+          offset: const Offset(2, 4),
+        )
+      ]),
       child: Padding(
         padding: EdgeInsets.fromLTRB(25.w, 18.h, 21.w, 18.h),
         child: Row(
@@ -53,16 +102,14 @@ Container timelineSoonInfoCard(
               children: [
                 Text(
                   DateFormat('MM/dd').format(DateTime.parse(history.deptTime!)),
-                  style: textTheme.subtitle2
-                      ?.copyWith(color: colorScheme.tertiaryContainer),
+                  style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
                 ),
                 SizedBox(
                   height: 15.h,
                 ),
                 Text(
                   postTypeToString(history.postType),
-                  style: textTheme.subtitle2
-                      ?.copyWith(color: colorScheme.tertiaryContainer),
+                  style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
                 ),
               ],
             ),
@@ -74,16 +121,14 @@ Container timelineSoonInfoCard(
               children: [
                 Text(
                   DateFormat('HH:mm').format(DateTime.parse(history.deptTime!)),
-                  style: textTheme.subtitle2
-                      ?.copyWith(color: colorScheme.tertiaryContainer),
+                  style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
                 ),
                 SizedBox(
                   height: 15.h,
                 ),
                 Text(
                   '${history.participantNum}/${history.capacity}명',
-                  style: textTheme.subtitle2
-                      ?.copyWith(color: colorScheme.tertiaryContainer),
+                  style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
                 ),
               ],
             ),
@@ -93,13 +138,11 @@ Container timelineSoonInfoCard(
                   if (history.postType == null) {
                     // TODO: ktx container 제작하면 연결
                   } else {
-                    _historyController.getHistoryInfo(
-                        postId: history.id!, postType: history.postType!);
+                    _historyController.getHistoryInfo(postId: history.id!, postType: history.postType!);
                     Get.to(() => const TimelineDetailScreen());
                   }
                 },
-                child:
-                    Image.asset(width: 81.w, 'assets/button/go_descript.png'))
+                child: Image.asset(width: 81.w, 'assets/button/go_descript.png'))
           ],
         ),
       ),
@@ -110,16 +153,13 @@ Container timelineSoonInfoCard(
     return Container(
       width: 339.w,
       height: 230.h,
-      decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(16),
-          color: colorScheme.primary,
-          boxShadow: [
-            BoxShadow(
-              color: colorScheme.shadow,
-              blurRadius: 20,
-              offset: const Offset(2, 4),
-            )
-          ]),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: colorScheme.primary, boxShadow: [
+        BoxShadow(
+          color: colorScheme.shadow,
+          blurRadius: 20,
+          offset: const Offset(2, 4),
+        )
+      ]),
       child: Padding(
         padding: EdgeInsets.fromLTRB(0.w, 18.h, 0.w, 0.h),
         child: Column(
@@ -132,8 +172,7 @@ Container timelineSoonInfoCard(
                 children: [
                   Text(
                     '곧 출발 예정',
-                    style: textTheme.subtitle2
-                        ?.copyWith(color: colorScheme.tertiaryContainer),
+                    style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
                   ),
                   SizedBox(
                     height: 15.h,
@@ -141,14 +180,13 @@ Container timelineSoonInfoCard(
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Image.asset(width: 24, 'assets/icon/location.png'),
+                      Image.asset(width: 24.r, 'assets/icon/location.png'),
                       SizedBox(
                         width: 20.w,
                       ),
                       Text(
                         '${history.departure?.name}',
-                        style: textTheme.subtitle2
-                            ?.copyWith(color: colorScheme.onTertiary),
+                        style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
                       ),
                       const Spacer(),
                     ],
@@ -159,14 +197,13 @@ Container timelineSoonInfoCard(
                   Row(
                     crossAxisAlignment: CrossAxisAlignment.end,
                     children: [
-                      Image.asset(width: 24, 'assets/icon/location.png'),
+                      Image.asset(width: 24.r, 'assets/icon/location.png'),
                       SizedBox(
                         width: 20.w,
                       ),
                       Text(
                         '${history.destination?.name}',
-                        style: textTheme.subtitle2
-                            ?.copyWith(color: colorScheme.onTertiary),
+                        style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
                       ),
                       const Spacer(),
                     ],
@@ -196,18 +233,15 @@ Container timelineSoonInfoCard(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              DateFormat('MM/dd')
-                                  .format(DateTime.parse(history.deptTime!)),
-                              style: textTheme.subtitle2?.copyWith(
-                                  color: colorScheme.tertiaryContainer),
+                              DateFormat('MM/dd').format(DateTime.parse(history.deptTime!)),
+                              style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
                             ),
                             SizedBox(
                               height: 15.h,
                             ),
                             Text(
                               postTypeToString(history.postType),
-                              style: textTheme.subtitle2?.copyWith(
-                                  color: colorScheme.tertiaryContainer),
+                              style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
                             ),
                           ],
                         ),
@@ -218,18 +252,15 @@ Container timelineSoonInfoCard(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             Text(
-                              DateFormat('HH:mm')
-                                  .format(DateTime.parse(history.deptTime!)),
-                              style: textTheme.subtitle2?.copyWith(
-                                  color: colorScheme.tertiaryContainer),
+                              DateFormat('HH:mm').format(DateTime.parse(history.deptTime!)),
+                              style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
                             ),
                             SizedBox(
                               height: 15.h,
                             ),
                             Text(
                               '${history.participantNum}/${history.capacity}명',
-                              style: textTheme.subtitle2?.copyWith(
-                                  color: colorScheme.tertiaryContainer),
+                              style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
                             ),
                           ],
                         ),
@@ -239,14 +270,11 @@ Container timelineSoonInfoCard(
                               if (history.postType == null) {
                                 // TODO: ktx container 제작하면 연결
                               } else {
-                                _historyController.getHistoryInfo(
-                                    postId: history.id!,
-                                    postType: history.postType!);
+                                _historyController.getHistoryInfo(postId: history.id!, postType: history.postType!);
                                 Get.to(() => const TimelineDetailScreen());
                               }
                             },
-                            child: Image.asset(
-                                width: 81.w, 'assets/button/go_descript.png'))
+                            child: Image.asset(width: 81.w, 'assets/button/go_descript.png'))
                       ],
                     ),
                     SizedBox(
@@ -263,28 +291,23 @@ Container timelineSoonInfoCard(
     return Container(
         width: 339.w,
         height: 268.h,
-        decoration: BoxDecoration(
-            borderRadius: BorderRadius.circular(16),
-            color: colorScheme.primary,
-            boxShadow: [
-              BoxShadow(
-                color: colorScheme.shadow,
-                blurRadius: 40,
-                offset: const Offset(2, 4),
-              )
-            ]),
+        decoration: BoxDecoration(borderRadius: BorderRadius.circular(16), color: colorScheme.primary, boxShadow: [
+          BoxShadow(
+            color: colorScheme.shadow,
+            blurRadius: 40,
+            offset: const Offset(2, 4),
+          )
+        ]),
         child: Padding(
             padding: EdgeInsets.fromLTRB(0.w, 18.h, 0.w, 0.h),
-            child:
-                Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
               Padding(
                 padding: EdgeInsets.fromLTRB(25.w, 0.h, 21.w, 0.h),
                 child: Column(
                   children: [
                     Text(
                       '곧 출발 예정',
-                      style: textTheme.subtitle2
-                          ?.copyWith(color: colorScheme.tertiaryContainer),
+                      style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
                     ),
                     SizedBox(
                       height: 15.h,
@@ -298,8 +321,7 @@ Container timelineSoonInfoCard(
                         ),
                         Text(
                           '${history.departure?.name}',
-                          style: textTheme.subtitle2
-                              ?.copyWith(color: colorScheme.onTertiary),
+                          style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
                         ),
                         const Spacer(),
                       ],
@@ -311,13 +333,10 @@ Container timelineSoonInfoCard(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
                         SizedBox(width: 44.w),
-                        Text('경유',
-                            style: textTheme.subtitle2?.copyWith(
-                                color: colorScheme.tertiaryContainer)),
+                        Text('경유', style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer)),
                         SizedBox(width: 16.w),
                         Text('${history.stopovers![0]!.name}',
-                            style: textTheme.subtitle2?.copyWith(
-                                color: colorScheme.tertiaryContainer)),
+                            style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer)),
                         const Spacer(),
                       ],
                     ),
@@ -333,8 +352,7 @@ Container timelineSoonInfoCard(
                         ),
                         Text(
                           '${history.destination?.name}',
-                          style: textTheme.subtitle2
-                              ?.copyWith(color: colorScheme.onTertiary),
+                          style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
                         ),
                         const Spacer(),
                       ],
@@ -363,18 +381,15 @@ Container timelineSoonInfoCard(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            DateFormat('MM/dd')
-                                .format(DateTime.parse(history.deptTime!)),
-                            style: textTheme.subtitle2?.copyWith(
-                                color: colorScheme.tertiaryContainer),
+                            DateFormat('MM/dd').format(DateTime.parse(history.deptTime!)),
+                            style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
                           ),
                           SizedBox(
                             height: 15.h,
                           ),
                           Text(
                             postTypeToString(history.postType),
-                            style: textTheme.subtitle2?.copyWith(
-                                color: colorScheme.tertiaryContainer),
+                            style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
                           ),
                         ],
                       ),
@@ -385,18 +400,15 @@ Container timelineSoonInfoCard(
                         crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
                           Text(
-                            DateFormat('HH:mm')
-                                .format(DateTime.parse(history.deptTime!)),
-                            style: textTheme.subtitle2?.copyWith(
-                                color: colorScheme.tertiaryContainer),
+                            DateFormat('HH:mm').format(DateTime.parse(history.deptTime!)),
+                            style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
                           ),
                           SizedBox(
                             height: 15.h,
                           ),
                           Text(
                             '${history.participantNum}/${history.capacity}명',
-                            style: textTheme.subtitle2?.copyWith(
-                                color: colorScheme.tertiaryContainer),
+                            style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
                           ),
                         ],
                       ),
@@ -406,14 +418,11 @@ Container timelineSoonInfoCard(
                             if (history.postType == null) {
                               // TODO: ktx container 제작하면 연결
                             } else {
-                              _historyController.getHistoryInfo(
-                                  postId: history.id!,
-                                  postType: history.postType!);
+                              _historyController.getHistoryInfo(postId: history.id!, postType: history.postType!);
                               Get.to(() => const TimelineDetailScreen());
                             }
                           },
-                          child: Image.asset(
-                              width: 81.w, 'assets/button/go_descript.png'))
+                          child: Image.asset(width: 81.w, 'assets/button/go_descript.png'))
                     ],
                   ),
                   SizedBox(

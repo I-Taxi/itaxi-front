@@ -120,38 +120,40 @@ class TimelineDetailScreen extends StatelessWidget {
                                   24.w, 61.36.h, 24.w, 22.47.h),
                               height: 156.47.h,
                               color: colorScheme.primary,
-                              child: Column(
-                                children: [
-                                  Align(
-                                    alignment: Alignment.centerRight,
-                                    child: GestureDetector(
-                                      behavior: HitTestBehavior.opaque,
-                                      onTap: () => Get.back(),
-                                      child: Image.asset(
-                                          'assets/icon/icon-Exit.png'),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 18.1.h,
-                                  ),
-                                  Row(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.center,
-                                    mainAxisAlignment:
-                                        MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        '${snapshot.data!.joiners![0].memberName}님의 ${postTypeToString(snapshot.data!.postType)}',
-                                        style:
-                                            textTheme.headline3?.copyWith(
-                                          color: colorScheme.onTertiary,
-                                        ),
+                              child: SingleChildScrollView(
+                                child: Column(
+                                  children: [
+                                    Align(
+                                      alignment: Alignment.centerRight,
+                                      child: GestureDetector(
+                                        behavior: HitTestBehavior.opaque,
+                                        onTap: () => Get.back(),
+                                        child: Image.asset(
+                                            'assets/icon/icon-Exit.png'),
                                       ),
-                                      insertBordingCompleteIcon(
-                                          snapshot.data!.deptTime),
-                                    ],
-                                  ),
-                                ],
+                                    ),
+                                    SizedBox(
+                                      height: 18.1.h,
+                                    ),
+                                    Row(
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.center,
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: [
+                                        Text(
+                                          '${snapshot.data!.joiners![0].memberName}님의 ${postTypeToString(snapshot.data!.postType)}',
+                                          style:
+                                              textTheme.headline3?.copyWith(
+                                            color: colorScheme.onTertiary,
+                                          ),
+                                        ),
+                                        insertBordingCompleteIcon(
+                                            snapshot.data!.deptTime),
+                                      ],
+                                    ),
+                                  ],
+                                ),
                               ),
                             ),
                             SizedBox(height: 8.h),
@@ -210,75 +212,77 @@ class TimelineDetailScreen extends StatelessWidget {
                                     height: addPlaceContainerSize(
                                         130.h, snapshot.data!.stopovers),
                                     color: colorScheme.primary,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          '출발/목적지',
-                                          style:
-                                              textTheme.subtitle2?.copyWith(
-                                            color: colorScheme.onTertiary,
+                                    child: SingleChildScrollView(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            '출발/목적지',
+                                            style:
+                                                textTheme.subtitle2?.copyWith(
+                                              color: colorScheme.onTertiary,
+                                            ),
                                           ),
-                                        ),
-                                        SizedBox(
-                                          height: 20.h,
-                                        ),
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Image.asset(
-                                              width: 18.w,
-                                              height: 18.h,
-                                              'assets/icon/location.png',
-                                            ),
-                                            SizedBox(
-                                              width: 5.w,
-                                            ),
-                                            Text(
-                                              '${snapshot.data!.departure?.name}',
-                                              style: textTheme.bodyText1
-                                                  ?.copyWith(
-                                                color:
-                                                    colorScheme.onTertiary,
+                                          SizedBox(
+                                            height: 20.h,
+                                          ),
+                                          Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Image.asset(
+                                                width: 18.w,
+                                                height: 18.h,
+                                                'assets/icon/location.png',
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                        insertStopoverContainer(
-                                            context: context,
-                                            stopovers:
-                                                snapshot.data!.stopovers),
-                                        Row(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.center,
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: [
-                                            Image.asset(
-                                              width: 18.w,
-                                              height: 18.h,
-                                              'assets/icon/location.png',
-                                            ),
-                                            SizedBox(
-                                              width: 5.w,
-                                            ),
-                                            Text(
-                                              '${snapshot.data!.destination?.name}',
-                                              style: textTheme.bodyText1
-                                                  ?.copyWith(
-                                                color:
-                                                    colorScheme.onTertiary,
+                                              SizedBox(
+                                                width: 5.w,
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
+                                              Text(
+                                                '${snapshot.data!.departure?.name}',
+                                                style: textTheme.bodyText1
+                                                    ?.copyWith(
+                                                  color:
+                                                      colorScheme.onTertiary,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                          insertStopoverContainer(
+                                              context: context,
+                                              stopovers:
+                                                  snapshot.data!.stopovers),
+                                          Row(
+                                            crossAxisAlignment:
+                                                CrossAxisAlignment.center,
+                                            mainAxisAlignment:
+                                                MainAxisAlignment.start,
+                                            children: [
+                                              Image.asset(
+                                                width: 18.w,
+                                                height: 18.h,
+                                                'assets/icon/location.png',
+                                              ),
+                                              SizedBox(
+                                                width: 5.w,
+                                              ),
+                                              Text(
+                                                '${snapshot.data!.destination?.name}',
+                                                style: textTheme.bodyText1
+                                                    ?.copyWith(
+                                                  color:
+                                                      colorScheme.onTertiary,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                   Divider(
@@ -290,35 +294,37 @@ class TimelineDetailScreen extends StatelessWidget {
                                         24.w, 16.h, 24.w, 24.h),
                                     color: colorScheme.primary,
                                     height: 253.h,
-                                    child: Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          '탑승 인원',
-                                          style:
-                                              textTheme.subtitle2?.copyWith(
-                                            color: colorScheme.onTertiary,
+                                    child: SingleChildScrollView(
+                                      child: Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        mainAxisAlignment:
+                                            MainAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            '탑승 인원',
+                                            style:
+                                                textTheme.subtitle2?.copyWith(
+                                              color: colorScheme.onTertiary,
+                                            ),
                                           ),
-                                        ),
-                                        SizedBox(
-                                          height: 16.h,
-                                        ),
-                                        for (int i = 0;
-                                            i <
-                                                snapshot
-                                                    .data!.joiners!.length;
-                                            i++)
-                                          passengerListTile(
-                                              context: context,
-                                              joiner: snapshot
-                                                  .data!.joiners![i]),
-                                        SizedBox(
-                                          height: 20.h,
-                                        ),
-                                      ],
+                                          SizedBox(
+                                            height: 16.h,
+                                          ),
+                                          for (int i = 0;
+                                              i <
+                                                  snapshot
+                                                      .data!.joiners!.length;
+                                              i++)
+                                            passengerListTile(
+                                                context: context,
+                                                joiner: snapshot
+                                                    .data!.joiners![i]),
+                                          SizedBox(
+                                            height: 20.h,
+                                          ),
+                                        ],
+                                      ),
                                     ),
                                   ),
                                 ],
