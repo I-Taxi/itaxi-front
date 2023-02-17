@@ -8,6 +8,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_native_splash/flutter_native_splash.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'package:get/get.dart';
 import 'package:itaxi/controller/signInController.dart';
@@ -163,6 +164,14 @@ class _MyAppState extends State<MyApp> {
       builder: (context, child) {
         return GetMaterialApp(
           title: 'iTaxi',
+          //datepicker 언어 설정 한국어
+          localizationsDelegates: const [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate
+          ],
+          supportedLocales:  [
+            const Locale('ko', 'KR')
+          ],
           theme: ITaxiTheme.lightThemeData,
           debugShowCheckedModeBanner: false,
           home: GetBuilder<SignInController>(

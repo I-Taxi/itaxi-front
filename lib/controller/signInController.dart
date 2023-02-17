@@ -28,9 +28,6 @@ class SignInController extends GetxController {
 
   bool loaded = false;
 
-  // 자동로그인 on/off
-  bool rememberId = false;
-
   void signedStart() {
     signInState = SignInState.start;
     update();

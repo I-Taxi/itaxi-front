@@ -30,6 +30,9 @@ class _SignInScreenState extends State<SignInScreen> {
   // 텍스트필드 숨김 on/off
   bool _isObscure = true;
 
+  // 자동로그인 on/off
+  bool _rememberId = false;
+
   //로그인 버튼 색깔 id, pw 입력시 변경
   bool idEmpty = true;
   bool pwEmpty = true;
@@ -212,14 +215,17 @@ class _SignInScreenState extends State<SignInScreen> {
                           ),
                         ),
                         Checkbox(
-                          value: _signInController.rememberId,
+                          value: _rememberId,
                           activeColor: colorScheme.primary,
                           checkColor: colorScheme.secondary,
                           side: BorderSide(
                             color: colorScheme.primary,
                           ),
-                          onChanged: (value) {
-                            _signInController.rememberId = !_signInController.rememberId;
+                          onChanged: (value) async{
+                            setState(() {
+                              _rememberId = !_rememberId;
+                              print(_rememberId);
+                            });
                           },
                         ),
                         const Spacer(),
@@ -267,11 +273,12 @@ class _SignInScreenState extends State<SignInScreen> {
                             }
                           });
 
-                          _signInController.rememberId
+                          _rememberId
                               ? await storage.write(
                                   key: "login",
                                   value: "id ${_idController.text}@handong.ac.kr password ${_pwController.text}")
-                              : () {};
+                              : await storage.delete(key: "login");
+                          print("${await storage.read(key: "login")}");
                         },
                         child: Text(
                           '로그인',

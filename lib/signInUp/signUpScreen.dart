@@ -433,6 +433,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                               style: textTheme.bodyText2?.copyWith(
                                 color: colorScheme.onSecondaryContainer,
                               ),
+                              textAlign: TextAlign.left,
                             ),
                             onPressed: () {
                               Get.to(TermOfServiceScreen());
@@ -473,17 +474,20 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: <Widget>[
-                        RawMaterialButton(
-                          child: Text(
-                            '개인정보처리방침',
-                            style: textTheme.bodyText2?.copyWith(
-                              color: colorScheme.onSecondaryContainer,
+                        Padding(
+                          padding: EdgeInsets.only(left: 2.w),
+                          child: RawMaterialButton(
+                            child: Text(
+                              '개인정보처리방침',
+                              style: textTheme.bodyText2?.copyWith(
+                                color: colorScheme.onSecondaryContainer,
+                              ),
                             ),
+                            onPressed: () {
+                              Get.to(PrivacyPolicyScreen());
+                              // Navigate
+                            },
                           ),
-                          onPressed: () {
-                            Get.to(PrivacyPolicyScreen());
-                            // Navigate
-                          },
                         ),
                         Row(
                           children: [
