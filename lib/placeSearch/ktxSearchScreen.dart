@@ -85,16 +85,18 @@ class _KtxSearchScreenState extends State<KtxSearchScreen> {
                       if (_ktxPlaceSearchController.depOrDst == 0) {
                         if (_ktxPlaceSearchController.selectedPlace == null ||
                             _ktxPlaceController.dst != null &&
-                                _ktxPlaceSearchController.selectedPlace!.name ==
-                                    _ktxPlaceController.dst!.name) {
+                                _ktxPlaceSearchController.selectedPlace!.name == _ktxPlaceController.dst!.name) {
                           // [TODO]: 출발지 도착지 같을때 띄우는거
                           placeSearchSnackBar(
                               context: context,
-                              title: const Text('출발지를 다시 선택해주세요.', textAlign: TextAlign.center),
+                              title: Text(
+                                '출발지를 다시 선택해주세요.',
+                                textAlign: TextAlign.center,
+                                style: textTheme.subtitle2?.copyWith(color: colorScheme.primary),
+                              ),
                               color: colorScheme.error);
                         } else {
-                          _ktxPlaceController.selectDep(
-                              place: _ktxPlaceSearchController.selectedPlace!);
+                          _ktxPlaceController.selectDep(place: _ktxPlaceSearchController.selectedPlace!);
                           _ktxPlaceSearchController.selectedIndex = -1;
                           _ktxPlaceSearchController.changeSearchQuery('');
                           Get.back();
@@ -102,16 +104,18 @@ class _KtxSearchScreenState extends State<KtxSearchScreen> {
                       } else if (_ktxPlaceSearchController.depOrDst == 1) {
                         if (_ktxPlaceSearchController.selectedPlace == null ||
                             _ktxPlaceController.dep != null &&
-                                _ktxPlaceSearchController.selectedPlace!.name ==
-                                    _ktxPlaceController.dep!.name) {
+                                _ktxPlaceSearchController.selectedPlace!.name == _ktxPlaceController.dep!.name) {
                           // [TODO]: 출발지 도착지 같을때 띄우는거
                           placeSearchSnackBar(
                               context: context,
-                              title: const Text('도착지를 다시 선택해주세요.', textAlign: TextAlign.center),
+                              title: Text(
+                                '도착지를 다시 선택해주세요.',
+                                textAlign: TextAlign.center,
+                                style: textTheme.subtitle2?.copyWith(color: colorScheme.primary),
+                              ),
                               color: colorScheme.error);
                         } else {
-                          _ktxPlaceController.selectDst(
-                              place: _ktxPlaceSearchController.selectedPlace!);
+                          _ktxPlaceController.selectDst(place: _ktxPlaceSearchController.selectedPlace!);
                           _ktxPlaceSearchController.selectedIndex = -1;
                           _ktxPlaceSearchController.changeSearchQuery('');
                           Get.back();
@@ -145,8 +149,7 @@ class _KtxSearchScreenState extends State<KtxSearchScreen> {
                       child: TextField(
                         //검색창 화면
                         textAlignVertical: TextAlignVertical.bottom,
-                        style: textTheme.bodyText1
-                            ?.copyWith(color: colorScheme.tertiary),
+                        style: textTheme.bodyText1?.copyWith(color: colorScheme.tertiary),
                         controller: _searchTextController,
                         decoration: InputDecoration(
                           filled: true,
@@ -161,8 +164,7 @@ class _KtxSearchScreenState extends State<KtxSearchScreen> {
                             color: colorScheme.tertiary,
                           ),
                           hintText: "$depOrDst를 입력하세요",
-                          hintStyle: textTheme.bodyText1
-                              ?.copyWith(color: colorScheme.tertiary),
+                          hintStyle: textTheme.bodyText1?.copyWith(color: colorScheme.tertiary),
                           //prefixIconColor :
                         ),
                         onChanged: (value) {
@@ -182,10 +184,8 @@ class _KtxSearchScreenState extends State<KtxSearchScreen> {
                             return GestureDetector(
                               behavior: HitTestBehavior.opaque,
                               onTap: () {
-                                _searchTextController.text =
-                                    suggestions[idx].name!;
-                                _ktxPlaceSearchController
-                                    .changeSearchQuery(suggestions[idx].name!);
+                                _searchTextController.text = suggestions[idx].name!;
+                                _ktxPlaceSearchController.changeSearchQuery(suggestions[idx].name!);
                                 _ktxPlaceSearchController.setResultByQuery();
                                 _ktxPlaceSearchController.selectedIndex = -1;
                               },
@@ -206,13 +206,11 @@ class _KtxSearchScreenState extends State<KtxSearchScreen> {
                     ),
                     _ktxPlaceSearchController.hasResult
                         ? placeSearchTile(
-                            placeList: _ktxPlaceSearchController
-                                .typeFilteredResultList,
+                            placeList: _ktxPlaceSearchController.typeFilteredResultList,
                             context: context,
                           )
                         : placeSearchTile(
-                            placeList:
-                                _ktxPlaceSearchController.typeFilteredList,
+                            placeList: _ktxPlaceSearchController.typeFilteredList,
                             context: context,
                           ),
                   ],
