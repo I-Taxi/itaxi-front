@@ -23,6 +23,7 @@ class ScreenController extends GetxController {
   // timeline
   bool enlargement = true;
   double backgroundHeight = 108.h;
+  double triggerScrollHeigth = 130.h;
 
   void toggleHasNotice() {
     hasNotice = !hasNotice;
@@ -44,6 +45,11 @@ class ScreenController extends GetxController {
     update();
   }
 
+  void setTriggerScrollHeight(double to) {
+    triggerScrollHeigth = to;
+    update();
+  }
+
   void setUnenlargement() {
     enlargement = false;
     update();
@@ -54,11 +60,9 @@ class ScreenController extends GetxController {
     update();
   }
 
-  void setBackgroundHeight(
-      double top, double bottom, double max, double scrollHeight) {
+  void setBackgroundHeight(double top, double bottom, double max, double scrollHeight) {
     backgroundHeight = bottom - (bottom - top) / max * scrollHeight;
     if (backgroundHeight < top) backgroundHeight = top;
-    print(backgroundHeight);
     update();
   }
 
