@@ -75,7 +75,7 @@ Widget chatroomListListTile(
                         children: [
                           Flexible(
                             child: Text(
-                              "${abbreviatePlaceName(history.departure!.name)}-${abbreviatePlaceName(history.destination!.name)}(${DateFormat('Md').format(DateTime.parse(time))})",
+                              "${abbreviatePlaceName(history.departure!.name)}-${abbreviatePlaceName(history.destination!.name)}(${DateFormat('MMd').format(DateTime.parse(time))})",
                               style: textTheme.subtitle2?.copyWith(
                                 color: colorScheme.onTertiary,
                               ),
