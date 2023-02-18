@@ -94,8 +94,6 @@ Widget chatroomListListTile(
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          // for (int i = 0; i < post.joiners!.length; i++)
-                          //   if (post.joiners![i].owner!)
                           Text(
                             "방장: ${history.ownerName}",
                             style: textTheme.bodyText2?.copyWith(

@@ -43,7 +43,8 @@ class KtxPostController extends GetxController {
   }
 
   // Posts 데이터 가져오기
-  Future<List<KtxPost>> fetchPost({int? depId, int? dstId, required String time}) async {
+  Future<List<KtxPost>> fetchPost(
+      {int? depId, int? dstId, required String time}) async {
     var postUrl = dotenv.env['API_URL'].toString();
     final Map<String, dynamic> queryParameters;
     if ((depId == null || depId == -1) && (dstId == null || dstId == -1)) {
@@ -128,7 +129,8 @@ class KtxPostController extends GetxController {
     );
 
     if (response.statusCode == 200) {
-      KtxPost result = KtxPost.fromDocs(json.decode(utf8.decode(response.bodyBytes)));
+      KtxPost result =
+          KtxPost.fromJoinerDocs(json.decode(utf8.decode(response.bodyBytes)));
       await _chatRoomController.ktxJoinChat(post: result);
       await KtxChatRepository().setPost(post: result);
       print('join');
@@ -146,7 +148,7 @@ class KtxPostController extends GetxController {
       if (joiner.owner!) {
         owner = joiner;
       }
-      post.joiners?.remove(joiner);
+      //post.joiners?.remove(joiner);
     });
 
     Map<String, dynamic> map = {
@@ -161,16 +163,34 @@ class KtxPostController extends GetxController {
       },
       body: body,
     );
+
     if (response.statusCode == 200) {
       print(response.body);
       await _chatRoomController.ktxOutChat(post: post);
       KtxChatRepository().setPost(post: post);
 
-      if (_userController.name != response.body) {
-        _chatRoomController.changeOwnerChat(ownerName: response.body);
+      int oldOwnerId = -1;
+      for (Joiner joiner in post.joiners!) {
+        if (joiner.owner!) {
+          oldOwnerId = joiner.memberId!;
+        }
       }
+      int newOwnerId = int.parse(response.body);
+      if (post.participantNum! > 1 && newOwnerId != oldOwnerId) {
+        String newOwnerName = '';
+        for (Joiner joiner in post.joiners!) {
+          if (newOwnerId == joiner.memberId) {
+            newOwnerName = joiner.memberName!;
+          }
+        }
+        _chatRoomController.changeOwnerChat(ownerName: newOwnerName);
+      }
+
+      // if (_userController.name != response.body) {
+      //   _chatRoomController.changeOwnerChat(ownerName: response.body);
+      // }
     } else {
-      throw Exception('Failed to out');
+      throw Exception(json.decode(utf8.decode(response.bodyBytes)));
     }
   }
 }
