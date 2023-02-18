@@ -11,6 +11,7 @@ import 'package:itaxi/chat/chatDetailListTile.dart';
 import 'package:itaxi/controller/chatRoomController.dart';
 import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/controller/ktxPostController.dart';
+import 'package:itaxi/controller/navigationController.dart';
 import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/model/chat.dart';
@@ -130,7 +131,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
               return Column(
                 children: [
                   Container(
-                    height: 158.h,
+                    height: 134.h,
                     width: 325.w,
                     decoration: BoxDecoration(
                       color: colorScheme.secondary,
@@ -146,21 +147,12 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                               Expanded(
                                 child: Text(
                                   _chatRoomController.postType != 3
-                                      ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} #${DateFormat('Md').format(DateTime.parse(time))}"
-                                      : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} #${DateFormat('Md').format(DateTime.parse(time))}",
+                                      ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} #${DateFormat('MMd').format(DateTime.parse(time))}"
+                                      : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} #${DateFormat('MMd').format(DateTime.parse(time))}",
                                   style: textTheme.subtitle1?.copyWith(
                                     color: colorScheme.primary,
                                   ),
                                 ),
-                              ),
-                              SizedBox(
-                                width: 8.w,
-                              ),
-                              IconButton(
-                                onPressed: () {},
-                                icon: const Icon(Icons.edit_outlined),
-                                iconSize: Platform.isIOS ? 18 : 16,
-                                color: colorScheme.primary,
                               ),
                             ],
                           ))
@@ -439,8 +431,8 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                 Flexible(
                                   child: Text(
                                     _chatRoomController.postType != 3
-                                        ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} (${DateFormat('Md').format(DateTime.parse(time))})"
-                                        : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} (${DateFormat('Md').format(DateTime.parse(time))})",
+                                        ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} (${DateFormat('MMd').format(DateTime.parse(time))})"
+                                        : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} (${DateFormat('MMd').format(DateTime.parse(time))})",
                                     style: textTheme.subtitle1?.copyWith(
                                         color: colorScheme.onTertiary,
                                         fontWeight: FontWeight.w500),
@@ -645,28 +637,36 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                                                 .data!.length -
                                                             1]
                                                         .memberName!,
-                                                    style: textTheme.subtitle1
+                                                    style: textTheme.bodyText1
                                                         ?.copyWith(
                                                       color:
                                                           colorScheme.primary,
                                                     ),
+                                                    maxLines: 1,
                                                   ),
-                                                  Text(
-                                                    snapshot
-                                                        .data![snapshot
-                                                                .data!.length -
-                                                            1]
-                                                        .chatData!,
-                                                    style: textTheme.subtitle1
-                                                        ?.copyWith(
-                                                      color:
-                                                          colorScheme.primary,
+                                                  Expanded(
+                                                    child: Text(
+                                                      snapshot
+                                                          .data![snapshot.data!
+                                                                  .length -
+                                                              1]
+                                                          .chatData!,
+                                                      style: textTheme.bodyText1
+                                                          ?.copyWith(
+                                                        color:
+                                                            colorScheme.primary,
+                                                      ),
+                                                      maxLines: 1,
                                                     ),
                                                   ),
                                                 ],
                                               ),
-                                              Image.asset(
-                                                  'assets/button/new_message.png'),
+                                              Container(
+                                                width: 91.w,
+                                                height: 27.h,
+                                                child: Image.asset(
+                                                    'assets/button/new_message.png'),
+                                              ),
                                             ],
                                           ),
                                         ),
@@ -686,8 +686,12 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                           });
                                           _scrollDown();
                                         },
-                                        child: Image.asset(
-                                            'assets/button/new_message.png'),
+                                        child: Container(
+                                          width: 91.w,
+                                          height: 27.h,
+                                          child: Image.asset(
+                                              'assets/button/new_message.png'),
+                                        ),
                                       ),
                                     ),
                                   ),
@@ -721,8 +725,8 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                 Flexible(
                                   child: Text(
                                     _chatRoomController.postType != 3
-                                        ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} (${DateFormat('Md').format(DateTime.parse(time))})"
-                                        : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} (${DateFormat('Md').format(DateTime.parse(time))})",
+                                        ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} (${DateFormat('MMd').format(DateTime.parse(time))})"
+                                        : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} (${DateFormat('MMd').format(DateTime.parse(time))})",
                                     style: textTheme.subtitle1?.copyWith(
                                         color: colorScheme.onTertiary,
                                         fontWeight: FontWeight.w500),
@@ -753,166 +757,173 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  if (isOwner)
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          '환영합니다. ${_userController.name}님이 방장입니다.',
-                                          style: textTheme.subtitle2!.copyWith(
-                                              color: colorScheme.primary),
-                                        ),
-                                        SizedBox(
-                                          height: 3.h,
-                                        ),
-                                        Text(
-                                          '알아두면 좋습니다.',
-                                          style: textTheme.bodyText2!.copyWith(
-                                              color: colorScheme.primary),
-                                        ),
-                                        SizedBox(
-                                          height: 3.h,
-                                        ),
-                                        Row(
+                                  isOwner
+                                      ? Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            Icon(
-                                              Icons.arrow_forward,
-                                              size: 13,
-                                              color: colorScheme.primary,
+                                            Text(
+                                              '환영합니다. ${_userController.name}님이 방장입니다.',
+                                              style: textTheme.subtitle2!
+                                                  .copyWith(
+                                                      color:
+                                                          colorScheme.primary),
                                             ),
                                             SizedBox(
-                                              width: 3.w,
+                                              height: 3.h,
                                             ),
                                             Text(
-                                              '탑승할 차 번호를 꼭 알려주세요.',
+                                              '알아두면 좋습니다.',
                                               style: textTheme.bodyText2!
                                                   .copyWith(
                                                       color:
                                                           colorScheme.primary),
                                             ),
+                                            SizedBox(
+                                              height: 3.h,
+                                            ),
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.arrow_forward,
+                                                  size: 13,
+                                                  color: colorScheme.primary,
+                                                ),
+                                                SizedBox(
+                                                  width: 3.w,
+                                                ),
+                                                Text(
+                                                  '탑승할 차 번호를 꼭 알려주세요.',
+                                                  style: textTheme.bodyText2!
+                                                      .copyWith(
+                                                          color: colorScheme
+                                                              .primary),
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.arrow_forward,
+                                                  size: 13,
+                                                  color: colorScheme.primary,
+                                                ),
+                                                SizedBox(
+                                                  width: 3.w,
+                                                ),
+                                                Text(
+                                                  '모일 장소를 숙지하세요.',
+                                                  style: textTheme.bodyText2!
+                                                      .copyWith(
+                                                          color: colorScheme
+                                                              .primary),
+                                                ),
+                                              ],
+                                            ),
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.arrow_forward,
+                                                  size: 13,
+                                                  color: colorScheme.primary,
+                                                ),
+                                                SizedBox(
+                                                  width: 3.w,
+                                                ),
+                                                Text(
+                                                  '정산 완료시 채팅으로 꼭 기록을 남겨 주세요.',
+                                                  style: textTheme.bodyText2!
+                                                      .copyWith(
+                                                          color: colorScheme
+                                                              .primary),
+                                                ),
+                                              ],
+                                            ),
                                           ],
-                                        ),
-                                        Row(
+                                        )
+                                      : Column(
+                                          crossAxisAlignment:
+                                              CrossAxisAlignment.start,
                                           children: [
-                                            Icon(
-                                              Icons.arrow_forward,
-                                              size: 13,
-                                              color: colorScheme.primary,
+                                            Text(
+                                              '${_userController.name}님 환영합니다.',
+                                              style: textTheme.subtitle2!
+                                                  .copyWith(
+                                                      color:
+                                                          colorScheme.primary),
                                             ),
                                             SizedBox(
-                                              width: 3.w,
+                                              height: 3.h,
                                             ),
                                             Text(
-                                              '모일 장소를 숙지하세요.',
+                                              '알아두면 좋습니다.',
                                               style: textTheme.bodyText2!
                                                   .copyWith(
                                                       color:
                                                           colorScheme.primary),
                                             ),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              Icons.arrow_forward,
-                                              size: 13,
-                                              color: colorScheme.primary,
-                                            ),
                                             SizedBox(
-                                              width: 3.w,
+                                              height: 3.h,
                                             ),
-                                            Text(
-                                              '정산 완료시 채팅으로 꼭 기록을 남겨 주세요.',
-                                              style: textTheme.bodyText2!
-                                                  .copyWith(
-                                                      color:
-                                                          colorScheme.primary),
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.arrow_forward,
+                                                  size: 13,
+                                                  color: colorScheme.primary,
+                                                ),
+                                                SizedBox(
+                                                  width: 3.w,
+                                                ),
+                                                Text(
+                                                  '탑승할 차 번호를 숙지하세요.',
+                                                  style: textTheme.bodyText2!
+                                                      .copyWith(
+                                                          color: colorScheme
+                                                              .primary),
+                                                ),
+                                              ],
                                             ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
-                                  if (!isOwner)
-                                    Column(
-                                      crossAxisAlignment:
-                                          CrossAxisAlignment.start,
-                                      children: [
-                                        Text(
-                                          '${_userController.name}님 환영합니다.',
-                                          style: textTheme.subtitle2!.copyWith(
-                                              color: colorScheme.primary),
-                                        ),
-                                        SizedBox(
-                                          height: 3.h,
-                                        ),
-                                        Text(
-                                          '알아두면 좋습니다.',
-                                          style: textTheme.bodyText2!.copyWith(
-                                              color: colorScheme.primary),
-                                        ),
-                                        SizedBox(
-                                          height: 3.h,
-                                        ),
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              Icons.arrow_forward,
-                                              size: 13,
-                                              color: colorScheme.primary,
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.arrow_forward,
+                                                  size: 13,
+                                                  color: colorScheme.primary,
+                                                ),
+                                                SizedBox(
+                                                  width: 3.w,
+                                                ),
+                                                Text(
+                                                  '모일 장소를 숙지하세요.',
+                                                  style: textTheme.bodyText2!
+                                                      .copyWith(
+                                                          color: colorScheme
+                                                              .primary),
+                                                ),
+                                              ],
                                             ),
-                                            SizedBox(
-                                              width: 3.w,
-                                            ),
-                                            Text(
-                                              '탑승할 차 번호를 숙지하세요.',
-                                              style: textTheme.bodyText2!
-                                                  .copyWith(
-                                                      color:
-                                                          colorScheme.primary),
-                                            ),
-                                          ],
-                                        ),
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              Icons.arrow_forward,
-                                              size: 13,
-                                              color: colorScheme.primary,
-                                            ),
-                                            SizedBox(
-                                              width: 3.w,
-                                            ),
-                                            Text(
-                                              '모일 장소를 숙지하세요.',
-                                              style: textTheme.bodyText2!
-                                                  .copyWith(
-                                                      color:
-                                                          colorScheme.primary),
+                                            Row(
+                                              children: [
+                                                Icon(
+                                                  Icons.arrow_forward,
+                                                  size: 13,
+                                                  color: colorScheme.primary,
+                                                ),
+                                                SizedBox(
+                                                  width: 3.w,
+                                                ),
+                                                Text(
+                                                  '정산 완료시 채팅으로 꼭 기록을 남겨 주세요.',
+                                                  style: textTheme.bodyText2!
+                                                      .copyWith(
+                                                          color: colorScheme
+                                                              .primary),
+                                                ),
+                                              ],
                                             ),
                                           ],
                                         ),
-                                        Row(
-                                          children: [
-                                            Icon(
-                                              Icons.arrow_forward,
-                                              size: 13,
-                                              color: colorScheme.primary,
-                                            ),
-                                            SizedBox(
-                                              width: 3.w,
-                                            ),
-                                            Text(
-                                              '정산 완료시 채팅으로 꼭 기록을 남겨 주세요.',
-                                              style: textTheme.bodyText2!
-                                                  .copyWith(
-                                                      color:
-                                                          colorScheme.primary),
-                                            ),
-                                          ],
-                                        ),
-                                      ],
-                                    ),
                                 ],
                               )),
                         ],
@@ -943,8 +954,8 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                               Flexible(
                                 child: Text(
                                   _chatRoomController.postType != 3
-                                      ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} (${DateFormat('Md').format(DateTime.parse(time))})"
-                                      : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} (${DateFormat('Md').format(DateTime.parse(time))})",
+                                      ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} (${DateFormat('MMd').format(DateTime.parse(time))})"
+                                      : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} (${DateFormat('MMd').format(DateTime.parse(time))})",
                                   style: textTheme.subtitle1?.copyWith(
                                       color: colorScheme.onTertiary,
                                       fontWeight: FontWeight.w500),
@@ -974,160 +985,169 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                if (isOwner)
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        '환영합니다. ${_userController.name}님이 방장입니다.',
-                                        style: textTheme.subtitle2!.copyWith(
-                                            color: colorScheme.primary),
-                                      ),
-                                      SizedBox(
-                                        height: 3.h,
-                                      ),
-                                      Text(
-                                        '알아두면 좋습니다.',
-                                        style: textTheme.bodyText2!.copyWith(
-                                            color: colorScheme.primary),
-                                      ),
-                                      SizedBox(
-                                        height: 3.h,
-                                      ),
-                                      Row(
+                                isOwner
+                                    ? Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          Icon(
-                                            Icons.arrow_forward,
-                                            size: 13,
-                                            color: colorScheme.primary,
+                                          Text(
+                                            '환영합니다. ${_userController.name}님이 방장입니다.',
+                                            style: textTheme.subtitle2!
+                                                .copyWith(
+                                                    color: colorScheme.primary),
                                           ),
                                           SizedBox(
-                                            width: 3.w,
+                                            height: 3.h,
                                           ),
                                           Text(
-                                            '탑승할 차 번호를 꼭 알려주세요.',
+                                            '알아두면 좋습니다.',
                                             style: textTheme.bodyText2!
                                                 .copyWith(
                                                     color: colorScheme.primary),
                                           ),
+                                          SizedBox(
+                                            height: 3.h,
+                                          ),
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                Icons.arrow_forward,
+                                                size: 13,
+                                                color: colorScheme.primary,
+                                              ),
+                                              SizedBox(
+                                                width: 3.w,
+                                              ),
+                                              Text(
+                                                '탑승할 차 번호를 꼭 알려주세요.',
+                                                style: textTheme.bodyText2!
+                                                    .copyWith(
+                                                        color: colorScheme
+                                                            .primary),
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                Icons.arrow_forward,
+                                                size: 13,
+                                                color: colorScheme.primary,
+                                              ),
+                                              SizedBox(
+                                                width: 3.w,
+                                              ),
+                                              Text(
+                                                '모일 장소를 숙지하세요.',
+                                                style: textTheme.bodyText2!
+                                                    .copyWith(
+                                                        color: colorScheme
+                                                            .primary),
+                                              ),
+                                            ],
+                                          ),
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                Icons.arrow_forward,
+                                                size: 13,
+                                                color: colorScheme.primary,
+                                              ),
+                                              SizedBox(
+                                                width: 3.w,
+                                              ),
+                                              Text(
+                                                '정산 완료시 채팅으로 꼭 기록을 남겨 주세요.',
+                                                style: textTheme.bodyText2!
+                                                    .copyWith(
+                                                        color: colorScheme
+                                                            .primary),
+                                              ),
+                                            ],
+                                          ),
                                         ],
-                                      ),
-                                      Row(
+                                      )
+                                    : Column(
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
-                                          Icon(
-                                            Icons.arrow_forward,
-                                            size: 13,
-                                            color: colorScheme.primary,
+                                          Text(
+                                            '${_userController.name}님 환영합니다.',
+                                            style: textTheme.subtitle2!
+                                                .copyWith(
+                                                    color: colorScheme.primary),
                                           ),
                                           SizedBox(
-                                            width: 3.w,
+                                            height: 3.h,
                                           ),
                                           Text(
-                                            '모일 장소를 숙지하세요.',
+                                            '알아두면 좋습니다.',
                                             style: textTheme.bodyText2!
                                                 .copyWith(
                                                     color: colorScheme.primary),
                                           ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.arrow_forward,
-                                            size: 13,
-                                            color: colorScheme.primary,
-                                          ),
                                           SizedBox(
-                                            width: 3.w,
+                                            height: 3.h,
                                           ),
-                                          Text(
-                                            '정산 완료시 채팅으로 꼭 기록을 남겨 주세요.',
-                                            style: textTheme.bodyText2!
-                                                .copyWith(
-                                                    color: colorScheme.primary),
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                Icons.arrow_forward,
+                                                size: 13,
+                                                color: colorScheme.primary,
+                                              ),
+                                              SizedBox(
+                                                width: 3.w,
+                                              ),
+                                              Text(
+                                                '탑승할 차 번호를 숙지하세요.',
+                                                style: textTheme.bodyText2!
+                                                    .copyWith(
+                                                        color: colorScheme
+                                                            .primary),
+                                              ),
+                                            ],
                                           ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                if (!isOwner)
-                                  Column(
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        '${_userController.name}님 환영합니다.',
-                                        style: textTheme.subtitle2!.copyWith(
-                                            color: colorScheme.primary),
-                                      ),
-                                      SizedBox(
-                                        height: 3.h,
-                                      ),
-                                      Text(
-                                        '알아두면 좋습니다.',
-                                        style: textTheme.bodyText2!.copyWith(
-                                            color: colorScheme.primary),
-                                      ),
-                                      SizedBox(
-                                        height: 3.h,
-                                      ),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.arrow_forward,
-                                            size: 13,
-                                            color: colorScheme.primary,
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                Icons.arrow_forward,
+                                                size: 13,
+                                                color: colorScheme.primary,
+                                              ),
+                                              SizedBox(
+                                                width: 3.w,
+                                              ),
+                                              Text(
+                                                '모일 장소를 숙지하세요.',
+                                                style: textTheme.bodyText2!
+                                                    .copyWith(
+                                                        color: colorScheme
+                                                            .primary),
+                                              ),
+                                            ],
                                           ),
-                                          SizedBox(
-                                            width: 3.w,
-                                          ),
-                                          Text(
-                                            '탑승할 차 번호를 숙지하세요.',
-                                            style: textTheme.bodyText2!
-                                                .copyWith(
-                                                    color: colorScheme.primary),
-                                          ),
-                                        ],
-                                      ),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.arrow_forward,
-                                            size: 13,
-                                            color: colorScheme.primary,
-                                          ),
-                                          SizedBox(
-                                            width: 3.w,
-                                          ),
-                                          Text(
-                                            '모일 장소를 숙지하세요.',
-                                            style: textTheme.bodyText2!
-                                                .copyWith(
-                                                    color: colorScheme.primary),
+                                          Row(
+                                            children: [
+                                              Icon(
+                                                Icons.arrow_forward,
+                                                size: 13,
+                                                color: colorScheme.primary,
+                                              ),
+                                              SizedBox(
+                                                width: 3.w,
+                                              ),
+                                              Text(
+                                                '정산 완료시 채팅으로 꼭 기록을 남겨 주세요.',
+                                                style: textTheme.bodyText2!
+                                                    .copyWith(
+                                                        color: colorScheme
+                                                            .primary),
+                                              ),
+                                            ],
                                           ),
                                         ],
                                       ),
-                                      Row(
-                                        children: [
-                                          Icon(
-                                            Icons.arrow_forward,
-                                            size: 13,
-                                            color: colorScheme.primary,
-                                          ),
-                                          SizedBox(
-                                            width: 3.w,
-                                          ),
-                                          Text(
-                                            '정산 완료시 채팅으로 꼭 기록을 남겨 주세요.',
-                                            style: textTheme.bodyText2!
-                                                .copyWith(
-                                                    color: colorScheme.primary),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
                               ],
                             )),
                       ],
@@ -1240,6 +1260,8 @@ Future<dynamic> showExitDialog(
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
 
+  late NavigationController _navController = Get.find();
+
   showDialog(
       context: context,
       builder: (BuildContext context) {
@@ -1297,6 +1319,7 @@ Future<dynamic> showExitDialog(
                           await _historyController.getHistorys();
                           Get.back();
                           Get.back();
+                          _navController.changeIndex(0);
                           Get.back();
                         } catch (e) {
                           print(e);

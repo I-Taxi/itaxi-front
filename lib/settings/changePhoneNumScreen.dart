@@ -89,7 +89,7 @@ class _FindPhoneNumScreenState extends State<FindPhoneNumScreen> {
                       autocorrect: false,
                       autovalidateMode: AutovalidateMode.onUserInteraction,
                       style: textTheme.bodyText1?.copyWith(
-                        color: colorScheme.tertiaryContainer,
+                        color: colorScheme.onTertiary,
                       ),
                       decoration: InputDecoration(
                         hintText: "변경할 전화번호를 입력해주세요",
@@ -98,7 +98,7 @@ class _FindPhoneNumScreenState extends State<FindPhoneNumScreen> {
                       ),
                         enabledBorder: UnderlineInputBorder(
                           borderSide: BorderSide(
-                            color: colorScheme.onPrimary,
+                            color: colorScheme.tertiaryContainer,
                             width: 1.0,
                           ),
                         ),
@@ -107,6 +107,21 @@ class _FindPhoneNumScreenState extends State<FindPhoneNumScreen> {
                             color: colorScheme.secondary,
                             width: 1.0,
                           ),
+                        ),
+                        errorStyle: textTheme.bodyText2?.copyWith(
+                          color: colorScheme.surfaceVariant,
+                        ),
+                        errorBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: colorScheme.surfaceVariant,
+                                width: 1.0
+                            )
+                        ),
+                        focusedErrorBorder: UnderlineInputBorder(
+                            borderSide: BorderSide(
+                                color: colorScheme.surfaceVariant,
+                                width: 1.0
+                            )
                         ),
                       ),
                       onChanged: (value) {
@@ -140,7 +155,7 @@ class _FindPhoneNumScreenState extends State<FindPhoneNumScreen> {
         ),
       ),
       bottomNavigationBar: Material(
-        color: isValueEmpty || !_isValidPhone(_phoneController.text) ? colorScheme.tertiaryContainer : colorScheme.secondary,
+        color: isValueEmpty || !_isValidPhone(_phoneController.text) ? colorScheme.onSurfaceVariant : colorScheme.secondary,
         child: InkWell(
           onTap: () async{
             if (_formKey.currentState!.validate()) {

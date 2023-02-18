@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 import 'package:itaxi/model/joiner.dart';
 import 'package:itaxi/model/ktxPlace.dart';
 
@@ -144,7 +145,8 @@ class KtxPost {
       membersId.add(joiner!.memberId);
     }
 
-    postName = "(${departure!.name!}) -> (${destination!.name!})";
+    postName =
+        "(${departure!.name!}) -> (${destination!.name!}) #${DateFormat('MMd').format(DateTime.parse(deptTime!))}";
 
     return {
       'id': id,

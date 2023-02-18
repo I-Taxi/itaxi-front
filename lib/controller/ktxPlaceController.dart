@@ -36,8 +36,7 @@ class KtxPlaceController extends GetxController {
 
   // Places 데이터 가져오기
   List<KtxPlace> PlacefromJson(json) {
-    List<KtxPlace> result = [
-      KtxPlace(id: -1, name: '전체', cnt: 0)];
+    List<KtxPlace> result = [];
     json.forEach((item) {
       result.add(KtxPlace.fromDocs(item));
     });
@@ -83,9 +82,24 @@ class KtxPlaceController extends GetxController {
   }
 
   void swapDepAndDst() {
-    KtxPlace? temp = dep;
-    dep = dst;
-    dst = temp;
+
+    if(hasDep && !hasDst){
+      KtxPlace? temp = dep;
+      dst = temp;
+      hasDep = false;
+      hasDst = true;
+    }
+    else if(!hasDep && hasDst){
+      KtxPlace? temp = dst;
+      dep = temp;
+      hasDep = true;
+      hasDst = false;
+    }
+    else{
+      KtxPlace? temp = dep;
+      dep = dst;
+      dst = temp;
+    }
     update();
   }
 }

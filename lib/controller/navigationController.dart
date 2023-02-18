@@ -1,9 +1,11 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
 class NavigationController extends GetxController {
   int currentIndex = 0;
-  int navHeight = 98;
+  int navHeight = Platform.isIOS ? 98 : 83;
   PageController pageController = PageController();
 
   void changeIndex(int index) {
@@ -11,12 +13,11 @@ class NavigationController extends GetxController {
     update();
   }
 
-  void changeNavHeight(bool isOpen){
-    if(isOpen == true){
+  void changeNavHeight(bool isOpen) {
+    if (isOpen == true) {
       navHeight = 0;
-    }
-    else{
-      navHeight = 98;
+    } else {
+      Platform.isIOS ? navHeight = 98 : navHeight = 83;
     }
     update();
   }

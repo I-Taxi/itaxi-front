@@ -8,8 +8,7 @@ class ITaxiTheme {
 
   static final Color _lightFocusColor = Colors.black.withOpacity(0.12);
 
-  static ThemeData lightThemeData =
-      themeData(lightColorScheme, _lightFocusColor);
+  static ThemeData lightThemeData = themeData(lightColorScheme, _lightFocusColor);
 
   static ThemeData themeData(ColorScheme colorScheme, Color focusColor) {
     return ThemeData(
@@ -59,42 +58,43 @@ class ITaxiTheme {
   }
 
   static const ColorScheme lightColorScheme = ColorScheme(
-      primary: Color(0xFFFFFFFF),
-      onPrimary: Colors.black,
-      primaryContainer: Color(0xfffbfbfb),
-      onPrimaryContainer: Color(0xff388bdd),
-      secondary: Color(0xff70b1f2), //Color(0xff3fa9f5) - 기존 color
-      onSecondary: Color(0xFFFFFFFF),
-      secondaryContainer: Color(0xFF509DE9),
-      onSecondaryContainer: Color(0xff388BDD),
-      error: Color(0xffb00020),
-      onError: Colors.white,
-      errorContainer: Color(0xffE67373),
-      background: Color(0xFFFFFFFF),
-      onBackground: Color(0xFFF1F1F1),
-      surface: Color(0xFFFFFFFF),
-      onSurface: Colors.black,
-      tertiary: Color(0xff919191),
-      tertiaryContainer: Color(0xff717171),
-      onTertiaryContainer: Color(0xFFFBFBFB),
-      shadow: Color.fromRGBO(0, 0, 0, 0.15),
-      brightness: Brightness.light,
-      onTertiary: Color(0xFF3E3E3E),
-      inverseSurface: Color(0xff00CE21),
+    primary: Color(0xFFFFFFFF),
+    onPrimary: Colors.black,
+    primaryContainer: Color(0xfffbfbfb),
+    onPrimaryContainer: Color(0xff388bdd),
+    secondary: Color(0xff70b1f2), //Color(0xff3fa9f5) - 기존 color
+    onSecondary: Color(0xFFFFFFFF),
+    secondaryContainer: Color(0xFF509DE9),
+    onSecondaryContainer: Color(0xff388BDD),
+    error: Color(0xffb00020),
+    onError: Colors.white,
+    errorContainer: Color(0xffE67373),
+    background: Color(0xFFFFFFFF),
+    onBackground: Color(0xFFF1F1F1),
+    surface: Color(0xFFFFFFFF),
+    onSurface: Colors.black,
+    tertiary: Color(0xff919191),
+    tertiaryContainer: Color(0xff717171),
+    onTertiaryContainer: Color(0xFFFBFBFB),
+    shadow: Color.fromRGBO(0, 0, 0, 0.15),
+    brightness: Brightness.light,
+    onTertiary: Color(0xFF3E3E3E),
+    inverseSurface: Color(0xff00CE21),
     outline: Color(0xff69c077),
-      onSurfaceVariant: Color(0xFFE1E1E1),
-      inversePrimary: Color(0xffB9B9B9),
+    onSurfaceVariant: Color(0xFFE1E1E1),
+    inversePrimary: Color(0xffB9B9B9),
     surfaceVariant: Color(0xffff8080),
-      );
+    surfaceTint: Color(0xffc5e1fd),
+  );
 
   static TextTheme textThemeDefault = TextTheme(
-    headline1: TextStyle(fontSize: 40.sp, fontFamily: 'Black'),
-    headline2: TextStyle(fontSize: 32.sp, fontFamily: 'Bold'),
-    headline3: TextStyle(fontSize: 24.sp, fontFamily: 'Bold'),
-    subtitle1: TextStyle(fontSize: 20.sp, fontFamily: 'Medium'),
-    subtitle2: TextStyle(fontSize: 16.sp, fontFamily: 'SemiBold'),
-    bodyText1: TextStyle(fontSize: 16.sp, fontFamily: 'Regular'),
-    bodyText2: TextStyle(fontSize: 13.sp, fontFamily: 'Regular'),
+    headline1: TextStyle(fontSize: 38.sp, fontFamily: 'Black'),
+    headline2: TextStyle(fontSize: 30.sp, fontFamily: 'Bold'),
+    headline3: TextStyle(fontSize: 22.sp, fontFamily: 'Bold'),
+    subtitle1: TextStyle(fontSize: 18.sp, fontFamily: 'Medium'),
+    subtitle2: TextStyle(fontSize: 14.sp, fontFamily: 'SemiBold'),
+    bodyText1: TextStyle(fontSize: 14.sp, fontFamily: 'Regular'),
+    bodyText2: TextStyle(fontSize: 11.sp, fontFamily: 'Regular'),
   );
 
   static TextTheme textThemeIOS = TextTheme(

@@ -115,10 +115,7 @@ class PostController extends GetxController {
         'Content-type': 'application/json',
       },
     );
-    print(1);
     if (response.statusCode == 200) {
-      print(utf8.decode(response.bodyBytes));
-      print(2);
       return postsfromJson(json.decode(utf8.decode(response.bodyBytes)));
     } else {
       throw Exception('Failed to load posts');
@@ -144,7 +141,6 @@ class PostController extends GetxController {
     );
 
     if (response.statusCode == 200) {
-      print(utf8.decode(response.bodyBytes));
       return Post.fromDocs(json.decode(utf8.decode(response.bodyBytes)));
     } else {
       print(response.statusCode);
@@ -174,10 +170,8 @@ class PostController extends GetxController {
 
     if (response.statusCode == 200) {
       Post result = Post.fromJoinerAndStopoversDocs(json.decode(utf8.decode(response.bodyBytes)));
-      print("result: ${result!.joiners}");
       await _chatRoomController.joinChat(post: result);
       await ChatRepository().setPost(post: result);
-      print('join');
     } else {
       throw Exception('Failed to join');
     }
@@ -189,7 +183,6 @@ class PostController extends GetxController {
     Joiner? owner;
 
     post.joiners?.forEach((joiner) {
-      print(1);
       if (joiner.owner!) {
         owner = joiner;
       }
@@ -209,7 +202,6 @@ class PostController extends GetxController {
       body: body,
     );
     if (response.statusCode == 200) {
-      print(response.body);
       await _chatRoomController.outChat(post: post);
       ChatRepository().setPost(post: post);
       int oldOwnerId = -1;

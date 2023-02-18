@@ -32,7 +32,8 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
     UserController _userController = Get.put(UserController());
     HistoryController _historyController = Get.put(HistoryController());
     final NavigationController _navController = Get.put(NavigationController());
-    final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
+    final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
+        GlobalKey<RefreshIndicatorState>();
 
     return Scaffold(
       backgroundColor: colorScheme.background,
@@ -52,7 +53,8 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
                 // history가 있을 때
                 if (snapshot.data!.isNotEmpty) {
                   return Padding(
-                    padding: EdgeInsets.only(left: 24.w, top: 55.h, right: 24.w),
+                    padding:
+                        EdgeInsets.only(left: 24.w, top: 55.h, right: 24.w),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
@@ -80,10 +82,12 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
                                   fit: BoxFit.fill,
                                 ),
                                 Padding(
-                                  padding: EdgeInsets.only(right: 7.w, bottom: 5.h),
+                                  padding:
+                                      EdgeInsets.only(right: 7.w, bottom: 5.h),
                                   child: Align(
                                     alignment: Alignment.bottomRight,
-                                    child: Image.asset('assets/button/contact.png'),
+                                    child: Image.asset(
+                                        'assets/button/contact.png'),
                                   ),
                                 )
                               ],
@@ -93,37 +97,47 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
                         ),
                         Expanded(
                           child: SingleChildScrollView(
-                            child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
-                              Text(
-                                "탑승 예정 톡방",
-                                style: textTheme.bodyText2?.copyWith(
-                                  color: colorScheme.tertiaryContainer,
-                                ),
-                              ),
-                              // if deptTime is later than current time
-                              for (int i = snapshot.data!.length - 1; i >= 0; i--)
-                                if (DateTime.tryParse(snapshot.data![i].deptTime!)!.isAfter(DateTime.now()))
-                                  chatroomListListTile(
-                                    context: context,
-                                    history: snapshot.data![i],
+                            child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    "탑승 예정 톡방",
+                                    style: textTheme.bodyText2?.copyWith(
+                                      color: colorScheme.tertiaryContainer,
+                                    ),
                                   ),
-                              SizedBox(
-                                height: 29.h,
-                              ),
-                              Text(
-                                "전체 톡방 내역",
-                                style: textTheme.bodyText2?.copyWith(
-                                  color: colorScheme.tertiaryContainer,
-                                ),
-                              ),
-                              // if deptTime is earlier than current time
-                              for (int i = snapshot.data!.length - 1; i >= 0; i--)
-                                if (DateTime.tryParse(snapshot.data![i].deptTime!)!.isBefore(DateTime.now()))
-                                  chatroomListListTile(
-                                    context: context,
-                                    history: snapshot.data![i],
+                                  // if deptTime is later than current time
+                                  for (int i = snapshot.data!.length - 1;
+                                      i >= 0;
+                                      i--)
+                                    if (DateTime.tryParse(
+                                            snapshot.data![i].deptTime!)!
+                                        .isAfter(DateTime.now()))
+                                      chatroomListListTile(
+                                        context: context,
+                                        history: snapshot.data![i],
+                                      ),
+                                  SizedBox(
+                                    height: 29.h,
                                   ),
-                            ]),
+                                  Text(
+                                    "전체 톡방 내역",
+                                    style: textTheme.bodyText2?.copyWith(
+                                      color: colorScheme.tertiaryContainer,
+                                    ),
+                                  ),
+                                  // if deptTime is earlier than current time
+                                  for (int i = snapshot.data!.length - 1;
+                                      i >= 0;
+                                      i--)
+                                    if (DateTime.tryParse(
+                                            snapshot.data![i].deptTime!)!
+                                        .isBefore(DateTime.now()))
+                                      chatroomListListTile(
+                                        context: context,
+                                        history: snapshot.data![i],
+                                      ),
+                                ]),
                           ),
                         )
                       ],
@@ -134,7 +148,8 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
                 // history가 없을 때
                 else {
                   return Padding(
-                    padding: EdgeInsets.only(left: 24.w, top: 55.h, right: 24.w),
+                    padding:
+                        EdgeInsets.only(left: 24.w, top: 55.h, right: 24.w),
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.center,
                       mainAxisAlignment: MainAxisAlignment.start,
@@ -159,12 +174,19 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
                             ),
                             child: Stack(
                               children: [
-                                Image.asset('assets/banner.png'),
+                                Image.asset(
+                                  'assets/banner.png',
+                                  width: 342.w,
+                                  height: 75.h,
+                                  fit: BoxFit.fill,
+                                ),
                                 Padding(
-                                  padding: EdgeInsets.only(right: 7.w, bottom: 5.h),
+                                  padding:
+                                      EdgeInsets.only(right: 7.w, bottom: 5.h),
                                   child: Align(
                                     alignment: Alignment.bottomRight,
-                                    child: Image.asset('assets/button/contact.png'),
+                                    child: Image.asset(
+                                        'assets/button/contact.png'),
                                   ),
                                 )
                               ],
@@ -181,7 +203,10 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
                                 Text(
                                   '아직 입장한 톡방이 없습니다\n방을 새로 만들거나 기존 방에 참여해보세요!',
                                   textAlign: TextAlign.center,
-                                  style: textTheme.headline1?.copyWith(color: colorScheme.tertiaryContainer, fontWeight: FontWeight.w500, fontSize: 20),
+                                  style: textTheme.headline1?.copyWith(
+                                      color: colorScheme.tertiaryContainer,
+                                      fontWeight: FontWeight.w500,
+                                      fontSize: 20),
                                 ),
                                 SizedBox(
                                   height: 18.h,
@@ -194,7 +219,10 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
                                     width: 198,
                                     'assets/button/add_timeline.png',
                                   ),
-                                  style: OutlinedButton.styleFrom(side: BorderSide(width: 0, color: colorScheme.onBackground)),
+                                  style: OutlinedButton.styleFrom(
+                                      side: BorderSide(
+                                          width: 0,
+                                          color: colorScheme.onBackground)),
                                 )
                               ],
                             ),
@@ -216,7 +244,8 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
                     Align(
                       child: Text(
                         '${snapshot.error}',
-                        style: textTheme.headline1?.copyWith(color: colorScheme.tertiary),
+                        style: textTheme.headline1
+                            ?.copyWith(color: colorScheme.tertiary),
                       ),
                     ),
                   ],
@@ -234,82 +263,3 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
     );
   }
 }
-
-// class ChatroomListScreen extends StatelessWidget {
-//   const ChatroomListScreen({super.key});
-//   @override
-//   Widget build(BuildContext context) {
-//     final colorScheme = Theme.of(context).colorScheme;
-//     final textTheme = Theme.of(context).textTheme;
-//     return Scaffold(
-//       body: Padding(
-//         padding: EdgeInsets.only(left: 24.w, top: 55.h, right: 24.w),
-//         child: Column(
-//           crossAxisAlignment: CrossAxisAlignment.start,
-//           children: [
-//             Text(
-//               "채팅",
-//               style: textTheme.headline2?.copyWith(
-//                 color: colorScheme.onTertiary,
-//               ),
-//             ),
-//             SizedBox(
-//               height: 13.h,
-//             ),
-//             Container(
-//                 width: 342.w,
-//                 height: 75.h,
-//                 decoration: BoxDecoration(
-//                   borderRadius: BorderRadius.circular(10.0),
-//                 ),
-//                 child: Stack(
-//                   children: [
-//                     Image.asset('assets/banner.png'),
-//                     Padding(
-//                       padding: EdgeInsets.only(right: 7.w, bottom: 5.h),
-//                       child: Align(
-//                         alignment: Alignment.bottomRight,
-//                         child: Image.asset('assets/button/contact.png'),
-//                       ),
-//                     )
-//                   ],
-//                 )),
-//             SizedBox(
-//               height: 13.h,
-//             ),
-//             Expanded(
-//               child: SingleChildScrollView(
-//                 child: Column(
-//                     crossAxisAlignment: CrossAxisAlignment.start,
-//                     children: [
-//                       Text(
-//                         "탑승 예정 톡방",
-//                         style: textTheme.bodyText2?.copyWith(
-//                           color: colorScheme.tertiaryContainer,
-//                         ),
-//                       ),
-//                       chatroomListListTile(context),
-//                       chatroomListListTile(context),
-//                       SizedBox(
-//                         height: 29.h,
-//                       ),
-//                       Text(
-//                         "전체 톡방 내역",
-//                         style: textTheme.bodyText2?.copyWith(
-//                           color: colorScheme.tertiaryContainer,
-//                         ),
-//                       ),
-//                       chatroomListListTile(context),
-//                       chatroomListListTile(context),
-//                       chatroomListListTile(context),
-//                       chatroomListListTile(context),
-//                       chatroomListListTile(context),
-//                     ]),
-//               ),
-//             )
-//           ],
-//         ),
-//       ),
-//     );
-//   }
-// }

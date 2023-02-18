@@ -49,11 +49,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
               onPressed: () {
                 Get.back();
               },
-              icon: Icon(
-                Icons.clear_sharp,
-                color: colorScheme.tertiaryContainer,
-                size: 24,
-              ),
+              icon: Image.asset("assets/button/clear.png", width: 24.w, height: 24.w, color: colorScheme. tertiaryContainer,)
             ),
           ]),
       backgroundColor: colorScheme.background,
@@ -273,8 +269,9 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                   width: 32.w,
                 ),
                 Icon(
-                  Icons.arrow_forward,
-                  size: 15.63.w,
+                    Icons.arrow_forward_ios,
+                  color: colorScheme.tertiaryContainer,
+                  size: 16.67,
                 ),
               ],
             ),
@@ -305,6 +302,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
     return Column(
       children: [
         GestureDetector(
+          behavior: HitTestBehavior.opaque,
           onTap: () {
             deletedUserDialog(context, '회원 탈퇴 하시겠어요?',
                 '지금 당장 필요하지 않아도\n언제나 한동대학교 계정을 통해서\n다시 가입하실 수 있어요');
@@ -343,14 +341,14 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
               borderRadius: BorderRadius.circular(24.0),
             ),
             child: Container(
-              width: 360.w,
-              height: 240.h,
+              width: 312.w,
+              height: 253.h,
               alignment: Alignment.center,
               padding: EdgeInsets.fromLTRB(
                 36.0.w,
                 24.0.h,
                 36.0.w,
-                28.0.h,
+                24.0.h,
               ),
               child: Column(
                 children: <Widget>[
@@ -361,53 +359,71 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                     ),
                   ),
                   SizedBox(
-                    height: 16.h,
+                    height: 22.h,
                   ),
-                  Text(
-                    content as String,
-                    style: textTheme.bodyText1?.copyWith(
-                      color: colorScheme.onTertiary,
+                  Container(
+                    width: 240.w,
+                    height: 99.h,
+                    child: Align(
+                      alignment: Alignment.centerLeft,
+                      child: Text(
+                        content as String,
+                        style: textTheme.bodyText1?.copyWith(
+                          color: colorScheme.onTertiary,
+                        ),
+                      ),
                     ),
                   ),
-                  const Spacer(),
+                  SizedBox(
+                    height: 22.h,
+                  ),
                   Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      TextButton(
-                        onPressed: () async {
-                          Get.back();
-                        },
-                        child: Text(
-                          "취소",
-                          style: textTheme.subtitle2
-                              ?.copyWith(color: colorScheme.tertiaryContainer),
+                      Container(
+                        width: 63.w,
+                        height: 33.h,
+                        child: TextButton(
+                          onPressed: () async {
+                            Get.back();
+                          },
+                          child: Text(
+                            "취소",
+                            style: textTheme.subtitle2
+                                ?.copyWith(color: colorScheme.tertiaryContainer),
+                          ),
                         ),
                       ),
                       SizedBox(
                         width: 78.w,
                       ),
-                      TextButton(
-                        onPressed: () async {
-                          Get.back();
-                          print("체크1");
-                          print(_userController.isDeleted);
-                          await _userController.fetchDeleteUsers();
-                          print(_userController.isDeleted);
-                          if (_userController.isDeleted == 1) {
-                            _signInController.deleteUser();
-                            await SettingScreen.storage.delete(key: "login");
-                            _signInController.reset();
-                            _navController.changeIndex(1);
-                          } else {
+                      Container(
+                        width: 63.w,
+                        height: 33.h,
+                        child: TextButton(
+                          onPressed: () async {
                             Get.back();
-                            mainDialog(context, '회원탈퇴',
-                                '현재 모집중이거나 입장하신 방이 있습니다. 해당 방을 나가신 후 다시 시도해주세요.');
-                          }
-                        },
-                        child: Text(
-                          "탈퇴",
-                          style: textTheme.subtitle2
-                              ?.copyWith(color: colorScheme.errorContainer),
+                            print("체크1");
+                            print(_userController.isDeleted);
+                            await _userController.fetchDeleteUsers();
+                            print(_userController.isDeleted);
+                            if (_userController.isDeleted == 1) {
+                              _signInController.deleteUser();
+                              _signInController.reset();
+                              _navController.changeIndex(0);
+                              Get.back();
+                              Get.back();
+                              Get.back();
+                            } else if(_userController.isDeleted == 2){
+                              mainDialog(context, '회원탈퇴',
+                                  '현재 모집중이거나 입장하신 방이 있습니다. 해당 방을 나가신 후 다시 시도해주세요.');
+                            }
+                          },
+                          child: Text(
+                            "탈퇴",
+                            style: textTheme.subtitle2
+                                ?.copyWith(color: colorScheme.errorContainer),
+                          ),
                         ),
                       ),
                     ],

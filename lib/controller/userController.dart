@@ -11,6 +11,7 @@ import 'dart:convert';
 
 import 'package:itaxi/model/userInfoList.dart';
 import 'package:itaxi/fcm/fcmController.dart';
+import 'package:itaxi/widget/mainDialog.dart';
 
 class UserController extends GetxController {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
@@ -32,6 +33,8 @@ class UserController extends GetxController {
   late final Encrypter encrypter;
   late String? token;
 
+  bool alarm = false;
+
   @override
   void onInit() {
     super.onInit();
@@ -43,6 +46,11 @@ class UserController extends GetxController {
   @override
   void dispose() {
     super.dispose();
+  }
+
+  void setAlarm(bool to) {
+    alarm = to;
+    update();
   }
 
   Future<void> getUsers() async {
@@ -86,7 +94,8 @@ class UserController extends GetxController {
 
     final body = jsonEncode({"uid": uid});
 
-    http.Response response = await http.post(Uri.parse(userUrl), headers: <String, String>{'Content-type': 'application/json'}, body: body);
+    http.Response response =
+        await http.post(Uri.parse(userUrl), headers: <String, String>{'Content-type': 'application/json'}, body: body);
 
     if (response.statusCode == 200) {
       UserInfoList result = userFromJson(json.decode(utf8.decode(response.bodyBytes)));
@@ -104,16 +113,12 @@ class UserController extends GetxController {
     userUrl = '${userUrl}member';
 
     var encryptPhone = encrypter.encrypt(phone!, iv: iv).base64;
-    var encryptBank = encrypter.encrypt("1", iv: iv).base64;
-    var encryptBankAddress = encrypter.encrypt("1", iv: iv).base64;
 
     http.Response response = await http.patch(
       Uri.parse(userUrl),
       headers: <String, String>{'Content-type': 'application/json'},
       body: json.encode(
         {
-          'bank': encryptBank,
-          'bankAddress': encryptBankAddress,
           'phone': encryptPhone,
           'uid': FirebaseAuth.instance.currentUser!.uid,
         },
@@ -124,6 +129,15 @@ class UserController extends GetxController {
       //return response;
     } else {
       throw Exception('Failed to patch My new Info');
+    }
+  }
+
+  Future<void> changePassword(String newPassword) async {
+    User user = FirebaseAuth.instance.currentUser!;
+    try {
+      await user.updatePassword(newPassword);
+    } catch (e) {
+      print(e);
     }
   }
 
@@ -138,19 +152,22 @@ class UserController extends GetxController {
     http.Response response = await http.patch(
       Uri.parse(userUrl),
       headers: <String, String>{
-        'Content-Type': 'application/json; charset=UTF-8',
+        'Content-Type': 'application/json',
       },
       body: body,
     );
-
+    print(utf8.decode(response.bodyBytes));
     if (response.statusCode == 200) {
       print(response.statusCode);
       isDeleted = 1;
-      return response;
-    } else {
-      print(response.statusCode);
-      print(response.body);
+    }
+    else if(json.decode(utf8.decode(response.bodyBytes))["message"] == "다른 방에 입장해있으면 탈퇴할 수 없습니다."){
+      print(json.decode(utf8.decode(response.bodyBytes))["message"]);
+      isDeleted = 2;
+    }
+    else{
       throw Exception('Failed to Delete User');
     }
+    return response;
   }
 }
