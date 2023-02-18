@@ -66,9 +66,8 @@ Widget postListTile({
                             children: <Widget>[
                               Text(
                                 "톡방에 참여하시겠어요?",
-                                style: textTheme.subtitle1?.copyWith(
-                                    color: colorScheme.secondary,
-                                    fontWeight: FontWeight.w500),
+                                style: textTheme.subtitle1
+                                    ?.copyWith(color: colorScheme.secondary, fontWeight: FontWeight.w500),
                               ),
                               SizedBox(
                                 height: 69.h,
@@ -189,9 +188,8 @@ Widget postListTile({
                       : Container(
                           width: 44.w,
                           height: 24.h,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(7.9931.r),
-                              color: colorScheme.outline),
+                          decoration:
+                              BoxDecoration(borderRadius: BorderRadius.circular(7.9931.r), color: colorScheme.outline),
                           alignment: Alignment.center,
                           child: Text(
                             '카풀',
