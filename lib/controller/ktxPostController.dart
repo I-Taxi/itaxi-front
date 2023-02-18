@@ -130,7 +130,7 @@ class KtxPostController extends GetxController {
 
     if (response.statusCode == 200) {
       KtxPost result =
-          KtxPost.fromJoinerDocs(json.decode(utf8.decode(response.bodyBytes)));
+          KtxPost.fromDocs(json.decode(utf8.decode(response.bodyBytes)));
       await _chatRoomController.ktxJoinChat(post: result);
       await KtxChatRepository().setPost(post: result);
       print('join');

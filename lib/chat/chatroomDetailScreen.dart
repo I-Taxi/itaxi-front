@@ -633,10 +633,12 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                                 children: [
                                                   Text(
                                                     snapshot
-                                                        .data![snapshot
-                                                                .data!.length -
-                                                            1]
-                                                        .memberName!,
+                                                            .data![snapshot
+                                                                    .data!
+                                                                    .length -
+                                                                1]
+                                                            .memberName ??
+                                                        '',
                                                     style: textTheme.bodyText1
                                                         ?.copyWith(
                                                       color:
@@ -647,10 +649,12 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                                   Expanded(
                                                     child: Text(
                                                       snapshot
-                                                          .data![snapshot.data!
-                                                                  .length -
-                                                              1]
-                                                          .chatData!,
+                                                              .data![snapshot
+                                                                      .data!
+                                                                      .length -
+                                                                  1]
+                                                              .chatData ??
+                                                          '',
                                                       style: textTheme.bodyText1
                                                           ?.copyWith(
                                                         color:

@@ -67,9 +67,8 @@ Widget postListTile({
                               Text(
                                 "톡방에 참여하시겠어요?",
                                 style: textTheme.subtitle1?.copyWith(
-                                  color: colorScheme.secondary,
-                                  fontWeight: FontWeight.w500
-                                ),
+                                    color: colorScheme.secondary,
+                                    fontWeight: FontWeight.w500),
                               ),
                               SizedBox(
                                 height: 69.h,
@@ -84,7 +83,8 @@ Widget postListTile({
                                     },
                                     child: Text(
                                       "취소",
-                                      style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
+                                      style: textTheme.subtitle2?.copyWith(
+                                          color: colorScheme.tertiaryContainer),
                                     ),
                                   ),
                                   SizedBox(
@@ -93,32 +93,44 @@ Widget postListTile({
                                   GestureDetector(
                                     behavior: HitTestBehavior.opaque,
                                     onTap: () async {
-                                      await _postController.fetchJoin(post: post);
+                                      await _postController.fetchJoin(
+                                          post: post);
                                       await _postController.getPosts(
                                         depId: _placeController.dep?.id,
                                         dstId: _placeController.dst?.id,
-                                        time: _dateController.formattingDateTime(
+                                        time:
+                                            _dateController.formattingDateTime(
                                           _dateController.mergeDateAndTime(),
                                         ),
-                                        postType: _screenController.mainScreenCurrentTabIndex,
+                                        postType: _screenController
+                                            .mainScreenCurrentTabIndex,
                                       );
                                       Get.back();
+                                      await _historyController.getHistorys();
                                       await _historyController.getHistoryInfo(
-                                          postId: post.id!, postType: post.postType!);
+                                          postId: post.id!,
+                                          postType: post.postType!);
                                       _historyController.history.then((value) {
                                         if (value.postType != 3) {
-                                          _chatRoomController.getPost(post: value.toPost());
-                                          _chatRoomController.getChats(post: value.toPost());
+                                          _chatRoomController.getPost(
+                                              post: value.toPost());
+                                          _chatRoomController.getChats(
+                                              post: value.toPost());
                                         } else {
-                                          _chatRoomController.getKtxPost(ktxPost: value.toKtxPost());
-                                          _chatRoomController.getKtxChats(ktxPost: value.toKtxPost());
+                                          _chatRoomController.getKtxPost(
+                                              ktxPost: value.toKtxPost());
+                                          _chatRoomController.getKtxChats(
+                                              ktxPost: value.toKtxPost());
                                         }
-                                        Get.to(() => const ChatRoomDetailScreen());
+                                        Get.to(
+                                            () => const ChatRoomDetailScreen());
                                       });
                                     },
                                     child: Text(
                                       "입장",
-                                      style: textTheme.subtitle2?.copyWith(color: colorScheme.onPrimaryContainer),
+                                      style: textTheme.subtitle2?.copyWith(
+                                          color:
+                                              colorScheme.onPrimaryContainer),
                                     ),
                                   ),
                                 ],
@@ -142,7 +154,9 @@ Widget postListTile({
             height: 92.h,
             decoration: BoxDecoration(
                 color: colorScheme.background,
-                border: Border(bottom: BorderSide(color: colorScheme.onSurfaceVariant, width: 1))),
+                border: Border(
+                    bottom: BorderSide(
+                        color: colorScheme.onSurfaceVariant, width: 1))),
             child: Padding(
               padding: EdgeInsets.only(left: 24.w, right: 24.w),
               child: Row(
@@ -164,21 +178,25 @@ Widget postListTile({
                           width: 44.w,
                           height: 24.h,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(7.9931.r), color: colorScheme.secondary),
+                              borderRadius: BorderRadius.circular(7.9931.r),
+                              color: colorScheme.secondary),
                           alignment: Alignment.center,
                           child: Text(
                             '택시',
-                            style: textTheme.bodyText1?.copyWith(color: colorScheme.onSecondary),
+                            style: textTheme.bodyText1
+                                ?.copyWith(color: colorScheme.onSecondary),
                           ))
                       : Container(
                           width: 44.w,
                           height: 24.h,
                           decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(7.9931.r), color: colorScheme.outline),
+                              borderRadius: BorderRadius.circular(7.9931.r),
+                              color: colorScheme.outline),
                           alignment: Alignment.center,
                           child: Text(
                             '카풀',
-                            style: textTheme.bodyText1?.copyWith(color: colorScheme.onSecondary),
+                            style: textTheme.bodyText1
+                                ?.copyWith(color: colorScheme.onSecondary),
                           )),
                   // Image(
                   //   image: post.postType == 2
@@ -190,7 +208,9 @@ Widget postListTile({
                   const Spacer(),
                   Text(
                     "${post.participantNum}/${post.capacity}명",
-                    style: textTheme.subtitle1?.copyWith(color: colorScheme.onTertiary, fontWeight: FontWeight.w500),
+                    style: textTheme.subtitle1?.copyWith(
+                        color: colorScheme.onTertiary,
+                        fontWeight: FontWeight.w500),
                   ),
                   SizedBox(
                     width: 22.w,
