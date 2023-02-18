@@ -3,6 +3,7 @@ import 'dart:core';
 
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -50,7 +51,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
   void _scrollDown() {
     if (_scrollController.hasClients) {
       _scrollController.animateTo(
-        _scrollController.position.maxScrollExtent,
+        _scrollController.position.minScrollExtent,
         curve: Curves.easeOut,
         duration: const Duration(milliseconds: 10),
       );
@@ -62,14 +63,14 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
     _scrollController.addListener(() {
       if (_scrollController.hasClients) {
         if (_scrollController.position.pixels ==
-            _scrollController.position.maxScrollExtent) {
+            _scrollController.position.minScrollExtent) {
           setState(() {
             isScrollDown = false;
             needScrollDown = false;
           });
         }
-        if (_scrollController.position.pixels <
-            _scrollController.position.maxScrollExtent) {
+        if (_scrollController.position.pixels >
+            _scrollController.position.minScrollExtent) {
           setState(() {
             needScrollDown = true;
           });
@@ -79,7 +80,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
     _chatRoomController.chats.listen((event) {
       if (_scrollController.hasClients &&
           _scrollController.position.pixels !=
-              _scrollController.position.maxScrollExtent) {
+              _scrollController.position.minScrollExtent) {
         setState(() {
           isScrollDown = true;
         });
@@ -408,6 +409,8 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
               builder: (BuildContext context, snapshot) {
                 if (snapshot.hasData) {
                   if (snapshot.data!.isNotEmpty) {
+                    var reversedList = snapshot.data?.reversed.toList();
+                    int itemCount = reversedList!.length;
                     return Padding(
                       padding:
                           EdgeInsets.only(left: 18.w, right: 18.w, top: 44.h),
@@ -452,6 +455,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                             child: Stack(
                               children: [
                                 ListView.builder(
+                                  reverse: true,
                                   shrinkWrap: true,
                                   controller: _scrollController,
                                   itemBuilder:
@@ -467,12 +471,12 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                       '일'
                                     ];
 
-                                    if (index != 0) {
-                                      final difference = snapshot
-                                          .data![index].chatTime!
+                                    if (index != itemCount - 1) {
+                                      final difference = reversedList[index]
+                                          .chatTime!
                                           .toDate()
-                                          .difference(snapshot
-                                              .data![index - 1].chatTime!
+                                          .difference(reversedList[index + 1]
+                                              .chatTime!
                                               .toDate());
                                       if (difference.inMinutes >= 1) {
                                         isFirst = true;
@@ -480,13 +484,13 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                         isFirst = false;
                                       }
 
-                                      if (snapshot.data![index].memberId !=
-                                          snapshot.data![index - 1].memberId) {
+                                      if (reversedList[index].memberId !=
+                                          reversedList[index + 1].memberId) {
                                         isFirst = true;
                                       }
                                       if (index == 1 &&
-                                          snapshot.data![0].memberId ==
-                                              snapshot.data![1].memberId) {
+                                          reversedList[0].memberId ==
+                                              reversedList[1].memberId) {
                                         isFirst = false;
                                       }
                                     } else {
@@ -495,30 +499,32 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                     return Column(
                                       children: [
                                         if (DateTime.now()
-                                                .difference(snapshot
-                                                    .data![index].chatTime!
+                                                .difference(reversedList[index]
+                                                    .chatTime!
                                                     .toDate())
                                                 .isNegative ==
                                             false)
-                                          if (index == 0 ||
-                                              (index - 1 > 0 &&
-                                                  DateTime.parse(DateFormat('yyyy-MM-dd')
-                                                              .format(snapshot
-                                                                  .data![index]
-                                                                  .chatTime!
-                                                                  .toDate()))
+                                          if (index == itemCount - 1 ||
+                                              (index - 1 > itemCount - 1 &&
+                                                  DateTime.parse(DateFormat(
+                                                                  'yyyy-MM-dd')
+                                                              .format(
+                                                                  reversedList[index]
+                                                                      .chatTime!
+                                                                      .toDate()))
                                                           .compareTo(DateTime.parse(
-                                                              DateFormat('yyyy-MM-dd').format(snapshot.data![index - 1].chatTime!.toDate()))) !=
+                                                              DateFormat('yyyy-MM-dd')
+                                                                  .format(reversedList[index - 1].chatTime!.toDate()))) !=
                                                       0))
                                             Column(
                                               children: [
                                                 Text(
                                                   DateFormat(
-                                                          'M월 d일 (${korDays[snapshot.data![index].chatTime!.toDate().weekday - 1]})')
-                                                      .format(snapshot
-                                                          .data![index]
-                                                          .chatTime!
-                                                          .toDate()),
+                                                          'M월 d일 (${korDays[reversedList[index].chatTime!.toDate().weekday - 1]})')
+                                                      .format(
+                                                          reversedList[index]
+                                                              .chatTime!
+                                                              .toDate()),
                                                   style: textTheme.bodyText2
                                                       ?.copyWith(
                                                           color: colorScheme
@@ -529,12 +535,11 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                                 ),
                                               ],
                                             ),
-                                        snapshot.data![index].memberName == null
+                                        reversedList[index].memberName == null
                                             ? Column(
                                                 children: [
                                                   index > 0 &&
-                                                          snapshot
-                                                                  .data![
+                                                          reversedList[
                                                                       index - 1]
                                                                   .memberName ==
                                                               null
@@ -559,7 +564,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                                                 horizontal:
                                                                     8.w),
                                                         child: Text(
-                                                          snapshot.data![index]
+                                                          reversedList[index]
                                                               .chatData!,
                                                           style: textTheme
                                                               .bodyText2
@@ -570,8 +575,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                                         ),
                                                       )),
                                                   index > 0 &&
-                                                          snapshot
-                                                                  .data![
+                                                          reversedList[
                                                                       index - 1]
                                                                   .memberName ==
                                                               null
@@ -584,7 +588,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                             : ChatDetailListTile(
                                                 context: context,
                                                 isFirst: isFirst,
-                                                chat: snapshot.data![index],
+                                                chat: reversedList[index],
                                                 joiners: _chatRoomController
                                                             .postType !=
                                                         3
@@ -596,11 +600,10 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                       ],
                                     );
                                   },
-                                  itemCount: snapshot.data!.length,
+                                  itemCount: reversedList.length,
                                 ),
                                 if (isScrollDown == true &&
-                                    snapshot.data![snapshot.data!.length - 1]
-                                            .uid !=
+                                    reversedList[reversedList.length - 1].uid !=
                                         _userController.uid)
                                   Align(
                                     alignment: Alignment.bottomCenter,
@@ -632,9 +635,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                                     CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    snapshot
-                                                            .data![snapshot
-                                                                    .data!
+                                                    reversedList[reversedList
                                                                     .length -
                                                                 1]
                                                             .memberName ??
@@ -648,9 +649,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                                   ),
                                                   Expanded(
                                                     child: Text(
-                                                      snapshot
-                                                              .data![snapshot
-                                                                      .data!
+                                                      reversedList[reversedList
                                                                       .length -
                                                                   1]
                                                               .chatData ??
