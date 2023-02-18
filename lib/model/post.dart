@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:intl/intl.dart';
 import 'package:itaxi/model/joiner.dart';
 import 'package:itaxi/model/place.dart';
 
@@ -85,8 +86,12 @@ class Post {
       capacity: ds['capacity'],
       participantNum: ds['participantNum'],
       status: ds['status'],
-      joiners: List<Joiner>.from(ds['joiners'].map((json) => Joiner.fromUidDocs(json))),
-      stopovers: (stopOversFromDs.isEmpty) ? [] : List<Place>.from(ds['stopovers'].map((json) => Place.fromDocs(json))),
+      joiners: List<Joiner>.from(
+          ds['joiners'].map((json) => Joiner.fromUidDocs(json))),
+      stopovers: (stopOversFromDs.isEmpty)
+          ? []
+          : List<Place>.from(
+              ds['stopovers'].map((json) => Place.fromDocs(json))),
     );
   }
 
@@ -102,7 +107,10 @@ class Post {
       capacity: ds['capacity'],
       participantNum: ds['participantNum'],
       status: ds['status'],
-      stopovers: (stopOversFromDs == null) ? [] : List<Place>.from(ds['stopovers'].map((json) => Place.fromStopoverDocs(json))),
+      stopovers: (stopOversFromDs == null)
+          ? []
+          : List<Place>.from(
+              ds['stopovers'].map((json) => Place.fromStopoverDocs(json))),
     );
   }
 
@@ -118,8 +126,12 @@ class Post {
       capacity: ds['capacity'],
       participantNum: ds['participantNum'],
       status: ds['status'],
-      joiners: List<Joiner>.from(ds['joiners'].map((json) => Joiner.fromDocs(json))),
-      stopovers: (stopOversFromDs.isEmpty) ? [] : List<Place>.from(ds['stopovers'].map((json) => Place.fromStopoverDocs(json))),
+      joiners:
+          List<Joiner>.from(ds['joiners'].map((json) => Joiner.fromDocs(json))),
+      stopovers: (stopOversFromDs.isEmpty)
+          ? []
+          : List<Place>.from(
+              ds['stopovers'].map((json) => Place.fromStopoverDocs(json))),
     );
   }
 
@@ -161,7 +173,9 @@ class Post {
       "dstId": destination!.id,
       "deptTime": deptTime,
       "capacity": capacity,
-      "stopoverIds": (stopovers == null || stopovers!.isEmpty) ? [] : List<int>.from(stopovers!.map((stopover) => stopover!.id!)),
+      "stopoverIds": (stopovers == null || stopovers!.isEmpty)
+          ? []
+          : List<int>.from(stopovers!.map((stopover) => stopover!.id!)),
     };
   }
 
@@ -173,7 +187,8 @@ class Post {
       membersId.add(joiner!.memberId);
     }
 
-    postName = "(${departure!.name!}) -> (${destination!.name!})";
+    postName =
+        "(${departure!.name!}) -> (${destination!.name!}) #${DateFormat('MMd').format(DateTime.parse(deptTime!))}";
 
     return {
       'id': id,
@@ -191,7 +206,8 @@ class Post {
       membersId.add(joiner!.memberId);
     }
 
-    postName = "(${departure!.name!}) -> (${destination!.name!})";
+    postName =
+        "(${departure!.name!}) -> (${destination!.name!}) #${DateFormat('MMd').format(DateTime.parse(deptTime!))}";
 
     return {
       'id': id,
