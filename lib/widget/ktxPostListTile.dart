@@ -93,6 +93,7 @@ Widget ktxPostListTile({
                                       ),
                                     );
                                     Get.back();
+                                    await _historyController.getHistorys();
                                     await _historyController.getHistoryInfo(
                                         postId: post.id!, postType: 3); //수정 요망
                                     _historyController.history.then((value) {
