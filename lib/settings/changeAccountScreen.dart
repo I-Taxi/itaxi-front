@@ -264,23 +264,25 @@ class _ChangeAccountScreenState extends State<ChangeAccountScreen> {
       bottomNavigationBar: Material(
         color: isBankEmpty || isBankAddressEmpty || isBankOwnerNameEmpty ? colorScheme.onSurfaceVariant : colorScheme.secondary,
         child: InkWell(
-          onTap: () async{
+          onTap: ()  async{
             if (!isBankEmpty && !isBankAddressEmpty && !isBankOwnerNameEmpty) {
-              storage.write(
+               storage.write(
                 key: "bank",
                 value: _bankController.text,
               );
-              storage.write(
+               storage.write(
                 key: "bankAddress",
                 value: _bankAddressController.text,
               );
-              storage.write(
+               storage.write(
                 key: "bankOwnerName",
                 value: _bankOwnerNameController.text,
               );
               showConfirmDialog(context);
-              Get.back();
             }
+            print(await storage.read(key: "bank"));
+            print(await storage.read(key: "bankAddress"));
+            print(await storage.read(key: "bankOwnerName"));
           },
           child: SizedBox(
             height: 94.h,
@@ -374,6 +376,9 @@ class _ChangeAccountScreenState extends State<ChangeAccountScreen> {
     showDialog(
       context: context,
       builder: (BuildContext context) {
+        Future.delayed(Duration(seconds: 2), (){
+          Navigator.of(context).pop(true);
+        });
         return Dialog(
           elevation: 0,
           shape: RoundedRectangleBorder(
@@ -381,7 +386,7 @@ class _ChangeAccountScreenState extends State<ChangeAccountScreen> {
           ),
           child: Container(
             width: 312.w,
-            height: 262.h,
+            height: 172.h,
             alignment: Alignment.center,
             padding: EdgeInsets.fromLTRB(
               46.0.w,
