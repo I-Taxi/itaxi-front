@@ -150,7 +150,6 @@ Container timelineSoonInfoCard({required BuildContext context, required History 
       ),
     );
   }
-
   if (history.stopovers == null || history.stopovers!.isEmpty) {
     return Container(
       width: 339.w,
@@ -285,7 +284,6 @@ Container timelineSoonInfoCard({required BuildContext context, required History 
                       ),
                     ],
                   )),
-              const Spacer(),
             ],
           ),
         ),
@@ -435,7 +433,6 @@ Container timelineSoonInfoCard({required BuildContext context, required History 
                     ),
                   ]),
                 ),
-                const Spacer(),
               ]),
             )));
   }

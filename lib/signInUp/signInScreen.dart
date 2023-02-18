@@ -9,9 +9,11 @@ import 'package:get/get.dart';
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 
 import 'package:itaxi/controller/signInController.dart';
+import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/signInUp/signUpScreen.dart';
 import 'package:itaxi/signInUp/forgotPwScreen.dart';
 import 'package:itaxi/timeline/checkPlaceScreen.dart';
+import 'package:itaxi/widget/showErrorDialogByString.dart';
 
 import '../widget/mainDialog.dart';
 
@@ -24,6 +26,7 @@ class SignInScreen extends StatefulWidget {
 
 class _SignInScreenState extends State<SignInScreen> {
   SignInController _signInController = Get.find();
+  UserController _userController = Get.find();
 
   static final storage = new FlutterSecureStorage();
 
@@ -221,7 +224,7 @@ class _SignInScreenState extends State<SignInScreen> {
                           side: BorderSide(
                             color: colorScheme.primary,
                           ),
-                          onChanged: (value) async{
+                          onChanged: (value) async {
                             setState(() {
                               _rememberId = !_rememberId;
                               print(_rememberId);
@@ -259,26 +262,78 @@ class _SignInScreenState extends State<SignInScreen> {
                           await _signInController.signIn();
                           setState(() {
                             if (_signInController.signInErrorState == 0) {
-                              return mainDialog(
-                                  context, '이메일 인증 오류', '인증 이메일을 확인해주시기 바랍니다.\n받은편지함에 없는 경우, 스팸함을 확인해주세요.');
+                              return showErrorDialogByString(
+                                  '이메일 인증 오류',
+                                  context,
+                                  Text(
+                                    '인증 이메일을 확인해주시기 바랍니다.\n받은편지함에 없는 경우, 스팸함을 확인해주세요.',
+                                    style: textTheme.bodyText1?.copyWith(color: colorScheme.onTertiary),
+                                  ), () {
+                                Get.back();
+                              });
                             } else if (_signInController.signInErrorState == 1) {
-                              return mainDialog(context, '등록되지 않은 이메일',
-                                  '등록되지 않은 이메일입니다.\n혹시 인증 이메일이 만료되었다면 itaxi.cra.handong@gmail.com로 메일 보내주세요.');
+                              return showErrorDialogByString(
+                                  '등록되지 않은 이메일',
+                                  context,
+                                  Text(
+                                    '등록되지 않은 이메일입니다.\n혹시 인증 이메일이 만료되었다면 itaxi.cra.handong@gmail.com로 메일 보내주세요.',
+                                    style: textTheme.bodyText1?.copyWith(color: colorScheme.onTertiary),
+                                  ), () {
+                                Get.back();
+                              });
                             } else if (_signInController.signInErrorState == 2) {
-                              return mainDialog(context, '비밀번호 오류', '비밀번호가 틀립니다.\n비밀번호를 다시 확인해주세요.');
+                              return showErrorDialogByString(
+                                  '비밀번호 오류',
+                                  context,
+                                  Text(
+                                    '비밀번호가 틀립니다.\n비밀번호를 다시 확인해주세요.',
+                                    style: textTheme.bodyText1?.copyWith(color: colorScheme.onTertiary),
+                                  ), () {
+                                Get.back();
+                              });
                             } else if (_signInController.signInErrorState == 3) {
-                              return mainDialog(context, '아이디와 비밀번호 입력', '아이디와 비밀번호를 입력해주세요.');
+                              return showErrorDialogByString(
+                                  '아이디와 비밀번호 입력',
+                                  context,
+                                  Text(
+                                    '아이디와 비밀번호를 입력해주세요.',
+                                    style: textTheme.bodyText1?.copyWith(color: colorScheme.onTertiary),
+                                  ), () {
+                                Get.back();
+                              });
                             } else if (_signInController.signInErrorState == 4) {
-                              return mainDialog(context, '네트워크 오류', '네트워크 연결을 확인해주세요');
+                              return showErrorDialogByString(
+                                  '네트워크 오류',
+                                  context,
+                                  Text(
+                                    '네트워크 연결을 확인해주세요',
+                                    style: textTheme.bodyText1?.copyWith(color: colorScheme.onTertiary),
+                                  ), () {
+                                Get.back();
+                              });
                             }
                           });
-
-                          _rememberId
-                              ? await storage.write(
-                                  key: "login",
-                                  value: "id ${_idController.text}@handong.ac.kr password ${_pwController.text}")
-                              : await storage.delete(key: "login");
-                          print("${await storage.read(key: "login")}");
+                          if (_signInController.signInErrorState == 5) {
+                            await _userController.getUsers().whenComplete(() async {
+                              if (!_userController.userFetchSuccess) {
+                                return showErrorDialogByString(
+                                    '네트워크 오류',
+                                    context,
+                                    Text(
+                                      '네트워크 연결을 확인해주세요',
+                                      style: textTheme.bodyText1?.copyWith(color: colorScheme.onTertiary),
+                                    ), () {
+                                  Get.back();
+                                });
+                              }
+                              _rememberId
+                                  ? await storage.write(
+                                      key: "login",
+                                      value: "id ${_idController.text}@handong.ac.kr password ${_pwController.text}")
+                                  : await storage.delete(key: "login");
+                              _signInController.signedInState();
+                            });
+                          }
                         },
                         child: Text(
                           '로그인',

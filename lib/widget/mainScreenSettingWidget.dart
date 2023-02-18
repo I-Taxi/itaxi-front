@@ -63,10 +63,11 @@ Padding lookupSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
                   padding: EdgeInsets.only(left: 5.w, bottom: 17.h),
                   child: GetBuilder<PlaceController>(builder: (_) {
                     return GestureDetector(
-                      onTap: () {
+                      onTap: () async {
                         _placeSearchController.changeDepOrDst(0);
                         _placeSearchController.changeIsLookup(true);
                         _placeSearchController.filterPlacesByIndex();
+                        _placeSearchController.fetchFavoritePlace();
                         Get.to(() => SearchScreen());
                       },
                       child: !(_placeController.hasDep)
@@ -90,10 +91,11 @@ Padding lookupSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
                   padding: EdgeInsets.only(left: 5.w, top: 17.h),
                   child: GetBuilder<PlaceController>(builder: (_) {
                     return GestureDetector(
-                      onTap: () {
+                      onTap: () async {
                         _placeSearchController.changeDepOrDst(1);
                         _placeSearchController.changeIsLookup(true);
                         _placeSearchController.filterPlacesByIndex();
+                        _placeSearchController.fetchFavoritePlace();
                         Get.to(() => SearchScreen());
                       },
                       child: !(_placeController.hasDst)
@@ -161,10 +163,11 @@ Padding gatherSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
                   padding: EdgeInsets.only(left: 5.w, bottom: 17.h),
                   child: GetBuilder<PlaceController>(builder: (_) {
                     return GestureDetector(
-                      onTap: () {
+                      onTap: () async {
                         _placeSearchController.changeDepOrDst(0);
                         _placeSearchController.changeIsLookup(false);
                         _placeSearchController.filterPlacesByIndex();
+                        _placeSearchController.fetchFavoritePlace();
                         Get.to(() => SearchScreen());
                       },
                       child: !(_placeController.hasDep)
@@ -188,10 +191,11 @@ Padding gatherSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
                   padding: EdgeInsets.only(left: 5.w, top: 17.h),
                   child: GetBuilder<PlaceController>(builder: (_) {
                     return GestureDetector(
-                      onTap: () {
+                      onTap: () async {
                         _placeSearchController.changeDepOrDst(1);
                         _placeSearchController.changeIsLookup(false);
                         _placeSearchController.filterPlacesByIndex();
+                        _placeSearchController.fetchFavoritePlace();
                         Get.to(() => SearchScreen());
                       },
                       child: !(_placeController.hasDst)
@@ -274,8 +278,11 @@ Padding gatherSetDepDstStopOverWidget(ColorScheme colorScheme, TextTheme textThe
                 padding: EdgeInsets.only(left: 5.w, bottom: 17.h),
                 child: GetBuilder<PlaceController>(builder: (_) {
                   return GestureDetector(
-                    onTap: () {
+                    onTap: () async {
                       _placeSearchController.changeDepOrDst(0);
+                      _placeSearchController.changeIsLookup(false);
+                      _placeSearchController.filterPlacesByIndex();
+                      _placeSearchController.fetchFavoritePlace();
                       Get.to(() => SearchScreen());
                     },
                     child: !(_placeController.hasDep)
@@ -299,8 +306,11 @@ Padding gatherSetDepDstStopOverWidget(ColorScheme colorScheme, TextTheme textThe
                 padding: EdgeInsets.only(left: 5.w, top: 16.h, bottom: 17.h),
                 child: GetBuilder<PlaceController>(builder: (_) {
                   return GestureDetector(
-                    onTap: () {
+                    onTap: () async {
                       _placeSearchController.changeDepOrDst(2);
+                      _placeSearchController.changeIsLookup(false);
+                      _placeSearchController.filterPlacesByIndex();
+                      _placeSearchController.fetchFavoritePlace();
                       Get.to(() => SearchScreen());
                     },
                     child: !(_placeController.stopOver.isNotEmpty)
@@ -324,8 +334,11 @@ Padding gatherSetDepDstStopOverWidget(ColorScheme colorScheme, TextTheme textThe
                 padding: EdgeInsets.only(left: 5.w, top: 16.h),
                 child: GetBuilder<PlaceController>(builder: (_) {
                   return GestureDetector(
-                    onTap: () {
+                    onTap: () async {
                       _placeSearchController.changeDepOrDst(1);
+                      _placeSearchController.changeIsLookup(false);
+                      _placeSearchController.filterPlacesByIndex();
+                      _placeSearchController.fetchFavoritePlace();
                       Get.to(() => SearchScreen());
                     },
                     child: !(_placeController.hasDst)
@@ -732,6 +745,7 @@ ElevatedButton lookupButton(TextTheme textTheme, ColorScheme colorScheme, BuildC
           snackBar(context: context, title: '도착지를 선택해주세요.');
         }
         else{
+
           _screenController.setCheckScreen(true);
         }
       },
