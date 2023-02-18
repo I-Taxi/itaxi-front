@@ -293,7 +293,7 @@ class _KtxScreenState extends State<KtxScreen> {
                       ),
                       if (controller.ktxScreenLoaded)
                         controller.ktxScreenCurrentToggle == 0
-                            ? lookupButton(textTheme, colorScheme)
+                            ? lookupButton(textTheme, colorScheme, context)
                             : gatherButton(
                                 textTheme, colorScheme, controller, context),
                     ],

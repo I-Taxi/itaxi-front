@@ -560,7 +560,7 @@ Padding lookupSetCapacityWidget(
   );
 }
 
-ElevatedButton lookupButton(TextTheme textTheme, ColorScheme colorScheme) {
+ElevatedButton lookupButton(TextTheme textTheme, ColorScheme colorScheme, BuildContext context) {
   return ElevatedButton(
       style: ElevatedButton.styleFrom(
           backgroundColor: colorScheme.onPrimaryContainer,
@@ -568,7 +568,15 @@ ElevatedButton lookupButton(TextTheme textTheme, ColorScheme colorScheme) {
           shape:
               RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))),
       onPressed: () {
-        _screenController.setKtxCheckScreen(true);
+        if(_ktxPlaceController.dep == null){
+          snackBar(context: context, title: '출발지를 선택해주세요.');
+        }
+        else if(_ktxPlaceController.dst == null){
+          snackBar(context: context, title: '도착지를 선택해주세요.');
+        }
+        else{
+          _screenController.setKtxCheckScreen(true);
+        }
       },
       child: Text(
         "조회하기",
