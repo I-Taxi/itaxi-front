@@ -65,6 +65,8 @@ dependencies:
   cloud_functions: ^4.0.7
   flutter_local_notifications: ^13.0.0
 
+  new_version: ^0.3.0
+  package_info: '>=0.4.3+4 <2.0.0'
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.

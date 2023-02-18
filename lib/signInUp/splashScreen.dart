@@ -7,6 +7,8 @@ import 'package:get/get.dart';
 import 'package:colorful_safe_area/colorful_safe_area.dart';
 
 import 'package:itaxi/controller/signInController.dart';
+import 'package:new_version/new_version.dart';
+import 'package:package_info/package_info.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({Key? key}) : super(key: key);
@@ -24,6 +26,42 @@ class _SplashScreenState extends State<SplashScreen> {
       _signInController.onInit();
     });
     super.initState();
+
+    setUpdateAlert();
+  }
+
+  Future<bool> setUpdateAlert() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+
+    final newVersion = NewVersion();
+
+    newVersion.showAlertIfNecessary(context: context);
+
+    advancedStatusCheck(newVersion);
+
+    return true;
+  }
+
+  advancedStatusCheck(NewVersion newVersion) async {
+    final status = await newVersion.getVersionStatus();
+    if (status != null) {
+      debugPrint(status.releaseNotes);
+      debugPrint(status.appStoreLink);
+      debugPrint(status.localVersion);
+      debugPrint(status.storeVersion);
+      debugPrint(status.canUpdate.toString());
+      newVersion.showUpdateDialog(
+        context: context,
+        versionStatus: status,
+        dialogTitle: '업데이트 알람',
+        dialogText: '\n새로운 버전이 나왔습니다!\n바로 다운받아보시겠어요?\n',
+        updateButtonText: '업데이트',
+        dismissButtonText: '나중에',
+        dismissAction: () {
+          Get.back();
+        },
+      );
+    }
   }
 
   @override

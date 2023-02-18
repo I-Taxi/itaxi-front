@@ -18,6 +18,10 @@ import 'package:itaxi/home.dart';
 import 'package:itaxi/signInUp/signInScreen.dart';
 import 'package:itaxi/signInUp/splashScreen.dart';
 import 'package:itaxi/src/theme.dart';
+import 'package:itaxi/widget/twoButtonDialog.dart';
+import 'package:new_version/new_version.dart';
+import 'package:package_info/package_info.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'onBoardingScreen.dart';
 import 'package:itaxi/fcm/fcmController.dart';
 
@@ -34,7 +38,6 @@ late AndroidNotificationChannel channel;
 late FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin;
 
 void main() async {
-
   //임시로 OS Error: CERTIFICATE_VERIFY_FAILED 해결
   HttpOverrides.global = new MyHttpOverrides();
 
@@ -130,7 +133,6 @@ class _MyAppState extends State<MyApp> {
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
         _onBoarding();
-
       },
     );
 
