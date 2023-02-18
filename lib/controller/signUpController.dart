@@ -98,7 +98,6 @@ class SignUpController extends GetxController {
         setSignUpStatus(2);
         throw Exception('the password provided is too weak');
       } else if (e.code == 'email-already-in-use') {
-        print(1131);
         setSignUpStatus(3);
         throw Exception('The account already exists for that email.');
       } else {

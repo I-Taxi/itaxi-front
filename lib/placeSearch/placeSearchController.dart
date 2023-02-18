@@ -304,8 +304,7 @@ class PlaceSearchController extends GetxController {
     var favorPlaceUrl = dotenv.env['API_URL'].toString();
     favorPlaceUrl = '${favorPlaceUrl}favorite/';
 
-    var body = json.encode(<String, String>{'uid': _userController.uid!});
-
+    var body = json.encode(<String, dynamic>{'uid': _userController.uid!, 'favorType': isLookup ? 1 : 0});
     http.Response response = await http.put(
       Uri.parse(favorPlaceUrl),
       headers: <String, String>{

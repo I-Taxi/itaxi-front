@@ -34,13 +34,14 @@ class UserController extends GetxController {
   late String? token;
 
   bool alarm = false;
+  bool loaded = false;
+  bool userFetchSuccess = false;
 
   @override
   void onInit() {
     super.onInit();
     _fcmController = FCMController(_fcm);
     encrypter = Encrypter(AES(key));
-    getUsers();
   }
 
   @override
@@ -55,9 +56,8 @@ class UserController extends GetxController {
 
   Future<void> getUsers() async {
     users = fetchUsers();
-    users.then((value) {
-      updateUserFirestore();
-    });
+    await fetchUsers();
+    await updateUserFirestore();
     update();
   }
 
@@ -98,12 +98,18 @@ class UserController extends GetxController {
         await http.post(Uri.parse(userUrl), headers: <String, String>{'Content-type': 'application/json'}, body: body);
 
     if (response.statusCode == 200) {
+      userFetchSuccess = true;
+      loaded = true;
+      update();
       UserInfoList result = userFromJson(json.decode(utf8.decode(response.bodyBytes)));
       decryptUser(result);
 
       return result;
     } else {
-      throw Exception('계정 정보를 불러오는 데 실패했습니다.');
+      userFetchSuccess = false;
+      loaded = true;
+      update();
+      return Future.error('계정 정보를 불러오는 데 실패했습니다.');
     }
   }
 
@@ -132,12 +138,14 @@ class UserController extends GetxController {
     }
   }
 
-  Future<void> changePassword(String newPassword) async {
+  Future<FirebaseAuthException?> changePassword(String newPassword) async {
     User user = FirebaseAuth.instance.currentUser!;
     try {
       await user.updatePassword(newPassword);
-    } catch (e) {
+      return null;
+    } on FirebaseAuthException catch (e) {
       print(e);
+      return e;
     }
   }
 
@@ -160,12 +168,10 @@ class UserController extends GetxController {
     if (response.statusCode == 200) {
       print(response.statusCode);
       isDeleted = 1;
-    }
-    else if(json.decode(utf8.decode(response.bodyBytes))["message"] == "다른 방에 입장해있으면 탈퇴할 수 없습니다."){
+    } else if (json.decode(utf8.decode(response.bodyBytes))["message"] == "다른 방에 입장해있으면 탈퇴할 수 없습니다.") {
       print(json.decode(utf8.decode(response.bodyBytes))["message"]);
       isDeleted = 2;
-    }
-    else{
+    } else {
       throw Exception('Failed to Delete User');
     }
     return response;

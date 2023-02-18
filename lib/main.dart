@@ -18,6 +18,7 @@ import 'package:itaxi/firebase_options.dart';
 import 'package:itaxi/home.dart';
 import 'package:itaxi/signInUp/signInScreen.dart';
 import 'package:itaxi/signInUp/splashScreen.dart';
+import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/src/theme.dart';
 import 'onBoardingScreen.dart';
 import 'package:itaxi/fcm/fcmController.dart';
@@ -99,6 +100,7 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final SignInController _signInController = Get.put(SignInController());
+  final UserController _userController = Get.put(UserController());
 
   static final storage = new FlutterSecureStorage();
   String? onBoardingInfo;
@@ -172,31 +174,40 @@ class _MyAppState extends State<MyApp> {
         return GetMaterialApp(
           title: 'iTaxi',
           //datepicker 언어 설정 한국어
-          localizationsDelegates: const [
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate
-          ],
-          supportedLocales:  [
-            const Locale('ko', 'KR')
-          ],
+          localizationsDelegates: const [GlobalMaterialLocalizations.delegate, GlobalWidgetsLocalizations.delegate],
+          supportedLocales: [const Locale('ko', 'KR')],
           theme: ITaxiTheme.lightThemeData,
           debugShowCheckedModeBanner: false,
-          home: GetBuilder<SignInController>(
-            builder: (_) {
-              print(_signInController.signInState);
-              if (_signInController.signInState == SignInState.start) {
-                return const SplashScreen();
-              } else if (_signInController.signInState == SignInState.signedOut) {
-                return const SignInScreen();
-              } else {
-                if (isOnBoarding == 1) {
-                  return const OnBoardingScreen();
-                } else {
-                  return Home();
+          home: GetBuilder<UserController>(builder: (_) {
+            return GetBuilder<SignInController>(
+              builder: (_) {
+                if (_signInController.signInState == SignInState.firebaseSignedIn) {
+                  WidgetsBinding.instance.addPostFrameCallback((_) {
+                    _userController.getUsers().whenComplete(() {
+                      if (_userController.userFetchSuccess) {
+                        _signInController.signedInState();
+                      } else {
+                        _signInController.backServerErrorState();
+                      }
+                    });
+                  });
                 }
-              }
-            },
-          ),
+                if (_signInController.signInState == SignInState.start ||
+                    _signInController.signInState == SignInState.firebaseSignedIn ||
+                    _signInController.signInState == SignInState.backServerError) {
+                  return const SplashScreen();
+                } else if (_signInController.signInState == SignInState.signedOut) {
+                  return const SignInScreen();
+                } else {
+                  if (isOnBoarding == 1) {
+                    return const OnBoardingScreen();
+                  } else {
+                    return Home();
+                  }
+                }
+              },
+            );
+          }),
         );
       },
     );

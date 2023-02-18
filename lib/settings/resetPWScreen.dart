@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:colorful_safe_area/colorful_safe_area.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -212,8 +213,8 @@ class _ResetPWScreenState extends State<ResetPWScreen> {
           onTap: () async {
             if (_formKey.currentState != null && _formKey.currentState!.validate()) {
               print(pw);
-              await _userController.changePassword(pw);
-              showConfirmDialog(context);
+              FirebaseAuthException? exception = await _userController.changePassword(pw);
+              showConfirmDialog(context, exception);
             }
           },
           child: SizedBox(
@@ -238,7 +239,7 @@ class _ResetPWScreenState extends State<ResetPWScreen> {
     );
   }
 
-  showConfirmDialog(context) {
+  showConfirmDialog(context, FirebaseAuthException? exception) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     showDialog(
@@ -248,24 +249,46 @@ class _ResetPWScreenState extends State<ResetPWScreen> {
           Get.back();
           Get.back();
         });
-        return Dialog(
-          elevation: 0,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(24.0),
-          ),
-          child: Container(
-            width: 312.w,
-            height: 172.h,
-            child: Center(
-              child: Text(
-                "변경이 완료되었습니다.",
-                style: textTheme.headline3?.copyWith(
-                  color: colorScheme.secondary,
+        if (exception == null) {
+          return Dialog(
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24.0),
+            ),
+            child: Container(
+              width: 312.w,
+              height: 172.h,
+              child: Center(
+                child: Text(
+                  "변경이 완료되었습니다.",
+                  style: textTheme.headline3?.copyWith(
+                    color: colorScheme.secondary,
+                  ),
                 ),
               ),
             ),
-          ),
-        );
+          );
+        } else {
+          return Dialog(
+            elevation: 0,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(24.0),
+            ),
+            child: Container(
+              width: 312.w,
+              height: 172.h,
+              child: Center(
+                child: Text(
+                  "비밀번호 변경에 실패했습니다. 비밀번호를 다시\n확인해 주세요.",
+                  style: textTheme.headline3?.copyWith(
+                    color: colorScheme.secondary,
+                  ),
+                ),
+              ),
+            ),
+          );
+        }
+        
       },
     );
   }
