@@ -2,6 +2,7 @@ import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
+
 import 'package:itaxi/controller/signUpController.dart';
 import 'package:itaxi/settings/privacyPolicyScreen.dart';
 
@@ -16,6 +17,14 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
+  static const List<String> signUpStatusStringList = [
+    'loading',
+    'success',
+    'weak-password',
+    'email-already-in-use',
+    'unknown-error'
+  ];
+
   SignUpController _signUpController = Get.put(SignUpController());
 
   final _idController = TextEditingController();
@@ -70,11 +79,11 @@ class _SignUpScreenState extends State<SignUpScreen> {
         leading: Padding(
           padding: EdgeInsets.only(left: 15.w),
           child: IconButton(
-            onPressed: () {
-              Get.back();
-            },
-            icon: Image.asset("assets/arrow/arrow_back_1.png", color: colorScheme.tertiaryContainer, width: 11.62.w, height: 20.51.h)
-          ),
+              onPressed: () {
+                Get.back();
+              },
+              icon: Image.asset("assets/arrow/arrow_back_1.png",
+                  color: colorScheme.tertiaryContainer, width: 11.62.w, height: 20.51.h)),
         ),
       ),
       backgroundColor: colorScheme.primary,
@@ -140,18 +149,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         errorStyle: textTheme.bodyText2?.copyWith(
                           color: colorScheme.surfaceVariant,
                         ),
-                        errorBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: colorScheme.surfaceVariant,
-                                width: 1.0
-                            )
-                        ),
-                        focusedErrorBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: colorScheme.surfaceVariant,
-                                width: 1.0
-                            )
-                        ),
+                        errorBorder:
+                            UnderlineInputBorder(borderSide: BorderSide(color: colorScheme.surfaceVariant, width: 1.0)),
+                        focusedErrorBorder:
+                            UnderlineInputBorder(borderSide: BorderSide(color: colorScheme.surfaceVariant, width: 1.0)),
                       ),
                       onChanged: (value) {
                         _signUpController.customId = value;
@@ -196,23 +197,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         errorStyle: textTheme.bodyText2?.copyWith(
                           color: colorScheme.surfaceVariant,
                         ),
-                        errorBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: colorScheme.surfaceVariant,
-                                width: 1.0
-                            )
-                        ),
-                        focusedErrorBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: colorScheme.surfaceVariant,
-                                width: 1.0
-                            )
-                        ),
+                        errorBorder:
+                            UnderlineInputBorder(borderSide: BorderSide(color: colorScheme.surfaceVariant, width: 1.0)),
+                        focusedErrorBorder:
+                            UnderlineInputBorder(borderSide: BorderSide(color: colorScheme.surfaceVariant, width: 1.0)),
                         suffixIcon: IconButton(
                           icon: Icon(
-                            _isObscure1
-                                ? Icons.visibility_off
-                                : Icons.visibility,
+                            _isObscure1 ? Icons.visibility_off : Icons.visibility,
                             size: 20.h,
                             color: colorScheme.tertiary,
                           ),
@@ -231,8 +222,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       validator: (value) {
                         if (value!.isEmpty) return '비밀번호를 입력해주세요';
                         regExp = RegExp(pattern.toString());
-                        if (!regExp.hasMatch(value))
-                          return '문자와 숫자, 특수문자를 결합해 6자리 이상 사용해주세요';
+                        if (!regExp.hasMatch(value)) return '문자와 숫자, 특수문자를 결합해 6자리 이상 사용해주세요';
                         return null;
                       },
                     ),
@@ -268,23 +258,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                             width: 1.0,
                           ),
                         ),
-                        errorBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: colorScheme.surfaceVariant,
-                                width: 1.0
-                            )
-                        ),
-                        focusedErrorBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: colorScheme.surfaceVariant,
-                                width: 1.0
-                            )
-                        ),
+                        errorBorder:
+                            UnderlineInputBorder(borderSide: BorderSide(color: colorScheme.surfaceVariant, width: 1.0)),
+                        focusedErrorBorder:
+                            UnderlineInputBorder(borderSide: BorderSide(color: colorScheme.surfaceVariant, width: 1.0)),
                         suffixIcon: IconButton(
                           icon: Icon(
-                            _isObscure2
-                                ? Icons.visibility_off
-                                : Icons.visibility,
+                            _isObscure2 ? Icons.visibility_off : Icons.visibility,
                             size: 20.h,
                             color: colorScheme.tertiary,
                           ),
@@ -298,7 +278,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         ),
                       ),
                       validator: (value) {
-                         if (value!.isEmpty) {
+                        if (value!.isEmpty) {
                           return '비밀번호를 한 번 더 입력해주세요';
                         } else if (_signUpController.customPw != value) {
                           return '비밀번호와 같지 않습니다';
@@ -338,18 +318,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         errorStyle: textTheme.bodyText2?.copyWith(
                           color: colorScheme.surfaceVariant,
                         ),
-                        errorBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: colorScheme.surfaceVariant,
-                                width: 1.0
-                            )
-                        ),
-                        focusedErrorBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: colorScheme.surfaceVariant,
-                                width: 1.0
-                            )
-                        ),
+                        errorBorder:
+                            UnderlineInputBorder(borderSide: BorderSide(color: colorScheme.surfaceVariant, width: 1.0)),
+                        focusedErrorBorder:
+                            UnderlineInputBorder(borderSide: BorderSide(color: colorScheme.surfaceVariant, width: 1.0)),
                       ),
                       onChanged: (value) {
                         _signUpController.name = value;
@@ -392,18 +364,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         errorStyle: textTheme.bodyText2?.copyWith(
                           color: colorScheme.surfaceVariant,
                         ),
-                        errorBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: colorScheme.surfaceVariant,
-                                width: 1.0
-                            )
-                        ),
-                        focusedErrorBorder: UnderlineInputBorder(
-                            borderSide: BorderSide(
-                                color: colorScheme.surfaceVariant,
-                                width: 1.0
-                            )
-                        ),
+                        errorBorder:
+                            UnderlineInputBorder(borderSide: BorderSide(color: colorScheme.surfaceVariant, width: 1.0)),
+                        focusedErrorBorder:
+                            UnderlineInputBorder(borderSide: BorderSide(color: colorScheme.surfaceVariant, width: 1.0)),
                       ),
                       onChanged: (value) {
                         _signUpController.phone = value;
@@ -411,8 +375,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       validator: (value) {
                         if (value!.isEmpty)
                           return '전화번호를 입력해주세요';
-                        else if (!_isValidPhone(value))
-                          return '전화번호 형식에 맞게 입력해주세요';
+                        else if (!_isValidPhone(value)) return '전화번호 형식에 맞게 입력해주세요';
                         return null;
                       },
                     ),
@@ -532,9 +495,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
             ? colorScheme.secondary
             : colorScheme.onSurfaceVariant,
         child: InkWell(
-          onTap: () {
+          onTap: () async {
             if (agree1 && agree2 && _formKey.currentState!.validate()) {
-              signUpDialog(context, '메일 인증');
+              _signUpController.signUp();
+              signUpDialog(context);
             }
           },
           child: SizedBox(
@@ -546,8 +510,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 padding: EdgeInsets.only(top: 18.h),
                 child: Text(
                   "가입 완료",
-                  style:
-                      textTheme.bodyText1!.copyWith(color: colorScheme.onTertiaryContainer, fontSize: 17),
+                  style: textTheme.bodyText1!.copyWith(color: colorScheme.onTertiaryContainer, fontSize: 17),
                 ),
               ),
             ),
@@ -557,7 +520,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
     );
   }
 
-  void signUpDialog(BuildContext context, String? title) {
+  void signUpDialog(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
 
@@ -569,72 +532,120 @@ class _SignUpScreenState extends State<SignUpScreen> {
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(7.0),
             ),
-            child: Container(
-              width: 312.w,
-              height: 273.h,
-              alignment: Alignment.center,
-              padding: EdgeInsets.fromLTRB(
-                36.0.w,
-                24.0.h,
-                36.0.w,
-                24.0.h,
-              ),
-              child: Column(
-                children: <Widget>[
-                  Text(
-                    title as String,
-                    style: textTheme.subtitle1?.copyWith(
-                      color: colorScheme.secondary,
+            child: GetBuilder<SignUpController>(builder: (_) {
+              if (_signUpController.getSignUpStatusString() == signUpStatusStringList[0]) {
+                return Container(
+                  width: 312.w,
+                  height: 273.h,
+                  alignment: Alignment.center,
+                  padding: EdgeInsets.fromLTRB(
+                    36.0.w,
+                    24.0.h,
+                    36.0.w,
+                    24.0.h,
+                  ),
+                  child: CircularProgressIndicator(color: colorScheme.onPrimaryContainer,),
+                );
+              } else if (_signUpController.getSignUpStatusString() == signUpStatusStringList[1]) {
+                return dialogContainer(
+                    '메일 인증',
+                    RichText(
+                        text: TextSpan(
+                      text: '입력한 이메일 주소로 이메일 인증\n링크를 보내드렸습니다.\n\n메일이 보이지 않는다면, ',
+                      style: textTheme.bodyText1?.copyWith(color: colorScheme.onTertiary),
+                      children: <TextSpan>[
+                        TextSpan(
+                          text: '스팸함',
+                          style: textTheme.bodyText1?.copyWith(color: colorScheme.secondary),
+                        ),
+                        TextSpan(
+                          text: '을 확인해주세요.',
+                          style: textTheme.bodyText1?.copyWith(color: colorScheme.onPrimary),
+                        )
+                      ],
+                    )),
+                    textTheme,
+                    colorScheme);
+              } else if (_signUpController.getSignUpStatusString() == signUpStatusStringList[2]) {
+                return dialogContainer(
+                    '오류',
+                    Text(
+                      '비밀번호 양식에 오류가 발생했습니다. 비밀번호를 다시 설정해주세요.',
+                      style: textTheme.bodyText1?.copyWith(color: colorScheme.onTertiary),
                     ),
-                  ),
-                  SizedBox(
-                    height: 32.h,
-                  ),
-                  RichText(
-                      text: TextSpan(
-                    text:
-                        '입력한 이메일 주소로 비밀번호 재설정\n링크를 보내드렸습니다.\n\n메일이 보이지 않는다면, ',
-                    style: textTheme.bodyText1
-                        ?.copyWith(color: colorScheme.onTertiary),
-                    children: <TextSpan>[
-                      TextSpan(
-                        text: '스팸함',
-                        style: textTheme.bodyText1
-                            ?.copyWith(color: colorScheme.secondary),
-                      ),
-                      TextSpan(
-                        text: '을 확인해주세요.',
-                        style: textTheme.bodyText1
-                            ?.copyWith(color: colorScheme.onPrimary),
-                      )
-                    ],
-                  )),
-                  // Text(
-                  //   '회원가입 시 입력하신 handong.ac.kr 계정으로 인증메일이 보내집니다.\n메일이 오지 않은 경우,',
-                  //   style: textTheme.subtitle1?.copyWith(
-                  //     color: colorScheme.onPrimary,
-                  //   ),
-                  // ),
-                  const Spacer(),
-                  SizedBox(
-                    height: 10.h,
-                  ),
-                  TextButton(
-                    onPressed: () async {
-                      _signUpController.signUp();
-                      Get.back();
-                      Get.back();
-                    },
-                    child: Text(
-                      "확인",
-                      style: textTheme.subtitle2
-                          ?.copyWith(color: colorScheme.tertiaryContainer),
+                    textTheme,
+                    colorScheme);
+              } else if (_signUpController.getSignUpStatusString() == signUpStatusStringList[3]) {
+                return dialogContainer(
+                    '오류',
+                    Text(
+                      '중복된 이메일입니다. 다른 이메일로 다시 가입해 주세요.',
+                      style: textTheme.bodyText1?.copyWith(color: colorScheme.onTertiary),
                     ),
-                  ),
-                ],
-              ),
-            ),
+                    textTheme,
+                    colorScheme);
+              }
+              else {
+                return dialogContainer(
+                    '오류',
+                    Text(
+                      '알 수 없는 오류가 발생했습니다. 잠시 후 다시 회원가입을 시도해 주세요.',
+                      style: textTheme.bodyText1?.copyWith(color: colorScheme.onTertiary),
+                    ),
+                    textTheme,
+                    colorScheme);
+              }
+            }),
           );
         });
+  }
+
+  Container dialogContainer(String? title, Widget content, TextTheme textTheme, ColorScheme colorScheme) {
+    return Container(
+      width: 312.w,
+      height: 273.h,
+      alignment: Alignment.center,
+      padding: EdgeInsets.fromLTRB(
+        36.0.w,
+        24.0.h,
+        36.0.w,
+        24.0.h,
+      ),
+      child: Column(
+        children: <Widget>[
+          Text(
+            title as String,
+            style: textTheme.subtitle1?.copyWith(
+              color: colorScheme.secondary,
+            ),
+          ),
+          SizedBox(
+            height: 32.h,
+          ),
+          content,
+          // Text(
+          //   '회원가입 시 입력하신 handong.ac.kr 계정으로 인증메일이 보내집니다.\n메일이 오지 않은 경우,',
+          //   style: textTheme.subtitle1?.copyWith(
+          //     color: colorScheme.onPrimary,
+          //   ),
+          // ),
+          const Spacer(),
+          SizedBox(
+            height: 10.h,
+          ),
+          TextButton(
+            onPressed: () {
+              Get.back();
+              if (_signUpController.getSignUpStatusString() == 'success') Get.back();
+              _signUpController.setSignUpStatus(0);
+            },
+            child: Text(
+              "확인",
+              style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
+            ),
+          ),
+        ],
+      ),
+    );
   }
 }
