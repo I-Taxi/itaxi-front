@@ -82,9 +82,24 @@ class KtxPlaceController extends GetxController {
   }
 
   void swapDepAndDst() {
-    KtxPlace? temp = dep;
-    dep = dst;
-    dst = temp;
+
+    if(hasDep && !hasDst){
+      KtxPlace? temp = dep;
+      dst = temp;
+      hasDep = false;
+      hasDst = true;
+    }
+    else if(!hasDep && hasDst){
+      KtxPlace? temp = dst;
+      dep = temp;
+      hasDep = true;
+      hasDst = false;
+    }
+    else{
+      KtxPlace? temp = dep;
+      dep = dst;
+      dst = temp;
+    }
     update();
   }
 }
