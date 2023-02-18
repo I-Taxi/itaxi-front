@@ -17,7 +17,6 @@ class ResetPWScreen extends StatefulWidget {
 class _ResetPWScreenState extends State<ResetPWScreen> {
   UserController _userController = Get.put(UserController());
 
-
   final _pwController = TextEditingController();
 
   Pattern pattern = r'^(?=.*[a-zA-Z0-9]{6,})';
@@ -41,24 +40,23 @@ class _ResetPWScreenState extends State<ResetPWScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final textTheme = Theme
-        .of(context)
-        .textTheme;
-    final colorScheme = Theme
-        .of(context)
-        .colorScheme;
-
+    final textTheme = Theme.of(context).textTheme;
+    final colorScheme = Theme.of(context).colorScheme;
 
     return Scaffold(
       appBar: AppBar(
         shadowColor: colorScheme.shadow,
         elevation: 0.0,
         leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: Image.asset("assets/arrow/arrow_back_1.png", color: colorScheme.tertiaryContainer, width: 11.62.w, height: 20.51.h,)
-        ),
+            onPressed: () {
+              Get.back();
+            },
+            icon: Image.asset(
+              "assets/arrow/arrow_back_1.png",
+              color: colorScheme.tertiaryContainer,
+              width: 11.62.w,
+              height: 20.51.h,
+            )),
       ),
       backgroundColor: colorScheme.background,
       body: ColorfulSafeArea(
@@ -78,9 +76,12 @@ class _ResetPWScreenState extends State<ResetPWScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('비밀번호 변경', style: textTheme.headline2?.copyWith(
+                  Text(
+                    '비밀번호 변경',
+                    style: textTheme.headline2?.copyWith(
                       color: colorScheme.onTertiary,
-                  ),),
+                    ),
+                  ),
                   SizedBox(
                     height: 52.0.h,
                   ),
@@ -111,29 +112,19 @@ class _ResetPWScreenState extends State<ResetPWScreen> {
                       errorStyle: textTheme.bodyText2?.copyWith(
                         color: colorScheme.surfaceVariant,
                       ),
-                      errorBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                              color: colorScheme.surfaceVariant,
-                              width: 1.0
-                          )
-                      ),
-                      focusedErrorBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                              color: colorScheme.surfaceVariant,
-                              width: 1.0
-                          )
-                      ),
+                      errorBorder:
+                          UnderlineInputBorder(borderSide: BorderSide(color: colorScheme.surfaceVariant, width: 1.0)),
+                      focusedErrorBorder:
+                          UnderlineInputBorder(borderSide: BorderSide(color: colorScheme.surfaceVariant, width: 1.0)),
                       suffixIcon: IconButton(
                         icon: Icon(
-                          _isObscure1
-                              ? Icons.visibility_off
-                              : Icons.visibility,
+                          _isObscure1 ? Icons.visibility_off : Icons.visibility,
                           size: 20.h,
                           color: colorScheme.tertiary,
                         ),
                         onPressed: () {
                           setState(
-                                () {
+                            () {
                               _isObscure1 = !_isObscure1;
                             },
                           );
@@ -146,8 +137,7 @@ class _ResetPWScreenState extends State<ResetPWScreen> {
                     validator: (value) {
                       if (value!.isEmpty || value == null) return '비밀번호를 입력해주세요';
                       regExp = RegExp(pattern.toString());
-                      if (!regExp.hasMatch(value))
-                        return '문자와 숫자 6자리 이상 사용해주세요';
+                      if (!regExp.hasMatch(value)) return '문자와 숫자 6자리 이상 사용해주세요';
                       return null;
                     },
                   ),
@@ -180,29 +170,19 @@ class _ResetPWScreenState extends State<ResetPWScreen> {
                       errorStyle: textTheme.bodyText2?.copyWith(
                         color: colorScheme.surfaceVariant,
                       ),
-                      errorBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                              color: colorScheme.surfaceVariant,
-                              width: 1.0
-                          )
-                      ),
-                      focusedErrorBorder: UnderlineInputBorder(
-                          borderSide: BorderSide(
-                              color: colorScheme.surfaceVariant,
-                              width: 1.0
-                          )
-                      ),
+                      errorBorder:
+                          UnderlineInputBorder(borderSide: BorderSide(color: colorScheme.surfaceVariant, width: 1.0)),
+                      focusedErrorBorder:
+                          UnderlineInputBorder(borderSide: BorderSide(color: colorScheme.surfaceVariant, width: 1.0)),
                       suffixIcon: IconButton(
                         icon: Icon(
-                          _isObscure2
-                              ? Icons.visibility_off
-                              : Icons.visibility,
+                          _isObscure2 ? Icons.visibility_off : Icons.visibility,
                           size: 20.h,
                           color: colorScheme.tertiary,
                         ),
                         onPressed: () {
                           setState(
-                                () {
+                            () {
                               _isObscure2 = !_isObscure2;
                             },
                           );
@@ -225,9 +205,11 @@ class _ResetPWScreenState extends State<ResetPWScreen> {
         ),
       ),
       bottomNavigationBar: Material(
-        color: _formKey.currentState != null && _formKey.currentState!.validate() ? colorScheme.secondary : colorScheme.onSurfaceVariant,
+        color: _formKey.currentState != null && _formKey.currentState!.validate()
+            ? colorScheme.secondary
+            : colorScheme.onSurfaceVariant,
         child: InkWell(
-          onTap: () async{
+          onTap: () async {
             if (_formKey.currentState != null && _formKey.currentState!.validate()) {
               print(pw);
               await _userController.changePassword(pw);
@@ -256,18 +238,15 @@ class _ResetPWScreenState extends State<ResetPWScreen> {
     );
   }
 
-  showConfirmDialog(context)  {
-    final colorScheme = Theme
-        .of(context)
-        .colorScheme;
-    final textTheme = Theme
-        .of(context)
-        .textTheme;
+  showConfirmDialog(context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textTheme = Theme.of(context).textTheme;
     showDialog(
       context: context,
-      builder: (BuildContext context)  {
-        Future.delayed(Duration(seconds: 2), (){
-          Navigator.of(context).pop(true);
+      builder: (BuildContext context) {
+        Future.delayed(Duration(seconds: 1, milliseconds: 500), () {
+          Get.back();
+          Get.back();
         });
         return Dialog(
           elevation: 0,
