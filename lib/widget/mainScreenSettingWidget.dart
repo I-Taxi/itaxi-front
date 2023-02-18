@@ -116,7 +116,7 @@ Padding lookupSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
               _placeController.swapDepAndDst();
             },
             icon: Image.asset('assets/change.png'),
-            iconSize: 35,
+            iconSize: 36.sp,
             color: colorScheme.tertiary,
           ),
         ],
@@ -219,7 +219,7 @@ Padding gatherSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
                   _placeController.swapDepAndDst();
                 },
                 icon: Image.asset('assets/change.png'),
-                iconSize: 36,
+                iconSize: 36.sp,
                 color: colorScheme.tertiary,
               ),
               IconButton(
@@ -352,7 +352,7 @@ Padding gatherSetDepDstStopOverWidget(ColorScheme colorScheme, TextTheme textThe
                   _placeController.swapDepAndDst();
                 },
                 icon: Image.asset('assets/change.png'),
-                iconSize: 36,
+                iconSize: 36.sp,
                 color: colorScheme.tertiary,
               ),
               IconButton(
