@@ -99,9 +99,25 @@ class PlaceController extends GetxController {
   }
 
   void swapDepAndDst() {
-    Place? temp = dep;
-    dep = dst;
-    dst = temp;
+
+    if(hasDep && !hasDst){
+      Place? temp = dep;
+      dst = temp;
+      hasDep = false;
+      hasDst = true;
+    }
+    else if(!hasDep && hasDst){
+      Place? temp = dst;
+      dep = temp;
+      hasDep = true;
+      hasDst = false;
+    }
+    else{
+      Place? temp = dep;
+      dep = dst;
+      dst = temp;
+    }
+
     update();
   }
 

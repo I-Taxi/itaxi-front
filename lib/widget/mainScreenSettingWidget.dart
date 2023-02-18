@@ -118,7 +118,7 @@ Padding lookupSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
               _placeController.swapDepAndDst();
             },
             icon: Image.asset('assets/change.png'),
-            iconSize: 35,
+            iconSize: 36.sp,
             color: colorScheme.tertiary,
           ),
         ],
@@ -223,7 +223,7 @@ Padding gatherSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
                   _placeController.swapDepAndDst();
                 },
                 icon: Image.asset('assets/change.png'),
-                iconSize: 36,
+                iconSize: 36.sp,
                 color: colorScheme.tertiary,
               ),
               IconButton(
@@ -365,7 +365,7 @@ Padding gatherSetDepDstStopOverWidget(ColorScheme colorScheme, TextTheme textThe
                   _placeController.swapDepAndDst();
                 },
                 icon: Image.asset('assets/change.png'),
-                iconSize: 36,
+                iconSize: 36.sp,
                 color: colorScheme.tertiary,
               ),
               IconButton(
@@ -731,14 +731,21 @@ Padding lookupSetCapacityWidget(ColorScheme colorScheme, ScreenController contro
   );
 }
 
-ElevatedButton lookupButton(TextTheme textTheme, ColorScheme colorScheme) {
+ElevatedButton lookupButton(TextTheme textTheme, ColorScheme colorScheme, BuildContext context) {
   return ElevatedButton(
       style: ElevatedButton.styleFrom(
           backgroundColor: colorScheme.onPrimaryContainer,
           minimumSize: Size(342.w, 57.h),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))),
       onPressed: () {
-        if (_placeController.hasDep && _placeController.hasDst) {
+        if(_placeController.dep == null){
+          snackBar(context: context, title: '출발지를 선택해주세요.');
+        }
+        else if(_placeController.dst == null){
+          snackBar(context: context, title: '도착지를 선택해주세요.');
+        }
+        else{
+
           _screenController.setCheckScreen(true);
         }
       },

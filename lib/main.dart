@@ -172,6 +172,10 @@ class _MyAppState extends State<MyApp> {
       designSize: const Size(390, 844),
       builder: (context, child) {
         return GetMaterialApp(
+          // useInheritedMediaQuery: true,
+          // locale: DevicePreview.locale(context),
+          // builder: DevicePreview.appBuilder,
+
           title: 'iTaxi',
           //datepicker 언어 설정 한국어
           localizationsDelegates: const [GlobalMaterialLocalizations.delegate, GlobalWidgetsLocalizations.delegate],

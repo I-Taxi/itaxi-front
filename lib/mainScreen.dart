@@ -255,7 +255,7 @@ class _MainScreenState extends State<MainScreen> {
                       ),
                       if (controller.mainScreenLoaded)
                         controller.mainScreenCurrentToggle == 0
-                            ? lookupButton(textTheme, colorScheme)
+                            ? lookupButton(textTheme, colorScheme, context)
                             : gatherButton(textTheme, colorScheme, controller, context),
                     ],
                   );
