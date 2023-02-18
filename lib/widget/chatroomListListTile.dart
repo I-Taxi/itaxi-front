@@ -75,7 +75,7 @@ Widget chatroomListListTile(
                         children: [
                           Flexible(
                             child: Text(
-                              "${abbreviatePlaceName(history.departure!.name)}-${abbreviatePlaceName(history.destination!.name)}(${DateFormat('Md').format(DateTime.parse(time))})",
+                              "${abbreviatePlaceName(history.departure!.name)}-${abbreviatePlaceName(history.destination!.name)}(${DateFormat('MMd').format(DateTime.parse(time))})",
                               style: textTheme.subtitle2?.copyWith(
                                 color: colorScheme.onTertiary,
                               ),
@@ -94,8 +94,6 @@ Widget chatroomListListTile(
                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
-                          // for (int i = 0; i < post.joiners!.length; i++)
-                          //   if (post.joiners![i].owner!)
                           Text(
                             "방장: ${history.ownerName}",
                             style: textTheme.bodyText2?.copyWith(
