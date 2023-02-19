@@ -119,7 +119,6 @@ class PlaceController extends GetxController {
       dep = dst;
       dst = temp;
     }
-
     update();
   }
 
