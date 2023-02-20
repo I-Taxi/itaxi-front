@@ -64,8 +64,7 @@ class PlaceController extends GetxController {
     _postController.getPosts(
       depId: dep?.id,
       dstId: dst?.id,
-      time: _dateController
-          .formattingDateTime(_dateController.mergeDateAndTime()),
+      time: _dateController.formattingDateTime(_dateController.mergeDateAndTime()),
       postType: _screenController.mainScreenCurrentTabIndex,
     );
   }
@@ -77,13 +76,13 @@ class PlaceController extends GetxController {
     _postController.getPosts(
       depId: dep?.id,
       dstId: dst?.id,
-      time: _dateController
-          .formattingDateTime(_dateController.mergeDateAndTime()),
+      time: _dateController.formattingDateTime(_dateController.mergeDateAndTime()),
       postType: _screenController.mainScreenCurrentTabIndex,
     );
   }
 
   void addStopOver({required Place place}) {
+    stopOver.clear();
     stopOver.add(place);
     update();
   }
@@ -99,22 +98,19 @@ class PlaceController extends GetxController {
   }
 
   void swapDepAndDst() {
-
-    if(hasDep && !hasDst){
+    if (hasDep && !hasDst) {
       Place? temp = dep;
       dst = temp;
       hasDep = false;
       hasDst = true;
       dep = null;
-    }
-    else if(!hasDep && hasDst){
+    } else if (!hasDep && hasDst) {
       Place? temp = dst;
       dep = temp;
       hasDep = true;
       hasDst = false;
       dst = null;
-    }
-    else{
+    } else {
       Place? temp = dep;
       dep = dst;
       dst = temp;
@@ -130,9 +126,7 @@ class PlaceController extends GetxController {
   String printStopOvers() {
     String query = '';
     if (stopOver.isNotEmpty) {
-      stopOver.length == 1
-          ? query = stopOver[0]!.name!
-          : query = "${stopOver[0]!.name!} 외 ${stopOver.length - 1}";
+      stopOver.length == 1 ? query = stopOver[0]!.name! : query = "${stopOver[0]!.name!} 외 ${stopOver.length - 1}";
     }
     return query;
   }
