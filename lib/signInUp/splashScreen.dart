@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -32,10 +33,12 @@ class _SplashScreenState extends State<SplashScreen> {
 
   Future<bool> setUpdateAlert() async {
     PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    debugPrint("packageInfo.packageName");
+    debugPrint(packageInfo.packageName);
 
     final newVersion = NewVersion();
 
-    newVersion.showAlertIfNecessary(context: context);
+    // newVersion.showAlertIfNecessary(context: context);
 
     advancedStatusCheck(newVersion);
 
@@ -45,22 +48,24 @@ class _SplashScreenState extends State<SplashScreen> {
   advancedStatusCheck(NewVersion newVersion) async {
     final status = await newVersion.getVersionStatus();
     if (status != null) {
-      debugPrint(status.releaseNotes);
-      debugPrint(status.appStoreLink);
-      debugPrint(status.localVersion);
-      debugPrint(status.storeVersion);
-      debugPrint(status.canUpdate.toString());
-      newVersion.showUpdateDialog(
-        context: context,
-        versionStatus: status,
-        dialogTitle: '업데이트 알람',
-        dialogText: '\n새로운 버전이 나왔습니다!\n바로 다운받아보시겠어요?\n',
-        updateButtonText: '업데이트',
-        dismissButtonText: '나중에',
-        dismissAction: () {
-          Get.back();
-        },
-      );
+      if (mounted) {
+        debugPrint(status.releaseNotes);
+        debugPrint(status.appStoreLink);
+        debugPrint(status.localVersion);
+        debugPrint(status.storeVersion);
+        debugPrint(status.canUpdate.toString());
+        newVersion.showUpdateDialog(
+          context: context,
+          versionStatus: status,
+          dialogTitle: '업데이트 알람',
+          dialogText: '\n새로운 버전이 나왔습니다!\n바로 다운받아보시겠어요?\n',
+          updateButtonText: '업데이트',
+          dismissButtonText: '나중에',
+          dismissAction: () {
+            Get.back();
+          },
+        );
+      }
     }
   }
 

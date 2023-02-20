@@ -61,9 +61,7 @@ void main() async {
 
   flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
-  await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
-      ?.createNotificationChannel(channel);
+  await flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()?.createNotificationChannel(channel);
 
   const AndroidInitializationSettings initSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
   const DarwinInitializationSettings initSettingsIOS = DarwinInitializationSettings(
@@ -85,6 +83,8 @@ void main() async {
     badge: true,
     sound: true,
   );
+
+  final navigatorKey = GlobalKey<NavigatorState>();
 
   runApp(const MyApp());
   // runApp(
@@ -180,13 +180,8 @@ class _MyAppState extends State<MyApp> {
 
           title: 'iTaxi',
           //datepicker 언어 설정 한국어
-          localizationsDelegates: const [
-            GlobalMaterialLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate
-          ],
-          supportedLocales:  [
-            const Locale('ko', 'KR')
-          ],
+          localizationsDelegates: const [GlobalMaterialLocalizations.delegate, GlobalCupertinoLocalizations.delegate, GlobalWidgetsLocalizations.delegate],
+          supportedLocales: [const Locale('ko', 'KR')],
           theme: ITaxiTheme.lightThemeData,
           debugShowCheckedModeBanner: false,
           home: GetBuilder<SignInController>(
@@ -214,7 +209,6 @@ class _MyAppState extends State<MyApp> {
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
-    return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+    return super.createHttpClient(context)..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
   }
 }
