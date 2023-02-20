@@ -168,6 +168,7 @@ flutter:
     - assets/type/taxi_text.png
     - assets/type/train_1.png
     - assets/type/train_2.png
+    - assets/type/train_text.png
 
     # for screen
     - assets/mainScreen.png
@@ -215,6 +216,7 @@ flutter:
     - assets/icon/add.png
     - assets/icon/icon-Exit.png
     - assets/icon/location_check.png
+    - assets/icon/discount_check.png
 
     # background
     - assets/background/timeline_default_bg.png
