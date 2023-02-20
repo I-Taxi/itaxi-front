@@ -17,6 +17,8 @@ import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/placeSearch/searchScreen.dart';
 import 'package:itaxi/placeSearch/placeSearchController.dart';
 import 'package:itaxi/widget/setTimeDateFormater.dart';
+import 'package:itaxi/controller/historyController.dart';
+import 'package:itaxi/model/history.dart';
 
 PlaceSearchController _placeSearchController = Get.find();
 PlaceController _placeController = Get.find();
@@ -26,6 +28,7 @@ UserController _userController = Get.find();
 AddPostController _addPostController = Get.find();
 ScreenController _screenController = Get.find();
 NavigationController _navigationController = Get.find();
+HistoryController _historyController = Get.put(HistoryController());
 
 Padding lookupSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, ScreenController controller) {
   return Padding(
@@ -760,62 +763,191 @@ ElevatedButton lookupButton(TextTheme textTheme, ColorScheme colorScheme, BuildC
 GetBuilder gatherButton(
     TextTheme textTheme, ColorScheme colorScheme, ScreenController controller, BuildContext context) {
   return GetBuilder<AddPostController>(builder: (_) {
-    return ElevatedButton(
-        style: ElevatedButton.styleFrom(
-            backgroundColor: _addPostController.loaded ? colorScheme.onPrimaryContainer : colorScheme.tertiaryContainer,
-            minimumSize: Size(342.w, 57.h),
-            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))),
-        onPressed: () async {
-          _addPostController.capacity = controller.capacity;
-          if (_addPostController.loaded) {
-            if (_placeController.dep == null) {
-              snackBar(context: context, title: '출발지를 선택해주세요.');
-            } else if (_placeController.dep!.id == -1) {
-              snackBar(context: context, title: '출발지를 다시 선택해주세요.');
-            } else if (_placeController.dst == null) {
-              snackBar(context: context, title: '도착지를 선택해주세요.');
-            } else if (_placeController.dst!.id == -1) {
-              snackBar(context: context, title: '도착지를 다시 선택해주세요.');
-            } else if (DateTime.now().difference(_dateController.mergeDateAndTime()).isNegative == false) {
-              snackBar(context: context, title: '출발시간을 다시 선택해주세요.');
-            } else if (_addPostController.capacity == 0) {
-              snackBar(context: context, title: '최대인원을 선택해주세요.');
-            } else {
-              Post post = Post(
-                uid: _userController.uid,
-                postType: controller.mainScreenCurrentTabIndex,
-                departure: _placeController.dep,
-                destination: _placeController.dst,
-                deptTime: _dateController.formattingDateTime(
-                  _dateController.mergeDateAndTime(),
-                ),
-                capacity: _addPostController.capacity,
-                stopovers: _placeController.stopOver,
-              );
+    return FutureBuilder<List<History>>(
+      future: _historyController.historys,
+      builder: (BuildContext context, snapshot) {
+        return ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                backgroundColor: _addPostController.loaded ? colorScheme.onPrimaryContainer : colorScheme.tertiaryContainer,
+                minimumSize: Size(342.w, 57.h),
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))),
+            onPressed: () async {
 
-              http.Response response = await _addPostController.fetchAddPost(post: post);
-              if (response.statusCode == 200) {
-                await _postController.getPosts(
-                  depId: _placeController.dep?.id,
-                  dstId: _placeController.dst?.id,
-                  time: _dateController.formattingDateTime(
-                    _dateController.mergeDateAndTime(),
-                  ),
-                  postType: controller.mainScreenCurrentTabIndex,
-                );
-                _navigationController.changeIndex(3);
-              } else {
-                _addPostController.completeLoad();
-                // if (context.mounted) snackBar(context: context, title: '알 수 없는 에러로 방 만들기에 실패했습니다.');
+              _addPostController.capacity = controller.capacity;
+              if (_addPostController.loaded) {
+                if (_placeController.dep == null) {
+                  snackBar(context: context, title: '출발지를 선택해주세요.');
+                } else if (_placeController.dep!.id == -1) {
+                  snackBar(context: context, title: '출발지를 다시 선택해주세요.');
+                } else if (_placeController.dst == null) {
+                  snackBar(context: context, title: '도착지를 선택해주세요.');
+                } else if (_placeController.dst!.id == -1) {
+                  snackBar(context: context, title: '도착지를 다시 선택해주세요.');
+                } else if (DateTime.now().difference(_dateController.mergeDateAndTime()).isNegative == false) {
+                  snackBar(context: context, title: '출발시간을 다시 선택해주세요.');
+                } else if (_addPostController.capacity == 0) {
+                  snackBar(context: context, title: '최대인원을 선택해주세요.');
+                } else {
+
+                  for (int i = snapshot.data!.length - 1; i >= 0; i--){
+                    if (DateTime.tryParse(
+                        snapshot.data![i].deptTime!)!
+                        .isAfter(DateTime.now())){
+                      if(snapshot.data![i].deptTime! == _dateController.formattingDateTime(_dateController.mergeDateAndTime(),) &&
+                          snapshot.data![i].departure!.name == _placeController.dep!.name && snapshot.data![i].destination!.name == _placeController.dst!.name){
+                        return showDialog(context: context, builder: (BuildContext context) {
+                          return Dialog(
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(24.0.r),
+                            ),
+                            child: Container(
+                              width: 312.w,
+                              height: 253.h,
+                              padding: EdgeInsets.fromLTRB(
+                                36.0.w,
+                                24.0.h,
+                                36.0.w,
+                                24.0.h,
+                              ),
+                              child: Column(
+                                children: <Widget>[
+                                  Text(
+                                    "중복 오류",
+                                    style: textTheme.subtitle1?.copyWith(
+                                        color: colorScheme.secondary,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 22.h,
+                                  ),
+                                  Container(
+                                    width: 240.w,
+                                    height: 99.h,
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        "이미 동일한 구성의 방이 존재합니다. 추가로 생성하겠습니까?",
+                                        style: textTheme.bodyText1?.copyWith(
+                                          color: colorScheme.onTertiary,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 22.h,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        width: 63.w,
+                                        height: 33.h,
+                                        child: TextButton(
+                                          onPressed: () async {
+                                            Get.back();
+                                          },
+                                          child: Text(
+                                            "취소",
+                                            style: textTheme.subtitle2
+                                                ?.copyWith(color: colorScheme.tertiaryContainer),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 78.w,
+                                      ),
+                                      Container(
+                                        width: 63.w,
+                                        height: 33.h,
+                                        child: TextButton(
+                                          onPressed: () async {
+                                            Get.back();
+                                            Post post = Post(
+                                              uid: _userController.uid,
+                                              postType: controller.mainScreenCurrentTabIndex,
+                                              departure: _placeController.dep,
+                                              destination: _placeController.dst,
+                                              deptTime: _dateController.formattingDateTime(
+                                                _dateController.mergeDateAndTime(),
+                                              ),
+                                              capacity: _addPostController.capacity,
+                                              stopovers: _placeController.stopOver,
+                                            );
+
+                                            http.Response response = await _addPostController.fetchAddPost(post: post);
+                                            if (response.statusCode == 200) {
+                                              await _postController.getPosts(
+                                                depId: _placeController.dep?.id,
+                                                dstId: _placeController.dst?.id,
+                                                time: _dateController.formattingDateTime(
+                                                  _dateController.mergeDateAndTime(),
+                                                ),
+                                                postType: controller.mainScreenCurrentTabIndex,
+                                              );
+                                              _navigationController.changeIndex(3);
+                                            } else {
+                                              _addPostController.completeLoad();
+                                              // if (context.mounted) snackBar(context: context, title: '알 수 없는 에러로 방 만들기에 실패했습니다.');
+                                            }
+                                          },
+                                          child: Text(
+                                            "생성",
+                                            style: textTheme.subtitle2
+                                                ?.copyWith(color: colorScheme.onSecondaryContainer),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        });
+                      }
+                      else if(i == 0){
+                        Post post = Post(
+                          uid: _userController.uid,
+                          postType: controller.mainScreenCurrentTabIndex,
+                          departure: _placeController.dep,
+                          destination: _placeController.dst,
+                          deptTime: _dateController.formattingDateTime(
+                            _dateController.mergeDateAndTime(),
+                          ),
+                          capacity: _addPostController.capacity,
+                          stopovers: _placeController.stopOver,
+                        );
+
+                        http.Response response = await _addPostController.fetchAddPost(post: post);
+                        if (response.statusCode == 200) {
+                          await _postController.getPosts(
+                            depId: _placeController.dep?.id,
+                            dstId: _placeController.dst?.id,
+                            time: _dateController.formattingDateTime(
+                              _dateController.mergeDateAndTime(),
+                            ),
+                            postType: controller.mainScreenCurrentTabIndex,
+                          );
+                          _navigationController.changeIndex(3);
+                        } else {
+                          _addPostController.completeLoad();
+                          // if (context.mounted) snackBar(context: context, title: '알 수 없는 에러로 방 만들기에 실패했습니다.');
+                        }
+                      }
+
+                    }
+                  }
+                }
               }
-            }
-          }
-        },
-        child: Text(
-          "방 만들기",
-          style: textTheme.subtitle2?.copyWith(
-            color: colorScheme.primary,
-          ),
-        ));
+            },
+            child: Text(
+              "방 만들기",
+              style: textTheme.subtitle2?.copyWith(
+                color: colorScheme.primary,
+              ),
+            ));
+      }
+    );
   });
 }
