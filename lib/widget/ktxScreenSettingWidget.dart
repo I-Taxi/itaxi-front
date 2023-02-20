@@ -227,7 +227,7 @@ Padding gatherSetDepDstWidget(
               _ktxPlaceController.swapDepAndDst();
             },
             icon: Image.asset('assets/change.png'),
-            iconSize: 35,
+            iconSize: 35.sp,
             color: colorScheme.tertiary,
           ),
         ],
