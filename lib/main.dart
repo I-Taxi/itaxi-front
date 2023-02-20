@@ -85,8 +85,6 @@ void main() async {
     sound: true,
   );
 
-  final navigatorKey = GlobalKey<NavigatorState>();
-
   runApp(const MyApp());
   // runApp(
   //   DevicePreview(
