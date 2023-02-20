@@ -14,6 +14,7 @@ import 'package:itaxi/controller/navigationController.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/model/history.dart';
 import 'package:itaxi/widget/chatroomListListTile.dart';
+import 'package:url_launcher/url_launcher.dart';
 
 class ChatroomListScreen extends StatefulWidget {
   const ChatroomListScreen({super.key});
@@ -34,6 +35,15 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
     final NavigationController _navController = Get.put(NavigationController());
     final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
         GlobalKey<RefreshIndicatorState>();
+
+    _launchURL() async {
+      const url = 'https://cra16.github.io/';
+      if (await canLaunch(url)) {
+        await launch(url);
+      } else {
+        throw 'Could not launch $url';
+      }
+    }
 
     return Scaffold(
       backgroundColor: colorScheme.background,
@@ -71,27 +81,23 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
                             width: 342.w,
                             height: 75.h,
                             decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
+                              borderRadius: BorderRadius.circular(8.0), boxShadow: [
+                            BoxShadow(
+                              color: colorScheme.shadow,
+                              blurRadius: 5,
                             ),
-                            child: Stack(
-                              children: [
-                                Image.asset(
-                                  'assets/banner.png',
-                                  width: 342.w,
-                                  height: 75.h,
-                                  fit: BoxFit.fill,
-                                ),
-                                Padding(
-                                  padding:
-                                      EdgeInsets.only(right: 7.w, bottom: 5.h),
-                                  child: Align(
-                                    alignment: Alignment.bottomRight,
-                                    child: Image.asset(
-                                        'assets/button/contact.png'),
-                                  ),
-                                )
-                              ],
-                            )),
+                          ]),
+                          child: GestureDetector(
+                            onTap: _launchURL,
+                            child: Image.asset(
+                              'assets/banner.png',
+                              width: 342.w,
+                              height: 75.h,
+                              fit: BoxFit.fill,
+                            ),
+                          ),
+                            
+                        ),
                         SizedBox(
                           height: 13.h,
                         ),
