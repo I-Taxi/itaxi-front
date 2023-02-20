@@ -18,7 +18,12 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final pageList = [const MainScreen(), const KtxScreen(), const ChatroomListScreen(), const TimelineScreen()];
+    final pageList = [
+      const MainScreen(),
+      const KtxScreen(),
+      const ChatroomListScreen(),
+      const TimelineScreen()
+    ];
 
     return GetBuilder<NavigationController>(
       builder: (_) {
@@ -27,8 +32,12 @@ class Home extends StatelessWidget {
           bottomNavigationBar: Container(
               width: 390.w,
               height: _navController.navHeight.h,
-              decoration: BoxDecoration(
-                  color: colorScheme.primary, boxShadow: [BoxShadow(color: Color.fromRGBO(0, 0, 0, 0.4), blurRadius: 3.r, offset: Offset(-1.w, 3.h))]),
+              decoration: BoxDecoration(color: colorScheme.primary, boxShadow: [
+                BoxShadow(
+                    color: Color.fromRGBO(0, 0, 0, 0.4),
+                    blurRadius: 3.r,
+                    offset: Offset(-1.w, 3.h))
+              ]),
               padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 8.h),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,

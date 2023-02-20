@@ -36,7 +36,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 SizedBox(
                   height: 15.h,
                 ),
-                Image(image: AssetImage("assets/onBoarding/indicator1.png"), height: 4.h,),
+                Image(
+                  image: AssetImage("assets/onBoarding/indicator1.png"),
+                  height: 4.h,
+                ),
                 SizedBox(
                   height: 101.h,
                 ),
@@ -47,10 +50,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     style: Platform.isIOS
                         ? ITaxiTheme.textThemeIOS.headline3!.copyWith(
                             color: ITaxiTheme.lightColorScheme.onPrimary,
-                          )
+                            height: 1.5.h)
                         : ITaxiTheme.textThemeDefault.headline3!.copyWith(
                             color: ITaxiTheme.lightColorScheme.onPrimary,
-                          ),
+                            height: 1.5.h),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -60,7 +63,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 Image(
                   image: AssetImage("assets/onBoarding/onBoardingScreen1.png"),
                   width: 296.61.w,
-                  height: 397.09.h,
+                  height: 376.09.h,
                 )
               ],
             ),
@@ -78,7 +81,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 SizedBox(
                   height: 15.h,
                 ),
-                Image(image: AssetImage("assets/onBoarding/indicator2.png"), height: 4.h,),
+                Image(
+                  image: AssetImage("assets/onBoarding/indicator2.png"),
+                  height: 4.h,
+                ),
                 SizedBox(
                   height: 101.h,
                 ),
@@ -89,10 +95,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     style: Platform.isIOS
                         ? ITaxiTheme.textThemeIOS.headline3!.copyWith(
                             color: ITaxiTheme.lightColorScheme.onPrimary,
-                          )
+                            height: 1.5.h)
                         : ITaxiTheme.textThemeDefault.headline3!.copyWith(
                             color: ITaxiTheme.lightColorScheme.onPrimary,
-                          ),
+                            height: 1.5.h),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -120,7 +126,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 SizedBox(
                   height: 15.h,
                 ),
-                Image(image: AssetImage("assets/onBoarding/indicator3.png"), height: 4.h,),
+                Image(
+                  image: AssetImage("assets/onBoarding/indicator3.png"),
+                  height: 4.h,
+                  width: 342.w,
+                ),
                 SizedBox(
                   height: 101.h,
                 ),
@@ -131,10 +141,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     style: Platform.isIOS
                         ? ITaxiTheme.textThemeIOS.headline3!.copyWith(
                             color: ITaxiTheme.lightColorScheme.onPrimary,
-                          )
+                            height: 1.5.h)
                         : ITaxiTheme.textThemeDefault.headline3!.copyWith(
                             color: ITaxiTheme.lightColorScheme.onPrimary,
-                          ),
+                            height: 1.5.h),
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -162,7 +172,10 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                 SizedBox(
                   height: 15.h,
                 ),
-                Image(image: AssetImage("assets/onBoarding/indicator4.png"), height: 4.h,),
+                Image(
+                  image: AssetImage("assets/onBoarding/indicator4.png"),
+                  height: 4.h,
+                ),
                 SizedBox(
                   height: 101.h,
                 ),
@@ -173,17 +186,17 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                     style: Platform.isIOS
                         ? ITaxiTheme.textThemeIOS.headline3!.copyWith(
                             color: ITaxiTheme.lightColorScheme.onPrimary,
-                          )
+                            height: 1.5.h)
                         : ITaxiTheme.textThemeDefault.headline3!.copyWith(
                             color: ITaxiTheme.lightColorScheme.onPrimary,
-                          ),
+                            height: 1.5.h),
                     textAlign: TextAlign.center,
                   ),
                 ),
                 Image(
                   image: AssetImage("assets/onBoarding/onBoardingScreen4.png"),
-                  width: 427.w,
-                  height: 422.h,
+                  width: 400.w,
+                  height: 382.h,
                 )
               ],
             ),
@@ -205,7 +218,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
       child: InkWell(
         onTap: () {
           if (setIndex != null && index != 3) {
-            index = index+1;
+            index = index + 1;
             setIndex(index);
           }
         },
@@ -268,12 +281,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             },
             child: Container(
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(33),
-                border: Border.all(
-                  width: 1,
-                  color: ITaxiTheme.lightColorScheme.secondary
-                )
-              ),
+                  borderRadius: BorderRadius.circular(33),
+                  border: Border.all(
+                      width: 1, color: ITaxiTheme.lightColorScheme.secondary)),
               width: 342.w,
               height: 64.h,
               child: Center(
@@ -315,7 +325,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           startPageIndex: 0,
           footerBuilder: (context, dragDistance, pagesLength, setIndex) {
             return Padding(
-              padding: index == pagesLength - 1 ? EdgeInsets.only(bottom: 17.h) : EdgeInsets.only(bottom: 65.h),
+              padding: index == pagesLength - 1
+                  ? EdgeInsets.only(bottom: 17.h)
+                  : EdgeInsets.only(bottom: 65.h),
               child: index == pagesLength - 1
                   ? _homeButton
                   : _nextButton(setIndex: setIndex),
