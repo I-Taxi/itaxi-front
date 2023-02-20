@@ -133,11 +133,15 @@ Widget ktxPostListTile({
     child: Column(
       children: [
         SizedBox(
-          height: 1.h,
+          height: 1.5.h,
         ),
         Container(
-          height: 96.h,
-          color: colorScheme.background,
+          height: 110.h,
+          decoration: BoxDecoration(
+              color: colorScheme.background,
+              border: Border(
+                  bottom: BorderSide(
+                      color: colorScheme.onSurfaceVariant, width: 1))),
           child: Padding(
             padding: EdgeInsets.fromLTRB(24.w, 24.h, 24.w, 24.h),
             child: Row(
@@ -150,8 +154,9 @@ Widget ktxPostListTile({
                     children: [
                       Column(
                         children: [
+                          Image(image: AssetImage("assets/type/train_text.png"), width: 46.w, height: 24.h,),
                           SizedBox(
-                            height: 1.5.h,
+                            height: 8.h,
                           ),
                           Text(
                             DateFormat('HH:mm')
@@ -163,26 +168,17 @@ Widget ktxPostListTile({
                         ],
                       ),
                       SizedBox(
-                        width: 41.w,
+                        width: 36.w,
                       ),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          Text(
-                            "KTX",
-                            style: textTheme.bodyText1?.copyWith(
-                              fontSize: Platform.isIOS ? 22 : 20,
-                              color: colorScheme.onTertiary,
-                            ),
-                          ),
-                          Text(
-                            "${post.sale}%",
-                            style: textTheme.subtitle2?.copyWith(
-                              color: colorScheme.secondary,
-                            ),
-                          ),
-                        ],
+                      Image(image: AssetImage("assets/icon/discount_check.png"), width: 16.2.w, height: 16.2.h, color: colorScheme.onTertiary,),
+                      SizedBox(
+                        width: 8.w,
+                      ),
+                      Text(
+                        "${post.sale}%",
+                        style: textTheme.bodyText1?.copyWith(
+                          color: colorScheme.onTertiary,
+                        ),
                       ),
                     ]),
                 Spacer(),
