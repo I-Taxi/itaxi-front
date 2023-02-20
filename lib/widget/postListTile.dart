@@ -11,6 +11,7 @@ import 'package:itaxi/controller/chatRoomController.dart';
 import 'package:itaxi/model/chat.dart';
 import 'package:itaxi/chat/chatRoomScreen_bak.dart';
 import 'package:itaxi/model/post.dart';
+import 'package:itaxi/widget/abbreviatePlaceName.dart';
 import 'package:itaxi/widget/snackBar.dart';
 import 'package:itaxi/model/history.dart';
 
@@ -35,7 +36,6 @@ Widget postListTile({
 
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
-
   return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
@@ -137,7 +137,7 @@ Widget postListTile({
             height: 1.5.h,
           ),
           Container(
-            height: 92.h,
+            height: 110.h,
             decoration: BoxDecoration(
                 color: colorScheme.background,
                 border: Border(bottom: BorderSide(color: colorScheme.onSurfaceVariant, width: 1))),
@@ -147,44 +147,112 @@ Widget postListTile({
                 crossAxisAlignment: CrossAxisAlignment.center,
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Text(
-                    DateFormat('HH:mm').format(DateTime.parse(post.deptTime!)),
-                    style: textTheme.subtitle1?.copyWith(
-                      color: colorScheme.onTertiary,
-                      fontWeight: FontWeight.w600,
-                    ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      post.postType == 1
+                          ? Container(
+                              width: 44.w,
+                              height: 24.h,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(7.9931.r), color: colorScheme.secondary),
+                              alignment: Alignment.center,
+                              child: Text(
+                                '택시',
+                                style: textTheme.bodyText1?.copyWith(color: colorScheme.onSecondary),
+                              ))
+                          : Container(
+                              width: 44.w,
+                              height: 24.h,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(7.9931.r), color: colorScheme.outline),
+                              alignment: Alignment.center,
+                              child: Text(
+                                '카풀',
+                                style: textTheme.bodyText1?.copyWith(color: colorScheme.onSecondary),
+                              )),
+                      SizedBox(
+                        height: 13.h,
+                      ),
+                      SizedBox(
+                        width: 57.w,
+                        child: Text(
+                          DateFormat('HH:mm').format(DateTime.parse(post.deptTime!)),
+                          style: textTheme.subtitle1?.copyWith(
+                            color: colorScheme.onTertiary,
+                            fontWeight: FontWeight.w600,
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                   SizedBox(
-                    width: 21.w,
+                    width: 25.w,
                   ),
-                  post.postType == 1
-                      ? Container(
-                          width: 44.w,
-                          height: 24.h,
-                          decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(7.9931.r), color: colorScheme.secondary),
-                          alignment: Alignment.center,
-                          child: Text(
-                            '택시',
-                            style: textTheme.bodyText1?.copyWith(color: colorScheme.onSecondary),
-                          ))
-                      : Container(
-                          width: 44.w,
-                          height: 24.h,
-                          decoration:
-                              BoxDecoration(borderRadius: BorderRadius.circular(7.9931.r), color: colorScheme.outline),
-                          alignment: Alignment.center,
-                          child: Text(
-                            '카풀',
-                            style: textTheme.bodyText1?.copyWith(color: colorScheme.onSecondary),
-                          )),
-                  // Image(
-                  //   image: post.postType == 2
-                  //       ? AssetImage("assets/type/taxi_text.png")
-                  //       : AssetImage("assets/type/car_text.png"),
-                  //   width: 44.w,
-                  //   height: 24.h,
-                  // ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Row(
+                        children: [
+                          ImageIcon(
+                            AssetImage('assets/icon/location_check.png'),
+                            size: 18.r,
+                          ),
+                          SizedBox(
+                            width: 8.w,
+                          ),
+                          Text(
+                            abbreviatePlaceName(post.departure!.name),
+                            style: textTheme.bodyText1?.copyWith(color: colorScheme.onTertiary),
+                          )
+                        ],
+                      ),
+                      if (post.stopovers != null && post.stopovers!.isNotEmpty)
+                        SizedBox(
+                          height: 5.5.h,
+                        ),
+                      if (post.stopovers != null && post.stopovers!.isNotEmpty)
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            SizedBox(
+                              width: 32.w,
+                            ),
+                            Text(
+                              abbreviatePlaceName(post.stopovers![0]!.name),
+                              style: textTheme.bodyText2?.copyWith(
+                                color: colorScheme.tertiaryContainer
+                              ),
+                            ),
+                          ],
+                        ),
+                      if (post.stopovers != null && post.stopovers!.isNotEmpty)
+                        SizedBox(
+                          height: 5.5.h,
+                        ),
+                      if (post.stopovers == null || post.stopovers!.isEmpty)
+                        SizedBox(
+                          height: 20.h,
+                        ),
+                      Row(
+                        children: [
+                          ImageIcon(
+                            AssetImage('assets/icon/location_check.png'),
+                            size: 18.r,
+                          ),
+                          SizedBox(
+                            width: 8.w,
+                          ),
+                          Text(
+                            abbreviatePlaceName(post.destination!.name),
+                            style: textTheme.bodyText1?.copyWith(color: colorScheme.onTertiary),
+                          )
+                        ],
+                      ),
+                    ],
+                  ),
                   const Spacer(),
                   Text(
                     "${post.participantNum}/${post.capacity}명",

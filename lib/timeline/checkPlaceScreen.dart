@@ -242,7 +242,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
         return GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () {
-            _dateController.afterDate();
+            _dateController.afterDate(difference);
           },
           child: Container(
             height: 24.h,
@@ -270,7 +270,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
           return GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () {
-              _dateController.beforDate();
+              _dateController.beforDate(difference);
             },
             child: Container(
               height: 24.h,
