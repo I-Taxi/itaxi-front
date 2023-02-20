@@ -488,9 +488,11 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                           reversedList[index + 1].memberId) {
                                         isFirst = true;
                                       }
-                                      if (index == 1 &&
-                                          reversedList[0].memberId ==
-                                              reversedList[1].memberId) {
+                                      if (index == itemCount - 2 &&
+                                          reversedList[itemCount - 1]
+                                                  .memberId ==
+                                              reversedList[itemCount - 2]
+                                                  .memberId) {
                                         isFirst = false;
                                       }
                                     } else {
@@ -505,7 +507,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                                 .isNegative ==
                                             false)
                                           if (index == itemCount - 1 ||
-                                              (index - 1 > itemCount - 1 &&
+                                              (index + 1 < itemCount - 1 &&
                                                   DateTime.parse(DateFormat(
                                                                   'yyyy-MM-dd')
                                                               .format(
@@ -514,10 +516,15 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                                                       .toDate()))
                                                           .compareTo(DateTime.parse(
                                                               DateFormat('yyyy-MM-dd')
-                                                                  .format(reversedList[index - 1].chatTime!.toDate()))) !=
+                                                                  .format(reversedList[index + 1].chatTime!.toDate()))) !=
                                                       0))
                                             Column(
                                               children: [
+                                                index != itemCount - 1
+                                                    ? SizedBox(
+                                                        height: 20.h,
+                                                      )
+                                                    : SizedBox(),
                                                 Text(
                                                   DateFormat(
                                                           'M월 d일 (${korDays[reversedList[index].chatTime!.toDate().weekday - 1]})')
@@ -579,7 +586,9 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                                                       index - 1]
                                                                   .memberName ==
                                                               null
-                                                      ? SizedBox()
+                                                      ? SizedBox(
+                                                          height: 5.h,
+                                                        )
                                                       : SizedBox(
                                                           height: 17.h,
                                                         )
@@ -1319,6 +1328,7 @@ Future<dynamic> showExitDialog(
                             await _ktxPostController.fetchOutJoin(
                                 post: ktxPost!);
                           }
+
                           await _historyController.getHistorys();
                           Get.back();
                           Get.back();
