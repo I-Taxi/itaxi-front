@@ -105,19 +105,20 @@ class PlaceController extends GetxController {
       dst = temp;
       hasDep = false;
       hasDst = true;
+      dep = null;
     }
     else if(!hasDep && hasDst){
       Place? temp = dst;
       dep = temp;
       hasDep = true;
       hasDst = false;
+      dst = null;
     }
     else{
       Place? temp = dep;
       dep = dst;
       dst = temp;
     }
-
     update();
   }
 
