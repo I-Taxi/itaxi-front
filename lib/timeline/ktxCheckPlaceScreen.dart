@@ -264,7 +264,7 @@ class _KtxCheckPlaceScreenState extends State<KtxCheckPlaceScreen> {
         return GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () {
-            _dateController.afterKtxDate();
+            _dateController.afterKtxDate(difference);
           },
           child: Container(
             height: 24.h,
@@ -292,7 +292,7 @@ class _KtxCheckPlaceScreenState extends State<KtxCheckPlaceScreen> {
           return GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () {
-              _dateController.beforeKtxDate();
+              _dateController.beforeKtxDate(difference);
             },
             child: Container(
               height: 24.h,

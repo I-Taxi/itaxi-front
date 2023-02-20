@@ -190,7 +190,7 @@ class _KtxScreenState extends State<KtxScreen> {
                                     child: SizedBox(
                                       height: 30.h,
                                       child: Text(
-                                        "어디든지 자유롭게 이동하세요!",
+                                        "어디든지 부담없이 이동하세요!",
                                         style: textTheme.subtitle1?.copyWith(
                                           color: colorScheme.primary,
                                         ),
