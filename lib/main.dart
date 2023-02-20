@@ -20,6 +20,10 @@ import 'package:itaxi/signInUp/signInScreen.dart';
 import 'package:itaxi/signInUp/splashScreen.dart';
 import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/src/theme.dart';
+import 'package:itaxi/widget/twoButtonDialog.dart';
+import 'package:new_version/new_version.dart';
+import 'package:package_info/package_info.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'onBoardingScreen.dart';
 import 'package:itaxi/fcm/fcmController.dart';
 
@@ -58,9 +62,7 @@ void main() async {
 
   flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
-  await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
-      ?.createNotificationChannel(channel);
+  await flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()?.createNotificationChannel(channel);
 
   const AndroidInitializationSettings initSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
   const DarwinInitializationSettings initSettingsIOS = DarwinInitializationSettings(
@@ -178,7 +180,7 @@ class _MyAppState extends State<MyApp> {
 
           title: 'iTaxi',
           //datepicker 언어 설정 한국어
-          localizationsDelegates: const [GlobalMaterialLocalizations.delegate, GlobalWidgetsLocalizations.delegate],
+          localizationsDelegates: const [GlobalMaterialLocalizations.delegate, GlobalCupertinoLocalizations.delegate, GlobalWidgetsLocalizations.delegate],
           supportedLocales: [const Locale('ko', 'KR')],
           theme: ITaxiTheme.lightThemeData,
           debugShowCheckedModeBanner: false,
@@ -221,7 +223,6 @@ class _MyAppState extends State<MyApp> {
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
-    return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+    return super.createHttpClient(context)..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
   }
 }

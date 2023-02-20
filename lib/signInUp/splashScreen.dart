@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
@@ -8,6 +9,8 @@ import 'package:colorful_safe_area/colorful_safe_area.dart';
 
 import 'package:itaxi/controller/signInController.dart';
 import 'package:itaxi/widget/showErrorDialogByString.dart';
+import 'package:new_version/new_version.dart';
+import 'package:package_info/package_info.dart';
 
 import '../widget/mainDialog.dart';
 
@@ -29,6 +32,47 @@ class _SplashScreenState extends State<SplashScreen> {
     super.initState();
   }
 
+  Future<bool> setUpdateAlert() async {
+    PackageInfo packageInfo = await PackageInfo.fromPlatform();
+    debugPrint("packageInfo.packageName");
+    debugPrint(packageInfo.packageName);
+
+    final newVersion = NewVersion();
+
+    // newVersion.showAlertIfNecessary(context: context);
+
+    advancedStatusCheck(newVersion);
+
+    return true;
+  }
+
+  advancedStatusCheck(NewVersion newVersion) async {
+    final status = await newVersion.getVersionStatus();
+    if (status != null) {
+      if (status != null && status.canUpdate) {
+        if (mounted) {
+          debugPrint(status.releaseNotes);
+          debugPrint(status.appStoreLink);
+          debugPrint(status.localVersion);
+          debugPrint(status.storeVersion);
+          debugPrint(status.canUpdate.toString());
+          newVersion.showUpdateDialog(
+            context: context,
+            versionStatus: status,
+            dialogTitle: '업데이트 알람',
+            dialogText: '\n새로운 버전이 나왔습니다!\n바로 다운받아보시겠어요?\n',
+            updateButtonText: '업데이트',
+            dismissButtonText: '나중에',
+            allowDismissal: false,
+            dismissAction: () {
+              Get.back();
+            },
+          );
+        }
+      }
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -39,6 +83,7 @@ class _SplashScreenState extends State<SplashScreen> {
         color: colorScheme.secondary,
         child: GetBuilder<SignInController>(builder: (controller) {
           WidgetsBinding.instance.addPostFrameCallback((_) {
+            setUpdateAlert();
             if (controller.signInState == SignInState.backServerError) {
               showErrorDialogByString(
                   '오류',
