@@ -1332,7 +1332,6 @@ Future<dynamic> showExitDialog(
                           await _historyController.getHistorys();
                           Get.back();
                           Get.back();
-                          _navController.changeIndex(0);
                           Get.back();
                         } catch (e) {
                           print(e);

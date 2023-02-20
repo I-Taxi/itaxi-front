@@ -15,6 +15,7 @@ void showErrorDialogByString(String? title, BuildContext context, Widget content
 
   showDialog(
       context: context,
+      barrierDismissible: false,
       builder: (BuildContext context) {
         return Dialog(
             elevation: 0,

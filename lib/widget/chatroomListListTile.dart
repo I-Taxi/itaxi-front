@@ -13,8 +13,7 @@ import 'package:itaxi/model/post.dart';
 import 'package:itaxi/model/history.dart';
 import 'package:itaxi/widget/abbreviatePlaceName.dart';
 
-Widget chatroomListListTile(
-    {required BuildContext context, required History history}) {
+Widget chatroomListListTile({required BuildContext context, required History history}) {
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
   late AddPostController _addPostController = Get.find();
@@ -27,8 +26,7 @@ Widget chatroomListListTile(
 
   return InkWell(
     onTap: () async {
-      await _historyController.getHistoryInfo(
-          postId: postId, postType: postType);
+      await _historyController.getHistoryInfo(postId: postId, postType: postType);
       _historyController.history.then((value) {
         if (value.postType != 3) {
           _chatRoomController.getPost(post: value.toPost());
@@ -43,8 +41,7 @@ Widget chatroomListListTile(
     child: Container(
       width: 342.w,
       height: 88.h,
-      decoration: BoxDecoration(
-          border: Border(bottom: BorderSide(color: colorScheme.onBackground))),
+      decoration: BoxDecoration(border: Border(bottom: BorderSide(color: colorScheme.onBackground))),
       child: Padding(
         padding: EdgeInsets.only(top: 16.h, bottom: 16.h),
         child: Row(children: [
