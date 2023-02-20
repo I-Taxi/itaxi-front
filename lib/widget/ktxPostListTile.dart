@@ -130,9 +130,7 @@ Widget ktxPostListTile({
           height: 110.h,
           decoration: BoxDecoration(
               color: colorScheme.background,
-              border: Border(
-                  bottom: BorderSide(
-                      color: colorScheme.onSurfaceVariant, width: 1))),
+              border: Border(bottom: BorderSide(color: colorScheme.onSurfaceVariant, width: 1))),
           child: Padding(
             padding: EdgeInsets.fromLTRB(24.w, 24.h, 24.w, 24.h),
             child: Row(
@@ -144,30 +142,53 @@ Widget ktxPostListTile({
                     mainAxisAlignment: MainAxisAlignment.start,
                     children: [
                       Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          Image(image: AssetImage("assets/type/train_text.png"), width: 46.w, height: 24.h,),
+                          Container(
+                              width: 46.w,
+                              height: 24.h,
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(7.99.r), color: const Color(0xFF617ABB)),
+                              alignment: Alignment.center,
+                              child: Text(
+                                'KTX',
+                                style: textTheme.bodyText1?.copyWith(color: colorScheme.onSecondary),
+                              )),
+                          // Image(image: AssetImage("assets/type/train_text.png"), width: 46.w, height: 24.h,),
                           SizedBox(
-                            height: 8.h,
+                            height: 13.h,
                           ),
-                          Text(
-                            DateFormat('HH:mm').format(DateTime.parse(post.deptTime!)),
-                            style: textTheme.subtitle1
-                                ?.copyWith(color: colorScheme.onTertiary, fontWeight: FontWeight.w600),
+                          SizedBox(
+                            width: 57.w,
+                            child: Text(
+                              DateFormat('HH:mm').format(DateTime.parse(post.deptTime!)),
+                              style: textTheme.subtitle1
+                                  ?.copyWith(color: colorScheme.onTertiary, fontWeight: FontWeight.w600),
+                            ),
                           ),
                         ],
                       ),
                       SizedBox(
-                        width: 36.w,
+                        width: 25.w,
                       ),
-                      Image(image: AssetImage("assets/icon/discount_check.png"), width: 16.2.w, height: 16.2.h, color: colorScheme.onTertiary,),
-                      SizedBox(
-                        width: 8.w,
-                      ),
-                      Text(
-                        "${post.sale}%",
-                        style: textTheme.bodyText1?.copyWith(
-                          color: colorScheme.onTertiary,
-                        ),
+                      Row(
+                        children: [
+                          ImageIcon(
+                            AssetImage("assets/icon/discount_check.png"),
+                            size: 16.2.r,
+                          ),
+                          // Image(image: AssetImage("assets/icon/discount_check.png"), width: 16.2.w, height: 16.2.h, color: colorScheme.onTertiary,),
+                          SizedBox(
+                            width: 10.69.w,
+                          ),
+                          Text(
+                            "${post.sale}%",
+                            style: textTheme.bodyText1?.copyWith(
+                              color: colorScheme.onTertiary,
+                            ),
+                          ),
+                        ],
                       ),
                     ]),
                 Spacer(),
