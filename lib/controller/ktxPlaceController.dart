@@ -88,12 +88,14 @@ class KtxPlaceController extends GetxController {
       dst = temp;
       hasDep = false;
       hasDst = true;
+      dep = null;
     }
     else if(!hasDep && hasDst){
       KtxPlace? temp = dst;
       dep = temp;
       hasDep = true;
       hasDst = false;
+      dst = null;
     }
     else{
       KtxPlace? temp = dep;

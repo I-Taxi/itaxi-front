@@ -216,6 +216,7 @@ flutter:
     - assets/icon/trash_can.png
     - assets/icon/add.png
     - assets/icon/icon-Exit.png
+    - assets/icon/location_check.png
 
     # background
     - assets/background/timeline_default_bg.png

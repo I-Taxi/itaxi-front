@@ -242,7 +242,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
         return GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () {
-            _dateController.afterDate();
+            _dateController.afterDate(difference);
           },
           child: Container(
             height: 24.h,
@@ -270,7 +270,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
           return GestureDetector(
             behavior: HitTestBehavior.opaque,
             onTap: () {
-              _dateController.beforDate();
+              _dateController.beforDate(difference);
             },
             child: Container(
               height: 24.h,
@@ -422,14 +422,14 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                           nextPage: NoticeScreen(),
                           context: context,
                         ),
-                        SizedBox(
-                          height: 32.h,
-                        ),
-                        _alarmListTile(
-                          title: '알림',
-                          nextPage: const AlarmScreen(),
-                          context: context,
-                        ),
+                        // SizedBox(
+                        //   height: 32.h,
+                        // ),
+                        // _alarmListTile(
+                        //   title: '알림',
+                        //   nextPage: const AlarmScreen(),
+                        //   context: context,
+                        // ),
                         SizedBox(
                           height: 32.h,
                         ),
@@ -515,46 +515,46 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
   }
 
   // 알림 타일
-  Widget _alarmListTile({
-    required String title,
-    required nextPage,
-    required BuildContext context,
-  }) {
-    final colorScheme = Theme.of(context).colorScheme;
-    final textTheme = Theme.of(context).textTheme;
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        GestureDetector(
-          onTap: () {
-            Get.to(nextPage);
-          },
-          child: Text(
-            title,
-            textAlign: TextAlign.start,
-            style: textTheme.subtitle1?.copyWith(color: colorScheme.onTertiary),
-          ),
-        ),
-        Spacer(),
-        Container(
-          height: 17.h,
-          width: 34.w,
-          child: Transform.scale(
-            transformHitTests: false,
-            scale: .6,
-            child: CupertinoSwitch(
-                value: _userController.alarm,
-                activeColor: colorScheme.inverseSurface,
-                thumbColor: colorScheme.primary,
-                trackColor: colorScheme.tertiary,
-                onChanged: (bool value) {
-                  _userController.setAlarm(value);
-                }),
-          ),
-        )
-      ],
-    );
-  }
+  // Widget _alarmListTile({
+  //   required String title,
+  //   required nextPage,
+  //   required BuildContext context,
+  // }) {
+  //   final colorScheme = Theme.of(context).colorScheme;
+  //   final textTheme = Theme.of(context).textTheme;
+  //   return Row(
+  //     mainAxisAlignment: MainAxisAlignment.center,
+  //     children: [
+  //       GestureDetector(
+  //         onTap: () {
+  //           Get.to(nextPage);
+  //         },
+  //         child: Text(
+  //           title,
+  //           textAlign: TextAlign.start,
+  //           style: textTheme.subtitle1?.copyWith(color: colorScheme.onTertiary),
+  //         ),
+  //       ),
+  //       Spacer(),
+  //       Container(
+  //         height: 17.h,
+  //         width: 34.w,
+  //         child: Transform.scale(
+  //           transformHitTests: false,
+  //           scale: .6,
+  //           child: CupertinoSwitch(
+  //               value: _userController.alarm,
+  //               activeColor: colorScheme.inverseSurface,
+  //               thumbColor: colorScheme.primary,
+  //               trackColor: colorScheme.tertiary,
+  //               onChanged: (bool value) {
+  //                 _userController.setAlarm(value);
+  //               }),
+  //         ),
+  //       )
+  //     ],
+  //   );
+  // }
 
   Widget _settingListTile({
     required String title,

@@ -32,7 +32,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
   @override
   initState() {
     super.initState();
-    _userController.getUsers();
+    WidgetsBinding.instance.addPostFrameCallback((_) => _userController.getUsers());
   }
 
   @override
@@ -40,18 +40,18 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
     return Scaffold(
-      appBar: AppBar(
-          shadowColor: colorScheme.shadow,
-          elevation: 0.0,
-          automaticallyImplyLeading: false,
-          actions: [
-            IconButton(
-              onPressed: () {
-                Get.back();
-              },
-              icon: Image.asset("assets/button/clear.png", width: 24.w, height: 24.w, color: colorScheme. tertiaryContainer,)
-            ),
-          ]),
+      appBar: AppBar(shadowColor: colorScheme.shadow, elevation: 0.0, automaticallyImplyLeading: false, actions: [
+        IconButton(
+            onPressed: () {
+              Get.back();
+            },
+            icon: Image.asset(
+              "assets/button/clear.png",
+              width: 24.w,
+              height: 24.w,
+              color: colorScheme.tertiaryContainer,
+            )),
+      ]),
       backgroundColor: colorScheme.background,
       body: ColorfulSafeArea(
         color: colorScheme.primary,
@@ -105,8 +105,8 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                                         Text(
                                           "${snapshot.data!.name.toString()}학부생",
                                           style: textTheme.headline3!.copyWith(
-                                              color: colorScheme.onPrimary,
-                                              ),
+                                            color: colorScheme.onPrimary,
+                                          ),
                                         ),
                                         SizedBox(
                                           height: 2.0.h,
@@ -162,23 +162,15 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                                 SizedBox(
                                   height: 28.5.h,
                                 ),
-                                _management(
-                                    title: "휴대폰 번호 재설정",
-                                    nextPage: FindPhoneNumScreen(),
-                                    context: context),
+                                _management(title: "휴대폰 번호 재설정", nextPage: FindPhoneNumScreen(), context: context),
                                 SizedBox(
                                   height: 18.5.h,
                                 ),
-                                _management(
-                                    title: "비밀번호 재설정",
-                                    nextPage: ResetPWScreen(),
-                                    context: context),
+                                _management(title: "비밀번호 재설정", nextPage: ResetPWScreen(), context: context),
                                 SizedBox(
                                   height: 18.5.h,
                                 ),
-                                _deleteUserAccount(
-                                    title: "회원 탈퇴하기",
-                                    context: context),
+                                _deleteUserAccount(title: "회원 탈퇴하기", context: context),
                               ],
                             ),
                           ),
@@ -186,11 +178,9 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                             width: 390.w,
                             height: 156.h,
                             decoration: BoxDecoration(
-                              border: Border(
-                                top: BorderSide(width: 0.1, color: colorScheme.tertiary),
-                                bottom: BorderSide(width: 0.1, color: colorScheme.tertiary)
-                              )
-                            ),
+                                border: Border(
+                                    top: BorderSide(width: 0.1, color: colorScheme.tertiary),
+                                    bottom: BorderSide(width: 0.1, color: colorScheme.tertiary))),
                             child: Padding(
                               padding: EdgeInsets.only(left: 24.w, right: 24.w),
                               child: Column(
@@ -217,18 +207,14 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                       );
                     } else {
                       return Center(
-                        child: Text(
-                          '로딩 중 오류가 발생하였습니다 :<',
-                          style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiary)
-                        ),
+                        child: Text('로딩 중 오류가 발생하였습니다 :<',
+                            style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiary)),
                       );
                     }
                   } else if (snapshot.hasError) {
                     return Center(
-                      child: Text(
-                        '${snapshot.error}',
-                        style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiary)
-                      ),
+                      child:
+                          Text('${snapshot.error}', style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiary)),
                     );
                   }
                   return LinearProgressIndicator(
@@ -262,14 +248,13 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
               children: [
                 Text(
                   title,
-                  style: textTheme.bodyText1!
-                      .copyWith(color: colorScheme.onTertiary),
+                  style: textTheme.bodyText1!.copyWith(color: colorScheme.onTertiary),
                 ),
                 SizedBox(
                   width: 32.w,
                 ),
                 Icon(
-                    Icons.arrow_forward_ios,
+                  Icons.arrow_forward_ios,
                   color: colorScheme.tertiaryContainer,
                   size: 16.67,
                 ),
@@ -304,8 +289,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
         GestureDetector(
           behavior: HitTestBehavior.opaque,
           onTap: () {
-            deletedUserDialog(context, '회원 탈퇴 하시겠어요?',
-                '지금 당장 필요하지 않아도\n언제나 한동대학교 계정을 통해서\n다시 가입하실 수 있어요');
+            deletedUserDialog(context, '회원 탈퇴 하시겠어요?', '지금 당장 필요하지 않아도\n언제나 한동대학교 계정을 통해서\n다시 가입하실 수 있어요');
           },
           child: Container(
             child: Row(
@@ -313,8 +297,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
               children: [
                 Text(
                   title,
-                  style:
-                      textTheme.bodyText1!.copyWith(color: Color(0xffE67373)),
+                  style: textTheme.bodyText1!.copyWith(color: Color(0xffE67373)),
                 ),
               ],
             ),
@@ -389,8 +372,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                           },
                           child: Text(
                             "취소",
-                            style: textTheme.subtitle2
-                                ?.copyWith(color: colorScheme.tertiaryContainer),
+                            style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
                           ),
                         ),
                       ),
@@ -414,15 +396,13 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                               Get.back();
                               Get.back();
                               Get.back();
-                            } else if(_userController.isDeleted == 2){
-                              mainDialog(context, '회원탈퇴',
-                                  '현재 모집중이거나 입장하신 방이 있습니다. 해당 방을 나가신 후 다시 시도해주세요.');
+                            } else if (_userController.isDeleted == 2) {
+                              mainDialog(context, '회원탈퇴', '현재 모집중이거나 입장하신 방이 있습니다. 해당 방을 나가신 후 다시 시도해주세요.');
                             }
                           },
                           child: Text(
                             "탈퇴",
-                            style: textTheme.subtitle2
-                                ?.copyWith(color: colorScheme.errorContainer),
+                            style: textTheme.subtitle2?.copyWith(color: colorScheme.errorContainer),
                           ),
                         ),
                       ),

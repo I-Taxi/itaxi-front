@@ -25,6 +25,8 @@ import 'package:itaxi/placeSearch/ktxPlaceSearchController.dart';
 import 'package:itaxi/widget/postTypeToggleButton.dart';
 import 'package:itaxi/widget/setTimeDateFormater.dart';
 import 'package:itaxi/timeline/ktxCheckPlaceScreen.dart';
+import 'package:itaxi/controller/historyController.dart';
+import 'package:itaxi/model/history.dart';
 
 KtxPlaceSearchController _ktxPlaceSearchController = Get.find();
 KtxPlaceController _ktxPlaceController = Get.find();
@@ -34,6 +36,7 @@ UserController _userController = Get.find();
 AddKtxPostController _addKtxPostController = Get.find();
 ScreenController _screenController = Get.find();
 NavigationController _navigationController = Get.find();
+HistoryController _historyController = Get.put(HistoryController());
 
 Padding lookupSetDepDstWidget(
     ColorScheme colorScheme, TextTheme textTheme, ScreenController controller) {
@@ -589,61 +592,180 @@ ElevatedButton lookupButton(TextTheme textTheme, ColorScheme colorScheme, BuildC
 GetBuilder gatherButton(TextTheme textTheme, ColorScheme colorScheme,
     ScreenController controller, BuildContext context) {
   return GetBuilder<AddKtxPostController>(builder: (_) {
-    return ElevatedButton(
-        style: ElevatedButton.styleFrom(
-            backgroundColor: _addKtxPostController.loaded
-                ? colorScheme.onPrimaryContainer
-                : colorScheme.tertiaryContainer,
-            minimumSize: Size(342.w, 57.h),
-            shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(16))),
-        onPressed: () async {
-          _addKtxPostController.capacity = controller.capacity;
-          _addKtxPostController.sale = controller.sale;
-          if (_addKtxPostController.loaded) {
-            if (_ktxPlaceController.dep == null) {
-              snackBar(context: context, title: '출발지를 선택해주세요.');
-            } else if (_ktxPlaceController.dep!.id == -1) {
-              snackBar(context: context, title: '출발지를 다시 선택해주세요.');
-            } else if (_ktxPlaceController.dst == null) {
-              snackBar(context: context, title: '도착지를 선택해주세요.');
-            } else if (_ktxPlaceController.dst!.id == -1) {
-              snackBar(context: context, title: '도착지를 다시 선택해주세요.');
-            } else if (DateTime.now()
-                    .difference(_dateController.mergeDateAndTime())
-                    .isNegative ==
-                false) {
-              snackBar(context: context, title: '출발시간을 다시 선택해주세요.');
-            } else if (_addKtxPostController.capacity == 0) {
-              snackBar(context: context, title: '최대인원을 선택해주세요.');
-            } else {
-              KtxPost post = KtxPost(
-                uid: _userController.uid,
-                departure: _ktxPlaceController.dep,
-                destination: _ktxPlaceController.dst,
-                deptTime: _dateController.formattingDateTime(
-                  _dateController.mergeDateAndTime(),
-                ),
-                sale: _addKtxPostController.sale,
-                capacity: _addKtxPostController.capacity,
-              );
-              _navigationController.changeIndex(3);
-              await _addKtxPostController.fetchAddPost(ktxPost: post);
-              await _ktxPostController.getPosts(
-                depId: _ktxPlaceController.dep?.id,
-                dstId: _ktxPlaceController.dst?.id,
-                time: _dateController.formattingDateTime(
-                  _dateController.mergeDateAndTime(),
-                ),
-              );
-            }
-          }
-        },
-        child: Text(
-          "방 만들기",
-          style: textTheme.subtitle2?.copyWith(
-            color: colorScheme.primary,
-          ),
-        ));
+    return FutureBuilder<List<History>>(
+      future: _historyController.historys,
+      builder: (BuildContext context, snapshot) {
+        return ElevatedButton(
+            style: ElevatedButton.styleFrom(
+                backgroundColor: _addKtxPostController.loaded
+                    ? colorScheme.onPrimaryContainer
+                    : colorScheme.tertiaryContainer,
+                minimumSize: Size(342.w, 57.h),
+                shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(16))),
+            onPressed: () async {
+              _addKtxPostController.capacity = controller.capacity;
+              _addKtxPostController.sale = controller.sale;
+              if (_addKtxPostController.loaded) {
+                if (_ktxPlaceController.dep == null) {
+                  snackBar(context: context, title: '출발지를 선택해주세요.');
+                } else if (_ktxPlaceController.dep!.id == -1) {
+                  snackBar(context: context, title: '출발지를 다시 선택해주세요.');
+                } else if (_ktxPlaceController.dst == null) {
+                  snackBar(context: context, title: '도착지를 선택해주세요.');
+                } else if (_ktxPlaceController.dst!.id == -1) {
+                  snackBar(context: context, title: '도착지를 다시 선택해주세요.');
+                } else if (DateTime.now()
+                        .difference(_dateController.mergeDateAndTime())
+                        .isNegative ==
+                    false) {
+                  snackBar(context: context, title: '출발시간을 다시 선택해주세요.');
+                } else if (_addKtxPostController.capacity == 0) {
+                  snackBar(context: context, title: '최대인원을 선택해주세요.');
+                } else {
+                  for (int i = snapshot.data!.length - 1; i >= 0; i--){
+                    if (DateTime.tryParse(
+                        snapshot.data![i].deptTime!)!
+                        .isAfter(DateTime.now())){
+                      if(snapshot.data![i].deptTime! == _dateController.formattingDateTime(_dateController.mergeDateAndTime(),) &&
+                          snapshot.data![i].departure!.name == _ktxPlaceController.dep!.name && snapshot.data![i].destination!.name == _ktxPlaceController.dst!.name){
+                        return showDialog(context: context, builder: (BuildContext context) {
+                          return Dialog(
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(24.0.r),
+                            ),
+                            child: Container(
+                              width: 312.w,
+                              height: 253.h,
+                              padding: EdgeInsets.fromLTRB(
+                                36.0.w,
+                                24.0.h,
+                                36.0.w,
+                                24.0.h,
+                              ),
+                              child: Column(
+                                children: <Widget>[
+                                  Text(
+                                    "중복 오류",
+                                    style: textTheme.subtitle1?.copyWith(
+                                      color: colorScheme.secondary,
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 22.h,
+                                  ),
+                                  Container(
+                                    width: 240.w,
+                                    height: 99.h,
+                                    child: Align(
+                                      alignment: Alignment.centerLeft,
+                                      child: Text(
+                                        "이미 동일한 구성의 방이 존재합니다. 추가로 생성하겠습니까?",
+                                        style: textTheme.bodyText1?.copyWith(
+                                          color: colorScheme.onTertiary,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 22.h,
+                                  ),
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    children: [
+                                      Container(
+                                        width: 63.w,
+                                        height: 33.h,
+                                        child: TextButton(
+                                          onPressed: () async {
+                                            Get.back();
+                                          },
+                                          child: Text(
+                                            "취소",
+                                            style: textTheme.subtitle2
+                                                ?.copyWith(color: colorScheme.tertiaryContainer),
+                                          ),
+                                        ),
+                                      ),
+                                      SizedBox(
+                                        width: 78.w,
+                                      ),
+                                      Container(
+                                        width: 63.w,
+                                        height: 33.h,
+                                        child: TextButton(
+                                          onPressed: () async {
+                                            Get.back();
+                                            KtxPost post = KtxPost(
+                                              uid: _userController.uid,
+                                              departure: _ktxPlaceController.dep,
+                                              destination: _ktxPlaceController.dst,
+                                              deptTime: _dateController.formattingDateTime(
+                                                _dateController.mergeDateAndTime(),
+                                              ),
+                                              sale: _addKtxPostController.sale,
+                                              capacity: _addKtxPostController.capacity,
+                                            );
+                                            _navigationController.changeIndex(3);
+                                            await _addKtxPostController.fetchAddPost(ktxPost: post);
+                                            await _ktxPostController.getPosts(
+                                              depId: _ktxPlaceController.dep?.id,
+                                              dstId: _ktxPlaceController.dst?.id,
+                                              time: _dateController.formattingDateTime(
+                                                _dateController.mergeDateAndTime(),
+                                              ),
+                                            );
+                                          },
+                                          child: Text(
+                                            "생성",
+                                            style: textTheme.subtitle2
+                                                ?.copyWith(color: colorScheme.onSecondaryContainer),
+                                          ),
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ],
+                              ),
+                            ),
+                          );
+                        });
+                      }
+                      else if( i  == 0){
+                        KtxPost post = KtxPost(
+                          uid: _userController.uid,
+                          departure: _ktxPlaceController.dep,
+                          destination: _ktxPlaceController.dst,
+                          deptTime: _dateController.formattingDateTime(
+                            _dateController.mergeDateAndTime(),
+                          ),
+                          sale: _addKtxPostController.sale,
+                          capacity: _addKtxPostController.capacity,
+                        );
+                        _navigationController.changeIndex(3);
+                        await _addKtxPostController.fetchAddPost(ktxPost: post);
+                        await _ktxPostController.getPosts(
+                          depId: _ktxPlaceController.dep?.id,
+                          dstId: _ktxPlaceController.dst?.id,
+                          time: _dateController.formattingDateTime(
+                            _dateController.mergeDateAndTime(),
+                          ),
+                        );
+                      }
+
+                    }
+                  }
+                }
+              }
+            },
+            child: Text(
+              "방 만들기",
+              style: textTheme.subtitle2?.copyWith(
+                color: colorScheme.primary,
+              ),
+            ));
+      }
+    );
   });
 }
