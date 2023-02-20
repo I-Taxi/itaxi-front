@@ -4,9 +4,11 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 
 enum SignInState {
+  firebaseSignedIn,
   signedIn,
   signedOut,
   start,
+  backServerError,
 }
 
 class SignInController extends GetxController {
@@ -16,8 +18,8 @@ class SignInController extends GetxController {
 
   late int signInErrorState;
 
-  late String id;
-  late String pw;
+  String id = "";
+  String pw = "";
 
   // 비밀번호 재설정 시 필요한 변수
   late String email;
@@ -38,8 +40,18 @@ class SignInController extends GetxController {
     update();
   }
 
+  void firebaseSignedInState() {
+    signInState = SignInState.firebaseSignedIn;
+    update();
+  }
+
   void signedOutState() {
     signInState = SignInState.signedOut;
+    update();
+  }
+
+  void backServerErrorState() {
+    signInState = SignInState.backServerError;
     update();
   }
 
@@ -47,11 +59,6 @@ class SignInController extends GetxController {
   onInit() {
     super.onInit();
     signInErrorState = 5;
-    WidgetsBinding.instance.addPostFrameCallback(
-      (_) {
-        _asyncMethod();
-      },
-    );
   }
 
   @override
@@ -65,7 +72,10 @@ class SignInController extends GetxController {
     fAuth.signOut();
   }
 
-  _asyncMethod() async {
+  Future<void> asyncMethod() async {
+    if (signInState == SignInState.signedIn) {
+      return;
+    }
     // 데이터 없을 경우 null 반환
     userInfo = await storage.read(key: "login");
     // UserInfo 값 확인
@@ -75,7 +85,7 @@ class SignInController extends GetxController {
     if (userInfo != null) {
       id = userInfo!.split(" ")[1];
       pw = userInfo!.split(" ")[3];
-      signIn();
+      firebaseSignedInState();
     } else {
       signedOutState();
       update();
@@ -84,19 +94,23 @@ class SignInController extends GetxController {
 
   Future<void> signIn() async {
     signInErrorState = 5;
+    if (id == "" || pw == "") {
+      signInErrorState = 3;
+      update();
+      return;
+    }
     try {
       await FirebaseAuth.instance
           .signInWithEmailAndPassword(email: id, password: pw) //아이디와 비밀번호로 로그인 시도
           .then((value) {
-        value.user!.emailVerified == true //이메일 인증 여부
-            ? {
-                signedInState(),
-                update(),
-              }
-            : {
-                signInErrorState = 0,
-                update(),
-              };
+        if (value.user!.emailVerified == true) //이메일 인증 여부
+        {
+          // firebaseSignedInState();
+        } else {
+          signInErrorState = 0;
+          update();
+        }
+
         // : throw Exception('이메일 확인 안됨');
         return value;
       });
@@ -104,7 +118,6 @@ class SignInController extends GetxController {
       //로그인 예외처리
       await storage.delete(key: 'login');
       signedOutState();
-
       if (e.code == 'user-not-found') {
         signInErrorState = 1;
         update();
@@ -114,11 +127,10 @@ class SignInController extends GetxController {
         update();
         // throw Exception('비밀번호가 틀렸습니다');
       } else if (e.code == 'network-request-failed') {
-        signInErrorState = 3;
+        signInErrorState = 4;
         update();
       } else {
-        print(e.code);
-        signInErrorState = 4;
+        signInErrorState = 3;
         update();
         // throw Exception(e.code);
       }

@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 
 import 'package:itaxi/controller/signUpController.dart';
 import 'package:itaxi/settings/privacyPolicyScreen.dart';
+import 'package:itaxi/widget/showErrorDialogByString.dart';
 
 import '../settings/termOfServiceScreen.dart';
 import '../widget/mainDialog.dart';
@@ -544,10 +545,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     36.0.w,
                     24.0.h,
                   ),
-                  child: CircularProgressIndicator(color: colorScheme.onPrimaryContainer,),
+                  child: CircularProgressIndicator(
+                    color: colorScheme.onPrimaryContainer,
+                  ),
                 );
               } else if (_signUpController.getSignUpStatusString() == signUpStatusStringList[1]) {
-                return dialogContainer(
+                return successDialogContainer(
                     '메일 인증',
                     RichText(
                         text: TextSpan(
@@ -567,40 +570,54 @@ class _SignUpScreenState extends State<SignUpScreen> {
                     textTheme,
                     colorScheme);
               } else if (_signUpController.getSignUpStatusString() == signUpStatusStringList[2]) {
-                return dialogContainer(
-                    '오류',
-                    Text(
-                      '비밀번호 양식에 오류가 발생했습니다. 비밀번호를 다시 설정해주세요.',
-                      style: textTheme.bodyText1?.copyWith(color: colorScheme.onTertiary),
-                    ),
-                    textTheme,
-                    colorScheme);
+                return errorDialogContainerByString(
+                  '오류',
+                  context,
+                  Text(
+                    '비밀번호 양식에 오류가 발생했습니다. 비밀번호를 다시 설정해주세요.',
+                    style: textTheme.bodyText1?.copyWith(color: colorScheme.onTertiary),
+                  ),
+                  () {
+                    Get.back();
+                    if (_signUpController.getSignUpStatusString() == 'success') Get.back();
+                    _signUpController.setSignUpStatus(0);
+                  },
+                );
               } else if (_signUpController.getSignUpStatusString() == signUpStatusStringList[3]) {
-                return dialogContainer(
-                    '오류',
-                    Text(
-                      '중복된 이메일입니다. 다른 이메일로 다시 가입해 주세요.',
-                      style: textTheme.bodyText1?.copyWith(color: colorScheme.onTertiary),
-                    ),
-                    textTheme,
-                    colorScheme);
-              }
-              else {
-                return dialogContainer(
-                    '오류',
-                    Text(
-                      '알 수 없는 오류가 발생했습니다. 잠시 후 다시 회원가입을 시도해 주세요.',
-                      style: textTheme.bodyText1?.copyWith(color: colorScheme.onTertiary),
-                    ),
-                    textTheme,
-                    colorScheme);
+                return errorDialogContainerByString(
+                  '오류',
+                  context,
+                  Text(
+                    '중복된 이메일입니다. 다른 이메일로 다시 가입해 주세요.',
+                    style: textTheme.bodyText1?.copyWith(color: colorScheme.onTertiary),
+                  ),
+                  () {
+                    Get.back();
+                    if (_signUpController.getSignUpStatusString() == 'success') Get.back();
+                    _signUpController.setSignUpStatus(0);
+                  },
+                );
+              } else {
+                return errorDialogContainerByString(
+                  '오류',
+                  context,
+                  Text(
+                    '알 수 없는 오류가 발생했습니다. 잠시 후 다시 회원가입을 시도해 주세요.',
+                    style: textTheme.bodyText1?.copyWith(color: colorScheme.onTertiary),
+                  ),
+                  () {
+                    Get.back();
+                    if (_signUpController.getSignUpStatusString() == 'success') Get.back();
+                    _signUpController.setSignUpStatus(0);
+                  },
+                );
               }
             }),
           );
         });
   }
 
-  Container dialogContainer(String? title, Widget content, TextTheme textTheme, ColorScheme colorScheme) {
+  Container successDialogContainer(String? title, Widget content, TextTheme textTheme, ColorScheme colorScheme) {
     return Container(
       width: 312.w,
       height: 273.h,
@@ -622,6 +639,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           SizedBox(
             height: 32.h,
           ),
+          const Spacer(),
           content,
           // Text(
           //   '회원가입 시 입력하신 handong.ac.kr 계정으로 인증메일이 보내집니다.\n메일이 오지 않은 경우,',

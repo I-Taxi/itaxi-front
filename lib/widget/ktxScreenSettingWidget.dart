@@ -732,6 +732,27 @@ GetBuilder gatherButton(TextTheme textTheme, ColorScheme colorScheme,
                           );
                         });
                       }
+                      else if( i  == 0){
+                        KtxPost post = KtxPost(
+                          uid: _userController.uid,
+                          departure: _ktxPlaceController.dep,
+                          destination: _ktxPlaceController.dst,
+                          deptTime: _dateController.formattingDateTime(
+                            _dateController.mergeDateAndTime(),
+                          ),
+                          sale: _addKtxPostController.sale,
+                          capacity: _addKtxPostController.capacity,
+                        );
+                        _navigationController.changeIndex(3);
+                        await _addKtxPostController.fetchAddPost(ktxPost: post);
+                        await _ktxPostController.getPosts(
+                          depId: _ktxPlaceController.dep?.id,
+                          dstId: _ktxPlaceController.dst?.id,
+                          time: _dateController.formattingDateTime(
+                            _dateController.mergeDateAndTime(),
+                          ),
+                        );
+                      }
 
                     }
                   }
