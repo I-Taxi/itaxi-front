@@ -29,6 +29,19 @@ class NoticeController extends GetxController {
     return result;
   }
 
+  Notice? getLatestNotice(List<Notice> noticeList) {
+    Notice? result;
+    for (Notice notice in noticeList) {
+      DateTime parseNoticeCreatedAt = DateTime.parse(notice.createdAt!);
+      Duration diff = parseNoticeCreatedAt.difference(DateTime.now());
+      if (diff.inDays >= -10) {
+        result = notice;
+        break;
+      }
+    }
+    return result;
+  }
+
   Future<List<Notice>> fetchNotices() async {
     var noticeUrl = dotenv.env['API_URL'].toString();
     noticeUrl = "${noticeUrl}notice";

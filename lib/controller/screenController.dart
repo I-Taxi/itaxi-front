@@ -25,8 +25,9 @@ class ScreenController extends GetxController {
   double backgroundHeight = 108.h;
   double triggerScrollHeigth = 130.h;
 
-  void toggleHasNotice() {
-    hasNotice = !hasNotice;
+  void setHasNotice(bool to) {
+    if (hasNotice == to) return;
+    hasNotice = to;
     update();
   }
 
