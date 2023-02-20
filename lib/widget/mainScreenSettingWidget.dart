@@ -368,7 +368,7 @@ Padding gatherSetDepDstStopOverWidget(ColorScheme colorScheme, TextTheme textThe
                   _placeController.swapDepAndDst();
                 },
                 icon: Image.asset('assets/change.png'),
-                iconSize: 36.sp,
+                iconSize: 35.sp,
                 color: colorScheme.tertiary,
               ),
               IconButton(
