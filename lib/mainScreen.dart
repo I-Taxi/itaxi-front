@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itaxi/controller/chatRoomController.dart';
+import 'package:itaxi/model/notice.dart';
 import 'package:itaxi/settings/settingScreen.dart';
 import 'package:get/get.dart';
 import 'package:itaxi/controller/addPostController.dart';
@@ -9,23 +10,22 @@ import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/controller/placeController.dart';
 import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/controller/screenController.dart';
-
+import 'package:itaxi/controller/noticeController.dart';
 import 'package:itaxi/controller/userController.dart';
 
 import 'package:itaxi/placeSearch/placeSearchController.dart';
 import 'package:itaxi/timeline/checkPlaceScreen.dart';
 import 'package:itaxi/widget/postTypeToggleButton.dart';
 import 'package:itaxi/widget/mainScreenSettingWidget.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:itaxi/controller/signInController.dart';
 import 'package:itaxi/model/userInfoList.dart';
-import 'package:itaxi/settings/alarmScreen.dart';
 import 'package:itaxi/settings/bugScreen.dart';
 import 'package:itaxi/settings/myInfoScreen.dart';
 import 'package:itaxi/settings/noticeScreen.dart';
 import 'package:itaxi/settings/privacyPolicyScreen.dart';
 import 'package:itaxi/settings/termOfServiceScreen.dart';
 import 'package:itaxi/settings/versionScreen.dart';
+import 'package:itaxi/widget/topNoticeWidget.dart';
 import '../controller/navigationController.dart';
 
 class MainScreen extends StatefulWidget {
@@ -43,6 +43,7 @@ class _MainScreenState extends State<MainScreen> {
   UserController _userController = Get.put(UserController());
   AddPostController _addPostController = Get.put(AddPostController());
   ChatRoomController _chatRoomController = Get.put(ChatRoomController());
+  NoticeController _noticeController = Get.put(NoticeController());
 
   late PlaceSearchController _placeSearchController;
   final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
@@ -82,187 +83,178 @@ class _MainScreenState extends State<MainScreen> {
     final textTheme = Theme.of(context).textTheme;
     return GetBuilder<ScreenController>(builder: (controller) {
       if (controller.isCheckScreen) return CheckPlaceScreen();
-      return Scaffold(
-        key: _scaffoldKey,
-        endDrawer: Drawer(child: _myListView(context: context)),
-        onEndDrawerChanged: (isOpen) {
-          _navController.changeNavHeight(isOpen);
-        },
-        body: Stack(
-          children: [
-            Container(
-                height: 427.h,
-                decoration: const BoxDecoration(
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage('assets/background.png'),
-                  ),
-                )),
-            Padding(
-                padding: EdgeInsets.only(left: 24.h, top: 55.63.h, right: 26.4.w),
-                child: GetBuilder<PlaceController>(builder: (_) {
-                  return Column(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              SizedBox(
-                                height: 31.h,
-                                child: Text(
-                                  "I-TAXI",
-                                  style: textTheme.headline3?.copyWith(
-                                    color: colorScheme.primary,
-                                  ),
-                                ),
-                              ),
-                              IconButton(
-                                padding: EdgeInsets.zero,
-                                constraints: BoxConstraints(),
-                                color: colorScheme.primary,
-                                onPressed: () {
-                                  _openEndDrawer();
-                                },
-                                icon: Icon(Icons.menu),
-                                iconSize: 24.w,
-                              )
-                            ],
+      return GetBuilder<NoticeController>(builder: (_) {
+        return FutureBuilder<List<Notice>>(
+            future: _noticeController.notices,
+            builder: (context, snapshot) {
+              Notice? latestNotice;
+              if (snapshot.data != null) {
+                latestNotice = _noticeController.getLatestNotice(snapshot.data!);
+                WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                  if (latestNotice != null) {
+                    controller.setHasNotice(true);
+                  } else {
+                    controller.setHasNotice(false);
+                  }
+                });
+              }
+
+              return Scaffold(
+                key: _scaffoldKey,
+                endDrawer: Drawer(child: _myListView(context: context)),
+                onEndDrawerChanged: (isOpen) {
+                  _navController.changeNavHeight(isOpen);
+                },
+                body: Stack(
+                  children: [
+                    Container(
+                        height: 427.h,
+                        decoration: const BoxDecoration(
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage('assets/background.png'),
                           ),
-                          controller.hasNotice
-                              ? SizedBox(
-                                  height: 0.37.h,
-                                )
-                              : SizedBox(
-                                  height: 2.37.h,
-                                ),
-                          GestureDetector(
-                            onTap: () {
-                              controller.toggleHasNotice();
-                            },
-                            child: controller.hasNotice
-                                ? Row(
+                        )),
+                    Padding(
+                        padding: EdgeInsets.only(left: 24.h, top: 55.63.h, right: 26.4.w),
+                        child: GetBuilder<PlaceController>(builder: (_) {
+                          return Column(
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Container(
-                                        height: 44.h,
-                                        decoration: BoxDecoration(
-                                          color: colorScheme.surfaceVariant,
-                                          borderRadius: BorderRadius.only(
-                                              topRight: Radius.circular(24),
-                                              bottomLeft: Radius.circular(24),
-                                              bottomRight: Radius.circular(24)),
-                                        ),
-                                        alignment: Alignment.center,
-                                        child: Padding(
-                                          padding: EdgeInsets.only(left: 16.w, right: 24.w),
-                                          child: Row(
-                                            mainAxisAlignment: MainAxisAlignment.center,
-                                            children: [
-                                              ImageIcon(
-                                                AssetImage('assets/icon/notice_info.png'),
-                                                size: 23,
-                                                color: colorScheme.primary,
-                                              ),
-                                              SizedBox(
-                                                width: 8.w,
-                                              ),
-                                              Text(
-                                                "iTaxi를 이용해 주셔서 감사합니다 :)",
-                                                style: textTheme.subtitle2?.copyWith(color: colorScheme.primary),
-                                              ),
-                                            ],
+                                      SizedBox(
+                                        height: 31.h,
+                                        child: Text(
+                                          "I-TAXI",
+                                          style: textTheme.headline3?.copyWith(
+                                            color: colorScheme.primary,
                                           ),
                                         ),
                                       ),
-                                      Container()
+                                      IconButton(
+                                        padding: EdgeInsets.zero,
+                                        constraints: BoxConstraints(),
+                                        color: colorScheme.primary,
+                                        onPressed: () {
+                                          _openEndDrawer();
+                                        },
+                                        icon: Icon(Icons.menu),
+                                        iconSize: 24.w,
+                                      )
                                     ],
-                                  )
-                                : Container(
-                                    alignment: Alignment.centerLeft,
-                                    child: SizedBox(
-                                      height: 30.h,
-                                      child: Text(
-                                        "어디든지 부담없이 이동하세요!",
-                                        style: textTheme.subtitle1?.copyWith(
-                                          color: colorScheme.primary,
-                                        ),
-                                      ),
-                                    ),
                                   ),
-                          )
-                        ],
-                      ),
-                      controller.hasNotice
-                          ? SizedBox(
-                              height: 40.37.h,
-                            )
-                          : SizedBox(
-                              height: 52.37.h,
-                            ),
-                      controller.mainScreenLoaded
-                          ? Container(
-                              height: (!_placeController.hasStopOver || controller.mainScreenCurrentToggle == 0)
-                                  ? 433.63.h
-                                  : 489.63.h,
-                              width: 342.w,
-                              decoration: BoxDecoration(
-                                  color: colorScheme.primary,
-                                  borderRadius: BorderRadius.circular(36.0),
-                                  boxShadow: [
-                                    BoxShadow(color: colorScheme.shadow, blurRadius: 40.r, offset: Offset(2.w, 4.h))
-                                  ]),
-                              child: controller.mainScreenCurrentToggle == 0
-                                  ? Column(
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(left: 23.w, right: 23.w, top: 20.63.h),
-                                          child: postTypeToggleButton(context: context, controller: controller),
+                                  controller.hasNotice
+                                      ? SizedBox(
+                                          height: 0.37.h,
+                                        )
+                                      : SizedBox(
+                                          height: 2.37.h,
                                         ),
-                                        lookupSetDepDstWidget(colorScheme, textTheme, controller),
-                                        lookupSetTimeWidget(colorScheme, context, textTheme),
-                                        lookupSetPostTypeWidget(colorScheme, controller, context),
-                                        lookupSetCapacityWidget(colorScheme, controller, textTheme)
-                                      ],
+                                  GestureDetector(
+                                    onTap: () {
+                                      //controller.setHasNotice();
+                                    },
+                                    child: controller.hasNotice && latestNotice != null
+                                        ? Row(
+                                            children: [
+                                              topNoticeWidget(colorScheme, textTheme, latestNotice),
+                                              const Spacer()
+                                            ],
+                                          )
+                                        : Container(
+                                            alignment: Alignment.centerLeft,
+                                            child: SizedBox(
+                                              height: 30.h,
+                                              child: Text(
+                                                "어디든지 부담없이 이동하세요!",
+                                                style: textTheme.subtitle1?.copyWith(
+                                                  color: colorScheme.primary,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                  )
+                                ],
+                              ),
+                              controller.hasNotice
+                                  ? SizedBox(
+                                      height: 40.37.h,
                                     )
-                                  : Column(
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(left: 23.w, right: 23.w, top: 20.63.h),
-                                          child: postTypeToggleButton(context: context, controller: controller),
-                                        ),
-                                        _placeController.hasStopOver
-                                            ? gatherSetDepDstStopOverWidget(colorScheme, textTheme, controller)
-                                            : gatherSetDepDstWidget(colorScheme, textTheme, controller),
-                                        gatherSetTimeWidget(colorScheme, context, textTheme),
-                                        gatherSetPostTypeWidget(colorScheme, controller, context),
-                                        lookupSetCapacityWidget(colorScheme, controller, textTheme)
-                                      ],
+                                  : SizedBox(
+                                      height: 52.37.h,
                                     ),
-                            )
-                          : Container(
-                              height: 433.63.h,
-                              width: 342.w,
-                              decoration: BoxDecoration(
-                                  color: colorScheme.primary,
-                                  borderRadius: BorderRadius.circular(36.0),
-                                  boxShadow: [
-                                    BoxShadow(color: colorScheme.shadow, blurRadius: 40, offset: Offset(2, 4))
-                                  ]),
-                            ),
-                      SizedBox(
-                        height: (!_placeController.hasStopOver || controller.mainScreenCurrentToggle == 0) ? 60.h : 4.h,
-                      ),
-                      if (controller.mainScreenLoaded)
-                        controller.mainScreenCurrentToggle == 0
-                            ? lookupButton(textTheme, colorScheme, context)
-                            : gatherButton(textTheme, colorScheme, controller, context),
-                    ],
-                  );
-                })),
-          ],
-        ),
-      );
+                              controller.mainScreenLoaded
+                                  ? Container(
+                                      height: (!_placeController.hasStopOver || controller.mainScreenCurrentToggle == 0)
+                                          ? 433.63.h
+                                          : 489.63.h,
+                                      width: 342.w,
+                                      decoration: BoxDecoration(
+                                          color: colorScheme.primary,
+                                          borderRadius: BorderRadius.circular(36.0),
+                                          boxShadow: [
+                                            BoxShadow(
+                                                color: colorScheme.shadow, blurRadius: 40.r, offset: Offset(2.w, 4.h))
+                                          ]),
+                                      child: controller.mainScreenCurrentToggle == 0
+                                          ? Column(
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsets.only(left: 23.w, right: 23.w, top: 20.63.h),
+                                                  child: postTypeToggleButton(context: context, controller: controller),
+                                                ),
+                                                lookupSetDepDstWidget(colorScheme, textTheme, controller),
+                                                lookupSetTimeWidget(colorScheme, context, textTheme),
+                                                lookupSetPostTypeWidget(colorScheme, controller, context),
+                                                lookupSetCapacityWidget(colorScheme, controller, textTheme)
+                                              ],
+                                            )
+                                          : Column(
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsets.only(left: 23.w, right: 23.w, top: 20.63.h),
+                                                  child: postTypeToggleButton(context: context, controller: controller),
+                                                ),
+                                                _placeController.hasStopOver
+                                                    ? gatherSetDepDstStopOverWidget(colorScheme, textTheme, controller)
+                                                    : gatherSetDepDstWidget(colorScheme, textTheme, controller),
+                                                gatherSetTimeWidget(colorScheme, context, textTheme),
+                                                gatherSetPostTypeWidget(colorScheme, controller, context),
+                                                lookupSetCapacityWidget(colorScheme, controller, textTheme)
+                                              ],
+                                            ),
+                                    )
+                                  : Container(
+                                      height: 433.63.h,
+                                      width: 342.w,
+                                      decoration: BoxDecoration(
+                                          color: colorScheme.primary,
+                                          borderRadius: BorderRadius.circular(36.0),
+                                          boxShadow: [
+                                            BoxShadow(color: colorScheme.shadow, blurRadius: 40, offset: Offset(2, 4))
+                                          ]),
+                                    ),
+                              SizedBox(
+                                height: (!_placeController.hasStopOver || controller.mainScreenCurrentToggle == 0)
+                                    ? 60.h
+                                    : 4.h,
+                              ),
+                              if (controller.mainScreenLoaded)
+                                controller.mainScreenCurrentToggle == 0
+                                    ? lookupButton(textTheme, colorScheme, context)
+                                    : gatherButton(textTheme, colorScheme, controller, context),
+                            ],
+                          );
+                        })),
+                  ],
+                ),
+              );
+            });
+      });
     });
   }
 
@@ -306,7 +298,8 @@ class _MainScreenState extends State<MainScreen> {
                             ),
                             Text(
                               snapshot.data!.email.toString(),
-                              style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiaryContainer, fontSize: 10.sp),
+                              style:
+                                  textTheme.bodyText2?.copyWith(color: colorScheme.tertiaryContainer, fontSize: 10.sp),
                             ),
                           ],
                         ),

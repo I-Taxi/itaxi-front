@@ -76,15 +76,13 @@ Widget ktxPostListTile({
                                   },
                                   child: Text(
                                     "취소",
-                                    style: textTheme.subtitle2?.copyWith(
-                                        color: colorScheme.tertiaryContainer),
+                                    style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
                                   ),
                                 ),
                                 const Spacer(),
                                 TextButton(
                                   onPressed: () async {
-                                    await _ktxPostController.fetchJoin(
-                                        ktxPost: post);
+                                    await _ktxPostController.fetchJoin(ktxPost: post);
                                     await _ktxPostController.getPosts(
                                       depId: _ktxPlaceController.dep?.id,
                                       dstId: _ktxPlaceController.dst?.id,
@@ -94,28 +92,21 @@ Widget ktxPostListTile({
                                     );
                                     Get.back();
                                     await _historyController.getHistorys();
-                                    await _historyController.getHistoryInfo(
-                                        postId: post.id!, postType: 3); //수정 요망
+                                    await _historyController.getHistoryInfo(postId: post.id!, postType: 3); //수정 요망
                                     _historyController.history.then((value) {
                                       if (value.postType != 3) {
-                                        _chatRoomController.getPost(
-                                            post: value.toPost());
-                                        _chatRoomController.getChats(
-                                            post: value.toPost());
+                                        _chatRoomController.getPost(post: value.toPost());
+                                        _chatRoomController.getChats(post: value.toPost());
                                       } else {
-                                        _chatRoomController.getKtxPost(
-                                            ktxPost: value.toKtxPost());
-                                        _chatRoomController.getKtxChats(
-                                            ktxPost: value.toKtxPost());
+                                        _chatRoomController.getKtxPost(ktxPost: value.toKtxPost());
+                                        _chatRoomController.getKtxChats(ktxPost: value.toKtxPost());
                                       }
-                                      Get.to(
-                                          () => const ChatRoomDetailScreen());
+                                      Get.to(() => const ChatRoomDetailScreen());
                                     });
                                   },
                                   child: Text(
                                     "입장",
-                                    style: textTheme.subtitle2?.copyWith(
-                                        color: colorScheme.onPrimaryContainer),
+                                    style: textTheme.subtitle2?.copyWith(color: colorScheme.onPrimaryContainer),
                                   ),
                                 ),
                               ],
@@ -154,11 +145,9 @@ Widget ktxPostListTile({
                             height: 1.5.h,
                           ),
                           Text(
-                            DateFormat('HH:mm')
-                                .format(DateTime.parse(post.deptTime!)),
-                            style: textTheme.subtitle1?.copyWith(
-                                color: colorScheme.onTertiary,
-                                fontWeight: FontWeight.w600),
+                            DateFormat('HH:mm').format(DateTime.parse(post.deptTime!)),
+                            style: textTheme.subtitle1
+                                ?.copyWith(color: colorScheme.onTertiary, fontWeight: FontWeight.w600),
                           ),
                         ],
                       ),
@@ -195,9 +184,8 @@ Widget ktxPostListTile({
                       children: [
                         Text(
                           "${post.participantNum}/${post.capacity}명",
-                          style: textTheme.subtitle1?.copyWith(
-                              color: colorScheme.onTertiary,
-                              fontWeight: FontWeight.w500),
+                          style:
+                              textTheme.subtitle1?.copyWith(color: colorScheme.onTertiary, fontWeight: FontWeight.w500),
                         ),
                         SizedBox(
                           width: 22.w,

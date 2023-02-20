@@ -1,39 +1,30 @@
-import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itaxi/controller/navigationController.dart';
 import 'package:itaxi/controller/signInController.dart';
-import 'package:itaxi/timeline/checkPlaceScreen.dart';
 import 'package:itaxi/settings/settingScreen.dart';
 import 'package:itaxi/timeline/ktxCheckPlaceScreen.dart';
-import 'package:toggle_switch/toggle_switch.dart';
 import 'package:get/get.dart';
-import 'package:intl/intl.dart';
 import 'package:itaxi/controller/addKtxPostController.dart';
 import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/controller/ktxPlaceController.dart';
 import 'package:itaxi/controller/ktxPostController.dart';
 import 'package:itaxi/controller/screenController.dart';
-import 'package:itaxi/model/post.dart';
-import 'package:itaxi/widget/postListTile.dart';
-import 'package:itaxi/widget/selectPlaceDialog.dart';
-import 'package:itaxi/widget/tabView.dart';
-
 import 'package:itaxi/controller/userController.dart';
+import 'package:itaxi/controller/noticeController.dart';
+import 'package:itaxi/model/notice.dart';
+import 'package:itaxi/widget/topNoticeWidget.dart';
 
-import 'package:itaxi/placeSearch/searchScreen.dart';
 import 'package:itaxi/placeSearch/ktxPlaceSearchController.dart';
 import 'package:itaxi/widget/postTypeToggleButton.dart';
 import 'package:itaxi/widget/ktxScreenSettingWidget.dart';
 import 'package:itaxi/model/userInfoList.dart';
-import 'package:itaxi/settings/alarmScreen.dart';
 import 'package:itaxi/settings/bugScreen.dart';
 import 'package:itaxi/settings/myInfoScreen.dart';
 import 'package:itaxi/settings/noticeScreen.dart';
 import 'package:itaxi/settings/privacyPolicyScreen.dart';
 import 'package:itaxi/settings/termOfServiceScreen.dart';
 import 'package:itaxi/settings/versionScreen.dart';
-import 'package:flutter/cupertino.dart';
 
 class KtxScreen extends StatefulWidget {
   const KtxScreen({Key? key}) : super(key: key);
@@ -49,6 +40,7 @@ class _KtxScreenState extends State<KtxScreen> {
   KtxPlaceController _ktxPlaceController = Get.put(KtxPlaceController());
   DateController _dateController = Get.put(DateController());
   UserController _userController = Get.put(UserController());
+  NoticeController _noticeController = Get.find();
 
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   late KtxPlaceSearchController _ktxPlaceSearchController;
@@ -82,226 +74,182 @@ class _KtxScreenState extends State<KtxScreen> {
     final textTheme = Theme.of(context).textTheme;
     return GetBuilder<ScreenController>(builder: (controller) {
       if (_screenController.isKtxCheckScreen) return KtxCheckPlaceScreen();
-      return Scaffold(
-        key: _scaffoldKey,
-        endDrawer: Drawer(child: _myListView(context: context)),
-        onEndDrawerChanged: (isOpen) {
-          _navController.changeNavHeight(isOpen);
-        },
-        body: Stack(
-          children: [
-            Container(
-                height: 427.h,
-                decoration: BoxDecoration(
-                  image: DecorationImage(
-                    fit: BoxFit.cover,
-                    image: AssetImage('assets/background.png'),
-                  ),
-                )),
-            Padding(
-                padding:
-                    EdgeInsets.only(left: 24.h, top: 55.63.h, right: 26.4.w),
-                child: GetBuilder<KtxPlaceController>(builder: (_) {
-                  return Column(
-                    children: [
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              SizedBox(
-                                height: 31.h,
-                                child: Text(
-                                  "I-TAXI",
-                                  style: textTheme.headline3?.copyWith(
-                                    color: colorScheme.primary,
-                                  ),
-                                ),
-                              ),
-                              IconButton(
-                                padding: EdgeInsets.zero,
-                                constraints: BoxConstraints(),
-                                color: colorScheme.primary,
-                                onPressed: () {
-                                  _openEndDrawer();
-                                },
-                                icon: Icon(Icons.menu),
-                                iconSize: 24.w,
-                              ),
-                            ],
+      return GetBuilder<NoticeController>(builder: (_) {
+        return FutureBuilder<List<Notice>>(
+            future: _noticeController.notices,
+            builder: (context, snapshot) {
+              Notice? latestNotice;
+              if (snapshot.data != null) {
+                latestNotice = _noticeController.getLatestNotice(snapshot.data!);
+                WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+                  if (latestNotice != null) {
+                    controller.setHasNotice(true);
+                  } else {
+                    controller.setHasNotice(false);
+                  }
+                });
+              }
+
+              return Scaffold(
+                key: _scaffoldKey,
+                endDrawer: Drawer(child: _myListView(context: context)),
+                onEndDrawerChanged: (isOpen) {
+                  _navController.changeNavHeight(isOpen);
+                },
+                body: Stack(
+                  children: [
+                    Container(
+                        height: 427.h,
+                        decoration: BoxDecoration(
+                          image: DecorationImage(
+                            fit: BoxFit.cover,
+                            image: AssetImage('assets/background.png'),
                           ),
-                          controller.hasNotice
-                              ? SizedBox(
-                                  height: 0.37.h,
-                                )
-                              : SizedBox(
-                                  height: 2.37.h,
-                                ),
-                          GestureDetector(
-                            onTap: () {
-                              controller.toggleHasNotice();
-                            },
-                            child: controller.hasNotice
-                                ? Row(
+                        )),
+                    Padding(
+                        padding: EdgeInsets.only(left: 24.h, top: 55.63.h, right: 26.4.w),
+                        child: GetBuilder<KtxPlaceController>(builder: (_) {
+                          return Column(
+                            children: [
+                              Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Row(
+                                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                     children: [
-                                      Container(
-                                        height: 44.h,
-                                        decoration: BoxDecoration(
-                                          color: colorScheme.surfaceVariant,
-                                          borderRadius: const BorderRadius.only(
-                                              topRight: Radius.circular(24),
-                                              bottomLeft: Radius.circular(24),
-                                              bottomRight: Radius.circular(24)),
-                                        ),
-                                        alignment: Alignment.center,
-                                        child: Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 16.w, right: 24.w),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              ImageIcon(
-                                                AssetImage(
-                                                    'assets/icon/notice_info.png'),
-                                                size: 23,
-                                                color: colorScheme.primary,
-                                              ),
-                                              SizedBox(
-                                                width: 8.w,
-                                              ),
-                                              Text(
-                                                "iTaxi를 이용해 주셔서 감사합니다 :)",
-                                                style: textTheme.subtitle2
-                                                    ?.copyWith(
-                                                        color: colorScheme
-                                                            .primary),
-                                              ),
-                                            ],
+                                      SizedBox(
+                                        height: 31.h,
+                                        child: Text(
+                                          "I-TAXI",
+                                          style: textTheme.headline3?.copyWith(
+                                            color: colorScheme.primary,
                                           ),
                                         ),
                                       ),
-                                      Container()
-                                    ],
-                                  )
-                                : Container(
-                                    alignment: Alignment.centerLeft,
-                                    child: SizedBox(
-                                      height: 30.h,
-                                      child: Text(
-                                        "어디든지 부담없이 이동하세요!",
-                                        style: textTheme.subtitle1?.copyWith(
-                                          color: colorScheme.primary,
-                                        ),
+                                      IconButton(
+                                        padding: EdgeInsets.zero,
+                                        constraints: BoxConstraints(),
+                                        color: colorScheme.primary,
+                                        onPressed: () {
+                                          _openEndDrawer();
+                                        },
+                                        icon: Icon(Icons.menu),
+                                        iconSize: 24.w,
                                       ),
-                                    ),
+                                    ],
                                   ),
-                          )
-                        ],
-                      ),
-                      controller.hasNotice
-                          ? SizedBox(
-                              height: 40.h,
-                            )
-                          : SizedBox(
-                              height: 52.h,
-                            ),
-                      controller.ktxScreenLoaded
-                          ? Container(
-                              height: (controller.ktxScreenCurrentToggle == 1)
-                                  ? (controller.discountSelect)
-                                      ? 496.h
-                                      : 446.h
-                                  : 382.h,
-                              width: 342.w,
-                              decoration: BoxDecoration(
-                                  color: colorScheme.primary,
-                                  borderRadius: BorderRadius.circular(36.0),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: colorScheme.shadow,
-                                        blurRadius: 40,
-                                        offset: Offset(2, 4))
-                                  ]),
-                              child: controller.ktxScreenCurrentToggle == 0
-                                  ? Column(
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 23.w,
-                                              right: 23.w,
-                                              top: 20.63.h),
-                                          child: ktxPostTypeToggleButton(
-                                              context: context,
-                                              controller: controller),
+                                  controller.hasNotice
+                                      ? SizedBox(
+                                          height: 0.37.h,
+                                        )
+                                      : SizedBox(
+                                          height: 2.37.h,
                                         ),
-                                        lookupSetDepDstWidget(
-                                            colorScheme, textTheme, controller),
-                                        lookupSetTimeWidget(
-                                            colorScheme, context, textTheme),
-                                        lookupSetCapacityWidget(
-                                            colorScheme, controller, textTheme)
-                                      ],
+                                  GestureDetector(
+                                    onTap: () {
+                                      //controller.setHasNotice();
+                                    },
+                                    child: controller.hasNotice && latestNotice != null
+                                        ? Row(
+                                            children: [
+                                              topNoticeWidget(colorScheme, textTheme, latestNotice),
+                                              const Spacer()
+                                            ],
+                                          )
+                                        : Container(
+                                            alignment: Alignment.centerLeft,
+                                            child: SizedBox(
+                                              height: 30.h,
+                                              child: Text(
+                                                "어디든지 부담없이 이동하세요!",
+                                                style: textTheme.subtitle1?.copyWith(
+                                                  color: colorScheme.primary,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                  )
+                                ],
+                              ),
+                              controller.hasNotice
+                                  ? SizedBox(
+                                      height: 40.h,
                                     )
-                                  : Column(
-                                      children: [
-                                        Padding(
-                                          padding: EdgeInsets.only(
-                                              left: 23.w,
-                                              right: 23.w,
-                                              top: 20.63.h),
-                                          child: ktxPostTypeToggleButton(
-                                              context: context,
-                                              controller: controller),
-                                        ),
-                                        gatherSetDepDstWidget(
-                                            colorScheme, textTheme, controller),
-                                        gatherSetTimeWidget(
-                                            colorScheme, context, textTheme),
-                                        controller.discountSelect
-                                            ? discountActivatedWidget(
-                                                colorScheme,
-                                                controller,
-                                                textTheme)
-                                            : discountWidget(colorScheme,
-                                                controller, textTheme),
-                                        lookupSetCapacityWidget(
-                                            colorScheme, controller, textTheme)
-                                      ],
+                                  : SizedBox(
+                                      height: 52.h,
                                     ),
-                            )
-                          : Container(
-                              height: 433.63.h,
-                              width: 342.w,
-                              decoration: BoxDecoration(
-                                  color: colorScheme.primary,
-                                  borderRadius: BorderRadius.circular(36.0),
-                                  boxShadow: [
-                                    BoxShadow(
-                                        color: colorScheme.shadow,
-                                        blurRadius: 40,
-                                        offset: Offset(2, 4))
-                                  ]),
-                            ),
-                      SizedBox(
-                        height: (controller.ktxScreenCurrentToggle == 1)
-                            ? (controller.discountSelect)
-                                ? 1.h
-                                : 47.h
-                            : 112.h,
-                      ),
-                      if (controller.ktxScreenLoaded)
-                        controller.ktxScreenCurrentToggle == 0
-                            ? lookupButton(textTheme, colorScheme, context)
-                            : gatherButton(
-                                textTheme, colorScheme, controller, context),
-                    ],
-                  );
-                })),
-          ],
-        ),
-      );
+                              controller.ktxScreenLoaded
+                                  ? Container(
+                                      height: (controller.ktxScreenCurrentToggle == 1)
+                                          ? (controller.discountSelect)
+                                              ? 496.h
+                                              : 446.h
+                                          : 382.h,
+                                      width: 342.w,
+                                      decoration: BoxDecoration(
+                                          color: colorScheme.primary,
+                                          borderRadius: BorderRadius.circular(36.0),
+                                          boxShadow: [
+                                            BoxShadow(color: colorScheme.shadow, blurRadius: 40, offset: Offset(2, 4))
+                                          ]),
+                                      child: controller.ktxScreenCurrentToggle == 0
+                                          ? Column(
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsets.only(left: 23.w, right: 23.w, top: 20.63.h),
+                                                  child:
+                                                      ktxPostTypeToggleButton(context: context, controller: controller),
+                                                ),
+                                                lookupSetDepDstWidget(colorScheme, textTheme, controller),
+                                                lookupSetTimeWidget(colorScheme, context, textTheme),
+                                                lookupSetCapacityWidget(colorScheme, controller, textTheme)
+                                              ],
+                                            )
+                                          : Column(
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsets.only(left: 23.w, right: 23.w, top: 20.63.h),
+                                                  child:
+                                                      ktxPostTypeToggleButton(context: context, controller: controller),
+                                                ),
+                                                gatherSetDepDstWidget(colorScheme, textTheme, controller),
+                                                gatherSetTimeWidget(colorScheme, context, textTheme),
+                                                controller.discountSelect
+                                                    ? discountActivatedWidget(colorScheme, controller, textTheme)
+                                                    : discountWidget(colorScheme, controller, textTheme),
+                                                lookupSetCapacityWidget(colorScheme, controller, textTheme)
+                                              ],
+                                            ),
+                                    )
+                                  : Container(
+                                      height: 433.63.h,
+                                      width: 342.w,
+                                      decoration: BoxDecoration(
+                                          color: colorScheme.primary,
+                                          borderRadius: BorderRadius.circular(36.0),
+                                          boxShadow: [
+                                            BoxShadow(color: colorScheme.shadow, blurRadius: 40, offset: Offset(2, 4))
+                                          ]),
+                                    ),
+                              SizedBox(
+                                height: (controller.ktxScreenCurrentToggle == 1)
+                                    ? (controller.discountSelect)
+                                        ? 1.h
+                                        : 47.h
+                                    : 112.h,
+                              ),
+                              if (controller.ktxScreenLoaded)
+                                controller.ktxScreenCurrentToggle == 0
+                                    ? lookupButton(textTheme, colorScheme, context)
+                                    : gatherButton(textTheme, colorScheme, controller, context),
+                            ],
+                          );
+                        })),
+                  ],
+                ),
+              );
+            });
+      });
     });
   }
 
@@ -317,8 +265,7 @@ class _KtxScreenState extends State<KtxScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Padding(
-                    padding:
-                        EdgeInsets.only(top: 87.h, left: 35.w, right: 24.w),
+                    padding: EdgeInsets.only(top: 87.h, left: 35.w, right: 24.w),
                     child: Image(
                       image: AssetImage("assets/profile.png"),
                       height: 88.w,
@@ -346,9 +293,8 @@ class _KtxScreenState extends State<KtxScreen> {
                             ),
                             Text(
                               snapshot.data!.email.toString(),
-                              style: textTheme.bodyText2?.copyWith(
-                                  color: colorScheme.tertiaryContainer,
-                                  fontSize: 10.sp),
+                              style:
+                                  textTheme.bodyText2?.copyWith(color: colorScheme.tertiaryContainer, fontSize: 10.sp),
                             ),
                           ],
                         ),
@@ -452,8 +398,7 @@ class _KtxScreenState extends State<KtxScreen> {
                               },
                               child: Text(
                                 "로그아웃",
-                                style: textTheme.bodyText2?.copyWith(
-                                    color: colorScheme.tertiaryContainer),
+                                style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiaryContainer),
                               ),
                             )
                           ],
@@ -471,8 +416,7 @@ class _KtxScreenState extends State<KtxScreen> {
                   },
                   child: Text(
                     "로그아웃",
-                    style: textTheme.bodyText2
-                        ?.copyWith(color: colorScheme.tertiary),
+                    style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiary),
                   ),
                 ),
               );
@@ -552,8 +496,7 @@ class _KtxScreenState extends State<KtxScreen> {
         builder: (BuildContext context) {
           return Dialog(
             elevation: 0,
-            shape:
-                RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
+            shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(24)),
             child: Container(
               width: 360.w,
               height: 240.h,
@@ -567,8 +510,7 @@ class _KtxScreenState extends State<KtxScreen> {
                 children: [
                   Text(
                     "로그아웃 하시겠습니까?",
-                    style: textTheme.subtitle1
-                        ?.copyWith(color: colorScheme.onSecondaryContainer),
+                    style: textTheme.subtitle1?.copyWith(color: colorScheme.onSecondaryContainer),
                   ),
                   const Spacer(),
                   Row(mainAxisAlignment: MainAxisAlignment.center, children: [
