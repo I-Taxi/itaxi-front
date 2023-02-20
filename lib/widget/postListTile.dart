@@ -55,7 +55,7 @@ Widget postListTile({
                     return Dialog(
                       elevation: 0,
                       shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(24.0),
+                        borderRadius: BorderRadius.circular(24.0.r),
                       ),
                       child: Container(
                         width: 312.w,
