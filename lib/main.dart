@@ -118,28 +118,28 @@ class _MyAppState extends State<MyApp> {
   void initState() {
     super.initState();
 
-    // FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
-    //   var notification = message.notification;
-    //   var android = message.notification?.android;
+    FirebaseMessaging.onMessage.listen((RemoteMessage message) async {
+      var notification = message.notification;
+      var android = message.notification?.android;
 
-    //   print('Got a message whilst in the foreground!');
-    //   print(channel.description);
+      print('Got a message whilst in the foreground!');
+      print(channel.description);
 
-    //   // android 인 경우
-    //   if (notification != null && android != null) {
-    //     await flutterLocalNotificationsPlugin.show(
-    //         notification.hashCode,
-    //         notification.title,
-    //         notification.body,
-    //         NotificationDetails(
-    //             android: AndroidNotificationDetails(
-    //           channel.id,
-    //           channel.name,
-    //           channelDescription: channel.description,
-    //           icon: android.smallIcon,
-    //         )));
-    //   }
-    // });
+      // android 인 경우
+      if (notification != null && android != null) {
+        await flutterLocalNotificationsPlugin.show(
+            notification.hashCode,
+            notification.title,
+            notification.body,
+            NotificationDetails(
+                android: AndroidNotificationDetails(
+              channel.id,
+              channel.name,
+              channelDescription: channel.description,
+              icon: android.smallIcon,
+            )));
+      }
+    });
 
     WidgetsBinding.instance.addPostFrameCallback(
       (_) {
