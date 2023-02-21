@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itaxi/controller/chatRoomController.dart';
 import 'package:itaxi/model/notice.dart';
-import 'package:itaxi/settings/settingScreen.dart';
 import 'package:get/get.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 import 'package:itaxi/controller/addPostController.dart';
 import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/controller/placeController.dart';
@@ -51,6 +51,8 @@ class _MainScreenState extends State<MainScreen> {
   final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
   final SignInController _signInController = Get.find();
   final NavigationController _navController = Get.put(NavigationController());
+
+  static final storage = FlutterSecureStorage();
 
   String e = ""; // 요일 변수
   int personCount = 1; // 인원수
@@ -532,6 +534,7 @@ class _MainScreenState extends State<MainScreen> {
                     ),
                     TextButton(
                         onPressed: () async {
+                          await storage.delete(key: "login");
                           _signInController.reset();
                           _signInController.signedOutState();
                           _navController.changeIndex(0);

@@ -68,7 +68,6 @@ class SignUpController extends GetxController {
         headers: <String, String>{'Content-Type': 'application/json'}, body: body);
 
     if (response.statusCode == 200) {
-      print(response);
       return response;
     } else {
       print(response.statusCode);
@@ -79,7 +78,6 @@ class SignUpController extends GetxController {
   }
 
   Future<void> signUp() async {
-    // print(FirebaseAuth.instance.currentUser!.displayName.toString());
     customId = "${customId}@handong.ac.kr";
     try {
       await FirebaseAuth.instance.createUserWithEmailAndPassword(email: customId, password: customPw);

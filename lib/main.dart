@@ -21,7 +21,6 @@ import 'package:itaxi/signInUp/signInScreen.dart';
 import 'package:itaxi/signInUp/splashScreen.dart';
 import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/src/theme.dart';
-import 'package:itaxi/widget/twoButtonDialog.dart';
 import 'package:new_version/new_version.dart';
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';

@@ -9,7 +9,6 @@ import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/controller/chatRoomController.dart';
 import 'package:itaxi/model/chat.dart';
-import 'package:itaxi/chat/chatRoomScreen_bak.dart';
 import 'package:itaxi/model/post.dart';
 import 'package:itaxi/widget/abbreviatePlaceName.dart';
 import 'package:itaxi/widget/snackBar.dart';
@@ -18,7 +17,7 @@ import 'package:itaxi/model/history.dart';
 import 'package:itaxi/controller/screenController.dart';
 import 'package:itaxi/controller/placeController.dart';
 import 'package:itaxi/controller/dateController.dart';
-import 'package:itaxi/chat/chatroomDetailScreen.dart';
+import 'package:itaxi/chat/chatRoomDetailScreen.dart';
 
 Widget postListTile({
   required BuildContext context,

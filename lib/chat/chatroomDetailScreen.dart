@@ -1,12 +1,9 @@
 import 'dart:io';
 import 'dart:core';
 
-import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
 import 'package:itaxi/chat/chatDetailListTile.dart';
 import 'package:itaxi/controller/chatRoomController.dart';
@@ -18,12 +15,8 @@ import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/model/chat.dart';
 import 'package:itaxi/model/history.dart';
 import 'package:itaxi/model/ktxPost.dart';
-import 'package:itaxi/model/place.dart';
 import 'package:itaxi/model/post.dart';
-import 'package:itaxi/settings/settingScreen.dart';
 import 'package:itaxi/widget/abbreviatePlaceName.dart';
-import 'package:itaxi/widget/chatListTile.dart';
-import 'package:itaxi/widget/timelineDialog.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:itaxi/widget/showErrorDialog.dart';
 

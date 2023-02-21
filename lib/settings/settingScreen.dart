@@ -123,14 +123,6 @@ class _SettingScreenState extends State<SettingScreen> {
                   SizedBox(
                     height: 22.h,
                   ),
-                  _alarmListTile(
-                    title: '알림',
-                    nextPage: const AlarmScreen(),
-                    context: context,
-                  ),
-                  SizedBox(
-                    height: 22.h,
-                  ),
                   _settingListTile(
                     title: '버그제보',
                     nextPage: BugScreen(),

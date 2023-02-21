@@ -9,7 +9,7 @@ import 'package:itaxi/controller/navigationController.dart';
 import 'package:itaxi/controller/ktxPostController.dart';
 import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/controller/chatRoomController.dart';
-import 'package:itaxi/chat/chatroomDetailScreen.dart';
+import 'package:itaxi/chat/chatRoomDetailScreen.dart';
 import 'package:itaxi/model/ktxPost.dart';
 import 'package:itaxi/widget/snackBar.dart';
 

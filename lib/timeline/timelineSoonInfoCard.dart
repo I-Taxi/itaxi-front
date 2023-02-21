@@ -3,7 +3,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
-import 'package:itaxi/chat/chatRoomScreen_bak.dart';
 import 'package:itaxi/controller/chatRoomController.dart';
 import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/controller/postController.dart';
@@ -14,7 +13,7 @@ import 'package:itaxi/timeline/timelineDetailScreen.dart';
 import 'package:itaxi/widget/postTypeToString.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-import '../widget/HorizontalDashedDivider.dart';
+import '../widget/horizontalDashedDivider.dart';
 
 String infoCardDateFormater(String dateTime) {
   return DateFormat('MM/dd').format(DateTime.parse(dateTime));

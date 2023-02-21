@@ -17,7 +17,6 @@ import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/controller/navigationController.dart';
 import 'package:itaxi/controller/signInController.dart';
 import 'package:itaxi/model/userInfoList.dart';
-import 'package:itaxi/settings/alarmScreen.dart';
 import 'package:itaxi/settings/bugScreen.dart';
 import 'package:itaxi/settings/myInfoScreen.dart';
 import 'package:itaxi/settings/noticeScreen.dart';
@@ -265,7 +264,6 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
     return GetBuilder<DateController>(
       builder: (_) {
         Duration diff = DateTime.now().difference(_dateController.pickedDate!.add(Duration(days: difference)));
-        print(diff.inDays);
         if (diff.inDays <= 0) {
           return GestureDetector(
             behavior: HitTestBehavior.opaque,
