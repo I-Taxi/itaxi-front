@@ -37,7 +37,7 @@ class Advertisement {
         id: ds['id'],
         url: ds['url'],
         path: ds['path'],
-        imgName: ds['imgimgName'],
+        imgName: ds['imgName'],
         imgType: ds['imgType'],
         name: ds['name']);
   }

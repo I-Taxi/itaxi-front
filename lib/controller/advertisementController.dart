@@ -10,6 +10,12 @@ class AdvertisementController extends GetxController {
   late Future<List<Advertisement>> advertisements;
   late Future<Advertisement> advertisement;
 
+  @override
+  Future<void> onInit() async {
+    super.onInit();
+    advertisement = fetchAdvertisement(imgName: 'dog');
+  }
+
   Future<void> getAdvertisement({required String imgName}) async {
     advertisement = fetchAdvertisement(imgName: imgName);
     update();
@@ -18,6 +24,17 @@ class AdvertisementController extends GetxController {
   Future<void> getAdvertisementList() async {
     advertisements = fetchAdvertisements();
     update();
+  }
+
+  Advertisement advertisementfromJson(json) {
+    List<Advertisement> result = [];
+    json.forEach(
+      (item) {
+        result.add(Advertisement.fromDocs(item));
+      },
+    );
+
+    return result[0];
   }
 
   List<Advertisement> advertisementsFromJson(json) {
@@ -46,38 +63,33 @@ class AdvertisementController extends GetxController {
       return advertisementsFromJson(
           json.decode(utf8.decode(response.bodyBytes)));
     } else {
-      throw Exception('Failed to load image names');
+      throw Exception('Failed to load advertisement list');
     }
   }
 
   Future<Advertisement> fetchAdvertisement({required String imgName}) async {
     var advertisementUrl = dotenv.env['API_URL'].toString();
+    final Map<String, dynamic> queryParameters;
 
-    Map<String, String?> map = {
-      'imgName': imgName,
-    };
+    queryParameters = {'imgName': imgName};
 
-    var body = utf8.encode(json.encode(map));
+    String queryString = Uri(queryParameters: queryParameters).query;
 
-    http.Response response = await http.post(
+    advertisementUrl = '${advertisementUrl}advertisement?$queryString';
+
+    http.Response response = await http.get(
       Uri.parse(advertisementUrl),
       headers: <String, String>{
         'Content-type': 'application/json',
       },
-      body: body,
     );
 
+    print(utf8.decode(response.bodyBytes));
     if (response.statusCode == 200) {
       return advertisementfromJson(
           json.decode(utf8.decode(response.bodyBytes)));
     } else {
-      throw Exception('Failed to load image');
+      throw Exception('Failed to load advertisement');
     }
-  }
-
-  Advertisement advertisementfromJson(json) {
-    Advertisement result = Advertisement.fromDocs(json);
-
-    return result;
   }
 }
