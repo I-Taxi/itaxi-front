@@ -1,4 +1,3 @@
-import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -8,7 +7,6 @@ import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/controller/ktxPlaceController.dart';
 import 'package:itaxi/controller/ktxPostController.dart';
 import 'package:itaxi/controller/screenController.dart';
-import 'package:itaxi/mainScreen.dart';
 import 'package:itaxi/model/ktxPost.dart';
 import 'package:itaxi/widget/ktxPostListTile.dart';
 import 'package:itaxi/widget/abbreviatePlaceName.dart';
@@ -17,14 +15,12 @@ import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/controller/navigationController.dart';
 import 'package:itaxi/controller/signInController.dart';
 import 'package:itaxi/model/userInfoList.dart';
-import 'package:itaxi/settings/alarmScreen.dart';
 import 'package:itaxi/settings/bugScreen.dart';
 import 'package:itaxi/settings/myInfoScreen.dart';
 import 'package:itaxi/settings/noticeScreen.dart';
 import 'package:itaxi/settings/privacyPolicyScreen.dart';
 import 'package:itaxi/settings/termOfServiceScreen.dart';
 import 'package:itaxi/settings/versionScreen.dart';
-import 'package:flutter/cupertino.dart';
 
 class KtxCheckPlaceScreen extends StatefulWidget {
   const KtxCheckPlaceScreen({Key? key}) : super(key: key);

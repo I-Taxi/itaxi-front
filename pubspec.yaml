@@ -104,19 +104,9 @@ flutter:
     - assets/logo_2_new.png
     - assets/logo_text.png
 
-    # botton bar
-    - assets/bottom_bar/home_1.png
-    - assets/bottom_bar/home_2.png
-    - assets/bottom_bar/setting_1.png
-    - assets/bottom_bar/setting_2.png
-    - assets/bottom_bar/timeline_1.png
-    - assets/bottom_bar/timeline_2.png
-    - assets/bottom_bar/timeline_new.png
-
     # button
     - assets/button/add_1.png
     - assets/button/add_2.png
-    - assets/button/calendar.png
     - assets/button/readd.png
     - assets/button/search.png
     - assets/button/mail.png
@@ -140,21 +130,6 @@ flutter:
     - assets/arrow/arrow_down_2.png
     - assets/arrow/arrow_downward.png
 
-    # luggage
-    - assets/luggage/human.png
-    - assets/luggage/luggage_small.png
-    - assets/luggage/luggage_large.png
-
-    # participant
-    - assets/participant/1_1.png
-    - assets/participant/1_2.png
-    - assets/participant/2_1.png
-    - assets/participant/2_2.png
-    - assets/participant/3_1.png
-    - assets/participant/3_2.png
-    - assets/participant/4_1.png
-    - assets/participant/4_2.png
-
     # place
     - assets/place/departure.png
     - assets/place/destination.png
@@ -164,19 +139,15 @@ flutter:
     # type
     - assets/type/car_1.png
     - assets/type/car_2.png
-    - assets/type/car_text.png
     - assets/type/taxi_1.png
     - assets/type/taxi_2.png
-    - assets/type/taxi_text.png
     - assets/type/train_1.png
     - assets/type/train_2.png
-    - assets/type/train_text.png
 
     # for screen
     - assets/mainScreen.png
     - assets/timeLine.png
     - assets/DeptoDes.png
-    - assets/ListView_Taxi_Car.png
     - assets/newType/car_taxi.png
     - assets/newType/ktx.png
     - assets/newType/messenger.png

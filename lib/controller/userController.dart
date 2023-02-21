@@ -166,7 +166,6 @@ class UserController extends GetxController {
     );
     print(utf8.decode(response.bodyBytes));
     if (response.statusCode == 200) {
-      print(response.statusCode);
       isDeleted = 1;
     } else if (json.decode(utf8.decode(response.bodyBytes))["message"] == "다른 방에 입장해있으면 탈퇴할 수 없습니다.") {
       print(json.decode(utf8.decode(response.bodyBytes))["message"]);

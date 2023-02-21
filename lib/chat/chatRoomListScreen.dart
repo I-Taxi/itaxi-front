@@ -1,17 +1,11 @@
-import 'dart:io';
-
-import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:intl/intl.dart';
 import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/controller/postController.dart';
 import 'package:itaxi/controller/userController.dart';
 import 'package:itaxi/controller/navigationController.dart';
-import 'package:itaxi/model/post.dart';
 import 'package:itaxi/model/history.dart';
 import 'package:itaxi/widget/chatroomListListTile.dart';
 import 'package:url_launcher/url_launcher.dart';

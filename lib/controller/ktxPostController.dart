@@ -101,7 +101,6 @@ class KtxPostController extends GetxController {
     );
 
     if (response.statusCode == 200) {
-      print(utf8.decode(response.bodyBytes));
       return KtxPost.fromDocs(json.decode(utf8.decode(response.bodyBytes)));
     } else {
       print(response.statusCode);
@@ -133,7 +132,6 @@ class KtxPostController extends GetxController {
           KtxPost.fromDocs(json.decode(utf8.decode(response.bodyBytes)));
       await _chatRoomController.ktxJoinChat(post: result);
       await KtxChatRepository().setPost(post: result);
-      print('join');
     } else {
       throw Exception('Failed to join');
     }
@@ -165,7 +163,6 @@ class KtxPostController extends GetxController {
     );
 
     if (response.statusCode == 200) {
-      print(response.body);
       await _chatRoomController.ktxOutChat(post: post);
       KtxChatRepository().setPost(post: post);
 

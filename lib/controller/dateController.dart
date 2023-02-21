@@ -30,7 +30,7 @@ class DateController extends GetxController {
     final colorScheme = Theme.of(context).colorScheme;
     DateTime? selectedDate = await showDatePicker(
       context: context,
-      initialDate: pickedDate!,
+      initialDate: pickedDate,
       firstDate: DateTime.now(),
       lastDate: DateTime.now().add(const Duration(days: 31)),
       helpText: '출발일',
@@ -126,7 +126,7 @@ class DateController extends GetxController {
   }
 
   void beforDate(int difference) {
-    pickedDate = pickedDate!.add(Duration(days: difference));
+    pickedDate = pickedDate.add(Duration(days: difference));
     update();
     _postController.getPosts(
       depId: _placeController.dep?.id,
@@ -137,7 +137,7 @@ class DateController extends GetxController {
   }
 
   void beforeKtxDate(int difference) {
-    pickedDate = pickedDate!.add(Duration(days: difference));
+    pickedDate = pickedDate.add(Duration(days: difference));
     update();
     _ktxPostController.getPosts(
       depId: _ktxPlaceController.dep?.id,
@@ -147,7 +147,7 @@ class DateController extends GetxController {
   }
 
   void afterDate(int difference) {
-    pickedDate = pickedDate!.add(Duration(days: difference));
+    pickedDate = pickedDate.add(Duration(days: difference));
     update();
     _postController.getPosts(
       depId: _placeController.dep?.id,
@@ -158,7 +158,7 @@ class DateController extends GetxController {
   }
 
   void afterKtxDate(int difference) {
-    pickedDate = pickedDate!.add(Duration(days: difference));
+    pickedDate = pickedDate.add(Duration(days: difference));
     update();
     _ktxPostController.getPosts(
       depId: _ktxPlaceController.dep?.id,
@@ -168,8 +168,8 @@ class DateController extends GetxController {
   }
 
   DateTime mergeDateAndTime() {
-    return DateTime(pickedDate!.year, pickedDate!.month, pickedDate!.day,
-        pickedTime!.hour, pickedTime!.minute);
+    return DateTime(pickedDate.year, pickedDate.month, pickedDate.day,
+        pickedTime.hour, pickedTime.minute);
   }
 
   String formattingDateTime(DateTime datetime) {

@@ -2,9 +2,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:itaxi/controller/navigationController.dart';
 import 'package:itaxi/controller/signInController.dart';
-import 'package:itaxi/settings/settingScreen.dart';
 import 'package:itaxi/timeline/ktxCheckPlaceScreen.dart';
 import 'package:get/get.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+
 import 'package:itaxi/controller/addKtxPostController.dart';
 import 'package:itaxi/controller/dateController.dart';
 import 'package:itaxi/controller/ktxPlaceController.dart';
@@ -46,6 +47,8 @@ class _KtxScreenState extends State<KtxScreen> {
   late KtxPlaceSearchController _ktxPlaceSearchController;
   final SignInController _signInController = Get.find();
   final NavigationController _navController = Get.put(NavigationController());
+
+  static final storage = FlutterSecureStorage();
 
   void _openEndDrawer() {
     _scaffoldKey.currentState!.openEndDrawer();
@@ -425,48 +428,6 @@ class _KtxScreenState extends State<KtxScreen> {
     });
   }
 
-  // 알림 타일
-  // Widget _alarmListTile({
-  //   required String title,
-  //   required nextPage,
-  //   required BuildContext context,
-  // }) {
-  //   final colorScheme = Theme.of(context).colorScheme;
-  //   final textTheme = Theme.of(context).textTheme;
-  //   return Row(
-  //     mainAxisAlignment: MainAxisAlignment.center,
-  //     children: [
-  //       GestureDetector(
-  //         onTap: () {
-  //           Get.to(nextPage);
-  //         },
-  //         child: Text(
-  //           title,
-  //           textAlign: TextAlign.start,
-  //           style: textTheme.subtitle1?.copyWith(color: colorScheme.onTertiary),
-  //         ),
-  //       ),
-  //       Spacer(),
-  //       Container(
-  //         height: 17.h,
-  //         width: 34.w,
-  //         child: Transform.scale(
-  //           transformHitTests: false,
-  //           scale: .6,
-  //           child: CupertinoSwitch(
-  //               value: _userController.alarm,
-  //               activeColor: colorScheme.inverseSurface,
-  //               thumbColor: colorScheme.primary,
-  //               trackColor: colorScheme.tertiary,
-  //               onChanged: (bool value) {
-  //                 _userController.setAlarm(value);
-  //               }),
-  //         ),
-  //       )
-  //     ],
-  //   );
-  // }
-
   Widget _settingListTile({
     required String title,
     required nextPage,
@@ -527,7 +488,7 @@ class _KtxScreenState extends State<KtxScreen> {
                     ),
                     TextButton(
                         onPressed: () async {
-                          await SettingScreen.storage.delete(key: "login");
+                          await storage.delete(key: "login");
                           _signInController.reset();
                           _signInController.signedOutState();
                           _navController.changeIndex(0);

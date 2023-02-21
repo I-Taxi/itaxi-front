@@ -84,7 +84,6 @@ class KtxPlaceSearchController extends GetxController {
   }
 
   void changeDepOrDst(int idx) {
-    print(idx);
     _depOrDst = idx;
     update();
   }

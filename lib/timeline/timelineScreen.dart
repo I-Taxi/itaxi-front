@@ -70,7 +70,6 @@ class _TimelineScreenState extends State<TimelineScreen> {
   }
 
   void checkScrollPos() {
-    print(_scrollController.offset);
     if (_screenController.enlargement && _scrollController.offset >= _screenController.triggerScrollHeigth) {
       _screenController.setUnenlargement();
     } else if (_scrollController.offset <= _screenController.triggerScrollHeigth) {
