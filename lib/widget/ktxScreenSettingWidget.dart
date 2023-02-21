@@ -581,6 +581,7 @@ ElevatedButton lookupButton(TextTheme textTheme, ColorScheme colorScheme, BuildC
 
 GetBuilder gatherButton(TextTheme textTheme, ColorScheme colorScheme,
     ScreenController controller, BuildContext context) {
+  bool isKTXRoomExist = false;
   return GetBuilder<AddKtxPostController>(builder: (_) {
     return FutureBuilder<List<History>>(
       future: _historyController.historys,
@@ -619,6 +620,7 @@ GetBuilder gatherButton(TextTheme textTheme, ColorScheme colorScheme,
                         .isAfter(DateTime.now())){
                       if(snapshot.data![i].deptTime! == _dateController.formattingDateTime(_dateController.mergeDateAndTime(),) &&
                           snapshot.data![i].departure!.name == _ktxPlaceController.dep!.name && snapshot.data![i].destination!.name == _ktxPlaceController.dst!.name){
+                        isKTXRoomExist = true;
                         return showDialog(context: context, builder: (BuildContext context) {
                           return Dialog(
                             elevation: 0,
@@ -722,29 +724,28 @@ GetBuilder gatherButton(TextTheme textTheme, ColorScheme colorScheme,
                           );
                         });
                       }
-                      else if( i  == 0){
-                        KtxPost post = KtxPost(
-                          uid: _userController.uid,
-                          departure: _ktxPlaceController.dep,
-                          destination: _ktxPlaceController.dst,
-                          deptTime: _dateController.formattingDateTime(
-                            _dateController.mergeDateAndTime(),
-                          ),
-                          sale: _addKtxPostController.sale,
-                          capacity: _addKtxPostController.capacity,
-                        );
-                        _navigationController.changeIndex(3);
-                        await _addKtxPostController.fetchAddPost(ktxPost: post);
-                        await _ktxPostController.getPosts(
-                          depId: _ktxPlaceController.dep?.id,
-                          dstId: _ktxPlaceController.dst?.id,
-                          time: _dateController.formattingDateTime(
-                            _dateController.mergeDateAndTime(),
-                          ),
-                        );
-                      }
-
                     }
+                  }
+                  if(!isKTXRoomExist){
+                    KtxPost post = KtxPost(
+                      uid: _userController.uid,
+                      departure: _ktxPlaceController.dep,
+                      destination: _ktxPlaceController.dst,
+                      deptTime: _dateController.formattingDateTime(
+                        _dateController.mergeDateAndTime(),
+                      ),
+                      sale: _addKtxPostController.sale,
+                      capacity: _addKtxPostController.capacity,
+                    );
+                    _navigationController.changeIndex(3);
+                    await _addKtxPostController.fetchAddPost(ktxPost: post);
+                    await _ktxPostController.getPosts(
+                      depId: _ktxPlaceController.dep?.id,
+                      dstId: _ktxPlaceController.dst?.id,
+                      time: _dateController.formattingDateTime(
+                        _dateController.mergeDateAndTime(),
+                      ),
+                    );
                   }
                 }
               }

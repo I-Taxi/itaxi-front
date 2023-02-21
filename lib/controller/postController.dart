@@ -201,7 +201,9 @@ class PostController extends GetxController {
       },
       body: body,
     );
-    if (response.statusCode == 200) {
+    if (response.statusCode == 200 && DateTime.tryParse(
+        _chatRoomController.post.deptTime!)!
+        .isAfter(DateTime.now())) {
       await _chatRoomController.outChat(post: post);
       ChatRepository().setPost(post: post);
       int oldOwnerId = -1;
