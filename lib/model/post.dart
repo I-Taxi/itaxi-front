@@ -180,7 +180,7 @@ class Post {
     }
 
     postName =
-        "${departure!.name!} - ${destination!.name!} #${DateFormat('MMd').format(DateTime.parse(deptTime!))}";
+        "${departure!.name!} - ${destination!.name!} #${DateFormat('MM/dd').format(DateTime.parse(deptTime!))}";
 
     return {
       'id': id,
@@ -199,7 +199,7 @@ class Post {
     }
 
     postName =
-        "${departure!.name!} - ${destination!.name!} #${DateFormat('MMd').format(DateTime.parse(deptTime!))}";
+        "${departure!.name!} - ${destination!.name!} #${DateFormat('MM/dd').format(DateTime.parse(deptTime!))}";
 
     return {
       'id': id,

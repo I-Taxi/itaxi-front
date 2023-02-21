@@ -146,7 +146,7 @@ class KtxPost {
     }
 
     postName =
-        "${departure!.name!} - ${destination!.name!} #${DateFormat('MMd').format(DateTime.parse(deptTime!))}";
+        "${departure!.name!} - ${destination!.name!} #${DateFormat('MM/dd').format(DateTime.parse(deptTime!))}";
 
     return {
       'id': id,
