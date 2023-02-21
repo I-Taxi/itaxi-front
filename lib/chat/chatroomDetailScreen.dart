@@ -141,8 +141,8 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                               Expanded(
                                 child: Text(
                                   _chatRoomController.postType != 3
-                                      ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} #${DateFormat('MMd').format(DateTime.parse(time))}"
-                                      : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} #${DateFormat('MMd').format(DateTime.parse(time))}",
+                                      ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} #${DateFormat('MM/dd').format(DateTime.parse(time))}"
+                                      : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} #${DateFormat('MM/dd').format(DateTime.parse(time))}",
                                   style: textTheme.subtitle1?.copyWith(
                                     color: colorScheme.primary,
                                   ),
@@ -427,8 +427,8 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                 Flexible(
                                   child: Text(
                                     _chatRoomController.postType != 3
-                                        ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} (${DateFormat('MMd').format(DateTime.parse(time))})"
-                                        : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} (${DateFormat('MMd').format(DateTime.parse(time))})",
+                                        ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} (${DateFormat('MM/dd').format(DateTime.parse(time))})"
+                                        : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} (${DateFormat('MM/dd').format(DateTime.parse(time))})",
                                     style: textTheme.subtitle1?.copyWith(
                                         color: colorScheme.onTertiary,
                                         fontWeight: FontWeight.w500),
@@ -730,8 +730,8 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                 Flexible(
                                   child: Text(
                                     _chatRoomController.postType != 3
-                                        ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} (${DateFormat('MMd').format(DateTime.parse(time))})"
-                                        : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} (${DateFormat('MMd').format(DateTime.parse(time))})",
+                                        ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} (${DateFormat('MM/dd').format(DateTime.parse(time))})"
+                                        : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} (${DateFormat('MM/dd').format(DateTime.parse(time))})",
                                     style: textTheme.subtitle1?.copyWith(
                                         color: colorScheme.onTertiary,
                                         fontWeight: FontWeight.w500),
@@ -959,8 +959,8 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                               Flexible(
                                 child: Text(
                                   _chatRoomController.postType != 3
-                                      ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} (${DateFormat('MMd').format(DateTime.parse(time))})"
-                                      : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} (${DateFormat('MMd').format(DateTime.parse(time))})",
+                                      ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} (${DateFormat('MM/dd').format(DateTime.parse(time))})"
+                                      : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} (${DateFormat('MM/dd').format(DateTime.parse(time))})",
                                   style: textTheme.subtitle1?.copyWith(
                                       color: colorScheme.onTertiary,
                                       fontWeight: FontWeight.w500),

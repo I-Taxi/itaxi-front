@@ -762,6 +762,7 @@ ElevatedButton lookupButton(TextTheme textTheme, ColorScheme colorScheme, BuildC
 
 GetBuilder gatherButton(
     TextTheme textTheme, ColorScheme colorScheme, ScreenController controller, BuildContext context) {
+  bool isRoomExist = false;
   return GetBuilder<AddPostController>(builder: (_) {
     return FutureBuilder<List<History>>(
       future: _historyController.historys,
@@ -795,6 +796,7 @@ GetBuilder gatherButton(
                         .isAfter(DateTime.now())){
                       if(snapshot.data![i].deptTime! == _dateController.formattingDateTime(_dateController.mergeDateAndTime(),) &&
                           snapshot.data![i].departure!.name == _placeController.dep!.name && snapshot.data![i].destination!.name == _placeController.dst!.name){
+                        isRoomExist = true;
                         return showDialog(context: context, builder: (BuildContext context) {
                           return Dialog(
                             elevation: 0,
@@ -906,36 +908,34 @@ GetBuilder gatherButton(
                           );
                         });
                       }
-                      else if(i == 0){
-                        Post post = Post(
-                          uid: _userController.uid,
-                          postType: controller.mainScreenCurrentTabIndex,
-                          departure: _placeController.dep,
-                          destination: _placeController.dst,
-                          deptTime: _dateController.formattingDateTime(
-                            _dateController.mergeDateAndTime(),
-                          ),
-                          capacity: _addPostController.capacity,
-                          stopovers: _placeController.stopOver,
-                        );
-
-                        http.Response response = await _addPostController.fetchAddPost(post: post);
-                        if (response.statusCode == 200) {
-                          await _postController.getPosts(
-                            depId: _placeController.dep?.id,
-                            dstId: _placeController.dst?.id,
-                            time: _dateController.formattingDateTime(
-                              _dateController.mergeDateAndTime(),
-                            ),
-                            postType: controller.mainScreenCurrentTabIndex,
-                          );
-                          _navigationController.changeIndex(3);
-                        } else {
-                          _addPostController.completeLoad();
-                          // if (context.mounted) snackBar(context: context, title: '알 수 없는 에러로 방 만들기에 실패했습니다.');
-                        }
-                      }
-
+                    }
+                  }
+                  if(!isRoomExist){
+                    Post post = Post(
+                      uid: _userController.uid,
+                      postType: controller.mainScreenCurrentTabIndex,
+                      departure: _placeController.dep,
+                      destination: _placeController.dst,
+                      deptTime: _dateController.formattingDateTime(
+                        _dateController.mergeDateAndTime(),
+                      ),
+                      capacity: _addPostController.capacity,
+                      stopovers: _placeController.stopOver,
+                    );
+                    http.Response response = await _addPostController.fetchAddPost(post: post);
+                    if (response.statusCode == 200) {
+                      await _postController.getPosts(
+                        depId: _placeController.dep?.id,
+                        dstId: _placeController.dst?.id,
+                        time: _dateController.formattingDateTime(
+                          _dateController.mergeDateAndTime(),
+                        ),
+                        postType: controller.mainScreenCurrentTabIndex,
+                      );
+                      _navigationController.changeIndex(3);
+                    } else {
+                      _addPostController.completeLoad();
+                      // if (context.mounted) snackBar(context: context, title: '알 수 없는 에러로 방 만들기에 실패했습니다.');
                     }
                   }
                 }

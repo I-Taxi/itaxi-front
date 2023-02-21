@@ -80,8 +80,7 @@ class KtxPost {
       participantNum: ds['participantNum'],
       status: ds['status'],
       sale: ds['sale'],
-      joiners: List<Joiner>.from(
-          ds['joiners'].map((json) => Joiner.fromUidDocs(json))),
+      joiners: List<Joiner>.from(ds['joiners'].map((json) => Joiner.fromUidDocs(json))),
     );
   }
 
@@ -95,8 +94,7 @@ class KtxPost {
       participantNum: ds['participantNum'],
       status: ds['status'],
       sale: ds['sale'],
-      joiners:
-          List<Joiner>.from(ds['joiners'].map((json) => Joiner.fromDocs(json))),
+      joiners: List<Joiner>.from(ds['joiners'].map((json) => Joiner.fromDocs(json))),
     );
   }
 
@@ -140,13 +138,11 @@ class KtxPost {
   Map<String, dynamic> toFirestoreMap() {
     List<int?> membersId = [];
     String postName = "";
-
     for (Joiner? joiner in joiners!) {
       membersId.add(joiner!.memberId);
     }
 
-    postName =
-        "${departure!.name!} - ${destination!.name!} #${DateFormat('MMd').format(DateTime.parse(deptTime!))}";
+    postName = "${departure!.name!} - ${destination!.name!} #${DateFormat('MM/dd').format(DateTime.parse(deptTime!))}";
 
     return {
       'id': id,

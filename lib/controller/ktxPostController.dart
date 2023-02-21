@@ -43,8 +43,7 @@ class KtxPostController extends GetxController {
   }
 
   // Posts 데이터 가져오기
-  Future<List<KtxPost>> fetchPost(
-      {int? depId, int? dstId, required String time}) async {
+  Future<List<KtxPost>> fetchPost({int? depId, int? dstId, required String time}) async {
     var postUrl = dotenv.env['API_URL'].toString();
     final Map<String, dynamic> queryParameters;
     if ((depId == null || depId == -1) && (dstId == null || dstId == -1)) {
@@ -101,7 +100,7 @@ class KtxPostController extends GetxController {
     );
 
     if (response.statusCode == 200) {
-      return KtxPost.fromDocs(json.decode(utf8.decode(response.bodyBytes)));
+      return KtxPost.fromPostAllDocs(json.decode(utf8.decode(response.bodyBytes)));
     } else {
       print(response.statusCode);
       print(utf8.decode(response.bodyBytes));
@@ -128,8 +127,7 @@ class KtxPostController extends GetxController {
     );
 
     if (response.statusCode == 200) {
-      KtxPost result =
-          KtxPost.fromDocs(json.decode(utf8.decode(response.bodyBytes)));
+      KtxPost result = KtxPost.fromPostAllDocs(json.decode(utf8.decode(response.bodyBytes)));
       await _chatRoomController.ktxJoinChat(post: result);
       await KtxChatRepository().setPost(post: result);
     } else {
