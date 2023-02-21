@@ -12,8 +12,7 @@ class KtxChatRepository {
   ChatRoomController _chatRoomController = Get.find();
 
   Future<void> setPost({required KtxPost post}) async {
-    DocumentReference reference =
-        _firestore.collection('KtxPost').doc(post.id.toString());
+    DocumentReference reference = _firestore.collection('KtxPost').doc(post.id.toString());
     await reference.set(post.toFirestoreMap());
   }
 
@@ -23,18 +22,10 @@ class KtxChatRepository {
       await setPost(post: post);
       _chatRoomController.firstSend = false;
     }
-    String cid = _firestore
-        .collection('KtxPost')
-        .doc(post.id.toString())
-        .collection('Chat')
-        .doc(chat.chatTime.toString())
-        .id;
+    String cid =
+        _firestore.collection('KtxPost').doc(post.id.toString()).collection('Chat').doc(chat.chatTime.toString()).id;
     chat = chat.copyWith(id: cid);
-    DocumentReference reference = _firestore
-        .collection('KtxPost')
-        .doc(post.id.toString())
-        .collection('Chat')
-        .doc(cid);
+    DocumentReference reference = _firestore.collection('KtxPost').doc(post.id.toString()).collection('Chat').doc(cid);
     await reference.set(chat.toMap());
   }
 
@@ -44,27 +35,15 @@ class KtxChatRepository {
       await setPost(post: post);
       _chatRoomController.firstSend = false;
     }
-    String cid = _firestore
-        .collection('KtxPost')
-        .doc(post.id.toString())
-        .collection('Chat')
-        .doc(chat.chatTime.toString())
-        .id;
+    String cid =
+        _firestore.collection('KtxPost').doc(post.id.toString()).collection('Chat').doc(chat.chatTime.toString()).id;
     chat = chat.copyWith(id: cid);
-    DocumentReference reference = _firestore
-        .collection('KtxPost')
-        .doc(post.id.toString())
-        .collection('Chat')
-        .doc(cid);
+    DocumentReference reference = _firestore.collection('KtxPost').doc(post.id.toString()).collection('Chat').doc(cid);
     await reference.set(chat.toMap());
   }
 
   Stream<List<Chat>> getChats({required KtxPost post}) {
-    final snapshot = _firestore
-        .collection('KtxPost')
-        .doc(post.id.toString())
-        .collection('Chat')
-        .snapshots();
+    final snapshot = _firestore.collection('KtxPost').doc(post.id.toString()).collection('Chat').snapshots();
     return snapshot.map((snapshot) {
       List<Chat> result = [];
       try {
