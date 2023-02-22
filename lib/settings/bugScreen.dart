@@ -4,7 +4,7 @@ import 'package:flutter_email_sender/flutter_email_sender.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
-import 'package:itaxi/widget/mainDialog.dart';
+import 'package:itaxi/tools/widget/mainDialog.dart';
 
 
 class BugScreen extends StatelessWidget {

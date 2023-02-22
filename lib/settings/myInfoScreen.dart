@@ -2,13 +2,13 @@ import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:itaxi/controller/userController.dart';
+import 'package:itaxi/user/controller/userController.dart';
 import 'package:dotted_line/dotted_line.dart';
 
-import '../model/userInfoList.dart';
-import 'package:itaxi/controller/signInController.dart';
-import 'package:itaxi/controller/navigationController.dart';
-import '../widget/mainDialog.dart';
+import 'package:itaxi/user/model/userInfoList.dart';
+import 'package:itaxi/user/controller/signInController.dart';
+import 'package:itaxi/tools/controller/navigationController.dart';
+import '../tools/widget/mainDialog.dart';
 import 'package:itaxi/settings/changePhoneNumScreen.dart';
 import 'package:itaxi/settings/resetPWScreen.dart';
 import 'package:itaxi/settings/changeAccountScreen.dart';
