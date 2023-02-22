@@ -3,6 +3,14 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 
+double smallFontSize(double size) {
+  if (size.h > size.w) {
+    return size.w;
+  } else {
+    return size.h;
+  }
+}
+
 class ITaxiTheme {
   // static const _lightFillColor = Color(0xffffffff);
 
@@ -88,22 +96,22 @@ class ITaxiTheme {
   );
 
   static TextTheme textThemeDefault = TextTheme(
-    headline1: TextStyle(fontSize: 38.sp, fontFamily: 'Black'),
-    headline2: TextStyle(fontSize: 30.sp, fontFamily: 'Bold'),
-    headline3: TextStyle(fontSize: 22.sp, fontFamily: 'Bold'),
-    subtitle1: TextStyle(fontSize: 18.sp, fontFamily: 'Medium'),
-    subtitle2: TextStyle(fontSize: 14.sp, fontFamily: 'SemiBold'),
-    bodyText1: TextStyle(fontSize: 14.sp, fontFamily: 'Regular'),
-    bodyText2: TextStyle(fontSize: 11.sp, fontFamily: 'Regular'),
+    headline1: TextStyle(fontSize: smallFontSize(38), fontFamily: 'Black'),
+    headline2: TextStyle(fontSize: smallFontSize(30), fontFamily: 'Bold'),
+    headline3: TextStyle(fontSize: smallFontSize(22), fontFamily: 'Bold'),
+    subtitle1: TextStyle(fontSize: smallFontSize(18), fontFamily: 'Medium'),
+    subtitle2: TextStyle(fontSize: smallFontSize(14), fontFamily: 'SemiBold'),
+    bodyText1: TextStyle(fontSize: smallFontSize(14), fontFamily: 'Regular'),
+    bodyText2: TextStyle(fontSize: smallFontSize(11), fontFamily: 'Regular'),
   );
 
   static TextTheme textThemeIOS = TextTheme(
-    headline1: TextStyle(fontSize: 40.sp, fontFamily: 'Black'),
-    headline2: TextStyle(fontSize: 32.sp, fontFamily: 'Bold'),
-    headline3: TextStyle(fontSize: 24.sp, fontFamily: 'Bold'),
-    subtitle1: TextStyle(fontSize: 20.sp, fontFamily: 'Medium'),
-    subtitle2: TextStyle(fontSize: 16.sp, fontFamily: 'SemiBold'),
-    bodyText1: TextStyle(fontSize: 16.sp, fontFamily: 'Regular'),
-    bodyText2: TextStyle(fontSize: 13.sp, fontFamily: 'Regular'),
+    headline1: TextStyle(fontSize: smallFontSize(40), fontFamily: 'Black'),
+    headline2: TextStyle(fontSize: smallFontSize(32), fontFamily: 'Bold'),
+    headline3: TextStyle(fontSize: smallFontSize(24), fontFamily: 'Bold'),
+    subtitle1: TextStyle(fontSize: smallFontSize(20), fontFamily: 'Medium'),
+    subtitle2: TextStyle(fontSize: smallFontSize(16), fontFamily: 'SemiBold'),
+    bodyText1: TextStyle(fontSize: smallFontSize(16), fontFamily: 'Regular'),
+    bodyText2: TextStyle(fontSize: smallFontSize(13), fontFamily: 'Regular'),
   );
 }
