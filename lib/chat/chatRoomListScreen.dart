@@ -1,5 +1,8 @@
+import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
@@ -36,8 +39,7 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
     final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey =
         GlobalKey<RefreshIndicatorState>();
 
-    _launchURL() async {
-      const url = 'https://cra16.github.io/';
+    _launchURL(String url) async {
       if (await canLaunch(url)) {
         await launch(url);
       } else {
@@ -53,7 +55,6 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
         backgroundColor: colorScheme.background,
         strokeWidth: 2.0,
         onRefresh: () async {
-          await _advertisementController.getAdvertisement(imgName: 'dog');
           await _historyController.getHistorys();
         },
         child: GetBuilder<HistoryController>(builder: (_) {
@@ -78,61 +79,51 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
                         SizedBox(
                           height: 13.h,
                         ),
-                        GestureDetector(
-                          onTap: _launchURL,
-                          child: Container(
-                            width: 342.w,
-                            height: 75.h,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(8.0),
-                              border: Border.all(
-                                  color: colorScheme.inversePrimary, width: 2),
-                              //   boxShadow: [
-                              //     BoxShadow(
-                              //       color: colorScheme.shadow,
-                              //       blurRadius: 5,
-                              //     ),
-                              // ]
-                            ),
-                            child: ClipRRect(
-                                borderRadius: BorderRadius.circular(6.0),
-                                child: GetBuilder<AdvertisementController>(
-                                  builder: (_) {
-                                    return FutureBuilder<Advertisement>(
-                                      future: _advertisementController
-                                          .advertisement,
-                                      builder:
-                                          (BuildContext context, snapshot) {
-                                        if (snapshot.hasData) {
-                                          return Image.file(
-                                            File(
-                                              "${snapshot.data!.path}${snapshot.data!.imgName}.${snapshot.data!.imgType}",
+                        GetBuilder<AdvertisementController>(
+                          builder: (_) {
+                            return FutureBuilder<Advertisement>(
+                              future:
+                                  _advertisementController.advertisementImage,
+                              builder: (BuildContext context, snapshot) {
+                                return GestureDetector(
+                                  onTap: () => _launchURL(snapshot.data!.url!),
+                                  child: Container(
+                                    width: 342.w,
+                                    height: 75.h,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      border: Border.all(
+                                          color: colorScheme.inversePrimary,
+                                          width: 2),
+                                      //   boxShadow: [
+                                      //     BoxShadow(
+                                      //       color: colorScheme.shadow,
+                                      //       blurRadius: 5,
+                                      //     ),
+                                      // ]
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(6.0),
+                                      child: snapshot.hasData
+                                          ? Image.memory(
+                                              base64Decode(
+                                                  snapshot.data!.byte!),
+                                              width: 342.w,
+                                              height: 75.h,
+                                              fit: BoxFit.fill,
+                                            )
+                                          : Image.asset(
+                                              'assets/banner.png',
+                                              width: 342.w,
+                                              height: 75.h,
+                                              fit: BoxFit.fill,
                                             ),
-                                            width: 342.w,
-                                            height: 75.h,
-                                            fit: BoxFit.fill,
-                                          );
-                                        } else {
-                                          return Image.asset(
-                                            'assets/banner.png',
-                                            width: 342.w,
-                                            height: 75.h,
-                                            fit: BoxFit.fill,
-                                          );
-                                        }
-                                      },
-                                    );
-                                  },
-                                )
-                                // Image.asset(
-                                //   'assets/banner.png',
-                                //   width: 342.w,
-                                //   height: 75.h,
-                                //   fit: BoxFit.fill,
-                                // ),
-
-                                ),
-                          ),
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
                         ),
                         SizedBox(
                           height: 13.h,
