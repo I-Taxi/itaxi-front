@@ -14,13 +14,13 @@ if (flutterRoot == null) {
 def flutterVersionCode = localProperties.getProperty('flutter.versionCode')
 if (flutterVersionCode == null) {
 
-    flutterVersionCode = '7'
+    flutterVersionCode = '6'
 }
 
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
 
-    flutterVersionName = '4.1.0+2'
+    flutterVersionName = '4.1.0'
     
 }
 
@@ -62,8 +62,8 @@ android {
         // For more information, see: https://docs.flutter.dev/deployment/android#reviewing-the-build-configuration.
         minSdkVersion 21
         targetSdkVersion flutter.targetSdkVersion
-        versionCode 7
-        versionName "4.1.0+2"
+        versionCode 6
+        versionName "4.1.0"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
@@ -74,10 +74,6 @@ android {
 ////            storePassword file('../keystore/store.password').text.trim() // Key store 비밀번호
 ////            keyPassword file('../keystore/key.password').text.trim() // Key 비밀번호
 ////            keyAlias 'appKey'
-//            keyAlias keystoreProperties['keyAlias']
-//            keyPassword keystoreProperties['keyPassword']
-//            storeFile file(keystoreProperties['storeFile'])
-//            storePassword keystoreProperties['storePassword']
 //        }
 //
 //

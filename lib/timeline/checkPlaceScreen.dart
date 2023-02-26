@@ -102,7 +102,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                 onPressed: () {
                   _screenController.setCheckScreen(false);
                 },
-                icon: Image.asset("assets/arrow/arrow_back_1.png",
+                icon: Image.asset("assets/arrow/back_short.png",
                     color: colorScheme.primary, width: 20.w, height: 20.h)),
             actions: [
               Padding(
@@ -112,7 +112,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                     _openEndDrawer();
                   },
                   icon: Image.asset(
-                    "assets/button/menu.png",
+                    "assets/button/open_menu.png",
                     color: colorScheme.background,
                     width: 24.w,
                     height: 24.h,
@@ -147,7 +147,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                           Image.asset(
                             width: 102.5.w,
                             height: 16.52.h,
-                            'assets/DeptoDes.png',
+                            'assets/Image/DeptoDes.png',
                           ),
                           SizedBox(
                             width: 35.5.w,
@@ -332,7 +332,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
               child: Image.asset(
                 height: 40.h,
                 width: 178.w,
-                'assets/button/add_timeline.png',
+                'assets/button/go_gather_screen.png',
               ),
             )
           ],
@@ -355,7 +355,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                   Padding(
                     padding: EdgeInsets.only(top: 87.h, left: 35.w, right: 24.w),
                     child: Image(
-                      image: AssetImage("assets/profile.png"),
+                      image: AssetImage("assets/Image/profile.png"),
                       height: 88.w,
                       width: 88.w,
                     ),
@@ -476,7 +476,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                               onPressed: () {
                                 _logout(context: context);
                               },
-                              icon: Image.asset("assets/logout.png"),
+                              icon: Image.asset("assets/button/logout_account.png"),
                               color: colorScheme.tertiary,
                             ),
                             GestureDetector(

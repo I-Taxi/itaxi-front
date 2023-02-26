@@ -37,7 +37,7 @@ Widget noticeListTile({
                         onPressed: (){
                           Navigator.pop(context);
                         },
-                        icon: Image.asset("assets/arrow/arrow_back_2.png", width: 20.w, height: 20.h,),
+                        icon: Image.asset("assets/arrow/back_long.png", width: 20.w, height: 20.h,),
                       ),
                     ),
                     actions: [
@@ -45,7 +45,7 @@ Widget noticeListTile({
                           onPressed: (){
                             Navigator.pop(context);
                           },
-                          icon: Image.asset("assets/button/clear.png", width: 20.w, height: 20.h,)
+                          icon: Image.asset("assets/button/close_current_page1.png", width: 20.w, height: 20.h,)
                       ),
                     ],
                   ),

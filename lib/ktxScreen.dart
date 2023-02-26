@@ -106,7 +106,7 @@ class _KtxScreenState extends State<KtxScreen> {
                         decoration: BoxDecoration(
                           image: DecorationImage(
                             fit: BoxFit.cover,
-                            image: AssetImage('assets/background.png'),
+                            image: AssetImage('assets/background/background.png'),
                           ),
                         )),
                     Padding(
@@ -270,7 +270,7 @@ class _KtxScreenState extends State<KtxScreen> {
                   Padding(
                     padding: EdgeInsets.only(top: 87.h, left: 35.w, right: 24.w),
                     child: Image(
-                      image: AssetImage("assets/profile.png"),
+                      image: AssetImage("assets/Image/profile.png"),
                       height: 88.w,
                       width: 88.w,
                     ),
@@ -392,7 +392,7 @@ class _KtxScreenState extends State<KtxScreen> {
                               onPressed: () {
                                 _logout(context: context);
                               },
-                              icon: Image.asset("assets/logout.png"),
+                              icon: Image.asset("assets/button/logout_account.png"),
                               color: colorScheme.tertiary,
                             ),
                             GestureDetector(

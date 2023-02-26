@@ -46,13 +46,13 @@ Widget chatroomListListTile({required BuildContext context, required History his
         child: Row(children: [
           history.postType != 3
               ? Image.asset(
-                  'assets/icon/icon-Car.png',
+                  'assets/icon/chat_room_list_car.png',
                   width: 56.w,
                   height: 56.h,
                   fit: BoxFit.fill,
                 )
               : Image.asset(
-                  'assets/icon/icon-KTX.png',
+                  'assets/icon/chat_room_list_ktx.png',
                   width: 56.w,
                   height: 56.h,
                   fit: BoxFit.fill,

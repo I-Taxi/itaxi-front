@@ -114,7 +114,7 @@ class _MainScreenState extends State<MainScreen> {
                         decoration: const BoxDecoration(
                           image: DecorationImage(
                             fit: BoxFit.cover,
-                            image: AssetImage('assets/background.png'),
+                            image: AssetImage('assets/background/background.png'),
                           ),
                         )),
                     Padding(
@@ -274,7 +274,7 @@ class _MainScreenState extends State<MainScreen> {
                   Padding(
                     padding: EdgeInsets.only(top: 87.h, left: 35.w, right: 24.w),
                     child: Image(
-                      image: AssetImage("assets/profile.png"),
+                      image: AssetImage("assets/Image/profile.png"),
                       height: 88.w,
                       width: 88.w,
                     ),
@@ -396,7 +396,7 @@ class _MainScreenState extends State<MainScreen> {
                               onPressed: () {
                                 _logout(context: context);
                               },
-                              icon: Image.asset("assets/logout.png"),
+                              icon: Image.asset("assets/button/logout_account.png"),
                               color: colorScheme.tertiary,
                             ),
                             GestureDetector(

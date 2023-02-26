@@ -193,7 +193,7 @@ Widget placeSearchTile({
                     GestureDetector(
                       onTap: favoritePressed,
                       child: ImageIcon(
-                        AssetImage('assets/icon/add.png'),
+                        AssetImage('assets/button/add_favorite_place.png'),
                         size: 24.r,
                         color: colorScheme.onSecondaryContainer,
                       ),
@@ -289,7 +289,7 @@ Widget favoritePlaceSearchTile({
                       GestureDetector(
                         onTap: favoritePressed,
                         child: ImageIcon(
-                          AssetImage('assets/icon/trash_can.png'),
+                          AssetImage('assets/button/remove_favorite_place.png'),
                           size: 24.r,
                           color: colorScheme.onSecondaryContainer,
                         ),

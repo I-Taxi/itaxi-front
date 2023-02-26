@@ -87,7 +87,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     Image.asset(
                       width: 110.w,
                       height: 122.h,
-                      'assets/logo_text.png',
+                      'assets/logo/logo_text.png',
                     ),
                     // 로고 글씨
                     SizedBox(

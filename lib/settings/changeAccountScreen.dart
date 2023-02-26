@@ -45,7 +45,7 @@ class _ChangeAccountScreenState extends State<ChangeAccountScreen> {
           onPressed: () {
             Get.back();
           },
-          icon: Image.asset("assets/arrow/arrow_back_1.png", color: colorScheme.tertiary, width: 11.62.w, height: 20.51.h,)
+          icon: Image.asset("assets/arrow/back_short.png", color: colorScheme.tertiary, width: 11.62.w, height: 20.51.h,)
         ),
       ),
       backgroundColor: colorScheme.background,

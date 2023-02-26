@@ -312,7 +312,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                         ),
                                         InkWell(
                                           child: Image.asset(
-                                            'assets/icon/phone.png',
+                                            'assets/button/call_other_person.png',
                                             width: 24.w,
                                             height: 24.h,
                                           ),
@@ -331,7 +331,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                         ),
                                         InkWell(
                                           child: Image.asset(
-                                            'assets/icon/message.png',
+                                            'assets/button/send_message.png',
                                             width: 24.w,
                                             height: 24.h,
                                           ),
@@ -375,7 +375,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                               currentKtxPost);
                         },
                         child: Row(children: [
-                          Image.asset('assets/icon/icon-LogOut.png'),
+                          Image.asset('assets/button/logout_account.png'),
                           SizedBox(
                             width: 5.w,
                           ),
@@ -439,7 +439,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                   onPressed: () {
                                     _scaffoldKey.currentState!.openEndDrawer();
                                   },
-                                  icon: Image.asset('assets/button/menu.png'),
+                                  icon: Image.asset('assets/button/open_menu.png'),
                                 ),
                               ],
                             ),
@@ -670,7 +670,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                                 width: 91.w,
                                                 height: 27.h,
                                                 child: Image.asset(
-                                                    'assets/button/new_message.png'),
+                                                    'assets/button/return_latest_chat.png'),
                                               ),
                                             ],
                                           ),
@@ -695,7 +695,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                           width: 91.w,
                                           height: 27.h,
                                           child: Image.asset(
-                                              'assets/button/new_message.png'),
+                                              'assets/button/return_latest_chat.png'),
                                         ),
                                       ),
                                     ),
@@ -742,7 +742,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                   onPressed: () {
                                     _scaffoldKey.currentState!.openEndDrawer();
                                   },
-                                  icon: Image.asset('assets/button/menu.png'),
+                                  icon: Image.asset('assets/button/open_menu.png'),
                                 ),
                               ],
                             ),
@@ -971,7 +971,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                 onPressed: () {
                                   _scaffoldKey.currentState!.openEndDrawer();
                                 },
-                                icon: Image.asset('assets/button/menu.png'),
+                                icon: Image.asset('assets/button/open_menu.png'),
                               ),
                             ],
                           ),
@@ -1211,7 +1211,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                             child: Padding(
                               padding:
                                   EdgeInsets.fromLTRB(0.w, 2.h, 8.68.w, 1.68.h),
-                              child: Image.asset('assets/button/send.png'),
+                              child: Image.asset('assets/button/send_chat.png'),
                             ),
                           );
                         } else {
@@ -1220,7 +1220,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                             child: Padding(
                               padding:
                                   EdgeInsets.fromLTRB(0.w, 2.h, 8.68.w, 1.68.h),
-                              child: Image.asset('assets/button/send.png'),
+                              child: Image.asset('assets/button/send_chat.png'),
                             ),
                           );
                         }

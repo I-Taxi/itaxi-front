@@ -48,7 +48,7 @@ Padding lookupSetDepDstWidget(
           ),
           Center(
             child: Image(
-              image: AssetImage('assets/place/dep-dest.png'),
+              image: AssetImage('assets/Image/dep-dest.png'),
               width: 23.w,
             ),
           ),
@@ -117,7 +117,7 @@ Padding lookupSetDepDstWidget(
             onPressed: () {
               _ktxPlaceController.swapDepAndDst();
             },
-            icon: Image.asset('assets/change.png'),
+            icon: Image.asset('assets/button/change_dep_des.png'),
             iconSize: 35,
             color: colorScheme.tertiary,
           ),
@@ -147,7 +147,7 @@ Padding gatherSetDepDstWidget(
           ),
           Center(
             child: Image(
-              image: AssetImage('assets/place/dep-dest.png'),
+              image: AssetImage('assets/Image/dep-dest.png'),
               width: 23.w,
             ),
           ),
@@ -216,7 +216,7 @@ Padding gatherSetDepDstWidget(
             onPressed: () {
               _ktxPlaceController.swapDepAndDst();
             },
-            icon: Image.asset('assets/change.png'),
+            icon: Image.asset('assets/button/change_dep_des.png'),
             iconSize: 35.sp,
             color: colorScheme.tertiary,
           ),
@@ -524,7 +524,7 @@ Padding lookupSetCapacityWidget(
             onPressed: () {
               controller.ktxScreenSubtractCapacity();
             },
-            icon: Image.asset('assets/removeP.png'),
+            icon: Image.asset('assets/button/decrease_capacity.png'),
             color: (controller.capacity == 1)
                 ? colorScheme.tertiaryContainer
                 : colorScheme.secondary,
@@ -542,7 +542,7 @@ Padding lookupSetCapacityWidget(
             onPressed: () {
               controller.addCapacity();
             },
-            icon: Image.asset('assets/addPerson.png'),
+            icon: Image.asset('assets/button/increase_capacity.png'),
             color: (controller.capacity == 4)
                 ? colorScheme.tertiaryContainer
                 : colorScheme.secondary,

@@ -20,6 +20,7 @@ import 'package:itaxi/widget/setTimeDateFormater.dart';
 import 'package:itaxi/controller/historyController.dart';
 import 'package:itaxi/model/history.dart';
 
+
 PlaceSearchController _placeSearchController = Get.find();
 PlaceController _placeController = Get.find();
 DateController _dateController = Get.find();
@@ -49,7 +50,7 @@ Padding lookupSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
           ),
           Center(
             child: Image(
-              image: AssetImage('assets/place/dep-dest.png'),
+              image: AssetImage('assets/Image/dep-dest.png'),
               width: 23.w,
             ),
           ),
@@ -120,7 +121,7 @@ Padding lookupSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
             onPressed: () {
               _placeController.swapDepAndDst();
             },
-            icon: Image.asset('assets/change.png'),
+            icon: Image.asset('assets/button/change_dep_des.png'),
             iconSize: 36.sp,
             color: colorScheme.tertiary,
           ),
@@ -149,7 +150,7 @@ Padding gatherSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
           ),
           Center(
             child: Image(
-              image: AssetImage('assets/place/dep-dest.png'),
+              image: AssetImage('assets/Image/dep-dest.png'),
               width: 23.w,
             ),
           ),
@@ -225,7 +226,7 @@ Padding gatherSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
                 onPressed: () {
                   _placeController.swapDepAndDst();
                 },
-                icon: Image.asset('assets/change.png'),
+                icon: Image.asset('assets/button/change_dep_des.png'),
                 iconSize: 36.sp,
                 color: colorScheme.tertiary,
               ),
@@ -235,7 +236,7 @@ Padding gatherSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
                 onPressed: () {
                   _placeController.changeStopOverCount(true);
                 },
-                icon: Image.asset('assets/addPlace.png'),
+                icon: Image.asset('assets/button/add_place.png'),
                 iconSize: 36,
                 color: colorScheme.tertiary,
               ),
@@ -266,7 +267,7 @@ Padding gatherSetDepDstStopOverWidget(ColorScheme colorScheme, TextTheme textThe
           ),
           Center(
             child: Image(
-              image: AssetImage('assets/place/dep-stop-dest.png'),
+              image: AssetImage('assets/Image/dep-stop-dest.png'),
               width: 23.w,
             ),
           ),
@@ -367,7 +368,7 @@ Padding gatherSetDepDstStopOverWidget(ColorScheme colorScheme, TextTheme textThe
                 onPressed: () {
                   _placeController.swapDepAndDst();
                 },
-                icon: Image.asset('assets/change.png'),
+                icon: Image.asset('assets/button/change_dep_des.png'),
                 iconSize: 35.sp,
                 color: colorScheme.tertiary,
               ),
@@ -381,14 +382,14 @@ Padding gatherSetDepDstStopOverWidget(ColorScheme colorScheme, TextTheme textThe
                     _placeController.changeStopOverCount(false);
                   }
                 },
-                icon: Image.asset('assets/subtract_place.png'),
+                icon: Image.asset('assets/button/delete_stopover.png'),
                 iconSize: 36,
                 color: colorScheme.tertiary,
               ),
             ],
             // IconButton(
             //   onPressed: () {},
-            //   icon: Image.asset('assets/change.png'),
+            //   icon: Image.asset('assets/button/change.png'),
             //   iconSize: 32,
             //   color: colorScheme.tertiary,
             // ),
@@ -396,7 +397,7 @@ Padding gatherSetDepDstStopOverWidget(ColorScheme colorScheme, TextTheme textThe
             //   onPressed: () {
             //     controller.changeStopOver(1);
             //   },
-            //   icon: Image.asset('assets/addPlace.png'),
+            //   icon: Image.asset('assets/button/addPlace.png'),
             //   iconSize: 32,
             //   color: colorScheme.tertiary,
             // ),
@@ -510,7 +511,7 @@ Padding lookupSetPostTypeWidget(ColorScheme colorScheme, ScreenController contro
             width: 19.w,
           ),
           ImageIcon(
-            AssetImage('assets/icon/logo_type.png'),
+            AssetImage('assets/logo/logo_type.png'),
             size: 24,
             color: colorScheme.tertiaryContainer,
           ),
@@ -615,7 +616,7 @@ Padding gatherSetPostTypeWidget(ColorScheme colorScheme, ScreenController contro
             width: 19.w,
           ),
           ImageIcon(
-            AssetImage('assets/icon/logo_type.png'),
+            AssetImage('assets/logo/logo_type.png'),
             size: 24,
             color: colorScheme.tertiaryContainer,
           ),
@@ -703,7 +704,7 @@ Padding lookupSetCapacityWidget(ColorScheme colorScheme, ScreenController contro
             onPressed: () {
               controller.mainScreenSubtractCapacity();
             },
-            icon: Image.asset('assets/removeP.png'),
+            icon: Image.asset('assets/button/decrease_capacity.png'),
             iconSize: 26,
             color: (controller.capacity == 1) ? colorScheme.tertiaryContainer : colorScheme.secondary,
           ),
@@ -724,7 +725,7 @@ Padding lookupSetCapacityWidget(ColorScheme colorScheme, ScreenController contro
             onPressed: () {
               controller.addCapacity();
             },
-            icon: Image.asset('assets/addPerson.png'),
+            icon: Image.asset('assets/button/increase_capacity.png'),
             iconSize: 26,
             color: (controller.capacity == 4) ? colorScheme.tertiaryContainer : colorScheme.secondary,
           ),

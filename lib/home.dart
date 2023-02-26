@@ -51,13 +51,13 @@ class Home extends StatelessWidget {
                         ? Image.asset(
                             width: 89.5.w,
                             height: 48.h,
-                            'assets/newType/car_taxi.png',
+                            'assets/icon/navi_car_taxi.png',
                             color: colorScheme.secondary,
                           )
                         : Image.asset(
                             width: 89.5.w,
                             height: 48.h,
-                            'assets/newType/car_taxi.png',
+                            'assets/icon/navi_car_taxi.png',
                             color: colorScheme.tertiary,
                           ),
                   ),
@@ -69,13 +69,13 @@ class Home extends StatelessWidget {
                         ? Image.asset(
                             width: 89.5.w,
                             height: 48.h,
-                            'assets/newType/ktx.png',
+                            'assets/icon/navi_ktx.png',
                             color: colorScheme.secondary,
                           )
                         : Image.asset(
                             width: 89.5.w,
                             height: 48.h,
-                            'assets/newType/ktx.png',
+                            'assets/icon/navi_ktx.png',
                             color: colorScheme.tertiary,
                           ),
                   ),
@@ -87,13 +87,13 @@ class Home extends StatelessWidget {
                         ? Image.asset(
                             width: 89.5.w,
                             height: 48.h,
-                            'assets/newType/messenger.png',
+                            'assets/icon/messenger.png',
                             color: colorScheme.secondary,
                           )
                         : Image.asset(
                             width: 89.5.w,
                             height: 48.h,
-                            'assets/newType/messenger.png',
+                            'assets/icon/messenger.png',
                             color: colorScheme.tertiary,
                           ),
                   ),
@@ -105,13 +105,13 @@ class Home extends StatelessWidget {
                         ? Image.asset(
                             width: 89.5.w,
                             height: 48.h,
-                            'assets/newType/timeline.png',
+                            'assets/icon/navi_timeline.png',
                             color: colorScheme.secondary,
                           )
                         : Image.asset(
                             width: 89.5.w,
                             height: 48.h,
-                            'assets/newType/timeline.png',
+                            'assets/icon/navi_timeline.png',
                             color: colorScheme.tertiary,
                           ),
                   ),

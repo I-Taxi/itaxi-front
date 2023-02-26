@@ -279,7 +279,7 @@ Widget postListTile({
                   ),
                   Image(
                     image: AssetImage(
-                      "assets/arrow/arrow_forward.png",
+                      "assets/arrow/forward_short.png",
                     ),
                     color: colorScheme.tertiary,
                     width: 12.w,

@@ -20,7 +20,7 @@ class VersionScreen extends StatelessWidget {
               onPressed: (){
                 Get.back();
               },
-              icon: Image.asset("assets/button/clear.png", width: 24.w, height: 24.w, color: colorScheme.primary,)
+              icon: Image.asset("assets/button/close_current_page1.png", width: 24.w, height: 24.w, color: colorScheme.primary,)
           )
         ],
       ),
@@ -48,7 +48,7 @@ class VersionScreen extends StatelessWidget {
                 Image.asset(
                   width: 113.w,
                   height: 124.44.h,
-                  'assets/logo_text.png',
+                  'assets/logo/logo_text.png',
                 ),
                 SizedBox(
                   height: 19.56.h,

@@ -87,7 +87,7 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
                             child: ClipRRect(
                               borderRadius: BorderRadius.circular(6.0),
                               child: Image.asset(
-                                'assets/banner.png',
+                                'assets/Image/banner.png',
                                 width: 342.w,
                                 height: 75.h,
                                 fit: BoxFit.fill,
@@ -167,7 +167,7 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
                             child: Stack(
                               children: [
                                 Image.asset(
-                                  'assets/banner.png',
+                                  'assets/Image/banner.png',
                                   width: 342.w,
                                   height: 75.h,
                                   fit: BoxFit.fill,
@@ -176,7 +176,7 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
                                   padding: EdgeInsets.only(right: 7.w, bottom: 5.h),
                                   child: Align(
                                     alignment: Alignment.bottomRight,
-                                    child: Image.asset('assets/button/contact.png'),
+                                    child: Image.asset('assets/button/go_ad_url.png'),
                                   ),
                                 )
                               ],
@@ -205,7 +205,7 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
                                   },
                                   child: Image.asset(
                                     width: 198,
-                                    'assets/button/add_timeline.png',
+                                    'assets/button/go_gather_screen.png',
                                   ),
                                   style: OutlinedButton.styleFrom(
                                       side: BorderSide(width: 0, color: colorScheme.onBackground)),

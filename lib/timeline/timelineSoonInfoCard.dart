@@ -142,7 +142,7 @@ Container timelineSoonInfoCard({required BuildContext context, required History 
                       Get.to(() => const TimelineDetailScreen());
                     }
                   },
-                  child: Image.asset(width: 81.w, 'assets/button/go_descript.png'))
+                  child: Image.asset(width: 81.w, 'assets/button/go_timeline.png'))
             ],
           ),
         ),
@@ -275,7 +275,7 @@ Container timelineSoonInfoCard({required BuildContext context, required History 
                                   Get.to(() => const TimelineDetailScreen());
                                 }
                               },
-                              child: Image.asset(width: 81.w, 'assets/button/go_descript.png'))
+                              child: Image.asset(width: 81.w, 'assets/button/go_timeline.png'))
                         ],
                       ),
                       SizedBox(
@@ -424,7 +424,7 @@ Container timelineSoonInfoCard({required BuildContext context, required History 
                                 Get.to(() => const TimelineDetailScreen());
                               }
                             },
-                            child: Image.asset(width: 81.w, 'assets/button/go_descript.png'))
+                            child: Image.asset(width: 81.w, 'assets/button/go_timeline.png'))
                       ],
                     ),
                     SizedBox(
