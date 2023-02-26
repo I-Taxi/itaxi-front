@@ -16,7 +16,7 @@ import 'package:itaxi/user/controller/userController.dart';
 import 'package:itaxi/place/controller/placeSearchController.dart';
 import 'package:itaxi/post/screen/checkPlaceScreen.dart';
 import 'package:itaxi/post/widget/postTypeToggleButton.dart';
-import 'package:itaxi/main/mainScreenSettingWidget.dart';
+import 'package:itaxi/main/widget/taxiLookupGatherWidget.dart';
 import 'package:itaxi/user/controller/signInController.dart';
 import 'package:itaxi/user/model/userInfoList.dart';
 import 'package:itaxi/settings/bugScreen.dart';
@@ -28,15 +28,14 @@ import 'package:itaxi/settings/versionScreen.dart';
 import 'package:itaxi/notice/widget/topNoticeWidget.dart';
 import 'package:itaxi/tools/controller/navigationController.dart';
 
-
-class MainScreen extends StatefulWidget {
-  const MainScreen({Key? key}) : super(key: key);
+class TaxiScreen extends StatefulWidget {
+  const TaxiScreen({Key? key}) : super(key: key);
 
   @override
-  State<MainScreen> createState() => _MainScreenState();
+  State<TaxiScreen> createState() => _TaxiScreenState();
 }
 
-class _MainScreenState extends State<MainScreen> {
+class _TaxiScreenState extends State<TaxiScreen> {
   ScreenController _screenController = Get.put(ScreenController());
   PostController _postController = Get.put(PostController());
   PlaceController _placeController = Get.put(PlaceController());

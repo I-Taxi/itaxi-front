@@ -7,14 +7,14 @@ import 'package:itaxi/place/controller/placeSearchController.dart';
 import 'package:itaxi/place/model/place.dart';
 import 'package:itaxi/place/widget/placeSearchWidget.dart';
 
-class SearchScreen extends StatefulWidget {
-  const SearchScreen({Key? key}) : super(key: key);
+class PlaceSearchScreen extends StatefulWidget {
+  const PlaceSearchScreen({Key? key}) : super(key: key);
 
   @override
-  State<SearchScreen> createState() => _SearchScreenState();
+  State<PlaceSearchScreen> createState() => _PlaceSearchScreenState();
 }
 
-class _SearchScreenState extends State<SearchScreen> {
+class _PlaceSearchScreenState extends State<PlaceSearchScreen> {
   final PlaceSearchController _placeSearchController = Get.find();
   final PlaceController _placeController = Get.find();
   final TextEditingController _searchTextController = TextEditingController();

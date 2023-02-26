@@ -118,61 +118,6 @@ Widget ktxPostListTile({
                             ),
                           ],
                         ),
-                        // padding: EdgeInsets.fromLTRB(62.w, 52.h, 62.w, 52.h),
-                        // child: Column(
-                        //   children: <Widget>[
-                        //     Text(
-                        //       "톡방에 참여하시겠어요?",
-                        //       style: textTheme.subtitle1?.copyWith(
-                        //         color: colorScheme.secondary,
-                        //       ),
-                        //     ),
-                        //     const Spacer(),
-                        //     Row(
-                        //       children: [
-                        //         TextButton(
-                        //           onPressed: () async {
-                        //             Get.back();
-                        //           },
-                        //           child: Text(
-                        //             "취소",
-                        //             style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
-                        //           ),
-                        //         ),
-                        //         const Spacer(),
-                        //         TextButton(
-                        //           onPressed: () async {
-                        //             await _ktxPostController.fetchJoin(ktxPost: post);
-                        //             await _ktxPostController.getPosts(
-                        //               depId: _ktxPlaceController.dep?.id,
-                        //               dstId: _ktxPlaceController.dst?.id,
-                        //               time: _dateController.formattingDateTime(
-                        //                 _dateController.mergeDateAndTime(),
-                        //               ),
-                        //             );
-                        //             Get.back();
-                        //             await _historyController.getHistorys();
-                        //             await _historyController.getHistoryInfo(postId: post.id!, postType: 3); //수정 요망
-                        //             _historyController.history.then((value) {
-                        //               if (value.postType != 3) {
-                        //                 _chatRoomController.getPost(post: value.toPost());
-                        //                 _chatRoomController.getChats(post: value.toPost());
-                        //               } else {
-                        //                 _chatRoomController.getKtxPost(ktxPost: value.toKtxPost());
-                        //                 _chatRoomController.getKtxChats(ktxPost: value.toKtxPost());
-                        //               }
-                        //               Get.to(() => const ChatRoomDetailScreen());
-                        //             });
-                        //           },
-                        //           child: Text(
-                        //             "입장",
-                        //             style: textTheme.subtitle2?.copyWith(color: colorScheme.onPrimaryContainer),
-                        //           ),
-                        //         ),
-                        //       ],
-                        //     ),
-                        //   ],
-                        // ),
                       ),
                     ),
                   );

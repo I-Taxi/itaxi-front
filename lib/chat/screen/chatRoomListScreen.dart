@@ -7,17 +7,17 @@ import 'package:itaxi/post/controller/postController.dart';
 import 'package:itaxi/user/controller/userController.dart';
 import 'package:itaxi/tools/controller/navigationController.dart';
 import 'package:itaxi/history/model/history.dart';
-import 'package:itaxi/chat/widget/chatroomListListTile.dart';
+import 'package:itaxi/chat/widget/chatRoomListTile.dart';
 import 'package:url_launcher/url_launcher.dart';
 
-class ChatroomListScreen extends StatefulWidget {
-  const ChatroomListScreen({super.key});
+class ChatRoomListScreen extends StatefulWidget {
+  const ChatRoomListScreen({super.key});
 
   @override
-  State<ChatroomListScreen> createState() => _ChatroomListScreenState();
+  State<ChatRoomListScreen> createState() => _ChatRoomListScreenState();
 }
 
-class _ChatroomListScreenState extends State<ChatroomListScreen> {
+class _ChatRoomListScreenState extends State<ChatRoomListScreen> {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
@@ -110,7 +110,7 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
                               // if deptTime is later than current time
                               for (int i = snapshot.data!.length - 1; i >= 0; i--)
                                 if (DateTime.tryParse(snapshot.data![i].deptTime!)!.isAfter(DateTime.now()))
-                                  chatroomListListTile(
+                                  chatRoomListTile(
                                     context: context,
                                     history: snapshot.data![i],
                                   ),
@@ -126,7 +126,7 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
                               // if deptTime is earlier than current time
                               for (int i = snapshot.data!.length - 1; i >= 0; i--)
                                 if (DateTime.tryParse(snapshot.data![i].deptTime!)!.isBefore(DateTime.now()))
-                                  chatroomListListTile(
+                                  chatRoomListTile(
                                     context: context,
                                     history: snapshot.data![i],
                                   ),
