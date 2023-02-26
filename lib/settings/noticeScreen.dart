@@ -2,10 +2,11 @@ import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:itaxi/controller/noticeController.dart';
-import 'package:itaxi/widget/noticeListTile.dart';
+import 'package:itaxi/notice/controller/noticeController.dart';
+import 'package:itaxi/notice/widget/noticeListTile.dart';
 
-import 'package:itaxi/model/notice.dart';
+import 'package:itaxi/notice/model/notice.dart';
+import 'dart:ui';
 
 class NoticeScreen extends StatefulWidget {
   const NoticeScreen({Key? key}) : super(key: key);
@@ -16,6 +17,9 @@ class NoticeScreen extends StatefulWidget {
 
 class _NoticeScreenState extends State<NoticeScreen> {
   NoticeController _noticeController = Get.put(NoticeController());
+
+  final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
+
 
 
   @override
@@ -30,70 +34,93 @@ class _NoticeScreenState extends State<NoticeScreen> {
     return Scaffold(
       appBar: AppBar(
         shadowColor: colorScheme.shadow,
-        elevation: 1.0,
-        centerTitle: true,
-        title: Text(
-          '공지사항',
-          style: textTheme.subtitle1?.copyWith(
-            color: colorScheme.onPrimary,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        leading: IconButton(
-          onPressed: () {
-            Get.back();
-          },
-          icon: Icon(
-            Icons.arrow_back_rounded,
-            color: colorScheme.tertiary,
-          ),
-        ),
+        elevation: 0.0,
+          automaticallyImplyLeading: false,
+          actions: [
+            IconButton(
+              onPressed: () {
+                Get.back();
+              },
+              icon: Icon(
+                Icons.clear_sharp,
+                color: colorScheme.tertiaryContainer,
+                size: 30,
+              ),
+            ),
+          ]
       ),
       backgroundColor: colorScheme.background,
       body: ColorfulSafeArea(
         color: colorScheme.primary,
-        child: SingleChildScrollView(
-          child: Padding(
-            padding: EdgeInsets.only(
-              left: 16.0.w,
-              right: 16.0.w,
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            SizedBox(
+              height: 28.h,
             ),
-            child: FutureBuilder<List<Notice>>(
-              future: _noticeController.notices,
-              builder: (BuildContext context, snapshot) {
-                if (snapshot.hasData) {
-                  if (snapshot.data!.isNotEmpty) {
-                    return ListView.builder(
-                      physics: ScrollPhysics(),
-                      shrinkWrap: true,
-                      itemCount: snapshot.data!.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        return noticeListTile(
-                          context: context,
-                          notice: snapshot.data![index],
+            Padding(
+              padding: EdgeInsets.only(left: 24.w),
+              child: Text(
+                '공지사항',
+                style: textTheme.headline2?.copyWith(
+                  color: colorScheme.onTertiary,
+                ),
+              ),
+            ),
+            SizedBox(
+              height: 45.h,
+            ),
+            Expanded(
+              child: RefreshIndicator(
+                key: _refreshIndicatorKey,
+                color: colorScheme.tertiary,
+                backgroundColor: colorScheme.background,
+                strokeWidth: 2.0,
+                onRefresh: () async {
+                  _noticeController.getNotices();
+                },
+                child: GetBuilder<NoticeController>(
+                  builder: (_) {
+                    return FutureBuilder<List<Notice>>(
+                      future: _noticeController.notices,
+                      builder: (BuildContext context, snapshot) {
+                        if (snapshot.hasData) {
+                          if (snapshot.data!.isNotEmpty) {
+                            return ListView.builder(
+                              padding: EdgeInsets.zero,
+                              physics: ScrollPhysics(),
+                              shrinkWrap: true,
+                              itemCount: snapshot.data!.length,
+                              itemBuilder: (BuildContext context, int index) {
+                                return noticeListTile(
+                                  context: context,
+                                  notice: snapshot.data![index],
+                                );
+                              },
+                            );
+                          } else {
+                            return noticeIsEmpty(context);
+                          }
+                        } else if (snapshot.hasError) {
+                          return Center(
+                            child: Text(
+                              '${snapshot.error}',
+                              style: textTheme.headline2?.copyWith(
+                                color: colorScheme.tertiary,
+                              ),
+                            ),
+                          );
+                        }
+                        return LinearProgressIndicator(
+                          color: colorScheme.secondary,
                         );
                       },
                     );
-                  } else {
-                    return noticeIsEmpty(context);
                   }
-                } else if (snapshot.hasError) {
-                  return Center(
-                    child: Text(
-                      '${snapshot.error}',
-                      style: textTheme.headline2?.copyWith(
-                        color: colorScheme.tertiary,
-                        fontFamily: 'NotoSans',
-                      ),
-                    ),
-                  );
-                }
-                return LinearProgressIndicator(
-                  color: colorScheme.secondary,
-                );
-              },
+                ),
+              ),
             ),
-          ),
+          ],
         ),
       ),
     );
@@ -113,7 +140,6 @@ class _NoticeScreenState extends State<NoticeScreen> {
             '공지사항이 없습니다',
             style: textTheme.headline2?.copyWith(
               color: colorScheme.tertiary,
-              fontFamily: 'NotoSans',
             ),
           ),
         ],
