@@ -219,40 +219,40 @@ Padding gatherSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
 Padding lookupSetTimeWidget(ColorScheme colorScheme, BuildContext context, TextTheme textTheme) {
   return Padding(
     padding: EdgeInsets.only(right: 24.w, left: 23.w, bottom: 8.h),
-    child: Container(
-      height: 56.h,
-      width: 295.w,
-      decoration: BoxDecoration(
-        color: colorScheme.primaryContainer,
-        borderRadius: BorderRadius.circular(8),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.start,
-        children: [
-          SizedBox(
-            width: 20.w,
-          ),
-          GestureDetector(
-            behavior: HitTestBehavior.opaque,
-            onTap: () {
-              _dateController.selectDate(context);
-            },
-            child: ImageIcon(
+    child: GestureDetector(
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        _dateController.selectDate(context);
+      },
+      child: Container(
+        height: 56.h,
+        width: 295.w,
+        decoration: BoxDecoration(
+          color: colorScheme.primaryContainer,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.start,
+          children: [
+            SizedBox(
+              width: 20.w,
+            ),
+            ImageIcon(
               AssetImage('assets/icon/calendar.png'),
               size: 24,
               color: colorScheme.tertiaryContainer,
             ),
-          ),
-          SizedBox(
-            width: 25.w,
-          ),
-          GetBuilder<DateController>(builder: (_) {
-            return Text(
-              lookupDateFormater(_dateController.pickedDate),
-              style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
-            );
-          })
-        ],
+            SizedBox(
+              width: 25.w,
+            ),
+            GetBuilder<DateController>(builder: (_) {
+              return Text(
+                lookupDateFormater(_dateController.pickedDate),
+                style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
+              );
+            })
+          ],
+        ),
       ),
     ),
   );

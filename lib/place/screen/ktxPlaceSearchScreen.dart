@@ -207,10 +207,12 @@ class _KtxPlaceSearchScreenState extends State<KtxPlaceSearchScreen> {
                         ? placeSearchTile(
                             placeList: _ktxPlaceSearchController.typeFilteredResultList,
                             context: context,
+                      depOrDet: "$depOrDst",
                           )
                         : placeSearchTile(
                             placeList: _ktxPlaceSearchController.typeFilteredList,
                             context: context,
+                      depOrDet: "$depOrDst",
                           ),
                   ],
                 ),

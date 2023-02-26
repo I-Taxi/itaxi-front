@@ -306,6 +306,7 @@ class _PlaceSearchScreenState extends State<PlaceSearchScreen> {
                                           color: colorScheme.outline);
                                     }
                                   },
+                                  depOrDst: "$depOrDst"
                                 )
                               : placeSearchTile(
                                   placeList: _placeSearchController.typeFilteredList,
@@ -326,6 +327,7 @@ class _PlaceSearchScreenState extends State<PlaceSearchScreen> {
                                           color: colorScheme.outline);
                                     }
                                   },
+                                depOrDst: "$depOrDst"
                                 ),
                     ],
                   ),
