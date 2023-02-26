@@ -2,10 +2,10 @@ import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:itaxi/controller/noticeController.dart';
-import 'package:itaxi/widget/noticeListTile.dart';
+import 'package:itaxi/notice/controller/noticeController.dart';
+import 'package:itaxi/notice/widget/noticeListTile.dart';
 
-import 'package:itaxi/model/notice.dart';
+import 'package:itaxi/notice/model/notice.dart';
 import 'dart:ui';
 
 class NoticeScreen extends StatefulWidget {

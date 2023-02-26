@@ -14,17 +14,17 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:device_preview/device_preview.dart';
 
 import 'package:get/get.dart';
-import 'package:itaxi/controller/signInController.dart';
+import 'package:itaxi/user/controller/signInController.dart';
 import 'package:itaxi/firebase_options.dart';
-import 'package:itaxi/home.dart';
-import 'package:itaxi/signInUp/signInScreen.dart';
-import 'package:itaxi/signInUp/splashScreen.dart';
-import 'package:itaxi/controller/userController.dart';
+import 'package:itaxi/main/screen/home.dart';
+import 'package:itaxi/user/screen/signInScreen.dart';
+import 'package:itaxi/user/screen/splashScreen.dart';
+import 'package:itaxi/user/controller/userController.dart';
 import 'package:itaxi/src/theme.dart';
 import 'package:new_version/new_version.dart';
 import 'package:package_info/package_info.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'onBoardingScreen.dart';
+import 'user/screen/onBoardingScreen.dart';
 import 'package:itaxi/fcm/fcmController.dart';
 
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {

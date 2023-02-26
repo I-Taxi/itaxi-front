@@ -4,7 +4,7 @@ import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:itaxi/controller/userController.dart';
+import 'package:itaxi/user/controller/userController.dart';
 import 'package:itaxi/src/theme.dart';
 
 class UserInfoRefactorScreen extends StatefulWidget {
