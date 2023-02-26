@@ -375,7 +375,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                               currentKtxPost);
                         },
                         child: Row(children: [
-                          Image.asset('assets/button/logout_account.png'),
+                          Image.asset('assets/button/logout_account.png', width: 24.w, height: 24.h),
                           SizedBox(
                             width: 5.w,
                           ),

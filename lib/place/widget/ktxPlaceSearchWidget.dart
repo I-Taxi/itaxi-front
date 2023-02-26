@@ -7,6 +7,7 @@ import 'package:itaxi/place/controller/ktxPlaceSearchController.dart';
 Widget placeSearchTile({
   required List<KtxPlace> placeList,
   required BuildContext context,
+  required String depOrDet
 }) {
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
@@ -43,13 +44,13 @@ Widget placeSearchTile({
                 title: RichText(
                     textAlign: TextAlign.center,
                     text: TextSpan(
-                      text: '원하는 출발지라면 ',
+                      text: '원하는 $depOrDet라면 ',
                       style: textTheme.subtitle2?.copyWith(
                         color: colorScheme.primary,
                       ),
                       children: <TextSpan>[
                         TextSpan(
-                          text: "다음",
+                          text: "상단의 다음",
                           style: textTheme.subtitle2?.copyWith(
                             color: colorScheme.secondary,
                           ),
