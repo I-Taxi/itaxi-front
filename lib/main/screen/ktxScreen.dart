@@ -18,7 +18,7 @@ import 'package:itaxi/notice/widget/topNoticeWidget.dart';
 
 import 'package:itaxi/place/controller/ktxPlaceSearchController.dart';
 import 'package:itaxi/post/widget/postTypeToggleButton.dart';
-import 'package:itaxi/main/ktxScreenSettingWidget.dart';
+import 'package:itaxi/main/widget/ktxLookupGatherWidget.dart';
 import 'package:itaxi/user/model/userInfoList.dart';
 import 'package:itaxi/settings/bugScreen.dart';
 import 'package:itaxi/settings/myInfoScreen.dart';

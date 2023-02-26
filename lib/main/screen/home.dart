@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:itaxi/chat/screen/chatRoomListScreen.dart';
 import 'package:itaxi/tools/controller/navigationController.dart';
 
-import 'package:itaxi/main/screen/mainScreen.dart';
+import 'package:itaxi/main/screen/taxiScreen.dart';
 import 'package:itaxi/main/screen/ktxScreen.dart';
 import 'package:itaxi/history/screen/timelineScreen.dart';
 
@@ -18,7 +18,7 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final pageList = [const MainScreen(), const KtxScreen(), const ChatroomListScreen(), const TimelineScreen()];
+    final pageList = [const TaxiScreen(), const KtxScreen(), const ChatRoomListScreen(), const TimelineScreen()];
 
     return GetBuilder<NavigationController>(
       builder: (_) {

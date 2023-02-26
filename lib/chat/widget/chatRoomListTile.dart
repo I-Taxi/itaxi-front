@@ -12,7 +12,7 @@ import 'package:itaxi/post/model/post.dart';
 import 'package:itaxi/history/model/history.dart';
 import 'package:itaxi/place/widget/abbreviatePlaceName.dart';
 
-Widget chatroomListListTile({required BuildContext context, required History history}) {
+Widget chatRoomListTile({required BuildContext context, required History history}) {
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
   late AddPostController _addPostController = Get.find();
