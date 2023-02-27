@@ -6,7 +6,7 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get_state_manager/get_state_manager.dart';
 import 'package:http/http.dart' as http;
-import 'package:itaxi/model/advertisement.dart';
+import 'package:itaxi/place/model/advertisement.dart';
 
 class AdvertisementController extends GetxController {
   late Future<List<Advertisement>> advertisements;
