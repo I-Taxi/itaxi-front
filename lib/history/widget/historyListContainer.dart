@@ -84,7 +84,7 @@ Widget historyListContainer(
                           style: textTheme.bodyText2
                               ?.copyWith(color: colorScheme.tertiaryContainer)),
                       SizedBox(height: 7.0.h),
-                      Text(abbreviatePlaceName(history.departure?.name),
+                      Text(abbreviatePlaceName(history.departure?.name) ?? 'error',
                           style: textTheme.bodyText1
                               ?.copyWith(color: colorScheme.onTertiary)),
                     ],
@@ -98,7 +98,7 @@ Widget historyListContainer(
                           style: textTheme.bodyText2
                               ?.copyWith(color: colorScheme.tertiaryContainer)),
                       SizedBox(height: 7.0.h),
-                      Text(abbreviatePlaceName(history.destination?.name),
+                      Text(abbreviatePlaceName(history.destination?.name) ?? 'error',
                           style: textTheme.bodyText1
                               ?.copyWith(color: colorScheme.onTertiary)),
                     ],

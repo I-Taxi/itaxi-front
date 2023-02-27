@@ -30,6 +30,7 @@ class KtxPlaceSearchController extends GetxController {
   final List<KtxPlace> _typeFilteredResultList = [];
 
   bool _hasResult = false;
+  bool isLookup = true;
 
   int get currentIndex => _currentIndex;
   int get peopleCount => _peopleCount;
@@ -92,6 +93,11 @@ class KtxPlaceSearchController extends GetxController {
     update();
   }
 
+  void changeIsLookup(bool to) {
+    isLookup = to;
+    update();
+  }
+
   void setResultByQuery() {
     _hasResult = true;
     _searchResult.clear();
@@ -116,11 +122,25 @@ class KtxPlaceSearchController extends GetxController {
   void filterPlacesByIndex() {
     if (_hasResult) {
       _typeFilteredResultList.clear();
+      if (isLookup) {
+        if (depOrDst == 0) {
+          _typeFilteredResultList.add(KtxPlace(cnt: 0, id: 3232, name: '출발지 전체'));
+        } else {
+          _typeFilteredResultList.add(KtxPlace(cnt: 0, id: 3232, name: '도착지 전체'));
+        }
+      }
       _searchResult.forEach((place) {
         _typeFilteredResultList.add(place);
       });
     }
     _typeFilteredList.clear();
+    if (isLookup) {
+      if (depOrDst == 0) {
+        _typeFilteredList.add(KtxPlace(cnt: 0, id: 3232, name: '출발지 전체'));
+      } else {
+        _typeFilteredList.add(KtxPlace(cnt: 0, id: 3232, name: '도착지 전체'));
+      }
+    }
     places.forEach((place) {
       _typeFilteredList.add(place);
     });
@@ -221,8 +241,7 @@ class KtxPlaceSearchController extends GetxController {
   }
 
   DateTime mergeDateAndTime() {
-    return DateTime(_pickedDate.year, _pickedDate.month, _pickedDate.day,
-        _pickedTime.hour, _pickedTime.minute);
+    return DateTime(_pickedDate.year, _pickedDate.month, _pickedDate.day, _pickedTime.hour, _pickedTime.minute);
   }
 
   @override

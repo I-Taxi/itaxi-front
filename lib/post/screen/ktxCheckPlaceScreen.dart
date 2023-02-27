@@ -142,7 +142,7 @@ class _KtxCheckPlaceScreenState extends State<KtxCheckPlaceScreen> {
                             alignment: Alignment.centerRight,
                             child: Text(
                                 abbreviatePlaceName(
-                                    _ktxPlaceController.dep!.name!),
+                                    _ktxPlaceController.dep?.name) ?? "출발지 전체",
                                 style: textTheme.subtitle1
                                     ?.copyWith(color: colorScheme.primary)),
                           ),
@@ -162,7 +162,7 @@ class _KtxCheckPlaceScreenState extends State<KtxCheckPlaceScreen> {
                             alignment: Alignment.centerLeft,
                             child: Text(
                                 abbreviatePlaceName(
-                                    _ktxPlaceController.dst!.name!),
+                                    _ktxPlaceController.dst?.name) ?? "도착지 전체",
                                 style: textTheme.subtitle1
                                     ?.copyWith(color: colorScheme.primary)),
                           ),

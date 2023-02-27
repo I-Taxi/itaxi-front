@@ -52,7 +52,7 @@ class PostController extends GetxController {
   Future<List<Post>> fetchPost({int? depId, int? dstId, required String time, required int postType}) async {
     var postUrl = dotenv.env['API_URL'].toString();
     final Map<String, dynamic> queryParameters;
-    if ((depId == null || depId == -1) && (dstId == null || dstId == -1)) {
+    if ((depId == null || depId == -1 || depId == 3232) && (dstId == null || dstId == -1 || dstId == 3232)) {
       if (postType == 0) {
         queryParameters = {
           'time': DateFormat('yyyy-MM-dd').format(DateTime.parse(time)),
@@ -63,7 +63,7 @@ class PostController extends GetxController {
           'postType': postType.toString(),
         };
       }
-    } else if (depId != null && (dstId == null || dstId == -1)) {
+    } else if (depId != null && (dstId == null || dstId == -1 || dstId == 3232)) {
       if (postType == 0) {
         queryParameters = {
           'depId': depId.toString(),
@@ -76,7 +76,7 @@ class PostController extends GetxController {
           'postType': postType.toString(),
         };
       }
-    } else if ((depId == null || depId == -1) && dstId != null) {
+    } else if ((depId == null || depId == -1 || depId == 3232) && dstId != null) {
       if (postType == 0) {
         queryParameters = {
           'dstId': dstId.toString(),
@@ -201,9 +201,7 @@ class PostController extends GetxController {
       },
       body: body,
     );
-    if (response.statusCode == 200 && DateTime.tryParse(
-        _chatRoomController.post.deptTime!)!
-        .isAfter(DateTime.now())) {
+    if (response.statusCode == 200 && DateTime.tryParse(_chatRoomController.post.deptTime!)!.isAfter(DateTime.now())) {
       await _chatRoomController.outChat(post: post);
       ChatRepository().setPost(post: post);
       int oldOwnerId = -1;

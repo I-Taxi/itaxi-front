@@ -105,6 +105,7 @@ class UserController extends GetxController {
 
       return result;
     } else {
+      print(utf8.decode(response.bodyBytes));
       userFetchSuccess = false;
       loaded = true;
       update();
