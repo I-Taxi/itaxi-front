@@ -3,22 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
-import 'package:itaxi/model/userInfoList.dart';
+import 'package:itaxi/user/model/userInfoList.dart';
 import 'package:itaxi/settings/privacyPolicyScreen.dart';
 import 'package:itaxi/settings/termOfServiceScreen.dart';
 import 'package:itaxi/settings/versionScreen.dart';
 
-import 'package:itaxi/controller/signInController.dart';
-import 'package:itaxi/settings/alarmScreen.dart';
+import 'package:itaxi/user/controller/signInController.dart';
 import 'package:itaxi/settings/bugScreen.dart';
 import 'package:itaxi/settings/myInfoScreen.dart';
 import 'package:itaxi/settings/noticeScreen.dart';
 
-import '../controller/navigationController.dart';
-import '../controller/userController.dart';
+import 'package:itaxi/tools/controller/navigationController.dart';
+import 'package:itaxi/user/controller/userController.dart';
 import 'package:flutter/cupertino.dart';
-
-import 'package:itaxi/onBoardingScreen.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);
@@ -67,7 +64,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Image(
-                    image: AssetImage("assets/profile.png"),
+                    image: AssetImage("assets/Image/profile.png"),
                     height: 88.w,
                     width: 88.w,
                   ),
@@ -168,7 +165,7 @@ class _SettingScreenState extends State<SettingScreen> {
                         onPressed: () {
                           _logout(context: context);
                         },
-                        icon: Image.asset("assets/logout.png"),
+                        icon: Image.asset("assets/button/logout_account.png"),
                         color: colorScheme.tertiary,
                       ),
                       GestureDetector(

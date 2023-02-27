@@ -4,7 +4,7 @@ import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:itaxi/controller/userController.dart';
+import 'package:itaxi/user/controller/userController.dart';
 
 
 class FindPhoneNumScreen extends StatefulWidget {
@@ -56,7 +56,7 @@ class _FindPhoneNumScreenState extends State<FindPhoneNumScreen> {
           onPressed: () {
             Get.back();
           },
-          icon: Image.asset("assets/arrow/arrow_back_1.png", color: colorScheme.tertiaryContainer, width: 11.62.w, height: 20.51.h,)
+          icon: Image.asset("assets/arrow/back_short.png", color: colorScheme.tertiaryContainer, width: 11.62.w, height: 20.51.h,)
         ),
       ),
       backgroundColor: colorScheme.background,

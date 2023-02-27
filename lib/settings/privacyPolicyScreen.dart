@@ -20,7 +20,7 @@ class PrivacyPolicyScreen extends StatelessWidget {
               onPressed: () {
                 Get.back();
               },
-              icon: Image.asset("assets/button/clear.png", width: 24.w, height: 24.w, color: colorScheme. tertiaryContainer,)
+              icon: Image.asset("assets/button/close_current_page1.png", width: 24.w, height: 24.w, color: colorScheme. tertiaryContainer,)
             ),
           ]),
       backgroundColor: colorScheme.primary,

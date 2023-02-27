@@ -5,8 +5,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:itaxi/controller/signUpController.dart';
-import 'package:itaxi/controller/userController.dart';
+import 'package:itaxi/user/controller/userController.dart';
 
 class ResetPWScreen extends StatefulWidget {
   ResetPWScreen({Key? key}) : super(key: key);
@@ -53,7 +52,7 @@ class _ResetPWScreenState extends State<ResetPWScreen> {
               Get.back();
             },
             icon: Image.asset(
-              "assets/arrow/arrow_back_1.png",
+              "assets/arrow/back_short.png",
               color: colorScheme.tertiaryContainer,
               width: 11.62.w,
               height: 20.51.h,

@@ -51,7 +51,7 @@ app.*.map.json
 .env
 
 # key
-/android/keystore/appKey.jks
+/android/appKey.jks
 /android/key.jks
 
 # Service Account Key

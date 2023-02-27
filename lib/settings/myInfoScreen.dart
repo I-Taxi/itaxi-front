@@ -2,13 +2,13 @@ import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:itaxi/controller/userController.dart';
+import 'package:itaxi/user/controller/userController.dart';
 import 'package:dotted_line/dotted_line.dart';
 
-import '../model/userInfoList.dart';
-import 'package:itaxi/controller/signInController.dart';
-import 'package:itaxi/controller/navigationController.dart';
-import '../widget/mainDialog.dart';
+import 'package:itaxi/user/model/userInfoList.dart';
+import 'package:itaxi/user/controller/signInController.dart';
+import 'package:itaxi/tools/controller/navigationController.dart';
+import '../tools/widget/mainDialog.dart';
 import 'package:itaxi/settings/changePhoneNumScreen.dart';
 import 'package:itaxi/settings/resetPWScreen.dart';
 import 'package:itaxi/settings/changeAccountScreen.dart';
@@ -43,7 +43,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
               Get.back();
             },
             icon: Image.asset(
-              "assets/button/clear.png",
+              "assets/button/close_current_page1.png",
               width: 24.w,
               height: 24.w,
               color: colorScheme.tertiaryContainer,
@@ -89,7 +89,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                                     //   child: Image.asset(
                                     //     width: 58.0.w,
                                     //     height: 40.h,
-                                    //     'assets/logo_2_new.png',
+                                    //     'assets/Image/logo_2_new.png',
                                     //   ),
                                     // ),
                                     Column(
@@ -132,7 +132,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                                     GestureDetector(
                                       onTap: () {},
                                       child: Image.asset(
-                                        "assets/profile_camera.png",
+                                        "assets/Image/profile_camera.png",
                                         width: 88.w,
                                         height: 91.h,
                                       ),

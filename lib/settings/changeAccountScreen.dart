@@ -2,7 +2,6 @@ import 'package:colorful_safe_area/colorful_safe_area.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
-import 'package:itaxi/controller/userController.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class ChangeAccountScreen extends StatefulWidget {
@@ -45,7 +44,7 @@ class _ChangeAccountScreenState extends State<ChangeAccountScreen> {
           onPressed: () {
             Get.back();
           },
-          icon: Image.asset("assets/arrow/arrow_back_1.png", color: colorScheme.tertiary, width: 11.62.w, height: 20.51.h,)
+          icon: Image.asset("assets/arrow/back_short.png", color: colorScheme.tertiary, width: 11.62.w, height: 20.51.h,)
         ),
       ),
       backgroundColor: colorScheme.background,
