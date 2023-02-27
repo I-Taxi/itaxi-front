@@ -85,7 +85,9 @@ class _PlaceSearchScreenState extends State<PlaceSearchScreen> {
                     onPressed: () {
                       if (_placeSearchController.depOrDst == 0) {
                         if (_placeSearchController.selectedPlace == null ||
-                            _placeController.dst != null &&
+                            _placeSearchController.selectedPlace != null &&
+                                _placeController.dst != null &&
+                                _placeSearchController.selectedPlace!.placeType != 5 &&
                                 _placeSearchController.selectedPlace!.name == _placeController.dst!.name) {
                           // [TODO]: 출발지 도착지 같을때 띄우는거
                           placeSearchSnackBar(
@@ -126,6 +128,8 @@ class _PlaceSearchScreenState extends State<PlaceSearchScreen> {
                       } else {
                         if (_placeSearchController.selectedPlace == null ||
                             _placeController.dep != null &&
+                                _placeController.dst != null &&
+                                _placeSearchController.selectedPlace!.placeType != 5 &&
                                 _placeSearchController.selectedPlace!.name == _placeController.dep!.name &&
                                 _placeSearchController.selectedPlace!.name == _placeController.dst!.name) {
                           // [TODO]: 출발지 도착지 같을때 띄우는거

@@ -136,7 +136,8 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                           Container(
                             width: 107.w,
                             alignment: Alignment.centerRight,
-                            child: Text(abbreviatePlaceName(_placeController.dep!.name!),
+                            child: 
+                            Text(abbreviatePlaceName(_placeController.dep?.name) ?? "출발지 전체",
                                 style: textTheme.subtitle1?.copyWith(color: colorScheme.primary)),
                           ),
                           SizedBox(
@@ -153,7 +154,7 @@ class _CheckPlaceScreenState extends State<CheckPlaceScreen> {
                           Container(
                             width: 107.w,
                             alignment: Alignment.centerLeft,
-                            child: Text(abbreviatePlaceName(_placeController.dst!.name!),
+                            child: Text(abbreviatePlaceName(_placeController.dst?.name) ?? "도착지 전체",
                                 style: textTheme.subtitle1?.copyWith(color: colorScheme.primary)),
                           ),
                         ],
