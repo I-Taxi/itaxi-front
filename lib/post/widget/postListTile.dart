@@ -216,7 +216,7 @@ Widget postListTile({
                             width: 8.w,
                           ),
                           Text(
-                            abbreviatePlaceName(post.departure!.name),
+                            abbreviatePlaceName(post.departure!.name) ?? 'error',
                             style: textTheme.bodyText1?.copyWith(color: colorScheme.onTertiary),
                           )
                         ],
@@ -233,7 +233,7 @@ Widget postListTile({
                               width: 32.w,
                             ),
                             Text(
-                              abbreviatePlaceName(post.stopovers![0]!.name),
+                              abbreviatePlaceName(post.stopovers![0]!.name) ?? 'error',
                               style: textTheme.bodyText2?.copyWith(
                                 color: colorScheme.tertiaryContainer
                               ),
@@ -258,7 +258,7 @@ Widget postListTile({
                             width: 8.w,
                           ),
                           Text(
-                            abbreviatePlaceName(post.destination!.name),
+                            abbreviatePlaceName(post.destination!.name) ?? 'error',
                             style: textTheme.bodyText1?.copyWith(color: colorScheme.onTertiary),
                           )
                         ],
@@ -277,7 +277,7 @@ Widget postListTile({
                   ),
                   Image(
                     image: AssetImage(
-                      "assets/arrow/arrow_forward.png",
+                      "assets/arrow/forward_short.png",
                     ),
                     color: colorScheme.tertiary,
                     width: 12.w,

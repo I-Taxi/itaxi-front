@@ -7,14 +7,14 @@ import 'package:itaxi/place/controller/ktxPlaceSearchController.dart';
 import 'package:itaxi/place/model/ktxPlace.dart';
 import 'package:itaxi/place/widget/ktxPlaceSearchWidget.dart';
 
-class KtxSearchScreen extends StatefulWidget {
-  const KtxSearchScreen({Key? key}) : super(key: key);
+class KtxPlaceSearchScreen extends StatefulWidget {
+  const KtxPlaceSearchScreen({Key? key}) : super(key: key);
 
   @override
-  State<KtxSearchScreen> createState() => _KtxSearchScreenState();
+  State<KtxPlaceSearchScreen> createState() => _KtxPlaceSearchScreenState();
 }
 
-class _KtxSearchScreenState extends State<KtxSearchScreen> {
+class _KtxPlaceSearchScreenState extends State<KtxPlaceSearchScreen> {
   final KtxPlaceSearchController _ktxPlaceSearchController = Get.find();
   final KtxPlaceController _ktxPlaceController = Get.find();
   final TextEditingController _searchTextController = TextEditingController();
@@ -207,10 +207,12 @@ class _KtxSearchScreenState extends State<KtxSearchScreen> {
                         ? placeSearchTile(
                             placeList: _ktxPlaceSearchController.typeFilteredResultList,
                             context: context,
+                      depOrDet: "$depOrDst",
                           )
                         : placeSearchTile(
                             placeList: _ktxPlaceSearchController.typeFilteredList,
                             context: context,
+                      depOrDet: "$depOrDst",
                           ),
                   ],
                 ),

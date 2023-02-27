@@ -43,7 +43,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
               Get.back();
             },
             icon: Image.asset(
-              "assets/button/clear.png",
+              "assets/button/close_current_page1.png",
               width: 24.w,
               height: 24.w,
               color: colorScheme.tertiaryContainer,
@@ -89,7 +89,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                                     //   child: Image.asset(
                                     //     width: 58.0.w,
                                     //     height: 40.h,
-                                    //     'assets/logo_2_new.png',
+                                    //     'assets/Image/logo_2_new.png',
                                     //   ),
                                     // ),
                                     Column(
@@ -132,7 +132,7 @@ class _MyInfoScreenState extends State<MyInfoScreen> {
                                     GestureDetector(
                                       onTap: () {},
                                       child: Image.asset(
-                                        "assets/profile_camera.png",
+                                        "assets/Image/profile_camera.png",
                                         width: 88.w,
                                         height: 91.h,
                                       ),

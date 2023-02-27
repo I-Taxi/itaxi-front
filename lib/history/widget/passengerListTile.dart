@@ -19,7 +19,7 @@ Widget passengerListTile({required BuildContext context, required Joiner joiner}
               )
             : Image.asset(
                 width: 39,
-                'assets/icon/not_owner.png',
+                'assets/icon/passenger.png',
               ),
         SizedBox(
           width: 15.w,
@@ -43,7 +43,7 @@ Widget passengerListTile({required BuildContext context, required Joiner joiner}
           },
           child: Image.asset(
             width: 24,
-            'assets/icon/phone.png',
+            'assets/button/call_other_person.png',
           ),
         ),
         SizedBox(
@@ -61,7 +61,7 @@ Widget passengerListTile({required BuildContext context, required Joiner joiner}
           },
           child: Image.asset(
             width: 24,
-            'assets/icon/message.png',
+            'assets/button/send_message.png',
           ),
         ),
       ],

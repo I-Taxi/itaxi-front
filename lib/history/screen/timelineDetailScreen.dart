@@ -88,7 +88,7 @@ class TimelineDetailScreen extends StatelessWidget {
         //         child: GestureDetector(
         //           behavior: HitTestBehavior.opaque,
         //           onTap: () => Get.back(),
-        //           child: Image.asset('assets/icon/icon-Exit.png'),
+        //           child: Image.asset('assets/button/close_current_page2.png'),
         //         )),
         //   ],
         // ),
@@ -122,7 +122,7 @@ class TimelineDetailScreen extends StatelessWidget {
                                         behavior: HitTestBehavior.opaque,
                                         onTap: () => Get.back(),
                                         child: Image.asset(
-                                            'assets/icon/icon-Exit.png'),
+                                            'assets/button/close_current_page2.png'),
                                       ),
                                     ),
                                     SizedBox(

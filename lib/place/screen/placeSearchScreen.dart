@@ -7,14 +7,14 @@ import 'package:itaxi/place/controller/placeSearchController.dart';
 import 'package:itaxi/place/model/place.dart';
 import 'package:itaxi/place/widget/placeSearchWidget.dart';
 
-class SearchScreen extends StatefulWidget {
-  const SearchScreen({Key? key}) : super(key: key);
+class PlaceSearchScreen extends StatefulWidget {
+  const PlaceSearchScreen({Key? key}) : super(key: key);
 
   @override
-  State<SearchScreen> createState() => _SearchScreenState();
+  State<PlaceSearchScreen> createState() => _PlaceSearchScreenState();
 }
 
-class _SearchScreenState extends State<SearchScreen> {
+class _PlaceSearchScreenState extends State<PlaceSearchScreen> {
   final PlaceSearchController _placeSearchController = Get.find();
   final PlaceController _placeController = Get.find();
   final TextEditingController _searchTextController = TextEditingController();
@@ -75,7 +75,7 @@ class _SearchScreenState extends State<SearchScreen> {
                     Get.back();
                   },
                   icon: Image.asset(
-                    "assets/arrow/arrow_back_1.png",
+                    "assets/arrow/back_short.png",
                     color: colorScheme.tertiaryContainer,
                     width: 11.62.w,
                     height: 20.51.h,
@@ -85,7 +85,9 @@ class _SearchScreenState extends State<SearchScreen> {
                     onPressed: () {
                       if (_placeSearchController.depOrDst == 0) {
                         if (_placeSearchController.selectedPlace == null ||
-                            _placeController.dst != null &&
+                            _placeSearchController.selectedPlace != null &&
+                                _placeController.dst != null &&
+                                _placeSearchController.selectedPlace!.placeType != 5 &&
                                 _placeSearchController.selectedPlace!.name == _placeController.dst!.name) {
                           // [TODO]: 출발지 도착지 같을때 띄우는거
                           placeSearchSnackBar(
@@ -126,6 +128,8 @@ class _SearchScreenState extends State<SearchScreen> {
                       } else {
                         if (_placeSearchController.selectedPlace == null ||
                             _placeController.dep != null &&
+                                _placeController.dst != null &&
+                                _placeSearchController.selectedPlace!.placeType != 5 &&
                                 _placeSearchController.selectedPlace!.name == _placeController.dep!.name &&
                                 _placeSearchController.selectedPlace!.name == _placeController.dst!.name) {
                           // [TODO]: 출발지 도착지 같을때 띄우는거
@@ -306,6 +310,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                           color: colorScheme.outline);
                                     }
                                   },
+                                  depOrDst: "$depOrDst"
                                 )
                               : placeSearchTile(
                                   placeList: _placeSearchController.typeFilteredList,
@@ -326,6 +331,7 @@ class _SearchScreenState extends State<SearchScreen> {
                                           color: colorScheme.outline);
                                     }
                                   },
+                                depOrDst: "$depOrDst"
                                 ),
                     ],
                   ),

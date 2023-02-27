@@ -82,7 +82,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
               onPressed: () {
                 Get.back();
               },
-              icon: Image.asset("assets/arrow/arrow_back_1.png",
+              icon: Image.asset("assets/arrow/back_short.png",
                   color: colorScheme.tertiaryContainer, width: 11.62.w, height: 20.51.h)),
         ),
       ),

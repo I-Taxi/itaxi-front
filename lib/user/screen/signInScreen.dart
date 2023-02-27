@@ -80,7 +80,7 @@ class _SignInScreenState extends State<SignInScreen> {
                     Image.asset(
                       width: 110.w,
                       height: 122.h,
-                      'assets/logo_text.png',
+                      'assets/logo/logo_text.png',
                     ),
                     // 로고 글씨
                     SizedBox(
@@ -269,7 +269,7 @@ class _SignInScreenState extends State<SignInScreen> {
                                   '등록되지 않은 이메일',
                                   context,
                                   Text(
-                                    '등록되지 않은 이메일입니다.\n혹시 인증 이메일이 만료되었다면 itaxi.cra.handong@gmail.com로 메일 보내주세요.',
+                                    '등록되지 않은 이메일입니다.\n회원가입 후 로그인을 시도해주세요.\n\n혹시 인증 이메일이 만료되었다면 itaxi.cra.handong@gmail.com로 메일 보내주세요.',
                                     style: textTheme.bodyText1?.copyWith(color: colorScheme.onTertiary),
                                   ), () {
                                 Get.back();

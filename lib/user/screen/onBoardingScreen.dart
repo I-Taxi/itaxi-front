@@ -37,7 +37,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   height: 15.h,
                 ),
                 Image(
-                  image: AssetImage("assets/onBoarding/indicator1.png"),
+                  image: AssetImage("assets/Image/indicator1.png"),
                   height: 4.h,
                 ),
                 SizedBox(
@@ -61,7 +61,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   height: 34.h,
                 ),
                 Image(
-                  image: AssetImage("assets/onBoarding/onBoardingScreen1.png"),
+                  image: AssetImage("assets/Image/onBoardingScreen1.png"),
                   width: 296.61.w,
                   height: 376.09.h,
                 )
@@ -82,7 +82,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   height: 15.h,
                 ),
                 Image(
-                  image: AssetImage("assets/onBoarding/indicator2.png"),
+                  image: AssetImage("assets/Image/indicator2.png"),
                   height: 4.h,
                 ),
                 SizedBox(
@@ -106,7 +106,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   height: 37.h,
                 ),
                 Image(
-                  image: AssetImage("assets/onBoarding/onBoardingScreen2.png"),
+                  image: AssetImage("assets/Image/onBoardingScreen2.png"),
                   width: 442.w,
                   height: 328.h,
                 )
@@ -127,7 +127,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   height: 15.h,
                 ),
                 Image(
-                  image: AssetImage("assets/onBoarding/indicator3.png"),
+                  image: AssetImage("assets/Image/indicator3.png"),
                   height: 4.h,
                   width: 342.w,
                 ),
@@ -152,7 +152,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   height: 11.5.h,
                 ),
                 Image(
-                  image: AssetImage("assets/onBoarding/onBoardingScreen3.png"),
+                  image: AssetImage("assets/Image/onBoardingScreen3.png"),
                   width: 436.w,
                   height: 382.h,
                 )
@@ -173,7 +173,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   height: 15.h,
                 ),
                 Image(
-                  image: AssetImage("assets/onBoarding/indicator4.png"),
+                  image: AssetImage("assets/Image/indicator4.png"),
                   height: 4.h,
                 ),
                 SizedBox(
@@ -194,7 +194,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   ),
                 ),
                 Image(
-                  image: AssetImage("assets/onBoarding/onBoardingScreen4.png"),
+                  image: AssetImage("assets/Image/onBoardingScreen4.png"),
                   width: 400.w,
                   height: 382.h,
                 )

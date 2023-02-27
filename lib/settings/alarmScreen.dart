@@ -44,7 +44,7 @@ class AlarmScreen extends StatelessWidget {
             Image.asset(
               width: 82.w,
               height: 56.h,
-              'assets/logo_1.png',
+              'assets/logo/logo_1.png',
             ),
             SizedBox(
               height: 12.h,

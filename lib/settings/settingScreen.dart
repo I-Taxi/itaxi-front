@@ -64,7 +64,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   Image(
-                    image: AssetImage("assets/profile.png"),
+                    image: AssetImage("assets/Image/profile.png"),
                     height: 88.w,
                     width: 88.w,
                   ),
@@ -165,7 +165,7 @@ class _SettingScreenState extends State<SettingScreen> {
                         onPressed: () {
                           _logout(context: context);
                         },
-                        icon: Image.asset("assets/logout.png"),
+                        icon: Image.asset("assets/button/logout_account.png"),
                         color: colorScheme.tertiary,
                       ),
                       GestureDetector(

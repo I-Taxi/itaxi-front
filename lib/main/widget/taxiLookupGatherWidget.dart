@@ -14,11 +14,12 @@ import 'package:itaxi/tools/widget/snackBar.dart';
 
 import 'package:itaxi/user/controller/userController.dart';
 
-import 'package:itaxi/place/screen/searchScreen.dart';
+import 'package:itaxi/place/screen/placeSearchScreen.dart';
 import 'package:itaxi/place/controller/placeSearchController.dart';
 import 'package:itaxi/tools/widget/setTimeDateFormater.dart';
 import 'package:itaxi/history/controller/historyController.dart';
 import 'package:itaxi/history/model/history.dart';
+
 
 PlaceSearchController _placeSearchController = Get.find();
 PlaceController _placeController = Get.find();
@@ -49,7 +50,7 @@ Padding lookupSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
           ),
           Center(
             child: Image(
-              image: AssetImage('assets/place/dep-dest.png'),
+              image: AssetImage('assets/Image/dep-dest.png'),
               width: 23.w,
             ),
           ),
@@ -71,11 +72,12 @@ Padding lookupSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
                         _placeSearchController.changeIsLookup(true);
                         _placeSearchController.filterPlacesByIndex();
                         _placeSearchController.fetchFavoritePlace();
-                        Get.to(() => SearchScreen());
+                        Get.to(() => PlaceSearchScreen());
                       },
-                      child: !(_placeController.hasDep)
+                      child: (!_placeController.hasDep ||
+                              _placeController.dep != null && _placeController.dep!.id == 3232)
                           ? Text(
-                              "출발지 입력",
+                              "출발지 전체",
                               style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
                             )
                           : Text(
@@ -99,11 +101,11 @@ Padding lookupSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
                         _placeSearchController.changeIsLookup(true);
                         _placeSearchController.filterPlacesByIndex();
                         _placeSearchController.fetchFavoritePlace();
-                        Get.to(() => SearchScreen());
+                        Get.to(() => PlaceSearchScreen());
                       },
-                      child: !(_placeController.hasDst)
+                      child: (!_placeController.hasDst || _placeController.dst != null && _placeController.dst!.id == 3232)
                           ? Text(
-                              "도착지 입력",
+                              "도착지 전체",
                               style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
                             )
                           : Text(
@@ -120,7 +122,7 @@ Padding lookupSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
             onPressed: () {
               _placeController.swapDepAndDst();
             },
-            icon: Image.asset('assets/change.png'),
+            icon: Image.asset('assets/button/change_dep_des.png'),
             iconSize: 36.sp,
             color: colorScheme.tertiary,
           ),
@@ -149,7 +151,7 @@ Padding gatherSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
           ),
           Center(
             child: Image(
-              image: AssetImage('assets/place/dep-dest.png'),
+              image: AssetImage('assets/Image/dep-dest.png'),
               width: 23.w,
             ),
           ),
@@ -171,7 +173,7 @@ Padding gatherSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
                         _placeSearchController.changeIsLookup(false);
                         _placeSearchController.filterPlacesByIndex();
                         _placeSearchController.fetchFavoritePlace();
-                        Get.to(() => SearchScreen());
+                        Get.to(() => PlaceSearchScreen());
                       },
                       child: !(_placeController.hasDep)
                           ? Text(
@@ -199,7 +201,7 @@ Padding gatherSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
                         _placeSearchController.changeIsLookup(false);
                         _placeSearchController.filterPlacesByIndex();
                         _placeSearchController.fetchFavoritePlace();
-                        Get.to(() => SearchScreen());
+                        Get.to(() => PlaceSearchScreen());
                       },
                       child: !(_placeController.hasDst)
                           ? Text(
@@ -225,7 +227,7 @@ Padding gatherSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
                 onPressed: () {
                   _placeController.swapDepAndDst();
                 },
-                icon: Image.asset('assets/change.png'),
+                icon: Image.asset('assets/button/change_dep_des.png'),
                 iconSize: 36.sp,
                 color: colorScheme.tertiary,
               ),
@@ -235,7 +237,7 @@ Padding gatherSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
                 onPressed: () {
                   _placeController.changeStopOverCount(true);
                 },
-                icon: Image.asset('assets/addPlace.png'),
+                icon: Image.asset('assets/button/add_place.png'),
                 iconSize: 36,
                 color: colorScheme.tertiary,
               ),
@@ -266,7 +268,7 @@ Padding gatherSetDepDstStopOverWidget(ColorScheme colorScheme, TextTheme textThe
           ),
           Center(
             child: Image(
-              image: AssetImage('assets/place/dep-stop-dest.png'),
+              image: AssetImage('assets/Image/dep-stop-dest.png'),
               width: 23.w,
             ),
           ),
@@ -286,7 +288,7 @@ Padding gatherSetDepDstStopOverWidget(ColorScheme colorScheme, TextTheme textThe
                       _placeSearchController.changeIsLookup(false);
                       _placeSearchController.filterPlacesByIndex();
                       _placeSearchController.fetchFavoritePlace();
-                      Get.to(() => SearchScreen());
+                      Get.to(() => PlaceSearchScreen());
                     },
                     child: !(_placeController.hasDep)
                         ? Text(
@@ -314,7 +316,7 @@ Padding gatherSetDepDstStopOverWidget(ColorScheme colorScheme, TextTheme textThe
                       _placeSearchController.changeIsLookup(false);
                       _placeSearchController.filterPlacesByIndex();
                       _placeSearchController.fetchFavoritePlace();
-                      Get.to(() => SearchScreen());
+                      Get.to(() => PlaceSearchScreen());
                     },
                     child: !(_placeController.stopOver.isNotEmpty)
                         ? Text(
@@ -342,7 +344,7 @@ Padding gatherSetDepDstStopOverWidget(ColorScheme colorScheme, TextTheme textThe
                       _placeSearchController.changeIsLookup(false);
                       _placeSearchController.filterPlacesByIndex();
                       _placeSearchController.fetchFavoritePlace();
-                      Get.to(() => SearchScreen());
+                      Get.to(() => PlaceSearchScreen());
                     },
                     child: !(_placeController.hasDst)
                         ? Text(
@@ -367,7 +369,7 @@ Padding gatherSetDepDstStopOverWidget(ColorScheme colorScheme, TextTheme textThe
                 onPressed: () {
                   _placeController.swapDepAndDst();
                 },
-                icon: Image.asset('assets/change.png'),
+                icon: Image.asset('assets/button/change_dep_des.png'),
                 iconSize: 35.sp,
                 color: colorScheme.tertiary,
               ),
@@ -381,14 +383,14 @@ Padding gatherSetDepDstStopOverWidget(ColorScheme colorScheme, TextTheme textThe
                     _placeController.changeStopOverCount(false);
                   }
                 },
-                icon: Image.asset('assets/subtract_place.png'),
+                icon: Image.asset('assets/button/delete_stopover.png'),
                 iconSize: 36,
                 color: colorScheme.tertiary,
               ),
             ],
             // IconButton(
             //   onPressed: () {},
-            //   icon: Image.asset('assets/change.png'),
+            //   icon: Image.asset('assets/button/change.png'),
             //   iconSize: 32,
             //   color: colorScheme.tertiary,
             // ),
@@ -396,7 +398,7 @@ Padding gatherSetDepDstStopOverWidget(ColorScheme colorScheme, TextTheme textThe
             //   onPressed: () {
             //     controller.changeStopOver(1);
             //   },
-            //   icon: Image.asset('assets/addPlace.png'),
+            //   icon: Image.asset('assets/button/addPlace.png'),
             //   iconSize: 32,
             //   color: colorScheme.tertiary,
             // ),
@@ -510,7 +512,7 @@ Padding lookupSetPostTypeWidget(ColorScheme colorScheme, ScreenController contro
             width: 19.w,
           ),
           ImageIcon(
-            AssetImage('assets/icon/logo_type.png'),
+            AssetImage('assets/logo/logo_type.png'),
             size: 24,
             color: colorScheme.tertiaryContainer,
           ),
@@ -615,7 +617,7 @@ Padding gatherSetPostTypeWidget(ColorScheme colorScheme, ScreenController contro
             width: 19.w,
           ),
           ImageIcon(
-            AssetImage('assets/icon/logo_type.png'),
+            AssetImage('assets/logo/logo_type.png'),
             size: 24,
             color: colorScheme.tertiaryContainer,
           ),
@@ -703,7 +705,7 @@ Padding lookupSetCapacityWidget(ColorScheme colorScheme, ScreenController contro
             onPressed: () {
               controller.mainScreenSubtractCapacity();
             },
-            icon: Image.asset('assets/removeP.png'),
+            icon: Image.asset('assets/button/decrease_capacity.png'),
             iconSize: 26,
             color: (controller.capacity == 1) ? colorScheme.tertiaryContainer : colorScheme.secondary,
           ),
@@ -724,7 +726,7 @@ Padding lookupSetCapacityWidget(ColorScheme colorScheme, ScreenController contro
             onPressed: () {
               controller.addCapacity();
             },
-            icon: Image.asset('assets/addPerson.png'),
+            icon: Image.asset('assets/button/increase_capacity.png'),
             iconSize: 26,
             color: (controller.capacity == 4) ? colorScheme.tertiaryContainer : colorScheme.secondary,
           ),
@@ -741,16 +743,14 @@ ElevatedButton lookupButton(TextTheme textTheme, ColorScheme colorScheme, BuildC
           minimumSize: Size(342.w, 57.h),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))),
       onPressed: () {
-        if(_placeController.dep == null){
-          snackBar(context: context, title: '출발지를 선택해주세요.');
-        }
-        else if(_placeController.dst == null){
-          snackBar(context: context, title: '도착지를 선택해주세요.');
-        }
-        else{
-
-          _screenController.setCheckScreen(true);
-        }
+        _screenController.setCheckScreen(true);
+        // if (_placeController.dep == null) {
+        //   snackBar(context: context, title: '출발지를 선택해주세요.');
+        // } else if (_placeController.dst == null) {
+        //   snackBar(context: context, title: '도착지를 선택해주세요.');
+        // } else {
+        //   _screenController.setCheckScreen(true);
+        // }
       },
       child: Text(
         "조회하기",
@@ -765,189 +765,192 @@ GetBuilder gatherButton(
   bool isRoomExist = false;
   return GetBuilder<AddPostController>(builder: (_) {
     return FutureBuilder<List<History>>(
-      future: _historyController.historys,
-      builder: (BuildContext context, snapshot) {
-        return ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                backgroundColor: _addPostController.loaded ? colorScheme.onPrimaryContainer : colorScheme.tertiaryContainer,
-                minimumSize: Size(342.w, 57.h),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))),
-            onPressed: () async {
-
-              _addPostController.capacity = controller.capacity;
-              if (_addPostController.loaded) {
-                if (_placeController.dep == null) {
-                  snackBar(context: context, title: '출발지를 선택해주세요.');
-                } else if (_placeController.dep!.id == -1) {
-                  snackBar(context: context, title: '출발지를 다시 선택해주세요.');
-                } else if (_placeController.dst == null) {
-                  snackBar(context: context, title: '도착지를 선택해주세요.');
-                } else if (_placeController.dst!.id == -1) {
-                  snackBar(context: context, title: '도착지를 다시 선택해주세요.');
-                } else if (DateTime.now().difference(_dateController.mergeDateAndTime()).isNegative == false) {
-                  snackBar(context: context, title: '출발시간을 다시 선택해주세요.');
-                } else if (_addPostController.capacity == 0) {
-                  snackBar(context: context, title: '최대인원을 선택해주세요.');
-                } else {
-
-                  for (int i = snapshot.data!.length - 1; i >= 0; i--){
-                    if (DateTime.tryParse(
-                        snapshot.data![i].deptTime!)!
-                        .isAfter(DateTime.now())){
-                      if(snapshot.data![i].deptTime! == _dateController.formattingDateTime(_dateController.mergeDateAndTime(),) &&
-                          snapshot.data![i].departure!.name == _placeController.dep!.name && snapshot.data![i].destination!.name == _placeController.dst!.name){
-                        isRoomExist = true;
-                        return showDialog(context: context, builder: (BuildContext context) {
-                          return Dialog(
-                            elevation: 0,
-                            shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(24.0.r),
-                            ),
-                            child: Container(
-                              width: 312.w,
-                              height: 253.h,
-                              padding: EdgeInsets.fromLTRB(
-                                36.0.w,
-                                24.0.h,
-                                36.0.w,
-                                24.0.h,
-                              ),
-                              child: Column(
-                                children: <Widget>[
-                                  Text(
-                                    "중복 오류",
-                                    style: textTheme.subtitle1?.copyWith(
-                                        color: colorScheme.secondary,
+        future: _historyController.historys,
+        builder: (BuildContext context, snapshot) {
+          return ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                  backgroundColor:
+                      _addPostController.loaded ? colorScheme.onPrimaryContainer : colorScheme.tertiaryContainer,
+                  minimumSize: Size(342.w, 57.h),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))),
+              onPressed: () async {
+                _addPostController.capacity = controller.capacity;
+                if (_addPostController.loaded) {
+                  if (_placeController.dep == null) {
+                    snackBar(context: context, title: '출발지를 선택해주세요.');
+                  } else if (_placeController.dep!.id == -1) {
+                    snackBar(context: context, title: '출발지를 다시 선택해주세요.');
+                  } else if (_placeController.dst == null) {
+                    snackBar(context: context, title: '도착지를 선택해주세요.');
+                  } else if (_placeController.dst!.id == -1) {
+                    snackBar(context: context, title: '도착지를 다시 선택해주세요.');
+                  } else if (DateTime.now().difference(_dateController.mergeDateAndTime()).isNegative == false) {
+                    snackBar(context: context, title: '출발시간을 다시 선택해주세요.');
+                  } else if (_addPostController.capacity == 0) {
+                    snackBar(context: context, title: '최대인원을 선택해주세요.');
+                  } else {
+                    for (int i = snapshot.data!.length - 1; i >= 0; i--) {
+                      if (DateTime.tryParse(snapshot.data![i].deptTime!)!.isAfter(DateTime.now())) {
+                        if (snapshot.data![i].deptTime! ==
+                                _dateController.formattingDateTime(
+                                  _dateController.mergeDateAndTime(),
+                                ) &&
+                            snapshot.data![i].departure!.name == _placeController.dep!.name &&
+                            snapshot.data![i].destination!.name == _placeController.dst!.name) {
+                          isRoomExist = true;
+                          return showDialog(
+                              context: context,
+                              builder: (BuildContext context) {
+                                return Dialog(
+                                  elevation: 0,
+                                  shape: RoundedRectangleBorder(
+                                    borderRadius: BorderRadius.circular(24.0.r),
+                                  ),
+                                  child: Container(
+                                    width: 312.w,
+                                    height: 253.h,
+                                    padding: EdgeInsets.fromLTRB(
+                                      36.0.w,
+                                      24.0.h,
+                                      36.0.w,
+                                      24.0.h,
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: 22.h,
-                                  ),
-                                  Container(
-                                    width: 240.w,
-                                    height: 99.h,
-                                    child: Align(
-                                      alignment: Alignment.centerLeft,
-                                      child: Text(
-                                        "이미 동일한 구성의 방이 존재합니다. 추가로 생성하겠습니까?",
-                                        style: textTheme.bodyText1?.copyWith(
-                                          color: colorScheme.onTertiary,
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 22.h,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.center,
-                                    children: [
-                                      Container(
-                                        width: 63.w,
-                                        height: 33.h,
-                                        child: TextButton(
-                                          onPressed: () async {
-                                            Get.back();
-                                          },
-                                          child: Text(
-                                            "취소",
-                                            style: textTheme.subtitle2
-                                                ?.copyWith(color: colorScheme.tertiaryContainer),
+                                    child: Column(
+                                      children: <Widget>[
+                                        Text(
+                                          "중복 오류",
+                                          style: textTheme.subtitle1?.copyWith(
+                                            color: colorScheme.secondary,
                                           ),
                                         ),
-                                      ),
-                                      SizedBox(
-                                        width: 78.w,
-                                      ),
-                                      Container(
-                                        width: 63.w,
-                                        height: 33.h,
-                                        child: TextButton(
-                                          onPressed: () async {
-                                            Get.back();
-                                            Post post = Post(
-                                              uid: _userController.uid,
-                                              postType: controller.mainScreenCurrentTabIndex,
-                                              departure: _placeController.dep,
-                                              destination: _placeController.dst,
-                                              deptTime: _dateController.formattingDateTime(
-                                                _dateController.mergeDateAndTime(),
+                                        SizedBox(
+                                          height: 22.h,
+                                        ),
+                                        Container(
+                                          width: 240.w,
+                                          height: 99.h,
+                                          child: Align(
+                                            alignment: Alignment.centerLeft,
+                                            child: Text(
+                                              "이미 동일한 구성의 방이 존재합니다. 추가로 생성하겠습니까?",
+                                              style: textTheme.bodyText1?.copyWith(
+                                                color: colorScheme.onTertiary,
                                               ),
-                                              capacity: _addPostController.capacity,
-                                              stopovers: _placeController.stopOver,
-                                            );
-
-                                            http.Response response = await _addPostController.fetchAddPost(post: post);
-                                            if (response.statusCode == 200) {
-                                              await _postController.getPosts(
-                                                depId: _placeController.dep?.id,
-                                                dstId: _placeController.dst?.id,
-                                                time: _dateController.formattingDateTime(
-                                                  _dateController.mergeDateAndTime(),
-                                                ),
-                                                postType: controller.mainScreenCurrentTabIndex,
-                                              );
-                                              _navigationController.changeIndex(3);
-                                            } else {
-                                              _addPostController.completeLoad();
-                                              // if (context.mounted) snackBar(context: context, title: '알 수 없는 에러로 방 만들기에 실패했습니다.');
-                                            }
-                                          },
-                                          child: Text(
-                                            "생성",
-                                            style: textTheme.subtitle2
-                                                ?.copyWith(color: colorScheme.onSecondaryContainer),
+                                            ),
                                           ),
                                         ),
-                                      ),
-                                    ],
+                                        SizedBox(
+                                          height: 22.h,
+                                        ),
+                                        Row(
+                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          children: [
+                                            Container(
+                                              width: 63.w,
+                                              height: 33.h,
+                                              child: TextButton(
+                                                onPressed: () async {
+                                                  Get.back();
+                                                },
+                                                child: Text(
+                                                  "취소",
+                                                  style: textTheme.subtitle2
+                                                      ?.copyWith(color: colorScheme.tertiaryContainer),
+                                                ),
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 78.w,
+                                            ),
+                                            Container(
+                                              width: 63.w,
+                                              height: 33.h,
+                                              child: TextButton(
+                                                onPressed: () async {
+                                                  Get.back();
+                                                  Post post = Post(
+                                                    uid: _userController.uid,
+                                                    postType: controller.mainScreenCurrentTabIndex,
+                                                    departure: _placeController.dep,
+                                                    destination: _placeController.dst,
+                                                    deptTime: _dateController.formattingDateTime(
+                                                      _dateController.mergeDateAndTime(),
+                                                    ),
+                                                    capacity: _addPostController.capacity,
+                                                    stopovers: _placeController.stopOver,
+                                                  );
+
+                                                  http.Response response =
+                                                      await _addPostController.fetchAddPost(post: post);
+                                                  if (response.statusCode == 200) {
+                                                    await _postController.getPosts(
+                                                      depId: _placeController.dep?.id,
+                                                      dstId: _placeController.dst?.id,
+                                                      time: _dateController.formattingDateTime(
+                                                        _dateController.mergeDateAndTime(),
+                                                      ),
+                                                      postType: controller.mainScreenCurrentTabIndex,
+                                                    );
+                                                    _navigationController.changeIndex(3);
+                                                  } else {
+                                                    _addPostController.completeLoad();
+                                                    // if (context.mounted) snackBar(context: context, title: '알 수 없는 에러로 방 만들기에 실패했습니다.');
+                                                  }
+                                                },
+                                                child: Text(
+                                                  "생성",
+                                                  style: textTheme.subtitle2
+                                                      ?.copyWith(color: colorScheme.onSecondaryContainer),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                      ],
+                                    ),
                                   ),
-                                ],
-                              ),
-                            ),
-                          );
-                        });
+                                );
+                              });
+                        }
+                      }
+                    }
+                    if (!isRoomExist) {
+                      Post post = Post(
+                        uid: _userController.uid,
+                        postType: controller.mainScreenCurrentTabIndex,
+                        departure: _placeController.dep,
+                        destination: _placeController.dst,
+                        deptTime: _dateController.formattingDateTime(
+                          _dateController.mergeDateAndTime(),
+                        ),
+                        capacity: _addPostController.capacity,
+                        stopovers: _placeController.stopOver,
+                      );
+                      http.Response response = await _addPostController.fetchAddPost(post: post);
+                      if (response.statusCode == 200) {
+                        await _postController.getPosts(
+                          depId: _placeController.dep?.id,
+                          dstId: _placeController.dst?.id,
+                          time: _dateController.formattingDateTime(
+                            _dateController.mergeDateAndTime(),
+                          ),
+                          postType: controller.mainScreenCurrentTabIndex,
+                        );
+                        _navigationController.changeIndex(3);
+                      } else {
+                        _addPostController.completeLoad();
+                        // if (context.mounted) snackBar(context: context, title: '알 수 없는 에러로 방 만들기에 실패했습니다.');
                       }
                     }
                   }
-                  if(!isRoomExist){
-                    Post post = Post(
-                      uid: _userController.uid,
-                      postType: controller.mainScreenCurrentTabIndex,
-                      departure: _placeController.dep,
-                      destination: _placeController.dst,
-                      deptTime: _dateController.formattingDateTime(
-                        _dateController.mergeDateAndTime(),
-                      ),
-                      capacity: _addPostController.capacity,
-                      stopovers: _placeController.stopOver,
-                    );
-                    http.Response response = await _addPostController.fetchAddPost(post: post);
-                    if (response.statusCode == 200) {
-                      await _postController.getPosts(
-                        depId: _placeController.dep?.id,
-                        dstId: _placeController.dst?.id,
-                        time: _dateController.formattingDateTime(
-                          _dateController.mergeDateAndTime(),
-                        ),
-                        postType: controller.mainScreenCurrentTabIndex,
-                      );
-                      _navigationController.changeIndex(3);
-                    } else {
-                      _addPostController.completeLoad();
-                      // if (context.mounted) snackBar(context: context, title: '알 수 없는 에러로 방 만들기에 실패했습니다.');
-                    }
-                  }
                 }
-              }
-            },
-            child: Text(
-              "방 만들기",
-              style: textTheme.subtitle2?.copyWith(
-                color: colorScheme.primary,
-              ),
-            ));
-      }
-    );
+              },
+              child: Text(
+                "방 만들기",
+                style: textTheme.subtitle2?.copyWith(
+                  color: colorScheme.primary,
+                ),
+              ));
+        });
   });
 }

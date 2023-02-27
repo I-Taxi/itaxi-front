@@ -12,7 +12,7 @@ import 'package:itaxi/post/model/post.dart';
 import 'package:itaxi/history/model/history.dart';
 import 'package:itaxi/place/widget/abbreviatePlaceName.dart';
 
-Widget chatroomListListTile({required BuildContext context, required History history}) {
+Widget chatRoomListTile({required BuildContext context, required History history}) {
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
   late AddPostController _addPostController = Get.find();
@@ -46,13 +46,13 @@ Widget chatroomListListTile({required BuildContext context, required History his
         child: Row(children: [
           history.postType != 3
               ? Image.asset(
-                  'assets/icon/icon-Car.png',
+                  'assets/icon/chat_room_list_car.png',
                   width: 56.w,
                   height: 56.h,
                   fit: BoxFit.fill,
                 )
               : Image.asset(
-                  'assets/icon/icon-KTX.png',
+                  'assets/icon/chat_room_list_ktx.png',
                   width: 56.w,
                   height: 56.h,
                   fit: BoxFit.fill,

@@ -5,7 +5,7 @@ import 'package:get/get.dart';
 import 'package:itaxi/chat/screen/chatRoomListScreen.dart';
 import 'package:itaxi/tools/controller/navigationController.dart';
 
-import 'package:itaxi/main/screen/mainScreen.dart';
+import 'package:itaxi/main/screen/taxiScreen.dart';
 import 'package:itaxi/main/screen/ktxScreen.dart';
 import 'package:itaxi/history/screen/timelineScreen.dart';
 
@@ -18,7 +18,12 @@ class Home extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final pageList = [const MainScreen(), const KtxScreen(), const ChatroomListScreen(), const TimelineScreen()];
+    final pageList = [
+      const TaxiScreen(),
+      const KtxScreen(),
+      const ChatroomListScreen(),
+      const TimelineScreen()
+    ];
 
     return GetBuilder<NavigationController>(
       builder: (_) {
@@ -28,7 +33,10 @@ class Home extends StatelessWidget {
               width: 390.w,
               height: _navController.navHeight.h,
               decoration: BoxDecoration(color: colorScheme.primary, boxShadow: [
-                BoxShadow(color: Color.fromRGBO(0, 0, 0, 0.4), blurRadius: 3.r, offset: Offset(-1.w, 3.h))
+                BoxShadow(
+                    color: Color.fromRGBO(0, 0, 0, 0.4),
+                    blurRadius: 3.r,
+                    offset: Offset(-1.w, 3.h))
               ]),
               padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 8.h),
               child: Row(
@@ -43,13 +51,13 @@ class Home extends StatelessWidget {
                         ? Image.asset(
                             width: 89.5.w,
                             height: 48.h,
-                            'assets/newType/car_taxi.png',
+                            'assets/icon/navi_car_taxi.png',
                             color: colorScheme.secondary,
                           )
                         : Image.asset(
                             width: 89.5.w,
                             height: 48.h,
-                            'assets/newType/car_taxi.png',
+                            'assets/icon/navi_car_taxi.png',
                             color: colorScheme.tertiary,
                           ),
                   ),
@@ -61,13 +69,13 @@ class Home extends StatelessWidget {
                         ? Image.asset(
                             width: 89.5.w,
                             height: 48.h,
-                            'assets/newType/ktx.png',
+                            'assets/icon/navi_ktx.png',
                             color: colorScheme.secondary,
                           )
                         : Image.asset(
                             width: 89.5.w,
                             height: 48.h,
-                            'assets/newType/ktx.png',
+                            'assets/icon/navi_ktx.png',
                             color: colorScheme.tertiary,
                           ),
                   ),
@@ -79,13 +87,13 @@ class Home extends StatelessWidget {
                         ? Image.asset(
                             width: 89.5.w,
                             height: 48.h,
-                            'assets/newType/messenger.png',
+                            'assets/icon/messenger.png',
                             color: colorScheme.secondary,
                           )
                         : Image.asset(
                             width: 89.5.w,
                             height: 48.h,
-                            'assets/newType/messenger.png',
+                            'assets/icon/messenger.png',
                             color: colorScheme.tertiary,
                           ),
                   ),
@@ -97,13 +105,13 @@ class Home extends StatelessWidget {
                         ? Image.asset(
                             width: 89.5.w,
                             height: 48.h,
-                            'assets/newType/timeline.png',
+                            'assets/icon/navi_timeline.png',
                             color: colorScheme.secondary,
                           )
                         : Image.asset(
                             width: 89.5.w,
                             height: 48.h,
-                            'assets/newType/timeline.png',
+                            'assets/icon/navi_timeline.png',
                             color: colorScheme.tertiary,
                           ),
                   ),

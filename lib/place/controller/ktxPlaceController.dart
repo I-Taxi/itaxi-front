@@ -37,6 +37,7 @@ class KtxPlaceController extends GetxController {
   // Places 데이터 가져오기
   List<KtxPlace> PlacefromJson(json) {
     List<KtxPlace> result = [];
+
     json.forEach((item) {
       result.add(KtxPlace.fromDocs(item));
     });
@@ -102,6 +103,15 @@ class KtxPlaceController extends GetxController {
       dep = dst;
       dst = temp;
     }
+
+    if (dep != null && dep!.name == '도착지 전체') {
+      dep!.name = '출발지 전체';
+    }
+
+    if (dst != null && dst!.name == '출발지 전체') {
+      dst!.name = '도착지 전체';
+    }
+    
     update();
   }
 }
