@@ -86,7 +86,8 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
                                   _advertisementController.advertisementImage,
                               builder: (BuildContext context, snapshot) {
                                 return GestureDetector(
-                                  onTap: () => _launchURL(snapshot.data!.url!),
+                                  onTap: () => _launchURL(snapshot.data?.url ??
+                                      'https://cra16.github.io/'),
                                   child: Container(
                                     width: 342.w,
                                     height: 75.h,
@@ -95,12 +96,6 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
                                       border: Border.all(
                                           color: colorScheme.inversePrimary,
                                           width: 2),
-                                      //   boxShadow: [
-                                      //     BoxShadow(
-                                      //       color: colorScheme.shadow,
-                                      //       blurRadius: 5,
-                                      //     ),
-                                      // ]
                                     ),
                                     child: ClipRRect(
                                       borderRadius: BorderRadius.circular(6.0),
@@ -113,7 +108,7 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
                                               fit: BoxFit.fill,
                                             )
                                           : Image.asset(
-                                              'assets/image/banner.png',
+                                              'assets/Image/banner.png',
                                               width: 342.w,
                                               height: 75.h,
                                               fit: BoxFit.fill,
@@ -199,31 +194,47 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
                         SizedBox(
                           height: 13.h,
                         ),
-                        Container(
-                            width: 342.w,
-                            height: 75.h,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10.0),
-                            ),
-                            child: Stack(
-                              children: [
-                                Image.asset(
-                                  'assets/banner.png',
-                                  width: 342.w,
-                                  height: 75.h,
-                                  fit: BoxFit.fill,
-                                ),
-                                Padding(
-                                  padding:
-                                      EdgeInsets.only(right: 7.w, bottom: 5.h),
-                                  child: Align(
-                                    alignment: Alignment.bottomRight,
-                                    child: Image.asset(
-                                        'assets/button/contact.png'),
+                        GetBuilder<AdvertisementController>(
+                          builder: (_) {
+                            return FutureBuilder<Advertisement>(
+                              future:
+                                  _advertisementController.advertisementImage,
+                              builder: (BuildContext context, snapshot) {
+                                return GestureDetector(
+                                  onTap: () => _launchURL(snapshot.data?.url ??
+                                      'https://cra16.github.io/'),
+                                  child: Container(
+                                    width: 342.w,
+                                    height: 75.h,
+                                    decoration: BoxDecoration(
+                                      borderRadius: BorderRadius.circular(8.0),
+                                      border: Border.all(
+                                          color: colorScheme.inversePrimary,
+                                          width: 2),
+                                    ),
+                                    child: ClipRRect(
+                                      borderRadius: BorderRadius.circular(6.0),
+                                      child: snapshot.hasData
+                                          ? Image.memory(
+                                              base64Decode(
+                                                  snapshot.data!.byte!),
+                                              width: 342.w,
+                                              height: 75.h,
+                                              fit: BoxFit.fill,
+                                            )
+                                          : Image.asset(
+                                              'assets/Image/banner.png',
+                                              width: 342.w,
+                                              height: 75.h,
+                                              fit: BoxFit.fill,
+                                            ),
+                                    ),
                                   ),
-                                )
-                              ],
-                            )),
+                                );
+                              },
+                            );
+                          },
+                        ),
                         SizedBox(
                           height: 13.h,
                         ),
