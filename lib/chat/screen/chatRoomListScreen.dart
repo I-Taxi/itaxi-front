@@ -1,6 +1,4 @@
 import 'dart:convert';
-import 'dart:io';
-import 'dart:typed_data';
 
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -40,8 +38,9 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
         GlobalKey<RefreshIndicatorState>();
 
     _launchURL(String url) async {
-      if (await canLaunch(url)) {
-        await launch(url);
+      final parsedUrl = Uri.parse(url);
+      if (await canLaunchUrl(parsedUrl)) {
+        await launchUrl(parsedUrl);
       } else {
         throw 'Could not launch $url';
       }
@@ -261,7 +260,7 @@ class _ChatroomListScreenState extends State<ChatroomListScreen> {
                                   },
                                   child: Image.asset(
                                     width: 198,
-                                    'assets/button/add_timeline.png',
+                                    'assets/button/go_gather_screen.png',
                                   ),
                                   style: OutlinedButton.styleFrom(
                                       side: BorderSide(
