@@ -3,9 +3,9 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:get/get.dart';
 
 import 'package:itaxi/chat/screen/chatRoomListScreen.dart';
-import 'package:itaxi/deeplink/dynamicLinkController.dart';
+import 'package:itaxi/deeplink/controller/dynamicLinkController.dart';
 import 'package:itaxi/post/controller/postController.dart';
-import 'package:itaxi/post/screen/postDeepLinkScreen.dart';
+import 'package:itaxi/deeplink/screen/postDeepLinkScreen.dart';
 import 'package:itaxi/tools/controller/navigationController.dart';
 
 import 'package:itaxi/main/screen/taxiScreen.dart';
