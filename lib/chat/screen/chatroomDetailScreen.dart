@@ -17,8 +17,11 @@ import 'package:itaxi/history/model/history.dart';
 import 'package:itaxi/post/model/ktxPost.dart';
 import 'package:itaxi/post/model/post.dart';
 import 'package:itaxi/place/widget/abbreviatePlaceName.dart';
+import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'package:itaxi/tools/widget/showErrorDialog.dart';
+
+import '../../deeplink/dynamicLink.dart';
 
 class ChatRoomDetailScreen extends StatefulWidget {
   const ChatRoomDetailScreen({super.key});
@@ -51,19 +54,27 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
     }
   }
 
+  Future<void> shareChatLink(int chatId) async {
+    Share.share(
+      await DynamicLink().getShortLink(
+        'chat',
+        "$chatId",
+        "hi"
+      ),
+    );
+  }
+
   @override
   void initState() {
     _scrollController.addListener(() {
       if (_scrollController.hasClients) {
-        if (_scrollController.position.pixels ==
-            _scrollController.position.minScrollExtent) {
+        if (_scrollController.position.pixels == _scrollController.position.minScrollExtent) {
           setState(() {
             isScrollDown = false;
             needScrollDown = false;
           });
         }
-        if (_scrollController.position.pixels >
-            _scrollController.position.minScrollExtent) {
+        if (_scrollController.position.pixels > _scrollController.position.minScrollExtent) {
           setState(() {
             needScrollDown = true;
           });
@@ -71,9 +82,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
       }
     });
     _chatRoomController.chats.listen((event) {
-      if (_scrollController.hasClients &&
-          _scrollController.position.pixels !=
-              _scrollController.position.minScrollExtent) {
+      if (_scrollController.hasClients && _scrollController.position.pixels != _scrollController.position.minScrollExtent) {
         setState(() {
           isScrollDown = true;
         });
@@ -87,9 +96,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
     final textTheme = Theme.of(context).textTheme;
-    String time = _chatRoomController.postType != 3
-        ? _chatRoomController.post.deptTime ?? 'null'
-        : _chatRoomController.ktxPost.deptTime ?? 'null';
+    String time = _chatRoomController.postType != 3 ? _chatRoomController.post.deptTime ?? 'null' : _chatRoomController.ktxPost.deptTime ?? 'null';
     List<HistoryPlace?> stopovers;
     bool isOwner = false;
 
@@ -140,9 +147,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                             children: [
                               Expanded(
                                 child: Text(
-                                  _chatRoomController.postType != 3
-                                      ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} #${DateFormat('MM/dd').format(DateTime.parse(time))}"
-                                      : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} #${DateFormat('MM/dd').format(DateTime.parse(time))}",
+                                  _chatRoomController.postType != 3 ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} #${DateFormat('MM/dd').format(DateTime.parse(time))}" : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} #${DateFormat('MM/dd').format(DateTime.parse(time))}",
                                   style: textTheme.subtitle1?.copyWith(
                                     color: colorScheme.primary,
                                   ),
@@ -156,104 +161,77 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                     width: 325.w,
                     child: Padding(
                       padding: EdgeInsets.fromLTRB(24.w, 24.h, 24.w, 36.h),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                        Text(
+                          "출발/도착지",
+                          style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
+                        ),
+                        SizedBox(
+                          height: 24.h,
+                        ),
+                        Row(
                           children: [
-                            Text(
-                              "출발/도착지",
-                              style: textTheme.subtitle2
-                                  ?.copyWith(color: colorScheme.onTertiary),
+                            Image.asset(
+                              'assets/icon/location.png',
+                              width: 18.w,
+                              height: 18.h,
                             ),
                             SizedBox(
-                              height: 24.h,
+                              width: 5.w,
                             ),
-                            Row(
+                            _chatRoomController.postType != 3 ? Text(_chatRoomController.post.departure!.name ?? 'null', style: textTheme.bodyText1?.copyWith()) : Text(_chatRoomController.ktxPost.departure!.name ?? 'null', style: textTheme.bodyText1?.copyWith())
+                          ],
+                        ),
+                        if (stopovers.isNotEmpty)
+                          for (int i = 0; i < stopovers.length; i++)
+                            Column(
                               children: [
-                                Image.asset(
-                                  'assets/icon/location.png',
-                                  width: 18.w,
-                                  height: 18.h,
-                                ),
                                 SizedBox(
-                                  width: 5.w,
+                                  height: 8.h,
                                 ),
-                                _chatRoomController.postType != 3
-                                    ? Text(
-                                        _chatRoomController
-                                                .post.departure!.name ??
-                                            'null',
-                                        style: textTheme.bodyText1?.copyWith())
-                                    : Text(
-                                        _chatRoomController
-                                                .ktxPost.departure!.name ??
-                                            'null',
-                                        style: textTheme.bodyText1?.copyWith())
-                              ],
-                            ),
-                            if (stopovers.isNotEmpty)
-                              for (int i = 0; i < stopovers.length; i++)
-                                Column(
+                                Row(
                                   children: [
                                     SizedBox(
-                                      height: 8.h,
+                                      width: 23.w,
+                                      height: 18.h,
                                     ),
-                                    Row(
-                                      children: [
-                                        SizedBox(
-                                          width: 23.w,
-                                          height: 18.h,
-                                        ),
-                                        Text(
-                                          '경유',
-                                          style: textTheme.bodyText1?.copyWith(
-                                              color: colorScheme
-                                                  .tertiaryContainer),
-                                        ),
-                                        SizedBox(
-                                          width: 16.w,
-                                        ),
-                                        Text(
-                                          stopovers[i]!.name ?? '',
-                                          style: textTheme.bodyText1?.copyWith(
-                                              color: colorScheme
-                                                  .tertiaryContainer),
-                                        ),
-                                      ],
+                                    Text(
+                                      '경유',
+                                      style: textTheme.bodyText1?.copyWith(color: colorScheme.tertiaryContainer),
                                     ),
-                                    if ((i + 1).isEqual(stopovers.length))
-                                      SizedBox(
-                                        height: 8.h,
-                                      ),
+                                    SizedBox(
+                                      width: 16.w,
+                                    ),
+                                    Text(
+                                      stopovers[i]!.name ?? '',
+                                      style: textTheme.bodyText1?.copyWith(color: colorScheme.tertiaryContainer),
+                                    ),
                                   ],
                                 ),
-                            if (stopovers.isEmpty)
-                              SizedBox(
-                                height: 24.h,
-                              ),
-                            Row(
-                              children: [
-                                Image.asset(
-                                  'assets/icon/location.png',
-                                  width: 18.w,
-                                  height: 18.h,
-                                ),
-                                SizedBox(
-                                  width: 5.w,
-                                ),
-                                _chatRoomController.postType != 3
-                                    ? Text(
-                                        _chatRoomController
-                                                .post.destination!.name ??
-                                            'null',
-                                        style: textTheme.bodyText1?.copyWith())
-                                    : Text(
-                                        _chatRoomController
-                                                .ktxPost.destination!.name ??
-                                            'null',
-                                        style: textTheme.bodyText1?.copyWith())
+                                if ((i + 1).isEqual(stopovers.length))
+                                  SizedBox(
+                                    height: 8.h,
+                                  ),
                               ],
                             ),
-                          ]),
+                        if (stopovers.isEmpty)
+                          SizedBox(
+                            height: 24.h,
+                          ),
+                        Row(
+                          children: [
+                            Image.asset(
+                              'assets/icon/location.png',
+                              width: 18.w,
+                              height: 18.h,
+                            ),
+                            SizedBox(
+                              width: 5.w,
+                            ),
+                            _chatRoomController.postType != 3 ? Text(_chatRoomController.post.destination!.name ?? 'null', style: textTheme.bodyText1?.copyWith()) : Text(_chatRoomController.ktxPost.destination!.name ?? 'null', style: textTheme.bodyText1?.copyWith())
+                          ],
+                        ),
+                      ]),
                     ),
                   ),
                   const Divider(
@@ -262,95 +240,79 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                   Container(
                     child: Padding(
                       padding: EdgeInsets.fromLTRB(24.w, 24.h, 24.w, 36.h),
-                      child: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              "대화상대",
-                              style: textTheme.subtitle2
-                                  ?.copyWith(color: colorScheme.onTertiary),
-                            ),
-                            if (snapshot.hasData)
-                              for (int i = 0;
-                                  i < snapshot.data!.joiners!.length;
-                                  i++)
-                                Column(
+                      child: Column(crossAxisAlignment: CrossAxisAlignment.start, children: [
+                        Text(
+                          "대화상대",
+                          style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
+                        ),
+                        if (snapshot.hasData)
+                          for (int i = 0; i < snapshot.data!.joiners!.length; i++)
+                            Column(
+                              children: [
+                                SizedBox(
+                                  height: 24.h,
+                                ),
+                                Row(
                                   children: [
+                                    (snapshot.data!.joiners![i].owner ?? false)
+                                        ? Padding(
+                                            padding: EdgeInsets.only(top: 3.h, bottom: 3.h),
+                                            child: SizedBox(
+                                              child: Icon(
+                                                Icons.star,
+                                                size: Platform.isIOS ? 20 : 18,
+                                                color: (Colors.yellow),
+                                              ),
+                                            ),
+                                          )
+                                        : SizedBox(),
                                     SizedBox(
-                                      height: 24.h,
+                                      width: 2.w,
                                     ),
-                                    Row(
-                                      children: [
-                                        (snapshot.data!.joiners![i].owner ??
-                                                false)
-                                            ? Padding(
-                                                padding: EdgeInsets.only(
-                                                    top: 3.h, bottom: 3.h),
-                                                child: SizedBox(
-                                                  child: Icon(
-                                                    Icons.star,
-                                                    size: Platform.isIOS
-                                                        ? 20
-                                                        : 18,
-                                                    color: (Colors.yellow),
-                                                  ),
-                                                ),
-                                              )
-                                            : SizedBox(),
-                                        SizedBox(
-                                          width: 2.w,
-                                        ),
-                                        Text(
-                                            snapshot.data!.joiners![i]
-                                                    .memberName ??
-                                                '',
-                                            style: textTheme.bodyText1
-                                                ?.copyWith()),
-                                        const Spacer(),
-                                        SizedBox(
-                                          width: 16.w,
-                                        ),
-                                        InkWell(
-                                          child: Image.asset(
-                                            'assets/button/call_other_person.png',
-                                            width: 24.w,
-                                            height: 24.h,
-                                          ),
-                                          onTap: () async {
-                                            final Uri launchUri = Uri.parse(
-                                                'tel:${snapshot.data!.joiners![i].memberPhone}');
-                                            if (await canLaunchUrl(launchUri)) {
-                                              await launchUrl(launchUri);
-                                            } else {
-                                              throw Exception('Failed call');
-                                            }
-                                          },
-                                        ),
-                                        SizedBox(
-                                          width: 16.w,
-                                        ),
-                                        InkWell(
-                                          child: Image.asset(
-                                            'assets/button/send_message.png',
-                                            width: 24.w,
-                                            height: 24.h,
-                                          ),
-                                          onTap: () async {
-                                            final Uri launchUri = Uri.parse(
-                                                'sms:${snapshot.data!.joiners![i].memberPhone}');
-                                            if (await canLaunchUrl(launchUri)) {
-                                              await launchUrl(launchUri);
-                                            } else {
-                                              throw Exception('Failed sms');
-                                            }
-                                          },
-                                        )
-                                      ],
+                                    Text(snapshot.data!.joiners![i].memberName ?? '', style: textTheme.bodyText1?.copyWith()),
+                                    const Spacer(),
+                                    SizedBox(
+                                      width: 16.w,
                                     ),
+                                    InkWell(
+                                      child: Image.asset(
+                                        'assets/button/call_other_person.png',
+                                        width: 24.w,
+                                        height: 24.h,
+                                      ),
+                                      onTap: () async {
+                                        final Uri launchUri = Uri.parse('tel:${snapshot.data!.joiners![i].memberPhone}');
+                                        if (await canLaunchUrl(launchUri)) {
+                                          await launchUrl(launchUri);
+                                        } else {
+                                          throw Exception('Failed call');
+                                        }
+                                      },
+                                    ),
+                                    SizedBox(
+                                      width: 16.w,
+                                    ),
+                                    InkWell(
+                                      child: Image.asset(
+                                        'assets/button/send_message.png',
+                                        width: 24.w,
+                                        height: 24.h,
+                                      ),
+                                      onTap: () async {
+                                        final Uri launchUri = Uri.parse('sms:${snapshot.data!.joiners![i].memberPhone}');
+                                        if (await canLaunchUrl(launchUri)) {
+                                          await launchUrl(launchUri);
+                                        } else {
+                                          throw Exception('Failed sms');
+                                        }
+                                      },
+                                    )
                                   ],
                                 ),
-                            SizedBox(),
-                          ]),
+                              ],
+                            ),
+                        SizedBox(),
+                      ]),
                     ),
                   ),
                   const Divider(
@@ -363,16 +325,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                       padding: EdgeInsets.only(bottom: 43.h, left: 30.w),
                       child: InkWell(
                         onTap: () async {
-                          showExitDialog(
-                              context,
-                              '방 나가기',
-                              '방을 나가시겠습니까?',
-                              _postController,
-                              _ktxPostController,
-                              _historyController,
-                              _chatRoomController,
-                              currentPost,
-                              currentKtxPost);
+                          showExitDialog(context, '방 나가기', '방을 나가시겠습니까?', _postController, _ktxPostController, _historyController, _chatRoomController, currentPost, currentKtxPost);
                         },
                         child: Row(children: [
                           Image.asset('assets/button/logout_account.png', width: 24.w, height: 24.h),
@@ -381,8 +334,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                           ),
                           Text(
                             "방 나가기",
-                            style: textTheme.bodyText2?.copyWith(
-                                color: colorScheme.tertiaryContainer),
+                            style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiaryContainer),
                           )
                         ]),
                       ),
@@ -405,8 +357,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                     var reversedList = snapshot.data?.reversed.toList();
                     int itemCount = reversedList!.length;
                     return Padding(
-                      padding:
-                          EdgeInsets.only(left: 18.w, right: 18.w, top: 44.h),
+                      padding: EdgeInsets.only(left: 18.w, right: 18.w, top: 44.h),
                       child: Column(
                         children: [
                           Container(
@@ -426,12 +377,8 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                 ),
                                 Flexible(
                                   child: Text(
-                                    _chatRoomController.postType != 3
-                                        ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} (${DateFormat('MM/dd').format(DateTime.parse(time))})"
-                                        : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} (${DateFormat('MM/dd').format(DateTime.parse(time))})",
-                                    style: textTheme.subtitle1?.copyWith(
-                                        color: colorScheme.onTertiary,
-                                        fontWeight: FontWeight.w500),
+                                    _chatRoomController.postType != 3 ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} (${DateFormat('MM/dd').format(DateTime.parse(time))})" : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} (${DateFormat('MM/dd').format(DateTime.parse(time))})",
+                                    style: textTheme.subtitle1?.copyWith(color: colorScheme.onTertiary, fontWeight: FontWeight.w500),
                                     maxLines: 1,
                                   ),
                                 ),
@@ -451,41 +398,22 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                   reverse: true,
                                   shrinkWrap: true,
                                   controller: _scrollController,
-                                  itemBuilder:
-                                      (BuildContext context, int index) {
+                                  itemBuilder: (BuildContext context, int index) {
                                     bool isFirst;
-                                    List<String> korDays = [
-                                      '월',
-                                      '화',
-                                      '수',
-                                      '목',
-                                      '금',
-                                      '토',
-                                      '일'
-                                    ];
+                                    List<String> korDays = ['월', '화', '수', '목', '금', '토', '일'];
 
                                     if (index != itemCount - 1) {
-                                      final difference = reversedList[index]
-                                          .chatTime!
-                                          .toDate()
-                                          .difference(reversedList[index + 1]
-                                              .chatTime!
-                                              .toDate());
+                                      final difference = reversedList[index].chatTime!.toDate().difference(reversedList[index + 1].chatTime!.toDate());
                                       if (difference.inMinutes >= 1) {
                                         isFirst = true;
                                       } else {
                                         isFirst = false;
                                       }
 
-                                      if (reversedList[index].memberId !=
-                                          reversedList[index + 1].memberId) {
+                                      if (reversedList[index].memberId != reversedList[index + 1].memberId) {
                                         isFirst = true;
                                       }
-                                      if (index == itemCount - 2 &&
-                                          reversedList[itemCount - 1]
-                                                  .memberId ==
-                                              reversedList[itemCount - 2]
-                                                  .memberId) {
+                                      if (index == itemCount - 2 && reversedList[itemCount - 1].memberId == reversedList[itemCount - 2].memberId) {
                                         isFirst = false;
                                       }
                                     } else {
@@ -493,24 +421,8 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                     }
                                     return Column(
                                       children: [
-                                        if (DateTime.now()
-                                                .difference(reversedList[index]
-                                                    .chatTime!
-                                                    .toDate())
-                                                .isNegative ==
-                                            false)
-                                          if (index == itemCount - 1 ||
-                                              (index + 1 < itemCount - 1 &&
-                                                  DateTime.parse(DateFormat(
-                                                                  'yyyy-MM-dd')
-                                                              .format(
-                                                                  reversedList[index]
-                                                                      .chatTime!
-                                                                      .toDate()))
-                                                          .compareTo(DateTime.parse(
-                                                              DateFormat('yyyy-MM-dd')
-                                                                  .format(reversedList[index + 1].chatTime!.toDate()))) !=
-                                                      0))
+                                        if (DateTime.now().difference(reversedList[index].chatTime!.toDate()).isNegative == false)
+                                          if (index == itemCount - 1 || (index + 1 < itemCount - 1 && DateTime.parse(DateFormat('yyyy-MM-dd').format(reversedList[index].chatTime!.toDate())).compareTo(DateTime.parse(DateFormat('yyyy-MM-dd').format(reversedList[index + 1].chatTime!.toDate()))) != 0))
                                             Column(
                                               children: [
                                                 index != itemCount - 1
@@ -519,16 +431,8 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                                       )
                                                     : SizedBox(),
                                                 Text(
-                                                  DateFormat(
-                                                          'M월 d일 (${korDays[reversedList[index].chatTime!.toDate().weekday - 1]})')
-                                                      .format(
-                                                          reversedList[index]
-                                                              .chatTime!
-                                                              .toDate()),
-                                                  style: textTheme.bodyText2
-                                                      ?.copyWith(
-                                                          color: colorScheme
-                                                              .tertiaryContainer),
+                                                  DateFormat('M월 d일 (${korDays[reversedList[index].chatTime!.toDate().weekday - 1]})').format(reversedList[index].chatTime!.toDate()),
+                                                  style: textTheme.bodyText2?.copyWith(color: colorScheme.tertiaryContainer),
                                                 ),
                                                 SizedBox(
                                                   height: 20.h,
@@ -538,47 +442,23 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                         reversedList[index].memberName == null
                                             ? Column(
                                                 children: [
-                                                  index > 0 &&
-                                                          reversedList[
-                                                                      index - 1]
-                                                                  .memberName ==
-                                                              null
+                                                  index > 0 && reversedList[index - 1].memberName == null
                                                       ? SizedBox()
                                                       : SizedBox(
                                                           height: 21.h,
                                                         ),
                                                   Container(
-                                                      decoration: BoxDecoration(
-                                                          color: colorScheme
-                                                              .onBackground,
-                                                          borderRadius:
-                                                              const BorderRadius
-                                                                      .all(
-                                                                  Radius
-                                                                      .circular(
-                                                                          5))),
+                                                      decoration: BoxDecoration(color: colorScheme.onBackground, borderRadius: const BorderRadius.all(Radius.circular(5))),
                                                       child: Padding(
-                                                        padding: EdgeInsets
-                                                            .symmetric(
-                                                                vertical: 6.h,
-                                                                horizontal:
-                                                                    8.w),
+                                                        padding: EdgeInsets.symmetric(vertical: 6.h, horizontal: 8.w),
                                                         child: Text(
-                                                          reversedList[index]
-                                                              .chatData!,
-                                                          style: textTheme
-                                                              .bodyText2
-                                                              ?.copyWith(
-                                                            color: colorScheme
-                                                                .tertiaryContainer,
+                                                          reversedList[index].chatData!,
+                                                          style: textTheme.bodyText2?.copyWith(
+                                                            color: colorScheme.tertiaryContainer,
                                                           ),
                                                         ),
                                                       )),
-                                                  index > 0 &&
-                                                          reversedList[
-                                                                      index - 1]
-                                                                  .memberName ==
-                                                              null
+                                                  index > 0 && reversedList[index - 1].memberName == null
                                                       ? SizedBox(
                                                           height: 5.h,
                                                         )
@@ -591,22 +471,14 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                                 context: context,
                                                 isFirst: isFirst,
                                                 chat: reversedList[index],
-                                                joiners: _chatRoomController
-                                                            .postType !=
-                                                        3
-                                                    ? _chatRoomController
-                                                        .post.joiners
-                                                    : _chatRoomController
-                                                        .ktxPost.joiners,
+                                                joiners: _chatRoomController.postType != 3 ? _chatRoomController.post.joiners : _chatRoomController.ktxPost.joiners,
                                               )
                                       ],
                                     );
                                   },
                                   itemCount: reversedList.length,
                                 ),
-                                if (isScrollDown == true &&
-                                    reversedList[reversedList.length - 1].uid !=
-                                        _userController.uid)
+                                if (isScrollDown == true && reversedList[reversedList.length - 1].uid != _userController.uid)
                                   Align(
                                     alignment: Alignment.bottomCenter,
                                     child: GestureDetector(
@@ -620,46 +492,29 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                         width: double.infinity,
                                         height: 56.h,
                                         decoration: BoxDecoration(
-                                          color: colorScheme.tertiary
-                                              .withOpacity(0.7),
-                                          borderRadius:
-                                              BorderRadius.circular(4),
+                                          color: colorScheme.tertiary.withOpacity(0.7),
+                                          borderRadius: BorderRadius.circular(4),
                                         ),
                                         child: Padding(
-                                          padding: EdgeInsets.fromLTRB(
-                                              16.w, 8.h, 16.w, 8.h),
+                                          padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 8.h),
                                           child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.spaceBetween,
+                                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                             children: [
                                               Column(
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
+                                                crossAxisAlignment: CrossAxisAlignment.start,
                                                 children: [
                                                   Text(
-                                                    reversedList[reversedList
-                                                                    .length -
-                                                                1]
-                                                            .memberName ??
-                                                        '',
-                                                    style: textTheme.bodyText1
-                                                        ?.copyWith(
-                                                      color:
-                                                          colorScheme.primary,
+                                                    reversedList[reversedList.length - 1].memberName ?? '',
+                                                    style: textTheme.bodyText1?.copyWith(
+                                                      color: colorScheme.primary,
                                                     ),
                                                     maxLines: 1,
                                                   ),
                                                   Expanded(
                                                     child: Text(
-                                                      reversedList[reversedList
-                                                                      .length -
-                                                                  1]
-                                                              .chatData ??
-                                                          '',
-                                                      style: textTheme.bodyText1
-                                                          ?.copyWith(
-                                                        color:
-                                                            colorScheme.primary,
+                                                      reversedList[reversedList.length - 1].chatData ?? '',
+                                                      style: textTheme.bodyText1?.copyWith(
+                                                        color: colorScheme.primary,
                                                       ),
                                                       maxLines: 1,
                                                     ),
@@ -669,8 +524,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                               Container(
                                                 width: 91.w,
                                                 height: 27.h,
-                                                child: Image.asset(
-                                                    'assets/button/return_latest_chat.png'),
+                                                child: Image.asset('assets/button/return_latest_chat.png'),
                                               ),
                                             ],
                                           ),
@@ -678,8 +532,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                       ),
                                     ),
                                   ),
-                                if (isScrollDown == false &&
-                                    needScrollDown == true)
+                                if (isScrollDown == false && needScrollDown == true)
                                   Padding(
                                     padding: EdgeInsets.only(bottom: 12.h),
                                     child: Align(
@@ -694,8 +547,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                         child: Container(
                                           width: 91.w,
                                           height: 27.h,
-                                          child: Image.asset(
-                                              'assets/button/return_latest_chat.png'),
+                                          child: Image.asset('assets/button/return_latest_chat.png'),
                                         ),
                                       ),
                                     ),
@@ -708,8 +560,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                     );
                   } else {
                     return Padding(
-                      padding:
-                          EdgeInsets.only(left: 18.w, right: 18.w, top: 44.h),
+                      padding: EdgeInsets.only(left: 18.w, right: 18.w, top: 44.h),
                       child: Column(
                         children: [
                           Container(
@@ -729,12 +580,8 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                 ),
                                 Flexible(
                                   child: Text(
-                                    _chatRoomController.postType != 3
-                                        ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} (${DateFormat('MM/dd').format(DateTime.parse(time))})"
-                                        : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} (${DateFormat('MM/dd').format(DateTime.parse(time))})",
-                                    style: textTheme.subtitle1?.copyWith(
-                                        color: colorScheme.onTertiary,
-                                        fontWeight: FontWeight.w500),
+                                    _chatRoomController.postType != 3 ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} (${DateFormat('MM/dd').format(DateTime.parse(time))})" : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} (${DateFormat('MM/dd').format(DateTime.parse(time))})",
+                                    style: textTheme.subtitle1?.copyWith(color: colorScheme.onTertiary, fontWeight: FontWeight.w500),
                                     maxLines: 1,
                                   ),
                                 ),
@@ -752,37 +599,28 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                           ),
                           Container(
                               width: 342.w,
-                              padding:
-                                  EdgeInsets.fromLTRB(21.w, 20.h, 21.w, 22.h),
+                              padding: EdgeInsets.fromLTRB(21.w, 20.h, 21.w, 22.h),
                               decoration: BoxDecoration(
                                 color: colorScheme.secondary,
-                                borderRadius:
-                                    const BorderRadius.all(Radius.circular(16)),
+                                borderRadius: const BorderRadius.all(Radius.circular(16)),
                               ),
                               child: Column(
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   isOwner
                                       ? Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               '환영합니다. ${_userController.name}님이 방장입니다.',
-                                              style: textTheme.subtitle2!
-                                                  .copyWith(
-                                                      color:
-                                                          colorScheme.primary),
+                                              style: textTheme.subtitle2!.copyWith(color: colorScheme.primary),
                                             ),
                                             SizedBox(
                                               height: 3.h,
                                             ),
                                             Text(
                                               '알아두면 좋습니다.',
-                                              style: textTheme.bodyText2!
-                                                  .copyWith(
-                                                      color:
-                                                          colorScheme.primary),
+                                              style: textTheme.bodyText2!.copyWith(color: colorScheme.primary),
                                             ),
                                             SizedBox(
                                               height: 3.h,
@@ -799,10 +637,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                                 ),
                                                 Text(
                                                   '탑승할 차 번호를 꼭 알려주세요.',
-                                                  style: textTheme.bodyText2!
-                                                      .copyWith(
-                                                          color: colorScheme
-                                                              .primary),
+                                                  style: textTheme.bodyText2!.copyWith(color: colorScheme.primary),
                                                 ),
                                               ],
                                             ),
@@ -818,10 +653,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                                 ),
                                                 Text(
                                                   '모일 장소를 숙지하세요.',
-                                                  style: textTheme.bodyText2!
-                                                      .copyWith(
-                                                          color: colorScheme
-                                                              .primary),
+                                                  style: textTheme.bodyText2!.copyWith(color: colorScheme.primary),
                                                 ),
                                               ],
                                             ),
@@ -837,35 +669,25 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                                 ),
                                                 Text(
                                                   '정산 완료시 채팅으로 꼭 기록을 남겨 주세요.',
-                                                  style: textTheme.bodyText2!
-                                                      .copyWith(
-                                                          color: colorScheme
-                                                              .primary),
+                                                  style: textTheme.bodyText2!.copyWith(color: colorScheme.primary),
                                                 ),
                                               ],
                                             ),
                                           ],
                                         )
                                       : Column(
-                                          crossAxisAlignment:
-                                              CrossAxisAlignment.start,
+                                          crossAxisAlignment: CrossAxisAlignment.start,
                                           children: [
                                             Text(
                                               '${_userController.name}님 환영합니다.',
-                                              style: textTheme.subtitle2!
-                                                  .copyWith(
-                                                      color:
-                                                          colorScheme.primary),
+                                              style: textTheme.subtitle2!.copyWith(color: colorScheme.primary),
                                             ),
                                             SizedBox(
                                               height: 3.h,
                                             ),
                                             Text(
                                               '알아두면 좋습니다.',
-                                              style: textTheme.bodyText2!
-                                                  .copyWith(
-                                                      color:
-                                                          colorScheme.primary),
+                                              style: textTheme.bodyText2!.copyWith(color: colorScheme.primary),
                                             ),
                                             SizedBox(
                                               height: 3.h,
@@ -882,10 +704,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                                 ),
                                                 Text(
                                                   '탑승할 차 번호를 숙지하세요.',
-                                                  style: textTheme.bodyText2!
-                                                      .copyWith(
-                                                          color: colorScheme
-                                                              .primary),
+                                                  style: textTheme.bodyText2!.copyWith(color: colorScheme.primary),
                                                 ),
                                               ],
                                             ),
@@ -901,10 +720,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                                 ),
                                                 Text(
                                                   '모일 장소를 숙지하세요.',
-                                                  style: textTheme.bodyText2!
-                                                      .copyWith(
-                                                          color: colorScheme
-                                                              .primary),
+                                                  style: textTheme.bodyText2!.copyWith(color: colorScheme.primary),
                                                 ),
                                               ],
                                             ),
@@ -920,10 +736,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                                 ),
                                                 Text(
                                                   '정산 완료시 채팅으로 꼭 기록을 남겨 주세요.',
-                                                  style: textTheme.bodyText2!
-                                                      .copyWith(
-                                                          color: colorScheme
-                                                              .primary),
+                                                  style: textTheme.bodyText2!.copyWith(color: colorScheme.primary),
                                                 ),
                                               ],
                                             ),
@@ -937,8 +750,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                   }
                 } else if (!snapshot.hasData) {
                   return Padding(
-                    padding:
-                        EdgeInsets.only(left: 18.w, right: 18.w, top: 44.h),
+                    padding: EdgeInsets.only(left: 18.w, right: 18.w, top: 44.h),
                     child: Column(
                       children: [
                         Container(
@@ -958,12 +770,8 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                               ),
                               Flexible(
                                 child: Text(
-                                  _chatRoomController.postType != 3
-                                      ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} (${DateFormat('MM/dd').format(DateTime.parse(time))})"
-                                      : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} (${DateFormat('MM/dd').format(DateTime.parse(time))})",
-                                  style: textTheme.subtitle1?.copyWith(
-                                      color: colorScheme.onTertiary,
-                                      fontWeight: FontWeight.w500),
+                                  _chatRoomController.postType != 3 ? "${abbreviatePlaceName(_chatRoomController.post.departure!.name)}-${abbreviatePlaceName(_chatRoomController.post.destination!.name)} (${DateFormat('MM/dd').format(DateTime.parse(time))})" : "${abbreviatePlaceName(_chatRoomController.ktxPost.departure!.name)}-${abbreviatePlaceName(_chatRoomController.ktxPost.destination!.name)} (${DateFormat('MM/dd').format(DateTime.parse(time))})",
+                                  style: textTheme.subtitle1?.copyWith(color: colorScheme.onTertiary, fontWeight: FontWeight.w500),
                                   maxLines: 1,
                                 ),
                               ),
@@ -984,31 +792,25 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                             padding: EdgeInsets.fromLTRB(16.w, 8.h, 16.w, 8.h),
                             decoration: BoxDecoration(
                               color: colorScheme.secondary,
-                              borderRadius:
-                                  const BorderRadius.all(Radius.circular(16)),
+                              borderRadius: const BorderRadius.all(Radius.circular(16)),
                             ),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
                                 isOwner
                                     ? Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             '환영합니다. ${_userController.name}님이 방장입니다.',
-                                            style: textTheme.subtitle2!
-                                                .copyWith(
-                                                    color: colorScheme.primary),
+                                            style: textTheme.subtitle2!.copyWith(color: colorScheme.primary),
                                           ),
                                           SizedBox(
                                             height: 3.h,
                                           ),
                                           Text(
                                             '알아두면 좋습니다.',
-                                            style: textTheme.bodyText2!
-                                                .copyWith(
-                                                    color: colorScheme.primary),
+                                            style: textTheme.bodyText2!.copyWith(color: colorScheme.primary),
                                           ),
                                           SizedBox(
                                             height: 3.h,
@@ -1025,10 +827,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                               ),
                                               Text(
                                                 '탑승할 차 번호를 꼭 알려주세요.',
-                                                style: textTheme.bodyText2!
-                                                    .copyWith(
-                                                        color: colorScheme
-                                                            .primary),
+                                                style: textTheme.bodyText2!.copyWith(color: colorScheme.primary),
                                               ),
                                             ],
                                           ),
@@ -1044,10 +843,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                               ),
                                               Text(
                                                 '모일 장소를 숙지하세요.',
-                                                style: textTheme.bodyText2!
-                                                    .copyWith(
-                                                        color: colorScheme
-                                                            .primary),
+                                                style: textTheme.bodyText2!.copyWith(color: colorScheme.primary),
                                               ),
                                             ],
                                           ),
@@ -1063,33 +859,25 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                               ),
                                               Text(
                                                 '정산 완료시 채팅으로 꼭 기록을 남겨 주세요.',
-                                                style: textTheme.bodyText2!
-                                                    .copyWith(
-                                                        color: colorScheme
-                                                            .primary),
+                                                style: textTheme.bodyText2!.copyWith(color: colorScheme.primary),
                                               ),
                                             ],
                                           ),
                                         ],
                                       )
                                     : Column(
-                                        crossAxisAlignment:
-                                            CrossAxisAlignment.start,
+                                        crossAxisAlignment: CrossAxisAlignment.start,
                                         children: [
                                           Text(
                                             '${_userController.name}님 환영합니다.',
-                                            style: textTheme.subtitle2!
-                                                .copyWith(
-                                                    color: colorScheme.primary),
+                                            style: textTheme.subtitle2!.copyWith(color: colorScheme.primary),
                                           ),
                                           SizedBox(
                                             height: 3.h,
                                           ),
                                           Text(
                                             '알아두면 좋습니다.',
-                                            style: textTheme.bodyText2!
-                                                .copyWith(
-                                                    color: colorScheme.primary),
+                                            style: textTheme.bodyText2!.copyWith(color: colorScheme.primary),
                                           ),
                                           SizedBox(
                                             height: 3.h,
@@ -1106,10 +894,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                               ),
                                               Text(
                                                 '탑승할 차 번호를 숙지하세요.',
-                                                style: textTheme.bodyText2!
-                                                    .copyWith(
-                                                        color: colorScheme
-                                                            .primary),
+                                                style: textTheme.bodyText2!.copyWith(color: colorScheme.primary),
                                               ),
                                             ],
                                           ),
@@ -1125,10 +910,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                               ),
                                               Text(
                                                 '모일 장소를 숙지하세요.',
-                                                style: textTheme.bodyText2!
-                                                    .copyWith(
-                                                        color: colorScheme
-                                                            .primary),
+                                                style: textTheme.bodyText2!.copyWith(color: colorScheme.primary),
                                               ),
                                             ],
                                           ),
@@ -1144,10 +926,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                               ),
                                               Text(
                                                 '정산 완료시 채팅으로 꼭 기록을 남겨 주세요.',
-                                                style: textTheme.bodyText2!
-                                                    .copyWith(
-                                                        color: colorScheme
-                                                            .primary),
+                                                style: textTheme.bodyText2!.copyWith(color: colorScheme.primary),
                                               ),
                                             ],
                                           ),
@@ -1179,26 +958,31 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                 child: TextField(
                   controller: _chatRoomController.chatTextController,
                   cursorColor: Colors.grey[400],
-                  style: textTheme.subtitle1
-                      ?.copyWith(color: colorScheme.onPrimary),
+                  style: textTheme.subtitle1?.copyWith(color: colorScheme.onPrimary),
                   minLines: 1,
                   maxLines: 4,
                   decoration: InputDecoration(
-                    contentPadding:
-                        EdgeInsets.only(top: 10.h, bottom: 10.h, left: 10.w),
+                    contentPadding: EdgeInsets.only(top: 10.h, bottom: 10.h, left: 10.w),
                     filled: true,
                     border: InputBorder.none,
                     enabledBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(width: 1, color: (Colors.grey[200])!),
+                      borderSide: BorderSide(width: 1, color: (Colors.grey[200])!),
                       borderRadius: BorderRadius.circular(24),
                     ),
                     focusedBorder: OutlineInputBorder(
-                      borderSide:
-                          BorderSide(width: 1, color: (Colors.grey[200])!),
+                      borderSide: BorderSide(width: 1, color: (Colors.grey[200])!),
                       borderRadius: BorderRadius.circular(24),
                     ),
                     fillColor: colorScheme.onBackground,
+                    prefixIcon: GestureDetector(
+                      onTap: () async {
+                        shareChatLink(_chatRoomController.post.id!);
+                      },
+                      child: Padding(
+                        padding: EdgeInsets.fromLTRB(0.w, 2.h, 8.68.w, 1.68.h),
+                        child: Image.asset('assets/button/share_link.png'),
+                      ),
+                    ),
                     suffixIcon: GetBuilder<ChatRoomController>(
                       builder: (_) {
                         if (_chatRoomController.texting == true) {
@@ -1209,8 +993,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                               _scrollDown();
                             },
                             child: Padding(
-                              padding:
-                                  EdgeInsets.fromLTRB(0.w, 2.h, 8.68.w, 1.68.h),
+                              padding: EdgeInsets.fromLTRB(8.68.w, 2.h, 2.w, 1.68.h),
                               child: Image.asset('assets/button/send_chat.png'),
                             ),
                           );
@@ -1218,8 +1001,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                           return GestureDetector(
                             onTap: () {},
                             child: Padding(
-                              padding:
-                                  EdgeInsets.fromLTRB(0.w, 2.h, 8.68.w, 1.68.h),
+                              padding: EdgeInsets.fromLTRB(0.w, 2.h, 8.68.w, 1.68.h),
                               child: Image.asset('assets/button/send_chat.png'),
                             ),
                           );
@@ -1232,8 +1014,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                     ),
                   ),
                   onChanged: (text) {
-                    if (_chatRoomController
-                        .chatTextController.text.isNotEmpty) {
+                    if (_chatRoomController.chatTextController.text.isNotEmpty) {
                       _chatRoomController.changeTexting(true);
                     } else {
                       _chatRoomController.changeTexting(false);
@@ -1252,16 +1033,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
   }
 }
 
-Future<dynamic> showExitDialog(
-    BuildContext context,
-    String? title,
-    String? content,
-    PostController _postController,
-    KtxPostController _ktxPostController,
-    HistoryController _historyController,
-    ChatRoomController _chatRoomController,
-    Post? post,
-    KtxPost? ktxPost) async {
+Future<dynamic> showExitDialog(BuildContext context, String? title, String? content, PostController _postController, KtxPostController _ktxPostController, HistoryController _historyController, ChatRoomController _chatRoomController, Post? post, KtxPost? ktxPost) async {
   final colorScheme = Theme.of(context).colorScheme;
   final textTheme = Theme.of(context).textTheme;
 
@@ -1318,8 +1090,7 @@ Future<dynamic> showExitDialog(
                           if (_chatRoomController.postType != 3) {
                             await _postController.fetchOutJoin(post: post!);
                           } else {
-                            await _ktxPostController.fetchOutJoin(
-                                post: ktxPost!);
+                            await _ktxPostController.fetchOutJoin(post: ktxPost!);
                           }
 
                           await _historyController.getHistorys();
@@ -1335,8 +1106,7 @@ Future<dynamic> showExitDialog(
                       },
                       child: Text(
                         "나가기",
-                        style: textTheme.subtitle2
-                            ?.copyWith(color: colorScheme.secondary),
+                        style: textTheme.subtitle2?.copyWith(color: colorScheme.secondary),
                       ),
                     ),
                     SizedBox(
@@ -1348,8 +1118,7 @@ Future<dynamic> showExitDialog(
                       },
                       child: Text(
                         "취소",
-                        style: textTheme.subtitle2
-                            ?.copyWith(color: colorScheme.tertiaryContainer),
+                        style: textTheme.subtitle2?.copyWith(color: colorScheme.tertiaryContainer),
                       ),
                     ),
                   ],

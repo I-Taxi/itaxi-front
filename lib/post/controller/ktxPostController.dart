@@ -46,16 +46,16 @@ class KtxPostController extends GetxController {
   Future<List<KtxPost>> fetchPost({int? depId, int? dstId, required String time}) async {
     var postUrl = dotenv.env['API_URL'].toString();
     final Map<String, dynamic> queryParameters;
-    if ((depId == null || depId == -1) && (dstId == null || dstId == -1)) {
+    if ((depId == null || depId == -1 || depId == 3232) && (dstId == null || dstId == -1 || dstId == 3232)) {
       queryParameters = {
         'time': DateFormat('yyyy-MM-dd').format(DateTime.parse(time)),
       };
-    } else if (depId != null && (dstId == null || dstId == -1)) {
+    } else if (depId != null && (dstId == null || dstId == -1 || dstId == 3232)) {
       queryParameters = {
         'depId': depId.toString(),
         'time': DateFormat('yyyy-MM-dd').format(DateTime.parse(time)),
       };
-    } else if ((depId == null || depId == -1) && dstId != null) {
+    } else if ((depId == null || depId == -1 || depId == 3232) && dstId != null) {
       queryParameters = {
         'dstId': dstId.toString(),
         'time': DateFormat('yyyy-MM-dd').format(DateTime.parse(time)),

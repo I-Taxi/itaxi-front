@@ -1,6 +1,7 @@
 import 'dart:io';
 
 import 'package:firebase_core/firebase_core.dart';
+import 'package:firebase_dynamic_links/firebase_dynamic_links.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -14,6 +15,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:device_preview/device_preview.dart';
 
 import 'package:get/get.dart';
+import 'package:itaxi/deeplink/dynamicLink.dart';
 import 'package:itaxi/user/controller/signInController.dart';
 import 'package:itaxi/firebase_options.dart';
 import 'package:itaxi/main/screen/home.dart';
@@ -23,6 +25,7 @@ import 'package:itaxi/user/controller/userController.dart';
 import 'package:itaxi/src/theme.dart';
 import 'package:new_version/new_version.dart';
 import 'package:package_info/package_info.dart';
+import 'package:uni_links/uni_links.dart';
 import 'package:url_launcher/url_launcher.dart';
 import 'user/screen/onBoardingScreen.dart';
 import 'package:itaxi/fcm/fcmController.dart';
@@ -63,9 +66,7 @@ void main() async {
 
   flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
-  await flutterLocalNotificationsPlugin
-      .resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()
-      ?.createNotificationChannel(channel);
+  await flutterLocalNotificationsPlugin.resolvePlatformSpecificImplementation<AndroidFlutterLocalNotificationsPlugin>()?.createNotificationChannel(channel);
 
   const AndroidInitializationSettings initSettingsAndroid = AndroidInitializationSettings('@mipmap/ic_launcher');
   const DarwinInitializationSettings initSettingsIOS = DarwinInitializationSettings(
@@ -183,11 +184,7 @@ class _MyAppState extends State<MyApp> {
 
           title: 'iTaxi',
           //datepicker 언어 설정 한국어
-          localizationsDelegates: const [
-            GlobalMaterialLocalizations.delegate,
-            GlobalCupertinoLocalizations.delegate,
-            GlobalWidgetsLocalizations.delegate
-          ],
+          localizationsDelegates: const [GlobalMaterialLocalizations.delegate, GlobalCupertinoLocalizations.delegate, GlobalWidgetsLocalizations.delegate],
           supportedLocales: [const Locale('ko', 'KR')],
           theme: ITaxiTheme.lightThemeData,
           debugShowCheckedModeBanner: false,
@@ -205,9 +202,7 @@ class _MyAppState extends State<MyApp> {
                     });
                   });
                 }
-                if (_signInController.signInState == SignInState.start ||
-                    _signInController.signInState == SignInState.firebaseSignedIn ||
-                    _signInController.signInState == SignInState.backServerError) {
+                if (_signInController.signInState == SignInState.start || _signInController.signInState == SignInState.firebaseSignedIn || _signInController.signInState == SignInState.backServerError) {
                   return const SplashScreen();
                 } else if (_signInController.signInState == SignInState.signedOut) {
                   return const SignInScreen();
@@ -230,7 +225,6 @@ class _MyAppState extends State<MyApp> {
 class MyHttpOverrides extends HttpOverrides {
   @override
   HttpClient createHttpClient(SecurityContext? context) {
-    return super.createHttpClient(context)
-      ..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
+    return super.createHttpClient(context)..badCertificateCallback = (X509Certificate cert, String host, int port) => true;
   }
 }

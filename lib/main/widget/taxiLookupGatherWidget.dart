@@ -74,9 +74,10 @@ Padding lookupSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
                         _placeSearchController.fetchFavoritePlace();
                         Get.to(() => PlaceSearchScreen());
                       },
-                      child: !(_placeController.hasDep)
+                      child: (!_placeController.hasDep ||
+                              _placeController.dep != null && _placeController.dep!.id == 3232)
                           ? Text(
-                              "출발지 입력",
+                              "출발지 전체",
                               style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
                             )
                           : Text(
@@ -102,9 +103,9 @@ Padding lookupSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
                         _placeSearchController.fetchFavoritePlace();
                         Get.to(() => PlaceSearchScreen());
                       },
-                      child: !(_placeController.hasDst)
+                      child: (!_placeController.hasDst || _placeController.dst != null && _placeController.dst!.id == 3232)
                           ? Text(
-                              "도착지 입력",
+                              "도착지 전체",
                               style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
                             )
                           : Text(
@@ -742,13 +743,14 @@ ElevatedButton lookupButton(TextTheme textTheme, ColorScheme colorScheme, BuildC
           minimumSize: Size(342.w, 57.h),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))),
       onPressed: () {
-        if (_placeController.dep == null) {
-          snackBar(context: context, title: '출발지를 선택해주세요.');
-        } else if (_placeController.dst == null) {
-          snackBar(context: context, title: '도착지를 선택해주세요.');
-        } else {
-          _screenController.setCheckScreen(true);
-        }
+        _screenController.setCheckScreen(true);
+        // if (_placeController.dep == null) {
+        //   snackBar(context: context, title: '출발지를 선택해주세요.');
+        // } else if (_placeController.dst == null) {
+        //   snackBar(context: context, title: '도착지를 선택해주세요.');
+        // } else {
+        //   _screenController.setCheckScreen(true);
+        // }
       },
       child: Text(
         "조회하기",

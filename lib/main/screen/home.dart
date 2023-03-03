@@ -11,14 +11,19 @@ import 'package:itaxi/history/screen/timelineScreen.dart';
 
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);
-
+  
   final NavigationController _navController = Get.put(NavigationController());
   // final MainScreen main = new MainScreen();
 
   @override
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
-    final pageList = [const TaxiScreen(), const KtxScreen(), const ChatRoomListScreen(), const TimelineScreen()];
+    final pageList = [
+      const TaxiScreen(),
+      const KtxScreen(),
+      const ChatroomListScreen(),
+      const TimelineScreen()
+    ];
 
     return GetBuilder<NavigationController>(
       builder: (_) {
@@ -28,7 +33,10 @@ class Home extends StatelessWidget {
               width: 390.w,
               height: _navController.navHeight.h,
               decoration: BoxDecoration(color: colorScheme.primary, boxShadow: [
-                BoxShadow(color: Color.fromRGBO(0, 0, 0, 0.4), blurRadius: 3.r, offset: Offset(-1.w, 3.h))
+                BoxShadow(
+                    color: Color.fromRGBO(0, 0, 0, 0.4),
+                    blurRadius: 3.r,
+                    offset: Offset(-1.w, 3.h))
               ]),
               padding: EdgeInsets.only(left: 16.w, right: 16.w, top: 8.h),
               child: Row(

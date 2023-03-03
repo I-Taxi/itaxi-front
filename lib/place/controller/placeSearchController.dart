@@ -153,15 +153,34 @@ class PlaceSearchController extends GetxController {
   void filterPlacesByIndex() {
     if (_hasResult) {
       _typeFilteredResultList.clear();
+      if (isLookup) {
+        if (depOrDst == 0) {
+          _typeFilteredResultList.add(Place(cnt: 0, id: 3232, name: '출발지 전체', placeType: 5));
+        } else {
+          _typeFilteredResultList.add(Place(cnt: 0, id: 3232, name: '도착지 전체', placeType: 5));
+        }
+      }
+
       _searchResult.forEach((place) {
-        if (place.placeType == _placeType || (place.placeType! - 3 == _placeType && isLookup)) {
+        if (place.placeType == 5 && isLookup ||
+            place.placeType == _placeType ||
+            (place.placeType! - 3 == _placeType && isLookup)) {
           _typeFilteredResultList.add(place);
         }
       });
     }
     _typeFilteredList.clear();
+    if (isLookup) {
+      if (depOrDst == 0) {
+        _typeFilteredList.add(Place(cnt: 0, id: 3232, name: '출발지 전체', placeType: 5));
+      } else {
+        _typeFilteredList.add(Place(cnt: 0, id: 3232, name: '도착지 전체', placeType: 5));
+      }
+    }
     places.forEach((place) {
-      if (place.placeType == _placeType || (place.placeType! - 3 == _placeType && isLookup)) {
+      if (place.placeType == 5 && isLookup ||
+          place.placeType == _placeType ||
+          (place.placeType! - 3 == _placeType && isLookup)) {
         _typeFilteredList.add(place);
       }
     });

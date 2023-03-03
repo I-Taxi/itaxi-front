@@ -56,3 +56,12 @@ app.*.map.json
 
 # Service Account Key
 service-account-file.json
+
+### Firebase ###
+.idea
+**/node_modules/*
+**/.firebaserc
+
+### Firebase Patch ###
+.runtimeconfig.json
+.firebase/

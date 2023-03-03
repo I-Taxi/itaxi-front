@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-String abbreviatePlaceName(String? place) {
+String? abbreviatePlaceName(String? place) {
   if (place == '그할마(CU장량그랜드점)') {
     return '그할마';
   } else if (place == '야옹아멍멍해봐') {
@@ -11,9 +11,13 @@ String abbreviatePlaceName(String? place) {
     return '포항시터';
   } else if (place == '태화강 식당 사거리') {
     return '태화강';
+  } else if (place == '한동 버스정류장') {
+    return '한동버정';
+  } else if (place == '한동 택시정류장') {
+    return '한동택정';
   } else if (place != null) {
     return place;
   } else {
-    return 'error';
+    return null;
   }
 }

@@ -66,11 +66,14 @@ Padding lookupSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
                     return GestureDetector(
                       onTap: () {
                         _ktxPlaceSearchController.changeDepOrDst(0);
+                        _ktxPlaceSearchController.changeIsLookup(true);
+                        _ktxPlaceSearchController.filterPlacesByIndex();
                         Get.to(() => KtxPlaceSearchScreen());
                       },
-                      child: !(_ktxPlaceController.hasDep)
+                      child: (!_ktxPlaceController.hasDep ||
+                              _ktxPlaceController.dep != null && _ktxPlaceController.dep!.id == 3232)
                           ? Text(
-                              "출발지 입력",
+                              "출발지 전체",
                               style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
                             )
                           : Text(
@@ -91,11 +94,14 @@ Padding lookupSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
                     return GestureDetector(
                       onTap: () {
                         _ktxPlaceSearchController.changeDepOrDst(1);
+                        _ktxPlaceSearchController.changeIsLookup(true);
+                        _ktxPlaceSearchController.filterPlacesByIndex();
                         Get.to(() => KtxPlaceSearchScreen());
                       },
-                      child: !(_ktxPlaceController.hasDst)
+                      child: (!_ktxPlaceController.hasDst  ||
+                              _ktxPlaceController.dst != null && _ktxPlaceController.dst!.id == 3232)
                           ? Text(
-                              "도착지 입력",
+                              "도착지 전체",
                               style: textTheme.subtitle2?.copyWith(color: colorScheme.onTertiary),
                             )
                           : Text(
@@ -160,6 +166,8 @@ Padding gatherSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
                     return GestureDetector(
                       onTap: () {
                         _ktxPlaceSearchController.changeDepOrDst(0);
+                        _ktxPlaceSearchController.changeIsLookup(false);
+                        _ktxPlaceSearchController.filterPlacesByIndex();
                         Get.to(() => KtxPlaceSearchScreen());
                       },
                       child: !(_ktxPlaceController.hasDep)
@@ -185,6 +193,8 @@ Padding gatherSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
                     return GestureDetector(
                       onTap: () {
                         _ktxPlaceSearchController.changeDepOrDst(1);
+                        _ktxPlaceSearchController.changeIsLookup(false);
+                        _ktxPlaceSearchController.filterPlacesByIndex();
                         Get.to(() => KtxPlaceSearchScreen());
                       },
                       child: !(_ktxPlaceController.hasDst)
@@ -519,13 +529,14 @@ ElevatedButton lookupButton(TextTheme textTheme, ColorScheme colorScheme, BuildC
           minimumSize: Size(342.w, 57.h),
           shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(16))),
       onPressed: () {
-        if (_ktxPlaceController.dep == null) {
-          snackBar(context: context, title: '출발지를 선택해주세요.');
-        } else if (_ktxPlaceController.dst == null) {
-          snackBar(context: context, title: '도착지를 선택해주세요.');
-        } else {
-          _screenController.setKtxCheckScreen(true);
-        }
+        // if (_ktxPlaceController.dep == null) {
+        //   snackBar(context: context, title: '출발지를 선택해주세요.');
+        // } else if (_ktxPlaceController.dst == null) {
+        //   snackBar(context: context, title: '도착지를 선택해주세요.');
+        // } else {
+        //   _screenController.setKtxCheckScreen(true);
+        // }
+        _screenController.setKtxCheckScreen(true);
       },
       child: Text(
         "조회하기",
