@@ -17,6 +17,7 @@ import 'package:device_preview/device_preview.dart';
 import 'package:get/get.dart';
 import 'package:itaxi/deeplink/dynamicLink.dart';
 import 'package:itaxi/user/controller/signInController.dart';
+import 'package:itaxi/ip/controller/ipController.dart';
 import 'package:itaxi/firebase_options.dart';
 import 'package:itaxi/main/screen/home.dart';
 import 'package:itaxi/user/screen/signInScreen.dart';
@@ -107,6 +108,7 @@ class MyApp extends StatefulWidget {
 class _MyAppState extends State<MyApp> {
   final SignInController _signInController = Get.put(SignInController());
   final UserController _userController = Get.put(UserController());
+  final IpController _ipController = Get.put(IpController());
 
   static final storage = new FlutterSecureStorage();
   String? onBoardingInfo;
@@ -160,6 +162,8 @@ class _MyAppState extends State<MyApp> {
       print('FirebaseMessaging.onMessageOpenedApp listened !');
       print(message.data);
     });
+
+    DynamicLink().setup();
   }
 
   _onBoarding() async {

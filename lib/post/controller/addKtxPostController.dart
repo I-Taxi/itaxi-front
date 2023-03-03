@@ -5,10 +5,12 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:itaxi/history/controller/historyController.dart';
+import 'package:itaxi/ip/controller/ipController.dart';
 import 'package:itaxi/post/model/ktxPost.dart';
 import 'package:itaxi/chat/repository/ktxChatRepository.dart';
 
 class AddKtxPostController extends GetxController {
+  IpController _ipController = Get.find();
   late HistoryController _historyController = Get.put(HistoryController());
   int capacity = 1;
   int sale = 35;
@@ -32,7 +34,7 @@ class AddKtxPostController extends GetxController {
   Future<int> fetchAddPost({required KtxPost ktxPost}) async {
     loaded = false;
     update();
-    var addPostUrl = dotenv.env['API_URL'].toString();
+    var addPostUrl = _ipController.ip.toString();
     addPostUrl = '${addPostUrl}ktx';
 
     var body = utf8.encode(json.encode(ktxPost.toAddPostMap()));
@@ -46,8 +48,7 @@ class AddKtxPostController extends GetxController {
     );
 
     if (response.statusCode == 200) {
-      KtxPost result =
-          KtxPost.fromPostAllDocs(json.decode(utf8.decode(response.bodyBytes)));
+      KtxPost result = KtxPost.fromPostAllDocs(json.decode(utf8.decode(response.bodyBytes)));
       ktxPost = ktxPost.copyWith(id: result.id, joiners: result.joiners);
       await KtxChatRepository().setPost(post: ktxPost);
       await _historyController.getHistorys();

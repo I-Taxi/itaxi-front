@@ -1,18 +1,18 @@
 import 'dart:convert';
 
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:itaxi/chat/controller/chatRoomController.dart';
 import 'package:itaxi/tools/controller/dateController.dart';
 import 'package:itaxi/user/controller/userController.dart';
+import 'package:itaxi/ip/controller/ipController.dart';
 import 'package:itaxi/chat/repository/ktxChatRepository.dart';
 import 'package:itaxi/post/model/ktxPost.dart';
 import 'package:itaxi/joiner/model/joiner.dart';
 
 class KtxPostController extends GetxController {
+  IpController _ipController = Get.find();
   late DateController _dateController = Get.find();
   late UserController _userController = Get.find();
   late ChatRoomController _chatRoomController = Get.put(ChatRoomController());
@@ -44,7 +44,7 @@ class KtxPostController extends GetxController {
 
   // Posts 데이터 가져오기
   Future<List<KtxPost>> fetchPost({int? depId, int? dstId, required String time}) async {
-    var postUrl = dotenv.env['API_URL'].toString();
+    var postUrl = _ipController.ip.toString();
     final Map<String, dynamic> queryParameters;
     if ((depId == null || depId == -1 || depId == 3232) && (dstId == null || dstId == -1 || dstId == 3232)) {
       queryParameters = {
@@ -86,7 +86,7 @@ class KtxPostController extends GetxController {
   }
 
   Future<KtxPost> fetchPostInfo({required int? id}) async {
-    var postUrl = dotenv.env['API_URL'].toString();
+    var postUrl = _ipController.ip.toString();
     postUrl = '${postUrl}ktx/$id';
 
     http.Response response = await http.post(
@@ -110,7 +110,7 @@ class KtxPostController extends GetxController {
 
   // /itaxi/api/post/{postId}/join
   Future<void> fetchJoin({required KtxPost ktxPost}) async {
-    var joinUrl = dotenv.env['API_URL'].toString();
+    var joinUrl = _ipController.ip.toString();
     joinUrl = '${joinUrl}ktx/${ktxPost.id}/join';
 
     Map<String, dynamic> map = {
@@ -136,7 +136,7 @@ class KtxPostController extends GetxController {
   }
 
   Future<void> fetchOutJoin({required KtxPost post}) async {
-    var joinUrl = dotenv.env['API_URL'].toString();
+    var joinUrl = _ipController.ip.toString();
     joinUrl = '${joinUrl}ktx/${post.id}/join';
     Joiner? owner;
 

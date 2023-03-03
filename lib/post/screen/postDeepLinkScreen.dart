@@ -4,6 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:itaxi/chat/screen/chatRoomDetailScreen.dart';
 import 'package:itaxi/chat/controller/chatRoomController.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:itaxi/deeplink/dynamicLinkController.dart';
 import 'package:itaxi/history/controller/historyController.dart';
 import 'package:itaxi/history/model/history.dart';
 import 'package:itaxi/main/screen/home.dart';
@@ -12,9 +13,13 @@ import 'package:itaxi/post/controller/postController.dart';
 import 'package:itaxi/post/model/post.dart';
 import 'package:itaxi/post/widget/postTypeToString.dart';
 
-class PostDeepLinkScreen extends StatelessWidget {
+class PostDeepLinkScreen extends StatefulWidget {
   PostDeepLinkScreen({Key? key}) : super(key: key);
+  @override
+  State<PostDeepLinkScreen> createState() => _PostDeepLinkScreenState();
+}
 
+class _PostDeepLinkScreenState extends State<PostDeepLinkScreen> {
   Container insertBordingCompleteIcon(String? time) {
     print("hi");
     if (DateTime.now().difference(DateTime.parse(time!)).isNegative == false) {
@@ -65,9 +70,10 @@ class PostDeepLinkScreen extends StatelessWidget {
     }
   }
 
-  PostController _postController = Get.find();
+  PostController _postController = Get.put(PostController());
   HistoryController _historyController = Get.put(HistoryController());
-  ChatRoomController _chatRoomController = Get.find();
+  ChatRoomController _chatRoomController = Get.put(ChatRoomController());
+  DynamicLinkController _dynamicLinkController = Get.put(DynamicLinkController());
 
   @override
   Widget build(BuildContext context) {
@@ -77,221 +83,222 @@ class PostDeepLinkScreen extends StatelessWidget {
     final GlobalKey<RefreshIndicatorState> _refreshIndicatorKey = GlobalKey<RefreshIndicatorState>();
     List<String> korDays = ['월', '화', '수', '목', '금', '토', '일'];
 
+    WidgetsBinding.instance.addPostFrameCallback((_) => _dynamicLinkController.setDynamicStatus(false));
+
     return Scaffold(
         backgroundColor: colorScheme.onBackground,
         body: GetBuilder<PostController>(builder: (_) {
-          return FutureBuilder<Post>(
-              future: _postController.fetchPostInfo(id: _postController.id),
-              builder: (BuildContext context, snapshot) {
-                if (snapshot.hasData) {
-                  if (snapshot.data != null) {
-                    return Column(
-                      children: [
-                        Container(
-                          padding: EdgeInsets.fromLTRB(24.w, 61.36.h, 24.w, 22.47.h),
-                          height: 156.47.h,
-                          color: colorScheme.primary,
-                          child: SingleChildScrollView(
-                            child: Column(
-                              children: [
-                                Align(
-                                  alignment: Alignment.centerRight,
-                                  child: GestureDetector(
-                                    behavior: HitTestBehavior.opaque,
-                                    onTap: () => Get.back(),
-                                    child: Image.asset('assets/button/close_current_page2.png'),
-                                  ),
-                                ),
-                                SizedBox(
-                                  height: 18.1.h,
-                                ),
-                                Row(
-                                  crossAxisAlignment: CrossAxisAlignment.center,
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: [
-                                    Text(
-                                      '${snapshot.data!.joiners![0].memberName}님의 ${postTypeToString(snapshot.data!.postType)}',
-                                      style: textTheme.headline3?.copyWith(
-                                        color: colorScheme.onTertiary,
-                                      ),
-                                    ),
-                                    insertBordingCompleteIcon(snapshot.data!.deptTime),
-                                  ],
-                                ),
-                              ],
+          return Column(
+            children: [
+              Container(
+                padding: EdgeInsets.fromLTRB(24.w, 61.36.h, 24.w, 22.47.h),
+                height: 156.47.h,
+                color: colorScheme.primary,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: GestureDetector(
+                          behavior: HitTestBehavior.opaque,
+                          onTap: () => Get.back(),
+                          child: Image.asset('assets/button/close_current_page2.png'),
+                        ),
+                      ),
+                      SizedBox(
+                        height: 18.1.h,
+                      ),
+                      Row(
+                        crossAxisAlignment: CrossAxisAlignment.center,
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        children: [
+                          Text(
+                            '초대된 ${postTypeToString(_postController.deepLinkPost.postType)} 채팅방 정보입니다.',
+                            style: textTheme.headline3?.copyWith(
+                              color: colorScheme.onTertiary,
                             ),
                           ),
-                        ),
-                        SizedBox(height: 8.h),
-                        Container(
-                          height: addPlaceContainerSize(528.h, snapshot.data!.stopovers),
-                          decoration: BoxDecoration(color: colorScheme.primary),
-                          child: Column(
-                            mainAxisAlignment: MainAxisAlignment.start,
+                          insertBordingCompleteIcon(_postController.deepLinkPost.deptTime),
+                        ],
+                      ),
+                    ],
+                  ),
+                ),
+              ),
+              SizedBox(height: 8.h),
+              Container(
+                height: addPlaceContainerSize(528.h, _postController.deepLinkPost.stopovers),
+                decoration: BoxDecoration(color: colorScheme.primary),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    Container(
+                      padding: EdgeInsets.fromLTRB(24.w, 24.h, 24.w, 24.h),
+                      height: 112.h,
+                      color: colorScheme.primary,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            '출발일자/시간',
+                            style: textTheme.subtitle2?.copyWith(
+                              color: colorScheme.onTertiary,
+                            ),
+                          ),
+                          SizedBox(height: 16.h),
+                          Row(
                             children: [
-                              Container(
-                                padding: EdgeInsets.fromLTRB(24.w, 24.h, 24.w, 24.h),
-                                height: 112.h,
-                                color: colorScheme.primary,
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
-                                    Text(
-                                      '출발일자/시간',
-                                      style: textTheme.subtitle2?.copyWith(
-                                        color: colorScheme.onTertiary,
-                                      ),
-                                    ),
-                                    SizedBox(height: 16.h),
-                                    Row(
-                                      children: [
-                                        Text(
-                                          DateFormat('yyyy년 MM월 dd일 (${korDays[DateTime.parse(snapshot.data!.deptTime!).weekday - 1]}) HH:mm').format(DateTime.parse(snapshot.data!.deptTime!)),
-                                          style: textTheme.bodyText1?.copyWith(
-                                            color: colorScheme.onTertiary,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
+                              Text(
+                                DateFormat('yyyy년 MM월 dd일 (${korDays[DateTime.parse(_postController.deepLinkPost.deptTime!).weekday - 1]}) HH:mm').format(DateTime.parse(_postController.deepLinkPost.deptTime!)),
+                                style: textTheme.bodyText1?.copyWith(
+                                  color: colorScheme.onTertiary,
                                 ),
-                              ),
-                              Divider(
-                                thickness: 8.h,
-                                color: colorScheme.onBackground,
-                              ),
-                              Container(
-                                padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 16.h),
-                                height: addPlaceContainerSize(130.h, snapshot.data!.stopovers),
-                                color: colorScheme.primary,
-                                child: SingleChildScrollView(
-                                  child: Column(
-                                    crossAxisAlignment: CrossAxisAlignment.start,
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        '출발/목적지',
-                                        style: textTheme.subtitle2?.copyWith(
-                                          color: colorScheme.onTertiary,
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        height: 20.h,
-                                      ),
-                                      Row(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        children: [
-                                          Image.asset(
-                                            width: 18.w,
-                                            height: 18.h,
-                                            'assets/icon/location.png',
-                                          ),
-                                          SizedBox(
-                                            width: 5.w,
-                                          ),
-                                          Text(
-                                            '${snapshot.data!.departure?.name}',
-                                            style: textTheme.bodyText1?.copyWith(
-                                              color: colorScheme.onTertiary,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                      insertStopoverContainer(context: context, stopovers: snapshot.data!.stopovers),
-                                      Row(
-                                        crossAxisAlignment: CrossAxisAlignment.center,
-                                        mainAxisAlignment: MainAxisAlignment.start,
-                                        children: [
-                                          Image.asset(
-                                            width: 18.w,
-                                            height: 18.h,
-                                            'assets/icon/location.png',
-                                          ),
-                                          SizedBox(
-                                            width: 5.w,
-                                          ),
-                                          Text(
-                                            '${snapshot.data!.destination?.name}',
-                                            style: textTheme.bodyText1?.copyWith(
-                                              color: colorScheme.onTertiary,
-                                            ),
-                                          ),
-                                        ],
-                                      ),
-                                    ],
-                                  ),
-                                ),
-                              ),
-                              Divider(
-                                thickness: 8.h,
-                                color: colorScheme.onBackground,
                               ),
                             ],
                           ),
-                        ),
-                        SizedBox(
-                          height: snapshot.data!.stopovers != null && snapshot.data!.stopovers!.isNotEmpty ? 0.53.h : 35.53.h,
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(left: 24.w, right: 24.w),
-                          child: ElevatedButton(
-                            style: ElevatedButton.styleFrom(
-                              tapTargetSize: MaterialTapTargetSize.shrinkWrap,
-                              padding: EdgeInsets.zero,
-                              backgroundColor: colorScheme.secondaryContainer,
-                              elevation: 1.0,
-                              minimumSize: Size.fromHeight(57.h),
-                              shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
+                        ],
+                      ),
+                    ),
+                    Divider(
+                      thickness: 8.h,
+                      color: colorScheme.onBackground,
+                    ),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(24.w, 16.h, 24.w, 16.h),
+                      height: addPlaceContainerSize(130.h, _postController.deepLinkPost.stopovers),
+                      color: colorScheme.primary,
+                      child: SingleChildScrollView(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.start,
+                          children: [
+                            Text(
+                              '출발/목적지',
+                              style: textTheme.subtitle2?.copyWith(
+                                color: colorScheme.onTertiary,
+                              ),
                             ),
-                            // TODO: 방 입장하시겠습니까 다이얼로그 띄우기
-                            onPressed: () async {
-                              enterChatRecruitDialog(context: context, post: snapshot.data!);
-
-                              await _historyController.getHistoryInfo(postId: snapshot.data!.id ?? 0, postType: snapshot.data!.postType ?? -1);
-                              _historyController.history.then((value) {
-                                if (value.postType != 3) {
-                                  _chatRoomController.getPost(post: value.toPost());
-                                  _chatRoomController.getChats(post: value.toPost());
-                                } else {
-                                  _chatRoomController.getKtxPost(ktxPost: value.toKtxPost());
-                                  _chatRoomController.getKtxChats(ktxPost: value.toKtxPost());
-                                }
-                                Get.to(() => Home());
-                              });
-                            },
-                            child: Text(
-                              '방 입장',
-                              style: textTheme.subtitle2?.copyWith(color: colorScheme.primary),
+                            SizedBox(
+                              height: 20.h,
                             ),
-                          ),
-                        ),
-                      ],
-                    );
-                  } else {
-                    return Center(
-                      child: Text(
-                        '글 내용 가져오기가 실패하였습니다',
-                        style: textTheme.headline2?.copyWith(
-                          color: colorScheme.tertiary,
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Image.asset(
+                                  width: 18.w,
+                                  height: 18.h,
+                                  'assets/icon/location.png',
+                                ),
+                                SizedBox(
+                                  width: 5.w,
+                                ),
+                                Text(
+                                  '${_postController.deepLinkPost.departure?.name}',
+                                  style: textTheme.bodyText1?.copyWith(
+                                    color: colorScheme.onTertiary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                            insertStopoverContainer(context: context, stopovers: _postController.deepLinkPost.stopovers),
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              children: [
+                                Image.asset(
+                                  width: 18.w,
+                                  height: 18.h,
+                                  'assets/icon/location.png',
+                                ),
+                                SizedBox(
+                                  width: 5.w,
+                                ),
+                                Text(
+                                  '${_postController.deepLinkPost.destination?.name}',
+                                  style: textTheme.bodyText1?.copyWith(
+                                    color: colorScheme.onTertiary,
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
                         ),
                       ),
-                    );
-                  }
-                } else if (snapshot.hasError) {
-                  return Center(
-                    child: Text('${snapshot.error}'),
-                  );
-                } else {
-                  return Center(
-                    child: CircularProgressIndicator(
-                      color: colorScheme.tertiary,
-                      strokeWidth: 2,
                     ),
-                  );
-                }
-              });
+                    Divider(
+                      thickness: 8.h,
+                      color: colorScheme.onBackground,
+                    ),
+                    Container(
+                      padding: EdgeInsets.fromLTRB(24.w, 24.h, 24.w, 24.h),
+                      height: 112.h,
+                      color: colorScheme.primary,
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            '탑승 인원',
+                            style: textTheme.subtitle2?.copyWith(
+                              color: colorScheme.onTertiary,
+                            ),
+                          ),
+                          SizedBox(height: 16.h),
+                          Row(
+                            children: [
+                              Text(
+                                '${_postController.deepLinkPost.capacity}명 중 ${_postController.deepLinkPost.participantNum}명이 탑승하여 있습니다.',
+                                style: textTheme.bodyText1?.copyWith(
+                                  color: colorScheme.onTertiary,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+              SizedBox(
+                height: _postController.deepLinkPost.stopovers != null && _postController.deepLinkPost.stopovers!.isNotEmpty ? 0.53.h : 35.53.h,
+              ),
+              Container(
+                padding: EdgeInsets.only(left: 24.w, right: 24.w),
+                child: ElevatedButton(
+                  style: ElevatedButton.styleFrom(
+                    tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    padding: EdgeInsets.zero,
+                    backgroundColor: colorScheme.secondaryContainer,
+                    elevation: 1.0,
+                    minimumSize: Size.fromHeight(57.h),
+                    shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
+                  ),
+                  // TODO: 방 입장하시겠습니까 다이얼로그 띄우기
+                  onPressed: () async {
+                    enterChatRecruitDialog(context: context, post: _postController.deepLinkPost);
+
+                    await _historyController.getHistoryInfo(postId: _postController.deepLinkPost.id ?? 0, postType: _postController.deepLinkPost.postType ?? -1);
+                    _historyController.history.then((value) {
+                      if (value.postType != 3) {
+                        _chatRoomController.getPost(post: value.toPost());
+                        _chatRoomController.getChats(post: value.toPost());
+                      } else {
+                        _chatRoomController.getKtxPost(ktxPost: value.toKtxPost());
+                        _chatRoomController.getKtxChats(ktxPost: value.toKtxPost());
+                      }
+                    });
+                  },
+                  child: Text(
+                    '채팅방 입장하기',
+                    style: textTheme.subtitle2?.copyWith(color: colorScheme.primary),
+                  ),
+                ),
+              ),
+            ],
+          );
         }));
   }
 

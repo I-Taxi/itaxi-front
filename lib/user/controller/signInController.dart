@@ -2,6 +2,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
+import 'package:itaxi/ip/controller/ipController.dart';
 
 enum SignInState {
   firebaseSignedIn,
@@ -12,6 +13,7 @@ enum SignInState {
 }
 
 class SignInController extends GetxController {
+  final IpController _ipController = Get.put(IpController());
   final FirebaseAuth fAuth = FirebaseAuth.instance;
 
   SignInState signInState = SignInState.start;
@@ -73,6 +75,7 @@ class SignInController extends GetxController {
   }
 
   Future<void> asyncMethod() async {
+    await _ipController.fetchIp();
     if (signInState == SignInState.signedIn) {
       return;
     }

@@ -7,12 +7,14 @@ import 'package:http/http.dart' as http;
 import 'package:itaxi/tools/controller/dateController.dart';
 import 'package:itaxi/post/controller/ktxPostController.dart';
 import 'package:itaxi/tools/controller/screenController.dart';
+import 'package:itaxi/ip/controller/ipController.dart';
 import 'package:itaxi/place/model/ktxPlace.dart';
 
 class KtxPlaceController extends GetxController {
   late ScreenController _screenController = Get.find();
   late KtxPostController _ktxPostController = Get.find();
   late DateController _dateController = Get.find();
+  IpController _ipController = Get.find();
   late Future<List<KtxPlace>> places;
 
   KtxPlace? dep; // 출발지
@@ -46,7 +48,7 @@ class KtxPlaceController extends GetxController {
   }
 
   Future<List<KtxPlace>> fetchPlace() async {
-    var placeUrl = dotenv.env['API_URL'].toString();
+    var placeUrl = _ipController.ip.toString();
     placeUrl = '${placeUrl}ktx-place';
 
     var response = await http.get(Uri.parse(placeUrl));
