@@ -12,12 +12,16 @@ import 'dart:convert';
 import 'package:itaxi/user/model/userInfoList.dart';
 import 'package:itaxi/fcm/fcmController.dart';
 
+import 'package:itaxi/ip/controller/ipController.dart';
+
 class UserController extends GetxController {
   FirebaseFirestore _firestore = FirebaseFirestore.instance;
   final FirebaseMessaging _fcm = FirebaseMessaging.instance;
   late final FCMController _fcmController;
 
   late Future<UserInfoList> users;
+
+  IpController _ipController = Get.find();
 
   int isDeleted = 0;
 
@@ -88,7 +92,7 @@ class UserController extends GetxController {
 
   Future<UserInfoList> fetchUsers() async {
     uid = FirebaseAuth.instance.currentUser!.uid;
-    var userUrl = dotenv.env['API_URL'].toString();
+    var userUrl = _ipController.ip;
     userUrl = '${userUrl}member/info';
 
     final body = jsonEncode({"uid": uid});
@@ -115,7 +119,7 @@ class UserController extends GetxController {
 
   // 정보 수정
   Future<void> fetchNewUsers() async {
-    var userUrl = dotenv.env['API_URL'].toString();
+    var userUrl = _ipController.ip;
     userUrl = '${userUrl}member';
 
     var encryptPhone = encrypter.encrypt(phone!, iv: iv).base64;
@@ -152,7 +156,7 @@ class UserController extends GetxController {
   // 회원탈퇴
   Future<http.Response> fetchDeleteUsers() async {
     uid = FirebaseAuth.instance.currentUser!.uid;
-    var userUrl = dotenv.env['API_URL'].toString();
+    var userUrl = _ipController.ip;
     userUrl = '${userUrl}member/resign';
 
     final body = jsonEncode({"uid": uid});

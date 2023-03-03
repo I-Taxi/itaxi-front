@@ -47,7 +47,7 @@ Padding lookupSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
           ),
           Center(
             child: Image(
-              image: AssetImage('assets/place/dep-dest.png'),
+              image: AssetImage('assets/Image/dep-dest.png'),
               width: 23.w,
             ),
           ),
@@ -147,7 +147,7 @@ Padding gatherSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
           ),
           Center(
             child: Image(
-              image: AssetImage('assets/place/dep-dest.png'),
+              image: AssetImage('assets/Image/dep-dest.png'),
               width: 23.w,
             ),
           ),
@@ -216,7 +216,7 @@ Padding gatherSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
             onPressed: () {
               _ktxPlaceController.swapDepAndDst();
             },
-            icon: Image.asset('assets/change.png'),
+            icon: Image.asset('assets/button/change_dep_des.png'),
             iconSize: 35.sp,
             color: colorScheme.tertiary,
           ),
