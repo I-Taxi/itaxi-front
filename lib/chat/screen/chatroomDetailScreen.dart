@@ -9,19 +9,21 @@ import 'package:itaxi/chat/widget/chatDetailListTile.dart';
 import 'package:itaxi/chat/controller/chatRoomController.dart';
 import 'package:itaxi/history/controller/historyController.dart';
 import 'package:itaxi/post/controller/ktxPostController.dart';
+import 'package:itaxi/post/widget/postTypeToString.dart';
 import 'package:itaxi/tools/controller/navigationController.dart';
 import 'package:itaxi/post/controller/postController.dart';
+import 'package:itaxi/tools/widget/setTimeDateFormater.dart';
 import 'package:itaxi/user/controller/userController.dart';
 import 'package:itaxi/chat/model/chat.dart';
 import 'package:itaxi/history/model/history.dart';
 import 'package:itaxi/post/model/ktxPost.dart';
 import 'package:itaxi/post/model/post.dart';
 import 'package:itaxi/place/widget/abbreviatePlaceName.dart';
+import 'package:itaxi/tools/widget/showErrorDialog.dart';
+import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
-import 'package:itaxi/tools/widget/showErrorDialog.dart';
-
-import '../../deeplink/dynamicLink.dart';
+import '../../deeplink/model/dynamicLink.dart';
 
 class ChatRoomDetailScreen extends StatefulWidget {
   const ChatRoomDetailScreen({super.key});
@@ -54,13 +56,16 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
     }
   }
 
-  Future<void> shareChatLink(int chatId) async {
+  Future<void> shareChatLink(Post post) async {
+    String text = '${postTypeToString(post.postType)} ${gatherLinkDateFormater(DateTime.parse(post.deptTime!))} (${post.participantNum}/${post.capacity})\n';
+    if (post.stopovers!.isEmpty) {
+      text = text + '${abbreviatePlaceName(post.departure!.name)} - ${abbreviatePlaceName(post.destination!.name)}\n\n';
+    } else {
+      text = text + '${abbreviatePlaceName(post.departure!.name)} - ${abbreviatePlaceName(post.stopovers!.first!.name)} - ${abbreviatePlaceName(post.destination!.name)}\n\n';
+    }
+    text = text + '아이택시를 이용하여 함께 이동해보세요!\n';
     Share.share(
-      await DynamicLink().getShortLink(
-        'chat',
-        "$chatId",
-        "hi"
-      ),
+      await DynamicLink().getShortLink('chat', "${post.id}", text),
     );
   }
 

@@ -10,13 +10,13 @@ import 'package:itaxi/post/screen/checkPlaceScreen.dart';
 import 'package:package_info/package_info.dart';
 import 'package:uni_links/uni_links.dart';
 
-import '../post/screen/postDeepLinkScreen.dart';
-import '../user/controller/signInController.dart';
-import '../user/controller/userController.dart';
-import '../user/screen/onBoardingScreen.dart';
-import '../user/screen/signInScreen.dart';
-import '../user/screen/splashScreen.dart';
-import 'dynamicLinkController.dart';
+import '../screen/postDeepLinkScreen.dart';
+import '../../user/controller/signInController.dart';
+import '../../user/controller/userController.dart';
+import '../../user/screen/onBoardingScreen.dart';
+import '../../user/screen/signInScreen.dart';
+import '../../user/screen/splashScreen.dart';
+import '../controller/dynamicLinkController.dart';
 
 class DynamicLink {
   Future<bool> setup() async {
@@ -83,7 +83,6 @@ class DynamicLink {
     final dynamicLinkParams = DynamicLinkParameters(
       uriPrefix: dynamicLinkPrefix,
       link: Uri.parse('$dynamicLinkPrefix/$screenName?id=$id'),
-      // link: Uri.parse('https://www.example.com/'),
       androidParameters: AndroidParameters(
         packageName: packageName,
         minimumVersion: 0,
@@ -96,6 +95,6 @@ class DynamicLink {
     final dynamicLink = await FirebaseDynamicLinks.instance.buildShortLink(dynamicLinkParams);
 
     // return dynamicLink.toString();
-    return "Hi hello " + dynamicLink.shortUrl.toString();
+    return text + dynamicLink.shortUrl.toString();
   }
 }

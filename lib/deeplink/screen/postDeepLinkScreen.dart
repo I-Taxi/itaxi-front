@@ -4,7 +4,7 @@ import 'package:intl/intl.dart';
 import 'package:itaxi/chat/screen/chatRoomDetailScreen.dart';
 import 'package:itaxi/chat/controller/chatRoomController.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
-import 'package:itaxi/deeplink/dynamicLinkController.dart';
+import 'package:itaxi/deeplink/controller/dynamicLinkController.dart';
 import 'package:itaxi/history/controller/historyController.dart';
 import 'package:itaxi/history/model/history.dart';
 import 'package:itaxi/main/screen/home.dart';
@@ -12,6 +12,7 @@ import 'package:itaxi/place/model/place.dart';
 import 'package:itaxi/post/controller/postController.dart';
 import 'package:itaxi/post/model/post.dart';
 import 'package:itaxi/post/widget/postTypeToString.dart';
+import 'package:itaxi/tools/widget/showErrorDialog.dart';
 
 class PostDeepLinkScreen extends StatefulWidget {
   PostDeepLinkScreen({Key? key}) : super(key: key);
@@ -347,20 +348,27 @@ class _PostDeepLinkScreenState extends State<PostDeepLinkScreen> {
                         GestureDetector(
                           behavior: HitTestBehavior.opaque,
                           onTap: () async {
-                            await _postController.fetchJoin(post: post);
-                            Get.back();
-                            await _historyController.getHistorys();
-                            await _historyController.getHistoryInfo(postId: post.id!, postType: post.postType!);
-                            _historyController.history.then((value) {
-                              if (value.postType != 3) {
-                                _chatRoomController.getPost(post: value.toPost());
-                                _chatRoomController.getChats(post: value.toPost());
-                              } else {
-                                _chatRoomController.getKtxPost(ktxPost: value.toKtxPost());
-                                _chatRoomController.getKtxChats(ktxPost: value.toKtxPost());
-                              }
-                              Get.to(() => const ChatRoomDetailScreen());
-                            });
+                            try {
+                              await _postController.fetchJoin(post: post);
+                              Get.back();
+                              await _historyController.getHistorys();
+                              await _historyController.getHistoryInfo(postId: post.id!, postType: post.postType!);
+                              _historyController.history.then((value) {
+                                if (value.postType != 3) {
+                                  _chatRoomController.getPost(post: value.toPost());
+                                  _chatRoomController.getChats(post: value.toPost());
+                                } else {
+                                  _chatRoomController.getKtxPost(ktxPost: value.toKtxPost());
+                                  _chatRoomController.getKtxChats(ktxPost: value.toKtxPost());
+                                }
+                                Get.to(() => const ChatRoomDetailScreen());
+                              });
+                            } catch (e) {
+                              print(e);
+                              Get.back();
+                              Get.back();
+                              showErrorDialog(context, textTheme, colorScheme, e);
+                            }
                           },
                           child: Text(
                             "입장",

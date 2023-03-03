@@ -15,7 +15,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:device_preview/device_preview.dart';
 
 import 'package:get/get.dart';
-import 'package:itaxi/deeplink/dynamicLink.dart';
+import 'package:itaxi/deeplink/model/dynamicLink.dart';
 import 'package:itaxi/user/controller/signInController.dart';
 import 'package:itaxi/ip/controller/ipController.dart';
 import 'package:itaxi/firebase_options.dart';
