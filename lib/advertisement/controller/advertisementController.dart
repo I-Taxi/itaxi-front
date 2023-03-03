@@ -16,7 +16,7 @@ class AdvertisementController extends GetxController {
   @override
   Future<void> onInit() async {
     super.onInit();
-    advertisementImage = fetchAdvertisementImage(imgName: 'dog');
+    advertisementImage = fetchAdvertisementImage(imgName: 'cra-recruiting');
   }
 
   Future<void> getAdvertisement({required String imgName}) async {
@@ -67,20 +67,20 @@ class AdvertisementController extends GetxController {
   Future<Advertisement> fetchAdvertisementImage(
       {required String imgName}) async {
     var advertisementUrl = dotenv.env['API_URL'].toString();
-    advertisementUrl = "${advertisementUrl}advertisement/$imgName";
+    advertisementUrl = "${advertisementUrl}advertisement/image/$imgName";
 
-    Map<String, dynamic> map = {
-      'imgName': imgName,
-    };
+    // Map<String, dynamic> map = {
+    //   'imgName': imgName,
+    // };
 
-    var body = utf8.encode(json.encode(map));
+    // var body = utf8.encode(json.encode(map));
 
-    var response = await http.post(
+    var response = await http.get(
       Uri.parse(advertisementUrl),
       headers: <String, String>{
         'Content-type': 'application/json',
       },
-      body: body,
+      //body: body,
     );
 
     if (response.statusCode == 200) {
