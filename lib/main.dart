@@ -160,6 +160,8 @@ class _MyAppState extends State<MyApp> {
       print('FirebaseMessaging.onMessageOpenedApp listened !');
       print(message.data);
     });
+
+    DynamicLink().setup();
   }
 
   _onBoarding() async {
