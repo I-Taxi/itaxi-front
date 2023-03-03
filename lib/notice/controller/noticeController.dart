@@ -5,10 +5,12 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:itaxi/ip/controller/ipController.dart';
 import 'package:itaxi/notice/model/notice.dart';
 
 class NoticeController extends GetxController {
   late Future<List<Notice>> notices;
+  IpController _ipController = Get.find();
 
   NoticeController() {
     getNotices();
@@ -34,7 +36,7 @@ class NoticeController extends GetxController {
     for (Notice notice in noticeList) {
       DateTime parseNoticeCreatedAt = DateTime.parse(notice.createdAt!);
       Duration diff = parseNoticeCreatedAt.difference(DateTime.now());
-      if (diff.inDays >= -10) {
+      if (diff.inDays >= -3) {
         result = notice;
         break;
       }
@@ -43,7 +45,7 @@ class NoticeController extends GetxController {
   }
 
   Future<List<Notice>> fetchNotices() async {
-    var noticeUrl = dotenv.env['API_URL'].toString();
+    var noticeUrl = _ipController.ip.toString();
     noticeUrl = "${noticeUrl}notice";
 
     var response = await http.get(

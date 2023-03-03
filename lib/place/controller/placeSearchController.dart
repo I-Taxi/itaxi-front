@@ -8,6 +8,7 @@ import 'package:get/get.dart';
 
 import 'package:itaxi/place/controller/placeController.dart';
 import 'package:itaxi/user/controller/userController.dart';
+import 'package:itaxi/ip/controller/ipController.dart';
 import 'package:itaxi/place/model/place.dart';
 import 'package:itaxi/place/model/favoritePlace.dart';
 
@@ -28,6 +29,7 @@ class PlaceSearchController extends GetxController {
 
   final PlaceController _placeController = Get.find();
   final UserController _userController = Get.find();
+  final IpController _ipController = Get.find();
 
   FavoritePlace? favoriteSelectedPlace;
   Place? selectedPlace;
@@ -285,7 +287,7 @@ class PlaceSearchController extends GetxController {
   }
 
   Future<int> addFavoritePlace() async {
-    var favorPlaceUrl = dotenv.env['API_URL'].toString();
+    var favorPlaceUrl = _ipController.ip.toString();
     favorPlaceUrl = '${favorPlaceUrl}favorite';
 
     Map<String, dynamic> addFavorPlaceMap = {
@@ -319,7 +321,7 @@ class PlaceSearchController extends GetxController {
   }
 
   Future<void> fetchFavoritePlace() async {
-    var favorPlaceUrl = dotenv.env['API_URL'].toString();
+    var favorPlaceUrl = _ipController.ip.toString();
     favorPlaceUrl = '${favorPlaceUrl}favorite/';
 
     var body = json.encode(<String, dynamic>{'uid': _userController.uid!, 'favorType': isLookup ? 1 : 0});
@@ -348,7 +350,7 @@ class PlaceSearchController extends GetxController {
   }
 
   Future<int> removeFavoritePlace() async {
-    var favorPlaceUrl = dotenv.env['API_URL'].toString();
+    var favorPlaceUrl = _ipController.ip.toString();
     favorPlaceUrl = '${favorPlaceUrl}favorite/delete/${favoriteSelectedPlace!.id}';
     var body = json.encode(<String, String>{"uid": _userController!.uid!});
 

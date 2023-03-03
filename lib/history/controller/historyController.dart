@@ -6,6 +6,7 @@ import 'package:http/http.dart' as http;
 import 'package:encrypt/encrypt.dart';
 
 import 'package:itaxi/user/controller/userController.dart';
+import 'package:itaxi/ip/controller/ipController.dart';
 import 'package:itaxi/post/model/post.dart';
 import 'package:itaxi/joiner/model/joiner.dart';
 import 'package:itaxi/history/model/history.dart';
@@ -13,7 +14,8 @@ import 'package:itaxi/post/model/ktxPost.dart';
 
 class HistoryController extends GetxController {
   UserController _userController = Get.put(UserController());
-
+  IpController _ipController = Get.find();
+  
   final key = Key.fromUtf8(dotenv.env['ENCRYPTION_KEY'].toString());
   final iv = IV.fromLength(16);
 
@@ -64,7 +66,7 @@ class HistoryController extends GetxController {
 
   // /itaxi/api/post/history
   Future<List<History>> fetchHistorys() async {
-    var historyUrl = dotenv.env['API_URL'].toString();
+    var historyUrl = _ipController.ip.toString();
     historyUrl = '${historyUrl}history';
 
     Map<String, dynamic> map = {
@@ -88,7 +90,7 @@ class HistoryController extends GetxController {
   }
 
   Future<History> fetchHistoryInfo({required int postId, required int postType}) async {
-    var historyUrl = dotenv.env['API_URL'].toString();
+    var historyUrl = _ipController.ip.toString();
     historyUrl = '${historyUrl}history/$postId';
     final Map<String, dynamic> queryParameters;
 

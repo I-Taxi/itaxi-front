@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
 
+import 'package:itaxi/ip/controller/ipController.dart';
 import 'package:itaxi/user/model/user.dart';
 
 class SignUpController extends GetxController {
@@ -27,6 +28,7 @@ class SignUpController extends GetxController {
   late String bankOwner;
   int signUpStatus = 0;
 
+  IpController _ipController = Get.find();
   final key = Key.fromUtf8(dotenv.env['ENCRYPTION_KEY'].toString());
   final iv = IV.fromLength(16);
 
@@ -56,7 +58,8 @@ class SignUpController extends GetxController {
   }
 
   Future<http.Response> fetchAddUser({required Login login}) async {
-    var addUserUrl = dotenv.env['API_URL'].toString();
+    // var addUserUrl = dotenv.env['API_URL'].toString();
+    var addUserUrl = _ipController.ip;
     addUserUrl = '${addUserUrl}member';
 
     var body = json.encode(login.toMap());
