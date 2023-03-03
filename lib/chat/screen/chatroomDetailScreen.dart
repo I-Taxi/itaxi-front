@@ -788,6 +788,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                               height: 50.h,
                               child: OutlinedButton(
                                 onPressed: () {
+                                  //     shareChatLink(_chatRoomController.post.id!);
                                 },
                                 style: OutlinedButton.styleFrom(side: BorderSide(width: 1, color: colorScheme.secondary)),
                                 child: Text(
@@ -986,14 +987,22 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                         ),
                                 ],
                               )),
-                          OutlinedButton(
-                              onPressed: () {
-                              },
-                              style: OutlinedButton.styleFrom(side: BorderSide(width: 1, color: colorScheme.secondary)),
-                              child: Text(
-                                "방 공유하기",
-                                style: textTheme.bodyText2!.copyWith(color: colorScheme.primary),
-                              )
+                          SizedBox(
+                            height: 70.h,
+                          ),
+                          Container(
+                            width: 198.w,
+                            height: 50.h,
+                            child: OutlinedButton(
+                                onPressed: () {
+                                  //     shareChatLink(_chatRoomController.post.id!);
+                                },
+                                style: OutlinedButton.styleFrom(side: BorderSide(width: 1, color: colorScheme.secondary)),
+                                child: Text(
+                                  "방 공유하기",
+                                  style: textTheme.subtitle1!.copyWith(color: colorScheme.onSecondaryContainer),
+                                )
+                            ),
                           )
                         ],
                       ),
@@ -1019,7 +1028,9 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                   child: Row(
                     children: [
                       GestureDetector(
-                        onTap: (){},
+                        onTap: (){
+                          //     shareChatLink(_chatRoomController.post.id!);
+                        },
                         child: Image.asset("assets/button/share_link.png", width: 24.w, height: 24.h, color: colorScheme.tertiary),
                       ),
                       SizedBox(
