@@ -1,18 +1,18 @@
 import 'dart:convert';
 
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:itaxi/tools/controller/dateController.dart';
 import 'package:itaxi/post/controller/postController.dart';
 import 'package:itaxi/tools/controller/screenController.dart';
+import 'package:itaxi/ip/controller/ipController.dart';
 import 'package:itaxi/place/model/place.dart';
 
 class PlaceController extends GetxController {
   late ScreenController _screenController = Get.find();
   late PostController _postController = Get.find();
   late DateController _dateController = Get.find();
+  IpController _ipController = Get.find();
   late Future<List<Place>> places;
 
   Place? dep; // 출발지
@@ -46,7 +46,7 @@ class PlaceController extends GetxController {
   }
 
   Future<List<Place>> fetchPlace() async {
-    var placeUrl = dotenv.env['API_URL'].toString();
+    var placeUrl = _ipController.ip.toString();
     placeUrl = '${placeUrl}place/1';
 
     var response = await http.get(Uri.parse(placeUrl));
