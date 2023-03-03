@@ -62,6 +62,7 @@ class AdvertisementController extends GetxController {
     return result;
   }
 
+
   Future<Advertisement> fetchAdvertisementImage({required String imgName}) async {
     var advertisementUrl = _ipController.ip.toString();
     advertisementUrl = "${advertisementUrl}advertisement/image/$imgName";
