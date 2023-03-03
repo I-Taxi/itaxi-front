@@ -17,6 +17,7 @@ class PostController extends GetxController {
   late UserController _userController = Get.find();
   late ChatRoomController _chatRoomController = Get.put(ChatRoomController());
   late Future<List<Post>> posts;
+  late int id;
   bool isLoading = true;
 
   List<Post> postsfromJson(json) {
@@ -126,23 +127,18 @@ class PostController extends GetxController {
     var postUrl = _ipController.ip.toString();
     postUrl = '${postUrl}post/$id';
 
-    Map<String, String?> map = {
-      'uid': _userController.uid,
-    };
-
-    var body = utf8.encode(json.encode(map));
-
-    http.Response response = await http.post(
+    http.Response response = await http.get(
       Uri.parse(postUrl),
       headers: <String, String>{
         'Content-type': 'application/json',
       },
-      body: body,
     );
 
     if (response.statusCode == 200) {
       return Post.fromDocs(json.decode(utf8.decode(response.bodyBytes)));
     } else {
+      print("PostUrl");
+      print(postUrl);
       print(response.statusCode);
       print(utf8.decode(response.bodyBytes));
       throw Exception('Failed to load post info');
