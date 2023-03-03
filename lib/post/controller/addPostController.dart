@@ -1,15 +1,15 @@
 import 'dart:convert';
 
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:itaxi/history/controller/historyController.dart';
+import 'package:itaxi/ip/controller/ipController.dart';
 import 'package:itaxi/post/model/post.dart';
 import 'package:itaxi/chat/repository/chatRepository.dart';
 
 class AddPostController extends GetxController {
   late HistoryController _historyController = Get.put(HistoryController());
+  IpController _ipController = Get.find();
   int capacity = 1;
   int luggage = 0;
   bool loaded = true;
@@ -41,7 +41,7 @@ class AddPostController extends GetxController {
 
   Future<http.Response> fetchAddPost({required Post post}) async {
     unloaded();
-    var addPostUrl = dotenv.env['API_URL'].toString();
+    var addPostUrl = _ipController.ip.toString();
     addPostUrl = '${addPostUrl}post';
 
     var body = utf8.encode(json.encode(post.toAddPostMap()));

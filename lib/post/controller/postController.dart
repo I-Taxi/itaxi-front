@@ -1,18 +1,18 @@
 import 'dart:convert';
 
-import 'package:flutter_dotenv/flutter_dotenv.dart';
-
 import 'package:http/http.dart' as http;
 import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:itaxi/chat/controller/chatRoomController.dart';
 import 'package:itaxi/tools/controller/dateController.dart';
 import 'package:itaxi/user/controller/userController.dart';
+import 'package:itaxi/ip/controller/ipController.dart';
 import 'package:itaxi/chat/repository/chatRepository.dart';
 import 'package:itaxi/post/model/post.dart';
 import 'package:itaxi/joiner/model/joiner.dart';
 
 class PostController extends GetxController {
+  IpController _ipController = Get.find();
   late DateController _dateController = Get.find();
   late UserController _userController = Get.find();
   late ChatRoomController _chatRoomController = Get.put(ChatRoomController());
@@ -50,7 +50,7 @@ class PostController extends GetxController {
 
   // Posts 데이터 가져오기
   Future<List<Post>> fetchPost({int? depId, int? dstId, required String time, required int postType}) async {
-    var postUrl = dotenv.env['API_URL'].toString();
+    var postUrl = _ipController.ip.toString();
     final Map<String, dynamic> queryParameters;
     if ((depId == null || depId == -1 || depId == 3232) && (dstId == null || dstId == -1 || dstId == 3232)) {
       if (postType == 0) {
@@ -123,7 +123,7 @@ class PostController extends GetxController {
   }
 
   Future<Post> fetchPostInfo({required int? id}) async {
-    var postUrl = dotenv.env['API_URL'].toString();
+    var postUrl = _ipController.ip.toString();
     postUrl = '${postUrl}post/$id';
 
     Map<String, String?> map = {
@@ -151,7 +151,7 @@ class PostController extends GetxController {
 
   // /itaxi/api/post/{postId}/join
   Future<void> fetchJoin({required Post post}) async {
-    var joinUrl = dotenv.env['API_URL'].toString();
+    var joinUrl = _ipController.ip.toString();
     joinUrl = '${joinUrl}post/${post.id}/join';
 
     Map<String, dynamic> map = {
@@ -178,7 +178,7 @@ class PostController extends GetxController {
   }
 
   Future<void> fetchOutJoin({required Post post}) async {
-    var joinUrl = dotenv.env['API_URL'].toString();
+    var joinUrl = _ipController.ip.toString();
     joinUrl = '${joinUrl}post/${post.id}/join';
     Joiner? owner;
 
