@@ -47,7 +47,7 @@ Padding lookupSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
           ),
           Center(
             child: Image(
-              image: AssetImage('assets/place/dep-dest.png'),
+              image: AssetImage('assets/Image/dep-dest.png'),
               width: 23.w,
             ),
           ),
@@ -147,7 +147,7 @@ Padding gatherSetDepDstWidget(ColorScheme colorScheme, TextTheme textTheme, Scre
           ),
           Center(
             child: Image(
-              image: AssetImage('assets/place/dep-dest.png'),
+              image: AssetImage('assets/Image/dep-dest.png'),
               width: 23.w,
             ),
           ),
