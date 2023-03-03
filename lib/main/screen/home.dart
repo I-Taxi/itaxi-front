@@ -11,7 +11,7 @@ import 'package:itaxi/history/screen/timelineScreen.dart';
 
 class Home extends StatelessWidget {
   Home({Key? key}) : super(key: key);
-
+  
   final NavigationController _navController = Get.put(NavigationController());
   // final MainScreen main = new MainScreen();
 

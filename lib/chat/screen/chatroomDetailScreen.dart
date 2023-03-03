@@ -57,8 +57,9 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
   Future<void> shareChatLink(int chatId) async {
     Share.share(
       await DynamicLink().getShortLink(
-        "share",
+        'chat',
         "$chatId",
+        "hi"
       ),
     );
   }

@@ -73,6 +73,9 @@ dependencies:
 
   new_version: ^0.3.0
   package_info: '>=0.4.3+4 <2.0.0'
+  firebase_dynamic_links: ^5.0.15
+  share_plus: ^6.3.1
+  uni_links: ^0.5.1
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -129,6 +132,7 @@ flutter:
     - assets/button/send_message.png
     - assets/button/call_other_person.png
     - assets/button/remove_favorite_place.png
+    - assets/button/share_link.png
 
     # icon
     - assets/icon/boarding_complete.png
