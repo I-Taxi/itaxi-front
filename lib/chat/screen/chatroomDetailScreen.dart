@@ -793,7 +793,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                               height: 50.h,
                               child: OutlinedButton(
                                 onPressed: () {
-                                  //     shareChatLink(_chatRoomController.post.id!);
+                                    shareChatLink(_chatRoomController.post);
                                 },
                                 style: OutlinedButton.styleFrom(side: BorderSide(width: 1, color: colorScheme.secondary)),
                                 child: Text(
