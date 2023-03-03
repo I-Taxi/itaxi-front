@@ -11,6 +11,10 @@ String? abbreviatePlaceName(String? place) {
     return '포항시터';
   } else if (place == '태화강 식당 사거리') {
     return '태화강';
+  } else if (place == '한동 버스정류장') {
+    return '한동버정';
+  } else if (place == '한동 택시정류장') {
+    return '한동택정';
   } else if (place != null) {
     return place;
   } else {
