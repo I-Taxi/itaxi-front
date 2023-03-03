@@ -1000,7 +1000,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                             height: 50.h,
                             child: OutlinedButton(
                                 onPressed: () {
-                                  //     shareChatLink(_chatRoomController.post.id!);
+                                  shareChatLink(_chatRoomController.post);
                                 },
                                 style: OutlinedButton.styleFrom(side: BorderSide(width: 1, color: colorScheme.secondary)),
                                 child: Text(
@@ -1034,7 +1034,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                     children: [
                       GestureDetector(
                         onTap: (){
-                          //     shareChatLink(_chatRoomController.post.id!);
+                          shareChatLink(_chatRoomController.post);
                         },
                         child: Image.asset("assets/button/share_link.png", width: 24.w, height: 24.h, color: colorScheme.tertiary),
                       ),
@@ -1063,15 +1063,6 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                               borderRadius: BorderRadius.circular(24),
                             ),
                             fillColor: colorScheme.onBackground,
-                            // prefixIcon: GestureDetector(
-                            //   onTap: () async {
-                            //     shareChatLink(_chatRoomController.post.id!);
-                            //   },
-                            //   child: Padding(
-                            //     padding: EdgeInsets.fromLTRB(0.w, 2.h, 8.68.w, 1.68.h),
-                            //     child: Image.asset('assets/button/share_link.png'),
-                            //   ),
-                            // ),
                             suffixIcon: GetBuilder<ChatRoomController>(
                               builder: (_) {
                                 if (_chatRoomController.texting == true) {

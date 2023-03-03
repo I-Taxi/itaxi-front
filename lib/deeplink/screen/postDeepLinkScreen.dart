@@ -21,21 +21,6 @@ class PostDeepLinkScreen extends StatefulWidget {
 }
 
 class _PostDeepLinkScreenState extends State<PostDeepLinkScreen> {
-  Container insertBordingCompleteIcon(String? time) {
-    print("hi");
-    if (DateTime.now().difference(DateTime.parse(time!)).isNegative == false) {
-      return Container(
-        padding: EdgeInsets.fromLTRB(15.w, 0.h, 0.w, 0.h),
-        child: Image.asset(
-          width: 57,
-          'assets/icon/boarding_complete.png',
-        ),
-      );
-    } else {
-      return Container(padding: EdgeInsets.fromLTRB(15.w, 0.h, 0.w, 0.h));
-    }
-  }
-
   double addPlaceContainerSize(double size, List<Place?>? stopovers) {
     if (stopovers != null && stopovers.isNotEmpty) {
       return size + 35.h;
@@ -119,7 +104,6 @@ class _PostDeepLinkScreenState extends State<PostDeepLinkScreen> {
                               color: colorScheme.onTertiary,
                             ),
                           ),
-                          insertBordingCompleteIcon(_postController.deepLinkPost.deptTime),
                         ],
                       ),
                     ],
@@ -277,7 +261,6 @@ class _PostDeepLinkScreenState extends State<PostDeepLinkScreen> {
                     minimumSize: Size.fromHeight(57.h),
                     shape: const RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(16))),
                   ),
-                  // TODO: 방 입장하시겠습니까 다이얼로그 띄우기
                   onPressed: () async {
                     enterChatRecruitDialog(context: context, post: _postController.deepLinkPost);
 
