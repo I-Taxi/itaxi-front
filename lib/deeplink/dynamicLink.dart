@@ -5,6 +5,7 @@ import 'package:get/get.dart';
 import 'package:itaxi/chat/screen/chatRoomListScreen.dart';
 import 'package:itaxi/place/controller/placeController.dart';
 import 'package:itaxi/post/controller/postController.dart';
+import 'package:itaxi/post/model/post.dart';
 import 'package:itaxi/post/screen/checkPlaceScreen.dart';
 import 'package:package_info/package_info.dart';
 import 'package:uni_links/uni_links.dart';
@@ -15,6 +16,7 @@ import '../user/controller/userController.dart';
 import '../user/screen/onBoardingScreen.dart';
 import '../user/screen/signInScreen.dart';
 import '../user/screen/splashScreen.dart';
+import 'dynamicLinkController.dart';
 
 class DynamicLink {
   Future<bool> setup() async {
@@ -26,31 +28,20 @@ class DynamicLink {
 
   Future<bool> _getInitialDynamicLink() async {
     final String? deepLink = await getInitialLink();
+    DynamicLinkController _dynamicLinkController = Get.put(DynamicLinkController());
 
     if (deepLink != null) {
       PendingDynamicLinkData? dynamicLinkData = await FirebaseDynamicLinks.instance.getDynamicLink(Uri.parse(deepLink));
+      _dynamicLinkController.setDynamicLink(dynamicLinkData);
 
       if (dynamicLinkData != null) {
-        _redirectScreen(dynamicLinkData);
+        await setPostInfo(dynamicLinkData);
 
         return true;
       }
     }
 
     return false;
-  }
-
-  static final storage = new FlutterSecureStorage();
-  String? onBoardingInfo;
-  int? isOnBoarding = 1; // 0일 경우, 온보딩 페이지 x / 1일 경우, 온보딩 페이지 띄우기
-  _onBoarding() async {
-    onBoardingInfo = await storage.read(key: "onBoarding");
-
-    if (onBoardingInfo != null) {
-      isOnBoarding = 0;
-    } else {
-      isOnBoarding = 1;
-    }
   }
 
   final SignInController _signInController = Get.put(SignInController());
@@ -66,7 +57,7 @@ class DynamicLink {
     });
   }
 
-  void _redirectScreen(PendingDynamicLinkData dynamicLinkData) {
+  Future<void> setPostInfo(PendingDynamicLinkData dynamicLinkData) async {
     PostController _postController = Get.put(PostController());
 
     print(dynamicLinkData.link.toString());
@@ -79,41 +70,7 @@ class DynamicLink {
 
       switch (link) {
         case 'chat':
-          _postController.fetchPostInfo(id: int.parse(id));
-          GetBuilder<UserController>(builder: (_) {
-            return GetBuilder<SignInController>(
-              builder: (_) {
-                if (_signInController.signInState == SignInState.firebaseSignedIn) {
-                  print("1");
-                  WidgetsBinding.instance.addPostFrameCallback((_) {
-                    _userController.getUsers().whenComplete(() {
-                      if (_userController.userFetchSuccess) {
-                        _signInController.signedInState();
-                      } else {
-                        _signInController.backServerErrorState();
-                      }
-                    });
-                  });
-                }
-                if (_signInController.signInState == SignInState.start || _signInController.signInState == SignInState.firebaseSignedIn || _signInController.signInState == SignInState.backServerError) {
-                  print(2);
-                  return const SplashScreen();
-                } else if (_signInController.signInState == SignInState.signedOut) {
-                  print(3);
-                  return const SignInScreen();
-                } else {
-                  print(4);
-                  if (isOnBoarding == 1) {
-                    return const OnBoardingScreen();
-                  } else {
-                    _postController.fetchPostInfo(id: int.parse(id));
-                    return PostDeepLinkScreen();
-                  }
-                }
-              },
-            );
-          });
-          break;
+          await _postController.fetchPostInfo(id: int.parse(id));
       }
     }
   }

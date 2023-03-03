@@ -20,7 +20,7 @@ if (flutterVersionCode == null) {
 def flutterVersionName = localProperties.getProperty('flutter.versionName')
 if (flutterVersionName == null) {
 
-    flutterVersionName = '4.1.0'
+    flutterVersionName = '4.1.2'
     
 }
 
@@ -63,7 +63,7 @@ android {
         minSdkVersion 21
         targetSdkVersion flutter.targetSdkVersion
         versionCode 6
-        versionName "4.1.0"
+        versionName "4.1.2"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
         multiDexEnabled true
     }
