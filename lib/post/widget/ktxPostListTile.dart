@@ -15,6 +15,7 @@ import 'package:itaxi/tools/widget/snackBar.dart';
 
 import 'package:itaxi/place/controller/ktxPlaceController.dart';
 import 'package:itaxi/tools/controller/dateController.dart';
+import 'package:itaxi/place/widget/abbreviatePlaceName.dart';
 
 Widget ktxPostListTile({
   required BuildContext context,
@@ -177,21 +178,33 @@ Widget ktxPostListTile({
                       SizedBox(
                         width: 25.w,
                       ),
-                      Row(
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
                         children: [
-                          ImageIcon(
-                            AssetImage("assets/icon/discount_check.png"),
-                            size: 16.2.r,
+                          Row(
+                            children: [
+                              ImageIcon(
+                                AssetImage("assets/icon/discount_check.png"),
+                                size: 16.2.r,
+                              ),
+                              // Image(image: AssetImage("assets/icon/discount_check.png"), width: 16.2.w, height: 16.2.h, color: colorScheme.onTertiary,),
+                              SizedBox(
+                                width: 10.69.w,
+                              ),
+                              Text(
+                                "${post.sale}%",
+                                style: textTheme.bodyText1?.copyWith(
+                                  color: colorScheme.onTertiary,
+                                ),
+                              ),
+                            ],
                           ),
-                          // Image(image: AssetImage("assets/icon/discount_check.png"), width: 16.2.w, height: 16.2.h, color: colorScheme.onTertiary,),
                           SizedBox(
-                            width: 10.69.w,
+                            height: 20.h,
                           ),
                           Text(
-                            "${post.sale}%",
-                            style: textTheme.bodyText1?.copyWith(
-                              color: colorScheme.onTertiary,
-                            ),
+                              "${post.departure!.name} --> ${post.destination!.name}",
+                            style: textTheme.bodyText1?.copyWith(color: colorScheme.onTertiary)
                           ),
                         ],
                       ),
