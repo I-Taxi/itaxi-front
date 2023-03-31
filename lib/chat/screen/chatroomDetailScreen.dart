@@ -7,23 +7,23 @@ import 'package:get/get.dart';
 import 'package:intl/intl.dart';
 import 'package:itaxi/chat/widget/chatDetailListTile.dart';
 import 'package:itaxi/chat/controller/chatRoomController.dart';
+import 'package:itaxi/deeplink/model/dynamicLink.dart';
 import 'package:itaxi/history/controller/historyController.dart';
 import 'package:itaxi/post/controller/ktxPostController.dart';
 import 'package:itaxi/post/widget/postTypeToString.dart';
 import 'package:itaxi/tools/controller/navigationController.dart';
 import 'package:itaxi/post/controller/postController.dart';
-import 'package:itaxi/tools/widget/setTimeDateFormater.dart';
 import 'package:itaxi/user/controller/userController.dart';
 import 'package:itaxi/chat/model/chat.dart';
 import 'package:itaxi/history/model/history.dart';
 import 'package:itaxi/post/model/ktxPost.dart';
 import 'package:itaxi/post/model/post.dart';
 import 'package:itaxi/place/widget/abbreviatePlaceName.dart';
-import 'package:itaxi/tools/widget/showErrorDialog.dart';
-import 'package:intl/intl.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:url_launcher/url_launcher.dart';
-import '../../deeplink/model/dynamicLink.dart';
+import 'package:itaxi/tools/widget/showErrorDialog.dart';
+import 'package:itaxi/tools/widget/setTimeDateFormater.dart';
+
 
 class ChatRoomDetailScreen extends StatefulWidget {
   const ChatRoomDetailScreen({super.key});
@@ -692,9 +692,11 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                                                   SizedBox(
                                                     width: 3.w,
                                                   ),
-                                                  Text(
-                                                    '메시지 입력창 옆 공유하기 버튼을 통해 다른 사람을 초대하세요.',
-                                                    style: textTheme.bodyText2!.copyWith(color: colorScheme.primary),
+                                                  Expanded(
+                                                    child: Text(
+                                                      '메시지 입력창 옆 공유하기 버튼을 통해 다른 사람을 초대하세요.',
+                                                      style: textTheme.bodyText2!.copyWith(color: colorScheme.primary),
+                                                    ),
                                                   ),
                                                 ],
                                               ),
@@ -793,7 +795,7 @@ class _ChatRoomDetailScreenState extends State<ChatRoomDetailScreen> {
                               height: 50.h,
                               child: OutlinedButton(
                                 onPressed: () {
-                                    shareChatLink(_chatRoomController.post);
+                                  shareChatLink(_chatRoomController.post);
                                 },
                                 style: OutlinedButton.styleFrom(side: BorderSide(width: 1, color: colorScheme.secondary)),
                                 child: Text(
