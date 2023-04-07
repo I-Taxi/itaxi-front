@@ -91,6 +91,10 @@ class DynamicLink {
         bundleId: packageName,
         minimumVersion: '0',
       ),
+      socialMetaTagParameters: SocialMetaTagParameters(
+          title: "itaxi image",
+          description: "This is image for dynamic link.",
+      )
     );
     final dynamicLink = await FirebaseDynamicLinks.instance.buildShortLink(dynamicLinkParams);
 

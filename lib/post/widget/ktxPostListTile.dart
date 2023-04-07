@@ -15,7 +15,6 @@ import 'package:itaxi/tools/widget/snackBar.dart';
 
 import 'package:itaxi/place/controller/ktxPlaceController.dart';
 import 'package:itaxi/tools/controller/dateController.dart';
-import 'package:itaxi/place/widget/abbreviatePlaceName.dart';
 
 Widget ktxPostListTile({
   required BuildContext context,
@@ -163,7 +162,7 @@ Widget ktxPostListTile({
                               )),
                           // Image(image: AssetImage("assets/type/train_text.png"), width: 46.w, height: 24.h,),
                           SizedBox(
-                            height: 13.h,
+                            height: 12.h,
                           ),
                           SizedBox(
                             width: 57.w,

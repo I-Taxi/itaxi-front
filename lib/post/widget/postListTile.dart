@@ -200,7 +200,7 @@ Widget postListTile({
                     ],
                   ),
                   SizedBox(
-                    width: 25.w,
+                    width: 24.w,
                   ),
                   Column(
                     mainAxisAlignment: MainAxisAlignment.center,
